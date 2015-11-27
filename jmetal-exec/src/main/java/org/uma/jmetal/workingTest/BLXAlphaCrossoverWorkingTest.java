@@ -6,7 +6,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.*;
@@ -61,7 +61,7 @@ public class BLXAlphaCrossoverWorkingTest {
 
     Collections.sort(population, new VariableComparator()) ;
 
-    new SolutionSetOutput(population)
+    new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsBLXAlpha"))
         .print();

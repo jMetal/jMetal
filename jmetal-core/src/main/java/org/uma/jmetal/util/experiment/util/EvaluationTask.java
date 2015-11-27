@@ -7,7 +7,7 @@ package org.uma.jmetal.util.experiment.util;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.File;
@@ -58,7 +58,7 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
     algorithm.run();
     Result population = algorithm.getResult() ;
 
-    new SolutionSetOutput((List<? extends S>) population)
+    new SolutionListOutput((List<? extends S>) population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext(varFile))
         .setFunFileOutputContext(new DefaultFileOutputContext(funFile))

@@ -14,8 +14,11 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentExecution;
+import org.uma.jmetal.util.experiment.util.ReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +27,7 @@ import java.util.List;
  * Created by ajnebro on 22/3/15.
  */
 public class ZDTStudy2 {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
@@ -45,7 +48,10 @@ public class ZDTStudy2 {
     ExperimentExecution<DoubleSolution, List<DoubleSolution>> experimentExecution =
         new ExperimentExecution<DoubleSolution, List<DoubleSolution>>(configuration) ;
 
-    experimentExecution.run();
+    //experimentExecution.run();
+
+    ReferenceParetoFront referenceParetoFront = new ReferenceParetoFront(configuration) ;
+    referenceParetoFront.generate();
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {

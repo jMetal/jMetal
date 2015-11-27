@@ -36,7 +36,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
     List<PermutationSolution<Integer>> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput(population)
+    new SolutionListOutput(population)
             .setSeparator("\t")
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

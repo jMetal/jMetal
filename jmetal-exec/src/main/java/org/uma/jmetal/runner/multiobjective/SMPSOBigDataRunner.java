@@ -33,7 +33,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -90,7 +90,7 @@ public class SMPSOBigDataRunner extends AbstractAlgorithmRunner {
     List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
-    new SolutionSetOutput(population)
+    new SolutionListOutput(population)
             .setSeparator("\t")
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
