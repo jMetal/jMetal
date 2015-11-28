@@ -14,6 +14,7 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
     File outputDirectory = createOutputDirectory(outputDirectoryName) ;
 
+    List<String> referenceFrontFileNames = new LinkedList<>() ;
     for (Problem<?> problem : experimentConfiguration.getProblemList()) {
       NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<DoubleSolution>() ;
@@ -60,9 +62,13 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
         }
       }
       String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
+      referenceFrontFileNames.add(problem.getName() + ".rf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName); ;
     }
+
+    experimentConfiguration.setReferenceFrontDirectory(outputDirectoryName);
+    experimentConfiguration.setReferenceFrontFileNmes(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {

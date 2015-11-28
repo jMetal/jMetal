@@ -9,8 +9,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
@@ -37,7 +36,7 @@ public class ZDTStudy2 {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
     ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
-        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
+        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
@@ -50,8 +49,10 @@ public class ZDTStudy2 {
     ExperimentExecution experimentExecution = new ExperimentExecution() ;
     experimentExecution
         //.add(new ExecuteAlgorithms<>(configuration))
-        //.add(new GenerateReferenceParetoFront((configuration)))
-        .add(new ComputeQualityIndicators(configuration, Arrays.asList(new Epsilon<>(), new Spread<>())))
+        .add(new GenerateReferenceParetoFront((configuration)))
+        .add(new ComputeQualityIndicators(configuration, Arrays.asList(
+            new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
+            new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>())))
         .run();
   }
 

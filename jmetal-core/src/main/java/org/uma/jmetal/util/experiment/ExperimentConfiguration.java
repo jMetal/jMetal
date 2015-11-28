@@ -102,5 +102,14 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
   public String getReferenceFrontDirectory() {
     return referenceFrontDirectory;
   }
-  
+
+  /* Setters */
+  public void setReferenceFrontDirectory(String referenceFrontDirectory) {
+    this.referenceFrontDirectory = referenceFrontDirectory ;
+  }
+
+  public void setReferenceFrontFileNmes(List<String> referenceFrontFileNames) {
+    this.referenceFrontFileNames = referenceFrontFileNames ;
+  }
+
 }
