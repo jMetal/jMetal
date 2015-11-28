@@ -9,9 +9,9 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
@@ -54,7 +54,9 @@ public class ZDTStudy {
     ExperimentExecution experimentExecution = new ExperimentExecution() ;
     experimentExecution
         //.add(new ExecuteAlgorithms<>(configuration))
-        .add(new ComputeQualityIndicators(configuration, Arrays.asList(new Epsilon<>(), new Spread<>())))
+        .add(new ComputeQualityIndicators(configuration, Arrays.asList(
+            new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
+            new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>())))
         .run();
   }
 
