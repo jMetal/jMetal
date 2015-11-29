@@ -23,6 +23,7 @@ package org.uma.jmetal.util.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -46,6 +47,8 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
   private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
 
+  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+
   private int numberOfCores ;
 
 	/** Constructor */
@@ -60,6 +63,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.numberOfCores = builder.getNumberOfCores() ;
     this.referenceFrontDirectory = builder.getReferenceFrontDirectory() ;
     this.referenceFrontFileNames = builder.getReferenceFrontFileNames() ;
+    this.indicatorList = builder.getIndicatorList() ;
   }
 
   /* Getters */
@@ -101,6 +105,10 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 
   public String getReferenceFrontDirectory() {
     return referenceFrontDirectory;
+  }
+
+  public List<GenericIndicator<List<? extends Solution<?>>>> getIndicatorList() {
+    return indicatorList;
   }
 
   /* Setters */

@@ -24,15 +24,14 @@ import java.util.logging.Logger;
  *
  * @author Antonio J. Nebro
  */
-public class ComputeQualityIndicators implements ExperimentComponent{
+public class ComputeQualityIndicators implements ExperimentComponent {
 
   private final ExperimentConfiguration<?, ?> configuration;
   private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
 
-  public ComputeQualityIndicators(ExperimentConfiguration experimentConfiguration,
-                                  List<GenericIndicator<List<? extends Solution<?>>>> indicatorList) {
+  public ComputeQualityIndicators(ExperimentConfiguration experimentConfiguration) {
     this.configuration = experimentConfiguration ;
-    this.indicatorList = indicatorList ;
+    this.indicatorList = experimentConfiguration.getIndicatorList() ;
   }
 
   @Override
@@ -48,7 +47,6 @@ public class ComputeQualityIndicators implements ExperimentComponent{
         for (int problemId = 0 ; problemId < configuration.getProblemList().size(); problemId++) {
           String problemDirectory = algorithmDirectory + "/" + configuration.getProblemList().get(problemId).getName() ;
 
-          //resetFile(problemDirectory);
           String referenceFrontDirectory = configuration.getReferenceFrontDirectory() ;
           String referenceFrontName = referenceFrontDirectory +
               "/" + configuration.getReferenceFrontFileNames().get(problemId) ;
@@ -56,13 +54,16 @@ public class ComputeQualityIndicators implements ExperimentComponent{
           Front referenceFront = new ArrayFront(referenceFrontName) ;
           Front normalizedReferenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
 
+          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+          System.out.println("Indicator file: " + qualityIndicatorFile) ;
+          resetFile(qualityIndicatorFile);
+
           indicator.setReferenceParetoFront(normalizedReferenceFront);
           for (int i = 0; i < configuration.getIndependentRuns(); i++) {
             String frontFileName;
             frontFileName = problemDirectory + "/" +
                 configuration.getOutputParetoFrontFileName() + i + ".tsv";
-            String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
-            System.out.println("Indicator file: " + qualityIndicatorFile) ;
+
             Front front = new ArrayFront(frontFileName) ;
             Front normalizedFront = new FrontNormalizer(normalizedReferenceFront).normalize(front) ;
             Double indicatorValue = (Double)indicator.evaluate(FrontUtils.convertFrontToSolutionList(normalizedFront)) ;

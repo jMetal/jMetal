@@ -46,6 +46,9 @@ public class ZDTStudy {
             .setReferenceFrontFileNames(referenceFrontFileNames)
             .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
             .setOutputParetoFrontFileName("FUN")
+            .setIndicatorList(Arrays.asList(
+                new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
+                new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
             .setOutputParetoSetFileName("VAR")
             .setIndependentRuns(2)
             .setNumberOfCores(8)
@@ -54,9 +57,7 @@ public class ZDTStudy {
     ExperimentExecution experimentExecution = new ExperimentExecution() ;
     experimentExecution
         //.add(new ExecuteAlgorithms<>(configuration))
-        .add(new ComputeQualityIndicators(configuration, Arrays.asList(
-            new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
-            new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>())))
+        .add(new ComputeQualityIndicators(configuration))
         .run();
   }
 

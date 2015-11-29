@@ -23,6 +23,7 @@ package org.uma.jmetal.util.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -45,6 +46,8 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private String outputParetoSetFileName;
   private int independentRuns;
 
+  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+
   private int numberOfCores ;
 
   public ExperimentConfigurationBuilder(String experimentName) {
@@ -52,7 +55,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
     this.referenceFrontFileNames = null ;
-    this.referenceFrontDirectory = "dfd" ;
+    this.referenceFrontDirectory = null ;
   }
 
   public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
@@ -81,6 +84,13 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public ExperimentConfigurationBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
     this.referenceFrontFileNames = referenceFrontFileNames ;
+
+    return this ;
+  }
+
+  public ExperimentConfigurationBuilder<S, Result> setIndicatorList(
+      List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ) {
+    this.indicatorList = indicatorList ;
 
     return this ;
   }
@@ -152,5 +162,9 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   public String getReferenceFrontDirectory() {
     return referenceFrontDirectory;
+  }
+
+  public List<GenericIndicator<List<? extends Solution<?>>>> getIndicatorList() {
+    return indicatorList;
   }
 }
