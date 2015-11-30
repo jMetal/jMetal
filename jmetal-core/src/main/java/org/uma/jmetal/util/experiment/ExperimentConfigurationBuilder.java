@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 17/07/14.
+ * Builder for class {@link ExperimentConfiguration}
  *
- * Class for describing the configuration of a jMetal experiment
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;

@@ -1,8 +1,3 @@
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -20,6 +15,7 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -34,7 +30,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 18/07/14.
+ * This class executes the algorithms the have been configured with a instance of class
+ * {@link ExperimentConfiguration}. For each combination algorithm + problem + runId an instance
+ * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
+ * which runs all the algorithms.
+ *
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per configuration, which are
+ * stored in the directory {@link ExperimentConfiguration #getExperimentBaseDirectory()} + algorithm + problem.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
   private ExperimentConfiguration<S, Result> configuration ;

@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class for describing the configuration of a jMetal experiment.
+ *
  * Created by Antonio J. Nebro on 17/07/14.
- * 
- * Class for describing the configuration of a jMetal experiment
  */
 public class ExperimentConfiguration<S extends Solution<?>, Result> {
 	private String experimentName;

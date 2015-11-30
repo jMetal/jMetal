@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
@@ -6,11 +19,20 @@ import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * Created by ajnebro on 29/11/15.
+ * This class computes a number of statistical values (mean, median, standard deviation, interquartile range)
+ * from the indicator files generated after executing {@link ExecuteAlgorithms} and {@link ComputeQualityIndicators}.
+ * After reading the data files and calculating the values, a Latex file is created containing an script
+ * that generates tables with the best and second best values per indicator. The name of the file is
+ * {@link ExperimentConfiguration #getExperimentName()} + tex, which is located by default in the directory
+ * {@link ExperimentConfiguration #getExperimentBaseDirectory()} + latex
+ *
+ * Although the maximum, minimum, and total number of items are also computed, no tables are generated
+ * with them (this is a pending work).
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex" ;
