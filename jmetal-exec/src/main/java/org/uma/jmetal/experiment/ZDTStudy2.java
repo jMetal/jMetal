@@ -14,9 +14,9 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
 import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -39,7 +39,7 @@ public class ZDTStudy2 {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
@@ -49,12 +49,10 @@ public class ZDTStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution experimentExecution = new ExperimentExecution() ;
-    experimentExecution
-        //.add(new ExecuteAlgorithms<>(configuration))
-        .add(new GenerateReferenceParetoFront((configuration)))
-        .add(new ComputeQualityIndicators(configuration))
-        .run();
+    new ExecuteAlgorithms<>(configuration).run();
+    new GenerateReferenceParetoFront(configuration).run();
+    new ComputeQualityIndicators<>(configuration).run() ;
+    new GenerateLatexTablesWithStatistics(configuration).run() ;
   }
 
 

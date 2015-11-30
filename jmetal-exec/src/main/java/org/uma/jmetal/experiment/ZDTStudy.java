@@ -11,15 +11,12 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
 import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
 import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.IOException;
@@ -45,22 +42,19 @@ public class ZDTStudy {
             .setProblemList(problemList)
             .setReferenceFrontDirectory("/Users/ajnebro/Softw/jMetal/jMetal/jmetal-algorithm/src/test/resources/pareto_fronts/")
             .setReferenceFrontFileNames(referenceFrontFileNames)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas3")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
             .setOutputParetoFrontFileName("FUN")
+            .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
                 new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
                 new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
-            .setOutputParetoSetFileName("VAR")
             .setIndependentRuns(2)
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution experimentExecution = new ExperimentExecution() ;
-    experimentExecution
-        //.add(new ExecuteAlgorithms<>(configuration))
-        //.add(new ComputeQualityIndicators<List<DoubleSolution>>(configuration))
-        .add(new GenerateLatexTablesWithStatistics(configuration))
-        .run();
+    new ExecuteAlgorithms<>(configuration).run();
+    new ComputeQualityIndicators<>(configuration).run() ;
+    new GenerateLatexTablesWithStatistics(configuration).run() ;
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {

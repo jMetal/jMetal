@@ -10,10 +10,9 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
 import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.IOException;
@@ -31,13 +30,17 @@ public class NSGAIIStudy  {
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
+    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf") ;
+
     ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("Experiment")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp/pruebas")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
+            .setReferenceFrontDirectory("/Users/ajnebro/Softw/jMetal/jMetal/jmetal-algorithm/src/test/resources/pareto_fronts/")
+            .setReferenceFrontFileNames(referenceFrontFileNames)
             .setIndicatorList(Arrays.asList(
                 new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
                 new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
@@ -45,12 +48,9 @@ public class NSGAIIStudy  {
             .setNumberOfCores(8)
             .build();
 
-    ExperimentExecution experimentExecution = new ExperimentExecution() ;
-    experimentExecution
-        .add(new ExecuteAlgorithms<>(configuration))
-        .add(new GenerateReferenceParetoFront((configuration)))
-        .add(new ComputeQualityIndicators(configuration))
-        .run();
+    new ExecuteAlgorithms<>(configuration).run();
+    new ComputeQualityIndicators<>(configuration).run() ;
+    new GenerateLatexTablesWithStatistics(configuration).run() ;
   }
 
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
