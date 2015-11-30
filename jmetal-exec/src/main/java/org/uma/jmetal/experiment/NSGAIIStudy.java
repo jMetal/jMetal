@@ -22,7 +22,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by ajnebro on 22/3/15.
+ * Example of experimental study based on solving the ZDT problems with four versions of NSGA-II, each
+ * of them applying a different crossover probability (from 0.7 to 1.0).
+ *
+ * This experiment assumes that the reference Pareto front are known, so the names of files containing
+ * them and the directory where they are located must be specified.
+ *
+ * Six quality indicators are used for performance assessment.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy  {
   public static void main(String[] args) throws IOException {
@@ -45,16 +53,25 @@ public class NSGAIIStudy  {
             .setIndicatorList(Arrays.asList(
                 new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
                 new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
-            .setIndependentRuns(10)
+            .setIndependentRuns(25)
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(configuration).run();
-    //new ComputeQualityIndicators<>(configuration).run() ;
-    //new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTables(configuration).run() ;
+    new ExecuteAlgorithms<>(configuration).run();
+    new ComputeQualityIndicators<>(configuration).run() ;
+    new GenerateLatexTablesWithStatistics(configuration).run() ;
+    new GenerateWilcoxonTestTables<>(configuration).run() ;
   }
 
+  /**
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
+   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}. The {@link TaggedAlgorithm}
+   * has an optional tag component, that can be set as it is shown in this example, where four variants of a
+   * same algorithm are defined.
+   *
+   * @param problemList
+   * @return
+   */
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
     for (int i = 0; i < problemList.size(); i++) {
@@ -67,7 +84,7 @@ public class NSGAIIStudy  {
     }
 
     for (int i = 0; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 10.0),
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(0.9, 20.0),
           new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
           .setMaxEvaluations(25000)
           .setPopulationSize(100)
@@ -76,12 +93,21 @@ public class NSGAIIStudy  {
     }
 
     for (int i = 0; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(1.0, 50.0),
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(0.8, 50.0),
           new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
           .setMaxEvaluations(25000)
           .setPopulationSize(100)
           .build();
       algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i)));
+    }
+
+    for (int i = 0; i < problemList.size(); i++) {
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i), new SBXCrossover(0.7, 50.0),
+          new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
+          .setMaxEvaluations(25000)
+          .setPopulationSize(100)
+          .build();
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, "NSGAIId", problemList.get(i)));
     }
 
     return algorithms ;

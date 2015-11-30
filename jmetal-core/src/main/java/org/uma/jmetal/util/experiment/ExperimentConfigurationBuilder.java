@@ -1,11 +1,3 @@
-//  ExperimentData.java 
-//
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +13,6 @@
 
 package org.uma.jmetal.util.experiment;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;

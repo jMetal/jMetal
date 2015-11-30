@@ -36,7 +36,7 @@ import java.util.List;
  * which runs all the algorithms.
  *
  * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per configuration, which are
- * stored in the directory {@link ExperimentConfiguration #getExperimentBaseDirectory()} + algorithm + problem.
+ * stored in the directory {@link ExperimentConfiguration #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

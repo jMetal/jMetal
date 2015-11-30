@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -8,7 +21,7 @@ import org.uma.jmetal.problem.Problem;
  * An {@link Algorithm} is decorated with two fiels:
  * - problem: the {@link Problem} to be optimized by the {@link Algorithm}
  * - tag: used to indicate the name of the algorithm in the experiment. By the default it is assigned the
- *        value of algorithm.getName(), but it can be set to another value if a same algorithm is configured
+ *        value of {@link Algorithm #getName()}, but it can be set to another value if a same algorithm is configured
  *        with different settings in the experiment.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

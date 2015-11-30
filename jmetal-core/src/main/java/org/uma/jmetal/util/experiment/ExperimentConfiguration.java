@@ -1,11 +1,3 @@
-//  ExperimentData.java 
-//
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -54,7 +46,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 
 	/** Constructor */
 	public ExperimentConfiguration(ExperimentConfigurationBuilder<S, Result> builder) {
-		experimentName = builder.getExperimentName() ;
+		this.experimentName = builder.getExperimentName() ;
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
     this.algorithmList = builder.getAlgorithmList() ;
     this.problemList = builder.getProblemList() ;

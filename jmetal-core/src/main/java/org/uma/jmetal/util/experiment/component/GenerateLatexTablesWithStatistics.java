@@ -26,8 +26,8 @@ import java.util.*;
  * from the indicator files generated after executing {@link ExecuteAlgorithms} and {@link ComputeQualityIndicators}.
  * After reading the data files and calculating the values, a Latex file is created containing an script
  * that generates tables with the best and second best values per indicator. The name of the file is
- * {@link ExperimentConfiguration #getExperimentName()} + tex, which is located by default in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()} + latex
+ * {@link ExperimentConfiguration #getExperimentName()}.tex, which is located by default in the directory
+ * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex
  *
  * Although the maximum, minimum, and total number of items are also computed, no tables are generated
  * with them (this is a pending work).

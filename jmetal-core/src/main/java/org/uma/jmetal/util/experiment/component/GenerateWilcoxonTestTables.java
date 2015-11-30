@@ -13,11 +13,9 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -31,7 +29,15 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by ajnebro on 30/11/15.
+ * This class computes the Wilcoxon Signed Rank Test and generates a Latex script that produces a table per
+ * quality indicator containing the pairwise comparison between all the algorithms on all the solved
+ * problems.
+ *
+ * The results are a set of Latex files that are written in the directory
+ * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex. Each file is called as
+ * indicatorName.tex
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateWilcoxonTestTables<Result> implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
