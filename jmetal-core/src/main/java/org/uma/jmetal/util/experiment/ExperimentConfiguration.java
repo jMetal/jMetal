@@ -27,6 +27,7 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,4 +121,26 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.referenceFrontFileNames = referenceFrontFileNames ;
   }
 
+  public void setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
+    this.algorithmList = algorithmList ;
+  }
+
+  /**
+   * The list of algorithms contain an algorithm instance per problem. This is not convenient for
+   * calculating later statistical data, because a same algorithm will appear many times.
+   * This method remove the duplicated algorithms and leave only an instance of each one.
+   */
+  public void removeDuplicatedAlgorithms() {
+    List<TaggedAlgorithm<Result>> algorithmList = new ArrayList<>() ;
+    List<String> algorithmTagList = new ArrayList<>() ;
+
+    for (TaggedAlgorithm<Result> algorithm : getAlgorithmList()) {
+      if (!algorithmTagList.contains(algorithm.getTag())) {
+        algorithmList.add(algorithm) ;
+        algorithmTagList.add(algorithm.getTag()) ;
+      }
+    }
+
+    setAlgorithmList(algorithmList);
+  }
 }

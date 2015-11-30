@@ -18,6 +18,7 @@ import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.ExperimentExecution;
 import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
 import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -57,7 +58,8 @@ public class ZDTStudy {
     ExperimentExecution experimentExecution = new ExperimentExecution() ;
     experimentExecution
         //.add(new ExecuteAlgorithms<>(configuration))
-        .add(new ComputeQualityIndicators(configuration))
+        //.add(new ComputeQualityIndicators<List<DoubleSolution>>(configuration))
+        .add(new GenerateLatexTablesWithStatistics(configuration))
         .run();
   }
 

@@ -29,6 +29,9 @@ import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 18/07/14.

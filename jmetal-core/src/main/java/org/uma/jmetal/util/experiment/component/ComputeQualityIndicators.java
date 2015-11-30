@@ -15,6 +15,7 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,14 +25,16 @@ import java.util.logging.Logger;
  *
  * @author Antonio J. Nebro
  */
-public class ComputeQualityIndicators implements ExperimentComponent {
+public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
-  private final ExperimentConfiguration<?, ?> configuration;
+  private final ExperimentConfiguration<?, Result> configuration;
   private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
 
   public ComputeQualityIndicators(ExperimentConfiguration experimentConfiguration) {
     this.configuration = experimentConfiguration ;
     this.indicatorList = experimentConfiguration.getIndicatorList() ;
+
+    configuration.removeDuplicatedAlgorithms();
   }
 
   @Override
@@ -111,5 +114,5 @@ public class ComputeQualityIndicators implements ExperimentComponent {
     } else {
       System.out.println("File " + file + " does NOT exist.");
     }
-  } // resetFile
+  }
 }

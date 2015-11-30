@@ -29,6 +29,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   
   public GenerateReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
     this.experimentConfiguration = experimentConfiguration ;
+    this.experimentConfiguration.removeDuplicatedAlgorithms();
   }
 
   /**
