@@ -170,7 +170,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\usepackage[table*]{xcolor}" + "\n");
     os.write("\\xdefinecolor{gray95}{gray}{0.65}" + "\n");
     os.write("\\xdefinecolor{gray25}{gray}{0.8}" + "\n");
-    os.write("\\author{}" + "\n");
+    os.write("\\author{A.J. Nebro}" + "\n");
     os.write("\\begin{document}" + "\n");
     os.write("\\maketitle" + "\n");
     os.write("\\section{Tables}" + "\n");
