@@ -70,9 +70,9 @@ public class ZDTStudy {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setReferenceFrontDirectory("/Users/ajnebro/Softw/jMetal/jMetal/jmetal-algorithm/src/test/resources/pareto_fronts/")
+            .setReferenceFrontDirectory("/pareto_fronts")
             .setReferenceFrontFileNames(referenceFrontFileNames)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
+            .setExperimentBaseDirectory("experiment")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
@@ -88,6 +88,13 @@ public class ZDTStudy {
     new GenerateWilcoxonTestTables<>(configuration).run() ;
   }
 
+  /**
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
+   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
+   *
+   * @param problemList
+   * @return
+   */
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 

@@ -65,7 +65,7 @@ public class ZDTStudy2 {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
+            .setExperimentBaseDirectory("experiment")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
@@ -82,7 +82,13 @@ public class ZDTStudy2 {
     new GenerateWilcoxonTestTables<>(configuration).run() ;
   }
 
-
+  /**
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
+   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
+   *
+   * @param problemList
+   * @return
+   */
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 

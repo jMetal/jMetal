@@ -65,10 +65,10 @@ public class NSGAIIStudy  {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/tmp")
+            .setExperimentBaseDirectory("experiment")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("/Users/ajnebro/Softw/jMetal/jMetal/jmetal-algorithm/src/test/resources/pareto_fronts/")
+            .setReferenceFrontDirectory("/pareto_fronts")
             .setReferenceFrontFileNames(referenceFrontFileNames)
             .setIndicatorList(Arrays.asList(
                 new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
@@ -77,8 +77,8 @@ public class NSGAIIStudy  {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
+    //new ExecuteAlgorithms<>(configuration).run();
+    //new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
     new GenerateWilcoxonTestTables<>(configuration).run() ;
   }

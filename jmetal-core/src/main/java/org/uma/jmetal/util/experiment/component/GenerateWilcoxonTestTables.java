@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.util.experiment.component;
 
+import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
 import org.uma.jmetal.problem.Problem;
@@ -20,8 +21,8 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.component.util.ReadDoubleDataFile;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.fileinput.util.ReadDoubleDataFile;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -100,7 +101,7 @@ public class GenerateWilcoxonTestTables<Result> implements ExperimentComponent {
 
     String caption = indicator.getName() + ". Problems: ";
     for (Problem<?> problem: configuration.getProblemList()) {
-      caption += problem.getName() ;
+      caption += problem.getName() + " " ;
     }
 
     os.write("\n");
@@ -153,6 +154,8 @@ public class GenerateWilcoxonTestTables<Result> implements ExperimentComponent {
         os.write(" & ");
       }
 
+      //DescriptiveStatistics stats = new DescriptiveStatistics() ;
+      WilcoxonSignedRankTest test = new WilcoxonSignedRankTest();
       for (int j = i + 1; j < configuration.getAlgorithmList().size(); j++) {
         for (Problem<?> problem : configuration.getProblemList()) {
           String dataFile1 = configuration.getExperimentBaseDirectory() + "/data/" +
@@ -168,20 +171,25 @@ public class GenerateWilcoxonTestTables<Result> implements ExperimentComponent {
           System.out.println(dataFile1);
           System.out.println(dataFile2);
           System.out.println();
-          double[] dataAlgorithm1 = ReadDoubleDataFile.readFile(dataFile1);
-          double[] dataAlgorithm2 = ReadDoubleDataFile.readFile(dataFile2);
-          WilcoxonSignedRankTest test = new WilcoxonSignedRankTest();
+          double[] dataAlgorithm1 = new ReadDoubleDataFile().readFile(dataFile1);
+          double[] dataAlgorithm2 = new ReadDoubleDataFile().readFile(dataFile2);
           double pvalue = test.wilcoxonSignedRankTest(dataAlgorithm1, dataAlgorithm2, true);
-          DescriptiveStatistics statsData1 = new DescriptiveStatistics();
+/*
+          double meanData1 ;
           for (double value : dataAlgorithm1) {
-            statsData1.addValue(value);
+            stats.addValue(value);
           }
-          DescriptiveStatistics statsData2 = new DescriptiveStatistics();
-          for (double value : dataAlgorithm2) {
-            statsData2.addValue(value);
+          meanData1 = stats.getPercentile(50) ;
+          stats.clear();
+
+          double meanData2 ;
+          for (double value : dataAlgorithm1) {
+            stats.addValue(value);
           }
+          meanData2 = stats.getPercentile(50) ;
+          */
           if (pvalue <= 0.05) {
-            if (statsData1.getPercentile(50.0) >= statsData2.getPercentile(50.0)) {
+            if (StatUtils.percentile(dataAlgorithm1, 50) >= StatUtils.percentile(dataAlgorithm2, 50)) {
               os.write("$\\blacktriangle$") ;
             } else {
               os.write("$\\blacktriangle$");
