@@ -25,12 +25,10 @@ import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTables;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.IOException;
@@ -72,20 +70,20 @@ public class ZDTStudy {
             .setProblemList(problemList)
             .setReferenceFrontDirectory("/pareto_fronts")
             .setReferenceFrontFileNames(referenceFrontFileNames)
-            .setExperimentBaseDirectory("experiment")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/pruebas/jmetal")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
                 new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
                 new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
-            .setIndependentRuns(2)
+            .setIndependentRuns(25)
             .setNumberOfCores(8)
             .build();
 
     new ExecuteAlgorithms<>(configuration).run();
     new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTables<>(configuration).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
   }
 
   /**
@@ -98,7 +96,20 @@ public class ZDTStudy {
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 
-      for (int i = 0; i < problemList.size(); i++) {
+    for (int i = 0 ; i < problemList.size(); i++) {
+      double mutationProbability = 1.0 / problemList.get(i).getNumberOfVariables() ;
+      double mutationDistributionIndex = 20.0 ;
+      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem)problemList.get(i),
+          new CrowdingDistanceArchive<DoubleSolution>(100))
+          .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+          .setMaxIterations(250)
+          .setSwarmSize(100)
+          .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+          .build() ;
+      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
+    }
+
+    for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 20.0),
             new PolynomialMutation(1.0 / problemList.get(i).getNumberOfVariables(), 20.0))
             .build();
@@ -108,13 +119,6 @@ public class ZDTStudy {
     for (int i = 0 ; i < problemList.size(); i++) {
       Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problemList.get(i), new SBXCrossover(1.0, 10.0),
           new PolynomialMutation(1.0/problemList.get(i).getNumberOfVariables(), 20.0))
-          .build() ;
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
-    }
-
-    for (int i = 0 ; i < problemList.size(); i++) {
-      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem)problemList.get(i),
-          new CrowdingDistanceArchive<DoubleSolution>(100))
           .build() ;
       algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problemList.get(i))) ;
     }

@@ -69,7 +69,6 @@ public class SolutionListOutput {
   }
 
   public void print()  {
-    JMetalLogger.logger.info("FILENAME: " + funFileContext.getFileName()); ;
     printObjectivesToFile(funFileContext, solutionList);
     printVariablesToFile(varFileContext, solutionList);
   }

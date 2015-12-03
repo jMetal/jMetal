@@ -28,13 +28,16 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This class computes the Wilcoxon Signed Rank Test and generates a Latex script that produces a table per
- * quality indicator containing the pairwise comparison between all the algorithms on all the solved
- * problems.
+ * This class generates a R script that computes the Wilcoxon Signed Rank Test and generates a Latex script
+ * that produces a table per quality indicator containing the pairwise comparison between all the algorithms
+ * on all the solved problems.
  *
- * The results are a set of Latex files that are written in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex. Each file is called as
- * indicatorName.tex
+ * The results are a set of R files that are written in the directory
+ * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/R. Each file is called as
+ * indicatorName.Wilcoxon.R
+ *
+ * To run the R script: Rscript indicatorName.Wilcoxon.R
+ * To generate the resulting Latex file: pdflatex indicatorName.Wilcoxon.tex
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -64,8 +67,12 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
       String latexFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".tex";
 
       printHeaderLatexCommands(rFileName, latexFileName);
-      printTable(indicator, rFileName, latexFileName);
+      printTableHeader(indicator, rFileName, latexFileName);
+      printLines(indicator, rFileName, latexFileName);
+      printTableTail(rFileName, latexFileName);
       printEndLatexCommands(rFileName, latexFileName);
+
+      printGenerateMainScript(indicator, rFileName, latexFileName) ;
     }
   }
 
@@ -92,14 +99,10 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
   private void printEndLatexCommands(String rFileName, String latexFileName) throws IOException {
     FileWriter os = new FileWriter(rFileName, true);
-    os.write("\\end{document}" + "\n");
+    String output = "latexTail <- function() { " + "\n" +
+        "  write(\"\\\\end{document}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
+    os.write(output + "\n");
     os.close();
-  }
-
-  private void printTable(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
-    printTableHeader(indicator, rFileName, latexFileName);
-    //printLines(indicator, rFileName, latexFileName);
-    printTableTail(rFileName, latexFileName);
   }
 
   private void printTableHeader(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
@@ -109,14 +112,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     for (Problem<?> problem : configuration.getProblemList()) {
       caption += problem.getName() + " ";
     }
-
-    os.write("\n");
-    os.write("\\begin{table}" + "\n");
-    os.write("\\caption{" + caption + "}" + "\n");
-    os.write("\\label{table: " + indicator.getName() + "}" + "\n");
-    os.write("\\centering" + "\n");
-    os.write("\\begin{scriptsize}" + "\n");
-    os.write("\\begin{tabular}{l");
 
     String latexTableLabel = "";
     String latexTabularAlignment = "";
@@ -130,14 +125,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     latexTableLabel = "  write(\"\\\\label{Table:\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "  write(problem, \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + "\", append=TRUE)" + "\n";
-    latexTabularAlignment = "l";
-    latexTableFirstLine = "\\\\hline ";
-
-    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
-      latexTabularAlignment += "c";
-      latexTableFirstLine += " & " + configuration.getAlgorithmList().get(i).getTag();
-    }
-    latexTableFirstLine += "\\\\\\\\ \"";
 
     // Generate function latexTableHeader()
     String output = "latexTableHeader <- function(problem, tabularString, latexTableFirstLine) {" + "\n" +
@@ -167,5 +154,199 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "  write(\"\\\\end{scriptsize}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "  write(\"\\\\end{table}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
     os.write(output + "\n");
+
+    os.close();
+  }
+
+  private void printLines(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
+    FileWriter os = new FileWriter(rFileName, true);
+
+    String output ;
+    if (indicator.getName().equals("HV")) {
+      output = "printTableLine <- function(indicator, algorithm1, algorithm2, i, j, problem) { " + "\n" +
+          "  file1<-paste(resultDirectory, algorithm1, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, problem, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, indicator, sep=\"/\")" + "\n" +
+          "  data1<-scan(file1)" + "\n" +
+          "  file2<-paste(resultDirectory, algorithm2, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, problem, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
+          "  data2<-scan(file2)" + "\n" +
+          "  if (i == j) {" + "\n" +
+          "    write(\"--\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "  else if (i < j) {" + "\n" +
+          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "      if (median(data1) >= median(data2)) {" + "\n" +
+          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "      }" + "\n" +
+          "      else {" + "\n" +
+          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "      }" + "\n" +
+          "    }" + "\n" +
+          "    else {" + "\n" +
+          "      write(\"$-$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "    }" + "\n" +
+          "  }" + "\n" +
+          "  else {" + "\n" +
+          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "}" + "\n";
+    } else {
+      output = "printTableLine <- function(indicator, algorithm1, algorithm2, i, j, problem) { " + "\n" +
+          "  file1<-paste(resultDirectory, algorithm1, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, problem, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, indicator, sep=\"/\")" + "\n" +
+          "  data1<-scan(file1)" + "\n" +
+          "  file2<-paste(resultDirectory, algorithm2, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, problem, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
+          "  data2<-scan(file2)" + "\n" +
+          "  if (i == j) {" + "\n" +
+          "    write(\"-- \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "  else if (i < j) {" + "\n" +
+          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "      if (median(data1) <= median(data2)) {" + "\n" +
+          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "      }" + "\n" +
+          "      else {" + "\n" +
+          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "      }" + "\n" +
+          "    }" + "\n" +
+          "    else {" + "\n" +
+          "      write(\"--\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "    }" + "\n" +
+          "  }" + "\n" +
+          "  else {" + "\n" +
+          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "}" + "\n";
+    }
+    os.write(output + "\n");
+    os.close();
+  }
+
+  private void printGenerateMainScript(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
+    FileWriter os = new FileWriter(rFileName, true);
+
+    // Start of the R script
+    String output = "### START OF SCRIPT ";
+    os.write(output + "\n");
+
+    String problemList = "problemList <-c(";
+    String algorithmList = "algorithmList <-c(";
+
+    for (int i = 0; i < (configuration.getProblemList().size() - 1); i++) {
+      problemList += "\"" + configuration.getProblemList().get(i).getName() + "\", ";
+    }
+    problemList += "\"" + configuration.getProblemList().get(configuration.getProblemList().size() - 1).getName() + "\") ";
+
+    for (int i = 0; i < (configuration.getAlgorithmList().size() - 1); i++) {
+      algorithmList += "\"" + configuration.getAlgorithmList().get(i).getTag() + "\", ";
+    }
+    algorithmList += "\"" + configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag() + "\") ";
+
+    String latexTabularAlignment = "l";
+    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
+      latexTabularAlignment += "c";
+    }
+
+    latexTabularAlignment = "l";
+    String latexTableFirstLine = "\\\\hline ";
+
+    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
+      latexTabularAlignment += "c";
+      latexTableFirstLine += " & " + configuration.getAlgorithmList().get(i).getTag();
+    }
+    latexTableFirstLine += "\\\\\\\\ \"";
+
+    String tabularString = "tabularString <-c(" + "\""+ latexTabularAlignment + "\""+ ") " ;
+    String tableFirstLine = "latexTableFirstLine <-c(" + "\"" + latexTableFirstLine + ") " ;
+
+    output = "# Constants" + "\n" +
+        problemList + "\n" +
+        algorithmList + "\n" +
+        tabularString + "\n" +
+        tableFirstLine + "\n" +
+        "indicator<-\"" + indicator.getName() + "\"";
+    os.write(output + "\n");
+
+    output = "\n # Step 1.  Writes the latex header" + "\n" +
+        "latexHeader()";
+    os.write(output + "\n");
+
+    // Generate full table
+    problemList = "";
+    for (Problem<?> problem : configuration.getProblemList()) {
+      problemList += problem.getName() + " ";
+    }
+    // The tabular environment and the latexTableFirstLine encodings.variable must be redefined
+    latexTabularAlignment = "| l | ";
+    latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
+    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
+      for (Problem<?> problem : configuration.getProblemList()) {
+        latexTabularAlignment += "p{0.15cm }";
+        //latexTabularAlignment += "@{}l@{}";
+        //latexTabularAlignment += "c";
+      }
+      latexTableFirstLine += " & \\\\multicolumn{" + configuration.getProblemList().size() + "}{c|}{" + configuration.getAlgorithmList().get(i).getTag()+"}";
+      latexTabularAlignment += " | " ;
+    }
+    latexTableFirstLine += " \\\\\\\\";
+
+    tabularString = "tabularString <-c(" + "\""+ latexTabularAlignment + "\""+ ") " ;
+    latexTableFirstLine = "latexTableFirstLine <-c(" + "\""+ latexTableFirstLine + "\""+ ") " ;
+
+    output = tabularString;
+    os.write(output + "\n" + "\n");
+    output = latexTableFirstLine ;
+    os.write(output + "\n" + "\n");
+
+    output = "# Step 3. Problem loop " + "\n" +
+        "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
+        "indx = 0" + "\n" +
+        "for (i in algorithmList) {" + "\n" +
+        "  if (i != \"" +  configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag()+ "\") {" + "\n" +
+        "    write(i , \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "    write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "\n" +
+        "    jndx = 0" + "\n" +
+        "    for (j in algorithmList) {" + "\n" +
+        "      for (problem in problemList) {" + "\n" +
+        "        if (jndx != 0) {" + "\n" +
+        "          if (i != j) {" + "\n" +
+        "            printTableLine(indicator, i, j, indx, jndx, problem)" + "\n" +
+        "          }" + "\n" +
+        "          else {" + "\n" +
+        "            write(\"  \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "          } " + "\n" +
+        "          if (problem == \"" + configuration.getProblemList().get(configuration.getProblemList().size()- 1).getName() + "\") {" + "\n" +
+        "            if (j == \"" + configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag() + "\") {" + "\n" +
+        "              write(\" \\\\\\\\ \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "            } " + "\n" +
+        "            else {" + "\n" +
+        "              write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "            }" + "\n" +
+        "          }" + "\n" +
+        "     else {" + "\n" +
+        "    write(\"&\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "     }" + "\n" +
+        "        }" + "\n" +
+        "      }" + "\n" +
+        "      jndx = jndx + 1" + "\n" +
+        "    }" + "\n" +
+        "    indx = indx + 1" + "\n" +
+        "  }" + "\n" +
+        "} # for algorithm" + "\n" + "\n" +
+        "  latexTableTail()" + "\n";
+
+    os.write(output + "\n");
+
+    // Generate end of file
+    output = "#Step 3. Writes the end of latex file " + "\n" +
+        "latexTail()" + "\n";
+    os.write(output + "\n");
+
+    os.close();
   }
 }

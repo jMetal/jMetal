@@ -43,7 +43,7 @@ public class InvertedGenerationalDistancePlusTest {
   @Test
   public void shouldConstructorRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation is null"));
+    exception.expectMessage(containsString("The reference pareto front is null"));
 
     Front front = null ;
 

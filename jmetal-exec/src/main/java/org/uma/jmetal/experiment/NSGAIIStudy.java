@@ -23,10 +23,7 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTables;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.IOException;
@@ -65,7 +62,7 @@ public class NSGAIIStudy  {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("experiment")
+            .setExperimentBaseDirectory("/Users/ajnebro/Softw/pruebas/jmetal")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory("/pareto_fronts")
@@ -77,10 +74,10 @@ public class NSGAIIStudy  {
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(configuration).run();
-    //new ComputeQualityIndicators<>(configuration).run() ;
+    new ExecuteAlgorithms<>(configuration).run();
+    new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTables<>(configuration).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
   }
 
   /**

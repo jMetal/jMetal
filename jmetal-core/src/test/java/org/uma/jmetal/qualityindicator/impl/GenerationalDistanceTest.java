@@ -49,7 +49,7 @@ public class GenerationalDistanceTest {
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front is null"));
+    exception.expectMessage(containsString("The reference pareto front is null"));
 
     Front front = null ;
 

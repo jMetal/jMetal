@@ -54,19 +54,23 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     prepareOutputDirectory() ;
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
-    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
-    parallelExecutor.start(this);
+
 
 
     for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
+      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
+      parallelExecutor.start(this);
+
       for (int i = 0; i < configuration.getIndependentRuns(); i++) {
         TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
         parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, configuration});
       }
+
+      parallelExecutor.parallelExecution();
+      parallelExecutor.stop();
     }
 
-    parallelExecutor.parallelExecution();
-    parallelExecutor.stop();
+
   }
 
   private void prepareOutputDirectory() {
