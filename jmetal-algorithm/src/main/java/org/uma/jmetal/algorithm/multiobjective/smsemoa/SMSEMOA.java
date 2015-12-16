@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxEvaluations;
-  protected final int populationSize;
   protected final double offset ;
 
   protected int evaluations;
@@ -55,7 +54,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       SelectionOperator<List<S>, S> selectionOperator) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations;
-    this.populationSize = populationSize;
+    setMaxPopulationSize(populationSize);
 
     this.offset = offset ;
 
@@ -67,7 +66,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override protected void initProgress() {
-    evaluations = populationSize ;
+    evaluations = getMaxPopulationSize() ;
   }
 
   @Override protected void updateProgress() {

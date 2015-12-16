@@ -33,7 +33,6 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	protected int populationSize;
 	protected int maxEvaluations;
 	protected int evaluations;
 	protected Normalizer normalizer;
@@ -57,13 +56,13 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 								List<Double> referencePoint) {
 
 		super(problem,maxIterations,crossoverOperator,mutationOperator,selectionOperator,evaluator);
-		this.populationSize			 		= populationSize ;
+		setMaxPopulationSize(populationSize);
 		this.referencePoint 				= referencePoint;
 		this.achievementScalarizingFunction =  createUtilityFunction();
 	}
 
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
-		double [][] weights = WeightVector.initUniformWeights2D(0.005, this.populationSize);
+		double [][] weights = WeightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
 		weights = WeightVector.invertWeights(weights,true);
 		ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
 
@@ -72,7 +71,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 
 	@Override
 	public int getPopulationSize() {
-		return this.populationSize;
+		return getMaxPopulationSize();
 	}
 
 	@Override

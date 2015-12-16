@@ -25,9 +25,9 @@ public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
                   SolutionListEvaluator<S> evaluator) {
     super(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator,
         null);
-    this.populationSize			 		= populationSize ;
+    setMaxPopulationSize(populationSize);
 
-    double [][] weights =  WeightVector.initUniformWeights2D(0.005, this.populationSize);
+    double [][] weights =  WeightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
 
     int halfVectorSize = weights.length  / 2;
     int evenVectorsSize    = (weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);

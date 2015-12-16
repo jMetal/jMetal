@@ -31,7 +31,6 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		return  new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());
-		//return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
 	public int getPopulationSize() {
