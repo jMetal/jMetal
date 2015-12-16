@@ -55,13 +55,6 @@ public class InvertedGenerationalDistancePlusTest {
     new InvertedGenerationalDistancePlus<>("nonExistingFile") ;
   }
 
-  /* TODO test pending of solving an issue in class ArrayFront
-  @Test (expected = JMetalException.class)
-  public void shouldConstructorRaiseAnExceptionIfFileNameIsEmpty() throws FileNotFoundException {
-    new InvertedGenerationalDistancePlus("") ;
-  }
-  */
-
   @Test
   public void shouldEvaluateRaiseAnExceptionIfTheFrontApproximationIsNull() {
     exception.expect(JMetalException.class);

@@ -70,7 +70,7 @@ public class ZDTStudy {
             .setProblemList(problemList)
             .setReferenceFrontDirectory("/pareto_fronts")
             .setReferenceFrontFileNames(referenceFrontFileNames)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/pruebas/jmetal")
+            .setExperimentBaseDirectory("experiment")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(

@@ -62,7 +62,7 @@ public class NSGAIIStudy  {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("/Users/ajnebro/Softw/pruebas/jmetal")
+            .setExperimentBaseDirectory("experiment")
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory("/pareto_fronts")
