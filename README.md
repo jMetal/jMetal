@@ -22,6 +22,7 @@ If you are interested in contributing with your ideas and comments, please take 
   * AdaptiveRandomNeighborhood
  
 * New features
+  * [Support for experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
   * Classes `PolynomialMutation` and `SBXCrossover` include setters to update their probability and distribution index values.
 
 * Bugs fixed

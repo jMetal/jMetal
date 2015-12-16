@@ -34,7 +34,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 		//return new ASFUtilityFunctionSet<>(pathWeights,this.getReferencePoint());
 	}
 	
-	public int getPopulationSize() {
+	public int getMaxPopulationSize() {
 		return this.utilityFunctions.getSize();
 	}
 
@@ -83,13 +83,13 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 			}
 			
 		});
-		int remain = this.getPopulationSize() - population.size();
+		int remain = this.getMaxPopulationSize() - population.size();
 		for (S solution : front.subList(0, remain))
 			population.add(solution);
 	}
 	
 	protected List<S> selectBest(R2Ranking<S> ranking) {
-		List<S> population = new ArrayList<>(this.getPopulationSize());
+		List<S> population = new ArrayList<>(this.getMaxPopulationSize());
 		int rankingIndex = 0;
 
 		while (populationIsNotFull(population)) {
@@ -104,7 +104,7 @@ public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 	}
 
 	private boolean subfrontFillsIntoThePopulation(R2Ranking<S> ranking, int index, List<S> population) {
-		return (population.size()+ranking.getSubfront(index).size() < this.getPopulationSize());
+		return (population.size()+ranking.getSubfront(index).size() < this.getMaxPopulationSize());
 	}
 	protected AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
 		return this.utilityFunctions;
