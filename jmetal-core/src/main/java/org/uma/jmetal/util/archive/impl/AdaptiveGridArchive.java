@@ -58,6 +58,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
    * @return true if the <code>Solution</code> has been inserted, false
    * otherwise.
    */
+  @Override
   public boolean add(S solution) {
     //Iterator of individuals over the list
     Iterator<S> iterator = getSolutionList().iterator();
