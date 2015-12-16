@@ -43,8 +43,6 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected final int populationSize;
   protected final double offset ;
 
-  protected final Problem<S> problem;
-
   protected int evaluations;
 
   private Hypervolume<?> hypervolume;
@@ -55,8 +53,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator) {
-    super() ;
-    this.problem = problem;
+    super(problem) ;
     this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
 
@@ -81,18 +78,9 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     return evaluations >= maxEvaluations ;
   }
 
-  @Override protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
   @Override protected List<S> evaluatePopulation(List<S> population) {
     for (S solution : population) {
-      problem.evaluate(solution);
+      getProblem().evaluate(solution);
     }
     return population ;
   }
@@ -212,7 +200,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
    * @return HV contributions
    */
   private double[] hvContributions(double[][] front) {
-    int numberOfObjectives = problem.getNumberOfObjectives();
+    int numberOfObjectives = getProblem().getNumberOfObjectives();
     double[] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();
@@ -231,5 +219,13 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
       frontCopy.add(i, evaluatedPoint);
     }
     return contributions;
+  }
+
+  @Override public String getName() {
+    return "SMSEMOA" ;
+  }
+
+  @Override public String getDescription() {
+    return "S metric selection EMOA" ;
   }
 }

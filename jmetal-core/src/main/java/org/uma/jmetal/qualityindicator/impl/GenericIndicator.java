@@ -1,0 +1,56 @@
+package org.uma.jmetal.qualityindicator.impl;
+
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+/**
+ * Created by ajnebro on 27/11/15.
+ */
+public abstract class GenericIndicator <Evaluate extends List<? extends Solution<?>>>
+    extends SimpleDescribedEntity
+    implements QualityIndicator<Evaluate,Double> {
+
+  protected Front referenceParetoFront = null ;
+
+  /**
+   * Default constructor
+   */
+  public GenericIndicator() {
+  }
+
+  public GenericIndicator(String referenceParetoFrontFile) throws FileNotFoundException {
+    setReferenceParetoFront(referenceParetoFrontFile);
+  }
+
+  public GenericIndicator(Front referenceParetoFront) {
+    if (referenceParetoFront == null) {
+      throw new JMetalException("The reference pareto front is null");
+    }
+
+    this.referenceParetoFront = referenceParetoFront ;
+  }
+
+  public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
+    if (referenceParetoFrontFile == null) {
+      throw new JMetalException("The reference pareto front is null");
+    }
+
+    Front front = new ArrayFront(referenceParetoFrontFile);
+    referenceParetoFront = front ;
+  }
+
+  public void setReferenceParetoFront(Front referenceFront) throws FileNotFoundException {
+    if (referenceFront == null) {
+      throw new JMetalException("The reference pareto front is null");
+    }
+
+    referenceParetoFront = referenceFront ;
+  }
+}

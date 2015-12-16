@@ -35,12 +35,15 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate> {
 
   private double pow = 2.0;
 
-  private Front referenceParetoFront ;
+  /**
+   * Default constructor
+   */
+  public InvertedGenerationalDistance() {
+  }
 
   /**
    * Constructor
@@ -49,13 +52,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) throws FileNotFoundException {
-    super("IGD", "Inverted generational distance") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    super(referenceParetoFrontFile) ;
     pow = p ;
   }
 
@@ -76,12 +73,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistance(Front referenceParetoFront) {
-    super("IGD", "Inverted generational distance") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -111,8 +103,11 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
     return sum / referenceFront.getNumberOfPoints();
   }
 
-  @Override
-  public String getName() {
-    return super.getName();
+  @Override public String getName() {
+    return "IGD" ;
+  }
+
+  @Override public String getDescription() {
+    return "Inverted generational distance quality indicator" ;
   }
 }

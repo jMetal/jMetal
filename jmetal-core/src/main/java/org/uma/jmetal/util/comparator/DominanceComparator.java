@@ -17,6 +17,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DominanceComparator<S extends Solution<?>> implements Comparator<S> {
+public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private ConstraintViolationComparator<S> constraintViolationComparator;
   private double epsilon = 0.0 ;
 

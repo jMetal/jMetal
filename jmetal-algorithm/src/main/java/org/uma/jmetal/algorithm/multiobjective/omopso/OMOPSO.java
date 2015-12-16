@@ -135,7 +135,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   }
 
   @Override
-  protected void initializeLeaders(List<DoubleSolution> swarm) {
+  protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution solution : swarm) {
       DoubleSolution particle = (DoubleSolution) solution.copy();
       if (leaderArchive.add(particle)) {
@@ -260,4 +260,13 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   protected void tearDown() {
     evaluator.shutdown();
   }
+
+  @Override public String getName() {
+    return "OMOPSO" ;
+  }
+
+  @Override public String getDescription() {
+    return "Optimized MOPSO" ;
+  }
+
 }

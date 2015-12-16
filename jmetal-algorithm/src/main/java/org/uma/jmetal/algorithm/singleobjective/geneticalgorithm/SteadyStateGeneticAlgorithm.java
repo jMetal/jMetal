@@ -31,10 +31,7 @@ import java.util.List;
 public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, S> {
   private Comparator<S> comparator;
   private int maxEvaluations;
-  private int populationSize;
   private int evaluations;
-
-  private Problem<S> problem;
 
   /**
    * Constructor
@@ -42,9 +39,9 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   public SteadyStateGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator) {
-    this.problem = problem;
+    super(problem);
+    setMaxPopulationSize(populationSize);
     this.maxEvaluations = maxEvaluations;
-    this.populationSize = populationSize;
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
@@ -55,15 +52,6 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
 
   @Override protected boolean isStoppingConditionReached() {
     return (evaluations >= maxEvaluations);
-  }
-
-  @Override protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
   }
 
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
@@ -103,7 +91,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
     for (S solution : population) {
-      problem.evaluate(solution);
+      getProblem().evaluate(solution);
     }
 
     return population;
@@ -120,5 +108,13 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
 
   @Override public void updateProgress() {
     evaluations++;
+  }
+
+  @Override public String getName() {
+    return "ssGA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Steady-State Genetic Algorithm" ;
   }
 }

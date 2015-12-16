@@ -43,7 +43,7 @@ public class InvertedGenerationalDistancePlusTest {
   @Test
   public void shouldConstructorRaiseAnExceptionIfTheParetoFrontIsNull() {
     exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The pareto front approximation is null"));
+    exception.expectMessage(containsString("The reference pareto front is null"));
 
     Front front = null ;
 
@@ -54,13 +54,6 @@ public class InvertedGenerationalDistancePlusTest {
   public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() throws FileNotFoundException {
     new InvertedGenerationalDistancePlus<>("nonExistingFile") ;
   }
-
-  /* TODO test pending of solving an issue in class ArrayFront
-  @Test (expected = JMetalException.class)
-  public void shouldConstructorRaiseAnExceptionIfFileNameIsEmpty() throws FileNotFoundException {
-    new InvertedGenerationalDistancePlus("") ;
-  }
-  */
 
   @Test
   public void shouldEvaluateRaiseAnExceptionIfTheFrontApproximationIsNull() {

@@ -89,4 +89,12 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
     return pop;
   }
+
+  @Override public String getName() {
+    return "NSGAIIM" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II. Version using measures" ;
+  }
 }

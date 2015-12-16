@@ -23,7 +23,7 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, R
   protected abstract boolean isStoppingConditionReached() ;
   protected abstract List<S> createInitialSwarm() ;
   protected abstract List<S> evaluateSwarm(List<S> swarm) ;
-  protected abstract void initializeLeaders(List<S> swarm) ;
+  protected abstract void initializeLeader(List<S> swarm) ;
   protected abstract void initializeParticlesMemory(List<S> swarm) ;
   protected abstract void initializeVelocity(List<S> swarm) ;
   protected abstract void updateVelocity(List<S> swarm) ;
@@ -41,7 +41,7 @@ public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, R
     swarm = evaluateSwarm(swarm);
     initializeVelocity(swarm);
     initializeParticlesMemory(swarm) ;
-    initializeLeaders(swarm) ;
+    initializeLeader(swarm) ;
     initProgress();
 
     while (!isStoppingConditionReached()) {

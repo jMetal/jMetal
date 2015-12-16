@@ -162,4 +162,12 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
       }
     }
   }
+
+  @Override public String getName() {
+    return "cMOEAD" ;
+  }
+
+  @Override public String getDescription() {
+    return "Multi-Objective Evolutionary Algorithm based on Decomposition with constraints support" ;
+  }
 }

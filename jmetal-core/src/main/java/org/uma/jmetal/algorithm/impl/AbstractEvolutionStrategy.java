@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -8,4 +9,17 @@ import org.uma.jmetal.solution.Solution;
  */
 public abstract class AbstractEvolutionStrategy<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
   protected MutationOperator<S> mutationOperator ;
+
+  /* Getter */
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
+  }
+
+  /**
+   * Constructor
+   * @param problem The problem to solve
+   */
+  public AbstractEvolutionStrategy(Problem<S> problem) {
+    setProblem(problem);
+  }
 }

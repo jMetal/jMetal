@@ -44,13 +44,12 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate>  {
 
-  private Front referenceParetoFront ;
-
+  /**
+   * Default constructor
+   */
   public Hypervolume() {
-    super("HV", "Hypervolume quality indicator") ;
   }
 
   /**
@@ -60,9 +59,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public Hypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
-    this() ;
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    super(referenceParetoFrontFile) ;
   }
 
   /**
@@ -72,12 +69,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public Hypervolume(Front referenceParetoFront) {
-    this() ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -91,11 +83,6 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
     }
 
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);  }
-
-  @Override
-  public String getName() {
-    return super.getName() ;
-  }
 
   /*
    returns true if 'point1' dominates 'points2' with respect to the
@@ -181,7 +168,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
      'front[0..noPoints-1]' are considered; 'front' is resorted, such that
      'front[0..n-1]' contains the remaining points; 'n' is returned */
   private int reduceNondominatedSet(double[][] front, int noPoints, int objective,
-      double threshold) {
+                                    double threshold) {
     int n;
     int i;
 
@@ -242,5 +229,13 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
         invertedFront.getNumberOfPoints(), numberOfObjectives);
+  }
+
+  @Override public String getName() {
+    return "HV" ;
+  }
+
+  @Override public String getDescription() {
+    return "Hypervolume quality indicator" ;
   }
 }

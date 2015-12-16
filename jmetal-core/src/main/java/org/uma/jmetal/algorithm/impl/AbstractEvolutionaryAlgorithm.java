@@ -1,8 +1,10 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +15,11 @@ import java.util.List;
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
   private List<S> population;
   private int maxPopulationSize ;
+  private Problem<S> problem ;
 
   public List<S> getPopulation() {
     return population;
   }
-
   public void setPopulation(List<S> population) {
     this.population = population;
   }
@@ -29,13 +31,20 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
     return maxPopulationSize ;
   }
 
+  public void setProblem(Problem<S> problem) {
+    this.problem = problem ;
+  }
+  public Problem<S> getProblem() {
+    return problem ;
+  }
+
   protected abstract void initProgress();
 
   protected abstract void updateProgress();
 
   protected abstract boolean isStoppingConditionReached();
 
-  protected abstract List<S> createInitialPopulation();
+  protected abstract  List<S> createInitialPopulation() ;
 
   protected abstract List<S> evaluatePopulation(List<S> population);
 

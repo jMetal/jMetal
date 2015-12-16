@@ -81,7 +81,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     algorithm = new GDE3Builder(problem)
         .setCrossover(crossover)
         .setSelection(selection)
-        .setMaxIterations(250)
+        .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .setSolutionSetEvaluator(evaluator)
         .build() ;

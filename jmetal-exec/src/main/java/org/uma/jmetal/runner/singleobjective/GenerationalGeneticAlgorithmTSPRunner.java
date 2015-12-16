@@ -27,7 +27,7 @@ import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
 
     long computingTime = algorithmRunner.getComputingTime() ;
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionListOutput(population)
             .setSeparator("\t")
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

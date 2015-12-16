@@ -306,4 +306,12 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
 
     solutionSet.remove(worstIndex);
   }
+
+  @Override public String getName() {
+    return "IBEA" ;
+  }
+
+  @Override public String getDescription() {
+    return "Indicator based Evolutionary Algorithm" ;
+  }
 }

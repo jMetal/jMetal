@@ -21,7 +21,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGeneticAlgorithm<S,List<S>> {
-	private final Problem<S> problem;
 	private final int maxIterations;
 
 	private int iterations = 0;
@@ -44,8 +43,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 											 CrossoverOperator<S> crossover, MutationOperator<S> mutation,
 											 SelectionOperator<List<S>,S> selection,
 											 SolutionListEvaluator<S> evaluator) {
-		super();
-		this.problem = problem;
+		super(problem);
 		this.maxIterations = maxIterations;
 
 		this.crossoverOperator 	= crossover;
@@ -76,18 +74,8 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	@Override
-	protected List<S> createInitialPopulation() {
-		List<S> population = new ArrayList<>(this.getPopulationSize());
-		for (int i = 0; i < this.getPopulationSize(); i++) {
-			S newIndividual = problem.createSolution();
-			population.add(newIndividual);
-		}
-		return population;
-	}
-
-	@Override
 	protected List<S> evaluatePopulation(List<S> population) {
-		population = evaluator.evaluate(population, problem);
+		population = evaluator.evaluate(population, getProblem());
 
 		return population;
 	}
@@ -128,7 +116,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	@Override
 	public List<S> getResult() {
-		this.setPopulation(evaluator.evaluate(this.getPopulation(), problem));
+		this.setPopulation(evaluator.evaluate(this.getPopulation(), getProblem()));
 
 		return this.getPopulation();
 	}
@@ -155,10 +143,6 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	public abstract void specificMOEAComputations();
-
-	public Problem<S> getProblem() {
-		return this.problem;
-	}
 
 	public List<Double> getReferencePoint() {
 		return this.referencePoint;

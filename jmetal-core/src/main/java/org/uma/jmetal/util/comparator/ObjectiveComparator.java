@@ -16,6 +16,7 @@ package org.uma.jmetal.util.comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S> {
+public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   public enum Ordering {ASCENDING, DESCENDING} ;
   private int objectiveId;
 

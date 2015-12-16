@@ -137,6 +137,13 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 		return result;
 	}
-	
+
+	@Override public String getName() {
+		return "MOMBI" ;
+	}
+
+	@Override public String getDescription() {
+		return "Many-Objective Metaheuristic Based on the R2 Indicator, version 2" ;
+	}
 
 }

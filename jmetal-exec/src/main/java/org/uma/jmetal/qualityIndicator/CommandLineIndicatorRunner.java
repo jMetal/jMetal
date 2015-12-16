@@ -109,9 +109,9 @@ public class CommandLineIndicatorRunner {
     if (normalize) {
       referenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
       front = new FrontNormalizer(referenceFront).normalize(front) ;
-      System.out.println("The fronts are NORMALIZED before computing the indicators") ;
+      JMetalLogger.logger.info("The fronts are NORMALIZED before computing the indicators"); ;
     } else {
-      System.out.println("The fronts are NOT NORMALIZED before computing the indicators") ;
+      JMetalLogger.logger.info("The fronts are NOT NORMALIZED before computing the indicators") ;
     }
     List<QualityIndicator<List<DoubleSolution>, Double>> indicatorList =
         getAvailableIndicators(referenceFront);
@@ -127,10 +127,10 @@ public class CommandLineIndicatorRunner {
       }
 
       SetCoverage sc = new SetCoverage() ;
-      System.out.println("SC(refPF, front): " + sc.evaluate(
+      JMetalLogger.logger.info("SC(refPF, front): " + sc.evaluate(
           FrontUtils.convertFrontToSolutionList(referenceFront),
           FrontUtils.convertFrontToSolutionList(front))) ;
-      System.out.println("SC(front, refPF): " + sc.evaluate(
+      JMetalLogger.logger.info("SC(front, refPF): " + sc.evaluate(
           FrontUtils.convertFrontToSolutionList(front),
           FrontUtils.convertFrontToSolutionList(referenceFront))) ;
     }

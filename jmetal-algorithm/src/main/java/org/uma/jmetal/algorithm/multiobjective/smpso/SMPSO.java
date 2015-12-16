@@ -31,6 +31,11 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * This class implements the SMPSO algorithm described in:
+ * SMPSO: A new PSO-based metaheuristic for multi-objective optimization
+ * MCDM 2009
+ * DOI: http://dx.doi.org/10.1109/MCDM.2009.4938830
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
@@ -152,7 +157,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return swarm;
   }
 
-  @Override protected void initializeLeaders(List<DoubleSolution> swarm) {
+  @Override protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       leaders.add(particle);
     }
@@ -295,5 +300,13 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   private double inertiaWeight(int iter, int miter, double wma, double wmin) {
     return wma;
+  }
+
+  @Override public String getName() {
+    return "SMPSO" ;
+  }
+
+  @Override public String getDescription() {
+    return "Speed contrained Multiobjective PSO" ;
   }
 }

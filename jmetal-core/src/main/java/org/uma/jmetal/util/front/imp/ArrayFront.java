@@ -101,7 +101,7 @@ public class ArrayFront implements Front {
    */
   public ArrayFront(String fileName) throws FileNotFoundException {
     this() ;
-    // TODO: investigate why not exception is raised if fileName == ""
+    // TODO: investigate why no exception is raised if fileName == ""
     InputStream inputStream = createInputStream(fileName) ;
 
     InputStreamReader isr = new InputStreamReader(inputStream);

@@ -59,4 +59,9 @@ public class  DefaultFileOutputContext implements FileOutputContext {
   public void setSeparator(String separator) {
     this.separator = separator;
   }
+
+  @Override
+  public String getFileName() {
+    return fileName ;
+  }
 }
