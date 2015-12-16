@@ -62,13 +62,14 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "";//"jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt1.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     
     referencePoint = new ArrayList<>();
+    referencePoint.add(0.0);
     referencePoint.add(0.0);
     referencePoint.add(0.0);
 
@@ -84,8 +85,6 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
 
     algorithm = new GAWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>()) ;
 
-    //algorithm = new GAWASFGA<DoubleSolution>(problem,100,250,crossover,mutation,selection, new SequentialSolutionListEvaluator<DoubleSolution>());
-    
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 

@@ -29,52 +29,47 @@ import java.util.List;
  *         DOI = {10.1007/s10898-014-0214-y}
  */
 public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
-  /**
-	 * 
+	/**
+	 *
 	 */
-  private static final long serialVersionUID = 1L;
-  protected int populationSize;
-  protected int maxEvaluations;
-  protected int evaluations;
-  protected Normalizer normalizer;
-  
-  
-  //AchievementScalarizingFunction<S> achievementScalarizingFunction ;
-  final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
-  List<Double> referencePoint = null;
-  
+	private static final long serialVersionUID = 1L;
+	protected int populationSize;
+	protected int maxEvaluations;
+	protected int evaluations;
+	protected Normalizer normalizer;
+	
+	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+	List<Double> referencePoint = null;
 
-  /**
-   * Constructor
-   *
-   * @param problem
-   *            Problem to solve
-   */
-  public WASFGA(Problem<S> problem, 
-		  int populationSize, 
-		  int maxIterations, 
-		  CrossoverOperator<S> crossoverOperator, 
-		  MutationOperator<S> mutationOperator, 
-		  SelectionOperator<List<S>, S> selectionOperator, 
-		  SolutionListEvaluator<S> evaluator,		  
-		  List<Double> referencePoint) {
-	  
-    super(problem,maxIterations,crossoverOperator,mutationOperator,selectionOperator,evaluator);
-    this.populationSize			 		= populationSize ;
-    this.referencePoint 				= referencePoint;
-    this.achievementScalarizingFunction =  createUtilityFunction(); 
-  }
-   
-  public AbstractUtilityFunctionsSet<S> createUtilityFunction() {	  
-	  	double [][] weights = WeightVector.initUniformWeights2D(0.005, this.populationSize);
-	  	weights = WeightVector.invertWeights(weights,true);	    				
+	/**
+	 * Constructor
+	 *
+	 * @param problem
+	 *            Problem to solve
+	 */
+	public WASFGA(Problem<S> problem,
+								int populationSize,
+								int maxIterations,
+								CrossoverOperator<S> crossoverOperator,
+								MutationOperator<S> mutationOperator,
+								SelectionOperator<List<S>, S> selectionOperator,
+								SolutionListEvaluator<S> evaluator,
+								List<Double> referencePoint) {
+
+		super(problem,maxIterations,crossoverOperator,mutationOperator,selectionOperator,evaluator);
+		this.populationSize			 		= populationSize ;
+		this.referencePoint 				= referencePoint;
+		this.achievementScalarizingFunction =  createUtilityFunction();
+	}
+
+	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
+		double [][] weights = WeightVector.initUniformWeights2D(0.005, this.populationSize);
+		weights = WeightVector.invertWeights(weights,true);
 		ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
-		//aux.setNadir(this.getNadirPoint());
-		//aux.setUtopia(this.getUtopiaPoint());
-	  	//ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(weights,this.referencePoint);
+
 		return aux;
-  }
-    
+	}
+
 	@Override
 	public int getPopulationSize() {
 		return this.populationSize;
@@ -97,18 +92,18 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	
 	protected Ranking<S> computeRanking(List<S> solutionList) {
 		Ranking<S> ranking = new WASFGARanking<>(this.achievementScalarizingFunction);
-		ranking.computeRanking(solutionList);		
+		ranking.computeRanking(solutionList);
 		return ranking;
 	}
 	
 	protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
-		population.addAll(ranking.getSubfront(index));		
+		population.addAll(ranking.getSubfront(index));
 	}
 	
 	protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking,int index, List<S>population) {
 		List<S> front 	= ranking.getSubfront(index);
 		int remain 		= this.getPopulationSize() - population.size();
-		population.addAll(front.subList(0, remain));		
+		population.addAll(front.subList(0, remain));
 	}
 	
 	protected List<S> selectBest(Ranking<S> ranking) {
@@ -133,11 +128,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		return this.achievementScalarizingFunction;
 	}
 	
-	  @Override public List<S> getResult() {
-	    return getNonDominatedSolutions(getPopulation());
-	  }
-	  protected List<S> getNonDominatedSolutions(List<S> solutionList) {
-		    return SolutionListUtils.getNondominatedSolutions(solutionList);
-		  }
-  
+	@Override public List<S> getResult() {
+		return getNonDominatedSolutions(getPopulation());
+	}
+	protected List<S> getNonDominatedSolutions(List<S> solutionList) {
+		return SolutionListUtils.getNondominatedSolutions(solutionList);
+	}
+
 }
