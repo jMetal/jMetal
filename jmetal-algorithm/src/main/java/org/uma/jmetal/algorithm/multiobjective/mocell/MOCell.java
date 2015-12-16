@@ -27,7 +27,6 @@ import java.util.*;
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
-  protected int populationSize;
   protected int archiveSize;
   protected final SolutionListEvaluator<S> evaluator;
 
@@ -36,7 +35,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   private List<S> currentNeighbors;
 
   private CrowdingDistanceArchive<S> archive;
-  protected final Problem<S> problem;
 
   private Comparator<S> dominanceComparator;
   private LocationAttribute<S> location;
@@ -57,10 +55,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       Neighborhood<S> neighborhood,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super();
-    this.problem = problem;
+    super(problem);
     this.maxEvaluations = maxEvaluations;
-    this.populationSize = populationSize;
+    setMaxPopulationSize(populationSize);
     this.archiveSize = archiveSize ;
     this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
@@ -82,7 +79,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected void updateProgress() {
     evaluations++;
-    currentIndividual=(currentIndividual+1)%populationSize;
+    currentIndividual=(currentIndividual+1)%getMaxPopulationSize();
   }
 
   @Override
@@ -92,9 +89,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
+    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i++) {
+      S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     location = new LocationAttribute<>(population);
@@ -103,7 +100,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem);
+    population = evaluator.evaluate(population, getProblem());
     for (S solution : population) {
       archive.add((S)solution.copy()) ;
     }
@@ -188,5 +185,13 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       population.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
       archive.add(offspringPopulation.get(0));
     }
+  }
+
+  @Override public String getName() {
+    return "MOCell" ;
+  }
+
+  @Override public String getDescription() {
+    return "Multi-Objective Cellular evolutionry algorithm" ;
   }
 }

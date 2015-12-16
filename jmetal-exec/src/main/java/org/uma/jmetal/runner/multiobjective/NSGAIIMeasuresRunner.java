@@ -88,12 +88,12 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int maxIterations = 250 ;
+    int maxEvaluations = 25000 ;
     int populationSize = 100 ;
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(maxIterations)
+        .setMaxEvaluations(maxEvaluations)
         .setPopulationSize(populationSize)
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
@@ -101,8 +101,8 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     /* Measure management */
     MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
 
-    CountingMeasure iteration =
-        (CountingMeasure) measureManager.<Long>getPullMeasure("currentIteration");
+    CountingMeasure currentEvalution =
+        (CountingMeasure) measureManager.<Long>getPullMeasure("currentEvaluation");
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
     BasicMeasure<Integer> nonDominatedSolutions =
@@ -111,7 +111,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     BasicMeasure<List<DoubleSolution>> solutionListMeasure =
         (BasicMeasure<List<DoubleSolution>>) measureManager.<List<DoubleSolution>> getPushMeasure("currentPopulation");
     CountingMeasure iteration2 =
-        (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
+        (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
     solutionListMeasure.register(new Listener());
     iteration2.register(new Listener2());
@@ -122,9 +122,9 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
 
     /* Using the measures */
     int i = 0 ;
-    while(iteration.get() < maxIterations) {
+    while(currentEvalution.get() < maxEvaluations) {
       TimeUnit.SECONDS.sleep(5);
-      System.out.println("Iteration (" + i + ")                       : " + iteration.get()) ;
+      System.out.println("Evaluations (" + i + ")                     : " + currentEvalution.get()) ;
       System.out.println("Computing time (" + i + ")                  : " + currentComputingTime.get()) ;
       System.out.println("Number of Nondominated solutions (" + i + "): " + nonDominatedSolutions.get()) ;
       i++ ;

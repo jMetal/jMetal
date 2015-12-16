@@ -19,18 +19,13 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @param <S>
  */
-
+@SuppressWarnings("serial")
 public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGeneticAlgorithm<S,List<S>> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final Problem<S> problem;
 	private final int maxIterations;
 
 	private int iterations = 0;
 	private final SolutionListEvaluator<S> evaluator;
-	private final List<Double> utopiaPoint;
+	private final List<Double> referencePoint;
 	private final List<Double> nadirPoint;
 
 	/**
@@ -48,8 +43,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 											 CrossoverOperator<S> crossover, MutationOperator<S> mutation,
 											 SelectionOperator<List<S>,S> selection,
 											 SolutionListEvaluator<S> evaluator) {
-		super();
-		this.problem = problem;
+		super(problem);
 		this.maxIterations = maxIterations;
 
 		this.crossoverOperator 	= crossover;
@@ -60,8 +54,8 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 		this.nadirPoint     = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
 		this.initializeNadirPoint(this.getProblem().getNumberOfObjectives());
-		this.utopiaPoint = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
-		this.initializeUtopiaPoint(this.getProblem().getNumberOfObjectives());
+		this.referencePoint = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
+		this.initializeReferencePoint(this.getProblem().getNumberOfObjectives());
 	}
 
 	@Override
@@ -80,18 +74,8 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	@Override
-	protected List<S> createInitialPopulation() {
-		List<S> population = new ArrayList<>(this.getPopulationSize());
-		for (int i = 0; i < this.getPopulationSize(); i++) {
-			S newIndividual = problem.createSolution();
-			population.add(newIndividual);
-		}
-		return population;
-	}
-
-	@Override
 	protected List<S> evaluatePopulation(List<S> population) {
-		population = evaluator.evaluate(population, problem);
+		population = evaluator.evaluate(population, getProblem());
 
 		return population;
 	}
@@ -132,7 +116,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	@Override
 	public List<S> getResult() {
-		this.setPopulation(evaluator.evaluate(this.getPopulation(), problem));
+		this.setPopulation(evaluator.evaluate(this.getPopulation(), getProblem()));
 
 		return this.getPopulation();
 	}
@@ -151,41 +135,36 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 			matingPopulation = selection(this.getPopulation());
 			offspringPopulation = reproduction(matingPopulation);
 			offspringPopulation = evaluatePopulation(offspringPopulation);
-			// specific GA needed computations
-			this.specificMOEAComputations();
 			this.setPopulation(replacement(this.getPopulation(), offspringPopulation));
 			updateProgress();
-			
+			// specific GA needed computations
+			this.specificMOEAComputations();
 		}
 	}
 
 	public abstract void specificMOEAComputations();
 
-	public Problem<S> getProblem() {
-		return this.problem;
-	}
-
-	public List<Double> getUtopiaPoint() {
-		return this.utopiaPoint;
+	public List<Double> getReferencePoint() {
+		return this.referencePoint;
 	}
 
 	public List<Double> getNadirPoint() {
 		return this.nadirPoint;
 	}
 
-	private void initializeUtopiaPoint(int size) {
+	private void initializeReferencePoint(int size) {
 		for (int i = 0; i < size; i++)
-			this.getUtopiaPoint().add(Double.POSITIVE_INFINITY);
+			this.getReferencePoint().add(Double.POSITIVE_INFINITY);
 	}
 
 	private void initializeNadirPoint(int size) {
-    for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++)
 			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
 	}
 
-	protected void updateUtopiaPoint(S s) {
-		for (int i = 0; i < s.getNumberOfObjectives(); i++) 
-			this.getUtopiaPoint().set(i, Math.min(this.getUtopiaPoint().get(i),s.getObjective(i)));			
+	protected void updateReferencePoint(S s) {
+		for (int i = 0; i < s.getNumberOfObjectives(); i++)
+			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.getObjective(i)));
 	}
 
 	private void updateNadirPoint(S s) {
@@ -193,9 +172,9 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.getObjective(i)));
 	}
 
-	public void updateUtopiaPoint(List<S> population) {
+	public void updateReferencePoint(List<S> population) {
 		for (S solution : population)
-			this.updateUtopiaPoint(solution);
+			this.updateReferencePoint(solution);
 	}
 
 	public void updateNadirPoint(List<S> population) {
@@ -209,11 +188,11 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 		return population.size() < getPopulationSize();
 	}
 
-	protected void setUtopiaPointValue(Double value, int index) {
-		if ((index < 0) || (index >= this.utopiaPoint.size())) {
+	protected void setReferencePointValue(Double value, int index) {
+		if ((index < 0) || (index >= this.referencePoint.size())) {
 			throw new IndexOutOfBoundsException();
 		}
 
-		this.utopiaPoint.set(index, value);
+		this.referencePoint.set(index, value);
 	}
 }

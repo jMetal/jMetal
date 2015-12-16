@@ -26,4 +26,9 @@ import java.util.List;
  * @param <S> The class of the solutions
  */
 public interface CrossoverOperator<S extends Solution<?>> extends Operator<List<S>,List<S>> {
+
+  /**
+   * @return The number of parents required to apply the operator.
+   */
+  public int getNumberOfParents() ;
 }

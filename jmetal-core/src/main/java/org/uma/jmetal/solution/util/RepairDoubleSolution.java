@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.solution.util;
 
+import java.io.Serializable;
+
 /**
  * @author Antonio J. Nebro
  * @version 1.0
@@ -20,7 +22,7 @@ package org.uma.jmetal.solution.util;
  * Interface representing classes that check whether a value is between a lower and an upper bound.
  * If not, a value between those limits is returned
  */
-public interface RepairDoubleSolution {
+public interface RepairDoubleSolution extends Serializable {
   /**
    * Checks if a given value is between its bounds and repairs it otherwise
    * @param value The value to be checked

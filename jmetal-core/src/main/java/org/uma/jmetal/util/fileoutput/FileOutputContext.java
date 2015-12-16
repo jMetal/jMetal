@@ -25,4 +25,5 @@ public interface FileOutputContext extends Serializable {
   public BufferedWriter getFileWriter() ;
   public String getSeparator() ;
   public void setSeparator(String separator) ;
+  public String getFileName() ;
 }

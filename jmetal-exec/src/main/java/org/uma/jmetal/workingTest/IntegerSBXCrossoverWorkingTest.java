@@ -6,7 +6,7 @@ import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.*;
@@ -62,7 +62,7 @@ public class IntegerSBXCrossoverWorkingTest {
 
     Collections.sort(population, new VariableComparator()) ;
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsSBX"))
         .print();

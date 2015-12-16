@@ -35,12 +35,26 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate> {
 
-  private static final double POW = 2.0;
+  private double pow = 2.0;
 
-  private Front referenceParetoFront ;
+  /**
+   * Default constructor
+   */
+  public InvertedGenerationalDistance() {
+  }
+
+  /**
+   * Constructor
+   *
+   * @param referenceParetoFrontFile
+   * @throws FileNotFoundException
+   */
+  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) throws FileNotFoundException {
+    super(referenceParetoFrontFile) ;
+    pow = p ;
+  }
 
   /**
    * Constructor
@@ -49,13 +63,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistance(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("IGD", "Inverted generational distance") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    this(referenceParetoFrontFile, 2.0) ;
   }
 
   /**
@@ -65,12 +73,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @throws FileNotFoundException
    */
   public InvertedGenerationalDistance(Front referenceParetoFront) {
-    super("IGD", "Inverted generational distance") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -92,16 +95,19 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
     double sum = 0.0;
     for (int i = 0 ; i < referenceFront.getNumberOfPoints(); i++) {
       sum += Math.pow(FrontUtils.distanceToClosestPoint(referenceFront.getPoint(i),
-          front), POW);
+          front), pow);
     }
 
-    sum = Math.pow(sum, 1.0 / POW);
+    sum = Math.pow(sum, 1.0 / pow);
 
     return sum / referenceFront.getNumberOfPoints();
   }
 
-  @Override
-  public String getName() {
-    return super.getName();
+  @Override public String getName() {
+    return "IGD" ;
+  }
+
+  @Override public String getDescription() {
+    return "Inverted generational distance quality indicator" ;
   }
 }

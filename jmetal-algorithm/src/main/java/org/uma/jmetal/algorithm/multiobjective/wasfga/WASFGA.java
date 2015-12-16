@@ -78,7 +78,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	@Override
 	public void specificMOEAComputations() {
 		updateNadirPoint(this.getPopulation());
-		updateUtopiaPoint(this.getPopulation());
+		updateReferencePoint(this.getPopulation());
 	}
 
 	@Override
@@ -135,4 +135,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		return SolutionListUtils.getNondominatedSolutions(solutionList);
 	}
 
+	@Override public String getName() {
+		return "WASFGA" ;
+	}
+
+	@Override public String getDescription() {
+		return "Weighting Achievement Scalarizing Function Genetic Algorithm" ;
+	}
 }

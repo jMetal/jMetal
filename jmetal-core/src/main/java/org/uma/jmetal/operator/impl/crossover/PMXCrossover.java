@@ -133,4 +133,12 @@ public class PMXCrossover implements
 
     return offspring;
   }
+
+  /**
+   * Two parents are required to apply this operator.
+   * @return
+   */
+  public int getNumberOfParents() {
+    return 2 ;
+  }
 }

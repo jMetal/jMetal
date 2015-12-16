@@ -4,7 +4,7 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -27,7 +27,7 @@ public abstract class AbstractAlgorithmRunner {
    */
   public static void printFinalSolutionSet(List<? extends Solution<?>> population) {
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

@@ -17,12 +17,17 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**
    * Constructor
    */
-  public SteadyStateNSGAII(Problem<S> problem, int maxIterations, int populationSize,
+  public SteadyStateNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
+    super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator,
         selectionOperator, evaluator);
   }
+
+  @Override protected void updateProgress() {
+    evaluations ++ ;
+  }
+
 
   @Override protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(2);
@@ -46,5 +51,13 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
     offspringPopulation.add(offspring.get(0));
     return offspringPopulation;
+  }
+
+  @Override public String getName() {
+    return "ssNSGAII" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II. Steady-state version" ;
   }
 }

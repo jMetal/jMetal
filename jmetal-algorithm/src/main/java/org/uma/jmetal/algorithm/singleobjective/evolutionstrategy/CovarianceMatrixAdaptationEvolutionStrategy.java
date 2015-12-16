@@ -40,8 +40,6 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   private int maxEvaluations ;
   private double[] typicalX;
 
-  private DoubleProblem problem;
-
   /**
    * CMA-ES state variables
    */
@@ -113,7 +111,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   /** Constructor */
   private CovarianceMatrixAdaptationEvolutionStrategy (Builder builder) {
-    this.problem = builder.problem ;
+    super(builder.problem) ;
     this.lambda = builder.lambda ;
     this.maxEvaluations = builder.maxEvaluations ;
     this.typicalX = builder.typicalX;
@@ -198,7 +196,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   @Override protected List<DoubleSolution> createInitialPopulation() {
     List<DoubleSolution> population = new ArrayList<>(lambda);
     for (int i = 0; i < lambda; i++) {
-      DoubleSolution newIndividual = problem.createSolution();
+      DoubleSolution newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     return population;
@@ -206,7 +204,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     for (DoubleSolution solution : population) {
-      problem.evaluate(solution);
+      getProblem().evaluate(solution);
     }
     return population;
   }
@@ -238,7 +236,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   private void initializeInternalParameters() {
 
     // number of objective variables/problem dimension
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     // objective variables initial point
     // TODO: Initialize the mean in a better way
@@ -341,7 +339,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateInternalParameters() {
 
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     double[] oldDistributionMean = new double[numberOfVariables];
     System.arraycopy( distributionMean, 0, oldDistributionMean, 0, numberOfVariables );
@@ -371,7 +369,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void updateDistributionMean() {
 
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     for (int i = 0; i < numberOfVariables; i++) {
       distributionMean[i] = 0.;
@@ -385,7 +383,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private int updateEvolutionPaths(double[] oldDistributionMean) {
 
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     double[] artmp = new double[numberOfVariables];
     for (int i = 0; i < numberOfVariables; i++) {
@@ -423,7 +421,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private void adaptCovarianceMatrix(double[] oldDistributionMean, int hsig) {
 
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     for (int i = 0; i < numberOfVariables; i++) {
       for (int j = 0; j <= i; j++) {
@@ -450,8 +448,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void decomposeCovarianceMatrix() {
-
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     if (evaluations - eigenEval > lambda / (c1 + cmu) / numberOfVariables / 10) {
 
@@ -494,8 +491,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void checkEigenCorrectness() {
-
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
 
     if (CMAESUtils.checkEigenSystem(numberOfVariables, c, diagD, b) > 0) {
       evaluations = maxEvaluations;
@@ -515,9 +511,9 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private DoubleSolution sampleSolution() {
 
-    DoubleSolution solution = problem.createSolution();
+    DoubleSolution solution = getProblem().createSolution();
 
-    int numberOfVariables = problem.getNumberOfVariables();
+    int numberOfVariables = getProblem().getNumberOfVariables();
     double[] artmp = new double[numberOfVariables];
     double sum;
 
@@ -532,10 +528,10 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
 
       double value = distributionMean[i] + sigma * sum;
-      if (value > problem.getUpperBound(i)) {
-        value = problem.getUpperBound(i);
-      } else if (value < problem.getLowerBound(i)) {
-        value = problem.getLowerBound(i);
+      if (value > ((DoubleProblem)getProblem()).getUpperBound(i)) {
+        value = ((DoubleProblem)getProblem()).getUpperBound(i);
+      } else if (value < ((DoubleProblem)getProblem()).getLowerBound(i)) {
+        value = ((DoubleProblem)getProblem()).getLowerBound(i);
       }
 
       solution.setVariableValue(i, value);
@@ -549,6 +545,14 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
         .getObjective(0))) {
       bestSolutionEver = getPopulation().get(0);
     }
+  }
+
+  @Override public String getName() {
+    return "CMAES" ;
+  }
+
+  @Override public String getDescription() {
+    return "Covariance Matrix Adaptation Evolution Strategy" ;
   }
 
 }

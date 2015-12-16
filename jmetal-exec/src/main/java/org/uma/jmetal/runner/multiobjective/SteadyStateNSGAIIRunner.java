@@ -87,7 +87,7 @@ public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(25000)
+        .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
         .build() ;

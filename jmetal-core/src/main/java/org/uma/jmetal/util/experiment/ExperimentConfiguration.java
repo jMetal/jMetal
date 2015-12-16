@@ -1,11 +1,3 @@
-//  ExperimentData.java 
-//
-//  Authors:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -23,18 +15,21 @@ package org.uma.jmetal.util.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class for describing the configuration of a jMetal experiment.
+ *
  * Created by Antonio J. Nebro on 17/07/14.
- * 
- * Class for describing the configuration of a jMetal experiment
  */
-public class ExperimentConfiguration<S extends Solution<?>> {
+public class ExperimentConfiguration<S extends Solution<?>, Result> {
 	private String experimentName;
-	private List<Algorithm<?>> algorithmList;
+	private List<TaggedAlgorithm<Result>> algorithmList;
 	private List<Problem<S>> problemList;
 	private String experimentBaseDirectory;
 
@@ -42,15 +37,26 @@ public class ExperimentConfiguration<S extends Solution<?>> {
 	private String outputParetoSetFileName;
 	private int independentRuns;
 
+  private List<String> referenceFrontFileNames ;
+  private String referenceFrontDirectory;
+
+  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+
+  private int numberOfCores ;
+
 	/** Constructor */
-	public ExperimentConfiguration(ExperimentConfigurationBuilder<S> builder) {
-		experimentName = builder.getExperimentName() ;
+	public ExperimentConfiguration(ExperimentConfigurationBuilder<S, Result> builder) {
+		this.experimentName = builder.getExperimentName() ;
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
     this.algorithmList = builder.getAlgorithmList() ;
     this.problemList = builder.getProblemList() ;
     this.independentRuns = builder.getIndependentRuns() ;
     this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName() ;
     this.outputParetoSetFileName = builder.getOutputParetoSetFileName() ;
+    this.numberOfCores = builder.getNumberOfCores() ;
+    this.referenceFrontDirectory = builder.getReferenceFrontDirectory() ;
+    this.referenceFrontFileNames = builder.getReferenceFrontFileNames() ;
+    this.indicatorList = builder.getIndicatorList() ;
   }
 
   /* Getters */
@@ -58,7 +64,7 @@ public class ExperimentConfiguration<S extends Solution<?>> {
     return experimentName;
   }
 
-  public List<Algorithm<?>> getAlgorithmList() {
+  public List<TaggedAlgorithm<Result>> getAlgorithmList() {
     return algorithmList;
   }
 
@@ -80,5 +86,53 @@ public class ExperimentConfiguration<S extends Solution<?>> {
 
   public int getIndependentRuns() {
     return independentRuns;
+  }
+
+  public int getNumberOfCores() {
+    return numberOfCores ;
+  }
+
+  public List<String> getReferenceFrontFileNames() {
+    return referenceFrontFileNames;
+  }
+
+  public String getReferenceFrontDirectory() {
+    return referenceFrontDirectory;
+  }
+
+  public List<GenericIndicator<List<? extends Solution<?>>>> getIndicatorList() {
+    return indicatorList;
+  }
+
+  /* Setters */
+  public void setReferenceFrontDirectory(String referenceFrontDirectory) {
+    this.referenceFrontDirectory = referenceFrontDirectory ;
+  }
+
+  public void setReferenceFrontFileNmes(List<String> referenceFrontFileNames) {
+    this.referenceFrontFileNames = referenceFrontFileNames ;
+  }
+
+  public void setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
+    this.algorithmList = algorithmList ;
+  }
+
+  /**
+   * The list of algorithms contain an algorithm instance per problem. This is not convenient for
+   * calculating later statistical data, because a same algorithm will appear many times.
+   * This method remove the duplicated algorithms and leave only an instance of each one.
+   */
+  public void removeDuplicatedAlgorithms() {
+    List<TaggedAlgorithm<Result>> algorithmList = new ArrayList<>() ;
+    List<String> algorithmTagList = new ArrayList<>() ;
+
+    for (TaggedAlgorithm<Result> algorithm : getAlgorithmList()) {
+      if (!algorithmTagList.contains(algorithm.getTag())) {
+        algorithmList.add(algorithm) ;
+        algorithmTagList.add(algorithm.getTag()) ;
+      }
+    }
+
+    setAlgorithmList(algorithmList);
   }
 }

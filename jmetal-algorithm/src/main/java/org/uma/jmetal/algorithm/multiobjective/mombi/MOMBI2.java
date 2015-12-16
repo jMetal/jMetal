@@ -69,7 +69,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		System.out.println("MOMBI 2");
 		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
 		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
-		this.normalizer = new Normalizer(this.getUtopiaPoint(), maxs);
+		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
 		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
 		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
 		aux.setNormalizer(this.normalizer);
@@ -79,7 +79,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	// ToDo: refactor this method (first implementation just try to mimic c implementation)
 	@Override
-	public void updateUtopiaPoint(List<S> population) {
+	public void updateReferencePoint(List<S> population) {
 		List<Double> iterationMaxs = new ArrayList<>(maxs.size());
 		
 		for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {		
@@ -87,7 +87,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		}
 		
 		for (S solution : population) {
-			updateUtopiaPoint(solution);
+			updateReferencePoint(solution);
 			for (int i = 0; i < solution.getNumberOfObjectives(); i++) {				
 				iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.getObjective(i)));				
 			}
@@ -106,7 +106,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 				this.maxs.set(i, maxInNadir);						
 		} else {						
 			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++) {
-				if (Math.abs(maxs.get(i) - this.getUtopiaPoint().get(i)) < this.epsilon) {
+				if (Math.abs(maxs.get(i) - this.getReferencePoint().get(i)) < this.epsilon) {
 					Double maxInMaxs = this.getMax(this.maxs);
 					this.maxs.set(i,maxInMaxs);
 					history.mark(i);
@@ -137,6 +137,13 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		
 		return result;
 	}
-	
+
+	@Override public String getName() {
+		return "MOMBI" ;
+	}
+
+	@Override public String getDescription() {
+		return "Many-Objective Metaheuristic Based on the R2 Indicator, version 2" ;
+	}
 
 }

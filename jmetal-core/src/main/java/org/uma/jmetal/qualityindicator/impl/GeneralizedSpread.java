@@ -48,10 +48,13 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    extends GenericIndicator<Evaluate> {
 
-  private Front referenceParetoFront ;
+  /**
+   * Default constructor
+   */
+  public GeneralizedSpread() {
+  }
 
   /**
    * Constructor
@@ -60,13 +63,7 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public GeneralizedSpread(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("GSPREAD", "Generalized SPREAD quality indicator") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    super(referenceParetoFrontFile) ;
   }
 
   /**
@@ -76,12 +73,7 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
    * @throws FileNotFoundException
    */
   public GeneralizedSpread(Front referenceParetoFront) {
-    super("GSPREAD", "Generalized SPREAD quality indicator") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("The pareto front is null");
-    }
-
-    this.referenceParetoFront = referenceParetoFront ;
+    super(referenceParetoFront) ;
   }
 
   /**
@@ -143,13 +135,16 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
             dmean);
       }
 
-      return (dExtrems + mean) / (dExtrems + (numberOfPoints*dmean));      
+      return (dExtrems + mean) / (dExtrems + (numberOfPoints*dmean));
     }
   }
 
+  @Override public String getName() {
+    return "GSPREAD" ;
+  }
 
-  @Override
-  public String getName() {
-    return super.getName();
+  @Override public String getDescription() {
+    return "Generalized Spread quality indicator" ;
   }
 }
+

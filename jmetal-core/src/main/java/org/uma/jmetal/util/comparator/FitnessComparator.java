@@ -16,6 +16,7 @@ package org.uma.jmetal.util.comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class FitnessComparator<S extends Solution<?>> implements Comparator<S> {
+public class FitnessComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private Fitness<S> solutionFitness = new Fitness<S>() ;
 
   /**

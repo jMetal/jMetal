@@ -306,7 +306,6 @@ public class FrontUtils {
     }
 
     @Override public void evaluate(DoubleSolution solution) {
-
     }
   }
 

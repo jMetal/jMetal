@@ -149,7 +149,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   }
 
   @Override
-  public void initializeLeaders(List<DoubleSolution> swarm) {
+  public void initializeLeader(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       neighborhoodBest[i] = getNeighborBest(i);
     }
@@ -286,5 +286,13 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
   public DoubleSolution[] getLocalBest() {
     return localBest ;
+  }
+
+  @Override public String getName() {
+    return "SPSO07" ;
+  }
+
+  @Override public String getDescription() {
+    return "Standard PSO 2007" ;
   }
 }

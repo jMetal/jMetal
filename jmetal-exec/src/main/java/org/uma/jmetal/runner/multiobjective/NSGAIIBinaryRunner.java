@@ -86,7 +86,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
 
     algorithm = new NSGAIIBuilder<BinarySolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .build() ;
 

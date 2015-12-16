@@ -27,27 +27,18 @@ import java.util.Vector;
 public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int iterations ;
   protected int maxIterations ;
-  protected int populationSize ;
-
-  protected Problem<S> problem ;
 
   protected SolutionListEvaluator<S> evaluator ;
 
   private Vector<Integer> numberOfDivisions  ;
   private List<ReferencePoint<S>> referencePoints = new Vector<>() ;
-  
-  public NSGAIIIBuilder<S> Builder;
-  
 
-  /** Constructor */
-  public NSGAIII() {
-  }
+  public NSGAIIIBuilder<S> Builder;
 
   /** Constructor */
   NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
-    problem = builder.problem ;
+    super(builder.problem) ;
     maxIterations = builder.maxIterations ;
-    
 
     crossoverOperator =  builder.crossoverOperator ;
     mutationOperator  =  builder.mutationOperator ;
@@ -59,15 +50,16 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     numberOfDivisions = new Vector<>(1) ;
     numberOfDivisions.add(12) ; // Default value for 3D problems
 
+    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 
-    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,problem.getNumberOfObjectives() , numberOfDivisions); 
-    
-    
-    populationSize = referencePoints.size();
+    int populationSize = referencePoints.size();
     System.out.println(referencePoints.size());
-    while (populationSize%4>0) populationSize++;
+    while (populationSize%4>0) {
+      populationSize++;
+    }
 
-    
+    setMaxPopulationSize(populationSize);
+
     JMetalLogger.logger.info("rpssize: " + referencePoints.size()); ;
   }
 
@@ -87,18 +79,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(populationSize) ;
-    for (int i = 0; i < populationSize; i++) {
-      S newIndividual = problem.createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
-  @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, problem) ;
+    population = evaluator.evaluate(population, getProblem()) ;
 
     return population ;
   }
@@ -106,7 +88,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   @Override
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(population.size()) ;
-    for (int i = 0; i < populationSize; i++) {
+    for (int i = 0; i < getMaxPopulationSize(); i++) {
       S solution = selectionOperator.execute(population);
       matingPopulation.add(solution) ;
     }
@@ -116,8 +98,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i+=2) {
+    List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i+1));
@@ -156,16 +138,18 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     List<List<S>> fronts = new ArrayList<>();
     int rankingIndex = 0;
     int candidateSolutions = 0;
-    while (candidateSolutions < populationSize) {
+    while (candidateSolutions < getMaxPopulationSize()) {
       fronts.add(ranking.getSubfront(rankingIndex));
       candidateSolutions += ranking.getSubfront(rankingIndex).size();
-      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= populationSize) 
+      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= getMaxPopulationSize())
         addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
       rankingIndex++;
     }
     
     // A copy of the reference list should be used as parameter of the environmental selection
-    EnvironmentalSelection<S> selection = new EnvironmentalSelection<>(fronts,populationSize,getReferencePointsCopy(),problem.getNumberOfObjectives());
+    EnvironmentalSelection<S> selection =
+            new EnvironmentalSelection<>(fronts,getMaxPopulationSize(),getReferencePointsCopy(),
+                    getProblem().getNumberOfObjectives());
     
     pop = selection.execute(pop);
      
@@ -176,8 +160,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   public List<S> getResult() {
     return getNonDominatedSolutions(getPopulation()) ;
   }
-
-
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<>() ;
@@ -199,4 +181,13 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
     return SolutionListUtils.getNondominatedSolutions(solutionList) ;
   }
+
+  @Override public String getName() {
+    return "NSGAIII" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version III" ;
+  }
+
 }

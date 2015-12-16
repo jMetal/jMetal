@@ -88,4 +88,5 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront) ;
     }
   }
+
 }

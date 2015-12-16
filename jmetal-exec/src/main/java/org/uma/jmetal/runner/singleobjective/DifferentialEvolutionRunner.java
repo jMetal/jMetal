@@ -25,7 +25,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class DifferentialEvolutionRunner {
 
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
-    new SolutionSetOutput.Printer(population)
+    new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

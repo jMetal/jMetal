@@ -97,4 +97,12 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
   @Override public List<DoubleSolution> getResult() {
     return population ;
   }
+
+  @Override public String getName() {
+    return "MOEAD" ;
+  }
+
+  @Override public String getDescription() {
+    return "Multi-Objective Evolutionary Algorithm based on Decomposition" ;
+  }
 }

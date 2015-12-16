@@ -173,4 +173,12 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
     return offspring;
   }
+
+  /**
+   * Two parents are required to apply this operator.
+   * @return
+   */
+  public int getNumberOfParents() {
+    return 2 ;
+  }
 }

@@ -26,14 +26,14 @@ import java.util.List;
  */
 public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   protected List<S> population ;
-  protected final int maxIterations;
+  protected final int maxEvaluations;
   protected final int populationSize;
 
   protected final Problem<S> problem;
 
   protected final SolutionListEvaluator<S> evaluator;
 
-  protected int iterations;
+  protected int evaluations;
 
   protected SelectionOperator<List<S>, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;
@@ -42,12 +42,12 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   /**
    * Constructor
    */
-  public NSGAII45(Problem<S> problem, int maxIterations, int populationSize,
+  public NSGAII45(Problem<S> problem, int maxEvaluations, int populationSize,
                   CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
                   SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super() ;
     this.problem = problem;
-    this.maxIterations = maxIterations;
+    this.maxEvaluations = maxEvaluations;
     this.populationSize = populationSize;
 
     this.crossoverOperator = crossoverOperator;
@@ -65,9 +65,9 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
     population = createInitialPopulation() ;
     evaluatePopulation(population) ;
 
-    iterations = 1 ;
+    evaluations = populationSize ;
 
-    while (iterations < maxIterations) {
+    while (evaluations < maxEvaluations) {
       List<S> offspringPopulation = new ArrayList<>(populationSize);
       for (int i = 0; i < populationSize; i += 2) {
         List<S> parents = new ArrayList<>(2);
@@ -83,6 +83,8 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
         offspringPopulation.add(offspring.get(1));
       }
 
+      evaluatePopulation(offspringPopulation) ;
+
       List<S> jointPopulation = new ArrayList<>();
       jointPopulation.addAll(population);
       jointPopulation.addAll(offspringPopulation);
@@ -91,7 +93,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
 
       population = crowdingDistanceSelection(ranking) ;
 
-      iterations ++ ;
+      evaluations += populationSize ;
     }
   }
 
@@ -170,5 +172,13 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
     return SolutionListUtils.getNondominatedSolutions(solutionList);
+  }
+
+  @Override public String getName() {
+    return "NSGAII45" ;
+  }
+
+  @Override public String getDescription() {
+    return "Nondominated Sorting Genetic Algorithm version II. Version not using the AbstractGeneticAlgorithm template" ;
   }
 }

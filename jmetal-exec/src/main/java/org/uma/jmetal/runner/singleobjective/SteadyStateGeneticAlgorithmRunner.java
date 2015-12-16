@@ -26,7 +26,7 @@ import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.fileoutput.SolutionSetOutput;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class SteadyStateGeneticAlgorithmRunner {
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
 
-    new SolutionSetOutput.Printer(population)
+    new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))

@@ -17,6 +17,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Comparator;
  *
  * This class implements a comparator based on the rank of the solutions.
  */
-public class RankingComparator<S extends Solution<?>> implements Comparator<S> {
+public class RankingComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private Ranking<S> ranking = new DominanceRanking<S>() ;
 
   /**

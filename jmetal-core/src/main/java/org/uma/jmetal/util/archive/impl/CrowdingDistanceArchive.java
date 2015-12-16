@@ -28,26 +28,24 @@ import java.util.Comparator;
 public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
   private Comparator<S> crowdingDistanceComparator;
   private DensityEstimator<S> crowdingDistance ;
-  
 
   public CrowdingDistanceArchive(int maxSize) {
     super(maxSize);
-	crowdingDistanceComparator = new CrowdingDistanceComparator<S>() ;
+    crowdingDistanceComparator = new CrowdingDistanceComparator<S>() ;
     crowdingDistance = new CrowdingDistance<S>() ;
   }
 
   @Override
   public void prune() {
-	  
-    if (getSolutionList().size() > getMaxSize()) { 
-	      crowdingDistance.computeDensityEstimator(getSolutionList());
-	      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
-	      getSolutionList().remove(worst);
+
+    if (getSolutionList().size() > getMaxSize()) {
+      crowdingDistance.computeDensityEstimator(getSolutionList());
+      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
+      getSolutionList().remove(worst);
     }
   }
 
   public void computeDistance() {
-	    crowdingDistance.computeDensityEstimator(getSolutionList());
-	  }
-  
- }
+    crowdingDistance.computeDensityEstimator(getSolutionList());
+  }
+}
