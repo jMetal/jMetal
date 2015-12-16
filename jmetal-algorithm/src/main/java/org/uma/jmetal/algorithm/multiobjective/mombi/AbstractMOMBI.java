@@ -83,7 +83,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	@Override
 	protected List<S> selection(List<S> population) {
 		List<S> matingPopulation = new ArrayList<>(population.size());
-		for (int i = 0; i < this.getPopulationSize(); i++) {
+		for (int i = 0; i < this.getMaxPopulationSize(); i++) {
 			S solution = selectionOperator.execute(population);
 			matingPopulation.add(solution);
 		}
@@ -93,13 +93,13 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	@Override
 	protected List<S> reproduction(List<S> population) {
-		List<S> offspringPopulation = new ArrayList<>(this.getPopulationSize());
-		for (int i = 0; i < this.getPopulationSize(); i += 2) {
+		List<S> offspringPopulation = new ArrayList<>(this.getMaxPopulationSize());
+		for (int i = 0; i < this.getMaxPopulationSize(); i += 2) {
 			List<S> parents = new ArrayList<>(2);
-			int parent1Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
-			int parent2Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
+			int parent1Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
+			int parent2Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
 			while (parent1Index==parent2Index)
-				parent2Index = JMetalRandom.getInstance().nextInt(0, this.getPopulationSize()-1);
+				parent2Index = JMetalRandom.getInstance().nextInt(0, this.getMaxPopulationSize()-1);
 			parents.add(population.get(parent1Index));
 			parents.add(population.get(parent2Index));
 
@@ -182,10 +182,10 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 			this.updateNadirPoint(solution);
 	}
 
-	protected abstract int getPopulationSize();
+	
 
 	protected boolean populationIsNotFull(List<S> population) {
-		return population.size() < getPopulationSize();
+		return population.size() < getMaxPopulationSize();
 	}
 
 	protected void setReferencePointValue(Double value, int index) {
