@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Created by ajnebro on 2/2/15.
  */
-public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
-    extends GenericIndicator<Evaluate> implements Hypervolume<Sol, Evaluate> {
+public class WFGHypervolume<S extends Solution<?>, Evaluate extends List<S>>
+    extends GenericIndicator<Evaluate> implements Hypervolume<S, Evaluate> {
 
   private Point referencePoint;
   private int numberOfObjectives;
@@ -187,7 +187,7 @@ public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
       solutionSetHV = evaluate(solutionList);
 
       for (int i = 0; i < solutionList.size(); i++) {
-        Sol currentPoint = solutionList.get(i);
+        S currentPoint = solutionList.get(i);
         solutionList.remove(i);
 
         if (numberOfObjectives == 2) {
@@ -207,7 +207,7 @@ public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
         hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       }
 
-      Collections.sort(solutionList, new HypervolumeContributionComparator());
+      Collections.sort(solutionList, new HypervolumeContributionComparator<S>());
     }
 
     return solutionList ;

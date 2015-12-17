@@ -32,8 +32,8 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public interface Hypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
-    extends QualityIndicator<Evaluate, Double>  {
+public interface Hypervolume<S extends Solution<?>, Evaluate extends List<S>>
+    extends QualityIndicator<List<S>, Double>  {
   public Evaluate computeHypervolumeContribution(Evaluate solutionList, Evaluate referenceFrontList) ;
   public double getOffset() ;
   public void setOffset(double offset) ;

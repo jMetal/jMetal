@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class GenericIndicator <Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    implements QualityIndicator<Evaluate, Double> {
 
   protected Front referenceParetoFront = null ;
 

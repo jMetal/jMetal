@@ -1,11 +1,3 @@
-//  Hypervolume.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -48,8 +40,8 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class PISAHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
-    extends GenericIndicator<Evaluate> implements Hypervolume<Sol, Evaluate> {
+public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
+    extends GenericIndicator<Evaluate> implements Hypervolume<S, Evaluate> {
 
   private static final double DEFAULT_OFFSET = 100.0 ;
   private double offset = DEFAULT_OFFSET ;
@@ -289,7 +281,7 @@ public class PISAHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>
         }
       }
 
-      HypervolumeContributionAttribute<Sol> hvContribution = new HypervolumeContributionAttribute<>() ;
+      HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<>() ;
 
       // calculate contributions and sort
       double[] contributions = hvContributions(FrontUtils.convertFrontToArray(invertedFront));
