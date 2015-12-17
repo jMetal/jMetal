@@ -25,7 +25,8 @@ import java.util.List;
  *         This algorithm is described in the paper: A.B. Ruiz, R. Saborido, M.
  *         Luque "A Preference-based Evolutionary Algorithm for Multiobjective
  *         Optimization: The Weighting Achievement Scalarizing Function Genetic
- *         Algorithm" Published in Journal of Global Optimization in 2014 
+ *         Algorithm". Journal of Global Optimization. May 2015, Volume 62,
+ *         Issue 1, pp 101-129
  *         DOI = {10.1007/s10898-014-0214-y}
  */
 public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
