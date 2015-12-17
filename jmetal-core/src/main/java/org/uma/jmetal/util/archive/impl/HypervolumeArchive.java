@@ -27,12 +27,10 @@ import java.util.Iterator;
  */
 public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
   private Comparator<S> dominanceComparator;
-  private DensityEstimator<S> crowdingDistance ;
 
   public HypervolumeArchive(int maxSize) {
     super(maxSize);
     dominanceComparator = new CrowdingDistanceComparator<S>() ;
-    crowdingDistance = new CrowdingDistance<S>() ;
   }
 
   @Override
