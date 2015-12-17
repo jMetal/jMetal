@@ -29,9 +29,8 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.RandomSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.FastHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.WFGHypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -43,7 +42,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the SMSEMOA algorithm
+ * Class to configure and run the SMSEMOA algorithm configured with the WFG implementation of the
+ * Hypervolume quality indicator.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -87,8 +87,8 @@ public class SMSEMOA2Runner extends AbstractAlgorithmRunner {
     selection = new RandomSelection<DoubleSolution>();
 
     Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolume ;
-    hypervolume = new FastHypervolume<>() ;
-    hypervolume.setOffset(100.0);
+    hypervolume = new WFGHypervolume<>() ;
+    hypervolume.setOffset(20.0);
 
     algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
