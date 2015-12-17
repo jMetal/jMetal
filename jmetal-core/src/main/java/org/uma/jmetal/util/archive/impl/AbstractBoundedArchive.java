@@ -23,17 +23,17 @@ import java.util.List;
  * @param <S>
  */
 public abstract class AbstractBoundedArchive<S extends Solution<?>> implements BoundedArchive<S> {
-	protected NonDominatedSolutionListArchive<S> list;
+	protected NonDominatedSolutionListArchive<S> archive;
 	protected int maxSize;
 
 	public AbstractBoundedArchive(int maxSize) {
 		this.maxSize = maxSize;
-		this.list = new NonDominatedSolutionListArchive<S>();
+		this.archive = new NonDominatedSolutionListArchive<S>();
 	}
 
 	@Override
 	public boolean add(S solution) {
-		boolean success = list.add(solution);
+		boolean success = archive.add(solution);
 		if (success)
 			prune();
 
@@ -47,12 +47,12 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 
 	@Override
 	public List<S> getSolutionList() {
-		return list.getSolutionList();
+		return archive.getSolutionList();
 	}
 
 	@Override
 	public int size() {
-		return list.size();
+		return archive.size();
 	}
 
 	@Override

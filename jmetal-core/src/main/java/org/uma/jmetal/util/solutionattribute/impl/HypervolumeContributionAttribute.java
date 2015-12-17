@@ -22,11 +22,11 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class HypervolumeContribution<S extends Solution<?>>
+public class HypervolumeContributionAttribute<S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
   private FastHypervolume fastHV ;
 
-  public HypervolumeContribution() {
+  public HypervolumeContributionAttribute() {
     fastHV = new FastHypervolume();
   }
 

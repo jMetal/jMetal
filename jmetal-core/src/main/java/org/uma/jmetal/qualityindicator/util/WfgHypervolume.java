@@ -7,7 +7,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.util.comparator.PointComparator;
-import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -191,7 +191,7 @@ public class WfgHypervolume {
         contribution = aux;
       }
 
-      HypervolumeContribution<Solution<?>> hvc = new HypervolumeContribution<Solution<?>>() ;
+      HypervolumeContributionAttribute<Solution<?>> hvc = new HypervolumeContributionAttribute<Solution<?>>() ;
       hvc.setAttribute(solutionList.get(i), aux);
       //solutionList.get(i).setCrowdingDistance(aux);
     }

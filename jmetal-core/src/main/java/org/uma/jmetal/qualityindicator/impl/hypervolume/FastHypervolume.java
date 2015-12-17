@@ -1,27 +1,55 @@
-package org.uma.jmetal.qualityindicator.util;
+package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.util.WfgHypervolume;
+import org.uma.jmetal.qualityindicator.util.WfgHypervolumeFront;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by ajnebro on 2/2/15.
  */
-public class FastHypervolume {
-  private static final double DEFAULT_OFFSET = 20.0 ;
+public class FastHypervolume <Sol extends Solution<?>, Evaluate extends List<Sol>>
+    extends GenericIndicator<Evaluate> implements Hypervolume<Sol, Evaluate> {
+
   private Point referencePoint;
   private int numberOfObjectives;
-  private double offset ;
-  //private HypervolumeContributionAttribute hvContribution ;
 
+  private static final double DEFAULT_OFFSET = 100.0 ;
+  private double offset = DEFAULT_OFFSET ;
+  /**
+   * Default constructor
+   */
   public FastHypervolume() {
-    this(DEFAULT_OFFSET) ;
+  }
+
+  /**
+   * Constructor
+   *
+   * @param referenceParetoFrontFile
+   * @throws FileNotFoundException
+   */
+  public FastHypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
+    super(referenceParetoFrontFile) ;
+  }
+
+  /**
+   * Constructor
+   *
+   * @param referenceParetoFront
+   * @throws FileNotFoundException
+   */
+  public FastHypervolume(Front referenceParetoFront) {
+    super(referenceParetoFront) ;
   }
 
   public FastHypervolume(double offset) {
@@ -31,7 +59,8 @@ public class FastHypervolume {
     //hvContribution = new HypervolumeContributionAttribute() ;
   }
 
-  public double computeHypervolume(List<? extends Solution<?>> solutionList) {
+  @Override
+  public Double evaluate(Evaluate solutionList) {
     double hv;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -49,22 +78,11 @@ public class FastHypervolume {
         hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
     }
-/*
-      updateReferencePoint(solutionSet);
-      if (numberOfObjectives == 2) {
-        solutionSet.sort(new ObjectiveComparator(numberOfObjectives - 1, true));
-        hv = get2DHV(solutionSet);
-      } else {
-        updateReferencePoint(solutionSet);
-        Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
-        hv = new WfgHv(numberOfObjectives, solutionSet.size(), referencePoint).getHV(front);
-      }
-    }
-*/
+
     return hv;
   }
 
-  public double computeHypervolume(List<? extends Solution<?>> solutionList, Point referencePoint) {
+  public double computeHypervolume(Evaluate solutionList, Point referencePoint) {
     double hv = 0.0;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -167,14 +185,14 @@ public class FastHypervolume {
    *
    * @return
    */
-  public <S extends Solution<?>> void computeHVContributions(List<S> solutionList) {
+  public void computeHVContributions(Evaluate solutionList) {
     double[] contributions = new double[solutionList.size()];
     double solutionSetHV = 0;
 
-    solutionSetHV = computeHypervolume(solutionList);
+    solutionSetHV = evaluate(solutionList);
 
     for (int i = 0; i < solutionList.size(); i++) {
-      S currentPoint = solutionList.get(i);
+      Sol currentPoint = solutionList.get(i);
       solutionList.remove(i);
 
       if (numberOfObjectives == 2) {
@@ -203,11 +221,11 @@ public class FastHypervolume {
    *
    * @return The hv contribution of the solutiontype
    */
-  public <S extends Solution<?>> double computeSolutionHVContribution(List<S> solutionList, int solutionIndex,
-      double solutionSetHV) {
+  public double computeSolutionHVContribution(List<Sol> solutionList, int solutionIndex,
+                                                                      double solutionSetHV) {
     double contribution;
 
-    S currentPoint = solutionList.get(solutionIndex);
+    Sol currentPoint = solutionList.get(solutionIndex);
     solutionList.remove(solutionIndex);
 
     WfgHypervolumeFront front = new WfgHypervolumeFront(solutionList);
@@ -218,9 +236,54 @@ public class FastHypervolume {
     solutionList.add(solutionIndex, currentPoint);
     HypervolumeContributionAttribute<Solution<?>> hvContribution = new HypervolumeContributionAttribute<Solution<?>>() ;
     hvContribution.setAttribute(solutionList.get(solutionIndex), contribution);
-   // solutionSet.get(solutionIndex).setCrowdingDistance(contribution);
+    // solutionSet.get(solutionIndex).setCrowdingDistance(contribution);
 
     return contribution;
   }
 
+  @Override
+  public Evaluate computeHypervolumeContribution(Evaluate solutionList, Evaluate referenceFrontList) {
+    updateReferencePoint(referenceFrontList);
+    if (solutionList.size() > 1) {
+      double[] contributions = new double[solutionList.size()];
+      double solutionSetHV = 0;
+
+      solutionSetHV = evaluate(solutionList);
+
+      for (int i = 0; i < solutionList.size(); i++) {
+        Sol currentPoint = solutionList.get(i);
+        solutionList.remove(i);
+
+        if (numberOfObjectives == 2) {
+          contributions[i] = solutionSetHV - get2DHV(solutionList);
+        } else {
+          //Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
+          WfgHypervolumeFront front = new WfgHypervolumeFront(solutionList);
+          double hv = new WfgHypervolume(numberOfObjectives, solutionList.size()).getHV(front);
+          contributions[i] = solutionSetHV - hv;
+        }
+
+        solutionList.add(i, currentPoint);
+      }
+
+      HypervolumeContributionAttribute<Solution<?>> hvContribution = new HypervolumeContributionAttribute<Solution<?>>();
+      for (int i = 0; i < solutionList.size(); i++) {
+        hvContribution.setAttribute(solutionList.get(i), contributions[i]);
+      }
+
+      Collections.sort(solutionList, new HypervolumeContributionComparator());
+    }
+
+    return solutionList ;
+  }
+
+  @Override
+  public double getOffset() {
+    return offset;
+  }
+
+  @Override
+  public void setOffset(double offset) {
+    this.offset = offset ;
+  }
 }

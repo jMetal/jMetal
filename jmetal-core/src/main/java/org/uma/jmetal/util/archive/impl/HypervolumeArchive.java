@@ -13,29 +13,35 @@
 
 package org.uma.jmetal.util.archive.impl;
 
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
+import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 24/09/14.
  */
 public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
-  private Comparator<S> dominanceComparator;
+  private Comparator<S> comparator;
+  Hypervolume<S, List<S>> hypervolume ;
 
-  public HypervolumeArchive(int maxSize) {
+
+  public HypervolumeArchive(int maxSize, Hypervolume<S, List<S>> hypervolume) {
     super(maxSize);
-    dominanceComparator = new CrowdingDistanceComparator<S>() ;
+    comparator = new HypervolumeContributionComparator<S>() ;
+    this.hypervolume = hypervolume ;
   }
 
   @Override
   public void prune() {
-
-
+    if (getSolutionList().size() > getMaxSize()) {
+      hypervolume.computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList()) ;
+      S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator) ;
+      getSolutionList().remove(worst);
+    }
   }
 }

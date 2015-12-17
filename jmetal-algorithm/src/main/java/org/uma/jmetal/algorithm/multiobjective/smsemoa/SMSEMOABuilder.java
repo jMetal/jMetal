@@ -18,6 +18,8 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.selection.RandomSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
@@ -40,12 +42,16 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
 
   protected double offset ;
 
+  protected Hypervolume<S, List<S>> hypervolumeImplementation;
+
   public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem ;
     this.offset = DEFAULT_OFFSET ;
     populationSize = 100 ;
     maxEvaluations = 25000 ;
+    this.hypervolumeImplementation = new PISAHypervolume<>() ;
+    hypervolumeImplementation.setOffset(offset);
 
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
@@ -82,6 +88,13 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
+  public SMSEMOABuilder<S> setHypervolumeImplementation(Hypervolume<S, List<S>> hypervolumeImplementation) {
+    this.hypervolumeImplementation = hypervolumeImplementation;
+
+    return this ;
+  }
+
+
   public SMSEMOABuilder<S> setOffset(double offset) {
     this.offset = offset ;
 
@@ -90,7 +103,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
 
   @Override public SMSEMOA<S> build() {
     return new SMSEMOA<S>(problem, maxEvaluations, populationSize, offset,
-        crossoverOperator, mutationOperator, selectionOperator);
+        crossoverOperator, mutationOperator, selectionOperator, hypervolumeImplementation);
   }
 
   /*

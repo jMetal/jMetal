@@ -14,7 +14,7 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContribution;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -25,8 +25,8 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class HypervolumeContributorComparator implements Comparator<Solution<?>>, Serializable {
-  private final HypervolumeContribution<Solution<?>> hvContribution = new HypervolumeContribution<Solution<?>>() ;
+public class HypervolumeContributionComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
+  private final HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<S>() ;
 
   /**
    * Compare two solutions.
@@ -37,7 +37,7 @@ public class HypervolumeContributorComparator implements Comparator<Solution<?>>
    * respectively.
    */
   @Override
-  public int compare(Solution<?> solution1, Solution<?> solution2) {
+  public int compare(S solution1, S solution2) {
     int result ;
     if (solution1 == null) {
       if (solution2 == null) {

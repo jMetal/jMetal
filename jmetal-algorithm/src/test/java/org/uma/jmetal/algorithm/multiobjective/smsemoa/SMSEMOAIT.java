@@ -12,6 +12,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 
@@ -36,10 +37,15 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
+    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolumeImplementation ;
+    hypervolumeImplementation = new PISAHypervolume<>() ;
+    hypervolumeImplementation.setOffset(100.0);
+
     algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
         .setSelectionOperator(new RandomSelection<DoubleSolution>())
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
+        .setHypervolumeImplementation(hypervolumeImplementation)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -55,7 +61,7 @@ public class SMSEMOAIT {
   }
 
   @Test
-  public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
+  public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
     DoubleProblem problem = new ZDT1() ;
 
     CrossoverOperator<DoubleSolution> crossover;
@@ -69,10 +75,15 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
+    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolumeImplementation ;
+    hypervolumeImplementation = new PISAHypervolume<>() ;
+    hypervolumeImplementation.setOffset(100.0);
+
     algorithm = new SMSEMOABuilder<>(problem, crossover, mutation)
         .setSelectionOperator(new RandomSelection<DoubleSolution>())
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
+        .setHypervolumeImplementation(hypervolumeImplementation)
         .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
