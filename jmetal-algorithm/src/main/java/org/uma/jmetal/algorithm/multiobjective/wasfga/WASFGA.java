@@ -69,7 +69,6 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		return aux;
 	}
 
-	@Override
 	public int getPopulationSize() {
 		return getMaxPopulationSize();
 	}

@@ -56,9 +56,9 @@ public class MOMBI2IT {
 
     /*
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard
-    settings, should return 100 solutions
+    settings, should return more than 90 solutions
     */
-    assertTrue(population.size() >= 98) ;
+    assertTrue(population.size() >= 91) ;
 
     randomGenerator.setSeed(System.currentTimeMillis());
   }
