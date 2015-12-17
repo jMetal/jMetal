@@ -1,27 +1,37 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.WFGHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class SMPSOIT {
-  Algorithm<List<DoubleSolution>> algorithm;
+public class SMPSOhvIT {
+  private Algorithm<List<DoubleSolution>> algorithm;
+  private BoundedArchive<DoubleSolution> archive ;
+
+  @Before
+  public void setup() {
+    archive = new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution, List<DoubleSolution>>()) ;
+  }
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     DoubleProblem problem = new ZDT4() ;
 
-    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
+    algorithm = new SMPSOBuilder(problem, archive).build() ;
 
     algorithm.run();
 
@@ -38,7 +48,7 @@ public class SMPSOIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT4() ;
 
-    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
+    algorithm = new SMPSOBuilder(problem, archive).build() ;
 
     algorithm.run();
 
@@ -51,6 +61,6 @@ public class SMPSOIT {
 
     double hv = (Double)hypervolume.evaluate(population) ;
 
-    assertTrue(hv > 0.64) ;
+    assertTrue(hv > 0.65) ;
   }
 }
