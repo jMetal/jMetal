@@ -1,3 +1,5 @@
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -289,7 +291,7 @@ public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
         hvContribution.setAttribute(solutionList.get(i), contributions[i]);
       }
 
-      Collections.sort(solutionList, new HypervolumeContributionComparator());
+      Collections.sort(solutionList, new HypervolumeContributionComparator<S>());
 
     }
     return solutionList ;
