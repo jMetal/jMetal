@@ -17,6 +17,18 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 	private final List<Double> referencePoint; 
 	private Normalizer normalizer = null;
 	
+	public ASFUtilityFunctionSet(double [][] weights, List<Double> referencePoint) {
+		super(weights);
+		this.referencePoint = referencePoint;
+	}
+	
+	public ASFUtilityFunctionSet(double [][] weights) {
+		super(weights);
+		this.referencePoint = new ArrayList<>(this.getVectorSize());
+		for (int i = 0; i < this.getVectorSize(); i++)
+			this.referencePoint.add(0.0);
+	}
+	
 	public ASFUtilityFunctionSet(String file_path, List<Double> referencePoint) {
 		super(file_path);
 		this.referencePoint = referencePoint;

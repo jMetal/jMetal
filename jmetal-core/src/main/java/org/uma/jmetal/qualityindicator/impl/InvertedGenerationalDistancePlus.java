@@ -20,7 +20,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
-import org.uma.jmetal.util.point.util.DominanceDistance;
+import org.uma.jmetal.util.point.util.distance.DominanceDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;

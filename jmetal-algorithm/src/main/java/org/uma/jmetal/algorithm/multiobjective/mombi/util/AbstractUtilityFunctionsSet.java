@@ -21,6 +21,20 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> {
 	private List<List<Double>> weightVectors;
 	private int vectorSize;
 	
+	public AbstractUtilityFunctionsSet(double [][] weights) {
+		this.weightVectors = new ArrayList<>();
+		for (int i = 0; i < weights.length; i++) {
+			this.weightVectors.add(new ArrayList<Double>());
+			for (int j = 0; j < weights[i].length;j++) {
+				this.weightVectors.get(i).add(weights[i][j]);
+			}
+		}
+		if (this.weightVectors.size() > 0) {
+			this.vectorSize = this.weightVectors.get(0).size();
+		}
+				
+	}
+	
 	public AbstractUtilityFunctionsSet(String file_path) {
 		loadWeightsFromFile(file_path);
 	}

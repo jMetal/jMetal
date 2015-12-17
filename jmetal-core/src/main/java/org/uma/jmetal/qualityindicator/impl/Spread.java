@@ -27,9 +27,9 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
-import org.uma.jmetal.util.point.impl.LexicographicalPointComparator;
-import org.uma.jmetal.util.point.util.EuclideanDistance;
-import org.uma.jmetal.util.point.util.PointDistance;
+import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
+import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
+import org.uma.jmetal.util.point.util.distance.PointDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;

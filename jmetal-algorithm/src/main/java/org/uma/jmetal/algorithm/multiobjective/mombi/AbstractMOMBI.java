@@ -158,7 +158,7 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	private void initializeNadirPoint(int size) {
-    for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++)
 			this.getNadirPoint().add(Double.NEGATIVE_INFINITY);
 	}
 
