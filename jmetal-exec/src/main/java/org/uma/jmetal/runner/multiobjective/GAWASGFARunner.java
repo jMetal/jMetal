@@ -71,7 +71,6 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
     referencePoint = new ArrayList<>();
     referencePoint.add(0.0);
     referencePoint.add(0.0);
-    referencePoint.add(0.0);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
