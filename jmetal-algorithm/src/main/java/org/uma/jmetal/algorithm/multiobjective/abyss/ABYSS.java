@@ -469,7 +469,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   private void updatePopulationWithArchive() {
     CrowdingDistanceArchive<DoubleSolution> crowdingArchive ;
     crowdingArchive = (CrowdingDistanceArchive<DoubleSolution>)archive ;
-    crowdingArchive.computeDistance(); // TODO: FIX this dependence
+    crowdingArchive.computeDensityEstimator();
 
     Collections.sort(crowdingArchive.getSolutionList(),crowdingDistanceComparator);
 

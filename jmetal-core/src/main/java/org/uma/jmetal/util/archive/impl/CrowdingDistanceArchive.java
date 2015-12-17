@@ -38,13 +38,18 @@ public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoun
   @Override
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
-      crowdingDistance.computeDensityEstimator(getSolutionList());
+      computeDensityEstimator();
       S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), crowdingDistanceComparator) ;
       getSolutionList().remove(worst);
     }
   }
 
-  public void computeDistance() {
+  @Override
+  public Comparator<S> getComparator() {
+    return crowdingDistanceComparator ;
+  }
+  @Override
+  public void computeDensityEstimator() {
     crowdingDistance.computeDensityEstimator(getSolutionList());
   }
 }

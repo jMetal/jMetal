@@ -16,6 +16,7 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ import java.util.Iterator;
 public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;
- 
+
   private Comparator<S> dominanceComparator;
 
   /**
@@ -120,17 +121,27 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   }
   
   public void prune() {
-	  Iterator<S> iterator = getSolutionList().iterator();
-      boolean removed = false;
-      while (iterator.hasNext()) {
-        if (!removed) {
-          S element = iterator.next();
-          int location2 = grid.location(element);
-          if (location2 == grid.getMostPopulatedHypercube()) {
-            iterator.remove();
-            grid.removeSolution(location2);
-          }
+    Iterator<S> iterator = getSolutionList().iterator();
+    boolean removed = false;
+    while (iterator.hasNext()) {
+      if (!removed) {
+        S element = iterator.next();
+        int location2 = grid.location(element);
+        if (location2 == grid.getMostPopulatedHypercube()) {
+          iterator.remove();
+          grid.removeSolution(location2);
         }
       }
+    }
+  }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return null ; // TODO
+  }
+
+  @Override
+  public void computeDensityEstimator() {
+    // TODO
   }
 }

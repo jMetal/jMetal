@@ -18,6 +18,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
+import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.Comparator;
 import java.util.List;
@@ -29,7 +30,6 @@ public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedAr
   private Comparator<S> comparator;
   Hypervolume<S, List<S>> hypervolume ;
 
-
   public HypervolumeArchive(int maxSize, Hypervolume<S, List<S>> hypervolume) {
     super(maxSize);
     comparator = new HypervolumeContributionComparator<S>() ;
@@ -39,9 +39,19 @@ public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedAr
   @Override
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
-      hypervolume.computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList()) ;
+      computeDensityEstimator() ;
       S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator) ;
       getSolutionList().remove(worst);
     }
+  }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return comparator ;
+  }
+
+  @Override
+  public void computeDensityEstimator() {
+    hypervolume.computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList()) ;
   }
 }

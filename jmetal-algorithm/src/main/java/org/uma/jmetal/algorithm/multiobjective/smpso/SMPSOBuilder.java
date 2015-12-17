@@ -18,6 +18,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -50,11 +51,11 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
   protected MutationOperator<DoubleSolution> mutationOperator;
 
-  private Archive<DoubleSolution> leaders;
+  private BoundedArchive<DoubleSolution> leaders;
 
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
-  public SMPSOBuilder(DoubleProblem problem, Archive<DoubleSolution> leaders) {
+  public SMPSOBuilder(DoubleProblem problem, BoundedArchive<DoubleSolution> leaders) {
     this.problem = problem;
     this.leaders = leaders;
 
@@ -264,7 +265,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return mutationOperator;
   }
 
-  public Archive<DoubleSolution> getLeaders() {
+  public BoundedArchive<DoubleSolution> getLeaders() {
     return leaders;
   }
 
