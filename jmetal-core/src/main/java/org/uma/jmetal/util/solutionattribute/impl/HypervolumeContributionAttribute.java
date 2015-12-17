@@ -13,9 +13,7 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.uma.jmetal.qualityindicator.util.FastHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.List;
 
@@ -23,14 +21,5 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class HypervolumeContributionAttribute<S extends Solution<?>>
-    extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
-  private FastHypervolume fastHV ;
-
-  public HypervolumeContributionAttribute() {
-    fastHV = new FastHypervolume();
-  }
-
-  @Override public void computeDensityEstimator(List<S> solutionList) {
-    fastHV.computeHVContributions(solutionList);
-  }
+    extends GenericSolutionAttribute<S, Double>  {
 }

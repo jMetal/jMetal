@@ -1,8 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
-import org.uma.jmetal.qualityindicator.util.WfgHypervolume;
-import org.uma.jmetal.qualityindicator.util.WfgHypervolumeFront;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.util.WfgHypervolumeFront;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.util.WfgHypervolumeVersion;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -73,7 +73,7 @@ public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
-        WfgHypervolume wfgHv = new WfgHypervolume(numberOfObjectives, solutionList.size());
+        WfgHypervolumeVersion wfgHv = new WfgHypervolumeVersion(numberOfObjectives, solutionList.size());
         hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
     }
@@ -88,23 +88,13 @@ public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
     } else {
       numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
       this.referencePoint = referencePoint;
-/*
-      if (numberOfObjectives == 2) {
-        solutionSet.sort(new ObjectiveComparator(numberOfObjectives - 1, true));
 
-        hv = get2DHV(solutionSet);
-      } else {
-        WFGHV wfg = new WFGHV(numberOfObjectives, solutionSet.size());
-        Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
-        hv = wfg.getHV(front, referencePoint);
-      }
-      */
       if (numberOfObjectives == 2) {
         Collections.sort(solutionList, new ObjectiveComparator<Solution<?>>(solutionList.size()-1,
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
-        WfgHypervolume wfgHv = new WfgHypervolume(numberOfObjectives, solutionList.size());
+        WfgHypervolumeVersion wfgHv = new WfgHypervolumeVersion(numberOfObjectives, solutionList.size());
         hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
     }
@@ -205,7 +195,7 @@ public class WFGHypervolume<Sol extends Solution<?>, Evaluate extends List<Sol>>
         } else {
           //Front front = new Front(solutionSet.size(), numberOfObjectives, solutionSet);
           WfgHypervolumeFront front = new WfgHypervolumeFront(solutionList);
-          double hv = new WfgHypervolume(numberOfObjectives, solutionList.size()).getHV(front);
+          double hv = new WfgHypervolumeVersion(numberOfObjectives, solutionList.size()).getHV(front);
           contributions[i] = solutionSetHV - hv;
         }
 

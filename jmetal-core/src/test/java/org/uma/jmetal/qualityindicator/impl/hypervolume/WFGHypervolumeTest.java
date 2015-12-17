@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityindicator.util;
+package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,16 +11,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
-public class FastHypervolumeTest {
-  private FastHypervolume fastHV ;
+/**
+ * Created by ajnebro on 17/12/15.
+ */
+public class WFGHypervolumeTest {
+  private Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolume ;
 
-  @Before public void setup() {
-    fastHV = new FastHypervolume() ;
+  @Before
+  public void setup() {
+    hypervolume = new WFGHypervolume<>() ;
   }
 
-  @Test public void simpleTest() {
+  @Test
+  public void simpleTest() {
     DoubleProblem problem = new MockDoubleProblem(2) ;
 
     DoubleSolution solution = problem.createSolution() ;
@@ -37,32 +42,10 @@ public class FastHypervolumeTest {
 
     List<DoubleSolution> list = Arrays.asList(solution, solution2, solution3) ;
 
-    double hv = fastHV.computeHypervolume(list) ;
+    double hv = hypervolume.evaluate(list) ;
 
     assertNotEquals(0, hv) ;
   }
-
-
-  @Test public void simpleTest2() {
-    DoubleProblem problem = new MockDoubleProblem(2) ;
-
-    DoubleSolution solution = problem.createSolution() ;
-    solution.setObjective(0, 0.0);
-    solution.setObjective(1, 1.0);
-
-    DoubleSolution solution2 = problem.createSolution() ;
-    solution2.setObjective(0, -1.0);
-    solution2.setObjective(1, 2.0);
-
-    DoubleSolution solution3 = problem.createSolution() ;
-    solution3.setObjective(0, -2.0);
-    solution3.setObjective(1, 1.5);
-
-    List<DoubleSolution> list = Arrays.asList(solution, solution2, solution3) ;
-
-//    fastHV.computeHVContributions(list);
-  }
-
 
 
   /**

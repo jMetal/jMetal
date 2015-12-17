@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityindicator.util;
+package org.uma.jmetal.qualityindicator.impl.hypervolume.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 2/2/15.
  */
-public class WfgHypervolume {
+public class WfgHypervolumeVersion {
   static final int OPT = 2;
   WfgHypervolumeFront[] fs;
   private Point referencePoint;
@@ -27,7 +27,7 @@ public class WfgHypervolume {
   private int maxNumberOfObjectives;
   private Comparator<Point> pointComparator;
 
-  public WfgHypervolume(int dimension, int maxNumberOfPoints) {
+  public WfgHypervolumeVersion(int dimension, int maxNumberOfPoints) {
     referencePoint = new ArrayPoint(dimension);
     for (int i = 0; i < dimension; i++) {
       referencePoint.setDimensionValue(i, 0.0);
@@ -47,7 +47,7 @@ public class WfgHypervolume {
     }
   }
 
-  public WfgHypervolume(int dimension, int maxNumberOfPoints, Point referencePoint) {
+  public WfgHypervolumeVersion(int dimension, int maxNumberOfPoints, Point referencePoint) {
     this.referencePoint = new ArrayPoint(referencePoint);
     maximizing = false;
     currentDeep = 0;
@@ -297,8 +297,8 @@ public class WfgHypervolume {
     referencePoint = new ArrayPoint(points);
     JMetalLogger.logger.info("Using reference point: " + referencePoint);
 
-    WfgHypervolume wfghv =
-        new WfgHypervolume(referencePoint.getNumberOfDimensions(), front.getNumberOfPoints(), referencePoint);
+    WfgHypervolumeVersion wfghv =
+        new WfgHypervolumeVersion(referencePoint.getNumberOfDimensions(), front.getNumberOfPoints(), referencePoint);
 
     System.out.println("HV: " + wfghv.getHV(front)) ;
   }

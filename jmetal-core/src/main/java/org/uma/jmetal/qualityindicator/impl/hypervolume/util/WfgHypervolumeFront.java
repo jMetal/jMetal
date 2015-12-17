@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityindicator.util;
+package org.uma.jmetal.qualityindicator.impl.hypervolume.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
