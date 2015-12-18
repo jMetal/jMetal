@@ -37,7 +37,7 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution> hypervolumeImplementation ;
+    Hypervolume<DoubleSolution> hypervolumeImplementation ;
     hypervolumeImplementation = new PISAHypervolume<>() ;
     hypervolumeImplementation.setOffset(100.0);
 
@@ -75,7 +75,7 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution> hypervolumeImplementation ;
+    Hypervolume<DoubleSolution> hypervolumeImplementation ;
     hypervolumeImplementation = new PISAHypervolume<>() ;
     hypervolumeImplementation.setOffset(100.0);
 
@@ -91,7 +91,7 @@ public class SMSEMOAIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new Hypervolume<>("/referenceFronts/ZDT1.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT1.pf") ;
 
     // Rationale: the default problem is ZDT1, and SMSEMOA, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65

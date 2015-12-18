@@ -1,6 +1,6 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.util.WfgHypervolumeFront;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.util.WfgHypervolumeVersion;
 import org.uma.jmetal.solution.Solution;
@@ -221,4 +221,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   public void setOffset(double offset) {
     this.offset = offset ;
   }
+
+  @Override public String getDescription() {
+    return "WFG implementation of the hypervolume quality indicator" ;
+  }
+
 }

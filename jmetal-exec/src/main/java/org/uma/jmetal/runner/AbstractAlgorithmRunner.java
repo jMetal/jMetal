@@ -1,6 +1,7 @@
 package org.uma.jmetal.runner;
 
 import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -44,6 +45,7 @@ public abstract class AbstractAlgorithmRunner {
    * @param paretoFrontFile
    * @throws FileNotFoundException
    */
+  @SuppressWarnings("unchecked")
   public static void printQualityIndicators(List<? extends Solution<?>> population, String paretoFrontFile)
       throws FileNotFoundException {
     Front referenceFront = new ArrayFront(paretoFrontFile);
@@ -56,9 +58,9 @@ public abstract class AbstractAlgorithmRunner {
 
     String outputString = "\n" ;
     outputString += "Hypervolume (N) : " +
-        new Hypervolume<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new PISAHypervolume<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "Hypervolume     : " +
-        new Hypervolume(referenceFront).evaluate(population) + "\n";
+        new PISAHypervolume(referenceFront).evaluate(population) + "\n";
     outputString += "Epsilon (N)     : " +
         new Epsilon<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
         "\n" ;

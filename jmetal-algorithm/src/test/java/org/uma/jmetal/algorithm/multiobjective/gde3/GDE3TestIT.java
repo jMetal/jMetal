@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -59,7 +60,7 @@ public class GDE3TestIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new Hypervolume<>("/referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT4.pf") ;
 
     // Rationale: the default problem is ZDT1, and GDE3, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.66

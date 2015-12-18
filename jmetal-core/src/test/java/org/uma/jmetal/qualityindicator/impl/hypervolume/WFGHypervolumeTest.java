@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 

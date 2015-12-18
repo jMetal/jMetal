@@ -15,7 +15,7 @@
 
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
@@ -232,12 +232,8 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         invertedFront.getNumberOfPoints(), numberOfObjectives);
   }
 
-  @Override public String getName() {
-    return "HV" ;
-  }
-
   @Override public String getDescription() {
-    return "Hypervolume quality indicator" ;
+    return "PISA implementation of the hypervolume quality indicator" ;
   }
 
   @Override

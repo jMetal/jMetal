@@ -15,6 +15,7 @@ package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -147,7 +148,7 @@ public class CommandLineIndicatorRunner {
 
     List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
     list.add(new Epsilon<DoubleSolution>(referenceFront)) ;
-    list.add(new Hypervolume<DoubleSolution>(referenceFront)) ;
+    list.add(new PISAHypervolume<DoubleSolution>(referenceFront)) ;
     list.add(new GenerationalDistance<DoubleSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistance<DoubleSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistancePlus<DoubleSolution>(referenceFront)) ;

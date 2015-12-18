@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
@@ -46,7 +47,7 @@ public class HypervolumeTest {
 
     Front front = new ArrayFront(0, 0) ;
 
-    Hypervolume<?> hypervolume = new Hypervolume<DoubleSolution>(front) ;
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(front) ;
     hypervolume.evaluate(null) ;
   }
 
@@ -57,6 +58,6 @@ public class HypervolumeTest {
 
     Front front = null ;
 
-    Hypervolume<?> hypervolume = new Hypervolume<DoubleSolution>(front) ;;
+    Hypervolume<?> hypervolume = new PISAHypervolume<DoubleSolution>(front) ;;
   }
 }

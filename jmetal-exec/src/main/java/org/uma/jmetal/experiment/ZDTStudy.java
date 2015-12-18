@@ -23,6 +23,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -75,7 +76,7 @@ public class ZDTStudy {
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
-                new Hypervolume<DoubleSolution>(),
+                new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(),
                 new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(25)

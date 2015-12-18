@@ -14,6 +14,7 @@ import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -95,7 +96,7 @@ public class MOMBI2IT {
     settings, should return 100 solutions
     */
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new Hypervolume<>("/pareto_fronts/DTLZ1.3D.pf") ;
+        new PISAHypervolume<>("/pareto_fronts/DTLZ1.3D.pf") ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
