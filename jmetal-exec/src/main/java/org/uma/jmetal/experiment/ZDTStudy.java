@@ -83,10 +83,10 @@ public class ZDTStudy {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
+    //new ExecuteAlgorithms<>(configuration).run();
+    //new ComputeQualityIndicators<>(configuration).run() ;
+    //new GenerateLatexTablesWithStatistics(configuration).run() ;
+    //new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
     new GenerateFriedmanTestTables<>(configuration).run();
   }
 
