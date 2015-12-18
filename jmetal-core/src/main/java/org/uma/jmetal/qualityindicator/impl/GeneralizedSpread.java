@@ -47,8 +47,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**
    * Default constructor
@@ -81,7 +80,7 @@ public class GeneralizedSpread<Evaluate extends List<? extends Solution<?>>>
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     return generalizedSpread(new ArrayFront(solutionList), referenceParetoFront);
   }
 

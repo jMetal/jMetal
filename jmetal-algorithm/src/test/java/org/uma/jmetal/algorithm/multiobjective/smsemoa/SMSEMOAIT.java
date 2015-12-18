@@ -37,7 +37,7 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolumeImplementation ;
+    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution> hypervolumeImplementation ;
     hypervolumeImplementation = new PISAHypervolume<>() ;
     hypervolumeImplementation.setOffset(100.0);
 
@@ -75,7 +75,7 @@ public class SMSEMOAIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolumeImplementation ;
+    org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume<DoubleSolution> hypervolumeImplementation ;
     hypervolumeImplementation = new PISAHypervolume<>() ;
     hypervolumeImplementation.setOffset(100.0);
 

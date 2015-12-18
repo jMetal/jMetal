@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * Created by ajnebro on 17/12/15.
  */
 public class WFGHypervolumeTest {
-  private Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolume ;
+  private Hypervolume<DoubleSolution> hypervolume ;
 
   @Before
   public void setup() {

@@ -68,8 +68,9 @@ public class NSGAIIStudy  {
             .setReferenceFrontDirectory("/pareto_fronts")
             .setReferenceFrontFileNames(referenceFrontFileNames)
             .setIndicatorList(Arrays.asList(
-                new Epsilon<>(), new Spread<>(), new GenerationalDistance<>(), new Hypervolume<>(),
-                new InvertedGenerationalDistance<>(), new InvertedGenerationalDistancePlus<>()))
+                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
+                new Hypervolume<DoubleSolution>(),
+                new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(25)
             .setNumberOfCores(8)
             .build();

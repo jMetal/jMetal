@@ -42,7 +42,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
 
   protected double offset ;
 
-  protected Hypervolume<S, List<S>> hypervolumeImplementation;
+  protected Hypervolume<S> hypervolumeImplementation;
 
   public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
@@ -88,7 +88,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
-  public SMSEMOABuilder<S> setHypervolumeImplementation(Hypervolume<S, List<S>> hypervolumeImplementation) {
+  public SMSEMOABuilder<S> setHypervolumeImplementation(Hypervolume<S> hypervolumeImplementation) {
     this.hypervolumeImplementation = hypervolumeImplementation;
 
     return this ;

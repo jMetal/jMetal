@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 2/2/15.
  */
-public class WFGHypervolume<S extends Solution<?>, Evaluate extends List<S>>
-    extends GenericIndicator<Evaluate> implements Hypervolume<S, Evaluate> {
+public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
   private Point referencePoint;
   private int numberOfObjectives;
@@ -59,7 +58,7 @@ public class WFGHypervolume<S extends Solution<?>, Evaluate extends List<S>>
   }
 
   @Override
-  public Double evaluate(Evaluate solutionList) {
+  public Double evaluate(List<S> solutionList) {
     double hv;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -81,7 +80,7 @@ public class WFGHypervolume<S extends Solution<?>, Evaluate extends List<S>>
     return hv;
   }
 
-  public double computeHypervolume(Evaluate solutionList, Point referencePoint) {
+  public double computeHypervolume(List<S> solutionList, Point referencePoint) {
     double hv = 0.0;
     if (solutionList.size() == 0) {
       hv = 0.0;
@@ -177,7 +176,7 @@ public class WFGHypervolume<S extends Solution<?>, Evaluate extends List<S>>
   }
 
   @Override
-  public Evaluate computeHypervolumeContribution(Evaluate solutionList, Evaluate referenceFrontList) {
+  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
     numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
     updateReferencePoint(referenceFrontList);
     if (solutionList.size() > 1) {

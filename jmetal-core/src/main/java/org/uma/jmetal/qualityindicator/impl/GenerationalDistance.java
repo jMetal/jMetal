@@ -42,8 +42,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class GenerationalDistance<S extends Solution<?>> extends GenericIndicator<S> {
   private double pow = 2.0;
 
   /**
@@ -88,7 +87,7 @@ public class GenerationalDistance<Evaluate extends List<? extends Solution<?>>>
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }

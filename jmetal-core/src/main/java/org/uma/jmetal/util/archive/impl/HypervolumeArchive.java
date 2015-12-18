@@ -28,9 +28,9 @@ import java.util.List;
  */
 public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
   private Comparator<S> comparator;
-  Hypervolume<S, List<S>> hypervolume ;
+  Hypervolume<S> hypervolume ;
 
-  public HypervolumeArchive(int maxSize, Hypervolume<S, List<S>> hypervolume) {
+  public HypervolumeArchive(int maxSize, Hypervolume<S> hypervolume) {
     super(maxSize);
     comparator = new HypervolumeContributionComparator<S>() ;
     this.hypervolume = hypervolume ;

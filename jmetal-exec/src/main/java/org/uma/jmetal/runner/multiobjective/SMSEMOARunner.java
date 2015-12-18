@@ -85,7 +85,7 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
 
     selection = new RandomSelection<DoubleSolution>();
 
-    Hypervolume<DoubleSolution, List<DoubleSolution>> hypervolume ;
+    Hypervolume<DoubleSolution> hypervolume ;
     hypervolume = new PISAHypervolume<>() ;
     hypervolume.setOffset(100.0);
 

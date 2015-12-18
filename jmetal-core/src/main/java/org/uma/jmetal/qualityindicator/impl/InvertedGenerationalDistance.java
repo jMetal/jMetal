@@ -34,8 +34,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class InvertedGenerationalDistance<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class InvertedGenerationalDistance<S extends Solution<?>> extends GenericIndicator<S> {
 
   private double pow = 2.0;
 
@@ -81,7 +80,7 @@ public class InvertedGenerationalDistance<Evaluate extends List<? extends Soluti
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
 

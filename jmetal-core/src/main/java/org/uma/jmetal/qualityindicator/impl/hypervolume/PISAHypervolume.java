@@ -42,8 +42,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
-    extends GenericIndicator<Evaluate> implements Hypervolume<S, Evaluate> {
+public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
   private static final double DEFAULT_OFFSET = 100.0 ;
   private double offset = DEFAULT_OFFSET ;
@@ -79,7 +78,7 @@ public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
    * @param paretoFrontApproximation
    * @return
    */
-  @Override public Double evaluate(Evaluate paretoFrontApproximation) {
+  @Override public Double evaluate(List<S> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }
@@ -245,14 +244,9 @@ public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
   public void setOffset (double offset) {
     this.offset = offset ;
   }
-  @Override
-
-  public double getOffset() {
-    return offset ;
-  }
 
   @Override
-  public Evaluate computeHypervolumeContribution(Evaluate solutionList, Evaluate referenceFrontList) {
+  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
       Front front = new ArrayFront(solutionList) ;
       Front referenceFront = new ArrayFront(referenceFrontList) ;
@@ -297,6 +291,12 @@ public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
     return solutionList ;
   }
 
+  @Override
+
+  public double getOffset() {
+    return offset ;
+  }
+
   /**
    * Calculates how much hypervolume each point dominates exclusively. The points
    * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
@@ -327,4 +327,5 @@ public class PISAHypervolume<S extends Solution<?>, Evaluate extends List<S>>
     }
     return contributions;
   }
+
 }

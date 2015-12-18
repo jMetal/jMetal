@@ -22,8 +22,12 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.front.Front;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -32,9 +36,20 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public interface Hypervolume<S extends Solution<?>, Evaluate extends List<S>>
-    extends QualityIndicator<Evaluate, Double>  {
-  public Evaluate computeHypervolumeContribution(Evaluate solutionList, Evaluate referenceFrontList) ;
-  public double getOffset() ;
-  public void setOffset(double offset) ;
+public abstract class Hypervolume<S extends Solution<?>> extends GenericIndicator<S> {
+
+  public Hypervolume() {
+  }
+
+  public Hypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
+    super(referenceParetoFrontFile);
+  }
+
+  public Hypervolume(Front referenceParetoFront) {
+    super(referenceParetoFront);
+  }
+
+  public abstract List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) ;
+  public abstract double getOffset() ;
+  public abstract void setOffset(double offset) ;
 }

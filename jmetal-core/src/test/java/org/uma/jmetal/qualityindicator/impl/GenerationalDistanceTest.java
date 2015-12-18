@@ -42,7 +42,7 @@ public class GenerationalDistanceTest {
 
     Front front = new ArrayFront(0, 0) ;
 
-    GenerationalDistance<List<DoubleSolution>> gd = new GenerationalDistance<List<DoubleSolution>>(front) ;
+    GenerationalDistance<DoubleSolution> gd = new GenerationalDistance<DoubleSolution>(front) ;
     gd.evaluate(null) ;
   }
 

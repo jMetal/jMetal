@@ -61,7 +61,7 @@ public class GenerateWilcoxonTestTables<Result> implements ExperimentComponent {
       boolean result = new File(latexDirectoryName).mkdirs();
       System.out.println("Creating " + latexDirectoryName + " directory");
     }
-    for (GenericIndicator<List<? extends Solution<?>>> indicator : configuration.getIndicatorList()) {
+    for (GenericIndicator<? extends Solution<?>> indicator : configuration.getIndicatorList()) {
       String latexFile = latexDirectoryName + "/" + "Wilcoxon_" + indicator.getName() + ".tex";
 
       printHeaderLatexCommands(latexFile);

@@ -48,7 +48,7 @@ import java.util.logging.Logger;
 public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
   private final ExperimentConfiguration<?, Result> configuration;
-  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+  private List<GenericIndicator<? extends Solution<?>>> indicatorList ;
 
   public ComputeQualityIndicators(ExperimentConfiguration experimentConfiguration) {
     this.configuration = experimentConfiguration ;

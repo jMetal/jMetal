@@ -42,8 +42,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class Spread<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
 
   /**
    * Default constructor
@@ -76,7 +75,7 @@ public class Spread<Evaluate extends List<? extends Solution<?>>>
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     return spread(new ArrayFront(solutionList), referenceParetoFront);
   }
 

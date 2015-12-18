@@ -44,8 +44,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 
-public class Epsilon<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**
    * Default constructor
@@ -78,7 +77,7 @@ public class Epsilon<Evaluate extends List<? extends Solution<?>>>
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation list is null") ;
     }

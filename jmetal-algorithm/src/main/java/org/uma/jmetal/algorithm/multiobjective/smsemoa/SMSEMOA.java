@@ -35,14 +35,14 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   protected int evaluations;
 
-  private Hypervolume<S, List<S>> hypervolume;
+  private Hypervolume<S> hypervolume;
 
   /**
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, Hypervolume<S, List<S>> hypervolumeImplementation) {
+      SelectionOperator<List<S>, S> selectionOperator, Hypervolume<S> hypervolumeImplementation) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);

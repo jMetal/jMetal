@@ -43,8 +43,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate>  {
+public class Hypervolume<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**
    * Default constructor
@@ -77,7 +76,7 @@ public class Hypervolume<Evaluate extends List<? extends Solution<?>>>
    * @param paretoFrontApproximation
    * @return
    */
-  @Override public Double evaluate(Evaluate paretoFrontApproximation) {
+  @Override public Double evaluate(List<S> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }

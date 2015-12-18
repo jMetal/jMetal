@@ -32,8 +32,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends Solution<?>>>
-    extends GenericIndicator<Evaluate> {
+public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**
    * Default constructor
@@ -65,7 +64,7 @@ public class InvertedGenerationalDistancePlus<Evaluate extends List<? extends So
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
+  @Override public Double evaluate(List<S> solutionList) {
     if (solutionList == null) {
       throw new JMetalException("The pareto front approximation is null") ;
     }

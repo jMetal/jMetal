@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by ajnebro on 27/11/15.
  */
-public abstract class GenericIndicator <Evaluate extends List<? extends Solution<?>>>
+public abstract class GenericIndicator<S extends Solution<?>>
     extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate, Double> {
+    implements QualityIndicator<List<S>, Double> {
 
   protected Front referenceParetoFront = null ;
 

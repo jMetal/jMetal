@@ -22,7 +22,7 @@ public class SMPSOhv2IT {
 
   @Before
   public void setup() {
-    archive = new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution, List<DoubleSolution>>()) ;
+    archive = new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>()) ;
   }
 
 

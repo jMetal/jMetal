@@ -24,7 +24,7 @@ public class SMPSOhvIT {
 
   @Before
   public void setup() {
-    archive = new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution, List<DoubleSolution>>()) ;
+    archive = new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>()) ;
   }
 
   @Test

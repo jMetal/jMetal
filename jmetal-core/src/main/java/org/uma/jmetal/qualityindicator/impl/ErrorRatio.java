@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate,Double> {
+    implements QualityIndicator<Evaluate, Double> {
   private Front referenceParetoFront ;
 
   /**

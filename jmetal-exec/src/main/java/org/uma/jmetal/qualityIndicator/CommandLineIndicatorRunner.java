@@ -146,13 +146,13 @@ public class CommandLineIndicatorRunner {
       Front referenceFront) throws FileNotFoundException {
 
     List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
-    list.add(new Epsilon<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new Hypervolume<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new GenerationalDistance<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new InvertedGenerationalDistance<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new InvertedGenerationalDistancePlus<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new Spread<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new GeneralizedSpread<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new Epsilon<DoubleSolution>(referenceFront)) ;
+    list.add(new Hypervolume<DoubleSolution>(referenceFront)) ;
+    list.add(new GenerationalDistance<DoubleSolution>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistance<DoubleSolution>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistancePlus<DoubleSolution>(referenceFront)) ;
+    list.add(new Spread<DoubleSolution>(referenceFront)) ;
+    list.add(new GeneralizedSpread<DoubleSolution>(referenceFront)) ;
     //list.add(new R2<List<DoubleSolution>>(referenceFront)) ;
     list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront)) ;
 

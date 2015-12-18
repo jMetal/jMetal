@@ -40,7 +40,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
   private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
 
-  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+  private List<GenericIndicator<S>> indicatorList ;
 
   private int numberOfCores ;
 
@@ -100,7 +100,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     return referenceFrontDirectory;
   }
 
-  public List<GenericIndicator<List<? extends Solution<?>>>> getIndicatorList() {
+  public List<GenericIndicator<S>> getIndicatorList() {
     return indicatorList;
   }
 

@@ -37,7 +37,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   private String outputParetoSetFileName;
   private int independentRuns;
 
-  private List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ;
+  private List<GenericIndicator<S>> indicatorList ;
 
   private int numberOfCores ;
 
@@ -80,7 +80,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
   }
 
   public ExperimentConfigurationBuilder<S, Result> setIndicatorList(
-      List<GenericIndicator<List<? extends Solution<?>>>> indicatorList ) {
+      List<GenericIndicator<S>> indicatorList ) {
     this.indicatorList = indicatorList ;
 
     return this ;
@@ -155,7 +155,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
     return referenceFrontDirectory;
   }
 
-  public List<GenericIndicator<List<? extends Solution<?>>>> getIndicatorList() {
+  public List<GenericIndicator<S>> getIndicatorList() {
     return indicatorList;
   }
 }

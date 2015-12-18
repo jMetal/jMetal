@@ -62,7 +62,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
       boolean result = new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
-    for (GenericIndicator<List<? extends Solution<?>>> indicator : configuration.getIndicatorList()) {
+    for (GenericIndicator<? extends Solution<?>> indicator : configuration.getIndicatorList()) {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
       String latexFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".tex";
 
