@@ -24,10 +24,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.IOException;
@@ -75,7 +72,7 @@ public class NSGAIIStudy  {
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
-            .setIndependentRuns(25)
+            .setIndependentRuns(30)
             .setNumberOfCores(8)
             .build();
 
@@ -83,6 +80,7 @@ public class NSGAIIStudy  {
     new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
     new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
+    new GenerateFriedmanTestTables<>(configuration).run();
   }
 
   /**
