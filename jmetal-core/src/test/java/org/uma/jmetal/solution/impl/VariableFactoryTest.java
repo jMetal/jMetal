@@ -1,14 +1,14 @@
 package org.uma.jmetal.solution.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.uma.jmetal.solution.SolutionBuilder.Variable;
+import org.uma.jmetal.solution.impl.VariableFactory.IsInterfaceException;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.junit.Test;
-import org.uma.jmetal.solution.SolutionBuilder.Variable;
-import org.uma.jmetal.solution.impl.VariableFactory.IsInterfaceException;
+import static org.junit.Assert.*;
 
 public class VariableFactoryTest {
 

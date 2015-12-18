@@ -1,7 +1,7 @@
 package org.uma.jmetal.measure.impl;
 
-import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 import org.uma.jmetal.measure.Measure;
+import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 /**
  * {@link SimpleMeasure} is a basic implementation of {@link Measure}. It

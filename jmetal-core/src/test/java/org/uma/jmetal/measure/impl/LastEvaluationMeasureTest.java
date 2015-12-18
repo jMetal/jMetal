@@ -1,10 +1,11 @@
 package org.uma.jmetal.measure.impl;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.impl.LastEvaluationMeasure.Evaluation;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class LastEvaluationMeasureTest {
 

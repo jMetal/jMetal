@@ -13,7 +13,6 @@
 package org.uma.jmetal.util.archive;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.Comparator;
 

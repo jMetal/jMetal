@@ -16,12 +16,9 @@ package org.uma.jmetal.util.archive.impl;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 24/09/14.

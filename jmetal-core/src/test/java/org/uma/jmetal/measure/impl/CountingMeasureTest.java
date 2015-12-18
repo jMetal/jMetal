@@ -1,9 +1,9 @@
 package org.uma.jmetal.measure.impl;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
+
+import static org.junit.Assert.*;
 
 public class CountingMeasureTest {
 

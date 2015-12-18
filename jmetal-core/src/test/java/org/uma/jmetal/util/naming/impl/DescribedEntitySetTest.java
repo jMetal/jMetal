@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.naming.impl;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.uma.jmetal.util.naming.DescribedEntity;
+
+import static org.junit.Assert.*;
 
 public class DescribedEntitySetTest {
 

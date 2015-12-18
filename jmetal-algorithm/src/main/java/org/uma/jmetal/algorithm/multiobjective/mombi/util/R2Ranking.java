@@ -1,17 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+
+import java.util.*;
 
 public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S, R2SolutionData> {
 

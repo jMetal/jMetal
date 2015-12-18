@@ -16,7 +16,6 @@ package org.uma.jmetal.operator.impl.selection;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.SolutionListUtils;
 
 import java.util.Comparator;
 import java.util.List;

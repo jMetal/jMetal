@@ -1,9 +1,9 @@
 package org.uma.jmetal.solution;
 
-import java.util.Collection;
-
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.naming.DescribedEntity;
+
+import java.util.Collection;
 
 /**
  * A {@link SolutionBuilder} allows to generate a {@link Solution} by setting

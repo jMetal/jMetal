@@ -1,9 +1,9 @@
 package org.uma.jmetal.solution;
 
-import java.util.Collection;
-
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.naming.DescribedEntity;
+
+import java.util.Collection;
 
 /**
  * A {@link SolutionEvaluator} allows to evaluate a {@link Solution} on one or

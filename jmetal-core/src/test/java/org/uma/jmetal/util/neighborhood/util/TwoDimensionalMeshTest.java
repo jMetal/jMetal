@@ -6,7 +6,6 @@ import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 import java.util.ArrayList;
 import java.util.List;

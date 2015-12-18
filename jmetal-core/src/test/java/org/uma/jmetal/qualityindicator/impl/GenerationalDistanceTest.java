@@ -21,8 +21,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.containsString;
 
 /**

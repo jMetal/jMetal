@@ -1,13 +1,14 @@
 package org.uma.jmetal.solution.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.uma.jmetal.solution.SolutionEvaluator.Objective;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.junit.Test;
-import org.uma.jmetal.solution.SolutionEvaluator.Objective;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ObjectiveFactoryTest {
 

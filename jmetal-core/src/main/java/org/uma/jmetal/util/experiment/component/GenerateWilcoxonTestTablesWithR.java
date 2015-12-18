@@ -13,19 +13,15 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import org.apache.commons.math3.stat.StatUtils;
-import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.fileinput.util.ReadDoubleDataFile;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * This class generates a R script that computes the Wilcoxon Signed Rank Test and generates a Latex script

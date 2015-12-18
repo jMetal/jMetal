@@ -15,8 +15,6 @@ package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.solution.Solution;
 
-import java.util.List;
-
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

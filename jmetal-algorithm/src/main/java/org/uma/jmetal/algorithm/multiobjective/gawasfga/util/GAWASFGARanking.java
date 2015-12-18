@@ -1,13 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.gawasfga.util;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GAWASFGARanking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer> 
 		implements Ranking<S> {

@@ -1,17 +1,11 @@
 package org.uma.jmetal.solution.impl;
 
+import org.uma.jmetal.solution.SolutionBuilder.Variable;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-
-import org.uma.jmetal.solution.SolutionBuilder.Variable;
 
 /**
  * This factory provides facilities to generate {@link Variable}s from usual

@@ -1,13 +1,13 @@
 package org.uma.jmetal.solution.impl;
 
+import org.uma.jmetal.solution.SolutionEvaluator.Objective;
+
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.uma.jmetal.solution.SolutionEvaluator.Objective;
 
 /**
  * This factory provides facilities to generate {@link Objective}s from usual

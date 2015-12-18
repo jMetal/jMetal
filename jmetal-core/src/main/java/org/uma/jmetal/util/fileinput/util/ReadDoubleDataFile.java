@@ -13,12 +13,7 @@
 
 package org.uma.jmetal.util.fileinput.util;
 
-import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.*;
 import java.util.ArrayList;

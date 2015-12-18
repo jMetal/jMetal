@@ -1,11 +1,11 @@
 package org.uma.jmetal.measure.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.uma.jmetal.measure.Measure;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.PushMeasure;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * {@link SimplePushMeasure} is a basic implementation of {@link PushMeasure}.

@@ -15,7 +15,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by ajnebro on 27/10/15.

@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.pseudorandom;
 
-import org.apache.commons.math3.random.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 import java.io.Serializable;

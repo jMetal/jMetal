@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.gawasfga;
 
-import java.util.List;
-
 import org.uma.jmetal.algorithm.multiobjective.gawasfga.util.GAWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -14,6 +12,8 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
+
+import java.util.List;
 
 public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
   final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;

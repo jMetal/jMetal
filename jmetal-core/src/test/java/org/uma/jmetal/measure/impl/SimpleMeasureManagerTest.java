@@ -1,13 +1,13 @@
 package org.uma.jmetal.measure.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.uma.jmetal.measure.Measure;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-import org.uma.jmetal.measure.Measure;
+import static org.junit.Assert.*;
 
 public class SimpleMeasureManagerTest {
 

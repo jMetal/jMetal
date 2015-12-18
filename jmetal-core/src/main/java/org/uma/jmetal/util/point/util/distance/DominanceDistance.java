@@ -15,7 +15,6 @@ package org.uma.jmetal.util.point.util.distance;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.util.distance.PointDistance;
 
 /**
  * Computes the distance between two points a y b according to the dominance relationship. Point a

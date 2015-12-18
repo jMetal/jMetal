@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
@@ -29,10 +28,7 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class computes the {@link QualityIndicator}s of an experiment. Once the algorithms of an

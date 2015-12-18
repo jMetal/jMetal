@@ -23,8 +23,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
-import java.util.List;
-
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -34,6 +32,8 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
+
+import java.util.List;
 
 /**
  * This class implements the IBEA algorithm

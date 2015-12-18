@@ -15,7 +15,6 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -25,9 +24,6 @@ import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
