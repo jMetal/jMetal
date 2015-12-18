@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
+@SuppressWarnings("unchecked")
 public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
   private final ExperimentConfiguration<?, Result> configuration;
