@@ -44,16 +44,19 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
 
   private final ExperimentConfiguration<?, Result> configuration;
-  private List<GenericIndicator<? extends Solution<?>>> indicatorList ;
 
   private String latexDirectoryName ;
+  private int numberOfAlgorithms ;
+  private int numberOfProblems ;
 
   @SuppressWarnings("unchecked")
   public GenerateFriedmanTestTables(ExperimentConfiguration experimentConfiguration) {
     this.configuration = experimentConfiguration ;
-    this.indicatorList = experimentConfiguration.getIndicatorList() ;
 
     configuration.removeDuplicatedAlgorithms();
+
+    numberOfAlgorithms = configuration.getAlgorithmList().size() ;
+    numberOfProblems = configuration.getProblemList().size() ;
   }
 
 
@@ -67,56 +70,32 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   }
 
   private void computeDataStatistics(QualityIndicator indicator) {
-    Vector<String> datasets = new Vector<String>();
-    Vector<Vector<Double>> data = new Vector<>();
-
-    String outputFile =
-        latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
-
-    int numberOfAlgorithms = configuration.getAlgorithmList().size() ;
-
-    for (int algorithm = 0; algorithm < configuration.getAlgorithmList().size(); algorithm++) {
-      String algorithmName = configuration.getAlgorithmList().get(algorithm).getTag();
-
-      data.add(new Vector<Double>());
-      String algorithmPath = configuration.getExperimentBaseDirectory() + "/data/"
-          + algorithmName + "/";
-
-      for (int problem = 0; problem < configuration.getProblemList().size(); problem++) {
-        if (algorithm == 0) {
-          datasets.add(configuration.getProblemList().get(problem).getName());
-        }
-
-        String path = algorithmPath + configuration.getProblemList().get(problem).getName() +
-            "/" + indicator.getName();
-
-        readDataFromFile(path, data, algorithm) ;
-      }
-    }
+    Vector<Vector<Double>> data ;
+    data = readData(indicator);
 
       /*Compute the average performance per algorithm for each data set*/
-    double[][] mean = new double[datasets.size()][numberOfAlgorithms];
+    double[][] mean = new double[numberOfProblems][numberOfAlgorithms];
 
     for (int j = 0; j < numberOfAlgorithms; j++) {
-      for (int i = 0; i < datasets.size(); i++) {
+      for (int i = 0; i < numberOfProblems; i++) {
         mean[i][j] = ((Double)((Vector)data.elementAt(j)).elementAt(i)).doubleValue();
       }
     }
 
-          /*We use the pareja structure to compute and order rankings*/
-    Pair[][] order = new Pair[datasets.size()][numberOfAlgorithms];
+    /*We use the Pair class to compute and order rankings*/
+    Pair[][] order = new Pair[numberOfProblems][numberOfAlgorithms];
 
-    for (int i=0; i<datasets.size(); i++) {
+    for (int i=0; i<numberOfProblems; i++) {
       for (int j=0; j<numberOfAlgorithms; j++){
         order[i][j] = new Pair(j,mean[i][j]);
       }
       Arrays.sort(order[i]);
     }
 
-          /*building of the rankings table per algorithms and data sets*/
-    Pair[][] rank = new Pair[datasets.size()][numberOfAlgorithms];
+    /*building of the rankings table per algorithms and data sets*/
+    Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
     int position = 0;
-    for (int i=0; i<datasets.size(); i++) {
+    for (int i=0; i<numberOfProblems; i++) {
       for (int j=0; j<numberOfAlgorithms; j++){
         boolean found  = false;
         for (int k=0; k<numberOfAlgorithms && !found; k++) {
@@ -130,28 +109,28 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     }
 
     /*In the case of having the same performance, the rankings are equal*/
-    for (int i=0; i<datasets.size(); i++) {
-      boolean[] visto = new boolean[numberOfAlgorithms];
-      Vector porVisitar= new Vector();
+    for (int i=0; i<numberOfProblems; i++) {
+      boolean[] hasBeenVisited = new boolean[numberOfAlgorithms];
+      Vector<Integer> pendingToVisit= new Vector<Integer>();
 
-      Arrays.fill(visto,false);
+      Arrays.fill(hasBeenVisited,false);
       for (int j=0; j<numberOfAlgorithms; j++) {
-        porVisitar.removeAllElements();
+        pendingToVisit.removeAllElements();
         double sum = rank[i][j].index;
-        visto[j] = true;
+        hasBeenVisited[j] = true;
         int ig = 1;
         for (int k=j+1;k<numberOfAlgorithms;k++) {
-          if (rank[i][j].value == rank[i][k].value && !visto[k]) {
+          if (rank[i][j].value == rank[i][k].value && !hasBeenVisited[k]) {
             sum += rank[i][k].index;
             ig++;
-            porVisitar.add(new Integer(k));
-            visto[k] = true;
+            pendingToVisit.add(new Integer(k));
+            hasBeenVisited[k] = true;
           }
         }
         sum /= (double)ig;
         rank[i][j].index = sum;
-        for (int k=0; k<porVisitar.size(); k++) {
-          rank[i][((Integer)porVisitar.elementAt(k)).intValue()].index = sum;
+        for (int k=0; k<pendingToVisit.size(); k++) {
+          rank[i][(pendingToVisit.elementAt(k)).intValue()].index = sum;
         }
       }
     }
@@ -160,8 +139,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     double []averageRanking = new double[numberOfAlgorithms];
     for (int i=0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
-      for (int j=0; j<datasets.size(); j++) {
-        averageRanking[i] += rank[j][i].index / ((double)datasets.size());
+      for (int j=0; j<numberOfProblems; j++) {
+        averageRanking[i] += rank[j][i].index / ((double)numberOfProblems);
       }
     }
 
@@ -169,8 +148,29 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     fileContents = printTableHeader(fileContents) ;
     fileContents = printTableLines(fileContents, averageRanking) ;
     fileContents = printTableTail(fileContents) ;
-    fileContents = printDocumentFooter(fileContents, datasets, averageRanking) ;
-    writeLatexFile(outputFile, fileContents);
+    fileContents = printDocumentFooter(fileContents, averageRanking) ;
+    writeLatexFile(indicator, fileContents);
+  }
+
+  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
+    Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
+
+    for (int algorithm = 0; algorithm < configuration.getAlgorithmList().size(); algorithm++) {
+      String algorithmName = configuration.getAlgorithmList().get(algorithm).getTag();
+
+      data.add(new Vector<Double>());
+      String algorithmPath = configuration.getExperimentBaseDirectory() + "/data/"
+          + algorithmName + "/";
+
+      for (int problem = 0; problem < configuration.getProblemList().size(); problem++) {
+        String path = algorithmPath + configuration.getProblemList().get(problem).getName() +
+            "/" + indicator.getName();
+
+        readDataFromFile(path, data, algorithm) ;
+      }
+    }
+
+    return data ;
   }
 
   private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
@@ -179,14 +179,14 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     try {
       FileInputStream fis = new FileInputStream(path);
 
-      byte[] leido = new byte[4096];
-      int bytesLeidos = 0;
+      byte[] bytes = new byte[4096];
+      int readBytes = 0;
 
-      while (bytesLeidos != -1) {
-        bytesLeidos = fis.read(leido);
+      while (readBytes != -1) {
+        readBytes = fis.read(bytes);
 
-        if (bytesLeidos != -1) {
-          string += new String(leido, 0, bytesLeidos);
+        if (readBytes != -1) {
+          string += new String(bytes, 0, readBytes);
         }
       }
 
@@ -214,10 +214,12 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
   /**
    * Write the file contents in the output file
-   * @param outputFile
+   * @param indicator
    * @param fileContents
    */
-  private void writeLatexFile(String outputFile, String fileContents) {
+  private void writeLatexFile(QualityIndicator indicator, String fileContents) {
+    String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
+
     try {
       File latexOutput;
       latexOutput = new File(latexDirectoryName);
@@ -276,9 +278,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
         "Algorithm&Ranking\\\\\n\\hline");
   }
 
-  private String printDocumentFooter(String fileContents, Vector<String> datasets, double[] averageRanking) {
-    double numberOfAlgorithms = configuration.getAlgorithmList().size() ;
-    double term1 = (12*(double)datasets.size())/(numberOfAlgorithms*(numberOfAlgorithms+1));
+  private String printDocumentFooter(String fileContents, double[] averageRanking) {
+    double term1 = (12*(double)numberOfProblems)/(numberOfAlgorithms*(numberOfAlgorithms+1));
     double term2 = numberOfAlgorithms*(numberOfAlgorithms+1)*(numberOfAlgorithms+1)/(4.0);
     double sum = 0;
     for (int i=0; i<numberOfAlgorithms;i++) {
