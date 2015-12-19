@@ -65,15 +65,75 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     latexDirectoryName = configuration.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
     for (QualityIndicator indicator : configuration.getIndicatorList()) {
-      computeDataStatistics(indicator);
+      Vector<Vector<Double>> data = readData(indicator);
+      double []averageRanking = computeAverageRanking(indicator, data) ;
+      String fileContents = prepareFileOutputContents(averageRanking) ;
+      writeLatexFile(indicator, fileContents);
     }
   }
 
-  private void computeDataStatistics(QualityIndicator indicator) {
-    Vector<Vector<Double>> data ;
-    data = readData(indicator);
+  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
+    Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
-      /*Compute the average performance per algorithm for each data set*/
+    for (int algorithm = 0; algorithm < configuration.getAlgorithmList().size(); algorithm++) {
+      String algorithmName = configuration.getAlgorithmList().get(algorithm).getTag();
+
+      data.add(new Vector<Double>());
+      String algorithmPath = configuration.getExperimentBaseDirectory() + "/data/"
+          + algorithmName + "/";
+
+      for (int problem = 0; problem < configuration.getProblemList().size(); problem++) {
+        String path = algorithmPath + configuration.getProblemList().get(problem).getName() +
+            "/" + indicator.getName();
+
+        readDataFromFile(path, data, algorithm) ;
+      }
+    }
+
+    return data ;
+  }
+
+  private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
+    String string = "";
+
+    try {
+      FileInputStream fis = new FileInputStream(path);
+
+      byte[] bytes = new byte[4096];
+      int readBytes = 0;
+
+      while (readBytes != -1) {
+        readBytes = fis.read(bytes);
+
+        if (readBytes != -1) {
+          string += new String(bytes, 0, readBytes);
+        }
+      }
+
+      fis.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(-1);
+    }
+
+    StringTokenizer lines = new StringTokenizer(string, "\n\r");
+
+    double valor = 0.0;
+    int n = 0;
+
+    while (lines.hasMoreTokens()) {
+      valor = valor + Double.parseDouble(lines.nextToken());
+      n++;
+    }
+    if (n != 0) {
+      (data.elementAt(algorithmIndex)).add(new Double(valor / n));
+    } else {
+      (data.elementAt(algorithmIndex)).add(new Double(valor));
+    }
+  }
+
+  private double[] computeAverageRanking(QualityIndicator indicator, Vector<Vector<Double>> data) {
+    /*Compute the average performance per algorithm for each data set*/
     double[][] mean = new double[numberOfProblems][numberOfAlgorithms];
 
     for (int j = 0; j < numberOfAlgorithms; j++) {
@@ -144,72 +204,17 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
       }
     }
 
+    return averageRanking ;
+  }
+
+  public String prepareFileOutputContents(double[] averageRanking) {
     String fileContents = writeLatexHeader();
     fileContents = printTableHeader(fileContents) ;
     fileContents = printTableLines(fileContents, averageRanking) ;
     fileContents = printTableTail(fileContents) ;
     fileContents = printDocumentFooter(fileContents, averageRanking) ;
-    writeLatexFile(indicator, fileContents);
-  }
 
-  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
-    Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
-
-    for (int algorithm = 0; algorithm < configuration.getAlgorithmList().size(); algorithm++) {
-      String algorithmName = configuration.getAlgorithmList().get(algorithm).getTag();
-
-      data.add(new Vector<Double>());
-      String algorithmPath = configuration.getExperimentBaseDirectory() + "/data/"
-          + algorithmName + "/";
-
-      for (int problem = 0; problem < configuration.getProblemList().size(); problem++) {
-        String path = algorithmPath + configuration.getProblemList().get(problem).getName() +
-            "/" + indicator.getName();
-
-        readDataFromFile(path, data, algorithm) ;
-      }
-    }
-
-    return data ;
-  }
-
-  private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
-    String string = "";
-
-    try {
-      FileInputStream fis = new FileInputStream(path);
-
-      byte[] bytes = new byte[4096];
-      int readBytes = 0;
-
-      while (readBytes != -1) {
-        readBytes = fis.read(bytes);
-
-        if (readBytes != -1) {
-          string += new String(bytes, 0, readBytes);
-        }
-      }
-
-      fis.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(-1);
-    }
-
-    StringTokenizer lines = new StringTokenizer(string, "\n\r");
-
-    double valor = 0.0;
-    int n = 0;
-
-    while (lines.hasMoreTokens()) {
-      valor = valor + Double.parseDouble(lines.nextToken());
-      n++;
-    }
-    if (n != 0) {
-      (data.elementAt(algorithmIndex)).add(new Double(valor / n));
-    } else {
-      (data.elementAt(algorithmIndex)).add(new Double(valor));
-    }
+    return fileContents ;
   }
 
   /**
