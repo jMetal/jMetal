@@ -253,7 +253,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
         secondBestDispersionValue = Double.MIN_VALUE;
         for (int j = 0; j < (configuration.getAlgorithmList().size()); j++) {
           if ((centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] == bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
+              ((centralTendency[indicatorIndex][i][j] ==
+                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
             secondBestIndex = bestIndex;
             secondBestCentralTendencyValue = bestCentralTendencyValue;
             secondBestDispersionValue = bestDispersionValue;
@@ -261,7 +262,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
             bestDispersionValue = dispersion[indicatorIndex][i][j];
             bestIndex = j;
           } else if ((centralTendency[indicatorIndex][i][j] > secondBestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] == secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
+              ((centralTendency[indicatorIndex][i][j] ==
+                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
             secondBestIndex = j;
             secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
             secondBestDispersionValue = dispersion[indicatorIndex][i][j];
@@ -274,7 +276,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
         secondBestDispersionValue = Double.MAX_VALUE;
         for (int j = 0; j < (configuration.getAlgorithmList().size()); j++) {
           if ((centralTendency[indicatorIndex][i][j] < bestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] == bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
+              ((centralTendency[indicatorIndex][i][j] ==
+                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
             secondBestIndex = bestIndex;
             secondBestCentralTendencyValue = bestCentralTendencyValue;
             secondBestDispersionValue = bestDispersionValue;
@@ -282,7 +285,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
             bestDispersionValue = dispersion[indicatorIndex][i][j];
             bestIndex = j;
           } else if ((centralTendency[indicatorIndex][i][j] < secondBestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] == secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
+              ((centralTendency[indicatorIndex][i][j] ==
+                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
             secondBestIndex = j;
             secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
             secondBestDispersionValue = dispersion[indicatorIndex][i][j];
@@ -306,8 +310,10 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
       if (bestIndex == (configuration.getAlgorithmList().size()- 1)) {
         os.write("\\cellcolor{gray95}");
       }
-      String m = String.format(Locale.ENGLISH, "%10.2e", centralTendency[indicatorIndex][i][configuration.getAlgorithmList().size() - 1]);
-      String s = String.format(Locale.ENGLISH, "%8.1e", dispersion[indicatorIndex][i][configuration.getAlgorithmList().size() - 1]);
+      String m = String.format(Locale.ENGLISH, "%10.2e",
+          centralTendency[indicatorIndex][i][configuration.getAlgorithmList().size() - 1]);
+      String s = String.format(Locale.ENGLISH, "%8.1e",
+          dispersion[indicatorIndex][i][configuration.getAlgorithmList().size() - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
     }
 
