@@ -71,6 +71,10 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
   public List<BinarySolution> doCrossover(double probability,
                                           BinarySolution parent1,
                                           BinarySolution parent2) throws JMetalException {
+    List<BinarySolution> offspring = new ArrayList<>();
+    offspring.add((BinarySolution) parent1.copy()) ;
+    offspring.add((BinarySolution) parent2.copy()) ;
+
     if (randomGenerator.nextDouble() < probability) {
       for (int var = 0; var < parent1.getNumberOfVariables(); var++) {
         BitSet p1 = parent1.getVariableValue(var) ;
@@ -78,18 +82,14 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
         for (int bit = 0; bit < parent1.getNumberOfBits(var); bit++) {
           if ((p1.get(bit) != p2.get(bit)) && (randomGenerator.nextDouble() < 0.5)) {
-            parent1.getVariableValue(var).set(bit, p2.get(bit)) ;
-            parent2.getVariableValue(var).set(bit, p1.get(bit)) ;
+            offspring.get(0).getVariableValue(var).set(bit, p2.get(bit)) ;
+            offspring.get(1).getVariableValue(var).set(bit, p1.get(bit)) ;
           }
         }
       }
     }
 
-    List<BinarySolution> offSpring = new ArrayList<>();
-    offSpring.add(parent1) ;
-    offSpring.add(parent2) ;
-
-    return offSpring;
+    return offspring;
   }
 
   /**
