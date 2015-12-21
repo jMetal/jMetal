@@ -14,8 +14,6 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.Pair;
@@ -66,7 +64,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
     for (QualityIndicator indicator : configuration.getIndicatorList()) {
       Vector<Vector<Double>> data = readData(indicator);
-      double []averageRanking = computeAverageRanking(indicator, data) ;
+      double []averageRanking = computeAverageRanking(data) ;
       String fileContents = prepareFileOutputContents(averageRanking) ;
       writeLatexFile(indicator, fileContents);
     }
@@ -126,19 +124,19 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
       n++;
     }
     if (n != 0) {
-      (data.elementAt(algorithmIndex)).add(new Double(valor / n));
+      (data.elementAt(algorithmIndex)).add(valor / n);
     } else {
-      (data.elementAt(algorithmIndex)).add(new Double(valor));
+      (data.elementAt(algorithmIndex)).add(valor);
     }
   }
 
-  private double[] computeAverageRanking(QualityIndicator indicator, Vector<Vector<Double>> data) {
+  private double[] computeAverageRanking(Vector<Vector<Double>> data) {
     /*Compute the average performance per algorithm for each data set*/
     double[][] mean = new double[numberOfProblems][numberOfAlgorithms];
 
     for (int j = 0; j < numberOfAlgorithms; j++) {
       for (int i = 0; i < numberOfProblems; i++) {
-        mean[i][j] = ((Double)((Vector)data.elementAt(j)).elementAt(i)).doubleValue();
+        mean[i][j] = (Double)((Vector) data.elementAt(j)).elementAt(i);
       }
     }
 
@@ -183,14 +181,14 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
           if (rank[i][j].value == rank[i][k].value && !hasBeenVisited[k]) {
             sum += rank[i][k].index;
             ig++;
-            pendingToVisit.add(new Integer(k));
+            pendingToVisit.add(k);
             hasBeenVisited[k] = true;
           }
         }
         sum /= (double)ig;
         rank[i][j].index = sum;
         for (int k=0; k<pendingToVisit.size(); k++) {
-          rank[i][(pendingToVisit.elementAt(k)).intValue()].index = sum;
+          rank[i][pendingToVisit.elementAt(k)].index = sum;
         }
       }
     }
@@ -246,7 +244,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   }
 
   private String writeLatexHeader() {
-    String latexHeader = ("\\documentclass{article}\n" +
+
+    return ("\\documentclass{article}\n" +
         "\\usepackage{graphicx}\n" +
         "\\title{Results}\n" +
         "\\author{}\n" +
@@ -256,8 +255,6 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
         "\\maketitle\n" +
         "\\\n" +
         "\\section{Tables}");
-
-    return latexHeader ;
   }
 
   private String printTableLines(String fileContents, double[] averageRanking) {

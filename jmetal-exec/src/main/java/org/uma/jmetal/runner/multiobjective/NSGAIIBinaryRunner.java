@@ -70,7 +70,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.OneZeroMax";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
       referenceParetoFront = "" ;
     }
 
