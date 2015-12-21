@@ -8,7 +8,7 @@ the new incoming features in advance.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
-##Changelog
+##Changelog of the next incoming release (jMetal 5.1)
 * New algorithms
  * [MOCHC](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/mochc) 
  (Optimal antenna placement using a new multi-objective chc algorithm. A.J. Nebro, E. Alba, G. Molina, F. Chicano, F. Luna, J.J. Durillo. GECCO '07: Proceedings of the 9th annual conference on Genetic and evolutionary computation. London, England. July 2007. DOI: [10.1145/1276958.1277128](http://dx.doi.org/10.1145/1276958.1277128)) 
