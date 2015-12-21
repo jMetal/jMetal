@@ -27,7 +27,7 @@ If you are interested in contributing with your ideas and comments, please take 
   * [`HypervolumeArchive`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/archive/impl/HypervolumeArchive.java)
  
 * New features
-  * Support [for experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
+  * Support for [experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
     * Parallel algorithm execution.
     * Quality indicators computing.
     * Reference Pareto front approximation computing.
