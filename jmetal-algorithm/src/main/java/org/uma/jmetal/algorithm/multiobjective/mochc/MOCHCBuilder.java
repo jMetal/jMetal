@@ -4,16 +4,16 @@ package org.uma.jmetal.algorithm.multiobjective.mochc;
  * Created by ajnebro on 21/11/14.
  */
 
-import java.util.List;
-
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.AlgorithmBuilder;
+
+import java.util.List;
 
 /**
  * Builder class
@@ -38,6 +38,7 @@ public class MOCHCBuilder implements AlgorithmBuilder<MOCHC> {
     maxEvaluations = 25000 ;
     convergenceValue = 3 ;
     preservedPopulation = 0.05 ;
+    initialConvergenceCount = 0.25 ;
   }
 
   /* Getters */

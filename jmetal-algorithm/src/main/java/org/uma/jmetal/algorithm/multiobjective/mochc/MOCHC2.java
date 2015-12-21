@@ -21,7 +21,8 @@
 
 package org.uma.jmetal.algorithm.multiobjective.mochc;
 
-import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -44,10 +45,15 @@ import java.util.List;
  * "Optimal antenna placement using a new multi-objective chc algorithm".
  * GECCO '07: Proceedings of the 9th annual conference on Genetic and
  * evolutionary computation. London, England. July 2007.
+ *
+ * Implementation of MOCHC following the scheme used in jMetal4.5 and former versions, i.e, without
+ * implementing the {@link AbstractGeneticAlgorithm} interface.
  */
-public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<BinarySolution>> {
+public class MOCHC2 implements Algorithm<List<BinarySolution>> {
   private BinaryProblem problem;
 
+  private List<BinarySolution> population ;
+  private int populationSize ;
   private int maxEvaluations;
   private int convergenceValue;
   private double preservedPopulation;
@@ -62,20 +68,20 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private Comparator<BinarySolution> comparator;
 
   private SolutionListEvaluator<BinarySolution> evaluator;
-  private int lastOffspringPopulationSize ;
 
   /**
    * Constructor
    */
-  public MOCHC(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
-      double preservedPopulation, double initialConvergenceCount,
-      CrossoverOperator<BinarySolution> crossoverOperator,
-      MutationOperator<BinarySolution> cataclysmicMutation,
-      SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection, SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
-      SolutionListEvaluator<BinarySolution> evaluator) {
+  public MOCHC2(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
+                double preservedPopulation, double initialConvergenceCount,
+                CrossoverOperator<BinarySolution> crossoverOperator,
+                MutationOperator<BinarySolution> cataclysmicMutation,
+                SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection,
+                SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
+                SolutionListEvaluator<BinarySolution> evaluator) {
     super();
     this.problem = problem;
-    setMaxPopulationSize(populationSize);
+    this.populationSize = populationSize;
     this.maxEvaluations = maxEvaluations;
     this.convergenceValue = convergenceValue;
     this.preservedPopulation = preservedPopulation;
@@ -85,107 +91,96 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     this.newGenerationSelection = newGenerationSelection;
     this.parentSelection = parentSelection;
     this.evaluator = evaluator;
+  }
 
+  @Override
+  public String getName() {
+    return "MOCHC45";
+  }
+
+  @Override
+  public String getDescription() {
+    return "Multiobjective CHC algorithm";
+  }
+
+  @Override
+  public void run() {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       size += problem.getNumberOfBits(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
     comparator = new CrowdingDistanceComparator<BinarySolution>();
-  }
 
-  @Override protected void initProgress() {
-    evaluations = getMaxPopulationSize() ;
-  }
-
-  @Override protected void updateProgress() {
-    evaluations += lastOffspringPopulationSize ;
-  }
-
-  @Override protected boolean isStoppingConditionReached() {
-    return evaluations >= maxEvaluations;
-  }
-
-  @Override protected List<BinarySolution> createInitialPopulation() {
-    List<BinarySolution> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
+    evaluations = 0 ;
+    population = new ArrayList<>() ;
+    for (int i = 0; i < populationSize; i++) {
       BinarySolution newIndividual = problem.createSolution();
+      problem.evaluate(newIndividual);
       population.add(newIndividual);
-    }
-    return population;
-  }
-
-  @Override protected List<BinarySolution> evaluatePopulation(List<BinarySolution> population) {
-    population = evaluator.evaluate(population, problem);
-
-    return population;
-  }
-
-  @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
-    List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < population.size(); i ++) {
-      BinarySolution solution = parentSelection.execute(population);
-      matingPopulation.add(solution);
+      evaluations ++ ;
     }
 
-    return matingPopulation;
-  }
+    boolean finishCondition = false ;
 
-  @Override protected List<BinarySolution> reproduction(List<BinarySolution> matingPopulation) {
-    List<BinarySolution> offspringPopulation = new ArrayList<>();
+    while (!finishCondition) {
+      List<BinarySolution> offspringPopulation = new ArrayList<>(populationSize) ;
+      for (int i = 0; i < population.size()/2; i++) {
+        List<BinarySolution> parents = new ArrayList<>(2) ;
+        parents.add(parentSelection.execute(population)) ;
+        parents.add(parentSelection.execute(population)) ;
 
-    for (int i = 0; i < matingPopulation.size(); i += 2) {
-      List<BinarySolution> parents = new ArrayList<>(2);
-      parents.add(matingPopulation.get(i));
-      parents.add(matingPopulation.get(i + 1));
+        if (hammingDistance(parents.get(0), parents.get(1)) >= minimumDistance) {
+          List<BinarySolution> offspring = crossover.execute(parents);
+          problem.evaluate(offspring.get(0));
+          problem.evaluate(offspring.get(1));
+          offspringPopulation.add(offspring.get(0));
+          offspringPopulation.add(offspring.get(1));
 
-      if (hammingDistance(parents.get(0), parents.get(1)) >= minimumDistance) {
-        List<BinarySolution> offspring = crossover.execute(parents);
-        offspringPopulation.add(offspring.get(0));
-        offspringPopulation.add(offspring.get(1));
+          evaluations += 2 ;
+        }
+      }
+
+      List<BinarySolution> union = new ArrayList<>();
+      union.addAll(population);
+      union.addAll(offspringPopulation);
+
+      List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
+
+      if (solutionSetsAreEquals(population, newPopulation)) {
+        minimumDistance--;
+      }
+
+      if (minimumDistance <= -convergenceValue) {
+        minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
+
+        int preserve = (int) Math.floor(preservedPopulation * population.size());
+        newPopulation = new ArrayList<>(populationSize);
+        Collections.sort(population, comparator);
+        for (int i = 0; i < preserve; i++) {
+          newPopulation.add((BinarySolution) population.get(i).copy());
+        }
+        for (int i = preserve; i < populationSize; i++) {
+          BinarySolution solution = (BinarySolution) population.get(i).copy();
+          cataclysmicMutation.execute(solution);
+          problem.evaluate(solution);
+          //problem.evaluateConstraints(solution);
+          newPopulation.add(solution);
+          evaluations ++ ;
+        }
+      }
+
+      population = newPopulation ;
+      if (evaluations >= maxEvaluations) {
+        finishCondition = true ;
       }
     }
-
-    lastOffspringPopulationSize = offspringPopulation.size() ;
-    return offspringPopulation;
   }
 
-  @Override protected List<BinarySolution> replacement(List<BinarySolution> population,
-      List<BinarySolution> offspringPopulation) {
-    List<BinarySolution> union = new ArrayList<>();
-    union.addAll(population);
-    union.addAll(offspringPopulation);
-
-    List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
-
-    if (solutionSetsAreEquals(population, newPopulation)) {
-      minimumDistance--;
-    }
-
-    if (minimumDistance <= -convergenceValue) {
-      minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
-
-      int preserve = (int) Math.floor(preservedPopulation * population.size());
-      newPopulation = new ArrayList<>(getMaxPopulationSize());
-      Collections.sort(population, comparator);
-      for (int i = 0; i < preserve; i++) {
-        newPopulation.add((BinarySolution) population.get(i).copy());
-      }
-      for (int i = preserve; i < getMaxPopulationSize(); i++) {
-        BinarySolution solution = (BinarySolution) population.get(i).copy();
-        cataclysmicMutation.execute(solution);
-        //problem.evaluate(solution);
-        //problem.evaluateConstraints(solution);
-        newPopulation.add(solution);
-      }
-    }
-
-    return newPopulation;
-  }
-
-  @Override public List<BinarySolution> getResult() {
+  @Override
+  public List<BinarySolution> getResult() {
     NonDominatedSolutionListArchive<BinarySolution> archive = new NonDominatedSolutionListArchive<>() ;
-    for (BinarySolution solution : getPopulation()) {
+    for (BinarySolution solution : population) {
       archive.add(solution) ;
     }
 
@@ -200,7 +195,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    * @return true if both are contains the same solutions, false in other case
    */
   public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet,
-      List<BinarySolution> newSolutionSet) {
+                                       List<BinarySolution> newSolutionSet) {
     boolean found;
     for (int i = 0; i < solutionSet.size(); i++) {
 
@@ -253,13 +248,4 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     return distance;
   }
 
-  @Override
-  public String getName() {
-    return "MOCHC";
-  }
-
-  @Override
-  public String getDescription() {
-    return "Multiobjective CHC algorithm";
-  }
 }
