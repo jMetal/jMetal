@@ -27,7 +27,15 @@ If you are interested in contributing with your ideas and comments, please take 
   * [`HypervolumeArchive`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/archive/impl/HypervolumeArchive.java)
  
 * New features
-  * [Support for experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
+  * Support [for experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
+    * Parallel algorithm execution.
+    * Quality indicators computing.
+    * Reference Pareto front approximation computing.
+    * Generation of Latex tables:
+      * Basic statistics (mean/median and standard deviation/IQR).
+      * Wilcoxon rank sum test.
+      * Friedman test ranking.
+    * Generation of boxplots. 
   * Classes `PolynomialMutation` and `SBXCrossover` include setters to update their probability and distribution index values.
   * Two implementations of the [Hypervolume](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/Hypervolume.java) quality indicator are provided: [`PISAHypervolume`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/hypervolume/PISAHypervolume.java) and [`WFGHypervolume`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/hypervolume/WFGHypervolume.java)
 
