@@ -86,19 +86,19 @@ public class GenerateBoxplots<Result> implements ExperimentComponent {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
       FileWriter os = new FileWriter(rFileName, false);
-      os.write("postscript(\"" + "." +
+      os.write("postscript(\"" +
                indicator.getName() +
               ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
               "\n");
 
-      os.write("resultDirectory<-\"../data/" + "\"" + "\n");
+      os.write("resultDirectory<-\"../data" + "\"" + "\n");
       os.write("qIndicator <- function(indicator, problem)" + "\n");
       os.write("{" + "\n");
 
       for (int i = 0; i <  configuration.getAlgorithmList().size(); i++) {
         String algorithmName = configuration.getAlgorithmList().get(i).getTag() ;
         os.write("file" +  algorithmName + "<-paste(resultDirectory, \"" + algorithmName + "\", sep=\"/\")" + "\n");
-        os.write("file" + "<-paste(file" +  algorithmName + ", " +  "problem, sep=\"/\")" + "\n");
+        os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " +  "problem, sep=\"/\")" + "\n");
         os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " + "indicator, sep=\"/\")" + "\n");
         os.write( algorithmName + "<-scan(" + "file" +  algorithmName + ")" + "\n");
         os.write("\n");
