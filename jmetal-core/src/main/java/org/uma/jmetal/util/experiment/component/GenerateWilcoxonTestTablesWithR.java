@@ -110,8 +110,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     }
 
     String latexTableLabel = "";
-    String latexTabularAlignment = "";
-    String latexTableFirstLine = "";
     String latexTableCaption = "";
 
     // Write function latexTableHeader
@@ -172,7 +170,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    write(\"-- \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "  }" + "\n" +
           "  else if (i < j) {" + "\n" +
-          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) <= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "      }" + "\n" +
@@ -203,7 +201,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    write(\"--\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "  }" + "\n" +
           "  else if (i < j) {" + "\n" +
-          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) >= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "      }" + "\n" +
