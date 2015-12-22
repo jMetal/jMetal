@@ -106,4 +106,9 @@ public class InvertedGenerationalDistance<S extends Solution<?>> extends Generic
   @Override public String getDescription() {
     return "Inverted generational distance quality indicator" ;
   }
+
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return true ;
+  }
 }

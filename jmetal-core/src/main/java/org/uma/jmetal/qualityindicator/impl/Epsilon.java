@@ -69,6 +69,11 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
     super(referenceParetoFront) ;
   }
 
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return true ;
+  }
+
   /**
    * Evaluate() method
    *

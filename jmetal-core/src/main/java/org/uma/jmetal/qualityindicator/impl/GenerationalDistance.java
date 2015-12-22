@@ -118,4 +118,9 @@ public class GenerationalDistance<S extends Solution<?>> extends GenericIndicato
   @Override public String getDescription() {
     return "Generational distance quality indicator" ;
   }
+
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return true ;
+  }
 }

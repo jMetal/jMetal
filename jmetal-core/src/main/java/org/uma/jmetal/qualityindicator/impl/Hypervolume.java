@@ -54,4 +54,8 @@ public abstract class Hypervolume<S extends Solution<?>> extends GenericIndicato
     return "HV" ;
   }
 
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return false ;
+  }
 }

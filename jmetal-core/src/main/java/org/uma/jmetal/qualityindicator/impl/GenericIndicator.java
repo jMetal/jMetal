@@ -53,4 +53,10 @@ public abstract class GenericIndicator<S extends Solution<?>>
 
     referenceParetoFront = referenceFront ;
   }
+
+  /**
+   * This method returns true if lower indicator values are preferred and false otherwise
+   * @return
+   */
+  public abstract boolean isTheLowerTheIndicatorValueTheBetter() ;
 }
