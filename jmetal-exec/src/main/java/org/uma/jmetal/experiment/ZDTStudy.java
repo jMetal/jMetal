@@ -51,7 +51,9 @@ import java.util.List;
  * 2. Execute the algorithms
  * 3. Compute que quality indicators
  * 4. Generate Latex tables reporting means and medians
- * 5. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
+ * 5. Generate R scripts to produce latex tables with the result of applying the Wilcoxon Rank Sum Test
+ * 6. Generate Latex tables with the ranking obtained by applying the Friedman test
+ * 7. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

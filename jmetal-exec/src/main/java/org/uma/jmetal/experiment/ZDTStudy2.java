@@ -52,6 +52,7 @@ import java.util.List;
  * 4. Compute que quality indicators
  * 5. Generate Latex tables reporting means and medians
  * 6. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
+ * 7. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
