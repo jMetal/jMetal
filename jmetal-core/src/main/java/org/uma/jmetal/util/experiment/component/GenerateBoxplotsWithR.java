@@ -24,9 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class generates a R script that computes the Wilcoxon Signed Rank Test and generates a Latex script
- * that produces a table per quality indicator containing the pairwise comparison between all the algorithms
- * on all the solved problems.
+ * This class generates a R script that generates an eps file containing boxplots
  *
  * The results are a set of R files that are written in the directory
  * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/R. Each file is called as

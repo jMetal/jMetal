@@ -126,4 +126,9 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
   @Override public String getDescription() {
     return "Spread quality indicator" ;
   }
+
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return true ;
+  }
 }

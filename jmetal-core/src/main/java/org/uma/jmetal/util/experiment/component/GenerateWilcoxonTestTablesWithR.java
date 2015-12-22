@@ -110,8 +110,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     }
 
     String latexTableLabel = "";
-    String latexTabularAlignment = "";
-    String latexTableFirstLine = "";
     String latexTableCaption = "";
 
     // Write function latexTableHeader
@@ -158,37 +156,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     FileWriter os = new FileWriter(rFileName, true);
 
     String output ;
-    if (indicator.getName().equals("HV")) {
-      output = "printTableLine <- function(indicator, algorithm1, algorithm2, i, j, problem) { " + "\n" +
-          "  file1<-paste(resultDirectory, algorithm1, sep=\"/\")" + "\n" +
-          "  file1<-paste(file1, problem, sep=\"/\")" + "\n" +
-          "  file1<-paste(file1, indicator, sep=\"/\")" + "\n" +
-          "  data1<-scan(file1)" + "\n" +
-          "  file2<-paste(resultDirectory, algorithm2, sep=\"/\")" + "\n" +
-          "  file2<-paste(file2, problem, sep=\"/\")" + "\n" +
-          "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
-          "  data2<-scan(file2)" + "\n" +
-          "  if (i == j) {" + "\n" +
-          "    write(\"--\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-          "  }" + "\n" +
-          "  else if (i < j) {" + "\n" +
-          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
-          "      if (median(data1) >= median(data2)) {" + "\n" +
-          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-          "      }" + "\n" +
-          "      else {" + "\n" +
-          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "      }" + "\n" +
-          "    }" + "\n" +
-          "    else {" + "\n" +
-          "      write(\"$-$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "    }" + "\n" +
-          "  }" + "\n" +
-          "  else {" + "\n" +
-          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-          "  }" + "\n" +
-          "}" + "\n";
-    } else {
+    if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
       output = "printTableLine <- function(indicator, algorithm1, algorithm2, i, j, problem) { " + "\n" +
           "  file1<-paste(resultDirectory, algorithm1, sep=\"/\")" + "\n" +
           "  file1<-paste(file1, problem, sep=\"/\")" + "\n" +
@@ -202,7 +170,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    write(\"-- \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "  }" + "\n" +
           "  else if (i < j) {" + "\n" +
-          "    if (wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) <= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "      }" + "\n" +
@@ -212,6 +180,37 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    }" + "\n" +
           "    else {" + "\n" +
           "      write(\"--\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "    }" + "\n" +
+          "  }" + "\n" +
+          "  else {" + "\n" +
+          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "}" + "\n";
+
+    } else {
+      output = "printTableLine <- function(indicator, algorithm1, algorithm2, i, j, problem) { " + "\n" +
+          "  file1<-paste(resultDirectory, algorithm1, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, problem, sep=\"/\")" + "\n" +
+          "  file1<-paste(file1, indicator, sep=\"/\")" + "\n" +
+          "  data1<-scan(file1)" + "\n" +
+          "  file2<-paste(resultDirectory, algorithm2, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, problem, sep=\"/\")" + "\n" +
+          "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
+          "  data2<-scan(file2)" + "\n" +
+          "  if (i == j) {" + "\n" +
+          "    write(\"--\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "  }" + "\n" +
+          "  else if (i < j) {" + "\n" +
+          "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
+          "      if (median(data1) >= median(data2)) {" + "\n" +
+          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "      }" + "\n" +
+          "      else {" + "\n" +
+          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
+          "      }" + "\n" +
+          "    }" + "\n" +
+          "    else {" + "\n" +
+          "      write(\"$-$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
           "    }" + "\n" +
           "  }" + "\n" +
           "  else {" + "\n" +
@@ -283,8 +282,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
       for (Problem<?> problem : configuration.getProblemList()) {
         latexTabularAlignment += "p{0.15cm }";
-        //latexTabularAlignment += "@{}l@{}";
-        //latexTabularAlignment += "c";
       }
       latexTableFirstLine += " & \\\\multicolumn{" + configuration.getProblemList().size() + "}{c|}{" + configuration.getAlgorithmList().get(i).getTag()+"}";
       latexTabularAlignment += " | " ;
