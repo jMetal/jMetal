@@ -22,6 +22,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
 import org.uma.jmetal.util.experiment.component.*;
@@ -53,6 +54,11 @@ import java.util.List;
  */
 public class NSGAIIStudy2 {
   public static void main(String[] args) throws IOException {
+    if (args.length < 2) {
+      new JMetalException("Missing argument: experiment base directory") ;
+    }
+    String experimentBaseDirectory = args[0] ;
+
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
@@ -62,7 +68,7 @@ public class NSGAIIStudy2 {
         new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy2")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory("experiment")
+            .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setIndicatorList(Arrays.asList(
