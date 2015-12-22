@@ -24,9 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * This class generates a R script that computes the Wilcoxon Signed Rank Test and generates a Latex script
- * that produces a table per quality indicator containing the pairwise comparison between all the algorithms
- * on all the solved problems.
+ * This class generates a R script that generates an eps file containing boxplots
  *
  * The results are a set of R files that are written in the directory
  * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/R. Each file is called as
@@ -37,7 +35,7 @@ import java.io.IOException;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateBoxplots<Result> implements ExperimentComponent {
+public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
   private final ExperimentConfiguration<?, Result> configuration;
@@ -45,7 +43,7 @@ public class GenerateBoxplots<Result> implements ExperimentComponent {
   private int numberOfColumns ;
   private boolean displayNotch ;
 
-  public GenerateBoxplots(ExperimentConfiguration<?, Result> experimentConfiguration) {
+  public GenerateBoxplotsWithR(ExperimentConfiguration<?, Result> experimentConfiguration) {
     this.configuration = experimentConfiguration;
     this.configuration.removeDuplicatedAlgorithms();
 
@@ -55,19 +53,19 @@ public class GenerateBoxplots<Result> implements ExperimentComponent {
     numberOfColumns = 3 ;
   }
 
-  public GenerateBoxplots<Result> setRows(int rows) {
+  public GenerateBoxplotsWithR<Result> setRows(int rows) {
     numberOfRows = rows ;
 
     return this ;
   }
 
-  public GenerateBoxplots<Result> setColumns(int columns) {
+  public GenerateBoxplotsWithR<Result> setColumns(int columns) {
     numberOfColumns = columns ;
 
     return this ;
   }
 
-  public GenerateBoxplots<Result> setDisplayNotch() {
+  public GenerateBoxplotsWithR<Result> setDisplayNotch() {
     displayNotch = true ;
 
     return this ;

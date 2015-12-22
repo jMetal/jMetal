@@ -26,7 +26,6 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
@@ -97,7 +96,7 @@ public class ZDTStudy {
     new GenerateLatexTablesWithStatistics(configuration).run() ;
     new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
     new GenerateFriedmanTestTables<>(configuration).run();
-    new GenerateBoxplots<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
+    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
 
   /**

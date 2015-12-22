@@ -88,7 +88,8 @@ public class ZDTStudy2 {
     new GenerateReferenceParetoFront(configuration).run();
     new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTables<>(configuration).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
+    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
 
   /**

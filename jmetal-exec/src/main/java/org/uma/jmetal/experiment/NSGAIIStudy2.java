@@ -83,7 +83,9 @@ public class NSGAIIStudy2 {
     new GenerateReferenceParetoFront(configuration).run();
     new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTables<>(configuration).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
+    new GenerateBoxplotsWithR<>(configuration).run();
+    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).run() ;
   }
 
   /**

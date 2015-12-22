@@ -246,30 +246,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
       int bestIndex = -1;
       int secondBestIndex = -1;
 
-      if (configuration.getIndicatorList().get(indicatorIndex).getName().equals("HV")) {
-        bestCentralTendencyValue = Double.MIN_VALUE;
-        bestDispersionValue = Double.MIN_VALUE;
-        secondBestCentralTendencyValue = Double.MIN_VALUE;
-        secondBestDispersionValue = Double.MIN_VALUE;
-        for (int j = 0; j < (configuration.getAlgorithmList().size()); j++) {
-          if ((centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
-            secondBestIndex = bestIndex;
-            secondBestCentralTendencyValue = bestCentralTendencyValue;
-            secondBestDispersionValue = bestDispersionValue;
-            bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            bestDispersionValue = dispersion[indicatorIndex][i][j];
-            bestIndex = j;
-          } else if ((centralTendency[indicatorIndex][i][j] > secondBestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
-            secondBestIndex = j;
-            secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            secondBestDispersionValue = dispersion[indicatorIndex][i][j];
-          }
-        }
-      } else {
+      if (configuration.getIndicatorList().get(indicatorIndex).isTheLowerTheIndicatorValueTheBetter()) {
         bestCentralTendencyValue = Double.MAX_VALUE;
         bestDispersionValue = Double.MAX_VALUE;
         secondBestCentralTendencyValue = Double.MAX_VALUE;
@@ -285,6 +262,29 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
             bestDispersionValue = dispersion[indicatorIndex][i][j];
             bestIndex = j;
           } else if ((centralTendency[indicatorIndex][i][j] < secondBestCentralTendencyValue) ||
+              ((centralTendency[indicatorIndex][i][j] ==
+                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
+            secondBestIndex = j;
+            secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+            secondBestDispersionValue = dispersion[indicatorIndex][i][j];
+          }
+        }
+      } else {
+        bestCentralTendencyValue = Double.MIN_VALUE;
+        bestDispersionValue = Double.MIN_VALUE;
+        secondBestCentralTendencyValue = Double.MIN_VALUE;
+        secondBestDispersionValue = Double.MIN_VALUE;
+        for (int j = 0; j < (configuration.getAlgorithmList().size()); j++) {
+          if ((centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue) ||
+              ((centralTendency[indicatorIndex][i][j] ==
+                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
+            secondBestIndex = bestIndex;
+            secondBestCentralTendencyValue = bestCentralTendencyValue;
+            secondBestDispersionValue = bestDispersionValue;
+            bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+            bestDispersionValue = dispersion[indicatorIndex][i][j];
+            bestIndex = j;
+          } else if ((centralTendency[indicatorIndex][i][j] > secondBestCentralTendencyValue) ||
               ((centralTendency[indicatorIndex][i][j] ==
                   secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
             secondBestIndex = j;
