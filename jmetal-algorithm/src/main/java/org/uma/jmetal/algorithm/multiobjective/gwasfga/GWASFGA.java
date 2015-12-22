@@ -1,6 +1,19 @@
-package org.uma.jmetal.algorithm.multiobjective.gawasfga;
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import org.uma.jmetal.algorithm.multiobjective.gawasfga.util.GAWASFGARanking;
+package org.uma.jmetal.algorithm.multiobjective.gwasfga;
+
+import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
@@ -15,14 +28,22 @@ import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.List;
 
-public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
+/**
+ * This class executes the GWASFGA algorithm described in:
+ * Saborido, R., Ruiz, A. B. and Luque, M. (2015). Global WASF-GA: An Evolutionary Algorithm in
+ * Multiobjective Optimization to Approximate the whole Pareto Optimal Front.
+ * Evolutionary Computation Accepted for publication.
+ *
+ * @author Juanjo Durillo
+ */
+public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
   final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
   final AbstractUtilityFunctionsSet<S> achievementScalarizingNadir;
   private static final long serialVersionUID = 1L;
 
-  public GAWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
-                  MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
-                  SolutionListEvaluator<S> evaluator) {
+  public GWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
+                 MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
+                 SolutionListEvaluator<S> evaluator) {
     super(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator,
         null);
     setMaxPopulationSize(populationSize);
@@ -57,7 +78,7 @@ public class GAWASFGA<S extends Solution<?>> extends WASFGA<S> {
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new GAWASFGARanking<>(this.achievementScalarizingUtopia, this.achievementScalarizingNadir);
+    Ranking<S> ranking = new GWASFGARanking<>(this.achievementScalarizingUtopia, this.achievementScalarizingNadir);
     ranking.computeRanking(solutionList);
     return ranking;
   }

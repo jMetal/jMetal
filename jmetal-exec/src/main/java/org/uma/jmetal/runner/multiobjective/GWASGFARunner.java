@@ -14,7 +14,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.gawasfga.GAWASFGA;
+import org.uma.jmetal.algorithm.multiobjective.gwasfga.GWASFGA;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -35,13 +35,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GAWASGFARunner extends AbstractAlgorithmRunner {
+public class GWASGFARunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAII45Runner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.GWASGFARunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -50,7 +50,6 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "" ;
-    List<Double> referencePoint = null;
 
     String problemName ;
     if (args.length == 1) {
@@ -64,10 +63,6 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    
-    referencePoint = new ArrayList<>();
-    referencePoint.add(0.0);
-    referencePoint.add(0.0);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -79,7 +74,7 @@ public class GAWASGFARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new GAWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>()) ;
+    algorithm = new GWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
