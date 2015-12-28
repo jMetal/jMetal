@@ -24,11 +24,9 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
-import org.uma.jmetal.util.experiment.util.TaggedDoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
@@ -53,9 +51,12 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
 
   private final ExperimentConfiguration<?, ?> experimentConfiguration;
 
+  GenericSolutionAttribute<DoubleSolution, String> solutionAttribute;
   public GenerateReferenceParetoFront2(ExperimentConfiguration experimentConfiguration) {
     this.experimentConfiguration = experimentConfiguration ;
     this.experimentConfiguration.removeDuplicatedAlgorithms();
+
+    solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
   }
 
   /**
@@ -97,14 +98,27 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
           .printObjectivesToFile(referenceFrontFileName);
 
       String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rs" ;
-      //referenceFrontFileNames.add(problem.getName() + ".rs");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printVariablesToFile(referenceSetFileName);
 
       for (TaggedAlgorithm<?> algorithm : experimentConfiguration.getAlgorithmList()) {
         List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
-        
+        for (DoubleSolution solution : nonDominatedSolutionArchive.getSolutionList()) {
+          if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
+            solutionsPerAlgorithm.add(solution) ;
+          }
+        }
 
+        new SolutionListOutput(solutionsPerAlgorithm)
+            .printObjectivesToFile(
+                outputDirectoryName + "/" + problem.getName() + "." +
+                    algorithm.getTag() + ".rf"
+            );
+        new SolutionListOutput(solutionsPerAlgorithm)
+            .printVariablesToFile(
+                outputDirectoryName + "/" + problem.getName() + "." +
+                    algorithm.getTag() + ".rs"
+            );
       }
     }
 
@@ -134,9 +148,6 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
     int numberOfObjectives = frontWithObjectiveValues.getPointDimensions() ;
     DummyProblem problem = new DummyProblem(numberOfVariables, numberOfObjectives) ;
 
-    GenericSolutionAttribute<DoubleSolution, String> attribute =
-        new GenericSolutionAttribute<DoubleSolution, String>()  ;
-
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     for (int i = 0 ; i < frontWithVariableValues.getNumberOfPoints(); i++) {
       DoubleSolution solution = new DefaultDoubleSolution(problem);
@@ -147,7 +158,7 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
         solution.setObjective(objs, frontWithObjectiveValues.getPoint(i).getValues()[objs]);
       }
 
-      attribute.setAttribute(solution, algorithmName);
+      solutionAttribute.setAttribute(solution, algorithmName);
       solutionList.add(solution) ;
     }
 
