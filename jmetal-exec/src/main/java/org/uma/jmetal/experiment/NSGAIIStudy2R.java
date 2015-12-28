@@ -52,7 +52,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIStudy2 {
+public class NSGAIIStudy2R {
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
       new JMetalException("Missing argument: experiment base directory") ;
@@ -79,12 +79,14 @@ public class NSGAIIStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new GenerateReferenceParetoFront(configuration).run();
+    //new ExecuteAlgorithms<>(configuration).run();
+    new GenerateReferenceParetoFront2(configuration).run();
+    /*
     new ComputeQualityIndicators<>(configuration).run() ;
     new GenerateLatexTablesWithStatistics(configuration).run() ;
     new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
     new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).run() ;
+    */
   }
 
   /**

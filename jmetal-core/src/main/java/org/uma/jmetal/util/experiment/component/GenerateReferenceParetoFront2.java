@@ -15,19 +15,25 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.ExperimentConfiguration;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.experiment.util.TaggedDoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,12 +48,12 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateReferenceParetoFront implements ExperimentComponent{
+public class GenerateReferenceParetoFront2 implements ExperimentComponent{
   private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
 
   private final ExperimentConfiguration<?, ?> experimentConfiguration;
-  
-  public GenerateReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
+
+  public GenerateReferenceParetoFront2(ExperimentConfiguration experimentConfiguration) {
     this.experimentConfiguration = experimentConfiguration ;
     this.experimentConfiguration.removeDuplicatedAlgorithms();
   }
@@ -74,17 +80,32 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
         for (int i = 0 ; i < experimentConfiguration.getIndependentRuns(); i++) {
           String frontFileName = problemDirectory + "/" + experimentConfiguration.getOutputParetoFrontFileName() +
               i + ".tsv";
-          Front front = new ArrayFront(frontFileName) ;
-          List<DoubleSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
+          String paretoSetFileName = problemDirectory + "/" + experimentConfiguration.getOutputParetoSetFileName() +
+              i + ".tsv";
+          Front frontWithObjectiveValues = new ArrayFront(frontFileName) ;
+          Front frontWithVariableValues = new ArrayFront(paretoSetFileName) ;
+          List<DoubleSolution> solutionList =
+              createSolutionList(algorithm.getTag(), frontWithVariableValues, frontWithObjectiveValues) ;
           for (DoubleSolution solution : solutionList) {
             nonDominatedSolutionArchive.add(solution) ;
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
+      String referenceFrontFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
       referenceFrontFileNames.add(problem.getName() + ".rf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
-          .printObjectivesToFile(referenceSetFileName); ;
+          .printObjectivesToFile(referenceFrontFileName);
+
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rs" ;
+      //referenceFrontFileNames.add(problem.getName() + ".rs");
+      new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
+          .printVariablesToFile(referenceSetFileName);
+
+      for (TaggedAlgorithm<?> algorithm : experimentConfiguration.getAlgorithmList()) {
+        List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
+        
+
+      }
     }
 
     experimentConfiguration.setReferenceFrontDirectory(outputDirectoryName);
@@ -100,5 +121,57 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
     }
 
     return outputDirectory ;
+  }
+
+  private List<DoubleSolution> createSolutionList(String algorithmName, Front frontWithVariableValues, Front frontWithObjectiveValues) {
+    if (frontWithVariableValues.getNumberOfPoints() != frontWithObjectiveValues.getNumberOfPoints()) {
+      throw new JMetalException("The number of solutions in the variable and objective fronts are not equal") ;
+    } else if (frontWithObjectiveValues.getNumberOfPoints() == 0) {
+      throw new JMetalException("The front of solutions is empty") ;
+    }
+
+    int numberOfVariables = frontWithVariableValues.getPointDimensions() ;
+    int numberOfObjectives = frontWithObjectiveValues.getPointDimensions() ;
+    DummyProblem problem = new DummyProblem(numberOfVariables, numberOfObjectives) ;
+
+    GenericSolutionAttribute<DoubleSolution, String> attribute =
+        new GenericSolutionAttribute<DoubleSolution, String>()  ;
+
+    List<DoubleSolution> solutionList = new ArrayList<>() ;
+    for (int i = 0 ; i < frontWithVariableValues.getNumberOfPoints(); i++) {
+      DoubleSolution solution = new DefaultDoubleSolution(problem);
+      for (int vars = 0; vars < numberOfVariables; vars++) {
+        solution.setVariableValue(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
+      }
+      for (int objs = 0; objs < numberOfObjectives; objs++) {
+        solution.setObjective(objs, frontWithObjectiveValues.getPoint(i).getValues()[objs]);
+      }
+
+      attribute.setAttribute(solution, algorithmName);
+      solutionList.add(solution) ;
+    }
+
+    return solutionList ;
+  }
+
+  private static class DummyProblem extends AbstractDoubleProblem {
+    public DummyProblem(int numberOfVariables, int numberOfObjectives) {
+      setNumberOfVariables(numberOfVariables);
+      setNumberOfObjectives(numberOfObjectives);
+
+      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
+      for (int i = 0; i < getNumberOfVariables(); i++) {
+        lowerLimit.add(-1.0);
+        upperLimit.add(1.0);
+      }
+
+      setLowerLimit(lowerLimit);
+      setUpperLimit(upperLimit);
+    }
+
+    @Override public void evaluate(DoubleSolution solution) {
+    }
   }
 }

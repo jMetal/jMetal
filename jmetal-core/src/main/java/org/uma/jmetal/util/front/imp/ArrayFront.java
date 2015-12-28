@@ -96,7 +96,7 @@ public class ArrayFront implements Front {
 
   /**
    * Constructor
-   * @param fileName
+   * @param fileName File containing the data. Each line of the file is a list of objective values
    * @throws FileNotFoundException
    */
   public ArrayFront(String fileName) throws FileNotFoundException {

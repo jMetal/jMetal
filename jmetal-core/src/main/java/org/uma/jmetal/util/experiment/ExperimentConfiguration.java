@@ -108,7 +108,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.referenceFrontDirectory = referenceFrontDirectory ;
   }
 
-  public void setReferenceFrontFileNmes(List<String> referenceFrontFileNames) {
+  public void setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
     this.referenceFrontFileNames = referenceFrontFileNames ;
   }
 
