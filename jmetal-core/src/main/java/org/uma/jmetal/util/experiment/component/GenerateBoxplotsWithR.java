@@ -17,7 +17,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -27,7 +27,7 @@ import java.io.IOException;
  * This class generates a R script that generates an eps file containing boxplots
  *
  * The results are a set of R files that are written in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/R. Each file is called as
+ * {@link Experiment #getExperimentBaseDirectory()}/R. Each file is called as
  * indicatorName.Wilcoxon.R
  *
  * To run the R script: Rscript indicatorName.Wilcoxon.R
@@ -38,12 +38,12 @@ import java.io.IOException;
 public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
-  private final ExperimentConfiguration<?, Result> configuration;
+  private final Experiment<?, Result> configuration;
   private int numberOfRows ;
   private int numberOfColumns ;
   private boolean displayNotch ;
 
-  public GenerateBoxplotsWithR(ExperimentConfiguration<?, Result> experimentConfiguration) {
+  public GenerateBoxplotsWithR(Experiment<?, Result> experimentConfiguration) {
     this.configuration = experimentConfiguration;
     this.configuration.removeDuplicatedAlgorithms();
 

@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builder for class {@link ExperimentConfiguration}
+ * Builder for class {@link Experiment}
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
+public class ExperimentBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
   private List<TaggedAlgorithm<Result>> algorithmList;
   private List<Problem<S>> problemList;
@@ -41,7 +41,7 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
 
   private int numberOfCores ;
 
-  public ExperimentConfigurationBuilder(String experimentName) {
+  public ExperimentBuilder(String experimentName) {
     this.experimentName = experimentName ;
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
@@ -49,69 +49,69 @@ public class ExperimentConfigurationBuilder<S extends Solution<?>, Result> {
     this.referenceFrontDirectory = null ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
+  public ExperimentBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setProblemList(List<Problem<S>> problemList) {
+  public ExperimentBuilder<S, Result> setProblemList(List<Problem<S>> problemList) {
     this.problemList = new ArrayList<>(problemList) ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setExperimentBaseDirectory(String experimentBaseDirectory) {
+  public ExperimentBuilder<S, Result> setExperimentBaseDirectory(String experimentBaseDirectory) {
     this.experimentBaseDirectory = experimentBaseDirectory+"/"+experimentName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setReferenceFrontDirectory(String referenceFrontDirectory) {
+  public ExperimentBuilder<S, Result> setReferenceFrontDirectory(String referenceFrontDirectory) {
     this.referenceFrontDirectory = referenceFrontDirectory ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
+  public ExperimentBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
     this.referenceFrontFileNames = referenceFrontFileNames ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setIndicatorList(
+  public ExperimentBuilder<S, Result> setIndicatorList(
       List<GenericIndicator<S>> indicatorList ) {
     this.indicatorList = indicatorList ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setOutputParetoFrontFileName(String outputParetoFrontFileName) {
+  public ExperimentBuilder<S, Result> setOutputParetoFrontFileName(String outputParetoFrontFileName) {
     this.outputParetoFrontFileName = outputParetoFrontFileName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setOutputParetoSetFileName(String outputParetoSetFileName) {
+  public ExperimentBuilder<S, Result> setOutputParetoSetFileName(String outputParetoSetFileName) {
     this.outputParetoSetFileName = outputParetoSetFileName ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setIndependentRuns(int independentRuns) {
+  public ExperimentBuilder<S, Result> setIndependentRuns(int independentRuns) {
     this.independentRuns = independentRuns ;
 
     return this ;
   }
 
-  public ExperimentConfigurationBuilder<S, Result> setNumberOfCores(int numberOfCores) {
+  public ExperimentBuilder<S, Result> setNumberOfCores(int numberOfCores) {
     this.numberOfCores = numberOfCores;
 
     return this ;
   }
 
-  public ExperimentConfiguration<S, Result> build() {
-    return new ExperimentConfiguration<S, Result>(this);
+  public Experiment<S, Result> build() {
+    return new Experiment<S, Result>(this);
   }
 
   /* Getters */

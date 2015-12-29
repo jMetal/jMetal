@@ -15,7 +15,7 @@ package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.*;
@@ -26,8 +26,8 @@ import java.util.*;
  * from the indicator files generated after executing {@link ExecuteAlgorithms} and {@link ComputeQualityIndicators}.
  * After reading the data files and calculating the values, a Latex file is created containing an script
  * that generates tables with the best and second best values per indicator. The name of the file is
- * {@link ExperimentConfiguration #getExperimentName()}.tex, which is located by default in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex
+ * {@link Experiment #getExperimentName()}.tex, which is located by default in the directory
+ * {@link Experiment #getExperimentBaseDirectory()}/latex
  *
  * Although the maximum, minimum, and total number of items are also computed, no tables are generated
  * with them (this is a pending work).
@@ -37,7 +37,7 @@ import java.util.*;
 public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex" ;
 
-  private final ExperimentConfiguration<?, ?> configuration;
+  private final Experiment<?, ?> configuration;
 
   private double[][][] mean;
   private double[][][] median;
@@ -47,7 +47,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   private double[][][] min;
   private double[][][] numberOfValues;
 
-  public GenerateLatexTablesWithStatistics(ExperimentConfiguration<?, ?> configuration) {
+  public GenerateLatexTablesWithStatistics(Experiment<?, ?> configuration) {
     this.configuration = configuration ;
     this.configuration.removeDuplicatedAlgorithms();
   }

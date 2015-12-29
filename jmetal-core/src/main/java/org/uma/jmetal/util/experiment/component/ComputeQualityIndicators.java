@@ -18,7 +18,7 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -43,10 +43,10 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
-  private final ExperimentConfiguration<?, Result> configuration;
+  private final Experiment<?, Result> configuration;
   private List<GenericIndicator<? extends Solution<?>>> indicatorList ;
 
-  public ComputeQualityIndicators(ExperimentConfiguration experimentConfiguration) {
+  public ComputeQualityIndicators(Experiment experimentConfiguration) {
     this.configuration = experimentConfiguration ;
     this.indicatorList = experimentConfiguration.getIndicatorList() ;
 

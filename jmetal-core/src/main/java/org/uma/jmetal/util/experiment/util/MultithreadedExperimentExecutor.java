@@ -15,7 +15,7 @@ package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.parallel.SynchronousParallelTaskExecutor;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
 
     TaggedAlgorithm<Result> algorithm = (TaggedAlgorithm<Result>) taskParameters[0];
     Integer id = (Integer) taskParameters[1];
-    ExperimentConfiguration<?,?> experimentData = (ExperimentConfiguration<?,?>) taskParameters[2] ;
+    Experiment<?,?> experimentData = (Experiment<?,?>) taskParameters[2] ;
     taskList.add(new EvaluationTask<S, Result>(algorithm, id, experimentData));
   }
 

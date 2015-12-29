@@ -15,7 +15,7 @@ package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.Pair;
 
 import java.io.*;
@@ -26,7 +26,7 @@ import java.util.*;
  * quality indicator containing the ranking
  *
  * The results are a set of Latex files that are written in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex. Each file is called as
+ * {@link Experiment #getExperimentBaseDirectory()}/latex. Each file is called as
  * FriedmanTest[indicatorName].tex
  *
  * The implementation is based on the one included in Keel:
@@ -41,14 +41,14 @@ import java.util.*;
 public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
 
-  private final ExperimentConfiguration<?, Result> configuration;
+  private final Experiment<?, Result> configuration;
 
   private String latexDirectoryName ;
   private int numberOfAlgorithms ;
   private int numberOfProblems ;
 
   @SuppressWarnings("unchecked")
-  public GenerateFriedmanTestTables(ExperimentConfiguration experimentConfiguration) {
+  public GenerateFriedmanTestTables(Experiment experimentConfiguration) {
     this.configuration = experimentConfiguration ;
 
     configuration.removeDuplicatedAlgorithms();

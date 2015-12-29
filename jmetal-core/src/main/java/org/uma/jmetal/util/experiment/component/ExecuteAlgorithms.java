@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -27,20 +27,20 @@ import java.io.File;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
- * {@link ExperimentConfiguration}. For each combination algorithm + problem + runId an instance
+ * {@link Experiment}. For each combination algorithm + problem + runId an instance
  * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
  * which runs all the algorithms.
  *
  * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per configuration, which are
- * stored in the directory {@link ExperimentConfiguration #getExperimentBaseDirectory()}/algorithmName/problemName.
+ * stored in the directory {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
-  private ExperimentConfiguration<S, Result> configuration ;
+  private Experiment<S, Result> configuration ;
 
   /** Constructor */
-  public ExecuteAlgorithms(ExperimentConfiguration<S, Result> configuration) {
+  public ExecuteAlgorithms(Experiment<S, Result> configuration) {
     this.configuration = configuration ;
   }
 

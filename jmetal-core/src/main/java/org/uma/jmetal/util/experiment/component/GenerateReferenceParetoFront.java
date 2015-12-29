@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
@@ -45,9 +45,9 @@ import java.util.List;
 public class GenerateReferenceParetoFront implements ExperimentComponent{
   private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
 
-  private final ExperimentConfiguration<?, ?> experimentConfiguration;
+  private final Experiment<?, ?> experimentConfiguration;
   
-  public GenerateReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
+  public GenerateReferenceParetoFront(Experiment experimentConfiguration) {
     this.experimentConfiguration = experimentConfiguration ;
     this.experimentConfiguration.removeDuplicatedAlgorithms();
   }
