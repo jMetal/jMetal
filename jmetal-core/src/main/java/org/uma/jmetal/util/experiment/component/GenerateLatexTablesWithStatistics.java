@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
@@ -148,7 +149,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     latexOutput = new File(latexDirectoryName);
     if (!latexOutput.exists()) {
       boolean result = new File(latexDirectoryName).mkdirs();
-      System.out.println("Creating " + latexDirectoryName + " directory");
+      JMetalLogger.logger.info("Creating " + latexDirectoryName + " directory");
     }
     //System.out.println("Experiment name: " + experimentName_);
     String latexFile = latexDirectoryName + "/" + configuration.getExperimentName() + ".tex";
@@ -309,6 +310,9 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
       }
       if (bestIndex == (configuration.getAlgorithmList().size()- 1)) {
         os.write("\\cellcolor{gray95}");
+      }
+      if (secondBestIndex == (configuration.getAlgorithmList().size()- 1)) {
+        os.write("\\cellcolor{gray25}");
       }
       String m = String.format(Locale.ENGLISH, "%10.2e",
           centralTendency[indicatorIndex][i][configuration.getAlgorithmList().size() - 1]);
