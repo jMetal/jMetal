@@ -15,8 +15,10 @@ package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
@@ -56,7 +58,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
   @Override
   public void run() throws IOException {
     for (GenericIndicator indicator : indicatorList) {
-      System.out.println(indicator.getName()) ;
+      JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
       for (TaggedAlgorithm algorithm : configuration.getAlgorithmList()) {
         String algorithmDirectory ;
@@ -70,11 +72,13 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
           String referenceFrontName = referenceFrontDirectory +
               "/" + configuration.getReferenceFrontFileNames().get(problemId) ;
 
+          JMetalLogger.logger.info("RF: " + referenceFrontName); ;
           Front referenceFront = new ArrayFront(referenceFrontName) ;
-          Front normalizedReferenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
+
+          FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
+          Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
 
           String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
-          System.out.println("Indicator file: " + qualityIndicatorFile) ;
           resetFile(qualityIndicatorFile);
 
           indicator.setReferenceParetoFront(normalizedReferenceFront);
@@ -84,9 +88,10 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
                 configuration.getOutputParetoFrontFileName() + i + ".tsv";
 
             Front front = new ArrayFront(frontFileName) ;
-            Front normalizedFront = new FrontNormalizer(normalizedReferenceFront).normalize(front) ;
-            Double indicatorValue = (Double)indicator.evaluate(FrontUtils.convertFrontToSolutionList(normalizedFront)) ;
-            System.out.println(indicator.getName() + ": " + indicatorValue) ;
+            Front normalizedFront = frontNormalizer.normalize(front) ;
+            List<DoubleSolution> normalizedPopulation = FrontUtils .convertFrontToSolutionList(normalizedFront) ;
+            Double indicatorValue = (Double)indicator.evaluate(normalizedPopulation) ;
+            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
 
             FileWriter os;
             try {
@@ -110,25 +115,25 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
   private void resetFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      System.out.println("File " + file + " exist.");
+      JMetalLogger.logger.info("File " + file + " exist.");
 
       if (f.isDirectory()) {
-        System.out.println("File " + file + " is a directory. Deleting directory.");
+        JMetalLogger.logger.info("File " + file + " is a directory. Deleting directory.");
         if (f.delete()) {
-          System.out.println("Directory successfully deleted.");
+          JMetalLogger.logger.info("Directory successfully deleted.");
         } else {
-          System.out.println("Error deleting directory.");
+          JMetalLogger.logger.info("Error deleting directory.");
         }
       } else {
-        System.out.println("File " + file + " is a file. Deleting file.");
+        JMetalLogger.logger.info("File " + file + " is a file. Deleting file.");
         if (f.delete()) {
-          System.out.println("File succesfully deleted.");
+          JMetalLogger.logger.info("File succesfully deleted.");
         } else {
-          System.out.println("Error deleting file.");
+          JMetalLogger.logger.info("Error deleting file.");
         }
       }
     } else {
-      System.out.println("File " + file + " does NOT exist.");
+      JMetalLogger.logger.info("File " + file + " does NOT exist.");
     }
   }
 }

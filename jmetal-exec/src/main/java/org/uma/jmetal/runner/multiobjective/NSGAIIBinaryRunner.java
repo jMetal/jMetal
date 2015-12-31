@@ -71,7 +71,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
-      referenceParetoFront = "" ;
+      referenceParetoFront = "/Users/ajnebro/Softw/tmp/experiment/BinaryProblemsStudy/referenceFronts/ZDT5.rf" ;
     }
 
     problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);

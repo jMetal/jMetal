@@ -59,10 +59,13 @@ public class MOCHCRunner extends AbstractAlgorithmRunner {
     BinaryProblem problem ;
 
     String problemName ;
+    String referenceParetoFront = "" ;
+
     if (args.length == 1) {
       problemName = args[0] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
+      referenceParetoFront = "" ;
     }
 
     problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
@@ -94,8 +97,8 @@ public class MOCHCRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    //if (!referenceParetoFront.equals("")) {
-    //  printQualityIndicators(population, referenceParetoFront) ;
-    //}
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront) ;
+    }
   }
 }

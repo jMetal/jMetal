@@ -51,8 +51,6 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
 
-
-
     for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
       parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
       parallelExecutor.start(this);
@@ -65,8 +63,6 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
       parallelExecutor.parallelExecution();
       parallelExecutor.stop();
     }
-
-
   }
 
   private void prepareOutputDirectory() {

@@ -60,16 +60,16 @@ import java.util.List;
 public class ZDTStudy2 {
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
-      new JMetalException("Missing argument: experiment base directory") ;
+      throw new JMetalException("Missing argument: experiment base directory") ;
     }
-    String experimentBaseDirectory = experimentBaseDirectory = args[0] ;
+    String experimentBaseDirectory = args[0] ;
 
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    Experiment<DoubleSolution, List<DoubleSolution>> configuration =
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
@@ -80,16 +80,16 @@ public class ZDTStudy2 {
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
-            .setIndependentRuns(2)
+            .setIndependentRuns(25)
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new GenerateReferenceParetoFront(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
-    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
+    new ExecuteAlgorithms<>(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
 
   /**

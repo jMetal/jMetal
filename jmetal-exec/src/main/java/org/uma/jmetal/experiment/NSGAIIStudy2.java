@@ -46,16 +46,18 @@ import java.util.List;
  * 1. Configure the experiment
  * 2. Execute the algorithms
  * 3. Generate the reference Pareto fronts
- * 4. Compute que quality indicators
+ * 4. Compute the quality indicators
  * 5. Generate Latex tables reporting means and medians
  * 6. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
+ * 7. Generate Latex tables with the ranking obtained by applying the Friedman test
+ * 8. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy2 {
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
-      new JMetalException("Missing argument: experiment base directory") ;
+      throw new JMetalException("Missing argument: experiment base directory") ;
     }
     String experimentBaseDirectory = args[0] ;
 
@@ -64,7 +66,7 @@ public class NSGAIIStudy2 {
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    Experiment<DoubleSolution, List<DoubleSolution>> configuration =
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy2")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
@@ -79,12 +81,13 @@ public class NSGAIIStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new GenerateReferenceParetoFront(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
-    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).run() ;
+    new ExecuteAlgorithms<>(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run() ;
   }
 
   /**

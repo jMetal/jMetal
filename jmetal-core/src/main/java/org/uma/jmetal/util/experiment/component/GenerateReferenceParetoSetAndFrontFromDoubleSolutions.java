@@ -14,6 +14,7 @@
 
 package org.uma.jmetal.util.experiment.component;
 
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -37,10 +38,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class computes a reference Pareto front from a set of files. Once the algorithms of an
- * experiment have been executed through running an instance of class {@link ExecuteAlgorithms},
- * all the obtained fronts of all the algorithms are gathered per problem; then, the dominated
- * solutions are removed thus yielding to the reference Pareto front.
+ * This class computes the reference Pareto set and front from a set of data files containing the variable
+ * (VARx.tsv file) and objective (FUNx.tsv) values. A requirement is that the variable values MUST correspond to
+ * {@link DoubleSolution} solutions, i.e., the solved problems must be instances of {@link DoubleProblem}.
+ *
+ * Once the algorithms of an experiment have been executed through running an instance of class {@link ExecuteAlgorithms},
+ * all the obtained fronts of all the algorithms are gathered per problem; then, the dominated solutions are removed
+ * thus yielding to the reference Pareto front.
  *
  * By default, the files are stored in a directory called "referenceFront", which is located in the
  * experiment base directory. The following files are generated per problem:
@@ -58,17 +62,14 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateReferenceParetoFront2 implements ExperimentComponent{
+public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements ExperimentComponent{
   private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
 
   private final Experiment<?, ?> experiment;
 
-  GenericSolutionAttribute<DoubleSolution, String> solutionAttribute;
-  public GenerateReferenceParetoFront2(Experiment experimentConfiguration) {
+  public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment experimentConfiguration) {
     this.experiment = experimentConfiguration ;
     this.experiment.removeDuplicatedAlgorithms();
-
-    solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
   }
 
   /**
@@ -84,57 +85,54 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
     for (Problem<?> problem : experiment.getProblemList()) {
       List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
 
-      for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
-        String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getTag() + "/" + problem.getName() ;
-
-        for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-          String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
-              i + ".tsv";
-          String paretoSetFileName = problemDirectory + "/" + experiment.getOutputParetoSetFileName() +
-              i + ".tsv";
-          Front frontWithObjectiveValues = new ArrayFront(frontFileName) ;
-          Front frontWithVariableValues = new ArrayFront(paretoSetFileName) ;
-          List<DoubleSolution> solutionList =
-              createSolutionListFrontFiles(algorithm.getTag(), frontWithVariableValues, frontWithObjectiveValues) ;
-          for (DoubleSolution solution : solutionList) {
-            nonDominatedSolutions.add(solution) ;
-          }
-        }
-      }
-
-      String referenceFrontFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
       referenceFrontFileNames.add(problem.getName() + ".rf");
-      new SolutionListOutput(nonDominatedSolutions)
-          .printObjectivesToFile(referenceFrontFileName);
 
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rs" ;
-      new SolutionListOutput(nonDominatedSolutions)
-          .printVariablesToFile(referenceSetFileName);
+      writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions) ;
+      writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions) ;
 
-      for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
-        List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
-        for (DoubleSolution solution : nonDominatedSolutions) {
-          if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
-            solutionsPerAlgorithm.add(solution) ;
-          }
-        }
-
-        new SolutionListOutput(solutionsPerAlgorithm)
-            .printObjectivesToFile(
-                outputDirectoryName + "/" + problem.getName() + "." +
-                    algorithm.getTag() + ".rf"
-            );
-        new SolutionListOutput(solutionsPerAlgorithm)
-            .printVariablesToFile(
-                outputDirectoryName + "/" + problem.getName() + "." +
-                    algorithm.getTag() + ".rs"
-            );
-      }
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem, nonDominatedSolutions) ;
     }
 
     experiment.setReferenceFrontDirectory(outputDirectoryName);
     experiment.setReferenceFrontFileNames(referenceFrontFileNames);
+  }
+
+  private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
+      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+
+    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+      List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
+      for (DoubleSolution solution : nonDominatedSolutions) {
+        if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
+          solutionsPerAlgorithm.add(solution) ;
+        }
+      }
+
+      new SolutionListOutput(solutionsPerAlgorithm)
+          .printObjectivesToFile(
+              outputDirectoryName + "/" + problem.getName() + "." +
+                  algorithm.getTag() + ".rf"
+          );
+      new SolutionListOutput(solutionsPerAlgorithm)
+          .printVariablesToFile(
+              outputDirectoryName + "/" + problem.getName() + "." +
+                  algorithm.getTag() + ".rs"
+          );
+    }
+  }
+
+  private void writeReferenceFrontFile(
+      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    String referenceFrontFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
+
+    new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName);
+  }
+
+  private void writeReferenceSetFile(
+      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rs" ;
+    new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName);
   }
 
   /**
@@ -204,6 +202,8 @@ public class GenerateReferenceParetoFront2 implements ExperimentComponent{
     } else if (frontWithObjectiveValues.getNumberOfPoints() == 0) {
       throw new JMetalException("The front of solutions is empty") ;
     }
+
+    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
     int numberOfVariables = frontWithVariableValues.getPointDimensions() ;
     int numberOfObjectives = frontWithObjectiveValues.getPointDimensions() ;
