@@ -98,10 +98,10 @@ public class BinaryProblemsStudy {
     //new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoFront(experiment).run();
     new ComputeQualityIndicators<>(experiment).run() ;
-    new GenerateLatexTablesWithStatistics(experiment).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
-    new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).setDisplayNotch().run() ;
+    //new GenerateLatexTablesWithStatistics(experiment).run() ;
+    //new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    //new GenerateFriedmanTestTables<>(experiment).run();
+    //new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run() ;
   }
 
   /**
