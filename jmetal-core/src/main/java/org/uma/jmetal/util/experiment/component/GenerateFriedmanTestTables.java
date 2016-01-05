@@ -13,10 +13,12 @@
 
 package org.uma.jmetal.util.experiment.component;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.Pair;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 
 import java.io.*;
 import java.util.*;
@@ -141,28 +143,44 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     }
 
     /*We use the Pair class to compute and order rankings*/
-    Pair[][] order = new Pair[numberOfProblems][numberOfAlgorithms];
+    List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
     for (int i=0; i<numberOfProblems; i++) {
+      order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
       for (int j=0; j<numberOfAlgorithms; j++){
-        order[i][j] = new Pair(j,mean[i][j]);
+        order.get(i).add(new ImmutablePair<Integer, Double>(j, mean[i][j]));
       }
-      Arrays.sort(order[i]);
+      Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
+        @Override
+        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
+          if (Math.abs(pair1.getValue()) > Math.abs(pair2.getValue())){
+            return 1;
+          } else if (Math.abs(pair1.getValue()) < Math.abs(pair2.getValue())) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      });
     }
 
     /*building of the rankings table per algorithms and data sets*/
-    Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
+   // Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
+    List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
+
     int position = 0;
     for (int i=0; i<numberOfProblems; i++) {
+      rank.add(new ArrayList<MutablePair<Double, Double>>(numberOfAlgorithms)) ;
       for (int j=0; j<numberOfAlgorithms; j++){
         boolean found  = false;
         for (int k=0; k<numberOfAlgorithms && !found; k++) {
-          if (order[i][k].index == j) {
+          if (order.get(i).get(k).getKey() == j) {
             found = true;
             position = k+1;
           }
         }
-        rank[i][j] = new Pair(position,order[i][position-1].value);
+        //rank[i][j] = new Pair(position,order[i][position-1].value);
+        rank.get(i).add(new MutablePair<Double, Double>((double)position, order.get(i).get(position-1).getValue())) ;
       }
     }
 
@@ -174,21 +192,21 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
       Arrays.fill(hasBeenVisited,false);
       for (int j=0; j<numberOfAlgorithms; j++) {
         pendingToVisit.removeAllElements();
-        double sum = rank[i][j].index;
+        double sum = rank.get(i).get(j).getKey();
         hasBeenVisited[j] = true;
         int ig = 1;
         for (int k=j+1;k<numberOfAlgorithms;k++) {
-          if (rank[i][j].value == rank[i][k].value && !hasBeenVisited[k]) {
-            sum += rank[i][k].index;
+          if (rank.get(i).get(j).getValue() == rank.get(i).get(k).getValue() && !hasBeenVisited[k]) {
+            sum += rank.get(i).get(k).getKey();
             ig++;
             pendingToVisit.add(k);
             hasBeenVisited[k] = true;
           }
         }
         sum /= (double)ig;
-        rank[i][j].index = sum;
+        rank.get(i).get(j).setLeft(sum);
         for (int k=0; k<pendingToVisit.size(); k++) {
-          rank[i][pendingToVisit.elementAt(k)].index = sum;
+          rank.get(i).get(pendingToVisit.elementAt(k)).setLeft(sum) ;
         }
       }
     }
@@ -198,7 +216,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     for (int i=0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
       for (int j=0; j<numberOfProblems; j++) {
-        averageRanking[i] += rank[j][i].index / ((double)numberOfProblems);
+        averageRanking[i] += rank.get(j).get(i).getKey() / ((double)numberOfProblems);
       }
     }
 

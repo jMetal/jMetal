@@ -56,15 +56,12 @@ import java.util.List;
  * - "problemName.algorithmName.ps": the variable values of the contributed solutions by
  *                                   the algorithm called "algorithmName" to "problemName.ps"
  *
- * This method must define two fields of the {@link Experiment} object by invoking the following methods:
- * - {@link Experiment#setReferenceFrontDirectory}
+ * This method must define one field of the {@link Experiment} object by invoking the following method:
  * - {@link Experiment#setReferenceFrontFileNames}
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements ExperimentComponent{
-  private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
-
   private final Experiment<?, ?> experiment;
 
   public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment experimentConfiguration) {
@@ -77,7 +74,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName = getOutputDirectoryName() ;
+    String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
     createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
@@ -93,12 +90,12 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem, nonDominatedSolutions) ;
     }
 
-    experiment.setReferenceFrontDirectory(outputDirectoryName);
     experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
-      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+      String outputDirectoryName, Problem<?> problem,
+      List<DoubleSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
     for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
@@ -167,10 +164,6 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     }
 
     return nonDominatedSolutionArchive.getSolutionList() ;
-  }
-
-  private String getOutputDirectoryName() {
-    return experiment.getExperimentBaseDirectory() + "/" + DEFAULT_OUTPUT_DIRECTORY ;
   }
 
   /**

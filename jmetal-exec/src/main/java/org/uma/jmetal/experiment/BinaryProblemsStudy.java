@@ -68,10 +68,11 @@ import java.util.List;
  */
 public class BinaryProblemsStudy {
   public static void main(String[] args) throws IOException {
-    if (args.length != 1) {
-      throw new JMetalException("Missing argument: experiment base directory") ;
+    if (args.length != 2) {
+      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
     }
     String experimentBaseDirectory = args[0] ;
+    String referenceFrontDirectory = args[1] ;
 
     List<Problem<BinarySolution>> problemList = Arrays.<Problem<BinarySolution>>asList(
         new ZDT5(), new OneZeroMax(512)) ;
@@ -85,6 +86,7 @@ public class BinaryProblemsStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
+            .setReferenceFrontDirectory(referenceFrontDirectory)
             .setIndicatorList(Arrays.asList(
                 new Epsilon<BinarySolution>(), new Spread<BinarySolution>(), new GenerationalDistance<BinarySolution>(),
                 new PISAHypervolume<BinarySolution>(),
@@ -100,7 +102,7 @@ public class BinaryProblemsStudy {
     new ComputeQualityIndicators<>(experiment).run() ;
     //new GenerateLatexTablesWithStatistics(experiment).run() ;
     //new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
-    //new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateFriedmanTestTables<>(experiment).run();
     //new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run() ;
   }
 

@@ -15,6 +15,7 @@ package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -98,7 +99,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
           }
-          findBestIndicatorFronts() ;
+          findBestIndicatorFronts(experiment) ;
         }
       }
     }
@@ -144,17 +145,16 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
     }
   }
 
-  public void findBestIndicatorFronts() throws IOException {
+  public void findBestIndicatorFronts(Experiment<?, Result> experiment) throws IOException {
     for (GenericIndicator indicator : experiment.getIndicatorList()) {
       for (TaggedAlgorithm algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getTag();
 
-        for (int problemId = 0; problemId < experiment.getProblemList().size(); problemId++) {
+        for (Problem<?> problem :experiment.getProblemList()) {
           String indicatorFileName =
-              algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getName() +
-              "/" + indicator.getName();
+              algorithmDirectory + "/" + problem.getName() + "/" + indicator.getName();
           Path indicatorFile = Paths.get(indicatorFileName) ;
           if (indicatorFile == null) {
             throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist") ;
@@ -171,13 +171,24 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
             list.add(pair) ;
           }
 
-          Collections.sort(list, new PairComparator());
+          Collections.sort(list, new Comparator<Pair<Double, Integer>>() {
+            @Override
+            public int compare(Pair<Double, Integer> pair1, Pair<Double, Integer> pair2) {
+              if (Math.abs(pair1.getLeft()) > Math.abs(pair2.getLeft())){
+                return 1;
+              } else if (Math.abs(pair1.getLeft()) < Math.abs(pair2.getLeft())) {
+                return -1;
+              } else {
+                return 0;
+              }
+            }
+          });
           String bestFunFileName ;
           String bestVarFileName ;
           String medianFunFileName ;
           String medianVarFileName ;
 
-          String outputDirectory = algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getName() ;
+          String outputDirectory = algorithmDirectory + "/" + problem.getName() ;
 
           bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.tsv" ;
           bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.tsv" ;
@@ -215,16 +226,3 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
   }
 }
 
-class PairComparator implements Comparator<Pair<Double, Integer>> {
-
-  @Override
-  public int compare(Pair<Double, Integer> pair1, Pair<Double, Integer> pair2) {
-    if (Math.abs(pair1.getLeft()) > Math.abs(pair2.getLeft())){
-      return 1;
-    } else if (Math.abs(pair1.getLeft()) < Math.abs(pair2.getLeft())) {
-      return -1;
-    } else {
-      return 0;
-    }
-  }
-}

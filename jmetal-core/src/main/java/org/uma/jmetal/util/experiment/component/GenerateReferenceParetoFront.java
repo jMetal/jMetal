@@ -43,13 +43,11 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateReferenceParetoFront implements ExperimentComponent{
-  private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
-
-  private final Experiment<?, ?> experimentConfiguration;
+  private final Experiment<?, ?> experiment;
   
   public GenerateReferenceParetoFront(Experiment experimentConfiguration) {
-    this.experimentConfiguration = experimentConfiguration ;
-    this.experimentConfiguration.removeDuplicatedAlgorithms();
+    this.experiment = experimentConfiguration ;
+    this.experiment.removeDuplicatedAlgorithms();
   }
 
   /**
@@ -57,22 +55,21 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName ;
-    outputDirectoryName = experimentConfiguration.getExperimentBaseDirectory() + "/" + DEFAULT_OUTPUT_DIRECTORY ;
+    String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
 
     File outputDirectory = createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
-    for (Problem<?> problem : experimentConfiguration.getProblemList()) {
+    for (Problem<?> problem : experiment.getProblemList()) {
       NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<DoubleSolution>() ;
 
-      for (TaggedAlgorithm<?> algorithm : experimentConfiguration.getAlgorithmList()) {
-        String problemDirectory = experimentConfiguration.getExperimentBaseDirectory() + "/data/" +
+      for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+        String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getTag() + "/" + problem.getName() ;
 
-        for (int i = 0 ; i < experimentConfiguration.getIndependentRuns(); i++) {
-          String frontFileName = problemDirectory + "/" + experimentConfiguration.getOutputParetoFrontFileName() +
+        for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+          String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
               i + ".tsv";
           Front front = new ArrayFront(frontFileName) ;
           List<DoubleSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
@@ -87,8 +84,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           .printObjectivesToFile(referenceSetFileName); ;
     }
 
-    experimentConfiguration.setReferenceFrontDirectory(outputDirectoryName);
-    experimentConfiguration.setReferenceFrontFileNames(referenceFrontFileNames);
+    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {
