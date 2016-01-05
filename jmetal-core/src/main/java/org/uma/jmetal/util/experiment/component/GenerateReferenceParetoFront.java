@@ -38,7 +38,7 @@ import java.util.List;
  * are removed and the final result is a file per problem containing the reference Pareto front.
  *
  * By default, the files are stored in a directory called "referenceFront", which is located in the
- * experiment base directory. Each front is named following the scheme "problemName.pf".
+ * experiment base directory. Each front is named following the scheme "problemName.rf".
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
