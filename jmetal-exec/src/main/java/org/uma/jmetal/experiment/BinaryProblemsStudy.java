@@ -97,13 +97,13 @@ public class BinaryProblemsStudy {
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoFront(experiment).run();
     new ComputeQualityIndicators<>(experiment).run() ;
-    //new GenerateLatexTablesWithStatistics(experiment).run() ;
-    //new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
     new GenerateFriedmanTestTables<>(experiment).run();
-    //new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run() ;
+    new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run() ;
   }
 
   /**

@@ -59,10 +59,11 @@ import java.util.List;
  */
 public class ZDTStudy2 {
   public static void main(String[] args) throws IOException {
-    if (args.length < 2) {
-      throw new JMetalException("Missing argument: experiment base directory") ;
+    if (args.length != 2) {
+      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
     }
     String experimentBaseDirectory = args[0] ;
+    String referenceFrontDirectory = args[1] ;
 
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
@@ -76,6 +77,7 @@ public class ZDTStudy2 {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
+            .setReferenceFrontDirectory(referenceFrontDirectory)
             .setIndicatorList(Arrays.asList(
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
