@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
@@ -43,13 +43,11 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateReferenceParetoFront implements ExperimentComponent{
-  private static final String DEFAULT_OUTPUT_DIRECTORY = "referenceFronts" ;
-
-  private final ExperimentConfiguration<?, ?> experimentConfiguration;
+  private final Experiment<?, ?> experiment;
   
-  public GenerateReferenceParetoFront(ExperimentConfiguration experimentConfiguration) {
-    this.experimentConfiguration = experimentConfiguration ;
-    this.experimentConfiguration.removeDuplicatedAlgorithms();
+  public GenerateReferenceParetoFront(Experiment experimentConfiguration) {
+    this.experiment = experimentConfiguration ;
+    this.experiment.removeDuplicatedAlgorithms();
   }
 
   /**
@@ -57,24 +55,22 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
    */
   @Override
   public void run() throws IOException {
-    String outputDirectoryName ;
-    outputDirectoryName = experimentConfiguration.getExperimentBaseDirectory() + "/" + DEFAULT_OUTPUT_DIRECTORY ;
+    String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
 
     File outputDirectory = createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
-    for (Problem<?> problem : experimentConfiguration.getProblemList()) {
+    for (Problem<?> problem : experiment.getProblemList()) {
       NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<DoubleSolution>() ;
 
-      for (TaggedAlgorithm<?> algorithm : experimentConfiguration.getAlgorithmList()) {
-        String problemDirectory = experimentConfiguration.getExperimentBaseDirectory() + "/data/" +
+      for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+        String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getTag() + "/" + problem.getName() ;
 
-        for (int i = 0 ; i < experimentConfiguration.getIndependentRuns(); i++) {
-          String frontFileName = problemDirectory + "/" + experimentConfiguration.getOutputParetoFrontFileName() +
+        for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+          String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
               i + ".tsv";
-          System.out.println(frontFileName) ;
           Front front = new ArrayFront(frontFileName) ;
           List<DoubleSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
           for (DoubleSolution solution : solutionList) {
@@ -88,8 +84,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           .printObjectivesToFile(referenceSetFileName); ;
     }
 
-    experimentConfiguration.setReferenceFrontDirectory(outputDirectoryName);
-    experimentConfiguration.setReferenceFrontFileNmes(referenceFrontFileNames);
+    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {

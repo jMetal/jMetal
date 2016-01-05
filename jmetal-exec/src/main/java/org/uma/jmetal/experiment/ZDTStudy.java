@@ -28,8 +28,8 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
+import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -62,7 +62,7 @@ import java.util.List;
 public class ZDTStudy {
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
-      new JMetalException("Missing argument: experiment base directory") ;
+      throw new JMetalException("Missing argument: experiment base directory") ;
     }
     String experimentBaseDirectory = args[0] ;
 
@@ -73,8 +73,8 @@ public class ZDTStudy {
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
-        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setReferenceFrontDirectory("/pareto_fronts")
@@ -91,12 +91,12 @@ public class ZDTStudy {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
-    new GenerateFriedmanTestTables<>(configuration).run();
-    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
+    new ExecuteAlgorithms<>(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
 
   /**

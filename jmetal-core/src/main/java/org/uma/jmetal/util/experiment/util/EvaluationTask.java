@@ -15,7 +15,7 @@ package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -34,7 +34,7 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
   private String outputDirectoryName ;
 
   /** Constructor */
-  public EvaluationTask(TaggedAlgorithm<Result> algorithm, int id, ExperimentConfiguration<?,?> experimentData) {
+  public EvaluationTask(TaggedAlgorithm<Result> algorithm, int id, Experiment<?,?> experimentData) {
     JMetalLogger.logger.info(
         " Task: " + algorithm.getTag() + ", problem: " + algorithm.getProblem().getName() + ", run: " + id);
     this.algorithm = algorithm ;

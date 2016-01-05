@@ -27,8 +27,8 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
+import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -59,37 +59,39 @@ import java.util.List;
  */
 public class ZDTStudy2 {
   public static void main(String[] args) throws IOException {
-    if (args.length < 2) {
-      new JMetalException("Missing argument: experiment base directory") ;
+    if (args.length != 2) {
+      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
     }
-    String experimentBaseDirectory = experimentBaseDirectory = args[0] ;
+    String experimentBaseDirectory = args[0] ;
+    String referenceFrontDirectory = args[1] ;
 
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
 
-    ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
-        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
+            .setReferenceFrontDirectory(referenceFrontDirectory)
             .setIndicatorList(Arrays.asList(
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
-            .setIndependentRuns(2)
+            .setIndependentRuns(25)
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new GenerateReferenceParetoFront(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
-    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).setDisplayNotch().run() ;
+    new ExecuteAlgorithms<>(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
 
   /**

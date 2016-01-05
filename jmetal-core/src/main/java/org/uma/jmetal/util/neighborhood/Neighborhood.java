@@ -15,6 +15,7 @@ package org.uma.jmetal.util.neighborhood;
 
 import org.uma.jmetal.solution.Solution;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,6 +23,6 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Neighborhood<S extends Solution<?>> {
+public interface Neighborhood<S extends Solution<?>> extends Serializable {
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) ;
 }

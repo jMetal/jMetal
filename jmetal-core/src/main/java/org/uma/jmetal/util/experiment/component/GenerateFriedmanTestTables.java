@@ -13,10 +13,12 @@
 
 package org.uma.jmetal.util.experiment.component;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.util.Pair;
 
 import java.io.*;
 import java.util.*;
@@ -26,7 +28,7 @@ import java.util.*;
  * quality indicator containing the ranking
  *
  * The results are a set of Latex files that are written in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/latex. Each file is called as
+ * {@link Experiment #getExperimentBaseDirectory()}/latex. Each file is called as
  * FriedmanTest[indicatorName].tex
  *
  * The implementation is based on the one included in Keel:
@@ -41,28 +43,28 @@ import java.util.*;
 public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
 
-  private final ExperimentConfiguration<?, Result> configuration;
+  private final Experiment<?, Result> experiment;
 
   private String latexDirectoryName ;
   private int numberOfAlgorithms ;
   private int numberOfProblems ;
 
   @SuppressWarnings("unchecked")
-  public GenerateFriedmanTestTables(ExperimentConfiguration experimentConfiguration) {
-    this.configuration = experimentConfiguration ;
+  public GenerateFriedmanTestTables(Experiment experimentConfiguration) {
+    this.experiment = experimentConfiguration ;
 
-    configuration.removeDuplicatedAlgorithms();
+    experiment.removeDuplicatedAlgorithms();
 
-    numberOfAlgorithms = configuration.getAlgorithmList().size() ;
-    numberOfProblems = configuration.getProblemList().size() ;
+    numberOfAlgorithms = experiment.getAlgorithmList().size() ;
+    numberOfProblems = experiment.getProblemList().size() ;
   }
 
 
   @Override
   public void run() throws IOException {
-    latexDirectoryName = configuration.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
+    latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
-    for (QualityIndicator indicator : configuration.getIndicatorList()) {
+    for (QualityIndicator indicator : experiment.getIndicatorList()) {
       Vector<Vector<Double>> data = readData(indicator);
       double []averageRanking = computeAverageRanking(data) ;
       String fileContents = prepareFileOutputContents(averageRanking) ;
@@ -73,15 +75,15 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private Vector<Vector<Double>> readData(QualityIndicator indicator) {
     Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
-    for (int algorithm = 0; algorithm < configuration.getAlgorithmList().size(); algorithm++) {
-      String algorithmName = configuration.getAlgorithmList().get(algorithm).getTag();
+    for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
+      String algorithmName = experiment.getAlgorithmList().get(algorithm).getTag();
 
       data.add(new Vector<Double>());
-      String algorithmPath = configuration.getExperimentBaseDirectory() + "/data/"
+      String algorithmPath = experiment.getExperimentBaseDirectory() + "/data/"
           + algorithmName + "/";
 
-      for (int problem = 0; problem < configuration.getProblemList().size(); problem++) {
-        String path = algorithmPath + configuration.getProblemList().get(problem).getName() +
+      for (int problem = 0; problem < experiment.getProblemList().size(); problem++) {
+        String path = algorithmPath + experiment.getProblemList().get(problem).getName() +
             "/" + indicator.getName();
 
         readDataFromFile(path, data, algorithm) ;
@@ -141,28 +143,44 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     }
 
     /*We use the Pair class to compute and order rankings*/
-    Pair[][] order = new Pair[numberOfProblems][numberOfAlgorithms];
+    List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
     for (int i=0; i<numberOfProblems; i++) {
+      order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
       for (int j=0; j<numberOfAlgorithms; j++){
-        order[i][j] = new Pair(j,mean[i][j]);
+        order.get(i).add(new ImmutablePair<Integer, Double>(j, mean[i][j]));
       }
-      Arrays.sort(order[i]);
+      Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
+        @Override
+        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
+          if (Math.abs(pair1.getValue()) > Math.abs(pair2.getValue())){
+            return 1;
+          } else if (Math.abs(pair1.getValue()) < Math.abs(pair2.getValue())) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      });
     }
 
     /*building of the rankings table per algorithms and data sets*/
-    Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
+   // Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
+    List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
+
     int position = 0;
     for (int i=0; i<numberOfProblems; i++) {
+      rank.add(new ArrayList<MutablePair<Double, Double>>(numberOfAlgorithms)) ;
       for (int j=0; j<numberOfAlgorithms; j++){
         boolean found  = false;
         for (int k=0; k<numberOfAlgorithms && !found; k++) {
-          if (order[i][k].index == j) {
+          if (order.get(i).get(k).getKey() == j) {
             found = true;
             position = k+1;
           }
         }
-        rank[i][j] = new Pair(position,order[i][position-1].value);
+        //rank[i][j] = new Pair(position,order[i][position-1].value);
+        rank.get(i).add(new MutablePair<Double, Double>((double)position, order.get(i).get(position-1).getValue())) ;
       }
     }
 
@@ -174,21 +192,21 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
       Arrays.fill(hasBeenVisited,false);
       for (int j=0; j<numberOfAlgorithms; j++) {
         pendingToVisit.removeAllElements();
-        double sum = rank[i][j].index;
+        double sum = rank.get(i).get(j).getKey();
         hasBeenVisited[j] = true;
         int ig = 1;
         for (int k=j+1;k<numberOfAlgorithms;k++) {
-          if (rank[i][j].value == rank[i][k].value && !hasBeenVisited[k]) {
-            sum += rank[i][k].index;
+          if (rank.get(i).get(j).getValue() == rank.get(i).get(k).getValue() && !hasBeenVisited[k]) {
+            sum += rank.get(i).get(k).getKey();
             ig++;
             pendingToVisit.add(k);
             hasBeenVisited[k] = true;
           }
         }
         sum /= (double)ig;
-        rank[i][j].index = sum;
+        rank.get(i).get(j).setLeft(sum);
         for (int k=0; k<pendingToVisit.size(); k++) {
-          rank[i][pendingToVisit.elementAt(k)].index = sum;
+          rank.get(i).get(pendingToVisit.elementAt(k)).setLeft(sum) ;
         }
       }
     }
@@ -198,7 +216,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     for (int i=0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
       for (int j=0; j<numberOfProblems; j++) {
-        averageRanking[i] += rank[j][i].index / ((double)numberOfProblems);
+        averageRanking[i] += rank.get(j).get(i).getKey() / ((double)numberOfProblems);
       }
     }
 
@@ -259,8 +277,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
   private String printTableLines(String fileContents, double[] averageRanking) {
     String output = fileContents ;
-    for (int i=0; i<configuration.getAlgorithmList().size();i++) {
-      output += "\n" + configuration.getAlgorithmList().get(i).getTag()+"&"+averageRanking[i]+"\\\\";
+    for (int i = 0; i< experiment.getAlgorithmList().size(); i++) {
+      output += "\n" + experiment.getAlgorithmList().get(i).getTag()+"&"+averageRanking[i]+"\\\\";
     }
 
     return output ;

@@ -19,7 +19,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -27,21 +27,21 @@ import java.io.File;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
- * {@link ExperimentConfiguration}. For each combination algorithm + problem + runId an instance
+ * {@link Experiment}. For each combination algorithm + problem + runId an instance
  * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
  * which runs all the algorithms.
  *
- * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per configuration, which are
- * stored in the directory {@link ExperimentConfiguration #getExperimentBaseDirectory()}/algorithmName/problemName.
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment, which are
+ * stored in the directory {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
-  private ExperimentConfiguration<S, Result> configuration ;
+  private Experiment<S, Result> experiment;
 
   /** Constructor */
-  public ExecuteAlgorithms(ExperimentConfiguration<S, Result> configuration) {
-    this.configuration = configuration ;
+  public ExecuteAlgorithms(Experiment<S, Result> configuration) {
+    this.experiment = configuration ;
   }
 
   @Override
@@ -51,22 +51,18 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
 
-
-
-    for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
-      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
+    for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
+      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
       parallelExecutor.start(this);
 
-      for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+      for (int i = 0; i < experiment.getIndependentRuns(); i++) {
         TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
-        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, configuration});
+        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, experiment});
       }
 
       parallelExecutor.parallelExecution();
       parallelExecutor.stop();
     }
-
-
   }
 
   private void prepareOutputDirectory() {
@@ -79,7 +75,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     boolean result;
     File experimentDirectory;
 
-    experimentDirectory = new File(configuration.getExperimentBaseDirectory());
+    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
     if (experimentDirectory.exists() && experimentDirectory.isDirectory()) {
       result = false;
     } else {
@@ -91,17 +87,17 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
   private void createExperimentDirectory() {
     File experimentDirectory;
-    experimentDirectory = new File(configuration.getExperimentBaseDirectory());
+    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
 
     if (experimentDirectory.exists()) {
       experimentDirectory.delete() ;
     }
 
     boolean result ;
-    result = new File(configuration.getExperimentBaseDirectory()).mkdirs() ;
+    result = new File(experiment.getExperimentBaseDirectory()).mkdirs() ;
     if (!result) {
       throw new JMetalException("Error creating experiment directory: " +
-          configuration.getExperimentBaseDirectory()) ;
+          experiment.getExperimentBaseDirectory()) ;
     }
   }
 }

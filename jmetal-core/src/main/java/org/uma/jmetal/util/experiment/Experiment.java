@@ -26,7 +26,7 @@ import java.util.List;
  *
  * Created by Antonio J. Nebro on 17/07/14.
  */
-public class ExperimentConfiguration<S extends Solution<?>, Result> {
+public class Experiment<S extends Solution<?>, Result> {
 	private String experimentName;
 	private List<TaggedAlgorithm<Result>> algorithmList;
 	private List<Problem<S>> problemList;
@@ -44,7 +44,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
   private int numberOfCores ;
 
 	/** Constructor */
-	public ExperimentConfiguration(ExperimentConfigurationBuilder<S, Result> builder) {
+	public Experiment(ExperimentBuilder<S, Result> builder) {
 		this.experimentName = builder.getExperimentName() ;
     this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
     this.algorithmList = builder.getAlgorithmList() ;
@@ -108,7 +108,7 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
     this.referenceFrontDirectory = referenceFrontDirectory ;
   }
 
-  public void setReferenceFrontFileNmes(List<String> referenceFrontFileNames) {
+  public void setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
     this.referenceFrontFileNames = referenceFrontFileNames ;
   }
 
@@ -118,8 +118,8 @@ public class ExperimentConfiguration<S extends Solution<?>, Result> {
 
   /**
    * The list of algorithms contain an algorithm instance per problem. This is not convenient for
-   * calculating later statistical data, because a same algorithm will appear many times.
-   * This method remove the duplicated algorithms and leave only an instance of each one.
+   * calculating statistical data, because a same algorithm will appear many times.
+   * This method remove duplicated algorithms and leave only an instance of each one.
    */
   public void removeDuplicatedAlgorithms() {
     List<TaggedAlgorithm<Result>> algorithmList = new ArrayList<>() ;

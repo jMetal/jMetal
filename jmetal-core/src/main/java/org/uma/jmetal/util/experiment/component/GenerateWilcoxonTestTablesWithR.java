@@ -17,7 +17,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
+import org.uma.jmetal.util.experiment.Experiment;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,7 +29,7 @@ import java.io.IOException;
  * on all the solved problems.
  *
  * The results are a set of R files that are written in the directory
- * {@link ExperimentConfiguration #getExperimentBaseDirectory()}/R. Each file is called as
+ * {@link Experiment #getExperimentBaseDirectory()}/R. Each file is called as
  * indicatorName.Wilcoxon.R
  *
  * To run the R script: Rscript indicatorName.Wilcoxon.R
@@ -40,25 +40,25 @@ import java.io.IOException;
 public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
-  private final ExperimentConfiguration<?, Result> configuration;
+  private final Experiment<?, Result> experiment;
 
-  public GenerateWilcoxonTestTablesWithR(ExperimentConfiguration<?, Result> experimentConfiguration) {
-    this.configuration = experimentConfiguration;
-    this.configuration.removeDuplicatedAlgorithms();
+  public GenerateWilcoxonTestTablesWithR(Experiment<?, Result> experimentConfiguration) {
+    this.experiment = experimentConfiguration;
+    this.experiment.removeDuplicatedAlgorithms();
 
-    configuration.removeDuplicatedAlgorithms();
+    experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
   public void run() throws IOException {
-    String rDirectoryName = configuration.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
+    String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
       boolean result = new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
-    for (GenericIndicator<? extends Solution<?>> indicator : configuration.getIndicatorList()) {
+    for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
       String latexFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".tex";
 
@@ -77,7 +77,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
     os.write(output + "\n");
 
-    String dataDirectory = configuration.getExperimentBaseDirectory() + "/data";
+    String dataDirectory = experiment.getExperimentBaseDirectory() + "/data";
     os.write("resultDirectory<-\"" + dataDirectory + "\"" + "\n");
     output = "latexHeader <- function() {" + "\n" +
         "  write(\"\\\\documentclass{article}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
@@ -105,7 +105,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     FileWriter os = new FileWriter(rFileName, true);
 
     String caption = indicator.getName() + ". Problems: ";
-    for (Problem<?> problem : configuration.getProblemList()) {
+    for (Problem<?> problem : experiment.getProblemList()) {
       caption += problem.getName() + " ";
     }
 
@@ -232,27 +232,27 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     String problemList = "problemList <-c(";
     String algorithmList = "algorithmList <-c(";
 
-    for (int i = 0; i < (configuration.getProblemList().size() - 1); i++) {
-      problemList += "\"" + configuration.getProblemList().get(i).getName() + "\", ";
+    for (int i = 0; i < (experiment.getProblemList().size() - 1); i++) {
+      problemList += "\"" + experiment.getProblemList().get(i).getName() + "\", ";
     }
-    problemList += "\"" + configuration.getProblemList().get(configuration.getProblemList().size() - 1).getName() + "\") ";
+    problemList += "\"" + experiment.getProblemList().get(experiment.getProblemList().size() - 1).getName() + "\") ";
 
-    for (int i = 0; i < (configuration.getAlgorithmList().size() - 1); i++) {
-      algorithmList += "\"" + configuration.getAlgorithmList().get(i).getTag() + "\", ";
+    for (int i = 0; i < (experiment.getAlgorithmList().size() - 1); i++) {
+      algorithmList += "\"" + experiment.getAlgorithmList().get(i).getTag() + "\", ";
     }
-    algorithmList += "\"" + configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag() + "\") ";
+    algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag() + "\") ";
 
     String latexTabularAlignment = "l";
-    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
+    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
     }
 
     latexTabularAlignment = "l";
     String latexTableFirstLine = "\\\\hline ";
 
-    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
+    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
-      latexTableFirstLine += " & " + configuration.getAlgorithmList().get(i).getTag();
+      latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getTag();
     }
     latexTableFirstLine += "\\\\\\\\ \"";
 
@@ -273,17 +273,17 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
     // Generate full table
     problemList = "";
-    for (Problem<?> problem : configuration.getProblemList()) {
+    for (Problem<?> problem : experiment.getProblemList()) {
       problemList += problem.getName() + " ";
     }
     // The tabular environment and the latexTableFirstLine encodings.variable must be redefined
     latexTabularAlignment = "| l | ";
     latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
-    for (int i = 1; i < configuration.getAlgorithmList().size(); i++) {
-      for (Problem<?> problem : configuration.getProblemList()) {
+    for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
+      for (Problem<?> problem : experiment.getProblemList()) {
         latexTabularAlignment += "p{0.15cm }";
       }
-      latexTableFirstLine += " & \\\\multicolumn{" + configuration.getProblemList().size() + "}{c|}{" + configuration.getAlgorithmList().get(i).getTag()+"}";
+      latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getTag()+"}";
       latexTabularAlignment += " | " ;
     }
     latexTableFirstLine += " \\\\\\\\";
@@ -300,7 +300,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag()+ "\") {" + "\n" +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag()+ "\") {" + "\n" +
         "    write(i , \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "    write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "\n" +
         "    jndx = 0" + "\n" +
@@ -313,8 +313,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "          else {" + "\n" +
         "            write(\"  \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "          } " + "\n" +
-        "          if (problem == \"" + configuration.getProblemList().get(configuration.getProblemList().size()- 1).getName() + "\") {" + "\n" +
-        "            if (j == \"" + configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag() + "\") {" + "\n" +
+        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getName() + "\") {" + "\n" +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag() + "\") {" + "\n" +
         "              write(\" \\\\\\\\ \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "            } " + "\n" +
         "            else {" + "\n" +

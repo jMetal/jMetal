@@ -23,8 +23,8 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.experiment.ExperimentConfiguration;
-import org.uma.jmetal.util.experiment.ExperimentConfigurationBuilder;
+import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
@@ -45,16 +45,18 @@ import java.util.List;
  * The steps to carry out the experiment are:
  * 1. Configure the experiment
  * 2. Execute the algorithms
- * 3. Compute que quality indicators
+ * 3. Compute the quality indicators
  * 4. Generate Latex tables reporting means and medians
  * 5. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
+ * 6. Generate Latex tables with the ranking obtained by applying the Friedman test
+ * 7. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy  {
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
-      new JMetalException("Missing argument: experiment base directory") ;
+      throw new JMetalException("Missing argument: experiment base directory") ;
     }
     String experimentBaseDirectory = args[0] ;
 
@@ -65,8 +67,8 @@ public class NSGAIIStudy  {
 
     List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf") ;
 
-    ExperimentConfiguration<DoubleSolution, List<DoubleSolution>> configuration =
-        new ExperimentConfigurationBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)
@@ -82,12 +84,12 @@ public class NSGAIIStudy  {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(configuration).run();
-    new ComputeQualityIndicators<>(configuration).run() ;
-    new GenerateLatexTablesWithStatistics(configuration).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(configuration).run() ;
-    new GenerateFriedmanTestTables<>(configuration).run();
-    new GenerateBoxplotsWithR<>(configuration).setRows(3).setColumns(3).run() ;
+    new ExecuteAlgorithms<>(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run() ;
   }
 
   /**
