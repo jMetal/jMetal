@@ -31,17 +31,17 @@ import java.io.File;
  * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
  * which runs all the algorithms.
  *
- * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per configuration, which are
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment, which are
  * stored in the directory {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
-  private Experiment<S, Result> configuration ;
+  private Experiment<S, Result> experiment;
 
   /** Constructor */
   public ExecuteAlgorithms(Experiment<S, Result> configuration) {
-    this.configuration = configuration ;
+    this.experiment = configuration ;
   }
 
   @Override
@@ -51,13 +51,13 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
 
-    for (TaggedAlgorithm<Result> algorithm : configuration.getAlgorithmList()) {
-      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(configuration.getNumberOfCores()) ;
+    for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
+      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
       parallelExecutor.start(this);
 
-      for (int i = 0; i < configuration.getIndependentRuns(); i++) {
+      for (int i = 0; i < experiment.getIndependentRuns(); i++) {
         TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
-        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, configuration});
+        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, experiment});
       }
 
       parallelExecutor.parallelExecution();
@@ -75,7 +75,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     boolean result;
     File experimentDirectory;
 
-    experimentDirectory = new File(configuration.getExperimentBaseDirectory());
+    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
     if (experimentDirectory.exists() && experimentDirectory.isDirectory()) {
       result = false;
     } else {
@@ -87,17 +87,17 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
   private void createExperimentDirectory() {
     File experimentDirectory;
-    experimentDirectory = new File(configuration.getExperimentBaseDirectory());
+    experimentDirectory = new File(experiment.getExperimentBaseDirectory());
 
     if (experimentDirectory.exists()) {
       experimentDirectory.delete() ;
     }
 
     boolean result ;
-    result = new File(configuration.getExperimentBaseDirectory()).mkdirs() ;
+    result = new File(experiment.getExperimentBaseDirectory()).mkdirs() ;
     if (!result) {
       throw new JMetalException("Error creating experiment directory: " +
-          configuration.getExperimentBaseDirectory()) ;
+          experiment.getExperimentBaseDirectory()) ;
     }
   }
 }

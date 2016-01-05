@@ -38,16 +38,16 @@ import java.io.IOException;
 public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
-  private final Experiment<?, Result> configuration;
+  private final Experiment<?, Result> experiment;
   private int numberOfRows ;
   private int numberOfColumns ;
   private boolean displayNotch ;
 
   public GenerateBoxplotsWithR(Experiment<?, Result> experimentConfiguration) {
-    this.configuration = experimentConfiguration;
-    this.configuration.removeDuplicatedAlgorithms();
+    this.experiment = experimentConfiguration;
+    this.experiment.removeDuplicatedAlgorithms();
 
-    configuration.removeDuplicatedAlgorithms();
+    experiment.removeDuplicatedAlgorithms();
     displayNotch = false ;
     numberOfRows = 3 ;
     numberOfColumns = 3 ;
@@ -73,14 +73,14 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
 
   @Override
   public void run() throws IOException {
-    String rDirectoryName = configuration.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
+    String rDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_R_DIRECTORY;
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
       boolean result = new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
-    for (GenericIndicator<? extends Solution<?>> indicator : configuration.getIndicatorList()) {
+    for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
       FileWriter os = new FileWriter(rFileName, false);
@@ -93,8 +93,8 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       os.write("qIndicator <- function(indicator, problem)" + "\n");
       os.write("{" + "\n");
 
-      for (int i = 0; i <  configuration.getAlgorithmList().size(); i++) {
-        String algorithmName = configuration.getAlgorithmList().get(i).getTag() ;
+      for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
+        String algorithmName = experiment.getAlgorithmList().get(i).getTag() ;
         os.write("file" +  algorithmName + "<-paste(resultDirectory, \"" + algorithmName + "\", sep=\"/\")" + "\n");
         os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " +  "problem, sep=\"/\")" + "\n");
         os.write("file" +  algorithmName + "<-paste(file" +  algorithmName + ", " + "indicator, sep=\"/\")" + "\n");
@@ -103,14 +103,14 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       }
 
       os.write("algs<-c(");
-      for (int i = 0; i <  configuration.getAlgorithmList().size() - 1; i++) {
-        os.write("\"" +  configuration.getAlgorithmList().get(i).getTag() + "\",");
+      for (int i = 0; i <  experiment.getAlgorithmList().size() - 1; i++) {
+        os.write("\"" +  experiment.getAlgorithmList().get(i).getTag() + "\",");
       } // for
-      os.write("\"" +  configuration.getAlgorithmList().get(configuration.getAlgorithmList().size() - 1).getTag() + "\")" + "\n");
+      os.write("\"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag() + "\")" + "\n");
 
       os.write("boxplot(");
-      for (int i = 0; i <  configuration.getAlgorithmList().size(); i++) {
-        os.write(configuration.getAlgorithmList().get(i).getTag() + ",");
+      for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
+        os.write(experiment.getAlgorithmList().get(i).getTag() + ",");
       } // for
       if (displayNotch) {
         os.write("names=algs, notch = TRUE)" + "\n");
@@ -126,7 +126,7 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
 
       os.write("indicator<-\"" +  indicator.getName() + "\"" + "\n");
 
-      for (Problem<?> problem : configuration.getProblemList()) {
+      for (Problem<?> problem : experiment.getProblemList()) {
         os.write("qIndicator(indicator, \"" + problem.getName() + "\")" + "\n");
       }
 
