@@ -29,6 +29,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -147,7 +148,7 @@ public class MOCHC2 implements Algorithm<List<BinarySolution>> {
 
       List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
 
-      if (solutionSetsAreEquals(population, newPopulation)) {
+      if (SolutionListUtils.solutionListsAreEquals(population, newPopulation)) {
         minimumDistance--;
       }
 
@@ -185,33 +186,6 @@ public class MOCHC2 implements Algorithm<List<BinarySolution>> {
     }
 
     return archive.getSolutionList();
-  }
-
-  /**
-   * Compares two solutionSets to determine if both are equals
-   *
-   * @param solutionSet    A <code>SolutionSet</code>
-   * @param newSolutionSet A <code>SolutionSet</code>
-   * @return true if both are contains the same solutions, false in other case
-   */
-  public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet,
-                                       List<BinarySolution> newSolutionSet) {
-    boolean found;
-    for (int i = 0; i < solutionSet.size(); i++) {
-
-      int j = 0;
-      found = false;
-      while (j < newSolutionSet.size()) {
-        if (solutionSet.get(i).equals(newSolutionSet.get(j))) {
-          found = true;
-        }
-        j++;
-      }
-      if (!found) {
-        return false;
-      }
-    }
-    return true;
   }
 
   /**
