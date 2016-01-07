@@ -28,6 +28,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -90,6 +91,8 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       size += problem.getNumberOfBits(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
+
+    System.out.println("Mim distance: " + minimumDistance) ;
 
     comparator = new CrowdingDistanceComparator<BinarySolution>();
   }
@@ -158,12 +161,13 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
     List<BinarySolution> newPopulation = newGenerationSelection.execute(union);
 
-    if (solutionSetsAreEquals(population, newPopulation)) {
+    if (SolutionListUtils.solutionListsAreEquals(population, newPopulation)) {
       minimumDistance--;
     }
 
     if (minimumDistance <= -convergenceValue) {
-      minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
+     // minimumDistance = (int) (1.0 / size * (1 - 1.0 / size) * size);
+      minimumDistance = (int) (0.35 * (1 - 0.35) * size);
 
       int preserve = (int) Math.floor(preservedPopulation * population.size());
       newPopulation = new ArrayList<>(getMaxPopulationSize());
@@ -174,8 +178,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
       for (int i = preserve; i < getMaxPopulationSize(); i++) {
         BinarySolution solution = (BinarySolution) population.get(i).copy();
         cataclysmicMutation.execute(solution);
-        //problem.evaluate(solution);
-        //problem.evaluateConstraints(solution);
+
         newPopulation.add(solution);
       }
     }
@@ -190,33 +193,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
 
     return archive.getSolutionList();
-  }
-
-  /**
-   * Compares two solutionSets to determine if both are equals
-   *
-   * @param solutionSet    A <code>SolutionSet</code>
-   * @param newSolutionSet A <code>SolutionSet</code>
-   * @return true if both are contains the same solutions, false in other case
-   */
-  public boolean solutionSetsAreEquals(List<BinarySolution> solutionSet,
-      List<BinarySolution> newSolutionSet) {
-    boolean found;
-    for (int i = 0; i < solutionSet.size(); i++) {
-
-      int j = 0;
-      found = false;
-      while (j < newSolutionSet.size()) {
-        if (solutionSet.get(i).equals(newSolutionSet.get(j))) {
-          found = true;
-        }
-        j++;
-      }
-      if (!found) {
-        return false;
-      }
-    }
-    return true;
   }
 
   /**

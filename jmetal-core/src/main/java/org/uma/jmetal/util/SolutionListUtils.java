@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -167,6 +168,7 @@ public class SolutionListUtils {
    * @param solutionSet The front to invert
    * @return The inverted front
    */
+  @SuppressWarnings("unchecked")
   public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size()) ;
     int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives() ;
@@ -247,16 +249,42 @@ public class SolutionListUtils {
    * @return
    */
   public static  <S extends Solution<?>> double [][] distanceMatrix(List<S> solutionSet) {
-     //The matrix of distances
-     double [][] distance = new double [solutionSet.size()][solutionSet.size()];        
+     double [][] distance = new double [solutionSet.size()][solutionSet.size()];
      for (int i = 0; i < solutionSet.size(); i++){
        distance[i][i] = 0.0;
        for (int j = i + 1; j < solutionSet.size(); j++){
          distance[i][j] = SolutionUtils.distanceBetweenObjectives(solutionSet.get(i),solutionSet.get(j));                
          distance[j][i] = distance[i][j];            
-       } // for
-     } // for        
+       }
+     }
      return distance;
-  } // distanceMatrix
-  
+  }
+
+  /**
+   * Compares two solution lists to determine if both are equals
+   *
+   * @param solutionList    A <code>Solution list</code>
+   * @param newSolutionList A <code>Solution list</code>
+   * @return true if both are contains the same solutions, false in other case
+   */
+  public static <S extends Solution<?>> boolean solutionListsAreEquals(List<S> solutionList,
+                                       List<S> newSolutionList) {
+    boolean found;
+    for (int i = 0; i < solutionList.size(); i++) {
+
+      int j = 0;
+      found = false;
+      while (j < newSolutionList.size()) {
+        if (solutionList.get(i).equals(newSolutionList.get(j))) {
+          found = true;
+        }
+        j++;
+      }
+      if (!found) {
+        return false;
+      }
+    }
+    return true;
+
+  }
 }
