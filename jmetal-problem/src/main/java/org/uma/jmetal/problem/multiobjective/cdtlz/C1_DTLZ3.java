@@ -15,9 +15,13 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Problem C1-DTLZ3, defined in:
@@ -27,15 +31,19 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class C1_DTLZ3 extends DTLZ1 implements ConstrainedProblem<DoubleSolution> {
+public class C1_DTLZ3 extends DTLZ3 implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
-  /**
-   * Default constructor
-   */
-  public C1_DTLZ3() {
-    this(7, 3) ;
+  private static Map<Integer, Double> rValue;
+
+  static {
+    rValue = new HashMap<Integer, Double>() ;
+    rValue.put(3, 9.0) ;
+    rValue.put(5, 12.5) ;
+    rValue.put(8, 12.5) ;
+    rValue.put(10, 15.0) ;
+    rValue.put(15, 15.0) ;
   }
 
   /**
@@ -56,20 +64,15 @@ public class C1_DTLZ3 extends DTLZ1 implements ConstrainedProblem<DoubleSolution
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    int numberOfVariables = getNumberOfVariables();
-
-    double[] x = new double[numberOfVariables] ;
-
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+    double sum1 = 0 ;
+    double sum2 = 0 ;
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
+      double v = Math.pow(solution.getObjective(i), 2) ;
+      sum1 += v - 16.0 ;
+      sum2 += v - Math.pow(rValue.get(getNumberOfObjectives()), 2.0) ;
     }
 
-    double sum = 0 ;
-    for (int i = 0; i < getNumberOfObjectives() - 2; i++) {
-      sum += solution.getObjective(i) / 0.5 ;
-    }
-
-    constraint[0] = 1.0 - solution.getObjective(getNumberOfObjectives()-1) - sum ;
+    constraint[0] = sum1 * sum2;
 
     double overallConstraintViolation = 0.0;
     int violatedConstraints = 0;
