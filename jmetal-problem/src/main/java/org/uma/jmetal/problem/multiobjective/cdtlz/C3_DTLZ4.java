@@ -21,7 +21,7 @@ import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
- * Problem C3-DTLZ1, defined in:
+ * Problem C3-DTLZ4, defined in:
  * Jain, H. and K. Deb.  "An Evolutionary Many-Objective Optimization Algorithm Using Reference-Point-Based
  * Nondominated Sorting Approach, Part II: Handling Constraints and Extending to an Adaptive Approach."
  * EEE Transactions on Evolutionary Computation, 18(4):602-622, 2014.
