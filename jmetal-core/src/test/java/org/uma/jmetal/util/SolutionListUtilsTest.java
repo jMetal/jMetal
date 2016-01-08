@@ -332,7 +332,7 @@ public class SolutionListUtilsTest {
     for (BinarySolution solution : solutions) {
       list1.add(solution) ;
     }
-  
+
     list2.add(solutions.get(2)) ;
     list2.add(solutions.get(1)) ;
     list2.add(solutions.get(0)) ;
