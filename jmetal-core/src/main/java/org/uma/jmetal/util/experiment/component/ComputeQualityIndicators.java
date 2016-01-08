@@ -99,10 +99,10 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
           }
-          findBestIndicatorFronts(experiment) ;
         }
       }
     }
+    findBestIndicatorFronts(experiment) ;
   }
 
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {

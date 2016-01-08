@@ -61,7 +61,7 @@ import java.util.List;
 
 public class ZDTStudy {
   public static void main(String[] args) throws IOException {
-    if (args.length < 2) {
+    if (args.length != 1) {
       throw new JMetalException("Missing argument: experiment base directory") ;
     }
     String experimentBaseDirectory = args[0] ;
