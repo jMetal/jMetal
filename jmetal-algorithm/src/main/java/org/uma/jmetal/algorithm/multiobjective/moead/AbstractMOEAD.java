@@ -18,6 +18,7 @@ import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -70,8 +71,6 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
-
-  protected int numberOfThreads ;
 
   public AbstractMOEAD(Problem<S> problem, int populationSize, int resultPopulationSize,
       int maxEvaluations, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutation,
@@ -171,7 +170,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     }
   }
 
-  void updateIdealPoint(S individual) {
+  protected void updateIdealPoint(S individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < idealPoint[n]) {
         idealPoint[n] = individual.getObjective(n);
@@ -192,8 +191,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   }
 
   protected List<S> parentSelection(int subProblemId, NeighborType neighborType) {
-    Vector<Integer> matingPool = new Vector<Integer>();
-    matingSelection(matingPool, subProblemId, neighborType);
+    List<Integer> matingPool = matingSelection(subProblemId, 2, neighborType);
 
     List<S> parents = new ArrayList<>(3);
 
@@ -206,14 +204,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
   /**
    *
-   * @param listOfSolutions The set of the indexes of selected mating parents
    * @param subproblemId the id of current subproblem
    * @param neighbourType neighbour type
    */
-  protected void matingSelection(Vector<Integer> listOfSolutions, int subproblemId, NeighborType neighbourType) {
+  protected List<Integer> matingSelection(int subproblemId, int numberOfSolutionsToSelect, NeighborType neighbourType) {
     int neighbourSize;
     int selectedSolution;
-    int numberOfSolutionsToSelect = 2 ;
+
+    List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
 
     neighbourSize = neighborhood[subproblemId].length;
     while (listOfSolutions.size() < numberOfSolutionsToSelect) {
@@ -233,9 +231,11 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       }
 
       if (flag) {
-        listOfSolutions.addElement(selectedSolution);
+        listOfSolutions.add(selectedSolution);
       }
     }
+
+    return listOfSolutions ;
   }
 
   /**
@@ -246,7 +246,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
    * @throws JMetalException
    */
   @SuppressWarnings("unchecked")
-  void updateNeighborhood(S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
+  protected  void updateNeighborhood(S individual, int subProblemId, NeighborType neighborType) throws JMetalException {
     int size;
     int time;
 
@@ -336,5 +336,9 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       throw new JMetalException(" MOEAD.fitnessFunction: unknown type " + functionType);
     }
     return fitness;
+  }
+
+  @Override public List<S> getResult() {
+    return population ;
   }
 }
