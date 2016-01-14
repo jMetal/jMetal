@@ -116,10 +116,6 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     }
   }
 
-  @Override public List<DoubleSolution> getResult() {
-    return population ;
-  }
-
   public void utilityFunction() throws JMetalException {
     double f1, f2, uti, delta;
     for (int n = 0; n < populationSize; n++) {

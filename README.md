@@ -31,7 +31,7 @@ If you are interested in contributing with your ideas and comments, please take 
   * Support for [experimental studies](https://github.com/jMetal/jMetal/tree/master/jmetal-exec/src/main/java/org/uma/jmetal/experiment)
     * Parallel algorithm execution.
     * Quality indicators computing.
-    * Reference Pareto front approximation computing.
+    * Reference Pareto front approximations computing.
     * Generation of Latex tables:
       * Basic statistics (mean/median and standard deviation/IQR).
       * Wilcoxon rank sum test.
