@@ -109,7 +109,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
   }
 
   @Override
-  void updateNeighborhood(DoubleSolution individual, int subproblemId, NeighborType neighborType) {
+  protected void updateNeighborhood(DoubleSolution individual, int subproblemId, NeighborType neighborType) {
     int size;
     int time;
 
