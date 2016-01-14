@@ -25,9 +25,11 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,7 +75,10 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
               i + ".tsv";
           Front front = new ArrayFront(frontFileName) ;
           List<DoubleSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
+          GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+
           for (DoubleSolution solution : solutionList) {
+            solutionAttribute.setAttribute(solution, algorithm.getTag());
             nonDominatedSolutionArchive.add(solution) ;
           }
         }
@@ -81,7 +86,10 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
       referenceFrontFileNames.add(problem.getName() + ".rf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
-          .printObjectivesToFile(referenceSetFileName); ;
+          .printObjectivesToFile(referenceSetFileName);
+
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
+          nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
     experiment.setReferenceFrontFileNames(referenceFrontFileNames);
@@ -96,5 +104,26 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
     }
 
     return outputDirectory ;
+  }
+
+  private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
+      String outputDirectoryName, Problem<?> problem,
+      List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+
+    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+      List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
+      for (DoubleSolution solution : nonDominatedSolutions) {
+        if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
+          solutionsPerAlgorithm.add(solution) ;
+        }
+      }
+
+      new SolutionListOutput(solutionsPerAlgorithm)
+          .printObjectivesToFile(
+              outputDirectoryName + "/" + problem.getName() + "." +
+                  algorithm.getTag() + ".rf"
+          );
+    }
   }
 }

@@ -67,42 +67,49 @@ public class SolutionListOutput {
     return this;
   }
 
-  public void print()  {
+  public void print() {
     printObjectivesToFile(funFileContext, solutionList);
     printVariablesToFile(varFileContext, solutionList);
   }
 
-  public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
+  public void printVariablesToFile(FileOutputContext context, List<? extends Solution<?>> solutionList) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
-    int numberOfVariables = solutionSet.get(0).getNumberOfVariables();
     try {
-      for (int i = 0; i < solutionSet.size(); i++) {
-        for (int j = 0; j < numberOfVariables; j++) {
-          bufferedWriter.write(solutionSet.get(i).getVariableValueString(j) + context.getSeparator());
+      if (solutionList.size() > 0) {
+        int numberOfVariables = solutionList.get(0).getNumberOfVariables();
+        for (int i = 0; i < solutionList.size(); i++) {
+          for (int j = 0; j < numberOfVariables; j++) {
+            bufferedWriter.write(solutionList.get(i).getVariableValueString(j) + context.getSeparator());
+          }
+          bufferedWriter.newLine();
         }
-        bufferedWriter.newLine();
       }
+
       bufferedWriter.close();
     } catch (IOException e) {
-      throw new JMetalException("Exception when printing variables to file", e) ;
+      e.printStackTrace();
     }
+
   }
 
-  void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionSet) {
+  void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionList) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
-    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
     try {
-      for (int i = 0; i < solutionSet.size(); i++) {
-        for (int j = 0; j < numberOfObjectives; j++) {
-          bufferedWriter.write(solutionSet.get(i).getObjective(j) + context.getSeparator());
+      if (solutionList.size() > 0) {
+        int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+        for (int i = 0; i < solutionList.size(); i++) {
+          for (int j = 0; j < numberOfObjectives; j++) {
+            bufferedWriter.write(solutionList.get(i).getObjective(j) + context.getSeparator());
+          }
+          bufferedWriter.newLine();
         }
-        bufferedWriter.newLine();
       }
+
       bufferedWriter.close();
     } catch (IOException e) {
-      throw new JMetalException("Exception when printing objectives to file", e) ;
+      e.printStackTrace();
     }
   }
 
