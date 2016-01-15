@@ -32,6 +32,7 @@ public class SolutionListOutput {
   private String separator = "\t";
   private List<? extends Solution<?>> solutionList;
   private boolean selectFeasibleSolutions;
+  private List<Boolean> isObjectiveToBeMinimized ;
 
   public SolutionListOutput(List<? extends Solution<?>> solutionList) {
     varFileContext = new DefaultFileOutputContext(varFileName);
@@ -40,6 +41,7 @@ public class SolutionListOutput {
     funFileContext.setSeparator(separator);
     this.solutionList = solutionList;
     selectFeasibleSolutions = false;
+    isObjectiveToBeMinimized = null ;
   }
 
   public SolutionListOutput setVarFileOutputContext(FileOutputContext fileContext) {
@@ -50,6 +52,12 @@ public class SolutionListOutput {
 
   public SolutionListOutput setFunFileOutputContext(FileOutputContext fileContext) {
     funFileContext = fileContext;
+
+    return this;
+  }
+
+  public SolutionListOutput setObjectiveMinimizingObjectiveList(List<Boolean> isObjectiveToBeMinimized) {
+    this.isObjectiveToBeMinimized = isObjectiveToBeMinimized ;
 
     return this;
   }
@@ -68,7 +76,11 @@ public class SolutionListOutput {
   }
 
   public void print() {
-    printObjectivesToFile(funFileContext, solutionList);
+    if (isObjectiveToBeMinimized == null) {
+      printObjectivesToFile(funFileContext, solutionList);
+    } else {
+      printObjectivesToFile(funFileContext, solutionList, isObjectiveToBeMinimized);
+    }
     printVariablesToFile(varFileContext, solutionList);
   }
 
@@ -93,7 +105,7 @@ public class SolutionListOutput {
 
   }
 
-  void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionList) {
+  public void printObjectivesToFile(FileOutputContext context, List<? extends Solution<?>> solutionList) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
@@ -109,7 +121,36 @@ public class SolutionListOutput {
 
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error printing objecives to file: ", e);
+    }
+  }
+
+  public void printObjectivesToFile(FileOutputContext context,
+                                    List<? extends Solution<?>> solutionList,
+                                    List<Boolean> minimizeObjective) {
+    BufferedWriter bufferedWriter = context.getFileWriter();
+
+    try {
+      if (solutionList.size() > 0) {
+        int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+        if (numberOfObjectives != minimizeObjective.size()) {
+          throw new JMetalException("The size of list minimizeObjective is not correct: " + minimizeObjective.size()) ;
+        }
+        for (int i = 0; i < solutionList.size(); i++) {
+          for (int j = 0; j < numberOfObjectives; j++) {
+            if (minimizeObjective.get(j)) {
+              bufferedWriter.write(solutionList.get(i).getObjective(j) + context.getSeparator());
+            } else {
+              bufferedWriter.write(-1.0 * solutionList.get(i).getObjective(j) + context.getSeparator());
+            }
+          }
+          bufferedWriter.newLine();
+        }
+      }
+
+      bufferedWriter.close();
+    } catch (IOException e) {
+      throw new JMetalException("Error printing objecives to file: ", e);
     }
   }
 
@@ -118,6 +159,10 @@ public class SolutionListOutput {
    */
   public void printObjectivesToFile(String fileName) throws IOException {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList);
+  }
+
+  public void printObjectivesToFile(String fileName, List<Boolean> minimizeObjective) throws IOException {
+    printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList, minimizeObjective);
   }
 
   public void printVariablesToFile(String fileName) throws IOException {
