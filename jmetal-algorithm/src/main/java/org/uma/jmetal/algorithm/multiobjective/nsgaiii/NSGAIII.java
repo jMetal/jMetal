@@ -35,14 +35,14 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   /** Constructor */
   public NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
-    super(builder.problem) ;
-    maxIterations = builder.maxIterations ;
+    super(builder.getProblem()) ;
+    maxIterations = builder.getMaxIterations() ;
 
-    crossoverOperator =  builder.crossoverOperator ;
-    mutationOperator  =  builder.mutationOperator ;
-    selectionOperator =  builder.selectionOperator ;
+    crossoverOperator =  builder.getCrossoverOperator() ;
+    mutationOperator  =  builder.getMutationOperator() ;
+    selectionOperator =  builder.getSelectionOperator() ;
 
-    evaluator = builder.evaluator ;
+    evaluator = builder.getEvaluator() ;
 
     /// NSGAIII
     numberOfDivisions = new Vector<>(1) ;
