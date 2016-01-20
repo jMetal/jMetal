@@ -34,7 +34,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   public NSGAIIIBuilder<S> Builder;
 
   /** Constructor */
-  NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
+  public NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
     super(builder.problem) ;
     maxIterations = builder.maxIterations ;
 
