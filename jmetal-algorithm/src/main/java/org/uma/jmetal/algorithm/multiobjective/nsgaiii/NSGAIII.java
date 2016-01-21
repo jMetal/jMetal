@@ -28,10 +28,8 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   protected SolutionListEvaluator<S> evaluator ;
 
-  private Vector<Integer> numberOfDivisions  ;
-  private List<ReferencePoint<S>> referencePoints = new Vector<>() ;
-
-  public NSGAIIIBuilder<S> Builder;
+  protected Vector<Integer> numberOfDivisions  ;
+  protected List<ReferencePoint<S>> referencePoints = new Vector<>() ;
 
   /** Constructor */
   public NSGAIII(NSGAIIIBuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
