@@ -3,6 +3,8 @@ package org.uma.jmetal.measure;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.util.naming.DescribedEntity;
 
+import java.io.Serializable;
+
 /**
  * A {@link Measure} aims at providing the {@link Value} of a specific property,
  * typically of an {@link Algorithm}. In order to facilitate external uses, it
@@ -14,5 +16,5 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  * @param <Value>
  *            the type of value the {@link Measure} can provide
  */
-public interface Measure<Value> extends DescribedEntity {
+public interface Measure<Value> extends DescribedEntity, Serializable {
 }
