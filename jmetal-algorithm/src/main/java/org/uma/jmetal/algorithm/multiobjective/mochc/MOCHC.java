@@ -92,8 +92,6 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    System.out.println("Mim distance: " + minimumDistance) ;
-
     comparator = new CrowdingDistanceComparator<BinarySolution>();
   }
 
