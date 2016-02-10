@@ -34,8 +34,9 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 	@Override
 	public boolean add(S solution) {
 		boolean success = archive.add(solution);
-		if (success)
+		if (success) {
 			prune();
+		}
 
 		return success;
 	}
