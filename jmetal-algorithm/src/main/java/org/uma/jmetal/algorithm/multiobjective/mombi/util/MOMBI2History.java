@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import org.uma.jmetal.solution.Solution;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 10/9/15.
  */
-public class MOMBI2History<T extends Solution<?>> {
+public class MOMBI2History<T extends Solution<?>> implements Serializable {
   public static final int MAX_LENGHT 			= 5;
   private 	  final int numberOfObjectives;
   private       final List<List<Double>> history;
