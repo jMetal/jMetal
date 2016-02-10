@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -28,12 +29,12 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
   protected final Problem<S> problem;
   protected int maxEvaluations;
   protected int populationSize;
-  protected int archiveSize ;
   protected CrossoverOperator<S>  crossoverOperator;
   protected MutationOperator<S> mutationOperator;
   protected SelectionOperator<List<S>,S> selectionOperator;
   protected SolutionListEvaluator<S> evaluator;
   protected Neighborhood<S> neighborhood ;
+  protected BoundedArchive<S> archive ;
 
   /**
    * MOCellBuilder constructor
@@ -43,7 +44,6 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
-    archiveSize = 100 ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>());
@@ -70,12 +70,8 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return this;
   }
 
-  public MOCellBuilder<S> setArchiveSize(int archiveSize) {
-    if (archiveSize < 0) {
-      throw new JMetalException("archive size is negative: " + populationSize);
-    }
-
-    this.archiveSize = archiveSize;
+  public MOCellBuilder<S> setArchive(BoundedArchive<S> archive) {
+    this.archive = archive ;
 
     return this;
   }
@@ -105,8 +101,8 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
   }
 
   public MOCell<S> build() {
-    MOCell<S> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize,
-        archiveSize, neighborhood, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    MOCell<S> algorithm = new MOCell<S>(problem, maxEvaluations, populationSize, archive,
+        neighborhood, crossoverOperator, mutationOperator, selectionOperator, evaluator);
     
     return algorithm ;
   }
@@ -124,8 +120,8 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     return populationSize;
   }
 
-  public int getArchiveSize() {
-    return archiveSize ;
+  public BoundedArchive<S> getArchive() {
+    return archive ;
   }
 
   public CrossoverOperator<S> getCrossoverOperator() {

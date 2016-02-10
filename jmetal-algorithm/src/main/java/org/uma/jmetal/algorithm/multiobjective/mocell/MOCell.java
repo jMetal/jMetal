@@ -19,6 +19,8 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -42,14 +44,13 @@ import java.util.List;
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;
-  protected int archiveSize;
   protected final SolutionListEvaluator<S> evaluator;
 
   private Neighborhood<S> neighborhood;
   private int currentIndividual;
   private List<S> currentNeighbors;
 
-  private CrowdingDistanceArchive<S> archive;
+  private BoundedArchive<S> archive;
 
   private Comparator<S> dominanceComparator;
   private LocationAttribute<S> location;
@@ -59,28 +60,26 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    * @param problem
    * @param maxEvaluations
    * @param populationSize
-   * @param archiveSize
    * @param neighborhood
    * @param crossoverOperator
    * @param mutationOperator
    * @param selectionOperator
    * @param evaluator
    */
-  public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
-      Neighborhood<S> neighborhood,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+  public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, BoundedArchive<S> archive,
+                Neighborhood<S> neighborhood,
+                CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem);
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
-    this.archiveSize = archiveSize ;
-    this.archive = new CrowdingDistanceArchive<>(archiveSize);
+    this.archive = archive ;
+    //this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
     this.dominanceComparator = new DominanceComparator<S>() ;
-
 
     this.evaluator = evaluator ;
   }

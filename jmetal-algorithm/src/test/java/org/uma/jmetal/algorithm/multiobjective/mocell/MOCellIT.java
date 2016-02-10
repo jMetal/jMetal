@@ -13,6 +13,7 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class MOCellIT {
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
+        .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -57,6 +59,7 @@ public class MOCellIT {
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
+        .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
