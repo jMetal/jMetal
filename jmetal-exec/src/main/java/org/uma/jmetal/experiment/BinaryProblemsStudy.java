@@ -34,6 +34,7 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
@@ -137,9 +138,9 @@ public class BinaryProblemsStudy {
     for (Problem<BinarySolution> problem : problemList) {
       Algorithm<List<BinarySolution>> algorithm = new MOCellBuilder<BinarySolution>(problem, new SinglePointCrossover(1.0),
           new BitFlipMutation(1.0 / ((BinaryProblem)problem).getNumberOfBits(0)))
-          .setArchiveSize(100)
           .setPopulationSize(100)
           .setMaxEvaluations(25000)
+          .setArchive(new CrowdingDistanceArchive<BinarySolution>(100))
           .build();
       algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem));
     }
