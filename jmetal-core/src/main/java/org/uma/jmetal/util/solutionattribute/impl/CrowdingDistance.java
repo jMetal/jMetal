@@ -90,5 +90,10 @@ public class CrowdingDistance<S extends Solution<?>>
       }
     }
   }
+
+  @Override
+  public Object getAttributeID() {
+    return this.getClass() ;
+  }
 }
 
