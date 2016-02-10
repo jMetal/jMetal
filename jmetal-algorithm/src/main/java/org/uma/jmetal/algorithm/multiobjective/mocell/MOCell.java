@@ -118,11 +118,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     for (S solution : population) {
       archive.add((S)solution.copy()) ;
     }
-    /*
-    Iterator<S> it = population.iterator();
-    while (it.hasNext())
-      archive.add(it.next());
-      */
+
     return population;
   }
 
