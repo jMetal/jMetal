@@ -31,14 +31,17 @@ public class TaggedAlgorithm<Result> implements Algorithm<Result> {
   private Problem<?> problem ;
   private String tag ;
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem) {
-    this(algorithm, algorithm.getName(), problem) ;
+  private int runId;
+
+  public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem, int runId) {
+    this(algorithm, algorithm.getName(), problem, runId) ;
   }
 
-  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem) {
+  public TaggedAlgorithm (Algorithm<Result> algorithm, String tag, Problem<?> problem, int runId) {
     this.algorithm = algorithm ;
     this.tag = tag ;
     this.problem = problem ;
+    this.runId = runId ;
   }
 
   @Override
@@ -63,6 +66,10 @@ public class TaggedAlgorithm<Result> implements Algorithm<Result> {
 
   public String getTag() {
     return tag ;
+  }
+
+  public int getRunId() {
+    return runId;
   }
 
   public void setTag(String tag) {

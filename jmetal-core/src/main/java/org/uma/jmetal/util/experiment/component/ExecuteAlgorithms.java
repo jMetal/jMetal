@@ -51,19 +51,17 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
 
     MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
 
+    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
+    parallelExecutor.start(this);
+
     for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
-      parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
-      parallelExecutor.start(this);
-
-      for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-        TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
-        parallelExecutor.addTask(new Object[]{clonedAlgorithm, i, experiment});
-      }
-
-      parallelExecutor.parallelExecution();
-      parallelExecutor.stop();
+      //for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+      //TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
+      parallelExecutor.addTask(new Object[]{algorithm, algorithm.getRunId(), experiment});
+      //}
     }
-  }
+    parallelExecutor.parallelExecution();
+    parallelExecutor.stop();  }
 
   private void prepareOutputDirectory() {
     if (experimentDirectoryDoesNotExist()) {

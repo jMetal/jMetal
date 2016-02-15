@@ -68,6 +68,8 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class BinaryProblemsStudy {
+  private static final int INDEPENDENT_RUNS = 25 ;
+
   public static void main(String[] args) throws IOException {
     if (args.length != 2) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
@@ -78,7 +80,7 @@ public class BinaryProblemsStudy {
     List<Problem<BinarySolution>> problemList = Arrays.<Problem<BinarySolution>>asList(
         new ZDT5(), new OneZeroMax(512)) ;
 
-    List<TaggedAlgorithm<List<BinarySolution>>> algorithmList = configureAlgorithmList(problemList) ;
+    List<TaggedAlgorithm<List<BinarySolution>>> algorithmList = configureAlgorithmList(problemList, INDEPENDENT_RUNS) ;
 
     Experiment<BinarySolution, List<BinarySolution>> experiment =
         new ExperimentBuilder<BinarySolution, List<BinarySolution>>("BinaryProblemsStudy")
@@ -94,7 +96,7 @@ public class BinaryProblemsStudy {
                 new InvertedGenerationalDistance<BinarySolution>(),
                 new InvertedGenerationalDistancePlus<BinarySolution>())
             )
-            .setIndependentRuns(20)
+            .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
             .build();
 
@@ -114,64 +116,67 @@ public class BinaryProblemsStudy {
    * @param problemList
    * @return
    */
-  static List<TaggedAlgorithm<List<BinarySolution>>> configureAlgorithmList(List<Problem<BinarySolution>> problemList) {
+  static List<TaggedAlgorithm<List<BinarySolution>>> configureAlgorithmList(
+      List<Problem<BinarySolution>> problemList,
+      int independentRuns) {
     List<TaggedAlgorithm<List<BinarySolution>>> algorithms = new ArrayList<>() ;
 
-    for (Problem<BinarySolution> problem : problemList) {
-      Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<BinarySolution>(problem, new SinglePointCrossover(1.0),
-          new BitFlipMutation(1.0 / ((BinaryProblem)problem).getNumberOfBits(0)))
-          .setMaxEvaluations(25000)
-          .setPopulationSize(100)
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem));
+    for (int run = 0; run < independentRuns; run++) {
+      for (Problem<BinarySolution> problem : problemList) {
+        Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<BinarySolution>(problem, new SinglePointCrossover(1.0),
+            new BitFlipMutation(1.0 / ((BinaryProblem) problem).getNumberOfBits(0)))
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem, run));
+      }
+
+      for (Problem<BinarySolution> problem : problemList) {
+        Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<BinarySolution>(problem, new SinglePointCrossover(1.0),
+            new BitFlipMutation(1.0 / ((BinaryProblem) problem).getNumberOfBits(0)))
+            .setMaxIterations(250)
+            .setPopulationSize(100)
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem, run));
+      }
+
+      for (Problem<BinarySolution> problem : problemList) {
+        Algorithm<List<BinarySolution>> algorithm = new MOCellBuilder<BinarySolution>(problem, new SinglePointCrossover(1.0),
+            new BitFlipMutation(1.0 / ((BinaryProblem) problem).getNumberOfBits(0)))
+            .setPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setArchive(new CrowdingDistanceArchive<BinarySolution>(100))
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem, run));
+      }
+
+      for (Problem<BinarySolution> problem : problemList) {
+        CrossoverOperator<BinarySolution> crossoverOperator;
+        MutationOperator<BinarySolution> mutationOperator;
+        SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection;
+        SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection;
+
+        crossoverOperator = new HUXCrossover(1.0);
+        parentsSelection = new RandomSelection<BinarySolution>();
+        newGenerationSelection = new RankingAndCrowdingSelection<BinarySolution>(100);
+        mutationOperator = new BitFlipMutation(0.35);
+
+        Algorithm<List<BinarySolution>> algorithm = new MOCHCBuilder(((BinaryProblem) problem))
+            .setInitialConvergenceCount(0.25)
+            .setConvergenceValue(3)
+            .setPreservedPopulation(0.05)
+            .setPopulationSize(100)
+            .setMaxEvaluations(25000)
+            .setCrossover(crossoverOperator)
+            .setNewGenerationSelection(newGenerationSelection)
+            .setCataclysmicMutation(mutationOperator)
+            .setParentSelection(parentsSelection)
+            .setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
+            .build();
+
+        algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem, run));
+      }
     }
-
-    for (Problem<BinarySolution> problem : problemList) {
-      Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<BinarySolution>(problem, new SinglePointCrossover(1.0),
-          new BitFlipMutation(1.0 / ((BinaryProblem)problem).getNumberOfBits(0)))
-          .setMaxIterations(250)
-          .setPopulationSize(100)
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem));
-    }
-
-    for (Problem<BinarySolution> problem : problemList) {
-      Algorithm<List<BinarySolution>> algorithm = new MOCellBuilder<BinarySolution>(problem, new SinglePointCrossover(1.0),
-          new BitFlipMutation(1.0 / ((BinaryProblem)problem).getNumberOfBits(0)))
-          .setPopulationSize(100)
-          .setMaxEvaluations(25000)
-          .setArchive(new CrowdingDistanceArchive<BinarySolution>(100))
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem));
-    }
-
-    for (Problem<BinarySolution> problem : problemList) {
-      CrossoverOperator<BinarySolution> crossoverOperator;
-      MutationOperator<BinarySolution> mutationOperator;
-      SelectionOperator<List<BinarySolution>, BinarySolution> parentsSelection;
-      SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection;
-
-      crossoverOperator = new HUXCrossover(1.0) ;
-      parentsSelection = new RandomSelection<BinarySolution>() ;
-      newGenerationSelection = new RankingAndCrowdingSelection<BinarySolution>(100) ;
-      mutationOperator = new BitFlipMutation(0.35) ;
-
-      Algorithm<List<BinarySolution>> algorithm = new MOCHCBuilder(((BinaryProblem)problem))
-          .setInitialConvergenceCount(0.25)
-          .setConvergenceValue(3)
-          .setPreservedPopulation(0.05)
-          .setPopulationSize(100)
-          .setMaxEvaluations(25000)
-          .setCrossover(crossoverOperator)
-          .setNewGenerationSelection(newGenerationSelection)
-          .setCataclysmicMutation(mutationOperator)
-          .setParentSelection(parentsSelection)
-          .setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
-          .build() ;
-
-      algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem));
-    }
-
     return algorithms ;
   }
 }

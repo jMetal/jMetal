@@ -58,6 +58,8 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ZDTStudy2 {
+  private static final int INDEPENDENT_RUNS = 25 ;
+
   public static void main(String[] args) throws IOException {
     if (args.length != 2) {
       throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
@@ -68,7 +70,7 @@ public class ZDTStudy2 {
     List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
         new ZDT3(), new ZDT4(), new ZDT6()) ;
 
-    List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList) ;
+    List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList, INDEPENDENT_RUNS) ;
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
@@ -82,7 +84,7 @@ public class ZDTStudy2 {
                 new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
-            .setIndependentRuns(25)
+            .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
             .build();
 
@@ -102,28 +104,32 @@ public class ZDTStudy2 {
    * @param problemList
    * @return
    */
-  static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(List<Problem<DoubleSolution>> problemList) {
+  static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(
+      List<Problem<DoubleSolution>> problemList,
+      int independentRuns) {
     List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
 
-    for (Problem<DoubleSolution> problem : problemList) {
-      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, new SBXCrossover(1.0, 20.0),
-          new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
-    }
+    for (int run = 0; run < independentRuns; run++) {
+      for (Problem<DoubleSolution> problem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, new SBXCrossover(1.0, 20.0),
+            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
+      }
 
-    for (Problem<DoubleSolution> problem : problemList) {
-      Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problem, new SBXCrossover(1.0, 10.0),
-          new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
-    }
+      for (Problem<DoubleSolution> problem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problem, new SBXCrossover(1.0, 10.0),
+            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
+      }
 
-    for (Problem<DoubleSolution> problem : problemList) {
-      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problem,
-          new CrowdingDistanceArchive<DoubleSolution>(100))
-          .build();
-      algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem));
+      for (Problem<DoubleSolution> problem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problem,
+            new CrowdingDistanceArchive<DoubleSolution>(100))
+            .build();
+        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
+      }
     }
 
     return algorithms ;
