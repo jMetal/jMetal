@@ -50,7 +50,7 @@ import java.util.List;
  * Implementation of MOCHC following the scheme used in jMetal4.5 and former versions, i.e, without
  * implementing the {@link AbstractGeneticAlgorithm} interface.
  */
-public class MOCHC2 implements Algorithm<List<BinarySolution>> {
+public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private BinaryProblem problem;
 
   private List<BinarySolution> population ;
@@ -73,13 +73,13 @@ public class MOCHC2 implements Algorithm<List<BinarySolution>> {
   /**
    * Constructor
    */
-  public MOCHC2(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
-                double preservedPopulation, double initialConvergenceCount,
-                CrossoverOperator<BinarySolution> crossoverOperator,
-                MutationOperator<BinarySolution> cataclysmicMutation,
-                SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection,
-                SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
-                SolutionListEvaluator<BinarySolution> evaluator) {
+  public MOCHC45(BinaryProblem problem, int populationSize, int maxEvaluations, int convergenceValue,
+                 double preservedPopulation, double initialConvergenceCount,
+                 CrossoverOperator<BinarySolution> crossoverOperator,
+                 MutationOperator<BinarySolution> cataclysmicMutation,
+                 SelectionOperator<List<BinarySolution>, List<BinarySolution>> newGenerationSelection,
+                 SelectionOperator<List<BinarySolution>, BinarySolution> parentSelection,
+                 SolutionListEvaluator<BinarySolution> evaluator) {
     super();
     this.problem = problem;
     this.populationSize = populationSize;

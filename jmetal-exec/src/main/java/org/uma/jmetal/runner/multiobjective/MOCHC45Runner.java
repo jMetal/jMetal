@@ -22,7 +22,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHC2;
+import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHC45;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -71,7 +71,7 @@ public class MOCHC45Runner extends AbstractAlgorithmRunner {
     newGenerationSelection = new RankingAndCrowdingSelection<BinarySolution>(100) ;
     mutationOperator = new BitFlipMutation(0.35) ;
 
-    algorithm = new MOCHC2(problem, 100, 25000, 3, 0.05, 0.25, crossoverOperator, mutationOperator,
+    algorithm = new MOCHC45(problem, 100, 25000, 3, 0.05, 0.25, crossoverOperator, mutationOperator,
         newGenerationSelection, parentsSelection, new SequentialSolutionListEvaluator<BinarySolution>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

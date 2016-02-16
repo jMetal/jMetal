@@ -11,17 +11,19 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.mocell;
+package org.uma.jmetal.algorithm.multiobjective.cellde;
 
+import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -37,49 +39,56 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author JuanJo Durillo
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *
- * @param <S>
  */
-public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
+public class CellDE {
+
+/*
+  public class CellDE extends AbstractDifferentialEvolution<List<DoubleSolution>>  {
   protected int evaluations;
   protected int maxEvaluations;
-  protected final SolutionListEvaluator<S> evaluator;
+  protected final SolutionListEvaluator<DoubleSolution> evaluator;
 
-  private Neighborhood<S> neighborhood;
+  private Neighborhood<DoubleSolution> neighborhood;
   private int currentIndividual;
-  private List<S> currentNeighbors;
+  private List<DoubleSolution> currentNeighbors;
 
-  private BoundedArchive<S> archive;
+  private DifferentialEvolutionSelection selection ;
+  private DifferentialEvolutionCrossover crossover ;
 
-  private Comparator<S> dominanceComparator;
-  private LocationAttribute<S> location;
+  private BoundedArchive<DoubleSolution> archive;
 
+  private Comparator<DoubleSolution> dominanceComparator;
+  private LocationAttribute<DoubleSolution> location;
+*/
   /**
    * Constructor
    * @param problem
    * @param maxEvaluations
    * @param populationSize
    * @param neighborhood
-   * @param crossoverOperator
-   * @param mutationOperator
-   * @param selectionOperator
    * @param evaluator
    */
-  public MOCell(Problem<S> problem, int maxEvaluations, int populationSize, BoundedArchive<S> archive,
-                Neighborhood<S> neighborhood,
-                CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-                SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem);
-    this.maxEvaluations = maxEvaluations;
+  /*
+  public CellDE(Problem<DoubleSolution> problem,
+                int maxEvaluations,
+                int populationSize,
+                BoundedArchive<DoubleSolution> archive,
+                Neighborhood<DoubleSolution> neighborhood,
+                DifferentialEvolutionSelection selection,
+                DifferentialEvolutionCrossover crossover,
+                double cr,
+                double f,
+                SolutionListEvaluator<DoubleSolution> evaluator) {
+    setProblem(problem);
     setMaxPopulationSize(populationSize);
+    this.maxEvaluations = maxEvaluations;
     this.archive = archive ;
-    //this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
-    this.crossoverOperator = crossoverOperator;
-    this.mutationOperator = mutationOperator;
-    this.selectionOperator = selectionOperator;
-    this.dominanceComparator = new DominanceComparator<S>() ;
+    this.selection = selection;
+    this.crossover = crossover;
+    this.dominanceComparator = new DominanceComparator<DoubleSolution>() ;
 
     this.evaluator = evaluator ;
   }
@@ -102,10 +111,10 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
+  protected List<DoubleSolution> createInitialPopulation() {
+    List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
     for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
+      DoubleSolution newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
     location = new LocationAttribute<>(population);
@@ -113,19 +122,13 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  @SuppressWarnings("unchecked")
-  protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, getProblem());
-    for (S solution : population) {
-      archive.add((S)solution.copy()) ;
-    }
-
-    return population;
+  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
+    return evaluator.evaluate(population, getProblem());
   }
-
+/*
   @Override
-  protected List<S> selection(List<S> population) {
-    List<S> parents = new ArrayList<>(2);
+  protected List<DoubleSolution> selection(List<DoubleSolution> population) {
+    List<DoubleSolution> parents = new ArrayList<>(2);
     currentNeighbors = neighborhood.getNeighbors(population, currentIndividual);
     currentNeighbors.add(population.get(currentIndividual));
 
@@ -139,9 +142,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  protected List<S> reproduction(List<S> population) {
-    List<S> result = new ArrayList<>(1);
-    List<S> offspring = crossoverOperator.execute(population);
+  protected List<DoubleSolution> reproduction(List<S> population) {
+    List<DoubleSolution> result = new ArrayList<>(1);
+    List<> offspring = crossoverOperator.execute(population);
     mutationOperator.execute(offspring.get(0));
     result.add(offspring.get(0));
     return result;
@@ -160,7 +163,17 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  public List<S> getResult() {
+  public List<    List<DoubleSolution> matingPopulation = new LinkedList<>();
+  for (int i = 0; i < getMaxPopulationSize(); i++) {
+    // Obtain parents. Two parameters are required: the population and the
+    //                 index of the current individual
+    selectionOperator.setIndex(i);
+    List<DoubleSolution> parents = selectionOperator.execute(population);
+
+    matingPopulation.addAll(parents);
+  }
+
+  return matingPopulation;> getResult() {
     return archive.getSolutionList();
   }
 
@@ -205,4 +218,5 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override public String getDescription() {
     return "Multi-Objective Cellular evolutionry algorithm" ;
   }
+*/
 }
