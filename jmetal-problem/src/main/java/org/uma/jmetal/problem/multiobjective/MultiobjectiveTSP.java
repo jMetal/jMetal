@@ -33,9 +33,9 @@ import java.io.*;
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
  */
 public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
-  private int         numberOfCities ;
-  private double [][] distanceMatrix ;
-  private double [][] costMatrix;
+  protected int         numberOfCities ;
+  protected double [][] distanceMatrix ;
+  protected double [][] costMatrix;
 
   /**
    * Creates a new MultiobjectiveTSP problem instance
