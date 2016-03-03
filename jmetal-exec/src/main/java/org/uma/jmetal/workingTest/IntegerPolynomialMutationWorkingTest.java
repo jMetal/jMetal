@@ -5,6 +5,8 @@ import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.singleobjective.NIntegerMin;
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -42,8 +44,8 @@ public class IntegerPolynomialMutationWorkingTest {
     String outputFileName ;
 
     if (args.length !=4) {
-      System.out.println("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
-      System.out.println("Using default parameters") ;
+      JMetalLogger.logger.info("Usage: numberOfSolutions granularity distributionIndex outputFile") ;
+      JMetalLogger.logger.info("Using default parameters") ;
 
       numberOfPoints = 10000 ;
       granularity = 100 ;
@@ -85,7 +87,7 @@ public class IntegerPolynomialMutationWorkingTest {
       }
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error reading data ", e) ;
     }
   }
 

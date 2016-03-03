@@ -79,7 +79,7 @@ public class IntegerSBXCrossoverWorkingTest {
       }
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error reading data ", e) ;
     }
   }
 

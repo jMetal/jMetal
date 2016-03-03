@@ -100,7 +100,7 @@ public class SolutionListOutput {
 
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error writing data ", e) ;
     }
 
   }

@@ -16,6 +16,7 @@ package org.uma.jmetal.algorithm.multiobjective.dmopso;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -253,12 +254,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         }
         br.close();
       } catch (Exception e) {
-        System.out.println("initUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName);
-        e.printStackTrace();
+        throw new JMetalException("initUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName);
       }
-    } // else
-
-  } // initUniformWeight
+    }
+  }
 
 
   private void initIdealPoint()  {
@@ -271,7 +270,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     for (int i = 0; i < swarmSize; i++) {
       updateReference(getSwarm().get(i));
     }
-  } // initIdealPoint
+  }
 
   private void updateReference(DoubleSolution individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
@@ -281,7 +280,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         indArray[n] = (DoubleSolution)individual.copy() ;
       }
     }
-  } // updateReference
+  }
 
   private void updateGlobalBest() {
 
@@ -309,17 +308,13 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     f1 = fitnessFunction(localBest[part], lambda[part]);
     f2 = fitnessFunction(indiv, lambda[part]);
 
-//		System.out.println("F1 = "+f1);
-//		System.out.println("F2 = "+f2);
-
     if(age[part] >= maxAge || f2 <= f1){
       localBest[part] = indiv;
       age[part] = 0;
     }else{
       age[part]++;
     }
-  } // updateLocalBest
-
+  }
 
   private double fitnessFunction(DoubleSolution sol, double[] lambda){
     double fitness = 0.0;

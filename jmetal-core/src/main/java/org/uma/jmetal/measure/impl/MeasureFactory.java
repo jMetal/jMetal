@@ -4,6 +4,7 @@ import org.uma.jmetal.measure.Measure;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.PullMeasure;
 import org.uma.jmetal.measure.PushMeasure;
+import org.uma.jmetal.util.JMetalException;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -138,7 +139,7 @@ public class MeasureFactory {
 					try {
 						Thread.sleep(period - alreadyConsumed);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						throw new JMetalException("Error in run method: ", e) ;
 					}
 
 					long measureStart = System.currentTimeMillis();

@@ -78,7 +78,7 @@ public class BLXAlphaCrossoverWorkingTest {
       }
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error reading data ", e) ;
     }
   }
 

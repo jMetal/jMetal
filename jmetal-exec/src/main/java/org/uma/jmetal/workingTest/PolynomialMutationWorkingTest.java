@@ -60,7 +60,6 @@ public class PolynomialMutationWorkingTest {
     Collections.sort(population, new VariableComparator()) ;
     double[][] classifier = classify(population, problem, granularity);
 
-
     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFileName)));
 
     try {
@@ -71,7 +70,7 @@ public class PolynomialMutationWorkingTest {
       }
       bufferedWriter.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new JMetalException("Error reading data ", e) ;
     }
   }
 

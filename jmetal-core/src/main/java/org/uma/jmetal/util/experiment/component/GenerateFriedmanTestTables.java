@@ -17,6 +17,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 
@@ -112,8 +113,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
       fis.close();
     } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(-1);
+      throw new JMetalException("Error reading data ", e) ;
     }
 
     StringTokenizer lines = new StringTokenizer(string, "\n\r");
@@ -256,8 +256,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
       fileOutputStream.close();
     }
     catch (IOException e) {
-      e.printStackTrace();
-      System.exit(-1);
+      throw new JMetalException("Error writing data ", e) ;
     }
   }
 

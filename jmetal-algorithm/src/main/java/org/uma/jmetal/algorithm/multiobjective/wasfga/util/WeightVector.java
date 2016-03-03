@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga.util;
 
+import org.uma.jmetal.util.JMetalException;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -40,14 +42,6 @@ public class WeightVector {
 
       indexOfWeight = indexOfWeight+1;
     }
-//    
-//    for (int i = 0; i < weights.length; i++) {
-//    	for (int j = 0; j < weights[i].length; j++) {
-//    		System.out.print(weights[i][j]+" ");    		
-//    	}
-//    	System.out.println();
-//    }
-    
 
     return weights;
   }
@@ -98,8 +92,7 @@ public class WeightVector {
         }
       }
     } catch (Exception e) {
-      System.out.println("getWeightsFromFile: failed when reading for file: " + filePath);
-      e.printStackTrace();
+      throw new JMetalException("getWeightsFromFile: failed when reading for file: " + filePath) ;
     }
 
     return weights;
