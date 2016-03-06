@@ -27,6 +27,39 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * Utilities methods to used by MOEA/D
  */
 public class MOEADUtils {
+	
+	/**
+	 * Quick sort procedure (ascending order)
+	 * 
+	 * @param array
+	 * @param idx
+	 * @param from
+	 * @param to
+	 */
+	public static void QuickSort(double[] array, int[] idx, int from, int to) {
+		if (from < to) {
+			double temp = array[to];
+			int tempIdx = idx[to];
+			int i = from - 1;
+			for (int j = from; j < to; j++) {
+				if (array[j] <= temp) {
+					i++;
+					double tempValue = array[j];
+					array[j] = array[i];
+					array[i] = tempValue;
+					int tempIndex = idx[j];
+					idx[j] = idx[i];
+					idx[i] = tempIndex;
+				}
+			}
+			array[to] = array[i + 1];
+			array[i + 1] = temp;
+			idx[to] = idx[i + 1];
+			idx[i + 1] = tempIdx;
+			QuickSort(array, idx, from, i);
+			QuickSort(array, idx, i + 1, to);
+		}
+	}
 
   public static double distVector(double[] vector1, double[] vector2) {
     int dim = vector1.length;

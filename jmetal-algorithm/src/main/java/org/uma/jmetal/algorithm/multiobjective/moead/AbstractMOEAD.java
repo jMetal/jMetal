@@ -44,6 +44,8 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
   /** Z vector in Zhang & Li paper */
   protected double[] idealPoint;
+  // nadir point
+  protected double[] nadirPoint;
   /** Lambda vectors */
   protected double[][] lambda;
   /** T in Zhang & Li paper */
@@ -60,6 +62,9 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   protected String dataDirectory;
 
   protected List<S> population;
+  protected List<S> offspringPopulation;
+  protected List<S> jointPopulation;
+  
   protected int populationSize;
   protected int resultPopulationSize ;
 
@@ -93,6 +98,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     indArray = new Solution[problem.getNumberOfObjectives()];
     neighborhood = new int[populationSize][neighborSize];
     idealPoint = new double[problem.getNumberOfObjectives()];
+    nadirPoint = new double[problem.getNumberOfObjectives()];
     lambda = new double[populationSize][problem.getNumberOfObjectives()];
   }
 
@@ -168,6 +174,23 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       updateIdealPoint(population.get(i));
     }
   }
+  
+//initialize the nadir point
+	protected void initializeNadirPoint() {
+		for (int i = 0; i < problem.getNumberOfObjectives(); i++)
+			nadirPoint[i] = -1.0e+30;
+		for (int i = 0; i < populationSize; i++)
+			updateNadirPoint(population.get(i));
+	}
+	
+	// update the current nadir point
+	void updateNadirPoint(S individual) {
+		for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+			if (individual.getObjective(i) > nadirPoint[i]) {
+				nadirPoint[i] = individual.getObjective(i);
+			}
+		}
+	}
 
   protected void updateIdealPoint(S individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {

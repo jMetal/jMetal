@@ -48,7 +48,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     DifferentialEvolutionCrossover crossover;
 
     String problemName ;
-    String referenceParetoFront = "" ;
+    String referenceParetoFront = "";
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -56,20 +56,20 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf" ;
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double cr = 1.0 ;
     double f = 0.5 ;
-    crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
+    crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin");
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADSTM)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(150000)
