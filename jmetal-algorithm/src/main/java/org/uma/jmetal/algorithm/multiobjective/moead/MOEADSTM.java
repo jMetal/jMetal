@@ -28,7 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Class implementing the MOEA/D-STM algorithm described in : 
+ * Class implementing the MOEA/D-STM algorithm described in :
  * K. Li, Q. Zhang, S. Kwong, M. Li and R. Wang,
  * "Stable Matching-Based Selection in Evolutionary Multiobjective Optimization",
  * IEEE Transactions on Evolutionary Computation, 18(6): 909-923, 2014. DOI: 10.1109/TEVC.2013.2293776
@@ -65,7 +65,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 		randomGenerator = JMetalRandom.getInstance();
 	}
-	
+
 	@Override
 	public void run() {
 		initializePopulation();
@@ -100,10 +100,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 				updateIdealPoint(child);
 				updateNadirPoint(child);
 				updateNeighborhood(child, subProblemId, neighborType);
-				
+
 				offspringPopulation.add(child);
 			}
-			
+
 			// Combine the parent and the current offspring populations
 			jointPopulation.clear();
 			jointPopulation.addAll(population);
@@ -111,7 +111,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 			// selection process
 			stmSelection();
-			
+
 			generation++;
 			if (generation % 30 == 0) {
 				utilityFunction();
@@ -125,7 +125,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		population 			= new ArrayList<>(populationSize);
 		offspringPopulation = new ArrayList<>(populationSize);
 		jointPopulation 	= new ArrayList<>(populationSize);
-		
+
 		for (int i = 0; i < populationSize; i++) {
 			DoubleSolution newSolution = (DoubleSolution) problem.createSolution();
 
@@ -189,7 +189,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		}
 		return selected;
 	}
-	
+
 	/**
   	 * Select the next parent population, based on the stable matching criteria
   	 */
@@ -254,12 +254,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		for (int i = 0; i < populationSize; i++)
 			population.add(i, jointPopulation.get(i));
 	}
-  
+
   	/**
 	 * Return the stable matching between 'subproblems' and 'solutions'
 	 * ('subproblems' propose first). It is worth noting that the number of
 	 * solutions is larger than that of the subproblems.
-	 * 
+	 *
 	 * @param manPref
 	 * @param womanPref
 	 * @param menSize
@@ -267,7 +267,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	 * @return
 	 */
 	public int[] stableMatching(int[][] manPref, int[][] womanPref, int menSize, int womenSize) {
-		
+
 		// Indicates the mating status
 		int[] statusMan   = new int[menSize];
 		int[] statusWoman = new int[womenSize];
@@ -302,10 +302,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 				}
 			}
 		}
-		
+
 		return statusMan;
 	}
-	
+
   	/**
   	 * Returns true in case that a given woman prefers x to y.
   	 * @param x
@@ -314,7 +314,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   	 * @return
   	 */
 	public boolean prefers(int x, int y, int[] womanPref, int size) {
-		
+
 		for (int i = 0; i < size; i++) {
 			int pref = womanPref[i];
 			if (pref == x)
@@ -326,11 +326,11 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		System.out.println("Error in womanPref list!");
 		return false;
 	}
-	
+
 	/**
 	 * Calculate the perpendicular distance between the solution and reference
 	 * line
-	 * 
+	 *
 	 * @param individual
 	 * @param lambda
 	 * @return
@@ -341,7 +341,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 		double[] vecInd  = new double[problem.getNumberOfObjectives()];
 		double[] vecProj = new double[problem.getNumberOfObjectives()];
-		
+
 		// vecInd has been normalized to the range [0,1]
 		for (int i = 0; i < problem.getNumberOfObjectives(); i++)
 			vecInd[i] = (individual.getObjective(i) - idealPoint[i]) / (nadirPoint[i] - idealPoint[i]);
@@ -351,10 +351,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 			vecProj[i] = vecInd[i] - scale * lambda[i];
 
 		distance = norm_vector(vecProj);
-		
+
 		return distance;
 	}
-	
+
 	/**
 	 * Calculate the perpendicular distance between the solution and reference line
 	 * @param individual
@@ -380,7 +380,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 		return distance;
 	}
-	
+
 	/**
 	 * Calculate the norm of the vector
 	 * @param z
@@ -388,13 +388,13 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	 */
 	public double norm_vector(double[] z) {
 		double sum = 0;
-		
+
 		for (int i = 0; i < problem.getNumberOfObjectives(); i++)
 			sum += z[i] * z[i];
-		
+
 		return Math.sqrt(sum);
 	}
-	
+
 	/**
 	 * Calculate the dot product of two vectors
 	 * @param vec1
@@ -403,16 +403,16 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	 */
 	public double innerproduct(double[] vec1, double[] vec2) {
 		double sum = 0;
-		
+
 		for (int i = 0; i < vec1.length; i++)
 			sum += vec1[i] * vec2[i];
-		
+
 		return sum;
 	}
 
 	@Override
 	public String getName() {
-		return "MOEADDRA";
+		return "MOEADSTM";
 	}
 
 	@Override
