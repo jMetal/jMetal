@@ -36,7 +36,7 @@ public class MOEADUtils {
 	 * @param from
 	 * @param to
 	 */
-	public static void QuickSort(double[] array, int[] idx, int from, int to) {
+	public static void quickSort(double[] array, int[] idx, int from, int to) {
 		if (from < to) {
 			double temp = array[to];
 			int tempIdx = idx[to];
@@ -56,8 +56,8 @@ public class MOEADUtils {
 			array[i + 1] = temp;
 			idx[to] = idx[i + 1];
 			idx[i + 1] = tempIdx;
-			QuickSort(array, idx, from, i);
-			QuickSort(array, idx, i + 1, to);
+			quickSort(array, idx, from, i);
+			quickSort(array, idx, i + 1, to);
 		}
 	}
 

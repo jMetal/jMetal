@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD.NeighborType;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -240,12 +239,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		for (int i = 0; i < populationSize; i++) {
 			for (int j = 0; j < jointPopulation.size(); j++)
 				subpPref[i][j] = j;
-			MOEADUtils.QuickSort(subpMatrix[i], subpPref[i], 0, jointPopulation.size() - 1);
+			MOEADUtils.quickSort(subpMatrix[i], subpPref[i], 0, jointPopulation.size() - 1);
 		}
 		for (int i = 0; i < jointPopulation.size(); i++) {
 			for (int j = 0; j < populationSize; j++)
 				solPref[i][j] = j;
-			MOEADUtils.QuickSort(solMatrix[i], solPref[i], 0, populationSize - 1);
+			MOEADUtils.quickSort(solMatrix[i], solPref[i], 0, populationSize - 1);
 		}
 
 		idx = stableMatching(subpPref, solPref, populationSize, jointPopulation.size());
