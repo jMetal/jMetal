@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADRunner extends AbstractAlgorithmRunner {
+public class MOEADSTMRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
@@ -69,7 +69,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADSTM)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(150000)

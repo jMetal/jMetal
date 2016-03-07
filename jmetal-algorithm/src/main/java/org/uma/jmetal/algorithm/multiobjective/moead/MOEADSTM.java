@@ -47,9 +47,9 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	JMetalRandom randomGenerator;
 
 	public MOEADSTM(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
-			MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
-			FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
-			int maximumNumberOfReplacedSolutions, int neighborSize) {
+									MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
+									FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
+									int maximumNumberOfReplacedSolutions, int neighborSize) {
 		super(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation, functionType,
 				dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborSize);
 
@@ -191,8 +191,8 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	}
 
 	/**
-  	 * Select the next parent population, based on the stable matching criteria
-  	 */
+	 * Select the next parent population, based on the stable matching criteria
+	 */
 	public void stmSelection() {
 
 		int[] idx = new int[populationSize];
@@ -255,7 +255,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 			population.add(i, jointPopulation.get(i));
 	}
 
-  	/**
+	/**
 	 * Return the stable matching between 'subproblems' and 'solutions'
 	 * ('subproblems' propose first). It is worth noting that the number of
 	 * solutions is larger than that of the subproblems.
@@ -306,13 +306,13 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		return statusMan;
 	}
 
-  	/**
-  	 * Returns true in case that a given woman prefers x to y.
-  	 * @param x
-  	 * @param y
-  	 * @param womanPref
-  	 * @return
-  	 */
+	/**
+	 * Returns true in case that a given woman prefers x to y.
+	 * @param x
+	 * @param y
+	 * @param womanPref
+	 * @return
+	 */
 	public boolean prefers(int x, int y, int[] womanPref, int size) {
 
 		for (int i = 0; i < size; i++) {
