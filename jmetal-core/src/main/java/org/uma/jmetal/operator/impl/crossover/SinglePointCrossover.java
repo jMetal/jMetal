@@ -104,8 +104,8 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
 
       // 6. Apply the crossover to the other variables
       for (int i = variable + 1; i < parent1.getNumberOfVariables(); i++) {
-        offspring.get(0).setVariableValue(i, parent2.getVariableValue(i));
-        offspring.get(1).setVariableValue(i, parent1.getVariableValue(i));
+          offspring.get(0).setVariableValue(i, (BinarySet) parent2.getVariableValue(i).clone());
+          offspring.get(1).setVariableValue(i, (BinarySet) parent1.getVariableValue(i).clone());
       }
 
     }
