@@ -16,8 +16,6 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
   private List<List<S>> rankedSubpopulations;
   private int numberOfRanks = 0;
 
-    
-
   public WASFGARanking(AbstractUtilityFunctionsSet<S> utilityFunctions) {
     this.utilityFunctions = utilityFunctions;
   }
