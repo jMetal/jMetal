@@ -10,9 +10,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.referencePoint.impl;
+package org.uma.jmetal.util.referencePoint.impl;
 
-import org.uma.jmetal.referencePoint.ReferencePoint;
+import org.uma.jmetal.util.referencePoint.ReferencePoint;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
