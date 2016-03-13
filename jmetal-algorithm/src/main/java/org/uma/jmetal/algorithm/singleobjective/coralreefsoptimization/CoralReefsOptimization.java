@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -12,6 +13,11 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
+/**
+ * 
+ * @author Inacio Medeiros <inaciogmedeiros@gmail.com>
+ * 
+ */
 public class CoralReefsOptimization<S extends Solution<?>>
 		extends AbstractCoralReefsOptimization<S, List<S>> {
 
@@ -145,7 +151,7 @@ public class CoralReefsOptimization<S extends Solution<?>>
 	}
 
 	@Override
-	protected List<S> larvaeSetting(List<S> larvae, List<S> population,
+	protected List<S> larvaeSettlementPhase(List<S> larvae, List<S> population,
 			List<Coordinate> coordinates) {
 
 		int attempts = getAttemptsToSettle();
@@ -208,14 +214,12 @@ public class CoralReefsOptimization<S extends Solution<?>>
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "CRO";
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Coral Reefs Optimizatoin";
 	}
 
 }
