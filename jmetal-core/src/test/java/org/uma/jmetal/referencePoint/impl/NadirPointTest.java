@@ -3,8 +3,7 @@ package org.uma.jmetal.referencePoint.impl;
 import org.junit.Test;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.referencePoint.impl.NadirPoint;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

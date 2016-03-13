@@ -30,8 +30,6 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   private List<List<S>> rankedSubpopulations;
   private int numberOfRanks = 0;
 
-    
-
   public GWASFGARanking(AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia, AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
     this.utilityFunctionsUtopia = utilityFunctionsUtopia;
     this.utilityFunctionsNadir  = utilityFunctionsNadir;

@@ -142,3 +142,8 @@ VAR*
 coverage
 *.iml
 *Backup
+
+.RData
+.Rhistory
+
+
