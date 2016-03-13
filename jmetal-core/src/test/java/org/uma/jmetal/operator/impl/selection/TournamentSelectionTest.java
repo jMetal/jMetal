@@ -57,6 +57,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldConstructorAssignTheCorrectValueSToTheNumberOfTournamentsAndTheComparator() {
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 7) ;
 
@@ -72,6 +73,7 @@ public class TournamentSelectionTest {
   public void shouldExecuteReturnAnElementIfTheListHasOneElement() {
     List<Solution<?>> population = new ArrayList<>(1);
 
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 2) ;
 
