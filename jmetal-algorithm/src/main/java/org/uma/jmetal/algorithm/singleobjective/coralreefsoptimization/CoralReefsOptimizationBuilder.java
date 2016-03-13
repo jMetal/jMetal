@@ -11,9 +11,17 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
 
+/**
+ * 
+ * @author Inacio Medeiros <inaciogmedeiros@gmail.com>
+ *
+ */
 public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 		AlgorithmBuilder<CoralReefsOptimization<S>> {
 
+	/**
+	 * CoralReefsOptimizationBuilder class
+	 */
 	private Problem<S> problem;
 
 	private SelectionOperator<List<S>, S> selectionOperator;
@@ -29,6 +37,9 @@ public class CoralReefsOptimizationBuilder<S extends Solution<?>> implements
 	private double Pd; // Probability of depredation
 	private int attemptsToSettle;
 
+	/**
+	 * CoralReefsOptimizationBuilder constructor
+	 */
 	public CoralReefsOptimizationBuilder(Problem<S> problem,
 			SelectionOperator<List<S>, S> selectionOperator,
 			CrossoverOperator<S> crossoverOperator,
