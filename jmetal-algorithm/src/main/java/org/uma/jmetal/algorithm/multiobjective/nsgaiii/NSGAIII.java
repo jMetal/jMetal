@@ -98,7 +98,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     for (int i = 0; i < getMaxPopulationSize(); i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
-      parents.add(population.get(i+1));
+      parents.add(population.get(Math.min(i + 1, getMaxPopulationSize()-1)));
 
       List<S> offspring = crossoverOperator.execute(parents);
 
