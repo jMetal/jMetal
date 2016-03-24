@@ -47,7 +47,7 @@ import java.util.List;
 public class GenerateReferenceParetoFront implements ExperimentComponent{
   private final Experiment<?, ?> experiment;
   
-  public GenerateReferenceParetoFront(Experiment experimentConfiguration) {
+  public GenerateReferenceParetoFront(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
     this.experiment.removeDuplicatedAlgorithms();
   }
