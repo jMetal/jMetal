@@ -251,7 +251,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 		population.clear();
 		for (int i = 0; i < populationSize; i++)
-			population.add(i, jointPopulation.get(i));
+			population.add(i, jointPopulation.get(idx[i]));
 	}
 
 	/**
