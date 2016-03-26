@@ -22,6 +22,7 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class C9<S extends Solution<?>> extends TwoDimensionalMesh<S> {
 
   // There are 8 possible movements: north, south, east, west, northeast, northwest,southeast, southwest

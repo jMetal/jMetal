@@ -196,6 +196,7 @@ public class IntegerPolynomialMutationTest {
   /**
    * Mock class representing an Integer problem
    */
+  @SuppressWarnings("serial")
   private class MockIntegerProblem extends AbstractIntegerProblem {
 
     /** Constructor */

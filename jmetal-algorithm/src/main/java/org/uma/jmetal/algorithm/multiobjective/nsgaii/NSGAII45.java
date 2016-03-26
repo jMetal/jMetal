@@ -24,6 +24,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   protected List<S> population ;
   protected final int maxEvaluations;

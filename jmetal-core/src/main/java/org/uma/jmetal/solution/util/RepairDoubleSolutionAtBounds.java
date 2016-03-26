@@ -19,6 +19,7 @@ import org.uma.jmetal.util.JMetalException;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class RepairDoubleSolutionAtBounds implements RepairDoubleSolution {
   /**
    * Checks if the value is between its bounds; if not, the lower or upper bound is returned

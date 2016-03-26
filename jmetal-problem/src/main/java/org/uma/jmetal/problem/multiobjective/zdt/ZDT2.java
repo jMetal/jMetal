@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem ZDT2 */
+@SuppressWarnings("serial")
 public class ZDT2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates default instance of problem ZDT2 (30 decision variables) */

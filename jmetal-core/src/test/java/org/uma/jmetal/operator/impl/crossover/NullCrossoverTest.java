@@ -37,6 +37,7 @@ public class NullCrossoverTest {
     assertEquals(parents.get(1), offspring.get(1)) ;
   }
 
+  @SuppressWarnings("serial")
   private class MockProblem extends AbstractDoubleProblem {
     private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
 

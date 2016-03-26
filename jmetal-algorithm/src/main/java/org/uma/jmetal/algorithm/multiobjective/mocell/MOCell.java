@@ -39,6 +39,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;

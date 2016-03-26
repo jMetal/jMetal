@@ -10,6 +10,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DefaultIntegerDoubleSolution
     extends AbstractGenericSolution<Number, IntegerDoubleProblem<?>>
     implements IntegerDoubleSolution {

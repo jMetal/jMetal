@@ -21,6 +21,7 @@ import java.util.logging.Level;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class JMetalException extends RuntimeException implements Serializable {
   public JMetalException(String message) {
     super(message);

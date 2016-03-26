@@ -32,6 +32,7 @@ import org.uma.jmetal.util.JMetalException;
  * Third International Conference, EMO 2005.
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
+@SuppressWarnings("serial")
 public class WFG5 extends WFG {
   /**
    * Creates a default WFG5 instance with

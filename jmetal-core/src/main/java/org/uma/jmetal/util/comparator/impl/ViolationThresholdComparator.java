@@ -32,6 +32,7 @@ import java.util.List;
  *
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class ViolationThresholdComparator<S extends Solution<?>> implements
     ConstraintViolationComparator<S> {
 

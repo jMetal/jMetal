@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
 public abstract class AbstractIntegerProblem extends AbstractGenericProblem<IntegerSolution>
   implements IntegerProblem {
 

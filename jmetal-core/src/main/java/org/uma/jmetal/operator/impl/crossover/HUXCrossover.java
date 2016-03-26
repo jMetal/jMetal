@@ -32,6 +32,7 @@ import java.util.List;
  * @author Juan J. Durillo
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class HUXCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
   private JMetalRandom randomGenerator ;

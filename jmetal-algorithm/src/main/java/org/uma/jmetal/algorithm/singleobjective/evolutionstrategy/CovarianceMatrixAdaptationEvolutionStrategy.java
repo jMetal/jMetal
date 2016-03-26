@@ -32,6 +32,7 @@ import java.util.*;
 /**
  * Class implementing the CMA-ES algorithm
  */
+@SuppressWarnings("serial")
 public class CovarianceMatrixAdaptationEvolutionStrategy
     extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
   private Comparator<DoubleSolution> comparator ;

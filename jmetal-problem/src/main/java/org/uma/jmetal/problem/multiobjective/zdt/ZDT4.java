@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem ZDT4
  */
+@SuppressWarnings("serial")
 public class ZDT4 extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of problem ZDT4 (10 decision variables */

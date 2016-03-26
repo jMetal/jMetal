@@ -213,6 +213,7 @@ public class PolynomialMutationTest {
   /**
    * Mock class representing a double problem
    */
+  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
     /** Constructor */

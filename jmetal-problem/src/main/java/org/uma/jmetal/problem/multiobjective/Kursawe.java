@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem Kursawe
  */
+@SuppressWarnings("serial")
 public class Kursawe extends AbstractDoubleProblem {
 
   /**

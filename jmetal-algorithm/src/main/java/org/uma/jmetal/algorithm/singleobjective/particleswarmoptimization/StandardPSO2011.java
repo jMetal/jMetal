@@ -43,6 +43,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSolution, DoubleSolution> {
   private DoubleProblem problem;
   private SolutionListEvaluator<DoubleSolution> evaluator;

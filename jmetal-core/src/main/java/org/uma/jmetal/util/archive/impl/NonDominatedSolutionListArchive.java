@@ -29,6 +29,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class NonDominatedSolutionListArchive<S extends Solution<?>> implements Archive<S> {
   private List<S> solutionList;
   private Comparator<S> dominanceComparator;

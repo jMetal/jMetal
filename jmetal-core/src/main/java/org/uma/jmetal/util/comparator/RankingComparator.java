@@ -25,6 +25,7 @@ import java.util.Comparator;
  *
  * This class implements a comparator based on the rank of the solutions.
  */
+@SuppressWarnings("serial")
 public class RankingComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private Ranking<S> ranking = new DominanceRanking<S>() ;
 

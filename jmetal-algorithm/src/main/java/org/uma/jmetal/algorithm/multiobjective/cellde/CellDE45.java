@@ -35,6 +35,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *
  */
+@SuppressWarnings("serial")
 public class CellDE45 implements Algorithm<List<DoubleSolution>> {
   private Problem<DoubleSolution> problem ;
   private List<DoubleSolution> population ;

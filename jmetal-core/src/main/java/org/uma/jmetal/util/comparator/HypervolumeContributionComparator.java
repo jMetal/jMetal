@@ -25,6 +25,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class HypervolumeContributionComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<S>() ;
 

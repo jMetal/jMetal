@@ -32,6 +32,7 @@ import java.util.logging.Logger;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  */
+@SuppressWarnings("serial")
 public class JMetalLogger implements Serializable {
 
 	public static final Logger logger = Logger.getLogger(JMetalLogger.class

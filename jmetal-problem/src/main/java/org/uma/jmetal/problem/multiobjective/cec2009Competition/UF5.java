@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem CEC2009_UF5
  */
+@SuppressWarnings("serial")
 public class UF5 extends AbstractDoubleProblem {
   int    n       ;
   double epsilon ;

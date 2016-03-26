@@ -31,6 +31,7 @@ import java.util.List;
 /**
  * Class representing problem LZ09F4
  */
+@SuppressWarnings("serial")
 public class LZ09F4 extends AbstractDoubleProblem {
 
   private LZ09 lz09;

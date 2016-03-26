@@ -35,6 +35,7 @@ public class MeasureFactoryTest {
 	}
 
   @Ignore @Test
+  @SuppressWarnings("serial")
 	public void testCreatePushFromPullNotifiesWithTheCorrectFrequency()
 			throws InterruptedException {
 		// create a pull measure
@@ -128,6 +129,7 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
+	@SuppressWarnings("serial")
 	public void testCreatePushFromPullStopNotificationsWhenPullDestroyed()
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
@@ -169,6 +171,7 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
+	@SuppressWarnings("serial")
 	public void testCreatePushFromPullStopNotificationsWhenPushDestroyed()
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
@@ -204,6 +207,7 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
+	@SuppressWarnings("serial")
 	public void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
 			throws InterruptedException {
 		// create a pull measure which changes only when we change the value of

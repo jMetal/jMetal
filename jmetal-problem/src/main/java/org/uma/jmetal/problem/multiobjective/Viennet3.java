@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem Viennet3
  */
+@SuppressWarnings("serial")
 public class Viennet3 extends AbstractDoubleProblem {
   
  /** 

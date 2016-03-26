@@ -27,6 +27,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class C2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

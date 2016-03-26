@@ -26,6 +26,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class Rastrigin extends AbstractDoubleProblem {
   /**
    * Constructor

@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private static final double DEFAULT_ALPHA = 0.5;
 

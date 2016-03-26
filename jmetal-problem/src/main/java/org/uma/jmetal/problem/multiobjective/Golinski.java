@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem Golinski.
  */
+@SuppressWarnings("serial")
 public class Golinski extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

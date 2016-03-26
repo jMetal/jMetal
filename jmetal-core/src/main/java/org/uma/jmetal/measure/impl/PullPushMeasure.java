@@ -20,6 +20,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
  * 
  * @param <Value>
  */
+@SuppressWarnings("serial")
 public class PullPushMeasure<Value> implements PullMeasure<Value>,
 		PushMeasure<Value> {
 

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem Fonseca */
+@SuppressWarnings("serial")
 public class Fonseca extends AbstractDoubleProblem {
 
   /** Constructor */

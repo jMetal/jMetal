@@ -33,6 +33,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 

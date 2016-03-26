@@ -30,6 +30,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**

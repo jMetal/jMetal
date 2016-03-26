@@ -13,6 +13,7 @@ import org.uma.jmetal.measure.PullMeasure;
  * 
  * @param <Value>
  */
+@SuppressWarnings("serial")
 public abstract class SimplePullMeasure<Value> extends SimpleMeasure<Value>
 		implements PullMeasure<Value> {
 

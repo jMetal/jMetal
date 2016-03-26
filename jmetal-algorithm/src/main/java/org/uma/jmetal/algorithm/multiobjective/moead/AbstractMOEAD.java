@@ -35,6 +35,7 @@ import java.util.StringTokenizer;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<List<S>> {
   protected enum NeighborType {NEIGHBOR, POPULATION}
   public enum FunctionType {TCHE, PBI, AGG}

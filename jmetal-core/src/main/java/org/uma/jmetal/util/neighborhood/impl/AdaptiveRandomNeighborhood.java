@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
   private int solutionListSize ;
   private int numberOfRandomNeighbours;

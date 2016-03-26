@@ -24,6 +24,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class UniformMutation implements MutationOperator<DoubleSolution> {
   private Double perturbation;
   private Double mutationProbability = null;

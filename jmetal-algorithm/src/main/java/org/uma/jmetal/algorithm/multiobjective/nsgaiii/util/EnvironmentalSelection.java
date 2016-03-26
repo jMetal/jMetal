@@ -10,6 +10,7 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>, List<S>>,
 											   SolutionAttribute<S, List<Double>> {
 

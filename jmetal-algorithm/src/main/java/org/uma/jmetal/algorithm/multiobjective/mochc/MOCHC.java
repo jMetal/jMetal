@@ -46,6 +46,7 @@ import java.util.List;
  * GECCO '07: Proceedings of the 9th annual conference on Genetic and
  * evolutionary computation. London, England. July 2007.
  */
+@SuppressWarnings("serial")
 public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<BinarySolution>> {
   private BinaryProblem problem;
 

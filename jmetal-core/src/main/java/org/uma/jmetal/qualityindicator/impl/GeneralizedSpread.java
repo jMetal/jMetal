@@ -44,6 +44,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**

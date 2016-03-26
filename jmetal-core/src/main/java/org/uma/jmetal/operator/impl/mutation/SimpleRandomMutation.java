@@ -23,6 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability ;
   private JMetalRandom randomGenerator ;

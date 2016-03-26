@@ -33,6 +33,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_PROBABILITY = 0.01 ;
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0 ;

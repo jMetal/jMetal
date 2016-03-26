@@ -20,6 +20,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class RepairDoubleSolutionAtRandom implements RepairDoubleSolution {
   private JMetalRandom randomGenerator ;
 

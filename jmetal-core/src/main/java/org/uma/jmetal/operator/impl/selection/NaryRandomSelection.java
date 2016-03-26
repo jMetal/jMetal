@@ -28,6 +28,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class NaryRandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
   private JMetalRandom randomGenerator ;
   private int numberOfSolutionsToBeReturned ;

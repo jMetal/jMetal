@@ -35,6 +35,7 @@ import java.util.logging.Level;
  * Third International Conference, EMO 2005.
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
+@SuppressWarnings("serial")
 public class WFG1 extends WFG {
   /**
    * Constructor

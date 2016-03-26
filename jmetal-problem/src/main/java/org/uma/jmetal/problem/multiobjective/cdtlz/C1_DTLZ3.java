@@ -30,6 +30,7 @@ import java.util.Map;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class C1_DTLZ3 extends DTLZ3 implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

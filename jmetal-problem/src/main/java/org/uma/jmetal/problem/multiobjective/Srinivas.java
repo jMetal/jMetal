@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Class representing problem Srinivas */
+@SuppressWarnings("serial")
 public class Srinivas extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
 
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;

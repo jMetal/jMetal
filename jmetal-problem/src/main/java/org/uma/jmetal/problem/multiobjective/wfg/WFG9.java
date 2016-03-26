@@ -14,6 +14,7 @@ import org.uma.jmetal.util.JMetalException;
  * 4 distance-related parameters,
  * and 2 objectives
  */
+@SuppressWarnings("serial")
 public class WFG9 extends WFG {
   /**
    * Creates a default WFG9 with

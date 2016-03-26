@@ -230,6 +230,7 @@ public class ABYSSTest {
   /**
    * Mock problem
    */
+  @SuppressWarnings("serial")
   private class MockProblem extends AbstractDoubleProblem {
     private JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
 

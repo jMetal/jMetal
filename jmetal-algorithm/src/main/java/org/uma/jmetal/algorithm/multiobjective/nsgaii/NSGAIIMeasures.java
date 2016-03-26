@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements Measurable {
   protected CountingMeasure evaluations ;
   protected DurationMeasure durationMeasure ;

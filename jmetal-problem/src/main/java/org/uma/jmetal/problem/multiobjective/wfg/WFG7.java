@@ -24,6 +24,7 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
+@SuppressWarnings("serial")
 public class WFG7 extends WFG {
   /**
    * Creates a default WFG7 problem with

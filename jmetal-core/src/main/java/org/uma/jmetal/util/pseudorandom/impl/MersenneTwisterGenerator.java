@@ -19,6 +19,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   private MersenneTwister rnd ;
   private long seed ;

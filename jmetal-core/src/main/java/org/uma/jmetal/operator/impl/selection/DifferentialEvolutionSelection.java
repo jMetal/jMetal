@@ -30,6 +30,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class DifferentialEvolutionSelection implements SelectionOperator<List<DoubleSolution>,List<DoubleSolution>> {
   private int solutionListIndex = Integer.MIN_VALUE ;
   private JMetalRandom randomGenerator ;

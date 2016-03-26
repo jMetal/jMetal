@@ -24,6 +24,7 @@ import java.util.*;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public abstract class AbstractGenericSolution<T, P extends Problem<?>> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;

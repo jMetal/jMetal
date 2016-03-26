@@ -26,6 +26,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro, Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class BinaryTournamentSelection<S extends Solution<?>> extends TournamentSelection<S> {
     /** Constructor */
   public BinaryTournamentSelection() {

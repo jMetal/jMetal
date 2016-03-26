@@ -143,6 +143,7 @@ public class BitFlipMutationTest {
   /**
    * Mock class representing a binary problem
    */
+  @SuppressWarnings("serial")
   private class MockBinaryProblem extends AbstractBinaryProblem {
     private int[] bitsPerVariable ;
 

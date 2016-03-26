@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 10/9/15.
  */
+@SuppressWarnings("serial")
 public class MOMBI2History<T extends Solution<?>> implements Serializable {
   public static final int MAX_LENGHT 			= 5;
   private 	  final int numberOfObjectives;

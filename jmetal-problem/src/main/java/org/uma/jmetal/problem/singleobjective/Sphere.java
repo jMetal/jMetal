@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing a Sphere problem.
  */
+@SuppressWarnings("serial")
 public class Sphere extends AbstractDoubleProblem {
   /** Constructor */
   public Sphere() {

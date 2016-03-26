@@ -30,6 +30,7 @@ import java.util.Map;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ConvexC2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

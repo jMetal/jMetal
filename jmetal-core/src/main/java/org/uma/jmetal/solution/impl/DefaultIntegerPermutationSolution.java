@@ -25,6 +25,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DefaultIntegerPermutationSolution
     extends AbstractGenericSolution<Integer, PermutationProblem<?>>
     implements PermutationSolution<Integer> {
