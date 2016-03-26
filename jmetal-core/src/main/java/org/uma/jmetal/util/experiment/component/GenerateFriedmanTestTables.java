@@ -16,7 +16,7 @@ package org.uma.jmetal.util.experiment.component;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -50,8 +50,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private int numberOfAlgorithms ;
   private int numberOfProblems ;
 
-  @SuppressWarnings("unchecked")
-  public GenerateFriedmanTestTables(Experiment experimentConfiguration) {
+  public GenerateFriedmanTestTables(Experiment<?, Result> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
 
     experiment.removeDuplicatedAlgorithms();
@@ -65,7 +64,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   public void run() throws IOException {
     latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
-    for (QualityIndicator indicator : experiment.getIndicatorList()) {
+    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
       Vector<Vector<Double>> data = readData(indicator);
       double []averageRanking = computeAverageRanking(data) ;
       String fileContents = prepareFileOutputContents(averageRanking) ;
@@ -73,7 +72,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     }
   }
 
-  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
+  private Vector<Vector<Double>> readData(GenericIndicator<?> indicator) {
     Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
     for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
@@ -138,7 +137,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
     for (int j = 0; j < numberOfAlgorithms; j++) {
       for (int i = 0; i < numberOfProblems; i++) {
-        mean[i][j] = (Double)((Vector) data.elementAt(j)).elementAt(i);
+        mean[i][j] = data.elementAt(j).elementAt(i);
       }
     }
 
@@ -238,7 +237,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
    * @param indicator
    * @param fileContents
    */
-  private void writeLatexFile(QualityIndicator indicator, String fileContents) {
+  private void writeLatexFile(GenericIndicator<?> indicator, String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
     try {

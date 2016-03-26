@@ -219,7 +219,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (TaggedAlgorithm algorithm : experiment.getAlgorithmList()) {
+    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
       os.write("l");
     }
     os.write("}\n");

@@ -64,7 +64,7 @@ import java.util.List;
 public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements ExperimentComponent{
   private final Experiment<?, ?> experiment;
 
-  public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment experimentConfiguration) {
+  public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
     this.experiment.removeDuplicatedAlgorithms();
   }
