@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * Abstract class for implementing versions of the MOEA/D algorithm.

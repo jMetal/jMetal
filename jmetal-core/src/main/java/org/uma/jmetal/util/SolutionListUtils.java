@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;

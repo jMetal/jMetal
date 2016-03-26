@@ -20,7 +20,6 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 /**
