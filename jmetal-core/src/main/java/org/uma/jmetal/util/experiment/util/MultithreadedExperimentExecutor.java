@@ -34,7 +34,7 @@ import java.util.logging.Level;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
-    implements SynchronousParallelTaskExecutor {
+    implements SynchronousParallelTaskExecutor<Object> {
   private Collection<EvaluationTask<S,Result>> taskList;
   private int numberOfThreads;
   private ExecutorService executor;
@@ -65,6 +65,7 @@ public class MultithreadedExperimentExecutor<S extends Solution<?>, Result>
       taskList = new ArrayList<EvaluationTask<S,Result>>();
     }
 
+    @SuppressWarnings("unchecked")
     TaggedAlgorithm<Result> algorithm = (TaggedAlgorithm<Result>) taskParameters[0];
     Integer id = (Integer) taskParameters[1];
     Experiment<?,?> experimentData = (Experiment<?,?>) taskParameters[2] ;

@@ -387,6 +387,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	  }
 
 	  @Override
+	  @SuppressWarnings("unchecked")
 	  public List<Double> getAttribute(S solution) {
 	    return (List<Double>) solution.getAttribute(getAttributeID());
 	  }

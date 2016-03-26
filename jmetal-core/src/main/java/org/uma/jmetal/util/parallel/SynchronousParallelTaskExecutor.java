@@ -20,8 +20,8 @@ package org.uma.jmetal.util.parallel;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
-public interface SynchronousParallelTaskExecutor {
-  public void start(Object configuration);
+public interface SynchronousParallelTaskExecutor<Configuration> {
+  public void start(Configuration configuration);
   public void addTask(Object[] taskParameters);
   Object parallelExecution();
   public void stop() ;

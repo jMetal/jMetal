@@ -77,6 +77,7 @@ public class NaryTournamentSelectionTest {
     NaryTournamentSelection<BinarySolution> selection = new NaryTournamentSelection<>() ;
     BinarySolution solution = mock(BinarySolution.class) ;
 
+    @SuppressWarnings("unchecked")
     Problem<BinarySolution> problem = mock(Problem.class) ;
 
     Mockito.when(problem.createSolution()).thenReturn(solution) ;
@@ -91,6 +92,7 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTheSameSolutionIfTheListContainsOneSolution() {
+    @SuppressWarnings("unchecked")
     NaryTournamentSelection<DoubleSolution>selection =
         new NaryTournamentSelection<DoubleSolution>(1, mock(Comparator.class)) ;
     DoubleSolution solution = mock(DoubleSolution.class) ;
@@ -102,9 +104,6 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
-    NaryTournamentSelection<IntegerSolution> selection =
-        new NaryTournamentSelection<>(2, mock(Comparator.class)) ;
-
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
 
@@ -118,6 +117,7 @@ public class NaryTournamentSelectionTest {
     exception.expectMessage(containsString("The solution list size (1) is less than " +
         "the number of requested solutions (4)"));
 
+    @SuppressWarnings("unchecked")
     NaryTournamentSelection<IntegerSolution> selection =
         new NaryTournamentSelection<>(4, mock(Comparator.class)) ;
     List<IntegerSolution> list = new ArrayList<>(1) ;
