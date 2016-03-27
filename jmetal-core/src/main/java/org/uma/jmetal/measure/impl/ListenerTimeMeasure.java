@@ -31,6 +31,7 @@ import java.util.WeakHashMap;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  */
+@SuppressWarnings("serial")
 public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 		PullMeasure<Long> {
 

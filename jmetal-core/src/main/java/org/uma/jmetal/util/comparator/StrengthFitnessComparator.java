@@ -23,6 +23,7 @@ import java.util.Comparator;
  * @author Juan J. Durillo
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class StrengthFitnessComparator<S extends Solution<?>> implements Comparator<S>, Serializable{
   private final StrengthRawFitness<S> fitnessValue = new StrengthRawFitness<S>();
 

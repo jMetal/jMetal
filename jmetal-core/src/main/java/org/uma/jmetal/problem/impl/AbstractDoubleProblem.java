@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
 public abstract class AbstractDoubleProblem extends AbstractGenericProblem<DoubleSolution>
   implements DoubleProblem {
 

@@ -299,7 +299,7 @@ public class FrontUtils {
     return solutionSet ;
   }
 
-
+  @SuppressWarnings("serial")
   private static class DummyClass extends AbstractDoubleProblem {
     public DummyClass(int numberOfObjectives) {
       setNumberOfObjectives(numberOfObjectives);

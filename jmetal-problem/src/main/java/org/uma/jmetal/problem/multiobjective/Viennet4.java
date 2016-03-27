@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem Viennet4
  */
+@SuppressWarnings("serial")
 public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

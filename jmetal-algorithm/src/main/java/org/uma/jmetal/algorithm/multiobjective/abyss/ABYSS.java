@@ -48,6 +48,7 @@ import java.util.List;
  *   @author Antonio J. Nebro <antonio@lcc.uma.es>
  *   @author Cristobal Barba
  */
+@SuppressWarnings("serial")
 public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolution>> {
   protected final int maxEvaluations ;
   protected final Problem<DoubleSolution> problem;

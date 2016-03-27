@@ -32,6 +32,7 @@ import java.util.BitSet;
  * Class representing problem OneMax. The problem consist of maximizing the
  * number of '1's in a binary string.
  */
+@SuppressWarnings("serial")
 public class OneMax extends AbstractBinaryProblem {
 	private int bits ;
 	

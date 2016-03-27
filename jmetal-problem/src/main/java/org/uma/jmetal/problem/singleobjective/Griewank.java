@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem Griewank
  */
+@SuppressWarnings("serial")
 public class Griewank extends AbstractDoubleProblem {
 
   /**

@@ -73,6 +73,7 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnTheValueReturnedByTheConstraintViolationComparator() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -87,6 +88,7 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfTheTwoSolutionsHasOneObjectiveWithTheSameValue() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -111,6 +113,7 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfTheTwoSolutionsHasOneObjectiveAndTheSecondOneIsLower() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -135,6 +138,7 @@ public class DominanceComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfTheTwoSolutionsHasOneObjectiveAndTheFirstOneIsLower() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -162,6 +166,7 @@ public class DominanceComparatorTest {
    * Case A: solution1 has objectives [-1.0, 5.0, 9.0] and solution2 has [2.0, 6.0, 15.0]
    */
   @Test public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseA() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -193,6 +198,7 @@ public class DominanceComparatorTest {
    * Case B: solution1 has objectives [-1.0, 5.0, 9.0] and solution2 has [-1.0, 5.0, 10.0]
    */
   @Test public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseB() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;
@@ -224,6 +230,7 @@ public class DominanceComparatorTest {
    * Case C: solution1 has  objectives [-1.0, 5.0, 9.0] and solution2 has [-2.0, 5.0, 9.0]
    */
   @Test public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     BinarySolution solution1 = mock(BinarySolution.class) ;
@@ -255,6 +262,7 @@ public class DominanceComparatorTest {
    * Case D: solution1 has  objectives [-1.0, 5.0, 9.0] and solution2 has [-1.0, 5.0, 8.0]
    */
   @Test public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseD() {
+    @SuppressWarnings("unchecked")
     ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class) ;
 
     Solution<?> solution1 = mock(Solution.class) ;

@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem Tanaka
  */
+@SuppressWarnings("serial")
 public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

@@ -28,6 +28,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
   private Problem<S> problem;
   private int improvementRounds ;

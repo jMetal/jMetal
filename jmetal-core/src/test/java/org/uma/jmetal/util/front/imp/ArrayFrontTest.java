@@ -460,6 +460,7 @@ public class ArrayFrontTest {
     assertEquals(-4, front.getPoint(3).getDimensionValue(3), EPSILON);
   }
 
+  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
     /**
      * Constructor
@@ -489,6 +490,7 @@ public class ArrayFrontTest {
     }
   }
 
+  @SuppressWarnings("serial")
   private class MockIntegerProblem extends AbstractIntegerProblem {
     /**
      * Constructor

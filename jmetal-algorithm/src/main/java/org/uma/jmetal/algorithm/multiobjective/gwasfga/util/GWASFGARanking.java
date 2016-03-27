@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
 		implements Ranking<S> {
 

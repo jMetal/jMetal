@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxEvaluations;
 

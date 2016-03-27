@@ -23,6 +23,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DefaultIntegerSolution
     extends AbstractGenericSolution<Integer, IntegerProblem>
     implements IntegerSolution {

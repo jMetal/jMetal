@@ -298,6 +298,7 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
+	@SuppressWarnings("serial")
 	public void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 

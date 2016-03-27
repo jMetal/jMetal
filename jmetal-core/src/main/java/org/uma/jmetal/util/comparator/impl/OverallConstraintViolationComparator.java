@@ -23,6 +23,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class OverallConstraintViolationComparator<S extends Solution<?>>
     implements ConstraintViolationComparator<S> {
   private OverallConstraintViolation<S> overallConstraintViolation ;

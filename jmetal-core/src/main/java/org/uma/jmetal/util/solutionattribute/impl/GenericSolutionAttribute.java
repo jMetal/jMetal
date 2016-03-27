@@ -21,6 +21,7 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
 
   @SuppressWarnings("unchecked")

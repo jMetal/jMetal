@@ -28,6 +28,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, S> {
   private Comparator<S> comparator;
   private int maxEvaluations;

@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @param <S>
  */
-
+@SuppressWarnings("serial")
 public class TchebycheffUtilityFunctionsSet<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 	private final List<Double> referencePoint;
 

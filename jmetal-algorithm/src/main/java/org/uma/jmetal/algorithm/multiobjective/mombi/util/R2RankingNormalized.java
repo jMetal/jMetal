@@ -4,6 +4,7 @@ import org.uma.jmetal.solution.Solution;
 
 import java.util.*;
 
+@SuppressWarnings("serial")
 public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
 
   private List<List<S>> rankedSubpopulations;

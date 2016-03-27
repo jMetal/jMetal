@@ -41,6 +41,7 @@ public class MeasureFactory {
 	 *         the {@link PushMeasure}, or the initial value if it did not send
 	 *         any
 	 */
+	@SuppressWarnings("serial")
 	public <Value> PullMeasure<Value> createPullFromPush(
 			final PushMeasure<Value> push, Value initialValue) {
 		final Object[] cache = { initialValue };
@@ -186,6 +187,7 @@ public class MeasureFactory {
 	 * @return the {@link Map} which contains the names of the getter methods
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
+	@SuppressWarnings("serial")
 	public Map<String, PullMeasure<?>> createPullsFromGetters(
 			final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
@@ -231,6 +233,7 @@ public class MeasureFactory {
 	 * @return the {@link Map} which contains the names of the getter methods
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
+	@SuppressWarnings("serial")
 	public Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
 		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
 		Class<? extends Object> clazz = object.getClass();

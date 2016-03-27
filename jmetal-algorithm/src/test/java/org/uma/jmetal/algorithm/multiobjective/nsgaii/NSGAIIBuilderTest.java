@@ -32,6 +32,7 @@ public class NSGAIIBuilderTest {
   private CrossoverOperator<DoubleSolution> crossover;
   private MutationOperator<DoubleSolution> mutation;
 
+  @SuppressWarnings("unchecked")
   @Before public void startup() {
     problem = mock(Problem.class);
     when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
@@ -94,6 +95,7 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewSelectionOperator() {
+    @SuppressWarnings("unchecked")
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = mock(SelectionOperator.class);
     assertNotEquals(selection, builder.getSelectionOperator());
     builder.setSelectionOperator(selection);

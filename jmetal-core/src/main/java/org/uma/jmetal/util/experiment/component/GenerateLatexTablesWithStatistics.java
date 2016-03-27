@@ -88,6 +88,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
             data.get(indicator).get(problem).get(algorithm).add(Double.parseDouble(aux));
             aux = br.readLine();
           }
+          br.close();
         }
       }
     }

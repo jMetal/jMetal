@@ -14,6 +14,7 @@ import java.util.*;
  * @author Juanjo Durillo
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
   private int solutionsToSelect = 0;

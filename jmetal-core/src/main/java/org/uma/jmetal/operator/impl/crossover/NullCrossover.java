@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "serial" })
 public class NullCrossover<S extends Solution<?>>
     implements CrossoverOperator<S> {
 

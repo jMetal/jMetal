@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 23/12/15.
  */
+@SuppressWarnings("serial")
 public class TaggedDoubleSolution implements TaggedSolution<Double>{
   private String tag ;
   private List<Double> objectives ;

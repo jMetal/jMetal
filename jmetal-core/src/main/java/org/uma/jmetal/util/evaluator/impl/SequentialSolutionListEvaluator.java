@@ -27,6 +27,7 @@ import java.util.logging.Level;
 /**
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class SequentialSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
 
   @Override

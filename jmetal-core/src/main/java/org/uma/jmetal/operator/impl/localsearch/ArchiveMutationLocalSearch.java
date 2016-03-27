@@ -32,6 +32,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ArchiveMutationLocalSearch<S extends Solution<?>> implements LocalSearchOperator<S>{
   private Problem<S> problem;
   private Archive<S> archive;

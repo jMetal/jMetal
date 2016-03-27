@@ -26,6 +26,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private ConstraintViolationComparator<S> constraintViolationComparator;
   private double epsilon = 0.0 ;

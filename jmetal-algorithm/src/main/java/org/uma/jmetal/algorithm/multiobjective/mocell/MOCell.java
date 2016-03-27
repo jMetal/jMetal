@@ -19,9 +19,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -41,6 +39,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int evaluations;
   protected int maxEvaluations;

@@ -23,6 +23,7 @@ import java.util.Comparator;
 /**
  * Created by Antonio J. Nebro on 24/09/14.
  */
+@SuppressWarnings("serial")
 public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
   private Comparator<S> comparator;
   Hypervolume<S> hypervolume ;

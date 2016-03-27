@@ -20,6 +20,7 @@ import java.util.Random;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class JavaRandomGenerator implements PseudoRandomGenerator {
   private Random rnd ;
   private long seed ;

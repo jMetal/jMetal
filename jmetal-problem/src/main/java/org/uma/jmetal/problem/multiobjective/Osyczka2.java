@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem Oyczka2
  */
+@SuppressWarnings("serial")
 public class Osyczka2 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

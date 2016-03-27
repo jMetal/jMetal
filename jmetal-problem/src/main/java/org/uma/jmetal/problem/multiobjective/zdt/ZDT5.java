@@ -30,6 +30,7 @@ import java.util.BitSet;
 /**
  * Class representing problem ZDT5
  */
+@SuppressWarnings("serial")
 public class ZDT5 extends AbstractBinaryProblem {
 	private int[] bitsPerVariable ;
 

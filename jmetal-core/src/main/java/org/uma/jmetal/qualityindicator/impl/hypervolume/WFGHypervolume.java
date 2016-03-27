@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 2/2/15.
  */
+@SuppressWarnings("serial")
 public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
   private Point referencePoint;

@@ -20,6 +20,7 @@ import java.io.Serializable;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class JMetalRandom implements Serializable {
   private static JMetalRandom instance ;
   private PseudoRandomGenerator randomGenerator ;

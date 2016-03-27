@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing for solving the CEC2005 competition problems.
  */
+@SuppressWarnings("serial")
 public class CEC2005Problem extends AbstractDoubleProblem {
   TestFunc testFunction;
 

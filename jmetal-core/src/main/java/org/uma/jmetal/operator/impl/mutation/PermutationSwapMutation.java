@@ -25,6 +25,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class PermutationSwapMutation<T> implements MutationOperator<PermutationSolution<T>> {
   private double mutationProbability ;
   private JMetalRandom randomGenerator ;

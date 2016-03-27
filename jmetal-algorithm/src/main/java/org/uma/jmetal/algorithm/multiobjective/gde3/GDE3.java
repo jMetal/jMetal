@@ -32,6 +32,7 @@ import java.util.*;
 /**
  * This class implements the GDE3 algorithm
  */
+@SuppressWarnings("serial")
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected int maxEvaluations;
   protected int evaluations;

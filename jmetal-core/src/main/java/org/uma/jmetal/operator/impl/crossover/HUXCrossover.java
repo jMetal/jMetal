@@ -20,7 +20,6 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -33,6 +32,7 @@ import java.util.List;
  * @author Juan J. Durillo
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class HUXCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
   private JMetalRandom randomGenerator ;

@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.impl;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
+@SuppressWarnings("serial")
 public abstract class AbstractGenericProblem<S extends Solution<?>> implements Problem<S> {
   private int numberOfVariables = 0 ;
   private int numberOfObjectives = 0 ;

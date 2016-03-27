@@ -9,6 +9,7 @@ import org.uma.jmetal.measure.PushMeasure;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class BasicMeasure<T> extends SimplePushMeasure<T> implements
     PullMeasure<T>, PushMeasure<T> {
 

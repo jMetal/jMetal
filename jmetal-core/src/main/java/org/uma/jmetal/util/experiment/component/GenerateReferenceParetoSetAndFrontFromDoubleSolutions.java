@@ -223,6 +223,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * This private class is intended to create{@link DoubleSolution} objects from the stored values of variables and
    * objectives obtained in files after running an experiment. The values of the lower and upper limits are useless.
    */
+  @SuppressWarnings("serial")
   private static class DummyProblem extends AbstractDoubleProblem {
     public DummyProblem(int numberOfVariables, int numberOfObjectives) {
       setNumberOfVariables(numberOfVariables);

@@ -14,7 +14,6 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;

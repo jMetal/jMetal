@@ -41,7 +41,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
-
+@SuppressWarnings("serial")
 public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**

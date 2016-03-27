@@ -24,6 +24,7 @@ import java.util.WeakHashMap;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  */
+@SuppressWarnings("serial")
 public class CountingMeasure extends SimplePushMeasure<Long> implements
 		PullMeasure<Long>, PushMeasure<Long> {
 

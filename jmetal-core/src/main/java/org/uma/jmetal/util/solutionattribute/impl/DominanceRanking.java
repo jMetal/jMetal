@@ -33,6 +33,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
@@ -57,14 +58,14 @@ public class DominanceRanking <S extends Solution<?>>
     int[] dominateMe = new int[population.size()];
 
     // iDominate[k] contains the list of solutions dominated by k
-    List<Integer>[] iDominate = new List[population.size()];
+    List<List<Integer>> iDominate = new ArrayList<>(population.size());
 
     // front[i] contains the list of individuals belonging to the front i
-    List<Integer>[] front = new List[population.size() + 1];
+    List<List<Integer>> front = new ArrayList<>(population.size() + 1);
 
     // Initialize the fronts 
-    for (int i = 0; i < front.length; i++) {
-      front[i] = new LinkedList<>();
+    for (int i = 0; i < front.size(); i++) {
+      front.set(i, new LinkedList<Integer>());
     }
 
     // Fast non dominated sorting algorithm
@@ -72,7 +73,7 @@ public class DominanceRanking <S extends Solution<?>>
     for (int p = 0; p < population.size(); p++) {
       // Initialize the list of individuals that i dominate and the number
       // of individuals that dominate me
-      iDominate[p] = new LinkedList<>();
+      iDominate.set(p, new LinkedList<Integer>());
       dominateMe[p] = 0;
     }
 
@@ -86,10 +87,10 @@ public class DominanceRanking <S extends Solution<?>>
           flagDominate = DOMINANCE_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         }
         if (flagDominate == -1) {
-          iDominate[p].add(q);
+          iDominate.get(p).add(q);
           dominateMe[q]++;
         } else if (flagDominate == 1) {
-          iDominate[q].add(p);
+          iDominate.get(q).add(p);
           dominateMe[p]++;
         }
       }
@@ -98,7 +99,7 @@ public class DominanceRanking <S extends Solution<?>>
     for (int i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
 
-        front[0].add(i);
+        front.get(0).add(i);
         //RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
         solutionSet.get(i).setAttribute(getAttributeID(), 0);
       }
@@ -107,16 +108,16 @@ public class DominanceRanking <S extends Solution<?>>
     //Obtain the rest of fronts
     int i = 0;
     Iterator<Integer> it1, it2; // Iterators
-    while (front[i].size() != 0) {
+    while (front.get(i).size() != 0) {
       i++;
-      it1 = front[i - 1].iterator();
+      it1 = front.get(i - 1).iterator();
       while (it1.hasNext()) {
-        it2 = iDominate[it1.next()].iterator();
+        it2 = iDominate.get(it1.next()).iterator();
         while (it2.hasNext()) {
           int index = it2.next();
           dominateMe[index]--;
           if (dominateMe[index] == 0) {
-            front[i].add(index);
+            front.get(i).add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
             solutionSet.get(index).setAttribute(getAttributeID(), i);
           }
@@ -127,8 +128,8 @@ public class DominanceRanking <S extends Solution<?>>
     rankedSubpopulations = new ArrayList<>();
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubpopulations.add(j, new ArrayList<S>(front[j].size()));
-      it1 = front[j].iterator();
+      rankedSubpopulations.add(j, new ArrayList<S>(front.get(j).size()));
+      it1 = front.get(j).iterator();
       while (it1.hasNext()) {
         rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));
       }

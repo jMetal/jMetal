@@ -52,6 +52,7 @@ public class WFGHypervolumeTest {
   /**
    * Mock class representing a binary problem
    */
+  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
     /** Constructor */

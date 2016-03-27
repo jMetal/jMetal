@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem Water
  */
+@SuppressWarnings("serial")
 public class Water extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;

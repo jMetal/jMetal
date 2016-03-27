@@ -33,6 +33,7 @@ import java.util.List;
 /**
  * Class representing problem ConstrEx
  */
+@SuppressWarnings("serial")
 public class ConstrEx extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
 
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;

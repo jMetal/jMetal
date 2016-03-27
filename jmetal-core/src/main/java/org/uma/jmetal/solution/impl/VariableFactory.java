@@ -206,6 +206,7 @@ public class VariableFactory {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public static class IsInterfaceException extends RuntimeException {
 		public IsInterfaceException(Class<?> solutionClass) {
 			super("No constructor exists for " + solutionClass

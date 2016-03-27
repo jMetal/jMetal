@@ -12,6 +12,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
  * 
  * @param <Value>
  */
+@SuppressWarnings("serial")
 public class SimpleMeasure<Value> extends SimpleDescribedEntity implements
 		Measure<Value> {
 
