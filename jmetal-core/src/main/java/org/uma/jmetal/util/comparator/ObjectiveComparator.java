@@ -24,6 +24,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   public enum Ordering {ASCENDING, DESCENDING} ;
   private int objectiveId;

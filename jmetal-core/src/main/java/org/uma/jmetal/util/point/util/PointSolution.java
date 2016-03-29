@@ -23,6 +23,7 @@ import java.util.Arrays;
  *
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class PointSolution implements Solution<Double> {
   private int numberOfObjectives ;
   private double[] objectives;

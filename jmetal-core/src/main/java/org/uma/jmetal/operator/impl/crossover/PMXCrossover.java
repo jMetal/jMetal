@@ -27,6 +27,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class PMXCrossover implements
     CrossoverOperator<PermutationSolution<Integer>> {
   private double crossoverProbability = 1.0;

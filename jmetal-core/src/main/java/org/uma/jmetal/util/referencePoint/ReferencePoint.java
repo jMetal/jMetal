@@ -20,6 +20,7 @@ import org.uma.jmetal.util.point.util.PointSolution;
  *
  * @author <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public abstract class ReferencePoint extends PointSolution {
   public ReferencePoint(int numberOfObjectives) {
     super(numberOfObjectives);

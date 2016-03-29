@@ -88,6 +88,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
             data.get(indicator).get(problem).get(algorithm).add(Double.parseDouble(aux));
             aux = br.readLine();
           }
+          br.close();
         }
       }
     }
@@ -219,7 +220,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (TaggedAlgorithm algorithm : experiment.getAlgorithmList()) {
+    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
       os.write("l");
     }
     os.write("}\n");

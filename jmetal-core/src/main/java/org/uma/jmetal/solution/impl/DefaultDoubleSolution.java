@@ -23,6 +23,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DefaultDoubleSolution 
     extends AbstractGenericSolution<Double, DoubleProblem>
     implements DoubleSolution {

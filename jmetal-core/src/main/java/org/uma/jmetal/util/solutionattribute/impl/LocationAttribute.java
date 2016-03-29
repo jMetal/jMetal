@@ -17,6 +17,7 @@ import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class LocationAttribute <S extends Solution<?>>
 		extends GenericSolutionAttribute<S, Integer> {
 

@@ -29,6 +29,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 /**
  * This class implements a selection operator as the used in the PESA-II algorithm
  */
+@SuppressWarnings("serial")
 public class PESA2Selection<S extends Solution<?>> implements SelectionOperator<AdaptiveGridArchive<S>, S> {
 
   private JMetalRandom randomGenerator ;

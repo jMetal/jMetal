@@ -39,6 +39,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /** Class implementing the OMOPSO algorithm */
+@SuppressWarnings("serial")
 public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
 
   private DoubleProblem problem;

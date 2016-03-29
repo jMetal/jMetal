@@ -26,6 +26,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class RandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
 
   /** Execute() method */

@@ -22,7 +22,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHC;
 import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHCBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -91,7 +90,7 @@ public class MOCHCRunner extends AbstractAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<BinarySolution> population = ((MOCHC)algorithm).getResult() ;
+    List<BinarySolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /** Class representing problem Binh2 */
+@SuppressWarnings("serial")
 public class Binh2 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
 
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;

@@ -11,6 +11,7 @@ import java.util.List;
  * @param <S> Solution
  * @param <R> Result
  */
+@SuppressWarnings("serial")
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
   private List<S> population;
   private int maxPopulationSize ;

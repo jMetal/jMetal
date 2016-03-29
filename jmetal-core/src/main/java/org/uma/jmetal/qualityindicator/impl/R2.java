@@ -32,6 +32,7 @@ import java.util.List;
 /**
  * TODO: Add comments here
  */
+@SuppressWarnings("serial")
 public class R2<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {

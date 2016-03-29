@@ -31,7 +31,7 @@ import java.util.logging.Level;
  * @author Antonio J. Nebro
  * @modified by Jackson Antonio do Prado Lima 09/09/2015
  */
-public class MultithreadedEvaluator<S extends Solution<?>> implements SynchronousParallelTaskExecutor {
+public class MultithreadedEvaluator<S extends Solution<?>> implements SynchronousParallelTaskExecutor<Problem<S>> {
   private Problem<S> problem;
   private Collection<EvaluationTask> taskList;
   private int numberOfThreads;
@@ -61,8 +61,8 @@ public class MultithreadedEvaluator<S extends Solution<?>> implements Synchronou
    *
    * @param problem problem to solve
    */
-  public void start(Object problem) {
-    this.problem = (Problem<S>) problem;
+  public void start(Problem<S> problem) {
+    this.problem = problem;
 
     executor = Executors.newFixedThreadPool(numberOfThreads);
     JMetalLogger.logger.info("Cores: " + numberOfThreads);
@@ -73,6 +73,7 @@ public class MultithreadedEvaluator<S extends Solution<?>> implements Synchronou
    * Adds a solution to be evaluated to a list of tasks
    */
   public void addTask(Object[] taskParameters) {
+    @SuppressWarnings("unchecked")
     S solution = (S) taskParameters[0];
     if (taskList == null) {
       taskList = new ArrayList<EvaluationTask>();

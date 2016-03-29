@@ -39,6 +39,7 @@ import java.util.List;
 /**
  * This class implements the IBEA algorithm
  */
+@SuppressWarnings("serial")
 public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   private Problem<S> problem;
 

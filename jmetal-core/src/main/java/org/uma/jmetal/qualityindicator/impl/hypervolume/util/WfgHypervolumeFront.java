@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 3/2/15.
  */
+@SuppressWarnings("serial")
 public class WfgHypervolumeFront extends ArrayFront {
 
   public WfgHypervolumeFront() {

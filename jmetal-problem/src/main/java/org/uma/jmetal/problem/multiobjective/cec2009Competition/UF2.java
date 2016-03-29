@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * Class representing problem CEC2009_UF2
  */
+@SuppressWarnings("serial")
 public class UF2 extends AbstractDoubleProblem {
 
   /**

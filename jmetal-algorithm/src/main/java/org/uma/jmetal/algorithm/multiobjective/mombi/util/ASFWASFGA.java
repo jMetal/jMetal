@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 
 	private final List<Double> referencePoint; 	

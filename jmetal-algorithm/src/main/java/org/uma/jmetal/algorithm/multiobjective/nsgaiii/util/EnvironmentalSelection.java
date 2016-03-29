@@ -10,6 +10,7 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>, List<S>>,
 											   SolutionAttribute<S, List<Double>> {
 
@@ -386,6 +387,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	  }
 
 	  @Override
+	  @SuppressWarnings("unchecked")
 	  public List<Double> getAttribute(S solution) {
 	    return (List<Double>) solution.getAttribute(getAttributeID());
 	  }

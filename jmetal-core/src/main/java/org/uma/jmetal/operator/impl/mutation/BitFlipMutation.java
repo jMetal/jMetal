@@ -24,6 +24,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  *
  * This class implements a bit flip mutation operator.
  */
+@SuppressWarnings("serial")
 public class BitFlipMutation implements MutationOperator<BinarySolution> {
   private double mutationProbability ;
   private JMetalRandom randomGenerator ;

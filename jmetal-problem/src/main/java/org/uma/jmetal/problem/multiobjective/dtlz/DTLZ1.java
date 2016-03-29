@@ -31,6 +31,7 @@ import java.util.List;
 /**
  * Class representing problem DTLZ1
  */
+@SuppressWarnings("serial")
 public class DTLZ1 extends AbstractDoubleProblem {
   /**
    * Creates a default DTLZ1 problem (7 variables and 3 objectives)

@@ -53,6 +53,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveNoRankingAttribute() {
+    @SuppressWarnings("unchecked")
     Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(Solution.class))).thenReturn((Integer) null, (Integer) null) ;
 
@@ -66,6 +67,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnZeroIfBothSolutionsHaveTheSameRanking() {
+    @SuppressWarnings("unchecked")
     Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(DoubleSolution.class))).thenReturn(1, 1, 1, 1) ;
 
@@ -79,6 +81,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnMinusOneIfSolutionAHasLessRanking() {
+    @SuppressWarnings("unchecked")
     Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(BinarySolution.class))).thenReturn(0, 0, 2, 2) ;
 
@@ -92,6 +95,7 @@ public class RankingComparatorTest {
   }
 
   @Test public void shouldCompareReturnOneIfSolutionBHasLessRanking() {
+    @SuppressWarnings("unchecked")
     Ranking<Solution<?>> ranking = mock(Ranking.class) ;
     when(ranking.getAttribute(any(BinarySolution.class))).thenReturn(3, 3, 2, 2) ;
 

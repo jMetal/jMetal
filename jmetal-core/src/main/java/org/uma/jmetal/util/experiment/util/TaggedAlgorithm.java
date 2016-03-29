@@ -26,11 +26,11 @@ import org.uma.jmetal.problem.Problem;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class TaggedAlgorithm<Result> implements Algorithm<Result> {
   private Algorithm<Result> algorithm ;
   private Problem<?> problem ;
   private String tag ;
-
   private int runId;
 
   public TaggedAlgorithm (Algorithm<Result> algorithm, Problem<?> problem, int runId) {

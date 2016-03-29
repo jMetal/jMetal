@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class StrengthRawFitness <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator<Solution<?>>();

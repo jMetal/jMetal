@@ -30,6 +30,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;

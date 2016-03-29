@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Class defining a bi-dimensional mesh.
  */
+@SuppressWarnings("serial")
 public class TwoDimensionalMesh<S extends Solution<?>> implements Neighborhood<S> {
   private int rows ;
   private int columns ;

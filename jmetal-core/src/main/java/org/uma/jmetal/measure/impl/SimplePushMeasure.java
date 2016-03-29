@@ -19,6 +19,7 @@ import java.util.Set;
  * 
  * @param <Value>
  */
+@SuppressWarnings("serial")
 public class SimplePushMeasure<Value> extends SimpleMeasure<Value> implements
 		PushMeasure<Value> {
 

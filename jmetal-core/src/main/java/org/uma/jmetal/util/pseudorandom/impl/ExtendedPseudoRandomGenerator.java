@@ -8,6 +8,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
   private final PseudoRandomGenerator randomGenerator ;
 

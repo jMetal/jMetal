@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
   protected SelectionOperator<List<S>, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;

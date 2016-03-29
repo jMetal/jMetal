@@ -26,6 +26,7 @@ import java.util.Iterator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;

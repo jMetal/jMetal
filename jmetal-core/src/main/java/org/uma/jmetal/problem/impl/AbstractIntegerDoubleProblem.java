@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
 public abstract class AbstractIntegerDoubleProblem<S extends Solution<Number>>
   extends AbstractGenericProblem<S>
   implements IntegerDoubleProblem<S> {

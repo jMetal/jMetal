@@ -23,6 +23,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
   private MultithreadedEvaluator<S> evaluator;
   private Problem<S> problem;

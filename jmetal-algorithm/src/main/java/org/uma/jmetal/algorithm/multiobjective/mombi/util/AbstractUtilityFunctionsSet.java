@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> implements Serializable {
 
 	private List<List<Double>> weightVectors;

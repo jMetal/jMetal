@@ -33,6 +33,7 @@ import java.util.List;
  * Objective 1: minimizing the distance to value N
  * Objective 2: minimizing the distance to value M
  */
+@SuppressWarnings("serial")
 public class NMMin2 extends AbstractIntegerDoubleProblem<IntegerDoubleSolution> {
   private int valueN ;
   private int valueM ;

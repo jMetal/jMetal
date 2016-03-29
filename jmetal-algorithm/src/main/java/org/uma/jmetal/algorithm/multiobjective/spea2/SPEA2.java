@@ -29,6 +29,7 @@ import java.util.List;
 /**
  * @author Juan J. Durillo
  **/
+@SuppressWarnings("serial")
 public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final SolutionListEvaluator<S> evaluator;

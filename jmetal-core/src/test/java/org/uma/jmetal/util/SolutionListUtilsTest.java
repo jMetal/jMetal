@@ -45,6 +45,7 @@ public class SolutionListUtilsTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
 
     SolutionListUtils.findBestSolution(null, comparator) ;
@@ -55,6 +56,7 @@ public class SolutionListUtilsTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
 
+    @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class) ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
@@ -74,6 +76,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionReturnTheSolutionInTheListWhenItContainsOneSolution() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     IntegerSolution solution = mock(IntegerSolution.class) ;
@@ -84,6 +87,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionReturnTheSecondSolutionInTheListIfIsTheBestOufOfTwoSolutions() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
@@ -98,6 +102,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionReturnTheLastOneIfThisIsTheBestSolutionInALastInAListWithFiveSolutions() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0 ; i < 5; i++) {
@@ -115,6 +120,7 @@ public class SolutionListUtilsTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
+    @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
 
     SolutionListUtils.findIndexOfBestSolution(null, comparator) ;
@@ -125,6 +131,7 @@ public class SolutionListUtilsTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is empty"));
 
+    @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class) ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
@@ -144,6 +151,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionReturnZeroIfTheListWhenItContainsOneSolution() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     IntegerSolution solution = mock(IntegerSolution.class) ;
@@ -154,6 +162,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionReturnZeroIfTheFirstSolutionItTheBestOutOfTwoSolutionsInTheList() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
@@ -168,6 +177,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionReturnOneIfTheSecondSolutionItTheBestOutOfTwoSolutionInTheList() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
@@ -182,6 +192,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionReturn4IfTheBestSolutionIsTheLastInAListWithFiveSolutions() {
+    @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class) ;
     List<IntegerSolution> list = new ArrayList<>() ;
     for (int i = 0 ; i < 5; i++) {

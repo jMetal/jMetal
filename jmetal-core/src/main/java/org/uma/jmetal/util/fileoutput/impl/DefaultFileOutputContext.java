@@ -26,6 +26,7 @@ import java.io.OutputStreamWriter;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class  DefaultFileOutputContext implements FileOutputContext {
   private static final String DEFAULT_SEPARATOR = " " ;
 

@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 
 	private final List<Double> referencePoint; 

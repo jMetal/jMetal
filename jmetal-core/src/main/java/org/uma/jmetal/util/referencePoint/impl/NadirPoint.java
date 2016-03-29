@@ -21,6 +21,7 @@ import org.uma.jmetal.util.JMetalException;
  *
  * @author Antonio J.Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class NadirPoint extends ReferencePoint {
   private static final double DEFAULT_INITIAL_VALUE = Double.NEGATIVE_INFINITY ;
 

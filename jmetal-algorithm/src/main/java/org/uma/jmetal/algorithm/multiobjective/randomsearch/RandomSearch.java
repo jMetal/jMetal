@@ -33,6 +33,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class RandomSearch<S extends Solution<?>> implements Algorithm<List<S>> {
   private Problem<S> problem ;
   private int maxEvaluations ;

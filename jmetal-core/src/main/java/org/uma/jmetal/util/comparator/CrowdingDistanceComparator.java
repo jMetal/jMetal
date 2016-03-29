@@ -25,6 +25,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class CrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>() ;
 

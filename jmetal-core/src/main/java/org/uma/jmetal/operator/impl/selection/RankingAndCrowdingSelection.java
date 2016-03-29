@@ -32,6 +32,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro, Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class RankingAndCrowdingSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>,List<S>> {
   private int solutionsToSelect = 0 ;

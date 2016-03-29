@@ -37,6 +37,7 @@ import java.util.Random;
  * Third International Conference, EMO 2005.
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
+@SuppressWarnings("serial")
 public abstract class WFG extends AbstractDoubleProblem {
 
   /**

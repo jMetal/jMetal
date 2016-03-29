@@ -33,6 +33,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public abstract class Hypervolume<S extends Solution<?>> extends GenericIndicator<S> {
 
   public Hypervolume() {

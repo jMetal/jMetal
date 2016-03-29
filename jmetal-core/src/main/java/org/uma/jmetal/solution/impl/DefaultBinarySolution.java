@@ -24,6 +24,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class DefaultBinarySolution
     extends AbstractGenericSolution<BinarySet, BinaryProblem>
     implements BinarySolution {

@@ -48,22 +48,21 @@ import java.util.*;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("unchecked")
 public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
   private final Experiment<?, Result> experiment;
 
-  public ComputeQualityIndicators(Experiment experiment) {
+  public ComputeQualityIndicators(Experiment<?, Result> experiment) {
     this.experiment = experiment ;
     this.experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
   public void run() throws IOException {
-    for (GenericIndicator indicator : experiment.getIndicatorList()) {
+    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
-      for (TaggedAlgorithm algorithm : experiment.getAlgorithmList()) {
+      for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory ;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getTag() ;
@@ -146,8 +145,8 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
   }
 
   public void findBestIndicatorFronts(Experiment<?, Result> experiment) throws IOException {
-    for (GenericIndicator indicator : experiment.getIndicatorList()) {
-      for (TaggedAlgorithm algorithm : experiment.getAlgorithmList()) {
+    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
+      for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getTag();

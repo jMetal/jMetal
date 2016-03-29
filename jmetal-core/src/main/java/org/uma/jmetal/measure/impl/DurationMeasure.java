@@ -16,6 +16,7 @@ package org.uma.jmetal.measure.impl;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  */
+@SuppressWarnings("serial")
 public class DurationMeasure extends SimplePullMeasure<Long> {
 
 	/**

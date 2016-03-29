@@ -13,31 +13,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cellde;
 
-import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
-import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.neighborhood.Neighborhood;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
-import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *

@@ -50,6 +50,7 @@ import java.util.List;
  * Implementation of MOCHC following the scheme used in jMetal4.5 and former versions, i.e, without
  * implementing the {@link AbstractGeneticAlgorithm} interface.
  */
+@SuppressWarnings("serial")
 public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private BinaryProblem problem;
 

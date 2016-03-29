@@ -15,6 +15,7 @@ import java.util.StringTokenizer;
 /**
  * Created by ajnebro on 14/1/15.
  */
+@SuppressWarnings("serial")
 public class BigOpt2015 extends AbstractDoubleProblem {
   private List<List<Double>> mixed ;
   private List<List<Double>> matrixA ;

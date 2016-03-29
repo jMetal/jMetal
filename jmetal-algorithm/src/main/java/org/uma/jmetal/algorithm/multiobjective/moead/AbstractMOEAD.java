@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * Abstract class for implementing versions of the MOEA/D algorithm.
@@ -36,6 +35,7 @@ import java.util.Vector;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<List<S>> {
   protected enum NeighborType {NEIGHBOR, POPULATION}
   public enum FunctionType {TCHE, PBI, AGG}

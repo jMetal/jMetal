@@ -31,6 +31,7 @@ import java.util.List;
  *
  * This class implements the PAES algorithm.
  */
+@SuppressWarnings("serial")
 public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
   protected int archiveSize;
   protected int maxEvaluations;

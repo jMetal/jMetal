@@ -34,6 +34,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   /** EPS defines the minimum difference allowed between real values */
   private static final double EPS = 1.0e-14;

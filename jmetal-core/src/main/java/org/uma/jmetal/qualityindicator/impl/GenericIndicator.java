@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 27/11/15.
  */
+@SuppressWarnings("serial")
 public abstract class GenericIndicator<S extends Solution<?>>
     extends SimpleDescribedEntity
     implements QualityIndicator<List<S>, Double> {

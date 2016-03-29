@@ -36,6 +36,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * TODO: using an epsilon value
  */
+@SuppressWarnings("serial")
 public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate, Double> {

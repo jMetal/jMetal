@@ -30,6 +30,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class SetCoverage
     extends SimpleDescribedEntity
     implements QualityIndicator<Pair<List<? extends Solution<?>>, List<? extends Solution<?>>>, Pair<Double, Double>> {

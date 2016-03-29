@@ -5,6 +5,7 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.util.*;
 
+@SuppressWarnings("serial")
 public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S, R2SolutionData> {
 
   private AbstractUtilityFunctionsSet<S> utilityFunctions;

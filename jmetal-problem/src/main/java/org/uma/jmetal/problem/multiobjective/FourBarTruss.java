@@ -35,6 +35,7 @@ import java.util.List;
  *  l = 200 cm
  *  sigma = 10kN/cm2
  */
+@SuppressWarnings("serial")
 public class FourBarTruss extends AbstractDoubleProblem {
 	private double f = 10   ;
   private double e = 200000;

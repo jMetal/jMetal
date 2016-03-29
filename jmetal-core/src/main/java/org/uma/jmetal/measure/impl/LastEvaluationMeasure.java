@@ -16,6 +16,7 @@ import org.uma.jmetal.measure.impl.LastEvaluationMeasure.Evaluation;
  *            the type of value used to evaluate the solution (Double,
  *            BigDecimal, enum, ...)
  */
+@SuppressWarnings("serial")
 public class LastEvaluationMeasure<Solution, Value> extends
 		SimplePushMeasure<Evaluation<Solution, Value>> {
 

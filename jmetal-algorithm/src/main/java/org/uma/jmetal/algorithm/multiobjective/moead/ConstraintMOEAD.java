@@ -32,6 +32,7 @@ import java.util.List;
  * @author Juan J. Durillo
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
 
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;

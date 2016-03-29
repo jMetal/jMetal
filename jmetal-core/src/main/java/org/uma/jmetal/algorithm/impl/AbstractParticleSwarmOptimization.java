@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by ajnebro on 26/10/14.
  */
+@SuppressWarnings("serial")
 public abstract class AbstractParticleSwarmOptimization<S extends Solution<?>, Result> implements Algorithm <Result> {
   private List<S> swarm;
   public List<S> getSwarm() {

@@ -14,15 +14,10 @@
 package org.uma.jmetal.algorithm.multiobjective.cellde;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -40,6 +35,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *
  */
+@SuppressWarnings("serial")
 public class CellDE45 implements Algorithm<List<DoubleSolution>> {
   private Problem<DoubleSolution> problem ;
   private List<DoubleSolution> population ;

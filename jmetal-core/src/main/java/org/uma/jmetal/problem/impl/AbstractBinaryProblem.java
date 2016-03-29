@@ -4,6 +4,7 @@ import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 
+@SuppressWarnings("serial")
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
   implements BinaryProblem {
 

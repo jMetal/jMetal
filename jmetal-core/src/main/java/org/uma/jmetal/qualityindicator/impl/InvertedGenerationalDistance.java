@@ -31,6 +31,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
+@SuppressWarnings("serial")
 public class InvertedGenerationalDistance<S extends Solution<?>> extends GenericIndicator<S> {
 
   private double pow = 2.0;

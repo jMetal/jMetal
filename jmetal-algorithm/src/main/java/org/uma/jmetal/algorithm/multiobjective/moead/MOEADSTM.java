@@ -35,7 +35,7 @@ import java.util.List;
  * @author Ke Li
  * @version 1.0
  */
-
+@SuppressWarnings("serial")
 public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	private DifferentialEvolutionCrossover differentialEvolutionCrossover;
 
@@ -251,7 +251,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 		population.clear();
 		for (int i = 0; i < populationSize; i++)
-			population.add(i, jointPopulation.get(i));
+			population.add(i, jointPopulation.get(idx[i]));
 	}
 
 	/**

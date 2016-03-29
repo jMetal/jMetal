@@ -28,6 +28,7 @@ import java.util.*;
  *
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class ArrayFront implements Front {
   protected Point[] points;
   protected int numberOfPoints ;

@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class NaryTournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
   private Comparator<S> comparator;
   private int numberOfSolutionsToBeReturned ;

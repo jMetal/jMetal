@@ -31,6 +31,7 @@ import java.util.List;
  * Single objective problem for testing integer encoding.
  * Objective: minimizing the distance to value N
  */
+@SuppressWarnings("serial")
 public class NIntegerMin extends AbstractIntegerProblem {
   private int valueN ;
 

@@ -32,6 +32,7 @@ import java.io.*;
  * It accepts data files from TSPLIB:
  *   http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/tsp/
  */
+@SuppressWarnings("serial")
 public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   protected int         numberOfCities ;
   protected double [][] distanceMatrix ;

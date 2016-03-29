@@ -35,6 +35,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  * @version 1.0
  */
+@SuppressWarnings("serial")
 public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
 
