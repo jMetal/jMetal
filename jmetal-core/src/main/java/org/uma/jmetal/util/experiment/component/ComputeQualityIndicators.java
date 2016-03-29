@@ -92,7 +92,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
             Front front = new ArrayFront(frontFileName) ;
             Front normalizedFront = frontNormalizer.normalize(front) ;
-            List<DoubleSolution> normalizedPopulation = FrontUtils .convertFrontToSolutionList(normalizedFront) ;
+            List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
             Double indicatorValue = (Double)indicator.evaluate(normalizedPopulation) ;
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
 
