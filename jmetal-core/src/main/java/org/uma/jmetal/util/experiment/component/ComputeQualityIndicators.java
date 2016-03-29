@@ -59,7 +59,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
   @Override
   public void run() throws IOException {
-    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
+    for (GenericIndicator indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
       for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
@@ -87,8 +87,6 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
           for (int i = 0; i < experiment.getIndependentRuns(); i++) {
             String frontFileName = problemDirectory + "/" +
                 experiment.getOutputParetoFrontFileName() + i + ".tsv";
-            String variableFileName = problemDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + i + ".tsv";
 
             Front front = new ArrayFront(frontFileName) ;
             Front normalizedFront = frontNormalizer.normalize(front) ;
