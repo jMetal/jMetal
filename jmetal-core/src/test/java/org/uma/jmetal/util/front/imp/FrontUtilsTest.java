@@ -22,6 +22,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.List;
 
@@ -618,7 +619,7 @@ public class FrontUtilsTest {
 
     Front front = new ArrayFront(numberOfPoints, numberOfDimensions) ;
 
-    List<DoubleSolution> list ;
+    List<PointSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(0, list.size());
@@ -640,7 +641,7 @@ public class FrontUtilsTest {
 
     front.setPoint(0, point1);
 
-    List<DoubleSolution> list ;
+    List<PointSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(1, list.size());
@@ -678,7 +679,7 @@ public class FrontUtilsTest {
     front.setPoint(1, point2);
     front.setPoint(2, point3);
 
-    List<DoubleSolution> list ;
+    List<PointSolution> list ;
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(3, list.size());

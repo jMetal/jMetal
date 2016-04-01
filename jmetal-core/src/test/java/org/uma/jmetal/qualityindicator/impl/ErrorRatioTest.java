@@ -26,6 +26,7 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -81,8 +82,8 @@ public class ErrorRatioTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point1);
 
-    QualityIndicator<List<DoubleSolution>, Double> errorRatio =
-        new ErrorRatio<List<DoubleSolution>>(referenceFront) ;
+    QualityIndicator<List<PointSolution>, Double> errorRatio =
+        new ErrorRatio<List<PointSolution>>(referenceFront) ;
 
     assertEquals(0.0, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
@@ -107,8 +108,8 @@ public class ErrorRatioTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point2);
 
-    QualityIndicator<List<DoubleSolution>, Double> errorRatio =
-        new ErrorRatio<List<DoubleSolution>>(referenceFront) ;
+    QualityIndicator<List<PointSolution>, Double> errorRatio =
+        new ErrorRatio<List<PointSolution>>(referenceFront) ;
 
     assertEquals(1.0, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
@@ -152,8 +153,8 @@ public class ErrorRatioTest {
     paretoFront.setPoint(1, point5);
     paretoFront.setPoint(2, point6);
 
-    QualityIndicator<List<DoubleSolution>, Double> errorRatio =
-        new ErrorRatio<List<DoubleSolution>>(paretoFront) ;
+    QualityIndicator<List<PointSolution>, Double> errorRatio =
+        new ErrorRatio<List<PointSolution>>(paretoFront) ;
 
     assertEquals(1.0/numberOfPoints, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }

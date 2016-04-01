@@ -11,6 +11,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.util.PointSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
@@ -52,33 +53,33 @@ public abstract class AbstractAlgorithmRunner {
 
     Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
     Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population)) ;
-    List<DoubleSolution> normalizedPopulation = FrontUtils
+    List<PointSolution> normalizedPopulation = FrontUtils
         .convertFrontToSolutionList(normalizedFront) ;
 
     String outputString = "\n" ;
     outputString += "Hypervolume (N) : " +
-        new PISAHypervolume<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "Hypervolume     : " +
         new PISAHypervolume<S>(referenceFront).evaluate(population) + "\n";
     outputString += "Epsilon (N)     : " +
-        new Epsilon<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
+        new Epsilon<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
         "\n" ;
     outputString += "Epsilon         : " +
         new Epsilon<S>(referenceFront).evaluate(population) + "\n" ;
     outputString += "GD (N)          : " +
-        new GenerationalDistance<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new GenerationalDistance<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "GD              : " +
         new GenerationalDistance<S>(referenceFront).evaluate(population) + "\n";
     outputString += "IGD (N)         : " +
-        new InvertedGenerationalDistance<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new InvertedGenerationalDistance<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString +="IGD             : " +
         new InvertedGenerationalDistance<S>(referenceFront).evaluate(population) + "\n";
     outputString += "IGD+ (N)        : " +
-        new InvertedGenerationalDistancePlus<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new InvertedGenerationalDistancePlus<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "IGD+            : " +
         new InvertedGenerationalDistancePlus<S>(referenceFront).evaluate(population) + "\n";
     outputString += "Spread (N)      : " +
-        new Spread<DoubleSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+        new Spread<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "Spread          : " +
         new Spread<S>(referenceFront).evaluate(population) + "\n";
 //    outputString += "R2 (N)          : " +

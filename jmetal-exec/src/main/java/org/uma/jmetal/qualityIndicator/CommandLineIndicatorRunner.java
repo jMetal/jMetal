@@ -23,6 +23,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -114,15 +115,15 @@ public class CommandLineIndicatorRunner {
     } else {
       JMetalLogger.logger.info("The fronts are NOT NORMALIZED before computing the indicators") ;
     }
-    List<QualityIndicator<List<DoubleSolution>, Double>> indicatorList =
+    List<QualityIndicator<List<PointSolution>, Double>> indicatorList =
         getAvailableIndicators(referenceFront);
 
     if (!args[0].equals("ALL")) {
-      QualityIndicator<List<DoubleSolution>, Double> indicator = getIndicatorFromName(
+      QualityIndicator<List<PointSolution>, Double> indicator = getIndicatorFromName(
           args[0], indicatorList);
       System.out.println(indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
     } else {
-      for (QualityIndicator<List<DoubleSolution>, Double> indicator : indicatorList) {
+      for (QualityIndicator<List<PointSolution>, Double> indicator : indicatorList) {
         System.out.println(indicator.getName() + ": " +
             indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
       }
@@ -143,19 +144,19 @@ public class CommandLineIndicatorRunner {
    * @return
    * @throws FileNotFoundException
    */
-  private static List<QualityIndicator<List<DoubleSolution>, Double>> getAvailableIndicators(
+  private static List<QualityIndicator<List<PointSolution>, Double>> getAvailableIndicators(
       Front referenceFront) throws FileNotFoundException {
 
-    List<QualityIndicator<List<DoubleSolution>, Double>> list = new ArrayList<>() ;
-    list.add(new Epsilon<DoubleSolution>(referenceFront)) ;
-    list.add(new PISAHypervolume<DoubleSolution>(referenceFront)) ;
-    list.add(new GenerationalDistance<DoubleSolution>(referenceFront)) ;
-    list.add(new InvertedGenerationalDistance<DoubleSolution>(referenceFront)) ;
-    list.add(new InvertedGenerationalDistancePlus<DoubleSolution>(referenceFront)) ;
-    list.add(new Spread<DoubleSolution>(referenceFront)) ;
-    list.add(new GeneralizedSpread<DoubleSolution>(referenceFront)) ;
+    List<QualityIndicator<List<PointSolution>, Double>> list = new ArrayList<>() ;
+    list.add(new Epsilon<PointSolution>(referenceFront)) ;
+    list.add(new PISAHypervolume<PointSolution>(referenceFront)) ;
+    list.add(new GenerationalDistance<PointSolution>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistance<PointSolution>(referenceFront)) ;
+    list.add(new InvertedGenerationalDistancePlus<PointSolution>(referenceFront)) ;
+    list.add(new Spread<PointSolution>(referenceFront)) ;
+    list.add(new GeneralizedSpread<PointSolution>(referenceFront)) ;
     //list.add(new R2<List<DoubleSolution>>(referenceFront)) ;
-    list.add(new ErrorRatio<List<DoubleSolution>>(referenceFront)) ;
+    list.add(new ErrorRatio<List<PointSolution>>(referenceFront)) ;
 
     return list ;
   }
@@ -166,11 +167,11 @@ public class CommandLineIndicatorRunner {
    * @param list
    * @return
    */
-  private static QualityIndicator<List<DoubleSolution>, Double> getIndicatorFromName(
-      String name, List<QualityIndicator<List<DoubleSolution>, Double>> list) {
-    QualityIndicator<List<DoubleSolution>, Double> result = null ;
+  private static QualityIndicator<List<PointSolution>, Double> getIndicatorFromName(
+      String name, List<QualityIndicator<List<PointSolution>, Double>> list) {
+    QualityIndicator<List<PointSolution>, Double> result = null ;
 
-    for (QualityIndicator<List<DoubleSolution>, Double> indicator : list) {
+    for (QualityIndicator<List<PointSolution>, Double> indicator : list) {
       if (indicator.getName().equals(name)) {
         result = indicator ;
       }

@@ -28,6 +28,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -90,7 +91,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
 
             Front front = new ArrayFront(frontFileName) ;
             Front normalizedFront = frontNormalizer.normalize(front) ;
-            List<DoubleSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
+            List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
             Double indicatorValue = (Double)indicator.evaluate(normalizedPopulation) ;
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
 

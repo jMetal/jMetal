@@ -25,6 +25,7 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.util.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
@@ -63,8 +64,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
     for (Problem<?> problem : experiment.getProblemList()) {
-      NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
-          new NonDominatedSolutionListArchive<DoubleSolution>() ;
+      NonDominatedSolutionListArchive<PointSolution> nonDominatedSolutionArchive =
+          new NonDominatedSolutionListArchive<PointSolution>() ;
 
       for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
         String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
@@ -74,10 +75,10 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
               i + ".tsv";
           Front front = new ArrayFront(frontFileName) ;
-          List<DoubleSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
-          GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+          List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
+          GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
-          for (DoubleSolution solution : solutionList) {
+          for (PointSolution solution : solutionList) {
             solutionAttribute.setAttribute(solution, algorithm.getTag());
             nonDominatedSolutionArchive.add(solution) ;
           }
@@ -108,12 +109,12 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
       String outputDirectoryName, Problem<?> problem,
-      List<DoubleSolution> nonDominatedSolutions) throws IOException {
-    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+      List<PointSolution> nonDominatedSolutions) throws IOException {
+    GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
     for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
-      List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
-      for (DoubleSolution solution : nonDominatedSolutions) {
+      List<PointSolution> solutionsPerAlgorithm = new ArrayList<>() ;
+      for (PointSolution solution : nonDominatedSolutions) {
         if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
           solutionsPerAlgorithm.add(solution) ;
         }

@@ -23,6 +23,7 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.FileNotFoundException;
 
@@ -80,8 +81,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
 
-    InvertedGenerationalDistancePlus<DoubleSolution> igdPlus =
-        new InvertedGenerationalDistancePlus<DoubleSolution>(paretoFront) ;
+    InvertedGenerationalDistancePlus<PointSolution> igdPlus =
+        new InvertedGenerationalDistancePlus<PointSolution>(paretoFront) ;
 
     assertEquals(0.0, igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
         EPSILON);
@@ -129,8 +130,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(1, points[1]);
     frontApproximation.setPoint(2, points[2]);
 
-    InvertedGenerationalDistancePlus<DoubleSolution> igdPlus =
-        new InvertedGenerationalDistancePlus<DoubleSolution>(paretoFront) ;
+    InvertedGenerationalDistancePlus<PointSolution> igdPlus =
+        new InvertedGenerationalDistancePlus<PointSolution>(paretoFront) ;
 
     assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
@@ -179,8 +180,8 @@ public class InvertedGenerationalDistancePlusTest {
     frontApproximation.setPoint(1, points[1]);
     frontApproximation.setPoint(2, points[2]);
 
-    InvertedGenerationalDistancePlus<DoubleSolution> igdPlus =
-        new InvertedGenerationalDistancePlus<DoubleSolution>(paretoFront) ;
+    InvertedGenerationalDistancePlus<PointSolution> igdPlus =
+        new InvertedGenerationalDistancePlus<PointSolution>(paretoFront) ;
 
     assertEquals((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
