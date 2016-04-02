@@ -13,16 +13,12 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -31,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 /**
