@@ -242,6 +242,7 @@ public class DominanceRankingTest {
   }
 */
 
+  @SuppressWarnings("serial")
   private class DummyProblem extends AbstractDoubleProblem {
 
     public DummyProblem(int numberOfObjectives) {
