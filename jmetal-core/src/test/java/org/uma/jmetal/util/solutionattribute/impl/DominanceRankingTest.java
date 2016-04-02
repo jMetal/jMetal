@@ -75,7 +75,7 @@ public class DominanceRankingTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
@@ -84,7 +84,7 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
 
@@ -106,7 +106,7 @@ public class DominanceRankingTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(2, ranking.getNumberOfSubfronts()) ;
@@ -118,8 +118,8 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -146,7 +146,7 @@ public class DominanceRankingTest {
     population.add(solution2) ;
     population.add(solution3) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(3, ranking.getNumberOfSubfronts()) ;
@@ -159,9 +159,9 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
-    List<Solution<?>> subfront2 = ranking.getSubfront(2) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront2 = ranking.getSubfront(2) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -197,7 +197,7 @@ public class DominanceRankingTest {
     population.add(solution4) ;
     population.add(solution5) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(2, ranking.getNumberOfSubfronts()) ;
@@ -209,8 +209,8 @@ public class DominanceRankingTest {
     //assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     //assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
