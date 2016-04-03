@@ -15,7 +15,6 @@
 package org.uma.jmetal.util.experiment.component;
 
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;

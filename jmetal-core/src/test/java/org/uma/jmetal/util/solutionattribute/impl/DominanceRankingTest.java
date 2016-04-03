@@ -13,16 +13,12 @@
 
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -31,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -80,7 +75,7 @@ public class DominanceRankingTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubfronts()) ;
@@ -89,7 +84,7 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
 
@@ -111,7 +106,7 @@ public class DominanceRankingTest {
     population.add(solution) ;
     population.add(solution2) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(2, ranking.getNumberOfSubfronts()) ;
@@ -123,8 +118,8 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -151,7 +146,7 @@ public class DominanceRankingTest {
     population.add(solution2) ;
     population.add(solution3) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(3, ranking.getNumberOfSubfronts()) ;
@@ -164,9 +159,9 @@ public class DominanceRankingTest {
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
-    List<Solution<?>> subfront2 = ranking.getSubfront(2) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront2 = ranking.getSubfront(2) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -202,7 +197,7 @@ public class DominanceRankingTest {
     population.add(solution4) ;
     population.add(solution5) ;
 
-    Ranking ranking = new DominanceRanking() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(2, ranking.getNumberOfSubfronts()) ;
@@ -214,8 +209,8 @@ public class DominanceRankingTest {
     //assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     //assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<Solution<?>> subfront = ranking.getSubfront(0) ;
-    List<Solution<?>> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -247,6 +242,7 @@ public class DominanceRankingTest {
   }
 */
 
+  @SuppressWarnings("serial")
   private class DummyProblem extends AbstractDoubleProblem {
 
     public DummyProblem(int numberOfObjectives) {
