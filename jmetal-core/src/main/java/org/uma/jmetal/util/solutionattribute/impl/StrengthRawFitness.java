@@ -43,7 +43,6 @@ public class StrengthRawFitness <S extends Solution<?>>
       }
     }
 
-
     //Calculate the raw fitness
     // rawFitness(i) = |{sum strenght(j) | j <- SolutionSet and j dominate i}|
     for (int i = 0;i < solutionSet.size(); i++) {
@@ -53,7 +52,6 @@ public class StrengthRawFitness <S extends Solution<?>>
         }
       }
     }
-
 
     // Add the distance to the k-th individual. In the reference paper of SPEA2,
     // k = sqrt(population.size()), but a value of k = 1 recommended. See

@@ -100,7 +100,6 @@ public class DominanceRanking <S extends Solution<?>>
       if (dominateMe[i] == 0) {
 
         front[0].add(i);
-        //RankingAndCrowdingAttr.getAttributes(solutionSet.get(0)).setRank(0);
         solutionSet.get(i).setAttribute(getAttributeID(), 0);
       }
     }
