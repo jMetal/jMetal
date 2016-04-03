@@ -18,7 +18,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -49,18 +49,18 @@ import java.util.*;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ComputeQualityIndicators<Result> implements ExperimentComponent {
+public class ComputeQualityIndicators<S extends Solution<?>, Result> implements ExperimentComponent {
 
-  private final Experiment<?, Result> experiment;
+  private final Experiment<S, Result> experiment;
 
-  public ComputeQualityIndicators(Experiment<?, Result> experiment) {
+  public ComputeQualityIndicators(Experiment<S, Result> experiment) {
     this.experiment = experiment ;
     this.experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
   public void run() throws IOException {
-    for (GenericIndicator indicator : experiment.getIndicatorList()) {
+    for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
       for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
@@ -92,7 +92,7 @@ public class ComputeQualityIndicators<Result> implements ExperimentComponent {
             Front front = new ArrayFront(frontFileName) ;
             Front normalizedFront = frontNormalizer.normalize(front) ;
             List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
-            Double indicatorValue = (Double)indicator.evaluate(normalizedPopulation) ;
+            Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
 
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
