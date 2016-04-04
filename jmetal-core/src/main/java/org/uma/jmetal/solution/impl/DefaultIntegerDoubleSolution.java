@@ -24,8 +24,6 @@ public class DefaultIntegerDoubleSolution
 
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
-    overallConstraintViolationDegree = 0.0 ;
-    numberOfViolatedConstraints = 0 ;
 
     initializeIntegerDoubleVariables() ;
     initializeObjectiveValues() ;
@@ -47,8 +45,8 @@ public class DefaultIntegerDoubleSolution
       setVariableValue(i, solution.getVariableValue(i)) ;
     }
 
-    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }

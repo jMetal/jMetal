@@ -34,9 +34,6 @@ public class DefaultIntegerPermutationSolution
   public DefaultIntegerPermutationSolution(PermutationProblem<?> problem) {
     super(problem) ;
 
-    overallConstraintViolationDegree = 0.0 ;
-    numberOfViolatedConstraints = 0 ;
-
     List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength());
 
     for (int j = 0; j < problem.getPermutationLength(); j++) {
@@ -61,8 +58,8 @@ public class DefaultIntegerPermutationSolution
       setVariableValue(i, solution.getVariableValue(i));
     }
 
-    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }

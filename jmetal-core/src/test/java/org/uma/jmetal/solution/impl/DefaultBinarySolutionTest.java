@@ -79,9 +79,6 @@ public class DefaultBinarySolutionTest {
     solutionB.getVariableValue(0).clear(3) ;
     solutionB.getVariableValue(0).set(4) ;
 
-    System.out.println("A: " + solutionA) ;
-    System.out.println("B: " + solutionA) ;
-
     assertEquals(solutionA.hashCode(), solutionB.hashCode());
   }
 

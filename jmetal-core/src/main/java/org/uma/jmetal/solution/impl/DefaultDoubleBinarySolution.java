@@ -40,8 +40,6 @@ public class DefaultDoubleBinarySolution
     super(problem) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
-    overallConstraintViolationDegree = 0.0 ;
-    numberOfViolatedConstraints = 0 ;
 
     initializeDoubleVariables();
     initializeBitSet() ;
@@ -58,8 +56,8 @@ public class DefaultDoubleBinarySolution
     copyDoubleVariables(solution);
     copyBitSet(solution);
 
-    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+   // overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+   // numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }

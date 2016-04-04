@@ -31,10 +31,7 @@ public class DefaultDoubleSolution
   /** Constructor */
   public DefaultDoubleSolution(DoubleProblem problem) {
     super(problem) ;
-    
-    overallConstraintViolationDegree = 0.0 ;
-    numberOfViolatedConstraints = 0 ;
-    
+
     initializeDoubleVariables();
     initializeObjectiveValues();
   }
@@ -51,8 +48,8 @@ public class DefaultDoubleSolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
+    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
+    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
