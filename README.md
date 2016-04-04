@@ -56,12 +56,11 @@ The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
 ##Publications
 A.J. Nebro, J.J. Durillo, M. Vergne: "Redesigning the jMetal Multi-Objective Optimization Framework". Proceedings of the Companion Publication of the 2015 on Genetic and Evolutionary Computation Conference (GECCO Companion '15) Pages 1093-1100. DOI: http://dx.doi.org/10.1145/2739482.2768462
 
-<!--
-####Code coverage (25th January 2015)
+##Code coverage (4th April 2016)
+Coverage data of the jmetal-core package reported by IntelliJ Idea:
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
-|17,8% (48/ 270) |	16,8% (243/ 1443) |	13,4% (1199/ 8975)
+|51,8% (93/181) |	40.0% (375/393) | 37%% (1183/5084)
 
--->
 
