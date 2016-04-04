@@ -2,12 +2,24 @@ package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.List;
 
@@ -51,5 +63,32 @@ public class SMPSOIT {
     double hv = (Double)hypervolume.evaluate(population) ;
 
     assertTrue(hv > 0.64) ;
+  }
+
+  @Test
+  public void shouldTheAlgorithmReturnAGoodQualityFrontWhenSolvingAConstrainedProblem() throws Exception {
+    ConstrEx problem = new ConstrEx() ;
+
+    algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
+
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+        .execute() ;
+
+    List<DoubleSolution> population = algorithm.getResult() ;
+
+    String referenceFrontFileName = "/referenceFronts/ConstrEx.pf" ;
+
+    Front referenceFront = new ArrayFront(referenceFrontFileName);
+    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
+
+    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
+    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population)) ;
+    List<PointSolution> normalizedPopulation = FrontUtils
+        .convertFrontToSolutionList(normalizedFront) ;
+
+    double hv = new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) ;
+
+    assertTrue(population.size() >= 98) ;
+    assertTrue(hv > 0.77) ;
   }
 }
