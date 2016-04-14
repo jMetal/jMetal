@@ -21,8 +21,6 @@ import java.util.List;
 public class LocationAttribute <S extends Solution<?>>
 		extends GenericSolutionAttribute<S, Integer> {
 
-	public LocationAttribute() {}
-
 	public LocationAttribute(List<S> source) {
 		int location = 0;
 		for (S s : source)

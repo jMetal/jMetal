@@ -17,12 +17,30 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 /**
- * Generic class for implementing {@link SolutionAttribute} classes
+ * Generic class for implementing {@link SolutionAttribute} classes. By default, the identifier
+ * of a {@link SolutionAttribute} is the class name, but it can be set to a different value
+ * when constructing an instance.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
+  private Object id ;
+
+  /**
+   * Constructor
+   */
+  public GenericSolutionAttribute() {
+    id = this.getClass() ;
+  }
+
+  /**
+   * Constructor
+   * @param id Attribute identifier
+   */
+  public GenericSolutionAttribute(Object id) {
+    this.id = id ;
+  }
 
   @SuppressWarnings("unchecked")
   @Override
@@ -37,6 +55,6 @@ public class GenericSolutionAttribute <S extends Solution<?>, V> implements Solu
 
   @Override
   public Object getAttributeID() {
-    return this.getClass() ;
+    return id ;
   }
 }
