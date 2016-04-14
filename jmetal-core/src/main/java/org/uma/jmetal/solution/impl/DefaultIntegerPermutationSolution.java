@@ -57,10 +57,7 @@ public class DefaultIntegerPermutationSolution
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       setVariableValue(i, solution.getVariableValue(i));
     }
-
-    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-
+    
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
