@@ -11,40 +11,31 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.algorithm.multiobjective.omopso;
+package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 /**
- * Integration tests for algorithm OMOPSO
+ * Integration tests for algorithm DMOPSO
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class OMOPSOIT {
+public class DMOPSOIT {
   Algorithm<List<DoubleSolution>> algorithm;
 
   @Test
@@ -55,19 +46,15 @@ public class OMOPSOIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
-    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
-        .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
-        .build();
+    algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
+        "_TCHE", "", 2) ;
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
     /*
-    Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
+    Rationale: the default problem is ZDT1, and dMOPSO, configured with standard settings, should
     return 100 solutions
     */
     assertTrue(population.size() >= 98) ;
@@ -77,14 +64,8 @@ public class OMOPSOIT {
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
     DoubleProblem problem = new ZDT1() ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-
-    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
-        .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
-        .build();
+    algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
+        "_TCHE", "", 2) ;
 
     algorithm.run();
 
