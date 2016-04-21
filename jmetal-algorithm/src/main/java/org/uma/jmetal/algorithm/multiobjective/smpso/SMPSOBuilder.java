@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -28,6 +29,8 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
+  public enum SMPSOVariant {SMPSO, Measures}
+
   private DoubleProblem problem;
 
   private double c1Max;
@@ -54,6 +57,8 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
+  private SMPSOVariant variant ;
+
   public SMPSOBuilder(DoubleProblem problem, BoundedArchive<DoubleSolution> leaders) {
     this.problem = problem;
     this.leaders = leaders;
@@ -76,6 +81,9 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
     mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
+
+    this.variant = SMPSOVariant.SMPSO ;
+
   }
 
   /* Getters */
@@ -242,10 +250,22 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this ;
   }
 
+  public SMPSOBuilder setVariant(SMPSOVariant variant) {
+    this.variant = variant;
+
+    return this;
+  }
+
   public SMPSO build() {
-    return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
-        r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
-        changeVelocity2, evaluator);
+    if (variant.equals(SMPSOVariant.SMPSO)) {
+      return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
+          r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
+          changeVelocity2, evaluator);
+    } else {
+      return new SMPSOMeasures(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
+          r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
+          changeVelocity2, evaluator);
+    }
   }
 
   /*
