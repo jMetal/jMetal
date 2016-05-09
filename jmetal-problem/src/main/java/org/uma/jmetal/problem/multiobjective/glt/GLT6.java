@@ -20,7 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Problem GLT6
+ * Problem GLT6. Defined in
+ * F. Gu, H.-L. Liu, and K. C. Tan, “A multiobjective evolutionary
+ * algorithm using dynamic weight design method,” International Journal
+ * of Innovative Computing, Information and Control, vol. 8, no. 5B, pp.
+ * 3677–3688, 2012.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
