@@ -36,18 +36,16 @@ public class UF4 extends AbstractDoubleProblem {
  /** 
   * Constructor.
   * Creates a default instance of problem CEC2009_UF4 (30 decision variables)
-  * @param solutionType The solution type must "Real" or "BinaryReal".
   */
-  public UF4(String solutionType) throws ClassNotFoundException {
-    this(solutionType, 30); // 30 variables by default
-  } // CEC2009_UF1
+  public UF4() throws ClassNotFoundException {
+    this(30);
+  }
   
  /**
   * Creates a new instance of problem CEC2009_UF4.
   * @param numberOfVariables Number of variables.
-  * @param solutionType The solution type must "Real" or "BinaryReal".
   */
-  public UF4(String solutionType, Integer numberOfVariables) {
+  public UF4(Integer numberOfVariables) {
     setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;

@@ -39,7 +39,7 @@ public class UF6 extends AbstractDoubleProblem {
   * Constructor.
   * Creates a default instance of problem CEC2009_UF6 (30 decision variables, N =10, epsilon = 0.1)
   */
-  public UF6(String solutionType) throws ClassNotFoundException {
+  public UF6() throws ClassNotFoundException {
     this(30, 2, 0.1);
   }
   
