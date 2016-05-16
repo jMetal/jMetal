@@ -55,8 +55,7 @@ public class NSGAIIEbesRunner extends AbstractAlgorithmRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "" ;
 
-    problem = new Ebes("jmetal-problem/src/main/resources/ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe",
-        new String{"W", "D"}) ;
+    problem = new Ebes("ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"}) ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
