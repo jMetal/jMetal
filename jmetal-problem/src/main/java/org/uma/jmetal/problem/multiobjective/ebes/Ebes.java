@@ -25,7 +25,6 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,9 +90,13 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
    * Stores the number of Nodes of the problem
    */
   protected double [][] nodeCheck_ ;
-
   public double nodeCheck(int i, int j) {
     return nodeCheck_[i][j];
+  } // get node check
+
+  protected int [][] geometryCheck_ ;
+  public int geometryCheck(int i, int j) {
+    return geometryCheck_[i][j];
   } // get node check
 
   /**
@@ -202,6 +205,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
 
   protected int numberOfConstraintsNodes_ ;
+  protected int numberOfGroupsToCheckGeometry_;
 
   public void setNumberOfConstraintsNodes(int numberOfConstraintsNodes) {
     numberOfConstraintsNodes_ = numberOfConstraintsNodes;
@@ -710,11 +714,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
 
-
-  /**
-   * Constructor
-   * @throws FileNotFoundException
-   */
   public Ebes() throws FileNotFoundException {
     overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
     String file = EBEsReadProblems() + ".ebe";
@@ -935,7 +934,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       }
     }
     matrixWidthBand_ = (elementsBetweenDiffGreat_ +1) * numberOfLibertyDegree_;
-
   } // end InitializeEBEs
 
   @Override
@@ -999,6 +997,11 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       else if(OF_[j].equals("ENS"))
       {
         fx[j]=FunctionENS(0);
+        solution.setObjective(j, fx[j]);
+      }
+      else if(OF_[j].equals("MDV"))
+      {
+        fx[j]=FunctionsMahalanobis_Distance_With_Variance(0);
         solution.setObjective(j, fx[j]);
       }
       else
@@ -4908,6 +4911,8 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
     // create a Scanner for the file
     //java.util.Scanner input = new java.util.Scanner(file);
 
+    //InputStream inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
+
     InputStream inputStream = getClass().getResourceAsStream("/" + "Ebes.txt");
 
     if (inputStream == null) {
@@ -5140,6 +5145,17 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
         txt = txt.substring(j);
         numberOfConstraintsNodes_ = Integer.valueOf(txt);
 
+        // number Of Groups To Check Geometry
+        // read lines
+        txt=input.nextLine();
+        for(i=txt.length()-1;i>=0;i--){
+          ch=txt.charAt(i);
+          if(ch == ' '){
+            j=i+1;break;}
+        }
+        txt = txt.substring(j);
+        numberOfGroupsToCheckGeometry_= Integer.valueOf(txt);
+
         // Cutting efect (not not included, read lines)
         txt=input.nextLine();
 
@@ -5283,6 +5299,25 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
           nodeCheck_[i][1]=Double.valueOf(input.next());
         }
 
+        //number of groups to check geometry
+        txt=input.nextLine();
+        txt=input.nextLine();
+        if(numberOfGroupsToCheckGeometry_!=0) {
+          geometryCheck_ = new int[numberOfGroupsToCheckGeometry_][];
+          //txt = input.nextLine();
+          for (i = 0; i < numberOfGroupsToCheckGeometry_; i++) {
+            txt = input.nextLine();
+            geometryCheck_[i] = new int[(txt.length() + 1) / 2];
+            String aTxt[] = txt.split(" ");
+            int k = 0;
+            for (j = 0; j < aTxt.length; j++) {
+              if (aTxt[j] != " ") {
+                geometryCheck_[i][k] =  Integer.parseInt(aTxt[j]);
+                k++;
+              }
+            }
+          }
+        }
         while(input.hasNext()){
           txt=input.nextLine();
         }
@@ -5431,43 +5466,129 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
     // function Efficiency Nash-Sutcliffe
     // O[k] : k-th data value of matirial stress (observed)
     // E[k] : k-th estimated value of the stress
-    double[] Omax = new double [numberOfGroupElements_];
-    double[] Omin = new double [numberOfGroupElements_];
-    double[] Emax = new double [numberOfGroupElements_];
-    double[] Emin = new double [numberOfGroupElements_];
+    double SSRes = 0.0;
+    double SSTot = 0.0;
+    double ENS = 0.0;
     double mOmax = 0.0;
     double mOmin = 0.0;
 
     // [0][hi] residual strain axial
     // [1][hi] residual strain transversal
 
-    for(int gr=0; gr<numberOfGroupElements_; gr++) {
-      Emin[gr] = StrainMin_[gr][hi];
-      Omin[gr] = Groups_[(int) Element_[gr][INDEX_]][COMPRESSION];
 
-      Emax[gr] = StrainMax_[gr][hi];
-      Omax[gr] = Groups_[(int)Element_[gr][INDEX_]][STRESS];
-
-      mOmax += (Omax[gr]);
-      mOmin += (Omin[gr]);
-    }
-
-    //mean of the observed data
-    mOmax = 2 * mOmax / Omax.length;
-    mOmin = 2 * mOmin / Omin.length;
-
-    double SSRes = 0.0;
-    double SSTot = 0.0;
-    double ENS = 0.0;
-    for (int i = 0; i < Omax.length; i++)
+    for (int i = 0; i < geometryCheck_.length; i++)
     {
-      //Sum of Squares of Residuals, also called the residual sum of squares
-      SSRes += Math.pow((Omin[i] - Emin[i]), 2.0) + Math.pow((Omax[i] - Emax[i]), 2.0);
-      //Total Sum of Squares (proportional to the sample variance)
-      SSTot +=  Math.pow((Omin[i] - mOmin), 2.0) + Math.pow((Omax[i] - mOmax), 2.0);
+      double[] Omax = new double [geometryCheck_[i].length];
+      double[] Omin = new double [geometryCheck_[i].length];
+      double[] Emax = new double [geometryCheck_[i].length];
+      double[] Emin = new double [geometryCheck_[i].length];
+
+      for (int j = 0; j < geometryCheck_[i].length; j++) {
+        int gr = geometryCheck_[i][j];
+
+        Emin[j] = StrainMin_[gr][hi];
+        Omin[j] = Groups_[(int) Element_[gr][INDEX_]][COMPRESSION];
+
+        Emax[j] = StrainMax_[gr][hi];
+        Omax[j] = Groups_[(int)Element_[gr][INDEX_]][STRESS];
+
+        mOmax += (Omax[j]);
+        mOmin += (Omin[j]);
+      }
+
+      //mean of the observed data
+      mOmax = 2 * mOmax / Omax.length;
+      mOmin = 2 * mOmin / Omin.length;
+
+      for (int k = 0; k < Omax.length; k++)
+      {
+        //Sum of Squares of Residuals, also called the residual sum of squares
+        SSRes += Math.pow((Omin[k] - Emin[k]), 2.0) + Math.pow((Omax[k] - Emax[k]), 2.0);
+        //Total Sum of Squares (proportional to the sample variance)
+        SSTot +=  Math.pow((Omin[k] - mOmin), 2.0) + Math.pow((Omax[k] - mOmax), 2.0);
+      }
+
+      ENS += SSRes / SSTot;
+
     }
-    ENS = SSRes / SSTot;
+
+
     return ENS;
+  }
+
+  public double FunctionsMahalanobis_Distance_With_Variance(int hi) {
+    // Mahalanobis Distance With Variance for estimated value respect to estimated data
+
+    double MD = 0.0; // mahalanobis distance
+    double[] MDi = new double [geometryCheck_.length]; // mahalanobis distance
+
+    for (int i = 0; i < geometryCheck_.length; i++)
+    {
+      int N = geometryCheck_[i].length;
+      double[] distY = new double[N];
+      double[] distZ = new double[N];
+      double sumY = 0.0; //
+      double sumZ = 0.0; //
+      double sumYxY = 0.0; //
+      double sumZxZ = 0.0; //
+      double sumYxZ = 0.0; //
+      double meanY = 0.0; // means Y distance
+      double meanZ = 0.0; // means Z distance
+      double S2Y = 0.0; // variance Y distance
+      double S2Z = 0.0; // variance Z distance
+      double SY = 0.0; // variance Y distance
+      double SZ = 0.0; // variance Z distance
+      double CS2 = 0.0; // covariance
+      double r = 0.0; // Pearson correlation
+
+      for (int j = 0; j < geometryCheck_[i].length; j++) {
+
+        distY[j] = Groups_[geometryCheck_[i][j]][Y_];
+        distZ[j] = Groups_[geometryCheck_[i][j]][Z_];
+
+        sumY += distY[j];
+        sumZ += distZ[j];
+        sumYxY += distY[j]*distY[j];
+        sumZxZ += distZ[j]*distZ[j];
+        sumYxZ += distY[j]*distZ[j];
+
+        meanY += distY[j];
+        meanZ += distZ[j];
+
+      }
+      //mean of the observed data and values estimated
+      meanY /= N;
+      meanZ /= N;
+
+      // Pearson’s correlation coefficient
+      r = (N*sumYxZ-sumY*sumZ)/(Math.sqrt((N*sumYxY-Math.pow(sumY,2.0))*(N*sumZxZ-Math.pow(sumZ,2.0))));
+
+
+      // variance
+      for (int k = 0; k < N; k++) {
+        S2Y += Math.pow((distY[k] - meanY), 2.0);
+        S2Z += Math.pow((distZ[k] - meanZ), 2.0);
+      }
+
+      S2Y /= (N-1);
+      S2Z /= (N-1);
+      SY = Math.sqrt(S2Y);
+      SZ = Math.sqrt(S2Z);
+      //CS2 /= (N-1);
+
+      // Mahalanobis distance
+      for (int k = 1; k < N; k++) {
+        MDi[i] += Math.pow((0-distY[k]), 2.0) / S2Y + Math.pow((0-distZ[k]), 2.0) / S2Z - 2.0*r*(0-distY[k])*(0-distZ[k])/(SY*SZ);
+      }
+
+      MDi[i] = Math.sqrt(1/(1-Math.pow(r,2.0))*MDi[i]);
+    }
+
+    for (int i = 0; i < geometryCheck_.length; i++) {
+      MD += MDi[i];
+    }
+
+    return MD;
   }
 
 /*
