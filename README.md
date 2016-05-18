@@ -25,6 +25,7 @@ Thanks to Ke Li for his contribution.
   
 * New benchmark problems
   * [GLT problems](https://github.com/jMetal/jMetal/tree/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/glt). Defined in: F. Gu, H.-L. Liu, and K. C. Tan, “A multiobjective evolutionary algorithm using dynamic weight design method,” International Journal of Innovative Computing, Information and Control, vol. 8, no. 5B, pp. 3677–3688, 2012.
+  * [MOP problems](https://github.com/jMetal/jMetal/tree/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/mop). Defined in: H. L. Liu, F. Gu and Q. Zhang, "Decomposition of a Multiobjective Optimization Problem Into a Number of Simple Multiobjective Subproblems", in IEEE Transactions on Evolutionary Computation, vol. 18, no. 3, pp. 450-455, June 2014. Thanks to Mastermay for his contribution.
 
 * New operators
   * [`BestSolutionSelection`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/operator/impl/selection/BestSolutionSelection.java)
