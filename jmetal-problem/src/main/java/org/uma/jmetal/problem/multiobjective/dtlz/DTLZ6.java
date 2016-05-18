@@ -1,4 +1,4 @@
-//  DTLZ1.java
+//  DTLZ6.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -15,7 +15,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -41,7 +41,7 @@ public class DTLZ6 extends AbstractDoubleProblem {
   }
 
   /**
-   * Creates a DTLZ4 problem instance
+   * Creates a DTLZ6 problem instance
    *
    * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
@@ -108,4 +108,3 @@ public class DTLZ6 extends AbstractDoubleProblem {
     }
   }
 }
-
