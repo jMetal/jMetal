@@ -560,6 +560,10 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   }
 //---- ANTONIO -----//
 
+  // NEW 20/05/2016
+  String GravitationalAxis_;
+//-----------------------
+
   //
   double g_ = 9.81; // acceleration of gravity
   //variables load beams
@@ -711,7 +715,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   int  selectedOF = 12;
   String []OF_;
 
-
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
 
   public Ebes() throws FileNotFoundException {
@@ -733,7 +736,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
   }
 
   public void EBEsInitialize(String file) throws FileNotFoundException {
-
     // CALCULAR dd Y CA (CANTIDADES DE NUDOS COARTADOS) AL CARGAR EL ARCHIVO
     // CON ESTO EVITO RECALCULARLOS CADA VEZ QUE SE BUSCA UNA SOLUCIÃƒÂ³N
     // CONTAR EN PENALIZACIÃƒÂ³N DE LA MATRIZ CA Y NO CN, CON ESTO
@@ -741,8 +743,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
     setName("Ebes");
     numberOfEval_ = 1;
-
-    //String file = EBEsReadProblems() + ".ebe";
 
     try {
       // read file topology structural
@@ -797,6 +797,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     System.out.println("  Number of constraints for Stress: " + (numberOfGroupElements_ * 3));
     System.out.println("  Number of constraints for Deflection: " + numberOfConstraintsNodes_);
     System.out.println("  Number of Constraints: " + numberOfConstraints_);
+    System.out.println("  Number of groups to check geometry: " + numberOfGroupsToCheckGeometry_);
 
     // objectives
     // Weight, Deflections, stress squared absolute error;
@@ -934,6 +935,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       }
     }
     matrixWidthBand_ = (elementsBetweenDiffGreat_ +1) * numberOfLibertyDegree_;
+
   } // end InitializeEBEs
 
   @Override
@@ -1387,19 +1389,35 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // load by weight of the element
     for (int el=0; el<numberOfElements_;el++){
       int idx =(int)Element_[el][INDEX_];
-      WeightElement_[el][QH_] = 0;
-      WeightElement_[el][QE_] = el;
-      WeightElement_[el][QT_] = CARGA_UNIFORME_TOTAL;
-      WeightElement_[el][QAx_] = 0.0;
-      WeightElement_[el][QAy_] = -Groups_[idx][AREA]*Groups_[idx][SPECIFIC_WEIGHT];
-      WeightElement_[el][QAz_] = 0.0;
-      WeightElement_[el][Qa_] = 0.0;
-      WeightElement_[el][Qb_] = 0.0;
+      if(GravitationalAxis_=="Z")
+      {
+        // gravitational in Z-AXIS
+        WeightElement_[el][QH_] = 0;
+        WeightElement_[el][QE_] = el;
+        WeightElement_[el][QT_] = CARGA_UNIFORME_TOTAL;
+        WeightElement_[el][QAx_] = 0.0;
+        WeightElement_[el][QAy_] = 0.0;
+        WeightElement_[el][QAz_] = -Groups_[idx][AREA] * Groups_[idx][SPECIFIC_WEIGHT];
+        WeightElement_[el][Qa_] = 0.0;
+        WeightElement_[el][Qb_] = 0.0;
+      }
+      else {
+        // gravitational in Y-AXIS
+        WeightElement_[el][QH_] = 0;
+        WeightElement_[el][QE_] = el;
+        WeightElement_[el][QT_] = CARGA_UNIFORME_TOTAL;
+        WeightElement_[el][QAx_] = 0.0;
+        WeightElement_[el][QAy_] = -Groups_[idx][AREA] * Groups_[idx][SPECIFIC_WEIGHT];
+        WeightElement_[el][QAz_] = 0.0;
+        WeightElement_[el][Qa_] = 0.0;
+        WeightElement_[el][Qb_] = 0.0;
+      }
 
       Qi = new double[numberOfLibertyDegree_];
       Qj = new double[numberOfLibertyDegree_];
       pi = new double[numberOfLibertyDegree_];
       pj = new double[numberOfLibertyDegree_];
+
       EBEsWeightDistributedUniformly(el, WeightElement_[el]);
 
       int hi = 0;
