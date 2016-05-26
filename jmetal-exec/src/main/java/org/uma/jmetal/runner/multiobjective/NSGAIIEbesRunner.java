@@ -34,7 +34,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm to solve the Ebes problem
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
