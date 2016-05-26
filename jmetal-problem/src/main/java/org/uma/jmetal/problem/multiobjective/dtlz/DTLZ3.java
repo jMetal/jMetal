@@ -36,7 +36,7 @@ public class DTLZ3 extends AbstractDoubleProblem {
   /**
    * Creates a default DTLZ3 problem (12 variables and 3 objectives)
    */
-  public DTLZ3() throws ClassNotFoundException, JMetalException {
+  public DTLZ3() {
     this(12, 3);
   }
 

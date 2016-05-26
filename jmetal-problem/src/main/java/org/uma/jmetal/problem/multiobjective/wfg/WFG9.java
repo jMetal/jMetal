@@ -22,7 +22,7 @@ public class WFG9 extends WFG {
    * 4 distance-related parameters,
    * and 2 objectives
    */
-  public WFG9() throws ClassNotFoundException, JMetalException {
+  public WFG9() {
     this(2, 4, 2);
   }
 
@@ -33,8 +33,7 @@ public class WFG9 extends WFG {
    * @param l            Number of distance variables
    * @param m            Number of objective functions
    */
-  public WFG9(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG9(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG9");
 

@@ -1,4 +1,4 @@
-//  CEC2009_UF6.java
+//  CEC2009_UF10.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.multiobjective.cec2009Competition;
+package org.uma.jmetal.problem.multiobjective.UF;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -28,42 +28,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing problem CEC2009_UF5
+ * Class representing problem CEC2009_UF10
  */
 @SuppressWarnings("serial")
-public class UF6 extends AbstractDoubleProblem {
-  int    n       ;
-  double epsilon ;
-
+public class UF10 extends AbstractDoubleProblem {
+  
  /** 
   * Constructor.
-  * Creates a default instance of problem CEC2009_UF6 (30 decision variables, N =10, epsilon = 0.1)
+  * Creates a default instance of problem CEC2009_UF10 (30 decision variables)
   */
-  public UF6() throws ClassNotFoundException {
-    this(30, 2, 0.1);
+  public UF10() {
+    this(30);
   }
   
  /**
-  * Creates a new instance of problem CEC2009_UF6.
+  * Creates a new instance of problem CEC2009_UF10.
   * @param numberOfVariables Number of variables.
   */
-  public UF6(Integer numberOfVariables, int N, double epsilon) {
+  public UF10(int numberOfVariables) {
     setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;
-    setName("UF6") ;
+    setName("UF10") ;
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-    
-    n = N  ;
-    this.epsilon = epsilon ;
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(-1.0);
-      upperLimit.add(1.0);
+    lowerLimit.add(0.0);
+    upperLimit.add(1.0);
+    for (int i = 2; i < getNumberOfVariables(); i++) {
+      lowerLimit.add(-2.0);
+      upperLimit.add(2.0);
     }
 
     setLowerLimit(lowerLimit);
@@ -78,31 +75,29 @@ public class UF6 extends AbstractDoubleProblem {
       x[i] = solution.getVariableValue(i) ;
     }
 
-  	int count1, count2 ;
-    double prod1, prod2 ;
-    double sum1, sum2, yj, hj, pj ;
-		sum1   = sum2   = 0.0;
-		count1 = count2 = 0;
- 		prod1  = prod2  = 1.0;
+  	int count1, count2, count3;
+		double sum1, sum2, sum3, yj, hj;
+		sum1   = sum2 = sum3 = 0.0;
+		count1 = count2 = count3 = 0;
     
-    for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
-			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
-			if (j % 2 == 0) {
-				sum2  += yj*yj;
-				prod2 *= pj;
+    for (int j = 3 ; j <= getNumberOfVariables(); j++) {
+			yj = x[j-1] - 2.0*x[1]*Math.sin(2.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
+			hj = 4.0*yj*yj - Math.cos(8.0*Math.PI*yj) + 1.0;
+			if(j % 3 == 1) {
+				sum1  += hj;
+				count1++;
+			} else if(j % 3 == 2) {
+				sum2  += hj;
 				count2++;
 			} else {
-				sum1  += yj*yj;
-				prod1 *= pj;
-				count1++;
+				sum3  += hj;
+				count3++;
 			}
     }
-		hj = 2.0*(0.5/n + epsilon)*Math.sin(2.0*n*Math.PI*x[0]);
-		if (hj < 0.0) 
-      hj = 0.0;
     
-    solution.setObjective(0, x[0] + hj + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
-    solution.setObjective(1, 1.0 - x[0] + hj + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
+    solution.setObjective(0, Math.cos(0.5*Math.PI*x[0])*Math.cos(0.5*Math.PI*x[1]) + 2.0*sum1 / (double)count1);
+    solution.setObjective(1, Math.cos(0.5*Math.PI*x[0])*Math.sin(0.5*Math.PI*x[1]) + 2.0*sum2 / (double)count2);
+    solution.setObjective(2, Math.sin(0.5*Math.PI*x[0])                       + 2.0*sum3 / (double)count3) ;
   }
-}
+} 
+

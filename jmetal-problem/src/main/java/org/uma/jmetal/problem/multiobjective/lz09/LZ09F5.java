@@ -39,7 +39,7 @@ public class LZ09F5 extends AbstractDoubleProblem {
   /**
    * Creates a default LZ09F5 problem (30 variables and 2 objectives)
    */
-  public LZ09F5() throws ClassNotFoundException, JMetalException {
+  public LZ09F5() {
     this(21, 1, 26);
   }
 

@@ -1,4 +1,4 @@
-//  CEC2009_UF7.java
+//  CEC2009_UF5.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.problem.multiobjective.cec2009Competition;
+package org.uma.jmetal.problem.multiobjective.UF;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -28,31 +28,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing problem CEC2009_UF7
+ * Class representing problem CEC2009_UF5
  */
 @SuppressWarnings("serial")
-public class UF7 extends AbstractDoubleProblem {
-    
+public class UF5 extends AbstractDoubleProblem {
+  int    n       ;
+  double epsilon ;
  /** 
   * Constructor.
-  * Creates a default instance of problem CEC2009_UF7 (30 decision variables)
+  * Creates a default instance of problem CEC2009_UF5 (30 decision variables)
   */
-  public UF7() {
-    this(30);
+  public UF5() {
+    this(30, 10, 0.1);
   }
   
  /**
-  * Creates a new instance of problem CEC2009_UF7.
+  * Creates a new instance of problem CEC2009_UF5.
   * @param numberOfVariables Number of variables.
   */
-  public UF7(int numberOfVariables) {
+  public UF5(int numberOfVariables, int N, double epsilon) {
     setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;
-    setName("UF7") ;
+    setName("UF5") ;
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    
+    this.n       = N ;
+    this.epsilon = epsilon ;
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
@@ -73,25 +77,25 @@ public class UF7 extends AbstractDoubleProblem {
       x[i] = solution.getVariableValue(i) ;
     }
 
-
   	int count1, count2;
-		double sum1, sum2, yj;
+		double sum1, sum2, yj, hj ;
 		sum1   = sum2   = 0.0;
 		count1 = count2 = 0;
     
     for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1] - Math.sin(6.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
+			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
+			hj = 2.0*yj*yj - Math.cos(4.0*Math.PI*yj) + 1.0;
 			if (j % 2 == 0) {
-				sum2  += yj*yj;
+				sum2  += hj;
 				count2++;
 			} else {
-				sum1  += yj*yj;
+				sum1  += hj;
 				count1++;
 			}
     }
-    yj = Math.pow(x[0],0.2);
-    
-    solution.setObjective(0, yj + 2.0*sum1 / (double)count1);
-    solution.setObjective(1, 1.0 - yj + 2.0*sum2 / (double)count2);
+    hj = (0.5/n + epsilon)*Math.abs(Math.sin(2.0*n*Math.PI*x[0]));
+
+    solution.setObjective(0, x[0] + hj + 2.0*sum1 / (double)count1);
+    solution.setObjective(1, 1.0 - x[0] + hj + 2.0*sum2 / (double)count2);
   }
 }

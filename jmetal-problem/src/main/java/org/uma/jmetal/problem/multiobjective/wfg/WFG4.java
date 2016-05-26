@@ -33,7 +33,6 @@ import org.uma.jmetal.util.JMetalException;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG4 extends WFG {
-  private static final long serialVersionUID = -5316522577489186702L;
 
   /**
    * Creates a default WFG4 with
@@ -41,7 +40,7 @@ public class WFG4 extends WFG {
    * 4 distance-related parameter and
    * 2 objectives
    */
-  public WFG4() throws ClassNotFoundException, JMetalException {
+  public WFG4() {
     this(2, 4, 2);
   }
 
@@ -52,8 +51,7 @@ public class WFG4 extends WFG {
    * @param l            Number of distance parameters
    * @param m            Number of objective functions
    */
-  public WFG4(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG4(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG4");
 

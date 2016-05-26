@@ -59,8 +59,8 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
 
   @SuppressWarnings("unchecked")
   public Integer call() throws Exception {
-    String funFile = outputDirectoryName + "/FUN" + id + ".tsv" ;
-    String varFile = outputDirectoryName + "/VAR" + id + ".tsv" ;
+    String funFile = outputDirectoryName + "/FUN" + id + ".txt" ;
+    String varFile = outputDirectoryName + "/VAR" + id + ".txt" ;
     JMetalLogger.logger.info(
         " Running algorithm: " + algorithm.getTag() +
             ", problem: " + algorithm.getProblem().getName() +
