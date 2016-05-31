@@ -129,11 +129,11 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
     List<S> population = new ArrayList<>(populationSize);
     int rankingIndex = 0;
     while (populationIsNotFull(population)) {
+      crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+      } else {        
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }

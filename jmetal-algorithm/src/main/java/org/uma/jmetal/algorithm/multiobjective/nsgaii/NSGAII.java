@@ -89,11 +89,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     List<S> population = new ArrayList<>(getMaxPopulationSize());
     int rankingIndex = 0;
     while (populationIsNotFull(population)) {
+      crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+      } else {        
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }
