@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -284,6 +285,61 @@ public class SolutionListUtils {
       }
     }
     return true;
+  }
 
+  /**
+   * This methods takes a list of solutions, removes a percentage of its solutions, and it is filled
+   * with new random generated solutions
+   * @param solutionList
+   * @param problem
+   * @param percentageOfSolutionsToRemove
+   */
+  public static <S extends Solution<?>> void restart(List<S> solutionList, Problem<S> problem,
+                                                     int percentageOfSolutionsToRemove) {
+    if (solutionList == null) {
+      throw new JMetalException("The solution list is null") ;
+    } else if (problem == null) {
+      throw new JMetalException("The problem is null") ;
+    } else if ((percentageOfSolutionsToRemove < 0) || (percentageOfSolutionsToRemove > 100)) {
+      throw new JMetalException("The percentage of solutions to remove is invalid: " + percentageOfSolutionsToRemove) ;
+    }
+
+    int solutionListOriginalSize = solutionList.size() ;
+    int numberOfSolutionsToRemove = (int)(solutionListOriginalSize * percentageOfSolutionsToRemove / 100.0) ;
+
+    removeSolutionsFromList(solutionList, numberOfSolutionsToRemove);
+    fillPopulationWithNewSolutions(solutionList, problem, solutionListOriginalSize);
+  }
+
+  /**
+   * Removes a number of solutions from a list
+   * @param solutionList The list of solutions
+   * @param numberOfSolutionsToRemove
+   */
+  public static <S extends Solution<?>> void removeSolutionsFromList(List<S> solutionList, int numberOfSolutionsToRemove) {
+    if (solutionList.size() < numberOfSolutionsToRemove) {
+      throw new JMetalException("The list size (" + solutionList.size()+") is lower than " +
+          "the number of solutions to remove ("+numberOfSolutionsToRemove+")") ;
+    }
+
+    for (int i = 0 ; i < numberOfSolutionsToRemove; i++) {
+      solutionList.remove(0) ;
+    }
+  }
+
+  /**
+   * Fills a population with new solutions until its size is maxListSize
+   * @param solutionList The list of solutions
+   * @param problem The problem being solved
+   * @param maxListSize The target size of the list
+   * @param <S> The type of the solutions to be created
+   */
+  public static <S extends Solution<?>> void fillPopulationWithNewSolutions(
+      List<S> solutionList,
+      Problem<S> problem,
+      int maxListSize) {
+    while (solutionList.size() < maxListSize) {
+      solutionList.add(problem.createSolution());
+    }
   }
 }
