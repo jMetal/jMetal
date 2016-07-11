@@ -42,8 +42,7 @@ public class SMSEMOAIT {
         .setPopulationSize(100)
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
@@ -75,8 +74,7 @@ public class SMSEMOAIT {
         .setPopulationSize(100)
         .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 

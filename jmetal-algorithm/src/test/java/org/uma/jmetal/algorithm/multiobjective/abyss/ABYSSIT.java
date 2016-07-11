@@ -55,8 +55,7 @@ public class ABYSSIT {
     algorithm = new ABYSSBuilder(problem, archive)
         .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -72,8 +71,7 @@ public class ABYSSIT {
     algorithm = new ABYSSBuilder(problem, archive)
         .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 

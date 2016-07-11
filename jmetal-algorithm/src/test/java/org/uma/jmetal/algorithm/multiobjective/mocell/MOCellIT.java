@@ -42,8 +42,7 @@ public class MOCellIT {
     algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -59,8 +58,7 @@ public class MOCellIT {
     algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 

@@ -25,7 +25,6 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -55,7 +54,6 @@ public class EpsilonTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The pareto front approximation list is null"));
 
-    List<DoubleSolution> list = new ArrayList<>();
     Front referenceFront = new ArrayFront() ;
 
     Epsilon<List<DoubleSolution>> epsilon = new Epsilon<>(referenceFront) ;
