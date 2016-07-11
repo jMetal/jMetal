@@ -113,7 +113,7 @@ public class CommandLineIndicatorRunner {
           args[0], indicatorList);
       System.out.println(indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
     } else {
-      for (QualityIndicator indicator : indicatorList) {
+      for (QualityIndicator<List<DoubleSolution>, Double> indicator : indicatorList) {
         System.out.println(indicator.getName() + ": " +
             indicator.evaluate(FrontUtils.convertFrontToSolutionList(front)));
       }

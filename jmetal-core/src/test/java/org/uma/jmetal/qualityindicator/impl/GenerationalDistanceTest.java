@@ -13,9 +13,12 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
+import java.util.List;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -43,7 +46,7 @@ public class GenerationalDistanceTest {
 
     Front front = new ArrayFront(0, 0) ;
 
-    GenerationalDistance gd = new GenerationalDistance(front) ;
+    GenerationalDistance<?> gd = new GenerationalDistance<>(front) ;
     gd.evaluate(null) ;
   }
 
@@ -54,7 +57,7 @@ public class GenerationalDistanceTest {
 
     Front front = null ;
 
-    new GenerationalDistance(front) ;
+    new GenerationalDistance<>(front) ;
   }
 
   @Test
@@ -74,7 +77,7 @@ public class GenerationalDistanceTest {
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
 
-    GenerationalDistance gd = new GenerationalDistance(paretoFront) ;
+    GenerationalDistance<List<DoubleSolution>> gd = new GenerationalDistance<>(paretoFront) ;
 
     assertEquals(0.0, gd.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }

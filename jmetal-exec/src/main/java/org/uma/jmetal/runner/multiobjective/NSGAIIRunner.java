@@ -114,7 +114,7 @@ public class NSGAIIRunner {
       Front referenceFront = new ArrayFront(referenceParetoFront);
 
       Hypervolume<List<DoubleSolution>> hypervolume =
-          new Hypervolume(referenceFront);
+          new Hypervolume<>(referenceFront);
       Epsilon<List<DoubleSolution>> epsilon =
           new Epsilon<List<DoubleSolution>>(referenceFront);
       GenerationalDistance<List<DoubleSolution>> gd =

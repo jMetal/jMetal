@@ -51,7 +51,7 @@ public class ErrorRatioTest {
     exception.expectMessage(containsString("The Pareto front approximation is null"));
 
     Front referenceFront = null ;
-    new ErrorRatio(referenceFront) ;
+    new ErrorRatio<>(referenceFront) ;
   }
 
   @Test
@@ -59,7 +59,7 @@ public class ErrorRatioTest {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list is null"));
 
-    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront(0, 0)) ;
+    QualityIndicator<?,?> errorRatio = new ErrorRatio<>(new ArrayFront(0, 0)) ;
 
     errorRatio.evaluate(null) ;
   }
@@ -79,9 +79,9 @@ public class ErrorRatioTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point1);
 
-    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>,Double> errorRatio = new ErrorRatio<List<DoubleSolution>>(referenceFront) ;
 
-    assertEquals(0.0, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
+    assertEquals(0.0, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   @Test
@@ -104,9 +104,9 @@ public class ErrorRatioTest {
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point2);
 
-    QualityIndicator errorRatio = new ErrorRatio(referenceFront) ;
+    QualityIndicator<List<DoubleSolution>,Double> errorRatio = new ErrorRatio<List<DoubleSolution>>(referenceFront) ;
 
-    assertEquals(1.0, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
+    assertEquals(1.0, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   /**
@@ -148,9 +148,9 @@ public class ErrorRatioTest {
     paretoFront.setPoint(1, point5);
     paretoFront.setPoint(2, point6);
 
-    QualityIndicator errorRatio = new ErrorRatio(paretoFront) ;
+    QualityIndicator<List<DoubleSolution>,Double> errorRatio = new ErrorRatio<List<DoubleSolution>>(paretoFront) ;
 
-    assertEquals(1.0/numberOfPoints, (Double)errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
+    assertEquals(1.0/numberOfPoints, errorRatio.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 
   /**
@@ -177,14 +177,14 @@ public class ErrorRatioTest {
     paretoFront.get(1).setObjective(0, 0.0);
     paretoFront.get(1).setObjective(1, 0.0);
 
-    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront(paretoFront)) ;
+    QualityIndicator<List<DoubleSolution>,Double> errorRatio = new ErrorRatio<List<DoubleSolution>>(new ArrayFront(paretoFront)) ;
 
     assertEquals(1.0, (Double)errorRatio.evaluate(frontApproximation), EPSILON);
   }
 
   @Test
   public void shouldGetNameReturnTheCorrectValue() throws FileNotFoundException {
-    QualityIndicator errorRatio = new ErrorRatio(new ArrayFront()) ;
+    QualityIndicator<?,?> errorRatio = new ErrorRatio<>(new ArrayFront()) ;
     assertEquals("ER", errorRatio.getName());
   }
 

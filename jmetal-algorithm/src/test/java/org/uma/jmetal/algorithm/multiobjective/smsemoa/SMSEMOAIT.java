@@ -80,12 +80,12 @@ public class SMSEMOAIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator hypervolume = new Hypervolume("/referenceFronts/ZDT1.pf") ;
+    QualityIndicator<List<DoubleSolution>,Double> hypervolume = new Hypervolume<>("/referenceFronts/ZDT1.pf") ;
 
     // Rationale: the default problem is ZDT1, and SMSEMOA, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65
 
-    double hv = (Double)hypervolume.evaluate(population) ;
+    double hv = hypervolume.evaluate(population) ;
 
     assertTrue(hv > 0.65) ;
   }
