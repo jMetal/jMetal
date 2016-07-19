@@ -171,7 +171,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     archive.add(offspringPopulation.get(0));
   }
 
-
   private void insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
     location.setAttribute(offspringPopulation.get(0), -1);
