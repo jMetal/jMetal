@@ -38,7 +38,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   private final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
   private final EnvironmentalSelection<S> environmentalSelection;
 
-  public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
+  public SPEA2(Problem<S> problem, int maxIterations, int populationSize, int archiveSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem);
@@ -50,11 +50,11 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     this.selectionOperator = selectionOperator;
     this.environmentalSelection = new EnvironmentalSelection<S>(populationSize);
 
-    this.archive = new ArrayList<>(populationSize);
+    this.archive = new ArrayList<>(archiveSize);
 
     this.evaluator = evaluator;
   }
-
+    
   @Override
   protected void initProgress() {
     iterations = 1;

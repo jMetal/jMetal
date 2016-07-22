@@ -28,14 +28,16 @@ import java.util.List;
 
 /**
  * @author Juan J. Durillo
+ * @param <S>
  */
 public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPEA2<S>> {
   /**
    * SPEA2Builder class
    */
   protected final Problem<S> problem;
-  protected int maxIterations;
+  protected int maxEvaluations;
   protected int populationSize;
+  protected int archiveSize;
   protected CrossoverOperator<S> crossoverOperator;
   protected MutationOperator<S> mutationOperator;
   protected SelectionOperator<List<S>, S> selectionOperator;
@@ -43,23 +45,26 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
 
   /**
    * SPEA2Builder constructor
+     * @param problem
+     * @param crossoverOperator
+     * @param mutationOperator
    */
   public SPEA2Builder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
-    maxIterations = 250;
+    maxEvaluations = 250;
     populationSize = 100;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection<S>();
-    evaluator = new SequentialSolutionListEvaluator<S>();
+    selectionOperator = new BinaryTournamentSelection<>();
+    evaluator = new SequentialSolutionListEvaluator<>();
   }
 
-  public SPEA2Builder<S> setMaxIterations(int maxIterations) {
+  public SPEA2Builder<S> setMaxEvaluations(int maxIterations) {
     if (maxIterations < 0) {
       throw new JMetalException("maxIterations is negative: " + maxIterations);
     }
-    this.maxIterations = maxIterations;
+    this.maxEvaluations = maxIterations;
 
     return this;
   }
@@ -73,7 +78,17 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
 
     return this;
   }
+  
+  public SPEA2Builder<S> setArchiveSize(int archiveSize) {
+    if (archiveSize < 0) {
+      throw new JMetalException("Archive size is negative: " + archiveSize);
+    }
 
+    this.archiveSize = archiveSize;
+
+    return this;
+  }
+  
   public SPEA2Builder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
     if (selectionOperator == null) {
       throw new JMetalException("selectionOperator is null");
@@ -92,12 +107,10 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     return this;
   }
 
+  @Override
   public SPEA2<S> build() {
-    SPEA2<S> algorithm = null ;
-    algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator);
-    
-    return algorithm ;
+    return new SPEA2<>(problem, maxEvaluations, populationSize, archiveSize, crossoverOperator,
+          mutationOperator, selectionOperator, evaluator);        
   }
 
   /* Getters */
@@ -105,12 +118,16 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     return problem;
   }
 
-  public int getMaxIterations() {
-    return maxIterations;
+  public int getMaxEvaluations() {
+    return maxEvaluations;
   }
 
   public int getPopulationSize() {
     return populationSize;
+  }
+  
+  public int getArchiveSize() {
+    return archiveSize;
   }
 
   public CrossoverOperator<S> getCrossoverOperator() {
