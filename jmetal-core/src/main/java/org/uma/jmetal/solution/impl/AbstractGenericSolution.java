@@ -10,7 +10,6 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.Problem;
@@ -26,116 +25,124 @@ import java.util.*;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractGenericSolution<T, P extends Problem<?>> implements Solution<T> {
-  private double[] objectives;
-  private List<T> variables;
-  protected P problem ;
-  //protected double overallConstraintViolationDegree ;
-  //protected int numberOfViolatedConstraints ;
-  protected Map<Object, Object> attributes ;
-  protected final JMetalRandom randomGenerator ;
 
-  /**
-   * Constructor
-   */
-  protected AbstractGenericSolution(P problem) {
-    this.problem = problem ;
-    attributes = new HashMap<>() ;
-    randomGenerator = JMetalRandom.getInstance() ;
+    //protected double overallConstraintViolationDegree ;
+    //protected int numberOfViolatedConstraints ;
+    protected Map<Object, Object> attributes;
+    private double[] objectives;
+    protected P problem;
+    protected final JMetalRandom randomGenerator;
+    private List<T> variables;
 
-    objectives = new double[problem.getNumberOfObjectives()] ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      variables.add(i, null) ;
+    /**
+     * Constructor
+     */
+    protected AbstractGenericSolution(P problem) {
+        this.problem = problem;
+        attributes = new HashMap<>();
+        randomGenerator = JMetalRandom.getInstance();
+
+        objectives = new double[problem.getNumberOfObjectives()];
+        variables = new ArrayList<>(problem.getNumberOfVariables());
+        for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+            variables.add(i, null);
+        }
+
+        // overallConstraintViolationDegree = 0.0 ;
+        // numberOfViolatedConstraints = 0 ;
     }
 
-   // overallConstraintViolationDegree = 0.0 ;
-   // numberOfViolatedConstraints = 0 ;
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-  @Override
-  public void setAttribute(Object id, Object value) {
-    attributes.put(id, value) ;
-  }
+        AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
 
-  @Override
-  public Object getAttribute(Object id) {
-    return attributes.get(id) ;
-  }
+        if (!attributes.equals(that.attributes)) {
+            return false;
+        }
+        if (!Arrays.equals(objectives, that.objectives)) {
+            return false;
+        }
+        if (!variables.equals(that.variables)) {
+            return false;
+        }
 
-  @Override
-  public void setObjective(int index, double value) {
-    objectives[index] = value ;
-  }
-
-  @Override
-  public double getObjective(int index) {
-    return objectives[index];
-  }
-
-  @Override
-  public T getVariableValue(int index) {
-    return variables.get(index);
-  }
-
-  @Override
-  public void setVariableValue(int index, T value) {
-    variables.set(index, value);
-  }
-
-  @Override
-  public int getNumberOfVariables() {
-    return variables.size();
-  }
-
-  @Override
-  public int getNumberOfObjectives() {
-    return objectives.length;
-  }
-
-  protected void initializeObjectiveValues() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives[i] = 0.0 ;
+        return true;
     }
-  }
 
-  @Override
-  public String toString() {
-    String result = "Variables: " ;
-    for (T var : variables) {
-      result += "" + var + " " ;
+    @Override
+    public Object getAttribute(Object id) {
+        return attributes.get(id);
     }
-    result += "Objectives: " ;
-    for (Double obj : objectives) {
-      result += "" + obj + " " ;
+
+    @Override
+    public int getNumberOfObjectives() {
+        return objectives.length;
     }
-    result += "\t" ;
-    result += "AlgorithmAttributes: " + attributes + "\n" ;
 
-    return result ;
-  }
+    @Override
+    public int getNumberOfVariables() {
+        return variables.size();
+    }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
+    @Override
+    public double getObjective(int index) {
+        return objectives[index];
+    }
 
-    AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
+    @Override
+    public T getVariableValue(int index) {
+        return variables.get(index);
+    }
 
-    if (!attributes.equals(that.attributes))
-      return false;
-    if (!Arrays.equals(objectives, that.objectives))
-      return false;
-    if (!variables.equals(that.variables))
-      return false;
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(objectives);
+        result = 31 * result + variables.hashCode();
+        result = 31 * result + attributes.hashCode();
+        return result;
+    }
 
-    return true;
-  }
+    protected void initializeObjectiveValues() {
+        for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+            objectives[i] = 0.0;
+        }
+    }
 
-  @Override public int hashCode() {
-    int result = Arrays.hashCode(objectives);
-    result = 31 * result + variables.hashCode();
-    result = 31 * result + attributes.hashCode();
-    return result;
-  }
+    @Override
+    public void setAttribute(Object id, Object value) {
+        attributes.put(id, value);
+    }
+
+    @Override
+    public void setObjective(int index, double value) {
+        objectives[index] = value;
+    }
+
+    @Override
+    public void setVariableValue(int index, T value) {
+        variables.set(index, value);
+    }
+
+    @Override
+    public String toString() {
+        String result = "Variables: ";
+        for (T var : variables) {
+            result += "" + var + " ";
+        }
+        result += "Objectives: ";
+        for (Double obj : objectives) {
+            result += "" + obj + " ";
+        }
+        result += "\t";
+        result += "AlgorithmAttributes: " + attributes + "\n";
+
+        return result;
+    }
 }
