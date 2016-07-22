@@ -92,7 +92,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
 
     algorithm = new SPEA2Builder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(250)
+        .setMaxEvaluations(250)
         .setPopulationSize(100)
         .setSolutionListEvaluator(evaluator)
         .build() ;

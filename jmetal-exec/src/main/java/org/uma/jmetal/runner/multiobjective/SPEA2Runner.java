@@ -70,7 +70,7 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
 
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxIterations(250)
+        .setMaxEvaluations(250)
         .setPopulationSize(100)
         .build() ;
 

@@ -52,19 +52,20 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
   public SPEA2Builder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
-    maxEvaluations = 250;
+    maxEvaluations = 250;    
     populationSize = 100;
+    this.archiveSize = this.populationSize;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<>();
     evaluator = new SequentialSolutionListEvaluator<>();
   }
 
-  public SPEA2Builder<S> setMaxEvaluations(int maxIterations) {
-    if (maxIterations < 0) {
-      throw new JMetalException("maxIterations is negative: " + maxIterations);
+  public SPEA2Builder<S> setMaxEvaluations(int maxEvaluations) {
+    if (maxEvaluations < 0) {
+      throw new JMetalException("Max evaluations is negative: " + maxEvaluations);
     }
-    this.maxEvaluations = maxIterations;
+    this.maxEvaluations = maxEvaluations;
 
     return this;
   }

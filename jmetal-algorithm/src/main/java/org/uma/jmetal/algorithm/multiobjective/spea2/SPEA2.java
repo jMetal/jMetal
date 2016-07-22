@@ -28,31 +28,39 @@ import java.util.List;
 
 /**
  * @author Juan J. Durillo
+ * @param <S>
  **/
 @SuppressWarnings("serial")
 public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
-  protected final int maxIterations;
+  protected final int maxEvaluations;
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
-  private final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
+  private final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<>();
   private final EnvironmentalSelection<S> environmentalSelection;
 
-  public SPEA2(Problem<S> problem, int maxIterations, int populationSize, int archiveSize,
+  public SPEA2(Problem<S> problem, int maxEvaluations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem);
-    this.maxIterations = maxIterations;
+      super(problem);
+      
+      this.maxEvaluations = maxEvaluations;
     this.setMaxPopulationSize(populationSize);
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.environmentalSelection = new EnvironmentalSelection<S>(populationSize);
-
-    this.archive = new ArrayList<>(archiveSize);
-
+    this.environmentalSelection = new EnvironmentalSelection<>(populationSize);
+    this.archive = new ArrayList<>(populationSize);
     this.evaluator = evaluator;
+  }
+  
+  public SPEA2(Problem<S> problem, int maxEvaluations, int populationSize, int archiveSize,
+      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+      this(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+      
+    this.archive = new ArrayList<>(archiveSize);   
   }
     
   @Override
@@ -67,7 +75,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override
   protected boolean isStoppingConditionReached() {
-    return iterations >= maxIterations;
+    return iterations >= maxEvaluations;
   }
 
   @Override

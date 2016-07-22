@@ -134,7 +134,7 @@ public class BinaryProblemsStudy {
       for (Problem<BinarySolution> problem : problemList) {
         Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<BinarySolution>(problem, new SinglePointCrossover(1.0),
             new BitFlipMutation(1.0 / ((BinaryProblem) problem).getNumberOfBits(0)))
-            .setMaxIterations(250)
+            .setMaxEvaluations(250)
             .setPopulationSize(100)
             .build();
         algorithms.add(new TaggedAlgorithm<List<BinarySolution>>(algorithm, problem, run));
