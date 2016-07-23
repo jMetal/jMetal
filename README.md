@@ -9,7 +9,8 @@ the new incoming features in advance.
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ##Changelog of the next incoming release (jMetal 5.2)
-No changes yet
+### New algorithms
+* Coral Reefs Optimization (Single Objective): S. Salcedo-Sanz, J. Del Ser, S. Gil-López, I. Landa-Torres and J. A. Portilla-Figueras, "The coral reefs optimization algorithm: an efficient meta-heuristic for solving hard optimization problems," 15th Applied Stochastic Models and Data Analysis International Conference, Mataró, Spain, June, 2013. Contribution of Inacio Medeiros. 
 
 ##jMetal is available as a Maven Project in The Central Repository
 
