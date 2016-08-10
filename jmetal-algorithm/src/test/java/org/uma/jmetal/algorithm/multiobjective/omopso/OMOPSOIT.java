@@ -15,25 +15,16 @@ package org.uma.jmetal.algorithm.multiobjective.omopso;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.List;
 

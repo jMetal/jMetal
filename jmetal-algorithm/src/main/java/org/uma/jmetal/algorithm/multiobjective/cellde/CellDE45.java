@@ -29,7 +29,9 @@ import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

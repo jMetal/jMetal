@@ -1,8 +1,5 @@
 package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
-import java.util.Comparator;
-import java.util.List;
-
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -10,6 +7,9 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * 

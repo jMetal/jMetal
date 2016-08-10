@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
