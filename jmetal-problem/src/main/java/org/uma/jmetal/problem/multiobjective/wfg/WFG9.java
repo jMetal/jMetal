@@ -6,7 +6,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * Creates a default WFG9 problem with

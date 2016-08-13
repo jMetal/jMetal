@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * This class implements the WFG4 problem
