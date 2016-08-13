@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class GenericSolutionAttributeTest {
   @Test
   public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassName() {
-
+	  fail("Not implemented yet");
   }
   
 }
