@@ -219,7 +219,7 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       double radius = 0;
       radius = SolutionUtils.distanceBetweenSolutions(gravityCenter, particle);
 
-      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRanndomGenerator()).randSphere(problem.getNumberOfVariables());
+      double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         randomParticle.setVariableValue(var, gravityCenter.getVariableValue(var) + radius * random[var]);

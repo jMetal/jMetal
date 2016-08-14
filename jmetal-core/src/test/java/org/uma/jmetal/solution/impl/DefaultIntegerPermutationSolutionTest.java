@@ -26,10 +26,7 @@
 package org.uma.jmetal.solution.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.IntegerDoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.PermutationSolution;
 
 import java.util.*;

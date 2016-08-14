@@ -922,8 +922,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
       } // end if
     } // gr
 
-    setLowerLimit(new ArrayList(Arrays.<Double>asList(lowerLimit_)));
-    setUpperLimit(new ArrayList(Arrays.<Double>asList(upperLimit_)));
+    setLowerLimit(new ArrayList<Double>(Arrays.<Double>asList(lowerLimit_)));
+    setUpperLimit(new ArrayList<Double>(Arrays.<Double>asList(upperLimit_)));
 
     // greates difference between nodes
     elementsBetweenDiffGreat_ = 0;

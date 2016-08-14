@@ -46,7 +46,7 @@ public abstract class AbstractCoralReefsOptimization<S extends Solution<?>, R>
 	 * @author inacio-medeiros
 	 *
 	 */
-	public class Coordinate implements Comparable<Coordinate> {
+	public static class Coordinate implements Comparable<Coordinate> {
 		private int x, y;
 
 		/**
