@@ -28,8 +28,7 @@ public class JavaRandomGenerator implements PseudoRandomGenerator {
 
   /** Constructor */
   public JavaRandomGenerator() {
-    seed = System.currentTimeMillis() ;
-    rnd = new Random(seed) ;
+    this(System.currentTimeMillis());
   }
 
   /** Constructor */

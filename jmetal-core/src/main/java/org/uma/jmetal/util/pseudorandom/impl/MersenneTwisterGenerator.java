@@ -27,8 +27,7 @@ public class MersenneTwisterGenerator implements PseudoRandomGenerator {
 
   /** Constructor */
   public MersenneTwisterGenerator() {
-    seed = System.currentTimeMillis() ;
-    rnd = new MersenneTwister(seed) ;
+    this(System.currentTimeMillis());
   }
 
   /** Constructor */
