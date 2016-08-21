@@ -43,8 +43,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategyRunner {
     Algorithm<DoubleSolution> algorithm;
     DoubleProblem problem = new Sphere() ;
 
-    algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
-            .build() ;
+    algorithm = new CovarianceMatrixAdaptationEvolutionStrategy(problem) ;
 
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

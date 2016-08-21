@@ -35,6 +35,10 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class CovarianceMatrixAdaptationEvolutionStrategy
     extends AbstractEvolutionStrategy<DoubleSolution, DoubleSolution> {
+  public static final int DEFAULT_LAMBDA = 10 ;
+  public static final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
+  public static final double DEFAULT_SIGMA = 0.3;
+  
   private Comparator<DoubleSolution> comparator ;
   private int lambda ;
   private int evaluations ;
@@ -110,13 +114,28 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   private Random rand;
 
+  /**
+   * Constructor with builder
+   * 
+   * @deprecated Use a constructor without {@link Builder} instead.
+   */
+  @Deprecated
+  private CovarianceMatrixAdaptationEvolutionStrategy(Builder builder) {
+    this(builder.problem, builder.lambda, builder.maxEvaluations, builder.typicalX, builder.sigma);
+  }
+  
+  /** Constructor with default values */
+  public CovarianceMatrixAdaptationEvolutionStrategy(DoubleProblem problem) {
+    this(problem, DEFAULT_LAMBDA, DEFAULT_MAX_EVALUATIONS, null, DEFAULT_SIGMA);
+  }
+  
   /** Constructor */
-  private CovarianceMatrixAdaptationEvolutionStrategy (Builder builder) {
-    super(builder.problem) ;
-    this.lambda = builder.lambda ;
-    this.maxEvaluations = builder.maxEvaluations ;
-    this.typicalX = builder.typicalX;
-    this.sigma = builder.sigma;
+  public CovarianceMatrixAdaptationEvolutionStrategy(DoubleProblem problem, int lambda, int maxEvaluations, double[] typicalX, double sigma) {
+    super(problem) ;
+    this.lambda = lambda ;
+    this.maxEvaluations = maxEvaluations ;
+    this.typicalX = typicalX;
+    this.sigma = sigma;
 
     long seed = System.currentTimeMillis();
     rand = new Random(seed);
@@ -137,12 +156,10 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   /**
    * Buider class
+   * @deprecated Use {@link CovarianceMatrixAdaptationEvolutionStrategyBuilder} instead
    */
+  @Deprecated
   public static class Builder {
-    private static final int DEFAULT_LAMBDA = 10 ;
-    private static final int DEFAULT_MAX_EVALUATIONS = 1000000 ;
-    private static final double DEFAULT_SIGMA = 0.3;
-
     private DoubleProblem problem ;
     private int lambda ;
     private int maxEvaluations ;
@@ -181,6 +198,22 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     }
   }
 
+  public void setLambda(int lambda) {
+    this.lambda = lambda;
+  }
+
+  public void setMaxEvaluations(int maxEvaluations) {
+    this.maxEvaluations = maxEvaluations;
+  }
+    
+  public void setTypicalX (double [] typicalX) {
+    this.typicalX = typicalX;
+  }
+
+  public void setSigma (double sigma) {
+    this.sigma = sigma;
+  }
+  
   @Override protected void initProgress() {
     evaluations = 0;
   }
