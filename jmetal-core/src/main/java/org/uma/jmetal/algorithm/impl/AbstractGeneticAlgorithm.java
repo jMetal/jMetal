@@ -30,11 +30,20 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
+  private int maxPopulationSize ;
   protected SelectionOperator<List<S>, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
 
-  /* Getters */
+  /* Setters and getters */
+  public void setMaxPopulationSize(int maxPopulationSize) {
+    this.maxPopulationSize = maxPopulationSize ;
+  }
+  
+  public int getMaxPopulationSize() {
+    return maxPopulationSize ;
+  }
+  
   public SelectionOperator<List<S>, S> getSelectionOperator() {
     return selectionOperator;
   }
