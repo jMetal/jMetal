@@ -34,8 +34,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+  * @version 1.0
  */
 public class SolutionListUtilsTest {
   @Rule

@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by ajnebro on 2/4/16.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CrowdingDistanceTest {
   private static final double EPSILON = 0.000000001 ;

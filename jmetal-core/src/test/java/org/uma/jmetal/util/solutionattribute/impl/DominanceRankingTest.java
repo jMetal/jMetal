@@ -30,7 +30,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Antonio on 15/09/14.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DominanceRankingTest {
   private DoubleProblem problem ;
