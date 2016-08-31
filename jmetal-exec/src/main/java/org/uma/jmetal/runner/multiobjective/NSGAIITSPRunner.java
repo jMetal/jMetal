@@ -38,6 +38,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +59,8 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
+    JMetalRandom.getInstance().setSeed(100L);
+
     PermutationProblem<PermutationSolution<Integer>> problem;
     Algorithm<List<PermutationSolution<Integer>>> algorithm;
     CrossoverOperator<PermutationSolution<Integer>> crossover;
@@ -92,6 +95,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
   }

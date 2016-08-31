@@ -1,16 +1,21 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Test;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by ajnebro on 15/4/16.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenericSolutionAttributeTest {
   @Test
   public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassName() {
-	  fail("Not implemented yet");
+
+    GenericSolutionAttribute<DoubleSolution, Integer> genericSolutionAttribute ;
+    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
+
+    assertEquals(genericSolutionAttribute.getClass(), genericSolutionAttribute.getAttributeID());
   }
   
 }
