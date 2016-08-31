@@ -24,13 +24,13 @@ import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenericSolutionAttribute <S extends Solution<?>, V> implements SolutionAttribute<S, V>{
-  private Object id ;
+  private Object identifier;
 
   /**
    * Constructor
    */
   public GenericSolutionAttribute() {
-    id = this.getClass() ;
+    identifier = this.getClass() ;
   }
 
   /**
@@ -38,22 +38,22 @@ public class GenericSolutionAttribute <S extends Solution<?>, V> implements Solu
    * @param id Attribute identifier
    */
   public GenericSolutionAttribute(Object id) {
-    this.id = id ;
+    this.identifier = id ;
   }
 
   @SuppressWarnings("unchecked")
   @Override
   public V getAttribute(S solution) {
-    return (V)solution.getAttribute(getAttributeID());
+    return (V)solution.getAttribute(getAttributeIdentifier());
   }
 
   @Override
   public void setAttribute(S solution, V value) {
-     solution.setAttribute(getAttributeID(), value);
+     solution.setAttribute(getAttributeIdentifier(), value);
   }
 
   @Override
-  public Object getAttributeID() {
-    return id ;
+  public Object getAttributeIdentifier() {
+    return identifier;
   }
 }

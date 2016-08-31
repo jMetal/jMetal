@@ -104,7 +104,7 @@ public class DominanceRanking <S extends Solution<?>>
     for (int i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
         front.get(0).add(i);
-        solutionSet.get(i).setAttribute(getAttributeID(), 0);
+        solutionSet.get(i).setAttribute(getAttributeIdentifier(), 0);
       }
     }
 
@@ -122,7 +122,7 @@ public class DominanceRanking <S extends Solution<?>>
           if (dominateMe[index] == 0) {
             front.get(i).add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
-            solutionSet.get(index).setAttribute(getAttributeID(), i);
+            solutionSet.get(index).setAttribute(getAttributeIdentifier(), i);
           }
         }
       }

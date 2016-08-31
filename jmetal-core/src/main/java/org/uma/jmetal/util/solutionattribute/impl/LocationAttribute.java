@@ -24,6 +24,6 @@ public class LocationAttribute <S extends Solution<?>>
 	public LocationAttribute(List<S> source) {
 		int location = 0;
 		for (S s : source)
-			s.setAttribute(getAttributeID(), location++);
+			s.setAttribute(getAttributeIdentifier(), location++);
 	}
 }
