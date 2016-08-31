@@ -117,9 +117,9 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
     /* Using the measures */
     int i = 0 ;
     while(currentIteration.get() < maxIterations) {
-      TimeUnit.SECONDS.sleep(5);
-      System.out.println("Iteration (" + i + ")                     : " + currentIteration.get()) ;
-      System.out.println("Computing time (" + i + ")                  : " + currentComputingTime.get()) ;
+      TimeUnit.SECONDS.sleep(1);
+      System.out.println("Iteration (" + i + ")            : " + currentIteration.get()) ;
+      System.out.println("Computing time (" + i + ")       : " + currentComputingTime.get()) ;
       i++ ;
     }
 
@@ -140,8 +140,8 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
     private int counter = 0 ;
 
     @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
-      if ((counter % 1 == 0)) {
-        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0)) ;
+      if ((counter % 100 == 0)) {
+        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).getVariableValue(0)) ;
       }
       counter ++ ;
     }
@@ -149,7 +149,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
   private static class Listener2 implements MeasureListener<Long> {
     @Override synchronized public void measureGenerated(Long value) {
-      if ((value % 50 == 0)) {
+      if ((value % 10 == 0)) {
         System.out.println("PUSH MEASURE. Iteration: " + value) ;
       }
     }

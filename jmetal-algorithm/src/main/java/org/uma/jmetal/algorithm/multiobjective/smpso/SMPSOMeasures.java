@@ -76,6 +76,10 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
     durationMeasure.stop();
   }
 
+  @Override protected boolean isStoppingConditionReached() {
+    return iterations.get() >= getMaxIterations();
+  }
+
   @Override protected void initProgress() {
     iterations.reset(1);
     updateLeadersDensityEstimator();
@@ -84,9 +88,7 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
   @Override protected void updateProgress() {
     iterations.increment(1); ;
     updateLeadersDensityEstimator();
-    for (double i = 0; i < 1000000000; i++) {
-      double v = i*i / 3.0 ;
-    }
+
     solutionListMeasure.push(super.getResult()) ;
   }
 
@@ -110,7 +112,7 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
   }
 
   @Override public String getName() {
-    return "SMPSOM" ;
+    return "SMPSOMeasures" ;
   }
   @Override public String getDescription() {
     return "SMPSO. Version using measures" ;
