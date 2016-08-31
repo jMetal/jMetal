@@ -36,6 +36,7 @@ import java.util.*;
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected int maxEvaluations;
   protected int evaluations;
+  private int maxPopulationSize ;
 
   protected Comparator<DoubleSolution> dominanceComparator;
 
@@ -61,6 +62,13 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     crowdingDistance = new CrowdingDistance<DoubleSolution>();
 
     this.evaluator = evaluator ;
+  }
+  
+  public void setMaxPopulationSize(int maxPopulationSize) {
+    this.maxPopulationSize = maxPopulationSize ;
+  }
+  public int getMaxPopulationSize() {
+    return maxPopulationSize ;
   }
 
   @Override protected void initProgress() {

@@ -51,6 +51,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private BinaryProblem problem;
 
   private int maxEvaluations;
+  private int maxPopulationSize ;
   private int convergenceValue;
   private double preservedPopulation;
   private double initialConvergenceCount;
@@ -94,6 +95,13 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
     comparator = new CrowdingDistanceComparator<BinarySolution>();
+  }
+  
+  public void setMaxPopulationSize(int maxPopulationSize) {
+    this.maxPopulationSize = maxPopulationSize ;
+  }
+  public int getMaxPopulationSize() {
+    return maxPopulationSize ;
   }
 
   @Override protected void initProgress() {
