@@ -48,7 +48,7 @@ public class UF9 extends AbstractDoubleProblem {
   */
   public UF9(int numberOfVariables, double epsilon) {
     setNumberOfVariables(numberOfVariables) ;
-    setNumberOfObjectives(2) ;
+    setNumberOfObjectives(3) ;
     setNumberOfConstraints(0) ;
     setName("UF9") ;
 
