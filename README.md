@@ -12,6 +12,11 @@ If you are interested in contributing with your ideas and comments, please take 
 ### New algorithms
 * Coral Reefs Optimization (Single Objective): S. Salcedo-Sanz, J. Del Ser, S. Gil-López, I. Landa-Torres and J. A. Portilla-Figueras, "The coral reefs optimization algorithm: an efficient meta-heuristic for solving hard optimization problems". 15th Applied Stochastic Models and Data Analysis International Conference, Mataró, Spain, June, 2013. Contribution of Inacio Medeiros. 
 
+### Bug fixes
+* Class [`Rosenbrock`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/singleobjective/Rosenbrock.java) didn't set the lower and upper limits.
+* The default number of objectives in class [`UF9`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/UF/UF9.java) was not correct.
+
+
 ##jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
