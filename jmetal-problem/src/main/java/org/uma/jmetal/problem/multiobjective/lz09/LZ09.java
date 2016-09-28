@@ -70,6 +70,7 @@ public class LZ09 {
       }
     } else {
       if (type == 31) {
+        alpha[0] = Math.cos(x.get(0) * Math.PI / 2) * Math.cos(x.get(1) * Math.PI / 2);
         alpha[1] = Math.cos(x.get(0) * Math.PI / 2) * Math.sin(x.get(1) * Math.PI / 2);
         alpha[2] = Math.sin(x.get(0) * Math.PI / 2);
       }
