@@ -15,6 +15,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Bug fixes
 * Class [`Rosenbrock`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/singleobjective/Rosenbrock.java) didn't set the lower and upper limits.
 * The default number of objectives in class [`UF9`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/UF/UF9.java) was not correct.
+* A sentece was missing in class [`LZ09`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/lz09/LZ09.java).
 
 
 ##jMetal is available as a Maven Project in The Central Repository
