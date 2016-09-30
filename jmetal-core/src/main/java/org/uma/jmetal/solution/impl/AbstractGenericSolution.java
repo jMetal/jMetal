@@ -29,8 +29,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   private double[] objectives;
   private List<T> variables;
   protected P problem ;
-  //protected double overallConstraintViolationDegree ;
-  //protected int numberOfViolatedConstraints ;
   protected Map<Object, Object> attributes ;
   protected final JMetalRandom randomGenerator ;
 
@@ -47,9 +45,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       variables.add(i, null) ;
     }
-
-   // overallConstraintViolationDegree = 0.0 ;
-   // numberOfViolatedConstraints = 0 ;
   }
 
   @Override

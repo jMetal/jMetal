@@ -45,9 +45,6 @@ public class DefaultIntegerDoubleSolution
       setVariableValue(i, solution.getVariableValue(i)) ;
     }
 
-    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 

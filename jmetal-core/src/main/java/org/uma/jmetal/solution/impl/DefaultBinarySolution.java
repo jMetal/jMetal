@@ -49,9 +49,6 @@ public class DefaultBinarySolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
