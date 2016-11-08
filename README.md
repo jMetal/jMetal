@@ -34,3 +34,5 @@ Coverage data of the jmetal-core package reported by IntelliJ Idea:
 |--------|--------|--------|
 |51,8% (93/181) |	40.0% (375/393) | 37%% (1183/5084)
 
+
+
