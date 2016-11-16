@@ -176,6 +176,7 @@ public class NonDominatedSolutionListArchiveTest {
     archive.add(equalSolution) ;
 
     assertEquals(2, archive.size()) ;
-    assertSame(solution, archive.get(0)) ;
+    assertTrue(archive.getSolutionList().contains(solution) ||
+            archive.getSolutionList().contains(equalSolution)) ;
   }
 }

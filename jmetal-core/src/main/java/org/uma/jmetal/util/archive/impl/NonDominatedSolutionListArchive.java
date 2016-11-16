@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * This class implements an archive containing non-dominated solutions
@@ -35,27 +36,31 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   private Comparator<S> dominanceComparator;
   private Comparator<S> equalSolutions = new EqualSolutionsComparator<S>();
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public NonDominatedSolutionListArchive() {
-    this(new DominanceComparator<S>()) ;
+    this(new DominanceComparator<S>());
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public NonDominatedSolutionListArchive(DominanceComparator<S> comparator) {
-    dominanceComparator = comparator ;
-   
-    solutionList = new ArrayList<>() ;
+    dominanceComparator = comparator;
+
+    solutionList = new ArrayList<>();
   }
 
   /**
    * Inserts a solution in the list
    *
    * @param solution The solution to be inserted.
-   * @return true if the operation success, and false if the solution is
-   * dominated or if an identical individual exists.
-   * The decision variables can be null if the solution is read from a file; in
-   * that case, the domination tests are omitted
+   * @return true if the operation success, and false if the solution is dominated or if an
+   * identical individual exists. The decision variables can be null if the solution is read from a
+   * file; in that case, the domination tests are omitted
    */
+  /*
   public boolean add(S solution) {
     boolean solutionInserted = false ;
     if (solutionList.size() == 0) {
@@ -74,11 +79,10 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
         }  else if (flag == 1) {
           isDominated = true; // dominated by one in the list
         } else if (flag == 0) {
-        	int equalflag = equalSolutions.compare(solution, listIndividual);
-        	if (equalflag==0) // solutions are equals
-        		isContained = true;
+          int equalflag = equalSolutions.compare(solution, listIndividual);
+          if (equalflag == 0) // solutions are equals
+            isContained = true;
         }
-        	
       }
       
       if (!isDominated && !isContained) {
@@ -91,17 +95,40 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
     return solutionInserted ;
   }
+*/
+
+  @Override
+  public boolean add(S solution) {
+    boolean hasTheSolutionBeenInserted = false;
+    solutionList.removeIf(sol ->
+            ((dominanceComparator.compare(solution, sol) == -1) ||
+                    equalSolutions.compare(sol, solution) == 0)
+    );
+    S foundSolution = solutionList.stream()
+            .filter(sol -> dominanceComparator.compare(solution, sol) == 1)
+            .findFirst()
+            .orElse(null);
+
+    if (foundSolution == null) {
+      solutionList.add(solution);
+      hasTheSolutionBeenInserted = true;
+    }
+
+    return hasTheSolutionBeenInserted;
+  }
 
   @Override
   public List<S> getSolutionList() {
     return solutionList;
   }
 
-  @Override public int size() {
+  @Override
+  public int size() {
     return solutionList.size();
   }
 
-  @Override public S get(int index) {
+  @Override
+  public S get(int index) {
     return solutionList.get(index);
   }
 }
