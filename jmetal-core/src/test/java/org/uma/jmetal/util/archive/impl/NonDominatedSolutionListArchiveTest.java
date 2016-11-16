@@ -1,14 +1,9 @@
 package org.uma.jmetal.util.archive.impl;
 
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.Comparator;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
