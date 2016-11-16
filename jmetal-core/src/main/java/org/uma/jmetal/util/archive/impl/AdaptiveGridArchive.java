@@ -122,16 +122,13 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   
   public void prune() {
     Iterator<S> iterator = getSolutionList().iterator();
-    boolean removed = false;
     while (iterator.hasNext()) {
-      if (!removed) {
-        S element = iterator.next();
-        int location = grid.location(element);
-        if (location == grid.getMostPopulatedHypercube()) {
-          iterator.remove();
-          grid.removeSolution(location);
-          removed = true ;
-        }
+      S element = iterator.next();
+      int location = grid.location(element);
+      if (location == grid.getMostPopulatedHypercube()) {
+        iterator.remove();
+        grid.removeSolution(location);
+        return;
       }
     }
   }

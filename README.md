@@ -17,7 +17,6 @@ If you are interested in contributing with your ideas and comments, please take 
 * The default number of objectives in class [`UF9`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/UF/UF9.java) was not correct.
 * A sentece was missing in class [`LZ09`](https://github.com/jMetal/jMetal/blob/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/lz09/LZ09.java).
 
-
 ##jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
@@ -34,5 +33,6 @@ Coverage data of the jmetal-core package reported by IntelliJ Idea:
 |Class % |Method %| Line % |
 |--------|--------|--------|
 |51,8% (93/181) |	40.0% (375/393) | 37%% (1183/5084)
+
 
 

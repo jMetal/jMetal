@@ -26,11 +26,8 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.HashMap;
 import java.util.Map;
