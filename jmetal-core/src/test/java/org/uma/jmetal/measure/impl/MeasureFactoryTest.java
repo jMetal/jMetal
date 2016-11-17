@@ -211,8 +211,8 @@ public class MeasureFactoryTest {
 			throws InterruptedException {
 		// create a pull measure which changes only when we change the value of
 		// the array
-		final Integer[] value = { null };
-		PullMeasure<Integer> pull = () -> value[0];
+		final Integer[] pulledValue = { null };
+		PullMeasure<Integer> pull = () -> pulledValue[0];
 
 		// create the push measure
 		MeasureFactory factory = new MeasureFactory();
@@ -234,20 +234,20 @@ public class MeasureFactoryTest {
 		assertEquals(0, notified.size());
 
 		// check 1 change provides 1 notification with the correct value
-		value[0] = 56;
+		pulledValue[0] = 56;
 		Thread.sleep(10 * period);
 		assertEquals(1, notified.size());
 		assertEquals(56, (Object) notified.get(0));
 
 		// check 1 more change provides 1 more notification with the new value
-		value[0] = 43;
+		pulledValue[0] = 43;
 		Thread.sleep(10 * period);
 		assertEquals(2, notified.size());
 		assertEquals(56, (Object) notified.get(0));
 		assertEquals(43, (Object) notified.get(1));
 
 		// check 1 more change provides 1 more notification with the new value
-		value[0] = -43;
+		pulledValue[0] = -43;
 		Thread.sleep(10 * period);
 		assertEquals(3, notified.size());
 		assertEquals(56, (Object) notified.get(0));
