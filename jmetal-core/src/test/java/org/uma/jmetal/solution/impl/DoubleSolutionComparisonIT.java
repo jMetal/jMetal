@@ -28,13 +28,14 @@ public class DoubleSolutionComparisonIT {
     long startTime ;
 
     startTime = System.currentTimeMillis() ;
-    for (int i = 0 ; i < 150000; i++) {
+    int loops = 10000;
+	for (int i = 0 ; i < loops; i++) {
       problem1.createSolution() ;
     }
     long timeToCreateObjectsWithProblem1 = System.currentTimeMillis() - startTime ;
 
     startTime = System.currentTimeMillis() ;
-    for (int i = 0 ; i < 150000; i++) {
+    for (int i = 0 ; i < loops; i++) {
       problem2.createSolution() ;
     }
     long timeToCreateObjectsWithProblem2 = System.currentTimeMillis() - startTime ;
@@ -57,14 +58,15 @@ public class DoubleSolutionComparisonIT {
     DoubleSolution solution ;
     solution = problem1.createSolution() ;
     startTime = System.currentTimeMillis() ;
-    for (int i = 0 ; i < 1500000; i++) {
+    int loops = 10000;
+	for (int i = 0 ; i < loops; i++) {
       problem1.evaluate(solution);
     }
     long timeToCreateObjectsWithProblem1 = System.currentTimeMillis() - startTime ;
 
     solution = problem2.createSolution() ;
     startTime = System.currentTimeMillis() ;
-    for (int i = 0 ; i < 1500000; i++) {
+    for (int i = 0 ; i < loops; i++) {
       problem2.evaluate(solution) ;
     }
     long timeToCreateObjectsWithProblem2 = System.currentTimeMillis() - startTime ;
