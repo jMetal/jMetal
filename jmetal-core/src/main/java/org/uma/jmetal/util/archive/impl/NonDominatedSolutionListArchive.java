@@ -19,9 +19,11 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -100,20 +102,20 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   @Override
   public boolean add(S solution) {
     boolean hasTheSolutionBeenInserted = false;
-    solutionList.removeIf(sol ->
-            ((dominanceComparator.compare(solution, sol) == -1) ||
-                    equalSolutions.compare(sol, solution) == 0)
-    );
-    S foundSolution = solutionList.stream()
-            .filter(sol -> dominanceComparator.compare(solution, sol) == 1)
-            .findFirst()
-            .orElse(null);
 
-    if (foundSolution == null) {
-      solutionList.add(solution);
-      hasTheSolutionBeenInserted = true;
+    boolean solutionIsInTheArchive = solutionList.stream()
+            .anyMatch(sol -> equalSolutions.compare(sol, solution) == 0);
+
+    if (!solutionIsInTheArchive) {
+      solutionList.removeIf(sol -> dominanceComparator.compare(solution, sol) == -1);
+      boolean aSolutionHasBeenFound = solutionList.stream()
+              .anyMatch(sol -> dominanceComparator.compare(solution, sol) == 1) ;
+
+      if (!aSolutionHasBeenFound) {
+        solutionList.add(solution);
+        hasTheSolutionBeenInserted = true;
+      }
     }
-
     return hasTheSolutionBeenInserted;
   }
 
