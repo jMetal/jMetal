@@ -1,7 +1,7 @@
 # jMetal 5 Development Site
 
 ### Status
-[![Build Status](https://travis-ci.org/jMetal/jMetal.svg?branch=master)](https://travis-ci.org/jMetal/jMetal.svg?branch=master)
+[![Build Status](https://travis-ci.org/jMetal/jMetal.svg?branch=master)](https://travis-ci.org/jMetal/jMetal)
 
 **jMetal** is an object-oriented Java-based framework for multi-objective optimization with metaheuristics
 The Web page of the project is: [http://jmetal.github.io/jMetal/](http://jmetal.github.io/jMetal/). Former jMetal versions can be found in [SourceForge](http://jmetal.sourceforge.net). The current version is jMetal 5.1.
