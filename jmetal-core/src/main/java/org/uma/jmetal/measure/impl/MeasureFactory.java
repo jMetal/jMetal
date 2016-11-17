@@ -45,13 +45,7 @@ public class MeasureFactory {
 	public <Value> PullMeasure<Value> createPullFromPush(
 			final PushMeasure<Value> push, Value initialValue) {
 		final Object[] cache = { initialValue };
-		final MeasureListener<Value> listener = new MeasureListener<Value>() {
-
-			@Override
-			public void measureGenerated(Value value) {
-				cache[0] = value;
-			}
-		};
+		final MeasureListener<Value> listener = (Value value) -> cache[0] = value;
 		push.register(listener);
 		return new PullMeasure<Value>() {
 

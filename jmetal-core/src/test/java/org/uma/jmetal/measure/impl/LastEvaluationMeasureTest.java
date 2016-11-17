@@ -1,7 +1,6 @@
 package org.uma.jmetal.measure.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.impl.LastEvaluationMeasure.Evaluation;
 
 import static org.junit.Assert.assertEquals;
@@ -14,13 +13,7 @@ public class LastEvaluationMeasureTest {
 		LastEvaluationMeasure<String, Integer> measure = new LastEvaluationMeasure<>();
 		@SuppressWarnings("unchecked")
 		final Evaluation<String, Integer>[] lastEvaluation = new Evaluation[] { null };
-		measure.register(new MeasureListener<Evaluation<String, Integer>>() {
-
-			@Override
-			public void measureGenerated(Evaluation<String, Integer> evaluation) {
-				lastEvaluation[0] = evaluation;
-			}
-		});
+		measure.register((evaluation) -> lastEvaluation[0] = evaluation);
 
 		String solution = "individual";
 		int value = 3;

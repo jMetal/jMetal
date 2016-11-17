@@ -150,13 +150,7 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		if (linkedMeasures.containsKey(measure)) {
 			// already linked
 		} else {
-			MeasureListener<T> listener = new MeasureListener<T>() {
-
-				@Override
-				public void measureGenerated(T value) {
-					increment();
-				}
-			};
+			MeasureListener<T> listener = (value) -> increment();
 			measure.register(listener);
 			linkedMeasures.put(measure, listener);
 		}

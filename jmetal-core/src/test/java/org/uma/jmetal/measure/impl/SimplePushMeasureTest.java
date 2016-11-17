@@ -10,15 +10,8 @@ public class SimplePushMeasureTest {
 	@Test
 	public void testNotifiedWhenRegistered() {
 		final Integer[] lastReceived = { null };
-		MeasureListener<Integer> listener = new MeasureListener<Integer>() {
-
-			@Override
-			public void measureGenerated(Integer value) {
-				lastReceived[0] = value;
-			}
-		};
 		SimplePushMeasure<Integer> pusher = new SimplePushMeasure<Integer>();
-		pusher.register(listener);
+		pusher.register((value) -> lastReceived[0] = value);
 
 		pusher.push(3);
 		assertEquals(3, (Object) lastReceived[0]);
@@ -31,13 +24,7 @@ public class SimplePushMeasureTest {
 	@Test
 	public void testNotNotifiedWhenUnregistered() {
 		final Integer[] lastReceived = { null };
-		MeasureListener<Integer> listener = new MeasureListener<Integer>() {
-
-			@Override
-			public void measureGenerated(Integer value) {
-				lastReceived[0] = value;
-			}
-		};
+		MeasureListener<Integer> listener = (value) -> lastReceived[0] = value;
 		SimplePushMeasure<Integer> pusher = new SimplePushMeasure<Integer>();
 		pusher.register(listener);
 		pusher.unregister(listener);

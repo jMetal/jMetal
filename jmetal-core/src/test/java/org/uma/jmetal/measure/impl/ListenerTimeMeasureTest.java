@@ -351,10 +351,7 @@ public class ListenerTimeMeasureTest {
 		MeasureListener<Object> wrapper50ms = measure
 				.wrapListener(original50ms);
 
-		MeasureListener<Object> original50msWithReset = new MeasureListener<Object>() {
-
-			@Override
-			public void measureGenerated(Object value) {
+		MeasureListener<Object> original50msWithReset = (Object value) -> {
 				try {
 					Thread.sleep(25);
 					measure.reset();
@@ -362,7 +359,6 @@ public class ListenerTimeMeasureTest {
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
-			}
 		};
 		MeasureListener<Object> wrapper50msWithReset = measure
 				.wrapListener(original50msWithReset);

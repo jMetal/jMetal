@@ -2,7 +2,6 @@ package org.uma.jmetal.measure.impl;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.PullMeasure;
 import org.uma.jmetal.measure.PushMeasure;
 
@@ -77,14 +76,8 @@ public class MeasureFactoryTest {
 		// register for notifications from now
 		final long start = System.currentTimeMillis();
 		final LinkedList<Long> timestamps = new LinkedList<>();
-		push.register(new MeasureListener<Integer>() {
-
-			@Override
-			public void measureGenerated(Integer value) {
-				// store the time spent since the registration
-				timestamps.add(System.currentTimeMillis() - start);
-			}
-		});
+		// store the time spent since the registration
+		push.register((value) -> timestamps.add(System.currentTimeMillis() - start));
 
 		// decide the number of notifications to wait for
 		/*
@@ -157,13 +150,7 @@ public class MeasureFactoryTest {
 
 		// register for notifications only from now
 		final LinkedList<Integer> timestamps = new LinkedList<>();
-		push.register(new MeasureListener<Integer>() {
-
-			@Override
-			public void measureGenerated(Integer value) {
-				timestamps.add(value);
-			}
-		});
+		push.register((value) -> timestamps.add(value));
 
 		// check no notifications are coming anymore
 		Thread.sleep(10 * period);
@@ -221,13 +208,7 @@ public class MeasureFactoryTest {
 
 		// register for notifications from now
 		final LinkedList<Integer> notified = new LinkedList<>();
-		push.register(new MeasureListener<Integer>() {
-
-			@Override
-			public void measureGenerated(Integer value) {
-				notified.add(value);
-			}
-		});
+		push.register((value) -> notified.add(value));
 
 		// check no change provide no notifications
 		Thread.sleep(10 * period);

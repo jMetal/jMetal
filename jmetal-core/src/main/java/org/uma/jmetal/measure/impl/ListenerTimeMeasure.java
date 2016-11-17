@@ -67,14 +67,11 @@ public class ListenerTimeMeasure extends SimplePullMeasure<Long> implements
 					.get(wrapped);
 
 			if (wrapper == null) {
-				wrapper = new MeasureListener<Value>() {
-					@Override
-					public void measureGenerated(Value value) {
+				wrapper = (value) -> {
 						long start = System.currentTimeMillis();
 						wrapped.measureGenerated(value);
 						long stop = System.currentTimeMillis();
 						time += stop - Math.max(start, lastReset);
-					}
 				};
 				listenerCache.put(wrapped, wrapper);
 			} else {
