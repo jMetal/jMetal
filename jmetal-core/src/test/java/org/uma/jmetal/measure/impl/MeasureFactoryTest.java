@@ -46,7 +46,7 @@ public class MeasureFactoryTest {
 		 * ensure that it leads to a proper notification, so it is not ignored.
 		 */
 		final int maxExecutionTime = 5;
-		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+		PullMeasure<Integer> pull = new PullMeasure<Integer>() {
 			private final Random rand = new Random();
 			private int count = 0;
 
@@ -134,7 +134,7 @@ public class MeasureFactoryTest {
 			throws InterruptedException {
 		// create a pull measure which is always different, thus leading to
 		// generate a notification at every check
-		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+		PullMeasure<Integer> pull = new PullMeasure<Integer>() {
 
 			int count = 0;
 
@@ -177,7 +177,7 @@ public class MeasureFactoryTest {
 		// create a pull measure which is always different, thus leading to
 		// generate a notification at every check
 		final boolean[] isCalled = { false };
-		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+		PullMeasure<Integer> pull = new PullMeasure<Integer>() {
 
 			int count = 0;
 
@@ -213,7 +213,8 @@ public class MeasureFactoryTest {
 		// create a pull measure which changes only when we change the value of
 		// the array
 		final Integer[] value = { null };
-		PullMeasure<Integer> pull = new SimplePullMeasure<Integer>() {
+		PullMeasure<Integer> pull = new PullMeasure<Integer>() {
+
 			@Override
 			public Integer get() {
 				return value[0];

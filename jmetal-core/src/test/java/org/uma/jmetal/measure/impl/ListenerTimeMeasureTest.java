@@ -4,6 +4,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
+import org.uma.jmetal.measure.PullMeasure;
 import org.uma.jmetal.measure.PushMeasure;
 
 import static org.junit.Assert.*;
@@ -302,7 +303,7 @@ public class ListenerTimeMeasureTest {
 	public void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
-		SimplePullMeasure<Object> pull = new SimplePullMeasure<Object>() {
+		PullMeasure<Object> pull = new PullMeasure<Object>() {
 
 			@Override
 			public Object get() {
