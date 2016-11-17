@@ -207,19 +207,12 @@ public class MeasureFactoryTest {
 	}
 
 	@Test
-	@SuppressWarnings("serial")
 	public void testCreatePushFromPullNotifiesOnlyWhenValueChanged()
 			throws InterruptedException {
 		// create a pull measure which changes only when we change the value of
 		// the array
 		final Integer[] value = { null };
-		PullMeasure<Integer> pull = new PullMeasure<Integer>() {
-
-			@Override
-			public Integer get() {
-				return value[0];
-			}
-		};
+		PullMeasure<Integer> pull = () -> value[0];
 
 		// create the push measure
 		MeasureFactory factory = new MeasureFactory();

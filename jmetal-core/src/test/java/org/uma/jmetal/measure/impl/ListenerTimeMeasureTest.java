@@ -299,17 +299,10 @@ public class ListenerTimeMeasureTest {
 	}
 
 	@Test
-	@SuppressWarnings("serial")
 	public void testAdditionalKeyForWrappedManagerRejectAlreadyUsedKeys() {
 		ListenerTimeMeasure measure = new ListenerTimeMeasure();
 
-		PullMeasure<Object> pull = new PullMeasure<Object>() {
-
-			@Override
-			public Object get() {
-				return null;
-			}
-		};
+		PullMeasure<Object> pull = () -> null;
 		SimplePushMeasure<Object> push = new SimplePushMeasure<Object>();
 		SimpleMeasureManager wrapped = new SimpleMeasureManager();
 		wrapped.setPullMeasure(1, pull);
