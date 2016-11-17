@@ -3,7 +3,6 @@ package org.uma.jmetal.util.naming.impl;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class SimpleDescribedEntityTest {
 
@@ -27,21 +26,6 @@ public class SimpleDescribedEntityTest {
 
 		entity.setDescription("abc");
 		assertEquals("abc", entity.getDescription());
-	}
-
-	class TestedClass extends SimpleDescribedEntity {
-	}
-
-	@Test
-	public void testClassNameWhenNoName() {
-		assertEquals(TestedClass.class.getSimpleName(),
-				new TestedClass().getName());
-	}
-
-	@Test
-	public void testNullDescriptionWhenNoDescription() {
-		assertNull(new SimpleDescribedEntity().getDescription());
-		assertNull(new SimpleDescribedEntity("name").getDescription());
 	}
 
 	@Test

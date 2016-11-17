@@ -36,24 +36,25 @@ public class SimpleDescribedEntity implements DescribedEntity {
 	}
 
 	/**
-	 * Create a {@link SimpleDescribedEntity} with a given name and a
-	 * <code>null</code> description.
+	 * Create a {@link SimpleDescribedEntity} with a given name and a default
+	 * description.
 	 * 
 	 * @param name
 	 *            the name of the {@link DescribedEntity}
 	 */
 	public SimpleDescribedEntity(String name) {
 		this(name, null);
+		setDescription(DescribedEntity.super.getDescription());
 	}
 
 	/**
-	 * Create a {@link SimpleDescribedEntity} with the class name as its name
-	 * and a <code>null</code> description.
-	 * 
+	 * Create a {@link SimpleDescribedEntity} with a default name and
+	 * description.
 	 */
 	public SimpleDescribedEntity() {
-		this(null);
-		setName(getClass().getSimpleName());
+		this(null, null);
+		setName(DescribedEntity.super.getName());
+		setDescription(DescribedEntity.super.getDescription());
 	}
 
 	/**
