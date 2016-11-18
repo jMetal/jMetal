@@ -234,7 +234,7 @@ public class MeasureFactory {
 		for (final Field field : clazz.getFields()) {
 			String key = field.getName();
 			// TODO exploit return type to restrict the generics
-			measures.put(key, new PullMeasure<Object>() {
+			measures.put(key, new SimplePullMeasure<Object>(key) {
 				@Override
 				public Object get() {
 					try {
