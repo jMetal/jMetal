@@ -12,7 +12,13 @@ public interface DescribedEntity {
 	 * 
 	 * @return the name of the {@link DescribedEntity}
 	 */
-	default String getName() {return toString();}
+	default String getName() {
+		/*
+		 * Inspired from toString(). We don't use it directly to avoid side
+		 * effects (the method is usually overwritten).
+		 */
+		return getClass().getName() + '@' + Integer.toHexString(hashCode());
+	}
 
 	/**
 	 * 

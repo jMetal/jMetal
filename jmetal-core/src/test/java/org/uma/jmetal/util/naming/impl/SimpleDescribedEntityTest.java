@@ -1,8 +1,9 @@
 package org.uma.jmetal.util.naming.impl;
 
 import org.junit.Test;
+import org.uma.jmetal.util.naming.DescribedEntity;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class SimpleDescribedEntityTest {
 
@@ -43,4 +44,29 @@ public class SimpleDescribedEntityTest {
 				description).getDescription());
 	}
 
+	@Test
+	public void testDefaultDescriptionUsedForNamleOnlyConstructor() {
+		String expected = new DescribedEntity() {}.getDescription();
+		String actual = new SimpleDescribedEntity("Test").getDescription();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testDefaultDescriptionUsedForEmptyConstructor() {
+		String expected = new DescribedEntity() {}.getDescription();
+		String actual = new SimpleDescribedEntity().getDescription();
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testDefaultNameUsedForEmptyConstructor() {
+		/*
+		 * This test is simplified one. If someone find out how to get exactly
+		 * the expected value without copy-pasting the default code (which can
+		 * evolve), please consider improving this test.
+		 */
+		String name = new SimpleDescribedEntity().getName();
+		assertNotNull(name);
+		assertFalse(name.isEmpty());
+	}
 }
