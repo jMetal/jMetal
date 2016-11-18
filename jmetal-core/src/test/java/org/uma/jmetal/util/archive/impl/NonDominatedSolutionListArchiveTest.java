@@ -93,9 +93,10 @@ public class NonDominatedSolutionListArchiveTest {
     when(solution2.getNumberOfObjectives()).thenReturn(2) ;
     when(solution2.getObjective(0)).thenReturn(0.0) ;
     when(solution2.getObjective(1)).thenReturn(0.0) ;
-    archive.add(solution2) ;
+    boolean result = archive.add(solution2) ;
 
     assertEquals(1, archive.size()) ;
+    assertTrue(result) ;
     assertSame(solution2, archive.get(0)) ;
   }
 
@@ -126,9 +127,10 @@ public class NonDominatedSolutionListArchiveTest {
     when(dominantSolution.getNumberOfObjectives()).thenReturn(2) ;
     when(dominantSolution.getObjective(0)).thenReturn(0.0) ;
     when(dominantSolution.getObjective(1)).thenReturn(0.0) ;
-    archive.add(dominantSolution) ;
+    boolean result = archive.add(dominantSolution) ;
 
     assertEquals(1, archive.size()) ;
+    assertTrue(result) ;
     assertSame(dominantSolution, archive.get(0)) ;
   }
 
@@ -173,9 +175,11 @@ public class NonDominatedSolutionListArchiveTest {
     when(equalSolution.getNumberOfObjectives()).thenReturn(2) ;
     when(equalSolution.getObjective(0)).thenReturn(1.0) ;
     when(equalSolution.getObjective(1)).thenReturn(1.0) ;
-    archive.add(equalSolution) ;
+    boolean result = archive.add(equalSolution) ;
 
     assertEquals(2, archive.size()) ;
-    assertSame(solution, archive.get(0)) ;
+    assertFalse(result) ;
+    assertTrue(archive.getSolutionList().contains(solution) ||
+            archive.getSolutionList().contains(equalSolution)) ;
   }
 }
