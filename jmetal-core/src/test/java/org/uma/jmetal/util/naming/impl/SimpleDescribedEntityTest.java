@@ -45,21 +45,29 @@ public class SimpleDescribedEntityTest {
 	}
 
 	@Test
-	public void testDefaultDescriptionUsedForNamleOnlyConstructor() {
+	public void testNullNameForCompleteConstructorWithNullName() {
+		assertNull(new SimpleDescribedEntity(null, "Test").getName());
+	}
+
+	@Test
+	public void testNullDescriptionForCompleteConstructorWithNullDescription() {
+		assertNull(new SimpleDescribedEntity("Test", null).getDescription());
+	}
+
+	@Test
+	public void testNullNameForNameOnlyConstructorWithNullName() {
+		assertNull(new SimpleDescribedEntity(null).getName());
+	}
+
+	@Test
+	public void testDefaultDescriptionForNamleOnlyConstructor() {
 		String expected = new DescribedEntity() {}.getDescription();
 		String actual = new SimpleDescribedEntity("Test").getDescription();
 		assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testDefaultDescriptionUsedForEmptyConstructor() {
-		String expected = new DescribedEntity() {}.getDescription();
-		String actual = new SimpleDescribedEntity().getDescription();
-		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testDefaultNameUsedForEmptyConstructor() {
+	public void testDefaultNameForEmptyConstructor() {
 		/*
 		 * This test is simplified one. If someone find out how to get exactly
 		 * the expected value without copy-pasting the default code (which can
@@ -68,5 +76,12 @@ public class SimpleDescribedEntityTest {
 		String name = new SimpleDescribedEntity().getName();
 		assertNotNull(name);
 		assertFalse(name.isEmpty());
+	}
+
+	@Test
+	public void testDefaultDescriptionForEmptyConstructor() {
+		String expected = new DescribedEntity() {}.getDescription();
+		String actual = new SimpleDescribedEntity().getDescription();
+		assertEquals(expected, actual);
 	}
 }
