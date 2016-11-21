@@ -37,13 +37,13 @@ public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implement
   }
 
   @Override
-  public List<S> evaluate(List<S> SolutionList, Problem<S> problem) {
-    for (int i = 0 ; i < SolutionList.size(); i++) {
-      evaluator.addTask(new Object[] {SolutionList.get(i)});
+  public List<S> evaluate(List<S> solutionList, Problem<S> problem) {
+    for (int i = 0 ; i < solutionList.size(); i++) {
+      evaluator.addTask(new Object[] {solutionList.get(i)});
     }
     evaluator.parallelExecution() ;
 
-    return SolutionList;
+    return solutionList;
   }
 
   public int getNumberOfThreads() {

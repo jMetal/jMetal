@@ -23,6 +23,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.List;
 import java.util.logging.Level;
+import java.util.stream.IntStream;
 
 /**
  * @author Antonio J. Nebro
