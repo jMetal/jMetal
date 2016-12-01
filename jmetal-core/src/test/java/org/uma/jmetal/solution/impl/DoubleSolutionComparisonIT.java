@@ -1,8 +1,6 @@
 package org.uma.jmetal.solution.impl;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
