@@ -20,6 +20,7 @@ package org.uma.jmetal.util.parallel;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
+@Deprecated
 public interface SynchronousParallelTaskExecutor<Configuration> {
   public void start(Configuration configuration);
   public void addTask(Object[] taskParameters);

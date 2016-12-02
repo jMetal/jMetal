@@ -34,7 +34,6 @@ public class MultithreadedSolutionListEvaluatorJ8<S extends Solution<?>> impleme
   public MultithreadedSolutionListEvaluatorJ8(int numberOfThreads, Problem<S> problem) {
     if (numberOfThreads == 0) {
       this.numberOfThreads = Runtime.getRuntime().availableProcessors();
-
     } else {
       this.numberOfThreads = numberOfThreads;
       System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism",

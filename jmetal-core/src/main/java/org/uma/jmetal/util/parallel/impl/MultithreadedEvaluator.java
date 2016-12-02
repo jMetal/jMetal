@@ -31,6 +31,7 @@ import java.util.logging.Level;
  * @author Antonio J. Nebro
  * @modified by Jackson Antonio do Prado Lima 09/09/2015
  */
+@Deprecated
 public class MultithreadedEvaluator<S extends Solution<?>> implements SynchronousParallelTaskExecutor<Problem<S>> {
   private Problem<S> problem;
   private Collection<EvaluationTask> taskList;
