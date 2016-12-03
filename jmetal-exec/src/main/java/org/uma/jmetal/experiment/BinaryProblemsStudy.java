@@ -35,7 +35,6 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;

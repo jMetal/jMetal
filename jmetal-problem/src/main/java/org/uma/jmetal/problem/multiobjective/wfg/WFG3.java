@@ -152,7 +152,7 @@ public class WFG3 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(DoubleSolution solution) {

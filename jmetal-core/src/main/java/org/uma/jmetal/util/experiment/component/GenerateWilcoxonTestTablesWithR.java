@@ -18,6 +18,7 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -44,9 +45,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
   public GenerateWilcoxonTestTablesWithR(Experiment<?, Result> experimentConfiguration) {
     this.experiment = experimentConfiguration;
-    this.experiment.removeDuplicatedAlgorithms();
-
-    experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
@@ -105,8 +103,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     FileWriter os = new FileWriter(rFileName, true);
 
     String caption = indicator.getName() + ". Problems: ";
-    for (Problem<?> problem : experiment.getProblemList()) {
-      caption += problem.getName() + " ";
+    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+      caption += problem.getTag() + " ";
     }
 
     String latexTableLabel = "";
@@ -233,14 +231,14 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     String algorithmList = "algorithmList <-c(";
 
     for (int i = 0; i < (experiment.getProblemList().size() - 1); i++) {
-      problemList += "\"" + experiment.getProblemList().get(i).getName() + "\", ";
+      problemList += "\"" + experiment.getProblemList().get(i).getTag() + "\", ";
     }
-    problemList += "\"" + experiment.getProblemList().get(experiment.getProblemList().size() - 1).getName() + "\") ";
+    problemList += "\"" + experiment.getProblemList().get(experiment.getProblemList().size() - 1).getTag() + "\") ";
 
     for (int i = 0; i < (experiment.getAlgorithmList().size() - 1); i++) {
-      algorithmList += "\"" + experiment.getAlgorithmList().get(i).getTag() + "\", ";
+      algorithmList += "\"" + experiment.getAlgorithmList().get(i).getProblemTag() + "\", ";
     }
-    algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag() + "\") ";
+    algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag() + "\") ";
 
     String latexTabularAlignment = "l";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
@@ -252,7 +250,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
-      latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getTag();
+      latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getProblemTag();
     }
     latexTableFirstLine += "\\\\\\\\ \"";
 
@@ -273,17 +271,17 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
     // Generate full table
     problemList = "";
-    for (Problem<?> problem : experiment.getProblemList()) {
-      problemList += problem.getName() + " ";
+    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+      problemList += problem.getTag() + " ";
     }
     // The tabular environment and the latexTableFirstLine encodings.variable must be redefined
     latexTabularAlignment = "| l | ";
     latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
-      for (Problem<?> problem : experiment.getProblemList()) {
+      for (ExperimentProblem<?> problem : experiment.getProblemList()) {
         latexTabularAlignment += "p{0.15cm }";
       }
-      latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getTag()+"}";
+      latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"}";
       latexTabularAlignment += " | " ;
     }
     latexTableFirstLine += " \\\\\\\\";
@@ -300,7 +298,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag()+ "\") {" + "\n" +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag()+ "\") {" + "\n" +
         "    write(i , \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "    write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "\n" +
         "    jndx = 0" + "\n" +
@@ -313,8 +311,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "          else {" + "\n" +
         "            write(\"  \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "          } " + "\n" +
-        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getName() + "\") {" + "\n" +
-        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getTag() + "\") {" + "\n" +
+        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + "\") {" + "\n" +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag() + "\") {" + "\n" +
         "              write(\" \\\\\\\\ \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "            } " + "\n" +
         "            else {" + "\n" +

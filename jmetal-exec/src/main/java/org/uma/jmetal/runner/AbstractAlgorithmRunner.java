@@ -82,9 +82,9 @@ public abstract class AbstractAlgorithmRunner {
     outputString += "Spread          : " +
         new Spread<S>(referenceFront).evaluate(population) + "\n";
 //    outputString += "R2 (N)          : " +
-//        new R2<List<DoubleSolution>>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+//        new R2<List<DoubleSolution>>(normalizedReferenceFront).runAlgorithm(normalizedPopulation) + "\n";
 //    outputString += "R2              : " +
-//        new R2<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
+//        new R2<List<? extends Solution<?>>>(referenceFront).runAlgorithm(population) + "\n";
     outputString += "Error ratio     : " +
         new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
     

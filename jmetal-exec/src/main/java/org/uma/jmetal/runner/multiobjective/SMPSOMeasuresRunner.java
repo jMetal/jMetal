@@ -38,7 +38,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.io.FileNotFoundException;

@@ -17,6 +17,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.*;
@@ -50,7 +51,6 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
 
   public GenerateLatexTablesWithStatistics(Experiment<?, ?> configuration) {
     this.experiment = configuration ;
-    this.experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
@@ -76,8 +76,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
 
           String directory = experiment.getExperimentBaseDirectory();
           directory += "/data/";
-          directory += "/" + experiment.getAlgorithmList().get(algorithm).getTag();
-          directory += "/" + experiment.getProblemList().get(problem).getName();
+          directory += "/" + experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
+          directory += "/" + experiment.getProblemList().get(problem).getTag();
           directory += "/" + experiment.getIndicatorList().get(indicator).getName();
           // Read values from data files
           FileInputStream fis = new FileInputStream(directory);
@@ -220,7 +220,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+    for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
       os.write("l");
     }
     os.write("}\n");
@@ -231,9 +231,9 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
       if (i == -1) {
         os.write(" & ");
       } else if (i == (experiment.getAlgorithmList().size() - 1)) {
-        os.write(" " + experiment.getAlgorithmList().get(i).getTag() + "\\\\" + "\n");
+        os.write(" " + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\\\\" + "\n");
       } else {
-        os.write("" + experiment.getAlgorithmList().get(i).getTag() + " & ");
+        os.write("" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + " & ");
       }
     }
     os.write("\\hline \n");
@@ -296,7 +296,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
         }
       }
 
-      os.write(experiment.getProblemList().get(i).getName().replace("_", "\\_") + " & ");
+      os.write(experiment.getProblemList().get(i).getTag().replace("_", "\\_") + " & ");
       for (int j = 0; j < (experiment.getAlgorithmList().size() - 1); j++) {
         if (j == bestIndex) {
           os.write("\\cellcolor{gray95}");

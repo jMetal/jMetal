@@ -13,35 +13,44 @@
 
 package org.uma.jmetal.util.evaluator.impl;
 
+import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.parallel.impl.MultithreadedEvaluator;
 
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
 public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
-  private MultithreadedEvaluator<S> evaluator;
-  private Problem<S> problem;
   private int numberOfThreads ;
 
   public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem<S> problem) {
-  	this.numberOfThreads = numberOfThreads ;
-    evaluator = new MultithreadedEvaluator<S>(numberOfThreads)  ;
-    this.problem = problem ;
-    evaluator.start(problem) ;
+    if (numberOfThreads == 0) {
+      this.numberOfThreads = Runtime.getRuntime().availableProcessors();
+    } else {
+      this.numberOfThreads = numberOfThreads;
+      System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism",
+              "" + this.numberOfThreads);
+    }
+    JMetalLogger.logger.info("Number of cores: " + numberOfThreads);
   }
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) {
-    for (int i = 0 ; i < solutionList.size(); i++) {
-      evaluator.addTask(new Object[] {solutionList.get(i)});
-    }
-    evaluator.parallelExecution() ;
+      if (problem instanceof ConstrainedProblem) {
+        solutionList.parallelStream().forEach(s -> {
+          problem.evaluate(s);
+          ((ConstrainedProblem) problem).evaluateConstraints(s);
+        });
+      } else {
+        solutionList.parallelStream().forEach(s -> problem.evaluate(s));
+      }
 
     return solutionList;
   }
@@ -51,7 +60,7 @@ public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implement
   }
   
   @Override public void shutdown() {
-    evaluator.stop();
+    ;
   }
 
 }

@@ -23,6 +23,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -55,7 +57,6 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
 
   public ComputeQualityIndicators(Experiment<S, Result> experiment) {
     this.experiment = experiment ;
-    this.experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
@@ -63,13 +64,13 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
-      for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
+      for (ExperimentAlgorithm<?,Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory ;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getTag() ;
+            algorithm.getAlgorithmTag() ;
 
         for (int problemId = 0; problemId < experiment.getProblemList().size(); problemId++) {
-          String problemDirectory = algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getName() ;
+          String problemDirectory = algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getTag() ;
 
           String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
           String referenceFrontName = referenceFrontDirectory +
@@ -145,14 +146,14 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
 
   public void findBestIndicatorFronts(Experiment<?, Result> experiment) throws IOException {
     for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
-      for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
+      for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getTag();
+            algorithm.getAlgorithmTag();
 
-        for (Problem<?> problem :experiment.getProblemList()) {
+        for (ExperimentProblem<?> problem :experiment.getProblemList()) {
           String indicatorFileName =
-              algorithmDirectory + "/" + problem.getName() + "/" + indicator.getName();
+              algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
           Path indicatorFile = Paths.get(indicatorFileName) ;
           if (indicatorFile == null) {
             throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist") ;
@@ -186,7 +187,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
           String medianFunFileName ;
           String medianVarFileName ;
 
-          String outputDirectory = algorithmDirectory + "/" + problem.getName() ;
+          String outputDirectory = algorithmDirectory + "/" + problem.getTag() ;
 
           bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.tsv" ;
           bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.tsv" ;

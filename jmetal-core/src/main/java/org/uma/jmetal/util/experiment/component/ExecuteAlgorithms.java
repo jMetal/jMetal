@@ -19,7 +19,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
 import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
@@ -48,19 +47,16 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     JMetalLogger.logger.info("ExecuteAlgorithms: Preparing output directory");
     prepareOutputDirectory() ;
 
-    MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
+    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism",
+            "" + this.experiment.getNumberOfCores());
 
-    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
-    parallelExecutor.start(this);
+    for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+      final int id = i ;
 
-    for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
-      //for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-      //TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
-      parallelExecutor.addTask(new Object[]{algorithm, algorithm.getRunId(), experiment});
-      //}
+      experiment.getAlgorithmList().parallelStream().forEach(algorithm -> algorithm.runAlgorithm(id)) ;
     }
-    parallelExecutor.parallelExecution();
-    parallelExecutor.stop();  }
+  }
+
 
   private void prepareOutputDirectory() {
     if (experimentDirectoryDoesNotExist()) {

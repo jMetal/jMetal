@@ -155,7 +155,7 @@ public class WFG2 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    */
   public void evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];

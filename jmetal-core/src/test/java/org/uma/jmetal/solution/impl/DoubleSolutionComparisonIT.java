@@ -67,9 +67,9 @@ public class DoubleSolutionComparisonIT {
     }
     long timeToCreateObjectsWithProblem2 = System.currentTimeMillis() - startTime ;
 
-    JMetalLogger.logger.info("Time to evaluate solutions with ArrayDoubleSolution: "
+    JMetalLogger.logger.info("Time to runAlgorithm solutions with ArrayDoubleSolution: "
             + timeToCreateObjectsWithProblem1);
-    JMetalLogger.logger.info("Time to evaluate solutions with DefaultDoubleSolution: "
+    JMetalLogger.logger.info("Time to runAlgorithm solutions with DefaultDoubleSolution: "
             + timeToCreateObjectsWithProblem2);
 
     assertTrue(timeToCreateObjectsWithProblem1 < timeToCreateObjectsWithProblem2) ;

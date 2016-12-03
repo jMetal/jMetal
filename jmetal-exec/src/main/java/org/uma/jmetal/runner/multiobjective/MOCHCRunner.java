@@ -36,7 +36,6 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.util.List;
 

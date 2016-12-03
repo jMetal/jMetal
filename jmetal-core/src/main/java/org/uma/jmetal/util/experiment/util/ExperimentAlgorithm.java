@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.util.experiment.util;
 
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.Experiment;
@@ -28,23 +30,29 @@ import java.util.concurrent.Callable;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> {
-  private TaggedAlgorithm<Result> algorithm ;
-  private int id;
-  private String outputDirectoryName ;
+public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
+  private Algorithm<Result> algorithm;
+  private String algorithmTag;
+  private String problemTag;
+  private String outputDirectoryName;
 
-  /** Constructor */
-  public EvaluationTask(TaggedAlgorithm<Result> algorithm, int id, Experiment<?,?> experimentData) {
-    JMetalLogger.logger.info(
-        " Task: " + algorithm.getTag() + ", problem: " + algorithm.getProblem().getName() + ", run: " + id);
-    this.algorithm = algorithm ;
-    this.id = id;
+  /**
+   * Constructor
+   */
+  public ExperimentAlgorithm(
+          Algorithm<Result> algorithm,
+          String algorithmTag,
+          String problemTag,
+          Experiment<?, ?> experimentData) {
+    this.algorithm = algorithm;
+    this.algorithmTag = algorithmTag;
+    this.problemTag = problemTag;
 
     outputDirectoryName = experimentData.getExperimentBaseDirectory()
-        + "/data/"
-        + algorithm.getTag()
-        + "/"
-        + algorithm.getProblem().getName() ;
+            + "/data/"
+            + algorithmTag
+            + "/"
+            + problemTag;
 
     File outputDirectory = new File(outputDirectoryName);
     if (!outputDirectory.exists()) {
@@ -57,27 +65,40 @@ class EvaluationTask<S extends Solution<?>, Result> implements Callable<Object> 
     }
   }
 
-  @SuppressWarnings("unchecked")
-  public Integer call() throws Exception {
-    String funFile = outputDirectoryName + "/FUN" + id + ".tsv" ;
-    String varFile = outputDirectoryName + "/VAR" + id + ".tsv" ;
+  public void runAlgorithm(int id) {
+    String funFile = outputDirectoryName + "/FUN" + id + ".tsv";
+    String varFile = outputDirectoryName + "/VAR" + id + ".tsv";
     JMetalLogger.logger.info(
-        " Running algorithm: " + algorithm.getTag() +
-            ", problem: " + algorithm.getProblem().getName() +
-            ", run: " + id+
-            ", funFile: " + funFile);
+            " Running algorithm: " + algorithmTag +
+                    ", problem: " + problemTag +
+                    ", run: " + id +
+                    ", funFile: " + funFile);
 
 
     algorithm.run();
-    Result population = algorithm.getResult() ;
+    Result population = algorithm.getResult();
 
-    new SolutionListOutput((List<? extends S>) population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext(varFile))
-        .setFunFileOutputContext(new DefaultFileOutputContext(funFile))
-        .print();
+    new SolutionListOutput((List<S>) population)
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext(varFile))
+            .setFunFileOutputContext(new DefaultFileOutputContext(funFile))
+            .print();
+  }
 
-    return id;
+  public Algorithm<Result> getAlgorithm() {
+    return algorithm;
+  }
+
+  public String getAlgorithmTag() {
+    return algorithmTag;
+  }
+
+  public String getProblemTag() {
+    return problemTag;
+  }
+
+  public String getOutputDirectoryName() {
+    return outputDirectoryName;
   }
 
 }
