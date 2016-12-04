@@ -53,7 +53,9 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     for (int i = 0; i < experiment.getIndependentRuns(); i++) {
       final int id = i ;
 
-      experiment.getAlgorithmList().parallelStream().forEach(algorithm -> algorithm.runAlgorithm(id)) ;
+      experiment.getAlgorithmList()
+              .parallelStream()
+              .forEach(algorithm -> algorithm.runAlgorithm(id, experiment)) ;
     }
   }
 

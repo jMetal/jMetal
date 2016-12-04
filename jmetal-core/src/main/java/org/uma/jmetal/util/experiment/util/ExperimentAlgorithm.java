@@ -34,7 +34,6 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   private Algorithm<Result> algorithm;
   private String algorithmTag;
   private String problemTag;
-  private String outputDirectoryName;
 
   /**
    * Constructor
@@ -42,13 +41,14 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
           String algorithmTag,
-          String problemTag,
-          Experiment<?, ?> experimentData) {
+          String problemTag) {
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
     this.problemTag = problemTag;
+  }
 
-    outputDirectoryName = experimentData.getExperimentBaseDirectory()
+  public void runAlgorithm(int id, Experiment<?, ?> experimentData) {
+    String outputDirectoryName = experimentData.getExperimentBaseDirectory()
             + "/data/"
             + algorithmTag
             + "/"
@@ -63,9 +63,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
         JMetalLogger.logger.severe("Creating " + outputDirectoryName + " failed");
       }
     }
-  }
 
-  public void runAlgorithm(int id) {
     String funFile = outputDirectoryName + "/FUN" + id + ".tsv";
     String varFile = outputDirectoryName + "/VAR" + id + ".tsv";
     JMetalLogger.logger.info(
@@ -96,9 +94,4 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public String getProblemTag() {
     return problemTag;
   }
-
-  public String getOutputDirectoryName() {
-    return outputDirectoryName;
-  }
-
 }

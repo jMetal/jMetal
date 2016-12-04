@@ -11,7 +11,6 @@ public class ExperimentProblem<S extends Solution<?>> {
   private String tag ;
 
   public ExperimentProblem(Problem<S> problem, String tag) {
-
     this.problem = problem;
     this.tag = tag;
   }
