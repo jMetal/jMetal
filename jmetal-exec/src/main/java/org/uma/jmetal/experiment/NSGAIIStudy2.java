@@ -55,6 +55,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy2 {
+  /*
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
@@ -93,7 +94,7 @@ public class NSGAIIStudy2 {
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run() ;
   }
-
+*/
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
    * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}. The {@link TaggedAlgorithm}
@@ -103,6 +104,7 @@ public class NSGAIIStudy2 {
    * @param problemList
    * @return
    */
+  /*
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(
       List<Problem<DoubleSolution>> problemList,
       int independentRuns) {
@@ -147,4 +149,5 @@ public class NSGAIIStudy2 {
     }
     return algorithms ;
   }
+  */
 }

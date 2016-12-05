@@ -67,6 +67,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class BinaryProblemsStudy {
+  /*
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
@@ -106,8 +107,9 @@ public class BinaryProblemsStudy {
     new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run() ;
-  }
 
+  }
+*/
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
    * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
@@ -115,6 +117,7 @@ public class BinaryProblemsStudy {
    * @param problemList
    * @return
    */
+  /*
   static List<TaggedAlgorithm<List<BinarySolution>>> configureAlgorithmList(
       List<Problem<BinarySolution>> problemList,
       int independentRuns) {
@@ -178,4 +181,5 @@ public class BinaryProblemsStudy {
     }
     return algorithms ;
   }
+  */
 }

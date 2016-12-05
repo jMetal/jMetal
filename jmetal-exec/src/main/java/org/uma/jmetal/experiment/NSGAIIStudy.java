@@ -55,7 +55,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy {
-  private static final int INDEPENDENT_RUNS = 25;
+  private static final int INDEPENDENT_RUNS = 5;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -85,9 +85,12 @@ public class NSGAIIStudy {
                     .setReferenceFrontDirectory("/pareto_fronts")
                     .setReferenceFrontFileNames(referenceFrontFileNames)
                     .setIndicatorList(Arrays.asList(
-                            new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
+                            new Epsilon<DoubleSolution>(),
+                            new Spread<DoubleSolution>(),
+                            new GenerationalDistance<DoubleSolution>(),
                             new PISAHypervolume<DoubleSolution>(),
-                            new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
+                            new InvertedGenerationalDistance<DoubleSolution>(),
+                            new InvertedGenerationalDistancePlus<DoubleSolution>()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
                     .setNumberOfCores(8)
                     .build();
@@ -111,14 +114,14 @@ public class NSGAIIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 5),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<DoubleSolution,List<DoubleSolution>>(algorithm, "NSGAIIa", problemList.get(i).getTag()));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i).getTag()));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -129,7 +132,7 @@ public class NSGAIIStudy {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<DoubleSolution,List<DoubleSolution>>(algorithm, "NSGAIIb", problemList.get(i).getTag()));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i).getTag()));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -138,7 +141,7 @@ public class NSGAIIStudy {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<DoubleSolution,List<DoubleSolution>>(algorithm, "NSGAIIc", problemList.get(i).getTag()));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i).getTag()));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -147,7 +150,7 @@ public class NSGAIIStudy {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<DoubleSolution,List<DoubleSolution>>(algorithm, "NSGAIId", problemList.get(i).getTag()));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i).getTag()));
       }
 
     return algorithms;

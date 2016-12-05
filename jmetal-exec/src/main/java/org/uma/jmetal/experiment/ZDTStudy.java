@@ -59,6 +59,7 @@ import java.util.List;
  */
 
 public class ZDTStudy {
+  /*
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
@@ -99,7 +100,7 @@ public class ZDTStudy {
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
-
+*/
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
    * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
@@ -107,6 +108,7 @@ public class ZDTStudy {
    * @param problemList
    * @return
    */
+  /*
   static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(
       List<Problem<DoubleSolution>> problemList,
       int independentRuns) {
@@ -142,4 +144,5 @@ public class ZDTStudy {
     }
     return algorithms ;
   }
+  */
 }
