@@ -45,6 +45,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
   public GenerateWilcoxonTestTablesWithR(Experiment<?, Result> experimentConfiguration) {
     this.experiment = experimentConfiguration;
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   @Override
@@ -236,9 +238,9 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     problemList += "\"" + experiment.getProblemList().get(experiment.getProblemList().size() - 1).getTag() + "\") ";
 
     for (int i = 0; i < (experiment.getAlgorithmList().size() - 1); i++) {
-      algorithmList += "\"" + experiment.getAlgorithmList().get(i).getProblemTag() + "\", ";
+      algorithmList += "\"" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\", ";
     }
-    algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag() + "\") ";
+    algorithmList += "\"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") ";
 
     String latexTabularAlignment = "l";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
@@ -250,7 +252,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
       latexTabularAlignment += "c";
-      latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getProblemTag();
+      latexTableFirstLine += " & " + experiment.getAlgorithmList().get(i).getAlgorithmTag();
     }
     latexTableFirstLine += "\\\\\\\\ \"";
 

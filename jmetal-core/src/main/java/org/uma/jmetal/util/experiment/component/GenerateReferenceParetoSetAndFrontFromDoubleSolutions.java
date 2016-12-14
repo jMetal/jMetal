@@ -26,7 +26,6 @@ import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -68,6 +67,8 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   /**

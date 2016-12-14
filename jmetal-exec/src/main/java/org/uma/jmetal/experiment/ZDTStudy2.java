@@ -21,16 +21,32 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
+import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
+import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
+import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,7 +74,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ZDTStudy2 {
-  /*
+
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
@@ -68,26 +84,30 @@ public class ZDTStudy2 {
     String experimentBaseDirectory = args[0] ;
     String referenceFrontDirectory = args[1] ;
 
-    List<Problem<DoubleSolution>> problemList = Arrays.<Problem<DoubleSolution>>asList(new ZDT1(), new ZDT2(),
-        new ZDT3(), new ZDT4(), new ZDT6()) ;
+    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
+    problemList.add(new ExperimentProblem<>(new ZDT1()));
+    problemList.add(new ExperimentProblem<>(new ZDT2()));
+    problemList.add(new ExperimentProblem<>(new ZDT3()));
+    problemList.add(new ExperimentProblem<>(new ZDT4()));
+    problemList.add(new ExperimentProblem<>(new ZDT6()));
 
-    List<TaggedAlgorithm<List<DoubleSolution>>> algorithmList = configureAlgorithmList(problemList, INDEPENDENT_RUNS) ;
+    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+            configureAlgorithmList(problemList);
 
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study")
-            .setAlgorithmList(algorithmList)
-            .setProblemList(problemList)
-            .setExperimentBaseDirectory(experimentBaseDirectory)
-            .setOutputParetoFrontFileName("FUN")
-            .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory(referenceFrontDirectory)
-            .setIndicatorList(Arrays.asList(
-                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
-                new PISAHypervolume<DoubleSolution>(),
-                new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
-            .setIndependentRuns(INDEPENDENT_RUNS)
-            .setNumberOfCores(8)
-            .build();
+    ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study");
+    zdt2Study.setAlgorithmList(algorithmList);
+    zdt2Study.setProblemList(problemList);
+    zdt2Study.setExperimentBaseDirectory(experimentBaseDirectory);
+    zdt2Study.setOutputParetoFrontFileName("FUN");
+    zdt2Study.setOutputParetoSetFileName("VAR");
+    zdt2Study.setReferenceFrontDirectory(referenceFrontDirectory);
+    zdt2Study.setIndicatorList(Arrays.asList(
+            new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
+            new PISAHypervolume<DoubleSolution>(),
+            new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()));
+    zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);
+    zdt2Study.setNumberOfCores(8);
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
 
     new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
@@ -97,7 +117,7 @@ public class ZDTStudy2 {
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
   }
-*/
+
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
    * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
@@ -105,36 +125,48 @@ public class ZDTStudy2 {
    * @param problemList
    * @return
    */
-  /*
-  static List<TaggedAlgorithm<List<DoubleSolution>>> configureAlgorithmList(
-      List<Problem<DoubleSolution>> problemList,
-      int independentRuns) {
-    List<TaggedAlgorithm<List<DoubleSolution>>> algorithms = new ArrayList<>() ;
+  /**
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
+   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
+   *
+   * @param problemList
+   * @return
+   */
+  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+          List<ExperimentProblem<DoubleSolution>> problemList) {
+    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
-    for (int run = 0; run < independentRuns; run++) {
-      for (Problem<DoubleSolution> problem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(problem, new SBXCrossover(1.0, 20.0),
-            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
-            .build();
-        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
-      }
+    for (int i = 0; i < problemList.size(); i++) {
+      double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+      double mutationDistributionIndex = 20.0;
+      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i),
+              new CrowdingDistanceArchive<DoubleSolution>(100))
+              .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+              .setMaxIterations(250)
+              .setSwarmSize(100)
+              .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+    }
 
-      for (Problem<DoubleSolution> problem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(problem, new SBXCrossover(1.0, 10.0),
-            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0))
-            .build();
-        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
-      }
+    for (int i = 0; i < problemList.size(); i++) {
+      Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+              problemList.get(i).getProblem(),
+              new SBXCrossover(1.0, 20.0),
+              new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+    }
 
-      for (Problem<DoubleSolution> problem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problem,
-            new CrowdingDistanceArchive<DoubleSolution>(100))
-            .build();
-        algorithms.add(new TaggedAlgorithm<List<DoubleSolution>>(algorithm, problem, run));
-      }
+    for (int i = 0; i < problemList.size(); i++) {
+      Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
+              problemList.get(i).getProblem(),
+              new SBXCrossover(1.0, 10.0),
+              new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+              .build();
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
     }
 
     return algorithms ;
   }
-  */
 }

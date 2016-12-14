@@ -14,36 +14,7 @@
 package org.uma.jmetal.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
-import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHCBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.HUXCrossover;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
-import org.uma.jmetal.operator.impl.selection.RandomSelection;
-import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
-import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.OneZeroMax;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
-import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Example of experimental study based on solving the ZDT problems with five algorithms: NSGAII, SPEA2, MOCell,

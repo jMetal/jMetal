@@ -47,6 +47,12 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
     this.problemTag = problemTag;
   }
 
+  public ExperimentAlgorithm(
+          Algorithm<Result> algorithm,
+          String problemTag) {
+    this(algorithm, algorithm.getName(), problemTag) ;
+  }
+
   public void runAlgorithm(int id, Experiment<?, ?> experimentData) {
     String outputDirectoryName = experimentData.getExperimentBaseDirectory()
             + "/data/"

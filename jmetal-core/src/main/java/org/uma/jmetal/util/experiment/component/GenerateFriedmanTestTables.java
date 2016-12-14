@@ -55,8 +55,9 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
     numberOfAlgorithms = experiment.getAlgorithmList().size() ;
     numberOfProblems = experiment.getProblemList().size() ;
-  }
 
+    experiment.removeDuplicatedAlgorithms();
+  }
 
   @Override
   public void run() throws IOException {

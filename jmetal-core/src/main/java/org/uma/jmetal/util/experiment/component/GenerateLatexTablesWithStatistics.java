@@ -18,7 +18,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.*;
 import java.util.*;
@@ -51,6 +50,8 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
 
   public GenerateLatexTablesWithStatistics(Experiment<?, ?> configuration) {
     this.experiment = configuration ;
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   @Override

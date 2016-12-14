@@ -19,7 +19,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
 

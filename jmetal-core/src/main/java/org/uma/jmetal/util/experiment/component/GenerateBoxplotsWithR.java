@@ -53,6 +53,8 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
     displayNotch = false ;
     numberOfRows = 3 ;
     numberOfColumns = 3 ;
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   public GenerateBoxplotsWithR<Result> setRows(int rows) {
@@ -96,11 +98,6 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       os.write("{" + "\n");
 
       System.out.println("experiment.getAlgorithmList().size(): " + experiment.getAlgorithmList().size()) ;
-      List<ExperimentAlgorithm<?,?>> algorithmList = new ArrayList<>() ;
-              experiment.getAlgorithmList()
-              .stream()
-                      .forEach(e -> { });
-      //        .filter
 
       for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
         String algorithmName = experiment.getAlgorithmList().get(i).getAlgorithmTag();
