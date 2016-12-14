@@ -97,8 +97,6 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       os.write("qIndicator <- function(indicator, problem)" + "\n");
       os.write("{" + "\n");
 
-      System.out.println("experiment.getAlgorithmList().size(): " + experiment.getAlgorithmList().size()) ;
-
       for (int i = 0; i <  experiment.getAlgorithmList().size(); i++) {
         String algorithmName = experiment.getAlgorithmList().get(i).getAlgorithmTag();
         os.write("file" +  algorithmName + "<-paste(resultDirectory, \"" + algorithmName + "\", sep=\"/\")" + "\n");

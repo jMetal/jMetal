@@ -300,7 +300,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag()+ "\") {" + "\n" +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ "\") {" + "\n" +
         "    write(i , \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "    write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "\n" +
         "    jndx = 0" + "\n" +
@@ -314,7 +314,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "            write(\"  \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "          } " + "\n" +
         "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + "\") {" + "\n" +
-        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getProblemTag() + "\") {" + "\n" +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") {" + "\n" +
         "              write(\" \\\\\\\\ \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "            } " + "\n" +
         "            else {" + "\n" +

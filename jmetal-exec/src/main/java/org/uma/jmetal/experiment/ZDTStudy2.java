@@ -109,7 +109,7 @@ public class ZDTStudy2 {
     zdt2Study.setNumberOfCores(8);
     Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
 
-    new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run() ;
     new GenerateLatexTablesWithStatistics(experiment).run() ;
