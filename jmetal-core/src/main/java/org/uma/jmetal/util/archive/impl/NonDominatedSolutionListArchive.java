@@ -60,7 +60,6 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
    * identical individual exists. The decision variables can be null if the solution is read from a
    * file; in that case, the domination tests are omitted
    */
-  /*
   public boolean add(S solution) {
     boolean solutionInserted = false ;
     if (solutionList.size() == 0) {
@@ -95,8 +94,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
     return solutionInserted ;
   }
-*/
-
+/*
   @Override
   public boolean add(S solution) {
     boolean hasTheSolutionBeenInserted = false;
@@ -116,7 +114,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
     return hasTheSolutionBeenInserted;
   }
-
+*/
   @Override
   public List<S> getSolutionList() {
     return solutionList;
