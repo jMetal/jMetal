@@ -24,12 +24,11 @@ import java.io.File;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
- * {@link Experiment}. For each combination algorithm + problem + runId an instance
- * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
- * which runs all the algorithms.
+ * {@link Experiment}. Java 8 parallel streams are used to run the algorithms in parallel.
  *
- * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment, which are
- * stored in the directory {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment,
+ * which are stored in the directory
+ * {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

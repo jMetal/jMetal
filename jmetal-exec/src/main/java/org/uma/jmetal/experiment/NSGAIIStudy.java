@@ -102,8 +102,8 @@ public class NSGAIIStudy {
 
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
-   * a {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}. The {@link
-   * TaggedAlgorithm} has an optional tag component, that can be set as it is shown in this example,
+   * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}. The {@link
+   * ExperimentAlgorithm} has an optional tag component, that can be set as it is shown in this example,
    * where four variants of a same algorithm are defined.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(

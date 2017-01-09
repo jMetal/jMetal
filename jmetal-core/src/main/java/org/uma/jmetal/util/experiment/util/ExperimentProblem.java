@@ -4,7 +4,9 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
 /**
- * Created by ajnebro on 2/12/16.
+ * Class used to add a tag field to a problem.
+ *
+ * @author Antonio J. Nebro <ajnebro@uma.es>
  */
 public class ExperimentProblem<S extends Solution<?>> {
   private Problem<S> problem ;

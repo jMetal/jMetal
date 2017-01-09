@@ -110,7 +110,7 @@ public class ZDTStudy {
 
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
-   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
+   * {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    *
    * @param problemList
    * @return
@@ -122,7 +122,7 @@ public class ZDTStudy {
       for (int i = 0; i < problemList.size(); i++) {
         double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
-        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i),
+        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i).getProblem(),
             new CrowdingDistanceArchive<DoubleSolution>(100))
             .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
             .setMaxIterations(250)

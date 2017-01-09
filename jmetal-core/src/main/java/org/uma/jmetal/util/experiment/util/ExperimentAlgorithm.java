@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Class defining tasks of an algorithm execution to be computed in parallel.
+ * Class defining tasks for the execution of algorithms in parallel.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

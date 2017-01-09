@@ -109,7 +109,7 @@ public class ZDTStudy2 {
     zdt2Study.setNumberOfCores(8);
     Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
     new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run() ;
     new GenerateLatexTablesWithStatistics(experiment).run() ;
@@ -127,7 +127,7 @@ public class ZDTStudy2 {
    */
   /**
    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
-   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
+   * {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    *
    * @param problemList
    * @return
@@ -139,7 +139,7 @@ public class ZDTStudy2 {
     for (int i = 0; i < problemList.size(); i++) {
       double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
       double mutationDistributionIndex = 20.0;
-      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i),
+      Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i).getProblem(),
               new CrowdingDistanceArchive<DoubleSolution>(100))
               .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
               .setMaxIterations(250)
