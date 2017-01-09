@@ -52,11 +52,11 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
   protected MutationOperator<DoubleSolution> mutationOperator;
 
-  private BoundedArchive<DoubleSolution> leaders;
+  protected BoundedArchive<DoubleSolution> leaders;
 
-  private SolutionListEvaluator<DoubleSolution> evaluator;
+  protected SolutionListEvaluator<DoubleSolution> evaluator;
 
-  private SMPSOVariant variant ;
+  protected SMPSOVariant variant ;
 
   public SMPSOBuilder(DoubleProblem problem, BoundedArchive<DoubleSolution> leaders) {
     this.problem = problem;
@@ -270,7 +270,6 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   /*
    * Getters
    */
-
   public DoubleProblem getProblem() {
     return problem;
   }
