@@ -57,7 +57,7 @@ public class CrowdingDistance<S extends Solution<?>>
       return;
     }
 
-    //Use a new SolutionSet to avoid altering the original solutionSet
+    // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(size);
     for (S solution : solutionList) {
       front.add(solution);
@@ -79,7 +79,7 @@ public class CrowdingDistance<S extends Solution<?>>
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
-      //Set de crowding distance
+      // Set de crowding distance
       front.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
       front.get(size - 1).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
 
