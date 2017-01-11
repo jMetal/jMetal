@@ -22,10 +22,6 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -43,7 +39,6 @@ import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
 import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
 import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
 import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
 import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
@@ -54,82 +49,80 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with algorithms NSGAII,
- * SPEA2, and SMPSO
+ * Example of experimental study based on solving the ZDT1 problem but using five different
+ * number of variables. This can be interesting to study the behaviour of the algorithms when solving
+ * an scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and
+ * SMPSO.
  *
- * This experiment assumes that the reference Pareto front are not known, so the names of files containing
- * them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front is of problem ZDT1 is known,
+ * so the name of file containing it and the directory where it are located must be specified. Note
+ * that the name of the file must be replicated to be equal to the number of problem variants.
  *
  * Six quality indicators are used for performance assessment.
  *
- * The steps to carry out the experiment are:
- * 1. Configure the experiment
- * 2. Execute the algorithms
- * 3. Generate the reference Pareto fronts
- * 4. Compute que quality indicators
- * 5. Generate Latex tables reporting means and medians
- * 6. Generate Latex tables with the result of applying the Wilcoxon Rank Sum Test
- * 7. Generate R scripts to obtain boxplots
+ * The steps to carry out the experiment are: 1. Configure the experiment 2. Execute the algorithms
+ * 3. Generate the reference Pareto fronts 4. Compute the quality indicators 5. Generate Latex
+ * tables reporting means and medians 6. Generate Latex tables with the result of applying the
+ * Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by applying the
+ * Friedman test 8. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ZDTStudy2 {
+public class ZDTScalabilityIStudy {
 
-  private static final int INDEPENDENT_RUNS = 25 ;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory") ;
+      throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
-    String experimentBaseDirectory = args[0] ;
+    String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new ZDT1()));
-    problemList.add(new ExperimentProblem<>(new ZDT2()));
-    problemList.add(new ExperimentProblem<>(new ZDT3()));
-    problemList.add(new ExperimentProblem<>(new ZDT4()));
-    problemList.add(new ExperimentProblem<>(new ZDT6()));
+    problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(20), "ZDT120"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy2");
-    zdt2Study.setAlgorithmList(algorithmList);
-    zdt2Study.setProblemList(problemList);
-    zdt2Study.setExperimentBaseDirectory(experimentBaseDirectory);
-    zdt2Study.setOutputParetoFrontFileName("FUN");
-    zdt2Study.setOutputParetoSetFileName("VAR");
-    zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts");
-    zdt2Study.setIndicatorList(Arrays.asList(
-            new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
-            new PISAHypervolume<DoubleSolution>(),
-            new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()));
-    zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);
-    zdt2Study.setNumberOfCores(8);
-    Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
+    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf");
+
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTScalabilityStudy")
+                    .setAlgorithmList(algorithmList)
+                    .setProblemList(problemList)
+                    .setExperimentBaseDirectory(experimentBaseDirectory)
+                    .setOutputParetoFrontFileName("FUN")
+                    .setOutputParetoSetFileName("VAR")
+                    .setReferenceFrontDirectory("/pareto_fronts")
+                    .setReferenceFrontFileNames(referenceFrontFileNames)
+                    .setIndicatorList(Arrays.asList(
+                            new Epsilon<DoubleSolution>(),
+                            new Spread<DoubleSolution>(),
+                            new GenerationalDistance<DoubleSolution>(),
+                            new PISAHypervolume<DoubleSolution>(),
+                            new InvertedGenerationalDistance<DoubleSolution>(),
+                            new InvertedGenerationalDistancePlus<DoubleSolution>()))
+                    .setIndependentRuns(INDEPENDENT_RUNS)
+                    .setNumberOfCores(8)
+                    .build();
 
     new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-    new ComputeQualityIndicators<>(experiment).run() ;
-    new GenerateLatexTablesWithStatistics(experiment).run() ;
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run() ;
+    new ComputeQualityIndicators<>(experiment).run();
+    new GenerateLatexTablesWithStatistics(experiment).run();
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run() ;
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }
 
   /**
-   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
-   * {@link TaggedAlgorithm}, which is a decorator for class {@link Algorithm}.
-   *
-   * @param problemList
-   * @return
-   */
-  /**
-   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of a
-   * {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
-   *
-   * @param problemList
-   * @return
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
+   * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}. The {@link
+   * ExperimentAlgorithm} has an optional tag component, that can be set as it is shown in this example,
+   * where four variants of a same algorithm are defined.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {

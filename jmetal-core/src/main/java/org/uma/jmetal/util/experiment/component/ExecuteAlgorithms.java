@@ -19,19 +19,16 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.MultithreadedExperimentExecutor;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
 
 import java.io.File;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
- * {@link Experiment}. For each combination algorithm + problem + runId an instance
- * of {@link TaggedAlgorithm} is created and inserted as a task of a {@link MultithreadedExperimentExecutor},
- * which runs all the algorithms.
+ * {@link Experiment}. Java 8 parallel streams are used to run the algorithms in parallel.
  *
- * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment, which are
- * stored in the directory {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment,
+ * which are stored in the directory
+ * {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -48,19 +45,19 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result> implements Experim
     JMetalLogger.logger.info("ExecuteAlgorithms: Preparing output directory");
     prepareOutputDirectory() ;
 
-    MultithreadedExperimentExecutor<S, Result> parallelExecutor ;
+    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism",
+            "" + this.experiment.getNumberOfCores());
 
-    parallelExecutor = new MultithreadedExperimentExecutor<S, Result>(experiment.getNumberOfCores()) ;
-    parallelExecutor.start(this);
+    for (int i = 0; i < experiment.getIndependentRuns(); i++) {
+      final int id = i ;
 
-    for (TaggedAlgorithm<Result> algorithm : experiment.getAlgorithmList()) {
-      //for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-      //TaggedAlgorithm<Result> clonedAlgorithm = SerializationUtils.clone(algorithm) ;
-      parallelExecutor.addTask(new Object[]{algorithm, algorithm.getRunId(), experiment});
-      //}
+      experiment.getAlgorithmList()
+              .parallelStream()
+              .forEach(algorithm -> algorithm.runAlgorithm(id, experiment)) ;
     }
-    parallelExecutor.parallelExecution();
-    parallelExecutor.stop();  }
+  }
+
+
 
   private void prepareOutputDirectory() {
     if (experimentDirectoryDoesNotExist()) {

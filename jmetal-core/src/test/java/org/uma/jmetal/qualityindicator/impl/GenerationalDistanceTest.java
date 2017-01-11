@@ -74,7 +74,7 @@ public class GenerationalDistanceTest {
     GenerationalDistance<List<DoubleSolution>> gd =
         new GenerationalDistance<List<DoubleSolution>>(paretoFront) ;
 
-    assertEquals(0.0, gd.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
+    assertEquals(0.0, gd.runAlgorithm(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
   */
 /**
@@ -123,7 +123,7 @@ public class GenerationalDistanceTest {
 
     QualityIndicator gd = new GenerationalDistance(paretoFront) ;
 
-    assertEquals(0.5, (Double)gd.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
+    assertEquals(0.5, (Double)gd.runAlgorithm(FrontUtils.convertFrontToSolutionList(frontApproximation)), EPSILON);
   }
 */
 

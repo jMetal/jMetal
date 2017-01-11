@@ -53,12 +53,11 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   public GenerateFriedmanTestTables(Experiment<?, Result> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
 
-    experiment.removeDuplicatedAlgorithms();
-
     numberOfAlgorithms = experiment.getAlgorithmList().size() ;
     numberOfProblems = experiment.getProblemList().size() ;
-  }
 
+    experiment.removeDuplicatedAlgorithms();
+  }
 
   @Override
   public void run() throws IOException {
@@ -76,14 +75,14 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
     for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
-      String algorithmName = experiment.getAlgorithmList().get(algorithm).getTag();
+      String algorithmName = experiment.getAlgorithmList().get(algorithm).getAlgorithmTag();
 
       data.add(new Vector<Double>());
       String algorithmPath = experiment.getExperimentBaseDirectory() + "/data/"
           + algorithmName + "/";
 
       for (int problem = 0; problem < experiment.getProblemList().size(); problem++) {
-        String path = algorithmPath + experiment.getProblemList().get(problem).getName() +
+        String path = algorithmPath + experiment.getProblemList().get(problem).getTag() +
             "/" + indicator.getName();
 
         readDataFromFile(path, data, algorithm) ;
@@ -276,7 +275,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private String printTableLines(String fileContents, double[] averageRanking) {
     String output = fileContents ;
     for (int i = 0; i< experiment.getAlgorithmList().size(); i++) {
-      output += "\n" + experiment.getAlgorithmList().get(i).getTag()+"&"+averageRanking[i]+"\\\\";
+      output += "\n" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"&"+averageRanking[i]+"\\\\";
     }
 
     return output ;
