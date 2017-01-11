@@ -40,8 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with five algorithms: NSGAII, SPEA2, MOCell,
- * SMPSO and AbYSS
+ * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
+ * SPEA2, and SMPSO
  *
  * This experiment assumes that the reference Pareto front are known, so the names of files containing
  * them and the directory where they are located must be specified.
@@ -61,12 +61,11 @@ import java.util.List;
  */
 
 public class ZDTStudy {
-
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
-      throw new JMetalException("Missing argument: experiment base directory") ;
+      throw new JMetalException("Missing argument: experimentBaseDirectory") ;
     }
     String experimentBaseDirectory = args[0] ;
 

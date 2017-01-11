@@ -81,11 +81,10 @@ public class BinaryProblemsStudy {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 2) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory");
+    if (args.length != 1) {
+      throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
     String experimentBaseDirectory = args[0];
-    String referenceFrontDirectory = args[1];
 
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT5()));
@@ -101,7 +100,7 @@ public class BinaryProblemsStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory(referenceFrontDirectory)
+            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
             .setIndicatorList(Arrays.asList(
                     new Epsilon<BinarySolution>(), new Spread<BinarySolution>(), new GenerationalDistance<BinarySolution>(),
                     new PISAHypervolume<BinarySolution>(),

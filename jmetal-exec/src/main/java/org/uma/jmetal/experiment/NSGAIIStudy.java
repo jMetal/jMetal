@@ -52,11 +52,11 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy {
-  private static final int INDEPENDENT_RUNS = 8;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
-      throw new JMetalException("Missing argument: experiment base directory");
+      throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
     String experimentBaseDirectory = args[0];
 

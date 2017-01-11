@@ -54,8 +54,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with five algorithms: NSGAII, SPEA2, MOCell,
- * SMPSO and AbYSS
+ * Example of experimental study based on solving the ZDT problems with algorithms NSGAII,
+ * SPEA2, and SMPSO
  *
  * This experiment assumes that the reference Pareto front are not known, so the names of files containing
  * them and the directory where they are located must be specified.
@@ -78,11 +78,10 @@ public class ZDTStudy2 {
   private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 2) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory") ;
+    if (args.length != 1) {
+      throw new JMetalException("Needed arguments: experimentBaseDirectory") ;
     }
     String experimentBaseDirectory = args[0] ;
-    String referenceFrontDirectory = args[1] ;
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1()));
@@ -94,13 +93,13 @@ public class ZDTStudy2 {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDT2Study");
+    ExperimentBuilder<DoubleSolution, List<DoubleSolution>> zdt2Study = new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy2");
     zdt2Study.setAlgorithmList(algorithmList);
     zdt2Study.setProblemList(problemList);
     zdt2Study.setExperimentBaseDirectory(experimentBaseDirectory);
     zdt2Study.setOutputParetoFrontFileName("FUN");
     zdt2Study.setOutputParetoSetFileName("VAR");
-    zdt2Study.setReferenceFrontDirectory(referenceFrontDirectory);
+    zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts");
     zdt2Study.setIndicatorList(Arrays.asList(
             new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
             new PISAHypervolume<DoubleSolution>(),

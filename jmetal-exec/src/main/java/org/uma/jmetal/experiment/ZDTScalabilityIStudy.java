@@ -70,11 +70,11 @@ import java.util.List;
  */
 public class ZDTScalabilityIStudy {
 
-  private static final int INDEPENDENT_RUNS = 5;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory referenceFrontDirectory");
+      throw new JMetalException("Needed arguments: experimentBaseDirectory");
     }
     String experimentBaseDirectory = args[0];
 
