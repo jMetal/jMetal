@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.impl;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertTrue;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class DoubleSolutionComparisonIT {
+  @Ignore
   @Test
   public void compareDoubleSolutionImplementationsWhenCreatingSolutions() {
     DoubleProblem problem1 = new MockedDoubleProblem1(500) ;
@@ -45,6 +47,7 @@ public class DoubleSolutionComparisonIT {
     assertTrue(timeToCreateObjectsWithProblem1 < timeToCreateObjectsWithProblem2) ;
   }
 
+  @Ignore
   @Test
   public void compareDoubleSolutionImplementationsWhenEvaluatingSolutions() {
     DoubleProblem problem1 = new MockedDoubleProblem1(20000) ;
