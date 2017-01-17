@@ -28,6 +28,7 @@ org.uma.jmetal.algorithm.multiobjective.spea2
 org.uma.jmetal.algorithm.multiobjective.spea2.util
 org.uma.jmetal.algorithm.multiobjective.wasfga
 org.uma.jmetal.algorithm.multiobjective.wasfga.util
+org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization
 org.uma.jmetal.algorithm.singleobjective.differentialevolution
 org.uma.jmetal.algorithm.singleobjective.evolutionstrategy
 org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util
@@ -93,8 +94,6 @@ org.uma.jmetal.util.naming.impl
 org.uma.jmetal.util.neighborhood
 org.uma.jmetal.util.neighborhood.impl
 org.uma.jmetal.util.neighborhood.util
-org.uma.jmetal.util.parallel
-org.uma.jmetal.util.parallel.impl
 org.uma.jmetal.util.point
 org.uma.jmetal.util.point.impl
 org.uma.jmetal.util.point.util
