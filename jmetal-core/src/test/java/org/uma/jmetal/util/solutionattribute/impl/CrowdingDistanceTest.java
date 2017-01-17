@@ -1,19 +1,15 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 /**
- * Created by ajnebro on 2/4/16.
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CrowdingDistanceTest {
   private static final double EPSILON = 0.000000001 ;

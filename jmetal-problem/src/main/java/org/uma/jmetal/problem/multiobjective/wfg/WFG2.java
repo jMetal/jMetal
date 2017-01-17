@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * This class implements the WFG2 problem
@@ -33,15 +32,13 @@ import org.uma.jmetal.util.JMetalException;
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
 public class WFG2 extends WFG {
-  private static final long serialVersionUID = 7721091933082996053L;
-
   /**
    * Creates a default WFG2 instance with
    * 2 position-related parameters
    * 4 distance-related parameters
    * and 2 objectives
    **/
-  public WFG2() throws ClassNotFoundException, JMetalException {
+  public WFG2() {
     this(2, 4, 2);
   }
 
@@ -158,7 +155,7 @@ public class WFG2 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    */
   public void evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];

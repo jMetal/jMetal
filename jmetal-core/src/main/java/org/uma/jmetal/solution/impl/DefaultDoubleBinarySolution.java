@@ -56,9 +56,6 @@ public class DefaultDoubleBinarySolution
     copyDoubleVariables(solution);
     copyBitSet(solution);
 
-   // overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-   // numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
-
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
@@ -72,14 +69,10 @@ public class DefaultDoubleBinarySolution
 
   private void initializeBitSet() {
     BitSet bitset = createNewBitSet(problem.getNumberOfBits()) ;
-    //variables.add(bitset) ;
     setVariableValue(numberOfDoubleVariables, bitset);
   }
 
   private void copyDoubleVariables(DefaultDoubleBinarySolution solution) {
-//    variables = new ArrayList<>() ;
-//    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
-//      variables.add(new Double((Double) solution.getVariableValue(i))) ;
     for (int i = 0 ; i < numberOfDoubleVariables; i++) {
       setVariableValue(i, solution.getVariableValue(i));
     }
@@ -87,7 +80,6 @@ public class DefaultDoubleBinarySolution
 
   private void copyBitSet(DefaultDoubleBinarySolution solution) {
     BitSet bitset = (BitSet)solution.getVariableValue(solution.getNumberOfVariables()-1) ;
-    //variables.add(bitset.clone()) ;
     setVariableValue(numberOfDoubleVariables, bitset);
   }
 

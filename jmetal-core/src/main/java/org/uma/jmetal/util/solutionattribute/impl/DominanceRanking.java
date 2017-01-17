@@ -41,13 +41,18 @@ public class DominanceRanking <S extends Solution<?>>
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
       new OverallConstraintViolationComparator<Solution<?>>();
 
-  private List<ArrayList<S>> rankedSubpopulations;
+  private List<ArrayList<S>> rankedSubPopulations;
 
   /**
    * Constructor
    */
   public DominanceRanking() {
-    rankedSubpopulations = new ArrayList<>();
+    rankedSubPopulations = new ArrayList<>();
+  }
+
+  public DominanceRanking(Object id) {
+    super(id) ;
+    rankedSubPopulations = new ArrayList<>();
   }
 
   @Override
@@ -99,7 +104,7 @@ public class DominanceRanking <S extends Solution<?>>
     for (int i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
         front.get(0).add(i);
-        solutionSet.get(i).setAttribute(getAttributeID(), 0);
+        solutionSet.get(i).setAttribute(getAttributeIdentifier(), 0);
       }
     }
 
@@ -117,19 +122,19 @@ public class DominanceRanking <S extends Solution<?>>
           if (dominateMe[index] == 0) {
             front.get(i).add(index);
             //RankingAndCrowdingAttr.getAttributes(solutionSet.get(index)).setRank(i);
-            solutionSet.get(index).setAttribute(getAttributeID(), i);
+            solutionSet.get(index).setAttribute(getAttributeIdentifier(), i);
           }
         }
       }
     }
 
-    rankedSubpopulations = new ArrayList<>();
+    rankedSubPopulations = new ArrayList<>();
     //0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
-      rankedSubpopulations.add(j, new ArrayList<S>(front.get(j).size()));
+      rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
       it1 = front.get(j).iterator();
       while (it1.hasNext()) {
-        rankedSubpopulations.get(j).add(solutionSet.get(it1.next()));
+        rankedSubPopulations.get(j).add(solutionSet.get(it1.next()));
       }
     }
 
@@ -138,14 +143,14 @@ public class DominanceRanking <S extends Solution<?>>
 
   @Override
   public List<S> getSubfront(int rank) {
-    if (rank >= rankedSubpopulations.size()) {
-      throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubpopulations.size() -1)) ;
+    if (rank >= rankedSubPopulations.size()) {
+      throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() -1)) ;
     }
-    return rankedSubpopulations.get(rank);
+    return rankedSubPopulations.get(rank);
   }
 
   @Override
   public int getNumberOfSubfronts() {
-    return rankedSubpopulations.size();
+    return rankedSubPopulations.size();
   }
 }

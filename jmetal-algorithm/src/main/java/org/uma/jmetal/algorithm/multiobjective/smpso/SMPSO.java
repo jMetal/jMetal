@@ -54,7 +54,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private int swarmSize;
   private int maxIterations;
   private int iterations;
-
+  
   private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
   private double[][] speed;
 
@@ -299,5 +299,23 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override public String getDescription() {
     return "Speed contrained Multiobjective PSO" ;
+  }
+  
+  /* Getters */
+  public int getSwarmSize() {
+    return swarmSize;
+  }
+  
+  public int getMaxIterations() {
+    return maxIterations;
+  }
+  
+  public int getIterations() {
+    return iterations;
+  }
+  
+  /* Setters */
+  public void setIterations(int iterations) {
+    this.iterations = iterations;
   }
 }

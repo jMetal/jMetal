@@ -36,7 +36,7 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
     for (S solution : population) {
       R2SolutionData data =  new R2SolutionData();
       data.utility = this.computeNorm(solution);
-      solution.setAttribute(getAttributeID(), data);
+      solution.setAttribute(getAttributeIdentifier(), data);
     }
 
     for (int i = 0; i < this.getUtilityFunctions().getSize(); i++) {

@@ -45,14 +45,14 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected int maxEvaluations;
   protected final SolutionListEvaluator<S> evaluator;
 
-  private Neighborhood<S> neighborhood;
-  private int currentIndividual;
-  private List<S> currentNeighbors;
+  protected Neighborhood<S> neighborhood;
+  protected int currentIndividual;
+  protected List<S> currentNeighbors;
 
-  private BoundedArchive<S> archive;
+  protected BoundedArchive<S> archive;
 
-  private Comparator<S> dominanceComparator;
-  private LocationAttribute<S> location;
+  protected Comparator<S> dominanceComparator;
+  protected LocationAttribute<S> location;
 
   /**
    * Constructor
@@ -171,7 +171,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     archive.add(offspringPopulation.get(0));
   }
 
-
   private void insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
     location.setAttribute(offspringPopulation.get(0), -1);
@@ -204,4 +203,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override public String getDescription() {
     return "Multi-Objective Cellular evolutionry algorithm" ;
   }
+
+
 }

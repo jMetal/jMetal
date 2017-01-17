@@ -480,7 +480,6 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     initProgress();
     while (!isStoppingConditionReached()) {
-      System.out.println("Iter: " + iterations) ;
       shuffleGlobalBest();
 
       for (int i = 0 ; i < getSwarm().size(); i++) {

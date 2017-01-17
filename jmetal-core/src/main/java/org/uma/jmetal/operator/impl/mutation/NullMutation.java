@@ -23,13 +23,13 @@ import org.uma.jmetal.solution.Solution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class NullMutation implements MutationOperator<Solution<?>> {
+public class NullMutation<S extends Solution<?>> implements MutationOperator<S> {
   public NullMutation() {
   }
 
   /** Execute() method */
   @Override
-  public Solution<?> execute(Solution<?> source) {
+  public S execute(S source) {
     return source;
   }
 }

@@ -44,7 +44,7 @@ public class WFG1 extends WFG {
    * 4 distance-related parameters
    * and 2 objectives
    */
-  public WFG1() throws ClassNotFoundException, JMetalException {
+  public WFG1() {
     this(2, 4, 2);
   }
 
@@ -55,8 +55,7 @@ public class WFG1 extends WFG {
    * @param l            Number of distance parameters
    * @param m            Number of objective functions
    */
-  public WFG1(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG1(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG1");
 
@@ -174,7 +173,7 @@ public class WFG1 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(DoubleSolution solution) {

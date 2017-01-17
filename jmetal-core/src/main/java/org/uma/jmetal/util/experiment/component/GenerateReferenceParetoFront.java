@@ -19,7 +19,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -49,7 +50,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   
   public GenerateReferenceParetoFront(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
-    this.experiment.removeDuplicatedAlgorithms();
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   /**
@@ -62,13 +64,13 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
     File outputDirectory = createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
-    for (Problem<?> problem : experiment.getProblemList()) {
+    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
       NonDominatedSolutionListArchive<PointSolution> nonDominatedSolutionArchive =
           new NonDominatedSolutionListArchive<PointSolution>() ;
 
-      for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+      for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
         String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getTag() + "/" + problem.getName() ;
+            algorithm.getAlgorithmTag() + "/" + problem.getTag() ;
 
         for (int i = 0; i < experiment.getIndependentRuns(); i++) {
           String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
@@ -78,17 +80,17 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
           for (PointSolution solution : solutionList) {
-            solutionAttribute.setAttribute(solution, algorithm.getTag());
+            solutionAttribute.setAttribute(solution, algorithm.getAlgorithmTag());
             nonDominatedSolutionArchive.add(solution) ;
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
-      referenceFrontFileNames.add(problem.getName() + ".rf");
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
+      referenceFrontFileNames.add(problem.getTag() + ".rf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
 
-      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem.getProblem(),
           nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
@@ -111,10 +113,10 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       List<PointSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
-    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+    for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
       List<PointSolution> solutionsPerAlgorithm = new ArrayList<>() ;
       for (PointSolution solution : nonDominatedSolutions) {
-        if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
+        if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
           solutionsPerAlgorithm.add(solution) ;
         }
       }
@@ -122,7 +124,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getName() + "." +
-                  algorithm.getTag() + ".rf"
+                  algorithm.getAlgorithmTag() + ".rf"
           );
     }
   }

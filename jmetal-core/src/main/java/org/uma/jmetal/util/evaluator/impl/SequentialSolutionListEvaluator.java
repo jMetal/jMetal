@@ -32,21 +32,14 @@ public class SequentialSolutionListEvaluator<S extends Solution<?>> implements S
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
-    try {
       if (problem instanceof ConstrainedProblem) {
-        for (int i = 0 ; i < solutionList.size(); i++) {
-          problem.evaluate(solutionList.get(i)) ;
-          ((ConstrainedProblem<S>)problem).evaluateConstraints(solutionList.get(i)) ;
-        }
+        solutionList.stream().forEach(s -> {
+          problem.evaluate(s);
+          ((ConstrainedProblem) problem).evaluateConstraints(s);
+        });
       } else {
-        for (int i = 0 ; i < solutionList.size(); i++) {
-          problem.evaluate(solutionList.get(i)) ;
-        }
+        solutionList.stream().forEach(s -> problem.evaluate(s));
       }
-    } catch (JMetalException e) {
-      JMetalLogger.logger.log(Level.SEVERE, "Error evaluating solution", e);
-      throw new JMetalException("Error in SequentialSolutionSetEvaluator.evaluate()") ;
-    }
 
     return solutionList;
   }

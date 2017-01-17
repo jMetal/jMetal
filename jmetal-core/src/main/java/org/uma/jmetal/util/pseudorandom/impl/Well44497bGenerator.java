@@ -27,8 +27,7 @@ public class Well44497bGenerator implements PseudoRandomGenerator {
 
   /** Constructor */
   public Well44497bGenerator() {
-    seed = System.currentTimeMillis() ;
-    rnd = new Well44497b(seed) ;
+    this(System.currentTimeMillis());
   }
 
   /** Constructor */

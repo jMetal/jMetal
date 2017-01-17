@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * Creates a default WFG8 problem with
@@ -31,7 +30,6 @@ import org.uma.jmetal.util.JMetalException;
  * and 2 objectives
  */
 public class WFG8 extends WFG {
-  private static final long serialVersionUID = 8622398802349268980L;
 
   /**
    * Creates a default WFG8 with
@@ -39,7 +37,7 @@ public class WFG8 extends WFG {
    * 4 distance-related parameters,
    * and 2 objectives
    **/
-  public WFG8() throws ClassNotFoundException, JMetalException {
+  public WFG8() {
     this(2, 4, 2);
   }
 
@@ -50,8 +48,7 @@ public class WFG8 extends WFG {
    * @param l            Number of distance parameters
    * @param m            Number of objective functions
    */
-  public WFG8(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG8(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG8");
 
@@ -158,7 +155,7 @@ public class WFG8 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(DoubleSolution solution) {

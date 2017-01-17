@@ -32,14 +32,13 @@ import java.util.List;
  * Class representing problem LZ09F9
  */
 public class LZ09F9 extends AbstractDoubleProblem {
-  private static final long serialVersionUID = 3762600989114109415L;
 
   private LZ09 lz09;
 
   /**
    * Creates a default LZ09F9 problem (30 variables and 2 objectives)
    **/
-  public LZ09F9() throws ClassNotFoundException, JMetalException {
+  public LZ09F9() {
     this(22, 1, 22);
   }
 

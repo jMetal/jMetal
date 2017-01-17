@@ -28,6 +28,8 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
+  public enum SMPSOVariant {SMPSO, Measures}
+
   private DoubleProblem problem;
 
   private double c1Max;
@@ -50,9 +52,11 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
   protected MutationOperator<DoubleSolution> mutationOperator;
 
-  private BoundedArchive<DoubleSolution> leaders;
+  protected BoundedArchive<DoubleSolution> leaders;
 
-  private SolutionListEvaluator<DoubleSolution> evaluator;
+  protected SolutionListEvaluator<DoubleSolution> evaluator;
+
+  protected SMPSOVariant variant ;
 
   public SMPSOBuilder(DoubleProblem problem, BoundedArchive<DoubleSolution> leaders) {
     this.problem = problem;
@@ -76,6 +80,9 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
 
     mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
+
+    this.variant = SMPSOVariant.SMPSO ;
+
   }
 
   /* Getters */
@@ -242,16 +249,27 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this ;
   }
 
+  public SMPSOBuilder setVariant(SMPSOVariant variant) {
+    this.variant = variant;
+
+    return this;
+  }
+
   public SMPSO build() {
-    return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
-        r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
-        changeVelocity2, evaluator);
+    if (variant.equals(SMPSOVariant.SMPSO)) {
+      return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
+          r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
+          changeVelocity2, evaluator);
+    } else {
+      return new SMPSOMeasures(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
+          r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
+          changeVelocity2, evaluator);
+    }
   }
 
   /*
    * Getters
    */
-
   public DoubleProblem getProblem() {
     return problem;
   }

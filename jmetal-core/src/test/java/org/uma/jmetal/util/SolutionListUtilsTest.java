@@ -17,6 +17,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Matchers;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
@@ -32,8 +34,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Antonio J. Nebro
- * @version 1.0
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+  * @version 1.0
  */
 public class SolutionListUtilsTest {
   @Rule
@@ -349,5 +351,58 @@ public class SolutionListUtilsTest {
     list2.add(solutions.get(0)) ;
 
     assertTrue(SolutionListUtils.solutionListsAreEquals(list1, list2)) ;
+  }
+
+  @Test
+  public void shouldFillPopulationWithNewSolutionsDoNothingIfTheMaxSizeIsLowerThanTheListSize() {
+    List<DoubleSolution> solutions = Arrays.asList(
+        mock(DoubleSolution.class),
+        mock(DoubleSolution.class),
+        mock(DoubleSolution.class)) ;
+
+    Problem<DoubleSolution> problem = new MockedDoubleProblem() ;
+
+    int maxListSize = 2 ;
+    SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
+
+    assertEquals(3, solutions.size()) ;
+  }
+
+  @Test
+  public void shouldFillPopulationWithNewSolutionsIncreaseTheListLengthToTheIndicatedValue() {
+    List<DoubleSolution> solutions = new ArrayList<DoubleSolution>(3) ;
+    solutions.add(mock(DoubleSolution.class)) ;
+    solutions.add(mock(DoubleSolution.class)) ;
+    solutions.add(mock(DoubleSolution.class)) ;
+
+    Problem<DoubleSolution> problem = new MockedDoubleProblem() ;
+
+    int maxListSize = 10 ;
+    SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
+
+    assertEquals(maxListSize, solutions.size()) ;
+  }
+
+  /**
+   * TODO
+   */
+  @Test
+  public void shouldRestartRemoveTheRequestedPercentageOfSolutions() {
+  }
+
+  private class MockedDoubleProblem extends AbstractDoubleProblem {
+
+    public MockedDoubleProblem() {
+      setNumberOfVariables(2);
+      setNumberOfObjectives(2);
+      setNumberOfConstraints(0);
+
+      setLowerLimit(Arrays.asList(0.0, 0.0));
+      setUpperLimit(Arrays.asList(1.0, 1.0));
+    }
+
+    @Override
+    public void evaluate(DoubleSolution solution) {
+    }
   }
 }

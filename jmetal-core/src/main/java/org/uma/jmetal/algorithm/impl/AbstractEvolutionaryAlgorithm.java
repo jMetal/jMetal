@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -7,14 +20,15 @@ import org.uma.jmetal.solution.Solution;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 26/10/14.
+ * Abstract class representing an evolutionary algorithm
  * @param <S> Solution
  * @param <R> Result
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
   private List<S> population;
-  private int maxPopulationSize ;
   private Problem<S> problem ;
 
   public List<S> getPopulation() {
@@ -22,13 +36,6 @@ public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  i
   }
   public void setPopulation(List<S> population) {
     this.population = population;
-  }
-
-  public void setMaxPopulationSize(int maxPopulationSize) {
-    this.maxPopulationSize = maxPopulationSize ;
-  }
-  public int getMaxPopulationSize() {
-    return maxPopulationSize ;
   }
 
   public void setProblem(Problem<S> problem) {

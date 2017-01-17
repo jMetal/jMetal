@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 @SuppressWarnings("serial")
 public class WFG7 extends WFG {
@@ -32,7 +31,7 @@ public class WFG7 extends WFG {
    * 4 distance-related parameters,
    * and 2 objectives
    */
-  public WFG7() throws ClassNotFoundException, JMetalException {
+  public WFG7() {
     this(2, 4, 2);
   }
 
@@ -43,8 +42,7 @@ public class WFG7 extends WFG {
    * @param l            Number of distance parameters
    * @param m            Number of objective functions
    */
-  public WFG7(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG7(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG7");
 

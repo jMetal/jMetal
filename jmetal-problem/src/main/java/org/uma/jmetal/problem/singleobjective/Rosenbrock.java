@@ -48,6 +48,9 @@ public class Rosenbrock extends AbstractDoubleProblem {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
     }
+
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
   }
 
   /** Evaluate() method */

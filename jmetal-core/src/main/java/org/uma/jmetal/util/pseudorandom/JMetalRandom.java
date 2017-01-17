@@ -40,7 +40,7 @@ public class JMetalRandom implements Serializable {
     this.randomGenerator = randomGenerator;
   }
 
-  public PseudoRandomGenerator getRanndomGenerator() {
+  public PseudoRandomGenerator getRandomGenerator() {
     return randomGenerator ;
   }
 

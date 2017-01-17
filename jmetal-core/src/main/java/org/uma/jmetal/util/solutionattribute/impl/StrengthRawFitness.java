@@ -54,13 +54,13 @@ public class StrengthRawFitness <S extends Solution<?>>
     }
 
     // Add the distance to the k-th individual. In the reference paper of SPEA2,
-    // k = sqrt(population.size()), but a value of k = 1 recommended. See
+    // k = sqrt(population.size()), but a value of k = 1 is recommended. See
     // http://www.tik.ee.ethz.ch/pisa/selectors/spea2/spea2_documentation.txt
     int k = 1 ;
     for (int i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
       kDistance = 1.0 / (distance[i][k] + 2.0);
-      solutionSet.get(i).setAttribute(getAttributeID(), rawFitness[i] + kDistance);
+      solutionSet.get(i).setAttribute(getAttributeIdentifier(), rawFitness[i] + kDistance);
     }
   }
 }

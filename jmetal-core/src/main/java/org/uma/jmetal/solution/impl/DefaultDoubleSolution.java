@@ -48,8 +48,6 @@ public class DefaultDoubleSolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    //overallConstraintViolationDegree = solution.overallConstraintViolationDegree ;
-    //numberOfViolatedConstraints = solution.numberOfViolatedConstraints ;
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 

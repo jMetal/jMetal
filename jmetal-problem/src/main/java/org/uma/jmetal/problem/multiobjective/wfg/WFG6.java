@@ -22,7 +22,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 /**
  * This class implements the WFG6 problem
@@ -40,7 +39,7 @@ public class WFG6 extends WFG {
    * 4 distance-related parameters,
    * and 2 objectives
    */
-  public WFG6() throws ClassNotFoundException, JMetalException {
+  public WFG6() {
     this(2, 4, 2);
   }
 
@@ -51,8 +50,7 @@ public class WFG6 extends WFG {
    * @param l            Number of distance parameters
    * @param m            Number of objective functions
    */
-  public WFG6(Integer k, Integer l, Integer m)
-    throws ClassNotFoundException, JMetalException {
+  public WFG6(Integer k, Integer l, Integer m) {
     super(k, l, m);
     setName("WFG6");
 
@@ -126,7 +124,7 @@ public class WFG6 extends WFG {
   /**
    * Evaluates a solution
    *
-   * @param solution The solution to evaluate
+   * @param solution The solution to runAlgorithm
    * @throws org.uma.jmetal.util.JMetalException
    */
   public void evaluate(DoubleSolution solution) {

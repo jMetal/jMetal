@@ -24,7 +24,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -66,7 +67,8 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   public GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
-    this.experiment.removeDuplicatedAlgorithms();
+
+    experiment.removeDuplicatedAlgorithms();
   }
 
   /**
@@ -79,15 +81,15 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
 
-    for (Problem<?> problem : experiment.getProblemList()) {
-      List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
+    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+      List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem.getProblem()) ;
 
-      referenceFrontFileNames.add(problem.getName() + ".rf");
+      referenceFrontFileNames.add(problem.getTag() + ".rf");
 
-      writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions) ;
-      writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions) ;
+      writeReferenceFrontFile(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
+      writeReferenceSetFile(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
 
-      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem, nonDominatedSolutions) ;
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
     }
 
     experiment.setReferenceFrontFileNames(referenceFrontFileNames);
@@ -98,10 +100,10 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       List<DoubleSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
-    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+    for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
       List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>() ;
       for (DoubleSolution solution : nonDominatedSolutions) {
-        if (algorithm.getTag().equals(solutionAttribute.getAttribute(solution))) {
+        if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
           solutionsPerAlgorithm.add(solution) ;
         }
       }
@@ -109,12 +111,12 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getName() + "." +
-                  algorithm.getTag() + ".rf"
+                  algorithm.getAlgorithmTag() + ".rf"
           );
       new SolutionListOutput(solutionsPerAlgorithm)
           .printVariablesToFile(
               outputDirectoryName + "/" + problem.getName() + "." +
-                  algorithm.getTag() + ".rs"
+                  algorithm.getAlgorithmTag() + ".rs"
           );
     }
   }
@@ -144,9 +146,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
         new NonDominatedSolutionListArchive<DoubleSolution>() ;
 
-    for (TaggedAlgorithm<?> algorithm : experiment.getAlgorithmList()) {
+    for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
       String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-          algorithm.getTag() + "/" + problem.getName() ;
+          algorithm.getAlgorithmTag() + "/" + problem.getName() ;
 
       for (int i = 0; i < experiment.getIndependentRuns(); i++) {
         String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
@@ -156,7 +158,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
         Front frontWithObjectiveValues = new ArrayFront(frontFileName) ;
         Front frontWithVariableValues = new ArrayFront(paretoSetFileName) ;
         List<DoubleSolution> solutionList =
-            createSolutionListFrontFiles(algorithm.getTag(), frontWithVariableValues, frontWithObjectiveValues) ;
+            createSolutionListFrontFiles(algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues) ;
         for (DoubleSolution solution : solutionList) {
           nonDominatedSolutionArchive.add(solution) ;
         }

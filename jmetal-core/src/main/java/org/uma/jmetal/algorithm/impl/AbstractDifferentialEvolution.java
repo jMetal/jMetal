@@ -11,7 +11,6 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
@@ -20,6 +19,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Abstract class representing differential evolution (DE) algorithms
+ *
  * @author Antonio J. Nebro
  * @version 1.0
  */

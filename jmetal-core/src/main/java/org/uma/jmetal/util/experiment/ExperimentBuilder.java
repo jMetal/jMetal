@@ -13,10 +13,10 @@
 
 package org.uma.jmetal.util.experiment;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.experiment.util.TaggedAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class ExperimentBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
-  private List<TaggedAlgorithm<Result>> algorithmList;
-  private List<Problem<S>> problemList;
+  private List<ExperimentAlgorithm<S, Result>> algorithmList;
+  private List<ExperimentProblem<S>> problemList;
   private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
   private String experimentBaseDirectory;
@@ -49,14 +49,14 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
     this.referenceFrontDirectory = null ;
   }
 
-  public ExperimentBuilder<S, Result> setAlgorithmList(List<TaggedAlgorithm<Result>> algorithmList) {
+  public ExperimentBuilder<S, Result> setAlgorithmList(List<ExperimentAlgorithm<S, Result>> algorithmList) {
     this.algorithmList = new ArrayList<>(algorithmList) ;
 
     return this ;
   }
 
-  public ExperimentBuilder<S, Result> setProblemList(List<Problem<S>> problemList) {
-    this.problemList = new ArrayList<>(problemList) ;
+  public ExperimentBuilder<S, Result> setProblemList(List<ExperimentProblem<S>> problemList) {
+    this.problemList = problemList ;
 
     return this ;
   }
@@ -119,11 +119,11 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
     return experimentName;
   }
 
-  public List<TaggedAlgorithm<Result>> getAlgorithmList() {
+  public List<ExperimentAlgorithm<S, Result>> getAlgorithmList() {
     return algorithmList;
   }
 
-  public List<Problem<S>> getProblemList() {
+  public List<ExperimentProblem<S>> getProblemList() {
     return problemList;
   }
 

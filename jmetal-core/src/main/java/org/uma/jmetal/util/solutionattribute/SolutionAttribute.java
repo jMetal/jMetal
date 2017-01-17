@@ -26,5 +26,5 @@ import java.io.Serializable;
 public interface SolutionAttribute <S extends Solution<?>, V> extends Serializable {
   public void setAttribute(S solution, V value) ;
   public V getAttribute(S solution) ;
-  public Object getAttributeID() ;
+  public Object getAttributeIdentifier() ;
 }

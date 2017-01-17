@@ -46,25 +46,25 @@ public class CrowdingDistance<S extends Solution<?>>
     }
 
     if (size == 1) {
-      solutionList.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionList.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
-      solutionList.get(1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
+      solutionList.get(1).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
 
       return;
     }
 
-    //Use a new SolutionSet to avoid altering the original solutionSet
+    // Use a new SolutionSet to avoid altering the original solutionSet
     List<S> front = new ArrayList<>(size);
     for (S solution : solutionList) {
       front.add(solution);
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).setAttribute(getAttributeID(), 0.0);
+      front.get(i).setAttribute(getAttributeIdentifier(), 0.0);
     }
 
     double objetiveMaxn;
@@ -79,21 +79,21 @@ public class CrowdingDistance<S extends Solution<?>>
       objetiveMinn = front.get(0).getObjective(i);
       objetiveMaxn = front.get(front.size() - 1).getObjective(i);
 
-      //Set de crowding distance
-      front.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
-      front.get(size - 1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
+      // Set de crowding distance
+      front.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
+      front.get(size - 1).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (double)front.get(j).getAttribute(getAttributeID());
-        front.get(j).setAttribute(getAttributeID(), distance);
+        distance += (double)front.get(j).getAttribute(getAttributeIdentifier());
+        front.get(j).setAttribute(getAttributeIdentifier(), distance);
       }
     }
   }
 
   @Override
-  public Object getAttributeID() {
+  public Object getAttributeIdentifier() {
     return this.getClass() ;
   }
 }

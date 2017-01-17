@@ -1,4 +1,4 @@
-//  DTLZ1.java
+//  DTLZ2.java
 //
 //  Author:
 //       Antonio J. Nebro <antonio@lcc.uma.es>
@@ -15,7 +15,7 @@
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU Lesser General Public License for more details.
-// 
+//
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -36,7 +36,7 @@ public class DTLZ2 extends AbstractDoubleProblem {
   /**
    * Creates a default DTLZ2 problem (12 variables and 3 objectives)
    */
-  public DTLZ2() throws ClassNotFoundException, JMetalException {
+  public DTLZ2() {
     this(12, 3);
   }
 
@@ -100,4 +100,3 @@ public class DTLZ2 extends AbstractDoubleProblem {
     }
   }
 }
-
