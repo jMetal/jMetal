@@ -65,11 +65,9 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
-
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
-    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
+    algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<>())
         .setMaxIterations(250)
         .setSwarmSize(100)
         .setUniformMutation(new UniformMutation(mutationProbability, 0.5))

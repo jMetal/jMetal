@@ -19,14 +19,10 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -48,11 +44,11 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.WASFGABinaryRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    BinaryProblem problem;
-    Algorithm<List<BinarySolution>> algorithm;
-    CrossoverOperator<BinarySolution> crossover;
-    MutationOperator<BinarySolution> mutation;
-    SelectionOperator<List<BinarySolution>, BinarySolution> selection;
+    Problem<DoubleSolution> problem;
+    Algorithm<List<DoubleSolution>> algorithm;
+    CrossoverOperator<DoubleSolution> crossover;
+    MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "" ;
     List<Double> referencePoint = null;
 
@@ -63,29 +59,32 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
     }
 
-    problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
+    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     
     referencePoint = new ArrayList<>();
-    referencePoint.add(10.0);
-    referencePoint.add(4.0);
+    referencePoint.add(0.0);
+    referencePoint.add(0.0);
 
     double crossoverProbability = 0.9 ;
-    crossover = new SinglePointCrossover(crossoverProbability) ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfBits(0) ;
-    mutation = new BitFlipMutation(mutationProbability) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<BinarySolution>() ;
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<BinarySolution>(),referencePoint) ;
+    algorithm = new WASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    List<BinarySolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
