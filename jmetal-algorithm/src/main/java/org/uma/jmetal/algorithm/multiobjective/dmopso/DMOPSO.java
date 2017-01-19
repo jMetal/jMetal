@@ -23,6 +23,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -222,20 +223,17 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
         lambda[n][1] = 1 - a;
-      } // for
-    } // if
+      }
+    }
     else {
       String dataFileName;
-      dataDirectory = "/Users/antelverde/Softw/pruebas/data/MOEAD_parameters/Weight";
       dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
               swarmSize + ".dat";
 
       try {
-        // Open the file
-        FileInputStream fis = new FileInputStream(dataDirectory + "/" + dataFileName);
-        InputStreamReader isr = new InputStreamReader(fis);
+        InputStream in = getClass().getResourceAsStream("/" + dataDirectory + "/" + dataFileName);
+        InputStreamReader isr = new InputStreamReader(in);
         BufferedReader br = new BufferedReader(isr);
-
 
         int i = 0;
         int j = 0;
