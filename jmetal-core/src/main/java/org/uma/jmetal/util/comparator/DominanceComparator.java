@@ -81,6 +81,48 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
   }
 
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
+    /*
+    int bestIsOne = 0, bestIsTwo=0;
+    for (unsigned i = 0; i < One.size(); i++) {
+//if(i != 2) continue;
+      if (One[i] / (1 + epsilon) < Two[i])
+        bestIsOne = 1;
+      if (Two[i] / (1 + epsilon) < One[i])
+        bestIsTwo = 1;
+    }
+    if (bestIsOne > bestIsTwo) {
+      return -1;
+    } else if (bestIsTwo > bestIsOne) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  */
+    int bestIsOne = 0 ;
+    int bestIsTwo = 0 ;
+    int result ;
+    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
+      double value1 = solution1.getObjective(i);
+      double value2 = solution2.getObjective(i);
+      if (value1 != value2) {
+        if (value1 / (1.0 + epsilon) < value2) {
+          bestIsOne = 1;
+        }
+        if (value2 / (1.0 + epsilon) < value1) {
+          bestIsTwo = 1;
+        }
+      }
+    }
+    if (bestIsOne > bestIsTwo) {
+      result = -1;
+    } else if (bestIsTwo > bestIsOne) {
+      result = 1;
+    } else {
+      result = 0;
+    }
+    return result ;
+    /*
     int result ;
     boolean solution1Dominates = false ;
     boolean solution2Dominates = false ;
@@ -119,5 +161,6 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
       result = 1;
     }
     return result ;
+    */
   }
 }
