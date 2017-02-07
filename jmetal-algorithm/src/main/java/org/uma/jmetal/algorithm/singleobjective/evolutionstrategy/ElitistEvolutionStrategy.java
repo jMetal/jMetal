@@ -54,7 +54,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   }
 
   @Override protected void initProgress() {
-    evaluations = 1;
+    evaluations = mu;
   }
 
   @Override protected void updateProgress() {
