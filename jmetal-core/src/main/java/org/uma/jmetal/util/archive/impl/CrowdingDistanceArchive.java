@@ -19,6 +19,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -52,5 +53,10 @@ public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoun
   @Override
   public void computeDensityEstimator() {
     crowdingDistance.computeDensityEstimator(getSolutionList());
+  }
+
+  @Override
+  public void sortByDensityEstimator() {
+    Collections.sort(getSolutionList(), new CrowdingDistanceComparator<S>());
   }
 }

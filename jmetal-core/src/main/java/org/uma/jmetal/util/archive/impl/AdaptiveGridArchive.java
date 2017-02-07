@@ -142,4 +142,9 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
   public void computeDensityEstimator() {
     // TODO
   }
+
+  @Override
+  public void sortByDensityEstimator() {
+    // TODO
+  }
 }
