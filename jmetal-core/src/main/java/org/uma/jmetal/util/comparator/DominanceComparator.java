@@ -21,15 +21,13 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * This class implements a solution comparator taking into account the violation constraints and
- * an optional epsilon value (i.e, implements an epsilon dominance comparator)
+ * This class implements a solution comparator taking into account the violation constraints
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private ConstraintViolationComparator<S> constraintViolationComparator;
-  private double epsilon = 0.0 ;
 
   /** Constructor */
   public DominanceComparator() {
@@ -49,7 +47,6 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
   /** Constructor */
   public DominanceComparator(ConstraintViolationComparator<S> constraintComparator, double epsilon) {
     constraintViolationComparator = constraintComparator ;
-    this.epsilon = epsilon ;
   }
 
   /**
@@ -81,24 +78,6 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
   }
 
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
-    /*
-    int bestIsOne = 0, bestIsTwo=0;
-    for (unsigned i = 0; i < One.size(); i++) {
-//if(i != 2) continue;
-      if (One[i] / (1 + epsilon) < Two[i])
-        bestIsOne = 1;
-      if (Two[i] / (1 + epsilon) < One[i])
-        bestIsTwo = 1;
-    }
-    if (bestIsOne > bestIsTwo) {
-      return -1;
-    } else if (bestIsTwo > bestIsOne) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-  */
     int bestIsOne = 0 ;
     int bestIsTwo = 0 ;
     int result ;
@@ -106,10 +85,10 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
       double value1 = solution1.getObjective(i);
       double value2 = solution2.getObjective(i);
       if (value1 != value2) {
-        if (value1 / (1.0 + epsilon) < value2) {
+        if (value1 < value2) {
           bestIsOne = 1;
         }
-        if (value2 / (1.0 + epsilon) < value1) {
+        if (value2 < value1) {
           bestIsTwo = 1;
         }
       }
@@ -122,45 +101,5 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
       result = 0;
     }
     return result ;
-    /*
-    int result ;
-    boolean solution1Dominates = false ;
-    boolean solution2Dominates = false ;
-
-    int flag;
-    double value1, value2;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      value1 = solution1.getObjective(i);
-      value2 = solution2.getObjective(i);
-      if (value1 / (1 + epsilon) < value2) {
-        flag = -1;
-      //} else if (value1 / (1 + epsilon) > value2) {
-      } else if (value2 / (1 + epsilon) < value1) {
-        flag = 1;
-      } else {
-        flag = 0;
-      }
-
-      if (flag == -1) {
-        solution1Dominates = true ;
-      }
-
-      if (flag == 1) {
-        solution2Dominates = true ;
-      }
-    }
-
-    if (solution1Dominates == solution2Dominates) {
-      // non-dominated solutions
-      result = 0;
-    } else if (solution1Dominates) {
-      // solution1 dominates
-      result = -1;
-    } else {
-      // solution2 dominates
-      result = 1;
-    }
-    return result ;
-    */
   }
 }
