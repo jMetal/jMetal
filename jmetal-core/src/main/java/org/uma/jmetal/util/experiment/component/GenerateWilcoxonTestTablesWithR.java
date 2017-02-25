@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
