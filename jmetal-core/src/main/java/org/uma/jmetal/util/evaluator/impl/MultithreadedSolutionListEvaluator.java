@@ -44,7 +44,7 @@ public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implement
       if (problem instanceof ConstrainedProblem) {
         solutionList.parallelStream().forEach(s -> {
           problem.evaluate(s);
-          ((ConstrainedProblem) problem).evaluateConstraints(s);
+          ((ConstrainedProblem<S>) problem).evaluateConstraints(s);
         });
       } else {
         solutionList.parallelStream().forEach(s -> problem.evaluate(s));

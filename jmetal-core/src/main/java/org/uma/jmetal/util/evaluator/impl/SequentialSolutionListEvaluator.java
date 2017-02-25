@@ -33,7 +33,7 @@ public class SequentialSolutionListEvaluator<S extends Solution<?>> implements S
       if (problem instanceof ConstrainedProblem) {
         solutionList.stream().forEach(s -> {
           problem.evaluate(s);
-          ((ConstrainedProblem) problem).evaluateConstraints(s);
+          ((ConstrainedProblem<S>) problem).evaluateConstraints(s);
         });
       } else {
         solutionList.stream().forEach(s -> problem.evaluate(s));
