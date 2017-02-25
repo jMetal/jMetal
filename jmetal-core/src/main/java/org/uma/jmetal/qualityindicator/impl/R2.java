@@ -90,12 +90,19 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * two objectives and N lambda vectors
    */
   public R2(int nVectors, String referenceParetoFrontFile) throws FileNotFoundException {
+	this(nVectors, new ArrayFront(referenceParetoFrontFile));
+  }
+
+  /**
+   * Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
+   */
+  public R2(int nVectors, Front referenceParetoFrontFile) {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
 
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+    referenceParetoFront = referenceParetoFrontFile ;
 
   
     // generating the weights
