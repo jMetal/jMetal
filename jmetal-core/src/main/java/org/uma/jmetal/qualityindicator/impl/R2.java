@@ -54,7 +54,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * Creates a new instance of the R2 indicator for a problem with
    * two objectives and 100 lambda vectors
    */
-  public R2(Front referenceParetoFrontFile) throws FileNotFoundException {
+  public R2(Front referenceParetoFrontFile) {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
     this(100, referenceParetoFrontFile) ;
