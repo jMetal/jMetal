@@ -63,7 +63,6 @@ public class WeightVector {
       BufferedReader br = new BufferedReader(isr);
 
       int numberOfObjectives = 0;
-      int i = 0;
       int j = 0;
       String aux = br.readLine();
       while (aux != null) {
@@ -79,7 +78,6 @@ public class WeightVector {
 
         listOfWeights.add(weight);
         aux = br.readLine();
-        i++;
       }
       br.close();
 

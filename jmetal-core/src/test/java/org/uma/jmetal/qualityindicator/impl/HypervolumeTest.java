@@ -52,6 +52,6 @@ public class HypervolumeTest {
 
     Front front = null ;
 
-    Hypervolume<?> hypervolume = new PISAHypervolume<DoubleSolution>(front) ;;
+    new PISAHypervolume<DoubleSolution>(front) ;
   }
 }

@@ -56,8 +56,6 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
 
   @Override
   public void run() throws IOException {
-    String latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
-
     List<List<List<List<Double>>>> data = readDataFromFiles() ;
     computeDataStatistics(data) ;
     generateLatexScript(data) ;
@@ -150,7 +148,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     File latexOutput;
     latexOutput = new File(latexDirectoryName);
     if (!latexOutput.exists()) {
-      boolean result = new File(latexDirectoryName).mkdirs();
+      new File(latexDirectoryName).mkdirs();
       JMetalLogger.logger.info("Creating " + latexDirectoryName + " directory");
     }
     //System.out.println("Experiment name: " + experimentName_);

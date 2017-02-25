@@ -77,7 +77,7 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
-      boolean result = new File(rDirectoryName).mkdirs();
+      new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {

@@ -40,8 +40,7 @@ public class NSGAIIIT {
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation).build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
@@ -68,8 +67,7 @@ public class NSGAIIIT {
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation).build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 

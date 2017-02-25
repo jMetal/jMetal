@@ -60,7 +60,6 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
 	    CrossoverOperator<DoubleSolution> crossover;
 	    MutationOperator<DoubleSolution> mutation;
 	    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-	    String referenceParetoFront = "" ;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
 

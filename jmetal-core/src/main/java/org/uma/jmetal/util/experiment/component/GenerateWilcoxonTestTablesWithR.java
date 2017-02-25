@@ -54,7 +54,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
-      boolean result = new File(rDirectoryName).mkdirs();
+      new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
@@ -102,11 +102,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
   private void printTableHeader(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
     FileWriter os = new FileWriter(rFileName, true);
-
-    String caption = indicator.getName() + ". Problems: ";
-    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-      caption += problem.getTag() + " ";
-    }
 
     String latexTableLabel = "";
     String latexTableCaption = "";
