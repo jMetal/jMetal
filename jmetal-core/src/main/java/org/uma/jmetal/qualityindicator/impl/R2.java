@@ -47,21 +47,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * two objectives and 100 lambda vectors
    */
   public R2(String referenceParetoFrontFile) throws FileNotFoundException {
-    // by default it creates an R2 indicator for a two dimensions problem and
-    // uses only 100 weight vectors for the R2 computation
-    super("R2", "R2 quality indicator") ;
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
-
-  
-    // generating the weights
-    lambda = new double[100][2];
-    for (int n = 0; n < 100; n++) {
-      double a = 1.0 * n / (100 - 1);
-      lambda[n][0] = a;
-      lambda[n][1] = 1 - a;
-    }
+    this(new ArrayFront(referenceParetoFrontFile));
   }
 
   /**
@@ -71,18 +57,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public R2(Front referenceParetoFrontFile) throws FileNotFoundException {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
-    super("R2", "R2 quality indicator") ;
-
-    referenceParetoFront = referenceParetoFrontFile ;
-
-  
-    // generating the weights
-    lambda = new double[100][2];
-    for (int n = 0; n < 100; n++) {
-      double a = 1.0 * n / (100 - 1);
-      lambda[n][0] = a;
-      lambda[n][1] = 1 - a;
-    }
+    this(100, referenceParetoFrontFile) ;
   }
 
   /**
