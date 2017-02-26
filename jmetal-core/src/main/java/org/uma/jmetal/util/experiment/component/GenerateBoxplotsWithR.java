@@ -17,15 +17,11 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class generates a R script that generates an eps file containing boxplots
@@ -81,7 +77,7 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
-      boolean result = new File(rDirectoryName).mkdirs();
+      new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {

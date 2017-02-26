@@ -20,8 +20,6 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 import java.util.List;
 
@@ -38,10 +36,6 @@ public class DMOPSOIT {
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     DoubleProblem problem = new ZDT1() ;
-
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
 
     algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
         "_TCHE", "", 2) ;

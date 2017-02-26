@@ -62,10 +62,7 @@ public class ZDT6 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution) {
-    int numberOfVariables = getNumberOfVariables() ;
-
     double[] f = new double[getNumberOfObjectives()];
-    double[] x = new double[numberOfVariables] ;
 
     double x1 = solution.getVariableValue(0);
     f[0] = 1.0 - Math.exp((-4.0) * x1) * Math.pow(Math.sin(6.0 * Math.PI * x1), 6.0);

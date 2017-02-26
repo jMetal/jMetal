@@ -378,7 +378,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException {
     String fileName = "abcdefadg" ;
 
-    Front front = new ArrayFront(fileName) ;
+    new ArrayFront(fileName) ;
   }
 
   @Test
@@ -418,7 +418,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException, JMetalException {
     String fileName = "/arrayFront/fileWithWrongData.dat" ;
 
-    Front front = new ArrayFront(fileName) ;
+    new ArrayFront(fileName) ;
   }
 
   /**
@@ -435,7 +435,7 @@ public class ArrayFrontTest {
     exception.expectMessage(containsString("Invalid number of points read. "
         + "Expected: 3, received: 2"));
 
-    Front front = new ArrayFront(fileName) ;
+    new ArrayFront(fileName) ;
   }
 
   /**

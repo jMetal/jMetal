@@ -67,7 +67,6 @@ public class DTLZ7 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = getNumberOfObjectives() ;
-    double[] theta = new double[numberOfObjectives - 1];
 
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables] ;
