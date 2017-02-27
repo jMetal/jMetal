@@ -50,22 +50,6 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
     this(new ArrayFront(referenceParetoFrontFile));
-
-
-
-    /*
-    super("R2", "R2 quality indicator") ;
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
-
-  
-    // generating the weights
-    lambda = new double[100][2];
-    for (int n = 0; n < 100; n++) {
-      double a = 1.0 * n / (100 - 1);
-      lambda[n][0] = a;
-      lambda[n][1] = 1 - a;
-    }*/
   }
 
   /**
@@ -75,18 +59,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public R2(Front referenceParetoFrontFile) throws FileNotFoundException {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
-    super("R2", "R2 quality indicator") ;
-
-    referenceParetoFront = referenceParetoFrontFile ;
-
-  
-    // generating the weights
-    lambda = new double[100][2];
-    for (int n = 0; n < 100; n++) {
-      double a = 1.0 * n / (100 - 1);
-      lambda[n][0] = a;
-      lambda[n][1] = 1 - a;
-    }
+    this(100,referenceParetoFrontFile);
   }
 
   /**
@@ -96,12 +69,19 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public R2(int nVectors, String referenceParetoFrontFile) throws FileNotFoundException {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
+    this(nVectors, new ArrayFront(referenceParetoFrontFile));
+  }
+
+  /**
+   * Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
+   */
+  public R2(int nVectors, Front referenceParetoFrontFile) throws FileNotFoundException {
+    // by default it creates an R2 indicator for a two dimensions problem and
+    // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
 
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
-
-  
+    referenceParetoFront = referenceParetoFrontFile;
     // generating the weights
     lambda = new double[nVectors][2];
     for (int n = 0; n < nVectors; n++) {
@@ -110,6 +90,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
       lambda[n][1] = 1 - a;
     }
   }
+
 
   @Override public Double evaluate(Evaluate solutionList) {
     return r2(new ArrayFront(solutionList), referenceParetoFront);
