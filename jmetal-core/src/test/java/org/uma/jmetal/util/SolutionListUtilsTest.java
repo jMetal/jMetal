@@ -390,6 +390,7 @@ public class SolutionListUtilsTest {
   public void shouldRestartRemoveTheRequestedPercentageOfSolutions() {
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem extends AbstractDoubleProblem {
 
     public MockedDoubleProblem() {

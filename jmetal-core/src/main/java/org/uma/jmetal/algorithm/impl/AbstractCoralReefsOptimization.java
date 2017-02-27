@@ -22,6 +22,7 @@ import org.uma.jmetal.solution.Solution;
  *
  * @author Inacio Medeiros <inaciogmedeiros@gmail.com>
  */
+@SuppressWarnings("serial")
 public abstract class AbstractCoralReefsOptimization<S extends Solution<?>, R>
 		implements Algorithm<R> {
 

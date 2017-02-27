@@ -29,6 +29,7 @@ import org.uma.jmetal.solution.DoubleSolution;
  * 4 distance-related parameters,
  * and 2 objectives
  */
+@SuppressWarnings("serial")
 public class WFG8 extends WFG {
 
   /**

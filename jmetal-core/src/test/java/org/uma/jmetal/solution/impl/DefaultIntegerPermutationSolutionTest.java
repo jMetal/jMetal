@@ -63,6 +63,7 @@ public class DefaultIntegerPermutationSolutionTest {
   /**
    * Mock class representing a integer permutation problem
    */
+  @SuppressWarnings("serial")
   private class MockIntegerPermutationProblem extends AbstractIntegerPermutationProblem {
 
     /**
