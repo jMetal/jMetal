@@ -49,8 +49,12 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public R2(String referenceParetoFrontFile) throws FileNotFoundException {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
-    super("R2", "R2 quality indicator") ;
+    this(new ArrayFront(referenceParetoFrontFile));
 
+
+
+    /*
+    super("R2", "R2 quality indicator") ;
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
 
@@ -61,7 +65,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
       double a = 1.0 * n / (100 - 1);
       lambda[n][0] = a;
       lambda[n][1] = 1 - a;
-    }
+    }*/
   }
 
   /**
