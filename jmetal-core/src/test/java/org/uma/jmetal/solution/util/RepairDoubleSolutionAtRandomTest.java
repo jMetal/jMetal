@@ -25,7 +25,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @version 1.0
  */
 public class RepairDoubleSolutionAtRandomTest {
-  private static final double EPSILON = 0.0000000000001;
   private RepairDoubleSolution repair;
 
   @Before public void setup() {

@@ -29,7 +29,6 @@ import static org.hamcrest.CoreMatchers.containsString;
  * @version 1.0
  */
 public class HypervolumeTest {
-  private static final double EPSILON = 0.0000000000001 ;
 
   @Rule
   public ExpectedException exception = ExpectedException.none();
