@@ -28,9 +28,6 @@ public class WfgHypervolumeVersion {
 
   public WfgHypervolumeVersion(int dimension, int maxNumberOfPoints) {
     referencePoint = new ArrayPoint(dimension);
-    for (int i = 0; i < dimension; i++) {
-      referencePoint.setDimensionValue(i, 0.0);
-    }
 
     maximizing = false;
     currentDeep = 0;
