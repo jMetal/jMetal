@@ -153,41 +153,38 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   }
 
   public double r2(Front front) {
+    if (this.referenceParetoFront != null) {
+       // STEP 1. Obtain the maximum and minimum values of the Pareto front
+       double[] maximumValues = FrontUtils.getMaximumValues(this.referenceParetoFront);
+       double[] minimumValues = FrontUtils.getMinimumValues(this.referenceParetoFront);
 
+       // STEP 2. Get the normalized front
+       FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+       front = frontNormalizer.normalize(front);
+    }
 
-      if (this.referenceParetoFront != null) {
-          // STEP 1. Obtain the maximum and minimum values of the Pareto front
-          double[] maximumValues = FrontUtils.getMaximumValues(this.referenceParetoFront);
-          double[] minimumValues = FrontUtils.getMinimumValues(this.referenceParetoFront);
+    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
 
-          // STEP 2. Get the normalized front
-          FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-          front = frontNormalizer.normalize(front);
+    // STEP 3. compute all the matrix of Tschebyscheff values if it is null
+    double[][] matrix = new double[front.getNumberOfPoints()][lambda.length];
+    for (int i = 0; i < front.getNumberOfPoints(); i++) {
+      for (int j = 0; j < lambda.length; j++) {
+        matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
+        for (int n = 1; n < numberOfObjectives; n++) {
+          matrix[i][j] = Math.max(matrix[i][j],
+          lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
+        }
       }
+    }
 
-      int numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
-      
-      // STEP 3. compute all the matrix of Tschebyscheff values if it is null
-      double [][] matrix = new double[front.getNumberOfPoints()][lambda.length];
-      for (int i = 0; i < front.getNumberOfPoints(); i++) {
-          for (int j = 0; j < lambda.length; j++) {
-              matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
-              for (int n = 1; n < numberOfObjectives; n++) {
-                  matrix[i][j] = Math.max(matrix[i][j],
-                          lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
-              }
-          }
+    double sum = 0.0;
+    for (int i = 0; i < lambda.length; i++) {
+      double tmp = matrix[0][i];
+      for (int j = 1; j < front.getNumberOfPoints(); j++) {
+        tmp = Math.min(tmp, matrix[j][i]);
       }
-
-      double sum = 0.0;
-      for (int i = 0; i < lambda.length; i++) {
-          double tmp = matrix[0][i];
-          for (int j = 1; j < front.getNumberOfPoints(); j++) {
-              tmp = Math.min(tmp, matrix[j][i]);
-          }
-          sum += tmp;
-      }
-
-      return sum / (double) lambda.length;
+      sum += tmp;
+    }
+    return sum / (double) lambda.length;
   }
 }
