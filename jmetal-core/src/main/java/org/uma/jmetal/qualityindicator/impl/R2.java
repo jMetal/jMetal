@@ -24,10 +24,17 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * TODO: Add comments here
@@ -36,52 +43,52 @@ import java.util.List;
 public class R2<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {
-  private double[][] matrix = null;
-  private double[][] lambda = null;
+    private double[][] lambda = null;
   
 
-  private Front referenceParetoFront ;
+  private Front referenceParetoFront = null;
+
+
 
   /**
    * Creates a new instance of the R2 indicator for a problem with
    * two objectives and 100 lambda vectors
    */
-  public R2(String referenceParetoFrontFile) throws FileNotFoundException {
+  public R2(Front referenceParetoFront) {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
-    this(new ArrayFront(referenceParetoFrontFile));
+    this(100, referenceParetoFront);
   }
 
+
   /**
    * Creates a new instance of the R2 indicator for a problem with
    * two objectives and 100 lambda vectors
    */
-  public R2(Front referenceParetoFrontFile) throws FileNotFoundException {
+  public R2() {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only 100 weight vectors for the R2 computation
-    this(100,referenceParetoFrontFile);
+    this(100);
+  }
+
+
+  /**
+   * Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
+   */
+  public R2(int nVectors, Front referenceParetoFront)  {
+    this(nVectors);
+    this.referenceParetoFront = referenceParetoFront;
   }
 
   /**
    * Creates a new instance of the R2 indicator for a problem with
    * two objectives and N lambda vectors
    */
-  public R2(int nVectors, String referenceParetoFrontFile) throws FileNotFoundException {
-    // by default it creates an R2 indicator for a two dimensions problem and
-    // uses only <code>nVectors</code> weight vectors for the R2 computation
-    this(nVectors, new ArrayFront(referenceParetoFrontFile));
-  }
-
-  /**
-   * Creates a new instance of the R2 indicator for a problem with
-   * two objectives and N lambda vectors
-   */
-  public R2(int nVectors, Front referenceParetoFrontFile) throws FileNotFoundException {
+  public R2(int nVectors)  {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
-
-    referenceParetoFront = referenceParetoFrontFile;
     // generating the weights
     lambda = new double[nVectors][2];
     for (int n = 0; n < nVectors; n++) {
@@ -91,45 +98,96 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     }
   }
 
+    /**
+     * Constructor
+     * Creates a new instance of the R2 indicator for nDimensiosn
+     * It loads the weight vectors from the file fileName
+     */
+    public R2(String file, Front referenceParetoFront) throws java.io.IOException {
+        this(file);
+        this.referenceParetoFront = referenceParetoFront;
+    } // R2
+
+
+    /**
+   * Constructor
+   * Creates a new instance of the R2 indicator for nDimensiosn
+   * It loads the weight vectors from the file fileName
+   */
+  public R2(String file) throws java.io.IOException {
+    // reading weights from file
+    FileInputStream fis = new FileInputStream(file);
+    InputStreamReader isr = new InputStreamReader(fis);
+    BufferedReader br = new BufferedReader(isr);
+
+    String line = br.readLine();
+
+    if (line==null)
+      return;
+
+    int numberOfObjectives = (new StringTokenizer(line)).countTokens();
+    int numberOfVectors   =  (int) br.lines().count();
+
+    lambda = new double[numberOfVectors][numberOfObjectives];
+
+    int index = 0;
+    while (line!=null) {
+      StringTokenizer st = new StringTokenizer(line);
+      for (int i = 0; i < numberOfObjectives; i++)
+        lambda[index][i] = new Double(st.nextToken());
+      index++;
+      line = br.readLine();
+    }
+
+    br.close();
+
+  } // R2
+
 
   @Override public Double evaluate(Evaluate solutionList) {
-    return r2(new ArrayFront(solutionList), referenceParetoFront);
+    return r2(new ArrayFront(solutionList));
   }
 
   @Override public String getName() {
     return super.getName();
   }
 
-  /**
-   * Returns the R2 indicator value of a given front
-   * @param front
-   * @param referenceFront
-   * @return
-   */
-  public double r2(Front front, Front referenceFront) {
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
+  public double r2(Front front) {
 
-    // STEP 3. compute all the matrix of Tschebyscheff values if it is null
-    matrix = new double[front.getNumberOfPoints()][lambda.length];
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      for (int j = 0; j < lambda.length; j++) {
-        matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
-        for (int n = 1; n < numberOfObjectives; n++) {
-          matrix[i][j] = Math.max(matrix[i][j],
-            lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
-        }
+
+      if (this.referenceParetoFront != null) {
+          // STEP 1. Obtain the maximum and minimum values of the Pareto front
+          double[] maximumValues = FrontUtils.getMaximumValues(this.referenceParetoFront);
+          double[] minimumValues = FrontUtils.getMinimumValues(this.referenceParetoFront);
+
+          // STEP 2. Get the normalized front
+          FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+          front = frontNormalizer.normalize(front);
       }
-    }
 
-    double sum = 0.0;
-    for (int i = 0; i < lambda.length; i++) {
-      double tmp = matrix[0][i];
-      for (int j = 1; j < front.getNumberOfPoints(); j++) {
-        tmp = Math.min(tmp, matrix[j][i]);
+      int numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+      
+      // STEP 3. compute all the matrix of Tschebyscheff values if it is null
+      double [][] matrix = new double[front.getNumberOfPoints()][lambda.length];
+      for (int i = 0; i < front.getNumberOfPoints(); i++) {
+          for (int j = 0; j < lambda.length; j++) {
+              matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
+              for (int n = 1; n < numberOfObjectives; n++) {
+                  matrix[i][j] = Math.max(matrix[i][j],
+                          lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
+              }
+          }
       }
-      sum += tmp;
-    }
 
-    return sum / (double) lambda.length;
+      double sum = 0.0;
+      for (int i = 0; i < lambda.length; i++) {
+          double tmp = matrix[0][i];
+          for (int j = 1; j < front.getNumberOfPoints(); j++) {
+              tmp = Math.min(tmp, matrix[j][i]);
+          }
+          sum += tmp;
+      }
+
+      return sum / (double) lambda.length;
   }
 }
