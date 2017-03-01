@@ -43,6 +43,11 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
     return mutationProbability;
   }
 
+  /* Setters */
+  public void setMutationProbability(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
+  }
+
   /** Execute() method */
   @Override
   public BinarySolution execute(BinarySolution solution) {

@@ -46,6 +46,11 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
     return crossoverProbability;
   }
 
+  /* Setter */
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
+  }
+
   @Override
   public List<BinarySolution> execute(List<BinarySolution> solutions) {
     if (solutions == null) {
