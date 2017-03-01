@@ -42,8 +42,6 @@ public class AdaptiveRandomNeighborhoodTest {
 
   @Test
   public void shouldConstructorThrowAnExceptionWhenTheNumberOfNeighboursIsNegative() {
-    List<DoubleSolution> list = new ArrayList<>() ;
-
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The number of neighbors is negative: -1"));
 

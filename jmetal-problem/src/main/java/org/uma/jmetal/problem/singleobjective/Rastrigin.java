@@ -57,7 +57,6 @@ public class Rastrigin extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[getNumberOfObjectives()];
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {

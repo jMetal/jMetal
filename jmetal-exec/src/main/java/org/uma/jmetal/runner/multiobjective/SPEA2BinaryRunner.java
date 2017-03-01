@@ -88,12 +88,9 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
         .setPopulationSize(100)
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<BinarySolution> population = algorithm.getResult();
-
-    long computingTime = algorithmRunner.getComputingTime() ;
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
