@@ -14,7 +14,6 @@
 package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
@@ -25,12 +24,9 @@ import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * This class implements an archive containing non-dominated solutions

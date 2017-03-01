@@ -68,7 +68,6 @@ public class UF1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public void evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariableValue(i) ;

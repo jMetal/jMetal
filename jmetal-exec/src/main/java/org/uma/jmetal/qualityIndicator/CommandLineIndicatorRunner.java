@@ -108,8 +108,9 @@ public class CommandLineIndicatorRunner {
     Front front = new ArrayFront(args[2]);
 
     if (normalize) {
-      referenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
-      front = new FrontNormalizer(referenceFront).normalize(front) ;
+      FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+      referenceFront = frontNormalizer.normalize(referenceFront);
+      front = frontNormalizer.normalize(front);
       JMetalLogger.logger.info("The fronts are NORMALIZED before computing the indicators"); ;
     } else {
       JMetalLogger.logger.info("The fronts are NOT NORMALIZED before computing the indicators") ;

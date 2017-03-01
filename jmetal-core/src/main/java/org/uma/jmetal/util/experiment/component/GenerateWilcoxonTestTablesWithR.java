@@ -13,7 +13,7 @@
 
 package org.uma.jmetal.util.experiment.component;
 
-import org.uma.jmetal.problem.Problem;
+import org.apache.commons.lang3.StringUtils;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -55,7 +55,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     File rOutput;
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
-      boolean result = new File(rDirectoryName).mkdirs();
+      new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
@@ -103,11 +103,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
 
   private void printTableHeader(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
     FileWriter os = new FileWriter(rFileName, true);
-
-    String caption = indicator.getName() + ". Problems: ";
-    for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-      caption += problem.getTag() + " ";
-    }
 
     String latexTableLabel = "";
     String latexTableCaption = "";
@@ -280,9 +275,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     latexTabularAlignment = "| l | ";
     latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
-      for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-        latexTabularAlignment += "p{0.15cm }";
-      }
+      latexTabularAlignment += StringUtils.repeat("p{0.15cm }", experiment.getProblemList().size());
       latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"}";
       latexTabularAlignment += " | " ;
     }

@@ -61,7 +61,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   public void run() throws IOException {
     String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
 
-    File outputDirectory = createOutputDirectory(outputDirectoryName) ;
+    createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {

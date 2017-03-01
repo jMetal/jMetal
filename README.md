@@ -13,6 +13,10 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ##Changelog of the next incoming release (jMetal 5.3)
 
+### New features
+* Added getters and setters to all the parameters of the operators.
+* The R2 indicator can be applied now to fronts with more than two objectives.
+
 ##jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal

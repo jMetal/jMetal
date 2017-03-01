@@ -1269,11 +1269,11 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
 
     double total = 0.0;
-    int number = 0;
+    //int number = 0;
     for (int i = 0; i < this.getNumberOfConstraints(); i++)
       if (constraint[i]<0.0){
         total+=constraint[i];
-        number++;
+        //number++;
       }
     overallConstraintViolationDegree.setAttribute(solution, total);
     //solution.setOverallConstraintViolationDegree(total);
@@ -3743,7 +3743,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // [2]: TensiÃƒÂ³n tangencial
     double [][][]Strain = new double [3][numberOfElements_][numberOfWeigthHypothesis_];
     double z, y;
-    double ez, ey;
+    //double ez, ey;
     double  A, Iz, Iy, It;
     // Effort
     double Nxx, Qxy, Qxz, Mxx, Mxy, Mxz;
@@ -3777,8 +3777,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
         y = Groups_[idx][Y_];
         z = Groups_[idx][Z_];
-        ey = Groups_[idx][eY_];
-        ez = Groups_[idx][eZ_];
+        //ey = Groups_[idx][eY_];
+        //ez = Groups_[idx][eZ_];
         A = Groups_[idx][AREA];
         Az = Groups_[idx][Az_];
         Ay = Groups_[idx][Ay_];
@@ -4324,9 +4324,10 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // z: longitud en sentido del eje Z princial local
     // ey: espesor en sentido eje Y, es decir coincidente con el espesor de cada ala
     // ez: espesor en sentido Z, es decir coincidente con el espesor del alma
-    double y1, z1, yi, zi;
-    double as, ys, es, al, yl, el;
-    double zl, ae, ze, ee;
+    //double y1, z1, yi, zi;
+    //double as, ys, es, al, yl, el;
+    //double zl, ae, ze, ee;
+    double yi, zi;
 
     // distancia Y en ejes locales principales
     Groups_[gr][Y_]=y;
@@ -5556,7 +5557,7 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
       double S2Z = 0.0; // variance Z distance
       double SY = 0.0; // variance Y distance
       double SZ = 0.0; // variance Z distance
-      double CS2 = 0.0; // covariance
+      //double CS2 = 0.0; // covariance
       double r = 0.0; // Pearson correlation
 
       for (int j = 0; j < geometryCheck_[i].length; j++) {
