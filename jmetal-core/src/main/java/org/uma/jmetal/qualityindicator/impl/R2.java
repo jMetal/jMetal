@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
 public class R2<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {
-    private double[][] lambda = null;
+    private final double[][] lambda;
   
 
   private Front referenceParetoFront = null;
@@ -124,6 +124,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 
     if (line==null) {
       br.close();
+      lambda = null;
       return;
     }
 
