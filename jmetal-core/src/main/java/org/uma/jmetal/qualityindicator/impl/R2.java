@@ -46,7 +46,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     private final double[][] lambda;
   
 
-  private Front referenceParetoFront = null;
+  private final Front referenceParetoFront;
 
 
 
@@ -115,6 +115,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
         if (line==null) {
           br.close();
           lambda = null;
+          this.referenceParetoFront = referenceParetoFront;
           return;
         }
 
