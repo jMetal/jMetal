@@ -122,8 +122,10 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 
     String line = br.readLine();
 
-    if (line==null)
+    if (line==null) {
+      br.close();
       return;
+    }
 
     int numberOfObjectives = (new StringTokenizer(line)).countTokens();
     int numberOfVectors   =  (int) br.lines().count();
