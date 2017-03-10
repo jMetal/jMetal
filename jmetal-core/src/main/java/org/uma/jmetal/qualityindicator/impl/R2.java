@@ -105,13 +105,18 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
      * It loads the weight vectors from the file fileName
      */
     public R2(String file, Front referenceParetoFront) throws java.io.IOException {
-        // reading weights from file
-        FileInputStream fis = new FileInputStream(file);
+        this.lambda = readWeightsFrom(file);
+        this.referenceParetoFront = referenceParetoFront;
+    }
+
+
+	private static double[][] readWeightsFrom(String file) throws java.io.IOException {
+		FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader br = new BufferedReader(isr);
 
         String line = br.readLine();
-
+        double[][] lambda;
         if (line==null) {
           lambda = null;
         } else {
@@ -131,9 +136,8 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 
           br.close();
         }
-
-        this.referenceParetoFront = referenceParetoFront;
-    } // R2
+        return lambda;
+	}
 
 
     /**
