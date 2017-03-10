@@ -77,15 +77,6 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * two objectives and N lambda vectors
    */
   public R2(int nVectors, Front referenceParetoFront)  {
-    this(nVectors);
-    this.referenceParetoFront = referenceParetoFront;
-  }
-
-  /**
-   * Creates a new instance of the R2 indicator for a problem with
-   * two objectives and N lambda vectors
-   */
-  public R2(int nVectors)  {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
@@ -96,6 +87,16 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
       lambda[n][0] = a;
       lambda[n][1] = 1 - a;
     }
+    
+    this.referenceParetoFront = referenceParetoFront;
+  }
+
+  /**
+   * Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
+   */
+  public R2(int nVectors)  {
+	  this(nVectors, null);
   }
 
     /**
@@ -104,7 +105,35 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
      * It loads the weight vectors from the file fileName
      */
     public R2(String file, Front referenceParetoFront) throws java.io.IOException {
-        this(file);
+        // reading weights from file
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+
+        String line = br.readLine();
+
+        if (line==null) {
+          br.close();
+          lambda = null;
+          return;
+        }
+
+        int numberOfObjectives = (new StringTokenizer(line)).countTokens();
+        int numberOfVectors   =  (int) br.lines().count();
+
+        lambda = new double[numberOfVectors][numberOfObjectives];
+
+        int index = 0;
+        while (line!=null) {
+          StringTokenizer st = new StringTokenizer(line);
+          for (int i = 0; i < numberOfObjectives; i++)
+            lambda[index][i] = new Double(st.nextToken());
+          index++;
+          line = br.readLine();
+        }
+
+        br.close();
+
         this.referenceParetoFront = referenceParetoFront;
     } // R2
 
@@ -115,35 +144,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * It loads the weight vectors from the file fileName
    */
   public R2(String file) throws java.io.IOException {
-    // reading weights from file
-    FileInputStream fis = new FileInputStream(file);
-    InputStreamReader isr = new InputStreamReader(fis);
-    BufferedReader br = new BufferedReader(isr);
-
-    String line = br.readLine();
-
-    if (line==null) {
-      br.close();
-      lambda = null;
-      return;
-    }
-
-    int numberOfObjectives = (new StringTokenizer(line)).countTokens();
-    int numberOfVectors   =  (int) br.lines().count();
-
-    lambda = new double[numberOfVectors][numberOfObjectives];
-
-    int index = 0;
-    while (line!=null) {
-      StringTokenizer st = new StringTokenizer(line);
-      for (int i = 0; i < numberOfObjectives; i++)
-        lambda[index][i] = new Double(st.nextToken());
-      index++;
-      line = br.readLine();
-    }
-
-    br.close();
-
+    this(file, null);
   } // R2
 
 
