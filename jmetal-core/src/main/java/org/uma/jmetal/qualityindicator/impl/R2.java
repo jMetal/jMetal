@@ -85,6 +85,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
      * It loads the weight vectors from the file fileName
      */
     public R2(String file, Front referenceParetoFront) throws java.io.IOException {
+        super("R2", "R2 quality indicator") ;
         this.lambda = readWeightsFrom(file);
         this.referenceParetoFront = referenceParetoFront;
     }
