@@ -85,9 +85,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
      * It loads the weight vectors from the file fileName
      */
     public R2(String file, Front referenceParetoFront) throws java.io.IOException {
-        super("R2", "R2 quality indicator") ;
-        this.lambda = readWeightsFrom(file);
-        this.referenceParetoFront = referenceParetoFront;
+        this(readWeightsFrom(file), referenceParetoFront);
     }
 
   /**
@@ -97,8 +95,14 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
   public R2(int nVectors, Front referenceParetoFront)  {
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
+    this(generateWeights(nVectors), referenceParetoFront);
+  }
+
+  private R2(double[][] lambda, Front referenceParetoFront)  {
+    // by default it creates an R2 indicator for a two dimensions problem and
+    // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
-    this.lambda = generateWeights(nVectors);
+    this.lambda = lambda;
     this.referenceParetoFront = referenceParetoFront;
   }
 
