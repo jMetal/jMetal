@@ -30,9 +30,7 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
