@@ -80,15 +80,18 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     // by default it creates an R2 indicator for a two dimensions problem and
     // uses only <code>nVectors</code> weight vectors for the R2 computation
     super("R2", "R2 quality indicator") ;
-    // generating the weights
-    lambda = new double[nVectors][2];
+    this.lambda = generateWeights(nVectors);
+    this.referenceParetoFront = referenceParetoFront;
+  }
+
+  private static double[][] generateWeights(int nVectors) {
+	double[][] lambda = new double[nVectors][2];
     for (int n = 0; n < nVectors; n++) {
       double a = 1.0 * n / (nVectors - 1);
       lambda[n][0] = a;
       lambda[n][1] = 1 - a;
     }
-    
-    this.referenceParetoFront = referenceParetoFront;
+    return lambda;
   }
 
   /**
