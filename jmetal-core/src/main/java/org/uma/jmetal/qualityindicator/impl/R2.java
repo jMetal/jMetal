@@ -71,6 +71,23 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     this(100);
   }
 
+  /**
+   * Creates a new instance of the R2 indicator for a problem with
+   * two objectives and N lambda vectors
+   */
+  public R2(int nVectors)  {
+	  this(nVectors, null);
+  }
+
+    /**
+     * Constructor
+     * Creates a new instance of the R2 indicator for nDimensiosn
+     * It loads the weight vectors from the file fileName
+     */
+    public R2(String file, Front referenceParetoFront) throws java.io.IOException {
+        this.lambda = readWeightsFrom(file);
+        this.referenceParetoFront = referenceParetoFront;
+    }
 
   /**
    * Creates a new instance of the R2 indicator for a problem with
@@ -93,25 +110,6 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
     }
     return lambda;
   }
-
-  /**
-   * Creates a new instance of the R2 indicator for a problem with
-   * two objectives and N lambda vectors
-   */
-  public R2(int nVectors)  {
-	  this(nVectors, null);
-  }
-
-    /**
-     * Constructor
-     * Creates a new instance of the R2 indicator for nDimensiosn
-     * It loads the weight vectors from the file fileName
-     */
-    public R2(String file, Front referenceParetoFront) throws java.io.IOException {
-        this.lambda = readWeightsFrom(file);
-        this.referenceParetoFront = referenceParetoFront;
-    }
-
 
 	private static double[][] readWeightsFrom(String file) throws java.io.IOException {
 		FileInputStream fis = new FileInputStream(file);
