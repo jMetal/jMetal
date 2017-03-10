@@ -113,27 +113,24 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
         String line = br.readLine();
 
         if (line==null) {
-          br.close();
           lambda = null;
-          this.referenceParetoFront = referenceParetoFront;
-          return;
+        } else {
+          int numberOfObjectives = (new StringTokenizer(line)).countTokens();
+          int numberOfVectors   =  (int) br.lines().count();
+
+          lambda = new double[numberOfVectors][numberOfObjectives];
+
+          int index = 0;
+          while (line!=null) {
+            StringTokenizer st = new StringTokenizer(line);
+            for (int i = 0; i < numberOfObjectives; i++)
+              lambda[index][i] = new Double(st.nextToken());
+            index++;
+            line = br.readLine();
+          }
+
+          br.close();
         }
-
-        int numberOfObjectives = (new StringTokenizer(line)).countTokens();
-        int numberOfVectors   =  (int) br.lines().count();
-
-        lambda = new double[numberOfVectors][numberOfObjectives];
-
-        int index = 0;
-        while (line!=null) {
-          StringTokenizer st = new StringTokenizer(line);
-          for (int i = 0; i < numberOfObjectives; i++)
-            lambda[index][i] = new Double(st.nextToken());
-          index++;
-          line = br.readLine();
-        }
-
-        br.close();
 
         this.referenceParetoFront = referenceParetoFront;
     } // R2
