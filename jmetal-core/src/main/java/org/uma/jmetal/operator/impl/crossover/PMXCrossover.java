@@ -44,6 +44,16 @@ public class PMXCrossover implements
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
+  /* Getters */
+  public double getCrossoverProbability() {
+    return crossoverProbability;
+  }
+
+  /* Setters */
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
+  }
+
   /**
    * Executes the operation
    *

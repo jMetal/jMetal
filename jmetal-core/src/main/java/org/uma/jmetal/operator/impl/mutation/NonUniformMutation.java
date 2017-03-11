@@ -59,13 +59,25 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
     return currentIteration;
   }
 
-  /* Setter */
+  /* Setters */
   public void setCurrentIteration(int currentIteration) {
     if (currentIteration < 0) {
       throw new JMetalException("Iteration number cannot be a negative value: " + currentIteration) ;
     }
 
     this.currentIteration = currentIteration;
+  }
+
+  public void setPerturbation(double perturbation) {
+    this.perturbation = perturbation;
+  }
+
+  public void setMaxIterations(int maxIterations) {
+    this.maxIterations = maxIterations;
+  }
+
+  public void setMutationProbability(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
   }
 
   /** Execute() method */

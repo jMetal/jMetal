@@ -114,8 +114,21 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     return variant;
   }
 
+  /* Setters */
   public void setCurrentSolution(DoubleSolution current) {
     this.currentSolution = current ;
+  }
+
+  public void setCr(double cr) {
+    this.cr = cr;
+  }
+
+  public void setF(double f) {
+    this.f = f;
+  }
+
+  public void setK(double k) {
+    this.k = k;
   }
 
   /** Execute() method */

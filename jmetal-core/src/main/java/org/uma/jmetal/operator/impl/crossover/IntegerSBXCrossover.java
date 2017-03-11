@@ -66,6 +66,15 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
     return distributionIndex;
   }
 
+  /* Setters */
+  public void setDistributionIndex(double distributionIndex) {
+    this.distributionIndex = distributionIndex;
+  }
+
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
+  }
+
   /** Execute() method */
   @Override
   public List<IntegerSolution> execute(List<IntegerSolution> solutions) {

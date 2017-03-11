@@ -37,8 +37,18 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   	this.mutationProbability = probability ;
     randomGenerator = JMetalRandom.getInstance() ;
   }
-	
-	/** Execute() method */
+
+  /* Getters */
+  public double getMutationProbability() {
+    return mutationProbability;
+  }
+
+  /* Setters */
+  public void setMutationProbability(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
+  }
+
+  /** Execute() method */
 	@Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     if (null == solution) {

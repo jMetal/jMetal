@@ -51,6 +51,11 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
     return this.crossoverProbability;
   }
 
+  /* Setter */
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
+  }
+
   /** Execute() method */
   public List<BinarySolution> execute(List<BinarySolution> parents) {
     if (parents.size() != 2) {

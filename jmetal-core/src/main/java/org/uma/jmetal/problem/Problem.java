@@ -26,12 +26,12 @@ import java.io.Serializable;
  */
 public interface Problem<S extends Solution<?>> extends Serializable {
   /* Getters */
-  public int getNumberOfVariables() ;
-  public int getNumberOfObjectives() ;
-  public int getNumberOfConstraints() ;
-  public String getName() ;
+  int getNumberOfVariables() ;
+  int getNumberOfObjectives() ;
+  int getNumberOfConstraints() ;
+  String getName() ;
 
   /* Methods */
-  public void evaluate(S solution) ;
-  public S createSolution() ;
+  void evaluate(S solution) ;
+  S createSolution() ;
 }

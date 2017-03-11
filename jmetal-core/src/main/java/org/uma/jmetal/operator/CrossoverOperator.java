@@ -30,5 +30,5 @@ public interface CrossoverOperator<S extends Solution<?>> extends Operator<List<
   /**
    * @return The number of parents required to apply the operator.
    */
-  public int getNumberOfParents() ;
+  int getNumberOfParents() ;
 }

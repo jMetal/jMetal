@@ -26,7 +26,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 @SuppressWarnings("serial")
 public class UniformMutation implements MutationOperator<DoubleSolution> {
-  private Double perturbation;
+  private double perturbation;
   private Double mutationProbability = null;
   private JMetalRandom randomGenenerator ;
 
@@ -38,12 +38,21 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
   }
 
   /* Getters */
-  public Double getPerturbation() {
+  public double getPerturbation() {
     return perturbation;
   }
 
   public Double getMutationProbability() {
     return mutationProbability;
+  }
+
+  /* Setters */
+  public void setPerturbation(Double perturbation) {
+    this.perturbation = perturbation;
+  }
+
+  public void setMutationProbability(Double mutationProbability) {
+    this.mutationProbability = mutationProbability;
   }
 
   /**

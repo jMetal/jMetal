@@ -82,6 +82,15 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     return distributionIndex;
   }
 
+  /* Setters */
+  public void setDistributionIndex(double distributionIndex) {
+    this.distributionIndex = distributionIndex;
+  }
+
+  public void setMutationProbability(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
+  }
+
   /** Execute() method */
   public IntegerSolution execute(IntegerSolution solution) throws JMetalException {
     if (null == solution) {

@@ -41,7 +41,17 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
-  /** Execute() method */
+  /* Getters */
+  public double getMutationProbability() {
+    return mutationProbability;
+  }
+
+  /* Setters */
+  public void setMutationProbability(double mutationProbability) {
+    this.mutationProbability = mutationProbability;
+  }
+
+  /* Execute() method */
   @Override
   public PermutationSolution<T> execute(PermutationSolution<T> solution) {
     if (null == solution) {

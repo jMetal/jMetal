@@ -72,6 +72,15 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     return alpha;
   }
 
+  /* Setters */
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
+  }
+
+  public void setAlpha(double alpha) {
+    this.alpha = alpha;
+  }
+
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
