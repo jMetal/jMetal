@@ -30,9 +30,8 @@ import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -115,33 +114,40 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
    * It loads the weight vectors from the file fileName
    */
   public R2(String file) throws java.io.IOException {
-    // reading weights from file
-    FileInputStream fis = new FileInputStream(file);
-    InputStreamReader isr = new InputStreamReader(fis);
-    BufferedReader br = new BufferedReader(isr);
+        // reading weights from file
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
 
-    String line = br.readLine();
+        int numberOfObjectives = 0;
+        int i = 0;
+        int j = 0;
+        String aux = br.readLine();
+        LinkedList<double[]> list = new LinkedList<double[]>();
+        while (aux != null) {
+            StringTokenizer st = new StringTokenizer(aux);
+            j = 0;
+            numberOfObjectives = st.countTokens();
+            double[] vector = new double[numberOfObjectives];
+            while (st.hasMoreTokens()) {
+                double value = new Double(st.nextToken());
+                vector[j++] = value;
+            }
+            list.add(vector);
+            aux = br.readLine();
+        }
+        br.close();
 
-    if (line==null)
-      return;
+        // convert the LinkedList into a vector
+        lambda = new double[list.size()][];
+        int index = 0;
+        for (double[] aList : list) {
+            lambda[index++] = aList;
+        }
 
-    int numberOfObjectives = (new StringTokenizer(line)).countTokens();
-    int numberOfVectors   =  (int) br.lines().count();
+        br.close();
 
-    lambda = new double[numberOfVectors][numberOfObjectives];
-
-    int index = 0;
-    while (line!=null) {
-      StringTokenizer st = new StringTokenizer(line);
-      for (int i = 0; i < numberOfObjectives; i++)
-        lambda[index][i] = new Double(st.nextToken());
-      index++;
-      line = br.readLine();
-    }
-
-    br.close();
-
-  } // R2
+    } // R2
 
 
   @Override public Double evaluate(Evaluate solutionList) {
