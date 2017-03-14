@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class GLT4 extends AbstractDoubleProblem {
 
   /**

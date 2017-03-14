@@ -33,6 +33,7 @@ import java.util.logging.Logger;
  * Class representing problem Ebes
  * Spatial Bars Structure (Estructuras de Barras Espaciales)
  */
+@SuppressWarnings("serial")
 public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   /**
    * Constructor.
