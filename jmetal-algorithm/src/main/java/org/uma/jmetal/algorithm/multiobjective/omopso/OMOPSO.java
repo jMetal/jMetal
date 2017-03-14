@@ -51,7 +51,6 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   private int maxIterations;
   private int currentIteration;
 
-  private List<DoubleSolution> swarm;
   private DoubleSolution[] localBest;
   private CrowdingDistanceArchive<DoubleSolution> leaderArchive;
   private NonDominatedSolutionListArchive<DoubleSolution> epsilonArchive;

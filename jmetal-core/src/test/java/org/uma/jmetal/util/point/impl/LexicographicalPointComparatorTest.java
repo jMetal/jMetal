@@ -26,8 +26,6 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  */
 public class LexicographicalPointComparatorTest {
-  private static final double EPSILON = 0.0000000000001 ;
-
   private Point point1 ;
   private Point point2 ;
 
