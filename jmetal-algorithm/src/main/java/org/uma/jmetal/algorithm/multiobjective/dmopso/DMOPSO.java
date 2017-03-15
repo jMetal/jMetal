@@ -30,10 +30,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
-  /**
-	 * 
-	 */
-  private static final long serialVersionUID = 1L;
+
+  public enum FunctionType {
+    TCHE, PBI, AGG
+  }
+
   private DoubleProblem problem;
   private List<DoubleSolution> swarm ;
 
@@ -50,10 +51,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private double changeVelocity1;
   private double changeVelocity2;
 
-  private int swarmSize;
-  private int maxIterations;
-  private int iterations;
-  private int maxAge ;
+  protected int swarmSize;
+  protected int maxIterations;
+  protected int iterations;
+  protected int maxAge ;
 
   private DoubleSolution[] localBest ;
   private DoubleSolution[] globalBest ;
@@ -69,7 +70,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   String dataDirectory ;
 
-  String functionType = "_PBI";//"_PBI";//"_TCHE";//"_AGG";
+  FunctionType functionType = FunctionType.PBI ;
 
   private JMetalRandom randomGenerator;
   private SolutionListEvaluator<DoubleSolution> evaluator;
@@ -78,7 +79,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
                 int maxIterations, double r1Min, double r1Max,
                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-                String functionType, String dataDirectory, int maxAge) {
+                FunctionType functionType, String dataDirectory, int maxAge) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.maxIterations = maxIterations;
@@ -243,7 +244,6 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -316,7 +316,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private double fitnessFunction(DoubleSolution sol, double[] lambda){
     double fitness = 0.0;
 
-    if (functionType.equals("_TCHE")) {
+    if (functionType == FunctionType.TCHE) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
@@ -335,7 +335,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       fitness = maxFun;
 
-    }else if(functionType.equals("_AGG")){
+    }else if(functionType == FunctionType.AGG){
       double sum = 0.0;
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
@@ -343,7 +343,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       fitness = sum;
 
-    }else if(functionType.equals("_PBI")){
+    }else if(functionType == FunctionType.PBI){
       double d1, d2, nl;
       double theta = 5.0;
 
