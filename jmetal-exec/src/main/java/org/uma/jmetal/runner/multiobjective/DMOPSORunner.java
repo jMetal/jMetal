@@ -59,7 +59,7 @@ public class DMOPSORunner extends AbstractAlgorithmRunner {
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-            "_TCHE", "MOEAD_Weights", 2) ;
+            DMOPSO.FunctionType.TCHE, "MOEAD_Weights", 2) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
