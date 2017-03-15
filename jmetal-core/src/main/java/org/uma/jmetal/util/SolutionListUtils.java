@@ -342,4 +342,22 @@ public class SolutionListUtils {
       solutionList.add(problem.createSolution());
     }
   }
+
+  /**
+   * Given a solution list and the identifier of an objective (0, 1, etc), returns an array with
+   * the values of that objective in all the solutions of the list
+   *
+   * @param solutionList
+   * @param objective
+   * @param <S>
+   * @return
+   */
+  public static <S extends Solution<?>> double[] getObjectiveArrayFromSolutionList(List<S> solutionList, int objective) {
+    double[] result = new double[solutionList.size()] ;
+
+    for(int i=0; i<solutionList.size();i++){
+      result[i] = solutionList.get(i).getObjective(objective);
+    }
+    return result;
+  }
 }
