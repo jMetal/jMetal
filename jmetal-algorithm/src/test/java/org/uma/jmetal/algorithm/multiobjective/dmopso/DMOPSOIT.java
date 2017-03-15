@@ -38,7 +38,7 @@ public class DMOPSOIT {
     DoubleProblem problem = new ZDT1() ;
 
     algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-        "_TCHE", "", 2) ;
+        DMOPSO.FunctionType.TCHE, "", 2) ;
 
     algorithm.run();
 
@@ -56,7 +56,7 @@ public class DMOPSOIT {
     DoubleProblem problem = new ZDT1() ;
 
     algorithm = new DMOPSO(problem, 100, 250, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-        "_TCHE", "", 2) ;
+            DMOPSO.FunctionType.TCHE, "", 2) ;
 
     algorithm.run();
 
