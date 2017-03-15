@@ -105,6 +105,7 @@ public class GenericSolutionAttributeTest {
     assertEquals(value, genericSolutionAttribute.getAttribute(solution));
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleSolution implements Solution<Double> {
     protected Map<Object, Object> attributes ;
 

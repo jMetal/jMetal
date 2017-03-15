@@ -55,6 +55,7 @@ public class ArrayDoubleSolutionTest {
     assertEquals(problem.getUpperBound(2), solution.getUpperBound(2));
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem extends AbstractDoubleProblem {
     public MockedDoubleProblem() {
       setNumberOfVariables(3);

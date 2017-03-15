@@ -79,6 +79,7 @@ public class DoubleSolutionComparisonIT {
   }
 
 
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem1 extends AbstractDoubleProblem {
     public MockedDoubleProblem1(int numberOfVariables) {
       setNumberOfVariables(numberOfVariables);
@@ -143,6 +144,7 @@ public class DoubleSolutionComparisonIT {
     }
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem2 extends MockedDoubleProblem1 {
     public MockedDoubleProblem2(int numberOfVariables) {
       super(numberOfVariables) ;

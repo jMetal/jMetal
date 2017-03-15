@@ -31,7 +31,6 @@ public class SolutionListOutput {
   private String funFileName = "FUN";
   private String separator = "\t";
   private List<? extends Solution<?>> solutionList;
-  private boolean selectFeasibleSolutions;
   private List<Boolean> isObjectiveToBeMinimized ;
 
   public SolutionListOutput(List<? extends Solution<?>> solutionList) {
@@ -40,7 +39,6 @@ public class SolutionListOutput {
     varFileContext.setSeparator(separator);
     funFileContext.setSeparator(separator);
     this.solutionList = solutionList;
-    selectFeasibleSolutions = false;
     isObjectiveToBeMinimized = null ;
   }
 
@@ -59,11 +57,6 @@ public class SolutionListOutput {
   public SolutionListOutput setObjectiveMinimizingObjectiveList(List<Boolean> isObjectiveToBeMinimized) {
     this.isObjectiveToBeMinimized = isObjectiveToBeMinimized ;
 
-    return this;
-  }
-
-  public SolutionListOutput selectFeasibleSolutions() {
-    selectFeasibleSolutions = true ;
     return this;
   }
 

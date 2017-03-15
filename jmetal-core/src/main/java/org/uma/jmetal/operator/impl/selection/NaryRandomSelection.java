@@ -17,7 +17,6 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
@@ -30,7 +29,6 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class NaryRandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
-  private JMetalRandom randomGenerator ;
   private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */
@@ -40,7 +38,6 @@ public class NaryRandomSelection<S extends Solution<?>> implements SelectionOper
 
   /** Constructor */
   public NaryRandomSelection(int numberOfSolutionsToBeReturned) {
-    randomGenerator = JMetalRandom.getInstance() ;
     this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned ;
   }
 

@@ -69,8 +69,6 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private int size;
   private Comparator<BinarySolution> comparator;
 
-  private SolutionListEvaluator<BinarySolution> evaluator;
-
   /**
    * Constructor
    */
@@ -92,7 +90,6 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
     this.cataclysmicMutation = cataclysmicMutation;
     this.newGenerationSelection = newGenerationSelection;
     this.parentSelection = parentSelection;
-    this.evaluator = evaluator;
   }
 
   @Override

@@ -48,19 +48,6 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private static final double DEFAULT_K = 0.5;
   private static final String DEFAULT_DE_VARIANT = "rand/1/bin";
 
-  private static final String[] VALID_VARIANTS = {
-    "rand/1/bin",
-    "best/1/bin",
-    "rand/1/exp",
-    "best/1/exp",
-    "current-to-rand/1",
-    "current-to-best/1",
-    "current-to-rand/1/bin",
-    "current-to-best/1/bin",
-    "current-to-rand/1/exp",
-    "current-to-best/1/exp"
-  } ;
-
   private double cr;
   private double f;
   private double k;

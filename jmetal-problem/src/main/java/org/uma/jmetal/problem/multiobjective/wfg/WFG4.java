@@ -31,6 +31,7 @@ import org.uma.jmetal.solution.DoubleSolution;
  * Third International Conference, EMO 2005.
  * Proceedings, volume 3410 of Lecture Notes in Computer Science
  */
+@SuppressWarnings("serial")
 public class WFG4 extends WFG {
 
   /**
