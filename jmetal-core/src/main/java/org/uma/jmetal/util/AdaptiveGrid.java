@@ -27,6 +27,7 @@ import java.util.List;
 public class AdaptiveGrid<S extends Solution<?>> {
   private int bisections;
   private int numberOfObjectives;
+
   private int[] hypercubes;
 
   private double[] gridLowerLimits;
@@ -45,11 +46,11 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * Creates an instance of AdaptiveGrid.
    *
    * @param bisections Number of bi-divisions of the objective space.
-   * @param objetives  Number of numberOfObjectives of the problem.
+   * @param objectives Number of numberOfObjectives of the problem.
    */
-  public AdaptiveGrid(int bisections, int objetives) {
+  public AdaptiveGrid(int bisections, int objectives) {
     this.bisections = bisections;
-    numberOfObjectives = objetives;
+    numberOfObjectives = objectives;
     gridLowerLimits = new double[numberOfObjectives];
     gridUpperLimits = new double[numberOfObjectives];
     divisionSize = new double[numberOfObjectives];
@@ -145,7 +146,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @param solution    <code>Solution</code> considered to update the grid.
    * @param solutionSet <code>SolutionSet</code> used to update the grid.
    */
-  public void updateGrid(S solution, List<S>  solutionSet) {
+  public void updateGrid(S solution, List<S> solutionSet) {
 
     int location = location(solution);
     if (location == -1) {
@@ -190,7 +191,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     //Calculate the position for each objective
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       if ((solution.getObjective(obj) > gridUpperLimits[obj])
-        || (solution.getObjective(obj) < gridLowerLimits[obj])) {
+              || (solution.getObjective(obj) < gridLowerLimits[obj])) {
         return -1;
       } else if (solution.getObjective(obj) == gridLowerLimits[obj]) {
         position[obj] = 0;
@@ -272,7 +273,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     //Increase the solutions in the location specified.
     hypercubes[location]++;
 
-    //Update the most poblated hypercube
+    //Update the most populated hypercube
     if (hypercubes[location] > hypercubes[mostPopulatedHypercube]) {
       mostPopulatedHypercube = location;
     }
@@ -302,7 +303,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     String result = "Grid\n";
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       result += "Objective " + obj + " " + gridLowerLimits[obj] + " "
-        + gridUpperLimits[obj] + "\n";
+              + gridUpperLimits[obj] + "\n";
     }
     return result;
   }
@@ -344,7 +345,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * Calculates the number of hypercubes having one or more solutions.
    * return the number of hypercubes with more than zero solutions.
    */
-  public int calculateOccupied() {
+  public void calculateOccupied() {
     int total = 0;
     for (int hypercube : hypercubes) {
       if (hypercube > 0) {
@@ -360,8 +361,6 @@ public class AdaptiveGrid<S extends Solution<?>> {
         base++;
       }
     }
-
-    return total;
   }
 
   /**
@@ -383,5 +382,31 @@ public class AdaptiveGrid<S extends Solution<?>> {
     int rand = JMetalRandom.getInstance().nextInt(0, occupied.length - 1);
     return occupied[rand];
   }
-}
+
+  /**
+   * Return the average number of solutions in the occupied hypercubes
+   */
+  public double getAverageOccupation() {
+    calculateOccupied();
+    double result;
+
+    if (occupiedHypercubes() == 0) {
+      result = 0.0;
+    } else {
+      double sum = 0.0;
+
+      for (int value : occupied) {
+        sum += hypercubes[value];
+      }
+
+      result = sum / occupiedHypercubes();
+    }
+    return result;
+  }
+
+  /* Getters */
+    public int[] getHypercubes () {
+      return hypercubes;
+    }
+  }
 
