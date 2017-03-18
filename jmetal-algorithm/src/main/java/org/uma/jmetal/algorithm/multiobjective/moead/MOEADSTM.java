@@ -36,7 +36,7 @@ import java.util.List;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class MOEADSTM1 extends AbstractMOEAD<DoubleSolution> {
+public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 	private DifferentialEvolutionCrossover differentialEvolutionCrossover;
 
 	private DoubleSolution[] savedValues;
@@ -45,7 +45,7 @@ public class MOEADSTM1 extends AbstractMOEAD<DoubleSolution> {
 
 	JMetalRandom randomGenerator;
 
-	public MOEADSTM1(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
+	public MOEADSTM(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
 									MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
 									FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
 									int maximumNumberOfReplacedSolutions, int neighborSize) {
