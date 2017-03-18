@@ -36,7 +36,7 @@ import java.util.List;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
+public class MOEADSTM1 extends AbstractMOEAD<DoubleSolution> {
 	private DifferentialEvolutionCrossover differentialEvolutionCrossover;
 
 	private DoubleSolution[] savedValues;
@@ -45,7 +45,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
 	JMetalRandom randomGenerator;
 
-	public MOEADSTM(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
+	public MOEADSTM1(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations,
 									MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
 									FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
 									int maximumNumberOfReplacedSolutions, int neighborSize) {
@@ -76,12 +76,11 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		int generation = 0;
 		evaluations    = populationSize;
 		do {
-			int[] permutation = new int[populationSize];
-			MOEADUtils.randomPermutation(permutation, populationSize);
+      List<Integer> permutation = tourSelection(10);
 			offspringPopulation.clear();
 
-			for (int i = 0; i < populationSize; i++) {
-				int subProblemId = permutation[i];
+			for (int i = 0; i < permutation.size(); i++) {
+				int subProblemId = permutation.get(i);
 				frequency[subProblemId]++;
 
 				NeighborType neighborType = chooseNeighborType();
