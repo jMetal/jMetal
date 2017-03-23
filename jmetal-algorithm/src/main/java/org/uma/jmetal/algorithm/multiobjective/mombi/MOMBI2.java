@@ -67,10 +67,8 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		System.out.println("MOMBI 2");
-		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
 		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
 		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
-		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
 		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
 		aux.setNormalizer(this.normalizer);
 		return aux;
