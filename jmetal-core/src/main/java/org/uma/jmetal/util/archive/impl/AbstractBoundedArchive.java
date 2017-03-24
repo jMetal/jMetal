@@ -14,6 +14,7 @@
 package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 
 import java.util.List;
@@ -63,4 +64,13 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 	}
 
 	public abstract void prune();
+
+	@Override
+	public Archive<S> join(Archive<S> archive) {
+		for (S solution : archive.getSolutionList()) {
+			this.add(solution) ;
+		}
+
+		return archive ;
+	}
 }
