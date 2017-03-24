@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -21,7 +22,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
+
+import javafx.scene.shape.Arc;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -45,28 +50,41 @@ public class GenerateReferenceFrontFromFile {
     String inputFileName = args[0] ;
     String outputFileName = args[1] ;
 
-    File inputFile ;
-    inputFile = new File(inputFileName) ;
-    if (!inputFile.exists()) {
-      throw new JMetalException(inputFileName + " does not exist.");
-    }
+    NonDominatedSolutionListArchive<DoubleSolution> archive = null;
 
-    NonDominatedSolutionListArchive<?> archive ;
-
-    if (inputFile.isFile()) {
+    if (Files.isRegularFile(Paths.get(inputFileName))) {
       archive = readDataFromFile(inputFileName) ;
 
-      new SolutionListOutput(archive.getSolutionList())
-              .setSeparator("\t")
-              .setFunFileOutputContext(new DefaultFileOutputContext(outputFileName))
-              .print();
+    } else if (Files.isDirectory(Paths.get(inputFileName))) {
+
+      List<String> fileNameList = Files
+              .list(Paths.get(inputFileName))
+              .map(s -> s.toString())
+              .collect(toList());
+
+      archive = new NonDominatedSolutionListArchive<>() ;
+      for (String fileName: fileNameList) {
+        System.out.println(fileName) ;
+        archive.join(readDataFromFile(fileName)) ;
+      }
+    } else {
+      throw new JMetalException("Error opening file/directory") ;
     }
 
+    new SolutionListOutput(archive.getSolutionList())
+            .setSeparator("\t")
+            .setFunFileOutputContext(new DefaultFileOutputContext(outputFileName))
+            .print();
   }
 
-  private static NonDominatedSolutionListArchive<?> readDataFromFile(String inputFileName) throws IOException {
-    Stream<String> lines;
-    lines = Files.lines(Paths.get(inputFileName), Charset.defaultCharset());
+  private static NonDominatedSolutionListArchive<DoubleSolution> readDataFromFile(String inputFileName)  {
+    Stream<String> lines ;
+
+    try {
+      lines = Files.lines(Paths.get(inputFileName), Charset.defaultCharset());
+    } catch (IOException e) {
+      throw new JMetalException(e) ;
+    }
 
     List<List<Double>> numbers = lines
             .map(line -> {
