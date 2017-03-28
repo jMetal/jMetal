@@ -13,6 +13,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.List;
 
@@ -88,7 +89,9 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
       List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking<S> ranking = computeRanking(pop);
+    Ranking<S> ranking = new DominanceRanking<S>();
+    ranking.computeRanking(population);
+
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
 
     return pop;

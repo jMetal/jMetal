@@ -35,7 +35,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class RankingAndCrowdingSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>,List<S>> {
-  private int solutionsToSelect = 0 ;
+  private final int solutionsToSelect ;
 
   /** Constructor */
   public RankingAndCrowdingSelection(int solutionsToSelect) {
@@ -43,7 +43,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   }
 
   /* Getter */
-  public int getSolutionsToSelect() {
+  public int getNumberOfSolutionsToSelect() {
     return solutionsToSelect;
   }
 
