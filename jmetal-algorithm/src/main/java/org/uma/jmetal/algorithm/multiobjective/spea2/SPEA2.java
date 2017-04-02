@@ -35,8 +35,8 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
-  private final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
-  private final EnvironmentalSelection<S> environmentalSelection;
+  protected final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
+  protected final EnvironmentalSelection<S> environmentalSelection;
 
   public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
