@@ -28,8 +28,8 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
-  private List<S> population;
-  private Problem<S> problem ;
+  protected List<S> population;
+  protected Problem<S> problem ;
 
   public List<S> getPopulation() {
     return population;

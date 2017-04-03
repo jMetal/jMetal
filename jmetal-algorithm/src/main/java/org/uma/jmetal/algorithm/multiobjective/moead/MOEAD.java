@@ -33,7 +33,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MOEAD extends AbstractMOEAD<DoubleSolution> {
-  private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+  protected DifferentialEvolutionCrossover differentialEvolutionCrossover ;
 
   public MOEAD(Problem<DoubleSolution> problem,
       int populationSize,
