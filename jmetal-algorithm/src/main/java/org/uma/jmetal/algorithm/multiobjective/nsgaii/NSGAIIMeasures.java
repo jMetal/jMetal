@@ -10,8 +10,12 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
@@ -28,6 +32,9 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
   protected BasicMeasure<List<S>> solutionListMeasure ;
   protected BasicMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
+  protected BasicMeasure<Double> hypervolumeValue ;
+
+  protected Front referenceFront ;
 
   /**
    * Constructor
@@ -37,6 +44,8 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
         selectionOperator, evaluator) ;
+
+    referenceFront = new ArrayFront() ;
 
     initMeasures() ;
   }
@@ -49,6 +58,12 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     evaluations.increment(getMaxPopulationSize());
 
     solutionListMeasure.push(getPopulation());
+
+    //if (referenceFront.getNumberOfPoints() > 0) {
+      hypervolumeValue.push(
+              new PISAHypervolume<S>(referenceFront).evaluate(
+                      getNonDominatedSolutions(getPopulation())));
+    //}
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -69,6 +84,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     evaluations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
     solutionListMeasure = new BasicMeasure<>() ;
+    hypervolumeValue = new BasicMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
@@ -78,6 +94,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
     measureManager.setPushMeasure("currentEvaluation", evaluations);
+    measureManager.setPushMeasure("hypervolume", hypervolumeValue);
   }
 
   @Override
@@ -107,5 +124,9 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
   @Override public String getDescription() {
     return "Nondominated Sorting Genetic Algorithm version II. Version using measures" ;
+  }
+
+  public void setReferenceFront(Front referenceFront) {
+    this.referenceFront = referenceFront ;
   }
 }
