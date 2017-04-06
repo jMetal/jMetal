@@ -21,12 +21,12 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGeneticAlgorithm<S,List<S>> {
-	private final int maxIterations;
+	protected final int maxIterations;
 
-	private int iterations = 0;
-	private final SolutionListEvaluator<S> evaluator;
-	private final List<Double> referencePoint;
-	private final List<Double> nadirPoint;
+	protected int iterations = 0;
+	protected final SolutionListEvaluator<S> evaluator;
+	protected final List<Double> referencePoint;
+	protected final List<Double> nadirPoint;
 
 	/**
 	 * Constructor

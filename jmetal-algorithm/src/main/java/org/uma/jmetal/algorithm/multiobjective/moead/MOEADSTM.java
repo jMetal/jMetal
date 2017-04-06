@@ -37,11 +37,11 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
-	private DifferentialEvolutionCrossover differentialEvolutionCrossover;
+	protected DifferentialEvolutionCrossover differentialEvolutionCrossover;
 
-	private DoubleSolution[] savedValues;
-	private double[] utility;
-	private int[] frequency;
+	protected DoubleSolution[] savedValues;
+	protected double[] utility;
+	protected int[] frequency;
 
 	JMetalRandom randomGenerator;
 

@@ -41,24 +41,24 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
-  private Problem<S> problem;
+  protected Problem<S> problem;
 
   public static final int TOURNAMENTS_ROUNDS = 1;
 
-  private List<List<Double>> indicatorValues;
-  private double maxIndicatorValue;
+  protected List<List<Double>> indicatorValues;
+  protected double maxIndicatorValue;
 
-  private int populationSize;
-  private int archiveSize;
-  private int maxEvaluations;
+  protected int populationSize;
+  protected int archiveSize;
+  protected int maxEvaluations;
 
-  private List<S> archive;
+  protected List<S> archive;
 
-  private CrossoverOperator<S> crossoverOperator;
-  private MutationOperator<S> mutationOperator;
-  private SelectionOperator<List<S>, S> selectionOperator;
+  protected CrossoverOperator<S> crossoverOperator;
+  protected MutationOperator<S> mutationOperator;
+  protected SelectionOperator<List<S>, S> selectionOperator;
 
-  private Fitness<S> solutionFitness = new Fitness<S>();
+  protected Fitness<S> solutionFitness = new Fitness<S>();
 
   /**
    * Constructor
