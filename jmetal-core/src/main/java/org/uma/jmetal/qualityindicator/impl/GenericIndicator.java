@@ -11,7 +11,9 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Created by ajnebro on 27/11/15.
+ * Abstract class representing quality indicators that need a reference front to be computed
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public abstract class GenericIndicator<S extends Solution<?>>
