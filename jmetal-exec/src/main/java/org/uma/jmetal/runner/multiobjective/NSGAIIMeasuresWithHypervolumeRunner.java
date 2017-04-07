@@ -95,7 +95,7 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
 
-    ((NSGAIIMeasures)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
+    ((NSGAIIMeasures<DoubleSolution>)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
     /* Measure management */
     MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
