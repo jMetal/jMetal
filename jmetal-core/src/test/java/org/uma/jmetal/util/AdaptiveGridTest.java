@@ -2,7 +2,6 @@ package org.uma.jmetal.util;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.util.ReflectionUtils;
 import org.uma.jmetal.solution.DoubleSolution;
 
 import static org.junit.Assert.*;
