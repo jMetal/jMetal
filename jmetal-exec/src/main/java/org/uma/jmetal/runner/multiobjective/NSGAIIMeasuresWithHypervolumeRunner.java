@@ -26,7 +26,6 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -45,7 +44,6 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class to configure and run the NSGA-II algorithm (variant with measures)
@@ -97,7 +95,7 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
 
-    ((NSGAIIMeasures)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
+    ((NSGAIIMeasures<DoubleSolution>)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
     /* Measure management */
     MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
