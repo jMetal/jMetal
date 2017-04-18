@@ -58,7 +58,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     private DMOPSOVariant variant;
 
     public DMOPSOBuilder(DoubleProblem problem) {
-        this.name = "DMOPSO";
+        this.name = "dMOPSO";
         this.problem = problem;
 
         this.swarmSize = 100;

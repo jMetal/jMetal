@@ -28,12 +28,9 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 
+@SuppressWarnings("serial")
 public class DMOPSOMeasures extends DMOPSO implements Measurable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
     protected CountingMeasure iterations;
     protected DurationMeasure durationMeasure;
     protected SimpleMeasureManager measureManager;
@@ -42,22 +39,28 @@ public class DMOPSOMeasures extends DMOPSO implements Measurable {
     protected BasicMeasure<Double> epsilonValue;
     protected Front referenceFront;
 
-    public DMOPSOMeasures(DoubleProblem problem, int swarmSize, int maxIterations, double r1Min, double r1Max,
-            double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max, double weightMin,
-            double weightMax, double changeVelocity1, double changeVelocity2, DMOPSO.FunctionType functionType,
-            String dataDirectory, int maxAge, String name) {
-        super(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin,
-                weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory, maxAge, name);
-        this.referenceFront = new ArrayFront();
-        initMeasures();
+    public DMOPSOMeasures(DoubleProblem problem, int swarmSize, int maxIterations,
+                          double r1Min, double r1Max, double r2Min, double r2Max,
+                          double c1Min, double c1Max, double c2Min, double c2Max,
+                          double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+                          FunctionType functionType, String dataDirectory, int maxAge) {
+        this(problem, swarmSize, maxIterations,
+             r1Min, r1Max, r2Min, r2Max,
+             c1Min, c1Max, c2Min, c2Max,
+             weightMin, weightMax, changeVelocity1, changeVelocity2,
+             functionType, dataDirectory, maxAge, "dMOPSO");
     }
 
-    public DMOPSOMeasures(DoubleProblem problem, int swarmSize, int maxIterations, double r1Min, double r1Max,
-            double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max, double weightMin,
-            double weightMax, double changeVelocity1, double changeVelocity2, DMOPSO.FunctionType functionType,
-            String dataDirectory, int maxAge) {
-        super(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin,
-                weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory, maxAge);
+    public DMOPSOMeasures(DoubleProblem problem, int swarmSize, int maxIterations,
+                          double r1Min, double r1Max, double r2Min, double r2Max,
+                          double c1Min, double c1Max, double c2Min, double c2Max,
+                          double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+                          FunctionType functionType, String dataDirectory, int maxAge, String name) {
+        super(problem, swarmSize, maxIterations,
+              r1Min, r1Max, r2Min, r2Max,
+              c1Min, c1Max, c2Min, c2Max,
+              weightMin, weightMax, changeVelocity1, changeVelocity2,
+              functionType, dataDirectory, maxAge, name);
         this.referenceFront = new ArrayFront();
         initMeasures();
     }

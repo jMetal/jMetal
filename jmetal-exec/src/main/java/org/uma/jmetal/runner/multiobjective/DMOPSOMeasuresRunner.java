@@ -69,7 +69,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
         problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
         algorithm = new DMOPSOMeasures(problem, 100, 150, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-                FunctionType.TCHE, "", 2);
+                FunctionType.TCHE, "MOEAD_Weights", 2);
 
         ((DMOPSOMeasures) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
 
