@@ -11,13 +11,18 @@ the new incoming features in advance.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
-##Changelog of the next incoming release (jMetal 5.3)
+## Changelog of the next incoming release (jMetal 5.3)
 
-### New features
-* Added getters and setters to all the parameters of the operators.
+### Algorithms
+* Algorithm [MOEA/DD](http://ieeexplore.ieee.org/document/6964796/). Contribution of @vinixnan.
+
+### Quality indicators
 * The R2 indicator can be applied now to fronts with more than two objectives.
 
-##jMetal is available as a Maven Project in The Central Repository
+### Miscelanea
+* Added getters and setters to all the parameters of the operators.
+
+## jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
