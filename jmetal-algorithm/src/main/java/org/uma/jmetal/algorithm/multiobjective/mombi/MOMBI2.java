@@ -47,7 +47,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		this.history = new MOMBI2History<>(problem.getNumberOfObjectives());
 	}
 	
-	private void updateMax(List<S> population) {
+	protected void updateMax(List<S> population) {
 		if (this.maxs.isEmpty())
 			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
 				this.maxs.add(Double.NEGATIVE_INFINITY);

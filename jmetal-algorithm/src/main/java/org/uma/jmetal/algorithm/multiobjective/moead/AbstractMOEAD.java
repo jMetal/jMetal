@@ -184,7 +184,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 	}
 	
 	// update the current nadir point
-	void updateNadirPoint(S individual) {
+	protected void updateNadirPoint(S individual) {
 		for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
 			if (individual.getObjective(i) > nadirPoint[i]) {
 				nadirPoint[i] = individual.getObjective(i);
