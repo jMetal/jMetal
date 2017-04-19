@@ -21,13 +21,13 @@ If you are interested in contributing with your ideas and comments, please take 
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
-##jMetal documentation
+## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
 
-##Publications
+## Publications
 A.J. Nebro, J.J. Durillo, M. Vergne: "Redesigning the jMetal Multi-Objective Optimization Framework". Proceedings of the Companion Publication of the 2015 on Genetic and Evolutionary Computation Conference (GECCO Companion '15) Pages 1093-1100. DOI: http://dx.doi.org/10.1145/2739482.2768462
 
-##Code coverage (4th April 2016)
+## Code coverage (4th April 2016)
 Coverage data of the jmetal-core package reported by IntelliJ Idea:
 
 |Class % |Method %| Line % |
