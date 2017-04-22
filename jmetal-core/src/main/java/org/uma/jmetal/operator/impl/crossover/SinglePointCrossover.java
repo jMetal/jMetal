@@ -17,7 +17,9 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.binarySet.BinarySet;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +32,22 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> crossoverRandomGenerator ;
+  private BoundedRandomGenerator<Integer> pointRandomGenerator ;
 
   /** Constructor */
   public SinglePointCrossover(double crossoverProbability) {
+	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /** Constructor */
+  public SinglePointCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> pointRandomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     }
     this.crossoverProbability = crossoverProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.crossoverRandomGenerator = crossoverRandomGenerator ;
+    this.pointRandomGenerator = pointRandomGenerator ;
   }
 
   /* Getter */
@@ -75,12 +84,12 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
     offspring.add((BinarySolution) parent1.copy()) ;
     offspring.add((BinarySolution) parent2.copy()) ;
 
-    if (randomGenerator.nextDouble() < probability) {
+    if (crossoverRandomGenerator.getRandomValue() < probability) {
       // 1. Get the total number of bits
       int totalNumberOfBits = parent1.getTotalNumberOfBits();
 
       // 2. Calculate the point to make the crossover
-      int crossoverPoint = randomGenerator.nextInt(0, totalNumberOfBits - 1);
+      int crossoverPoint = pointRandomGenerator.getRandomValue(0, totalNumberOfBits - 1);
 
       // 3. Compute the variable containing the crossover bit
       int variable = 0;

@@ -21,7 +21,8 @@ import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,10 +88,11 @@ public class SinglePointCrossoverTest {
   public void shouldCrossingTwoVariableSolutionsReturnTheSameSolutionsIfNoBitsAreMutated() {
     int numberOfVariables = 1;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.01;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.02) ;
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.02) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
@@ -98,13 +100,13 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0), resultSolutions.get(0)) ;
     assertEquals(solutions.get(1), resultSolutions.get(1)) ;
-    verify(randomGenerator, times(1)).nextDouble();
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
   }
 
   @Test
@@ -112,11 +114,14 @@ public class SinglePointCrossoverTest {
     int numberOfVariables = 1 ;
     int cuttingBit = 0 ;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
     double crossoverProbability = 0.9;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.5) ;
-    Mockito.when(randomGenerator.nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
+    Mockito.when(pointRandomGenerator.getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
@@ -124,7 +129,8 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
+    ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
@@ -132,8 +138,8 @@ public class SinglePointCrossoverTest {
         resultSolutions.get(1).getVariableValue(0).get(0)) ;
     assertEquals(solutions.get(1).getVariableValue(0).get(0), resultSolutions.get(0).getVariableValue(0).get(
         0)) ;
-    verify(randomGenerator, times(1)).nextDouble();
-    verify(randomGenerator, times(1)).nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
+    verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
   }
 
   @Test
@@ -141,11 +147,14 @@ public class SinglePointCrossoverTest {
     int numberOfVariables = 1 ;
     int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM - 1 ;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
     double crossoverProbability = 0.9;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.5) ;
-    Mockito.when(randomGenerator.nextInt(0,
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
+    Mockito.when(pointRandomGenerator.getRandomValue(0,
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
@@ -154,7 +163,8 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
+    ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
@@ -162,8 +172,8 @@ public class SinglePointCrossoverTest {
         resultSolutions.get(1).getVariableValue(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
     assertEquals(solutions.get(1).getVariableValue(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
         resultSolutions.get(0).getVariableValue(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
-    verify(randomGenerator, times(1)).nextDouble();
-    verify(randomGenerator, times(1)).nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
+    verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
   }
 
   @Test
@@ -171,11 +181,14 @@ public class SinglePointCrossoverTest {
     int numberOfVariables = 1 ;
     int cuttingBit = (BITS_OF_MOCKED_BINARY_PROBLEM - 1) / 2 ;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
     double crossoverProbability = 0.9;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.5) ;
-    Mockito.when(randomGenerator.nextInt(0,
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
+    Mockito.when(pointRandomGenerator.getRandomValue(0,
         BITS_OF_MOCKED_BINARY_PROBLEM - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
@@ -184,7 +197,8 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
+    ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
@@ -197,8 +211,8 @@ public class SinglePointCrossoverTest {
         resultSolutions.get(1).getVariableValue(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
     assertEquals(solutions.get(1).getVariableValue(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2),
         resultSolutions.get(0).getVariableValue(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
-    verify(randomGenerator, times(1)).nextDouble();
-    verify(randomGenerator, times(1)).nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
+    verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
   }
 
   @Test
@@ -206,12 +220,15 @@ public class SinglePointCrossoverTest {
     int numberOfVariables = 3 ;
     int cuttingBit = BITS_OF_MOCKED_BINARY_PROBLEM ;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
     double crossoverProbability = 0.9;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.5) ;
-    Mockito.when(randomGenerator.
-        nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1)).thenReturn(cuttingBit) ;
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
+    Mockito.when(pointRandomGenerator.
+        getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1)).thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
     BinaryProblem problem = new MockBinaryProblem(numberOfVariables) ;
@@ -219,7 +236,8 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
+    ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
@@ -230,8 +248,8 @@ public class SinglePointCrossoverTest {
 
     assertEquals(solutions.get(0).getVariableValue(2), resultSolutions.get(1).getVariableValue(2)) ;
     assertEquals(solutions.get(1).getVariableValue(2), resultSolutions.get(0).getVariableValue(2)) ;
-    verify(randomGenerator, times(1)).nextDouble();
-    verify(randomGenerator, times(1)).nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
+    verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
   }
 
   @Test
@@ -239,12 +257,15 @@ public class SinglePointCrossoverTest {
     int numberOfVariables = 3 ;
     int cuttingBit = (int) (BITS_OF_MOCKED_BINARY_PROBLEM*1.5);
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> crossoverRandomGenerator = mock(RandomGenerator.class) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> pointRandomGenerator = mock(BoundedRandomGenerator.class) ;
     double crossoverProbability = 0.9;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.5) ;
-    Mockito.when(randomGenerator.
-        nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1))
+    Mockito.when(crossoverRandomGenerator.getRandomValue()).thenReturn(0.5) ;
+    Mockito.when(pointRandomGenerator.
+        getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM * numberOfVariables - 1))
         .thenReturn(cuttingBit) ;
 
     SinglePointCrossover crossover = new SinglePointCrossover(crossoverProbability) ;
@@ -253,7 +274,8 @@ public class SinglePointCrossoverTest {
     solutions.add(problem.createSolution()) ;
     solutions.add(problem.createSolution()) ;
 
-    ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
+    ReflectionTestUtils.setField(crossover, "crossoverRandomGenerator", crossoverRandomGenerator);
+    ReflectionTestUtils.setField(crossover, "pointRandomGenerator", pointRandomGenerator);
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
@@ -273,8 +295,8 @@ public class SinglePointCrossoverTest {
 
     assertEquals(solutions.get(0).getVariableValue(2), resultSolutions.get(1).getVariableValue(2)) ;
     assertEquals(solutions.get(1).getVariableValue(2), resultSolutions.get(0).getVariableValue(2)) ;
-    verify(randomGenerator, times(1)).nextDouble();
-    verify(randomGenerator, times(1)).nextInt(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
+    verify(crossoverRandomGenerator, times(1)).getRandomValue();
+    verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
   }
 
   /**
