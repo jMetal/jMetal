@@ -21,7 +21,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,7 +117,8 @@ public class BLXAlphaCrossoverTest {
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsReturnTheSameSolutionsIfNotCrossoverIsApplied() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
 
     double crossoverProbability = 0.9;
     double alpha = 0.3 ;
@@ -126,23 +127,24 @@ public class BLXAlphaCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(1) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(1.0) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0), newSolutions.get(0)) ;
     assertEquals(solutions.get(1), newSolutions.get(1)) ;
-    verify(randomGenerator).nextDouble() ;
+    verify(randomGenerator).getRandomValue() ;
   }
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsReturnValidSolutions() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double alpha = 0.35 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2, 0.6) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.6) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -161,16 +163,17 @@ public class BLXAlphaCrossoverTest {
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
     assertThat(newSolutions.get(1).getVariableValue(0), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
-    verify(randomGenerator, times(3)).nextDouble();
+    verify(randomGenerator, times(3)).getRandomValue();
   }
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsWithSimilarValueReturnTheSameVariables() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double alpha = 0.45;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2, 0.3) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.3) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -185,16 +188,17 @@ public class BLXAlphaCrossoverTest {
 
     assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON) ;
     assertEquals(solutions.get(1).getVariableValue(0), newSolutions.get(1).getVariableValue(0), EPSILON) ;
-    verify(randomGenerator, times(3)).nextDouble();
+    verify(randomGenerator, times(3)).getRandomValue();
   }
 
   @Test
   public void shouldCrossingTwoDoubleVariableSolutionsReturnValidSolutions() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double alpha = 0.35 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2, 0.8, 0.3, 0.2) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.8, 0.3, 0.2) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
     DoubleProblem problem = new MockDoubleProblem(2) ;
@@ -226,7 +230,7 @@ public class BLXAlphaCrossoverTest {
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
     assertThat(newSolutions.get(1).getVariableValue(1), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
-    verify(randomGenerator, times(5)).nextDouble();
+    verify(randomGenerator, times(5)).getRandomValue();
   }
 
   /**

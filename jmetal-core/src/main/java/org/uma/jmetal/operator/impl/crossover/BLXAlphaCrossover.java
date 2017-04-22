@@ -19,6 +19,7 @@ import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
   private RepairDoubleSolution solutionRepair ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability) {
@@ -51,6 +52,11 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability, double alpha, RepairDoubleSolution solutionRepair) {
+	  this(crossoverProbability, alpha, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public BLXAlphaCrossover(double crossoverProbability, double alpha, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     } else if (alpha < 0) {
@@ -59,7 +65,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
     this.crossoverProbability = crossoverProbability ;
     this.alpha = alpha ;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
     this.solutionRepair = solutionRepair ;
   }
 
@@ -110,7 +116,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     double upperBound;
     double lowerBound;
 
-    if (randomGenerator.nextDouble() <= probability) {
+    if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
         upperBound = parent1.getUpperBound(i);
         lowerBound = parent1.getLowerBound(i);
@@ -137,10 +143,10 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
         minRange = min - range * alpha;
         maxRange = max + range * alpha;
 
-        random = randomGenerator.nextDouble();
+        random = randomGenerator.getRandomValue();
         valueY1 = minRange + random * (maxRange - minRange);
 
-        random = randomGenerator.nextDouble();
+        random = randomGenerator.getRandomValue();
         valueY2 = minRange + random * (maxRange - minRange);
 
         valueY1 = solutionRepair.repairSolutionVariableValue(valueY1, lowerBound, upperBound) ;

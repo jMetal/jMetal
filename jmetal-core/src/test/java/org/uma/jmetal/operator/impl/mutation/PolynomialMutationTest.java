@@ -22,7 +22,7 @@ import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,11 +125,12 @@ public class PolynomialMutationTest {
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfItIsNotMutated() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(1.0) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -141,16 +142,17 @@ public class PolynomialMutationTest {
     mutation.execute(solution) ;
 
     assertEquals(oldSolution, solution) ;
-    verify(randomGenerator, times(1)).nextDouble();
+    verify(randomGenerator, times(1)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnAValidSolution() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.6) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -163,16 +165,17 @@ public class PolynomialMutationTest {
     assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(
         solution.getLowerBound(0))) ;
     assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
-    verify(randomGenerator, times(2)).nextDouble();
+    verify(randomGenerator, times(2)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnAnotherValidSolution() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -184,16 +187,17 @@ public class PolynomialMutationTest {
 
     assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
     assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
-    verify(randomGenerator, times(2)).nextDouble();
+    verify(randomGenerator, times(2)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionWithSameLowerAndUpperBoundsReturnTheBoundValue() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
 

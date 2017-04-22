@@ -17,6 +17,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -27,15 +28,20 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 @SuppressWarnings("serial")
 public class BitFlipMutation implements MutationOperator<BinarySolution> {
   private double mutationProbability ;
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public BitFlipMutation(double mutationProbability) {
+	  this(mutationProbability, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public BitFlipMutation(double mutationProbability, RandomGenerator<Double> randomGenerator) {
     if (mutationProbability < 0) {
       throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
     }
     this.mutationProbability = mutationProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getter */
@@ -68,7 +74,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   public void doMutation(double probability, BinarySolution solution)  {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       for (int j = 0; j < solution.getVariableValue(i).getBinarySetLength(); j++) {
-        if (randomGenerator.nextDouble() <= probability) {
+        if (randomGenerator.getRandomValue() <= probability) {
           solution.getVariableValue(i).flip(j);
         }
       }

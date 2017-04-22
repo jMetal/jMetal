@@ -20,7 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,8 +180,9 @@ public class AdaptiveRandomNeighborhoodTest {
     AdaptiveRandomNeighborhood<IntegerSolution> neighborhood =
             new AdaptiveRandomNeighborhood<IntegerSolution>(solutionListSize, numberOfNeighbors) ;
 
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
-    when(randomGenerator.nextInt(0, solutionListSize-1)).thenReturn(2, 0, 0) ;
+    @SuppressWarnings("unchecked")
+	BoundedRandomGenerator<Integer> randomGenerator = mock(BoundedRandomGenerator.class) ;
+    when(randomGenerator.getRandomValue(0, solutionListSize-1)).thenReturn(2, 0, 0) ;
 
     ReflectionTestUtils.setField(neighborhood, "randomGenerator", randomGenerator);
 

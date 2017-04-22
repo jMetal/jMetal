@@ -21,7 +21,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +115,8 @@ public class SBXCrossoverTest {
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsReturnTheSameSolutionsIfNotCrossoverIsApplied() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
 
     double crossoverProbability = 0.9;
     double distributionIndex = 20.0 ;
@@ -124,23 +125,24 @@ public class SBXCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(1) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(1.0) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
     assertEquals(solutions.get(0), newSolutions.get(0)) ;
     assertEquals(solutions.get(1), newSolutions.get(1)) ;
-    verify(randomGenerator).nextDouble() ;
+    verify(randomGenerator).getRandomValue() ;
   }
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsReturnValidSolutions() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2, 0.6, 0.6) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.6, 0.6) ;
 
     SBXCrossover crossover = new SBXCrossover(crossoverProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -159,16 +161,17 @@ public class SBXCrossoverTest {
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
     assertThat(newSolutions.get(1).getVariableValue(0), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
-    verify(randomGenerator, times(4)).nextDouble();
+    verify(randomGenerator, times(4)).getRandomValue();
   }
 
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsWithSimilarValueReturnTheSameVariables() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2) ;
 
     SBXCrossover crossover = new SBXCrossover(crossoverProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -183,16 +186,17 @@ public class SBXCrossoverTest {
 
     assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON) ;
     assertEquals(solutions.get(1).getVariableValue(0), newSolutions.get(1).getVariableValue(0), EPSILON) ;
-    verify(randomGenerator, times(2)).nextDouble();
+    verify(randomGenerator, times(2)).getRandomValue();
   }
 
   @Test
   public void shouldCrossingTwoDoubleVariableSolutionsReturnValidSolutions() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.2, 0.2, 0.8, 0.3, 0.2, 0.8, 0.3) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.8, 0.3, 0.2, 0.8, 0.3) ;
 
     SBXCrossover crossover = new SBXCrossover(crossoverProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(2) ;
@@ -224,16 +228,17 @@ public class SBXCrossoverTest {
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
     assertThat(newSolutions.get(1).getVariableValue(1), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
-    verify(randomGenerator, times(7)).nextDouble();
+    verify(randomGenerator, times(7)).getRandomValue();
   }
 
   @Test
   public void shouldCrossingTheSecondVariableReturnTheOtherVariablesUnchanged() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.3, 0.7,  0.2, 0.2, 0.2, 0.7) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.3, 0.7,  0.2, 0.2, 0.2, 0.7) ;
 
     SBXCrossover crossover = new SBXCrossover(crossoverProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(3) ;
@@ -247,7 +252,7 @@ public class SBXCrossoverTest {
     assertNotEquals(solutions.get(0).getVariableValue(1), newSolutions.get(0).getVariableValue(1), EPSILON);
     assertEquals(solutions.get(0).getVariableValue(2), newSolutions.get(0).getVariableValue(2), EPSILON);
 
-    verify(randomGenerator, times(6)).nextDouble();
+    verify(randomGenerator, times(6)).getRandomValue();
   }
 
   /**
