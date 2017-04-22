@@ -3,15 +3,16 @@ package org.uma.jmetal.util;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 /**
  * Created by Antonio J. Nebro on 6/12/14.
  */
 public class SolutionUtils {
-  private static JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
 
   /**
    * Return the best solution between those passed as arguments. If they are equal or incomparable
@@ -21,6 +22,30 @@ public class SolutionUtils {
    * @return The best solution
    */
   public static <S extends Solution<?>> S getBestSolution(S solution1, S solution2, Comparator<S> comparator) {
+	  return getBestSolution(solution1, solution2, comparator, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /**
+   * Return the best solution between those passed as arguments. If they are equal or incomparable
+   * one of them is chosen randomly.
+   * @param solution1
+   * @param solution2
+   * @param randomGenerator {@link RandomGenerator} for the equality case
+   * @return The best solution
+   */
+  public static <S extends Solution<?>> S getBestSolution(S solution1, S solution2, Comparator<S> comparator, RandomGenerator<Double> randomGenerator) {
+	  return getBestSolution(solution1, solution2, comparator, (a, b) -> randomGenerator.getRandomValue() < 0.5 ? a : b);
+  }
+
+  /**
+   * Return the best solution between those passed as arguments. If they are equal or incomparable
+   * one of them is chosen based on the given policy.
+   * @param solution1
+   * @param solution2
+   * @param equalityPolicy
+   * @return The best solution
+   */
+  public static <S extends Solution<?>> S getBestSolution(S solution1, S solution2, Comparator<S> comparator, BinaryOperator<S> equalityPolicy) {
     S result ;
     int flag = comparator.compare(solution1, solution2);
     if (flag == -1) {
@@ -28,11 +53,7 @@ public class SolutionUtils {
     } else if (flag == 1) {
       result = solution2;
     } else {
-      if (randomGenerator.nextDouble() < 0.5) {
-        result = solution1;
-      } else {
-        result = solution2;
-      }
+      result = equalityPolicy.apply(solution1, solution2);
     }
 
     return result ;
