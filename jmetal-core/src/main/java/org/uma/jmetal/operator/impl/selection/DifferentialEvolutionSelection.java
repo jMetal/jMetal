@@ -16,6 +16,7 @@ package org.uma.jmetal.operator.impl.selection;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -33,11 +34,16 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class DifferentialEvolutionSelection implements SelectionOperator<List<DoubleSolution>,List<DoubleSolution>> {
   private int solutionListIndex = Integer.MIN_VALUE ;
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Integer> randomGenerator ;
 
   /** Constructor */
   public DifferentialEvolutionSelection() {
-    randomGenerator = JMetalRandom.getInstance() ;
+	  this((a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /** Constructor */
+  public DifferentialEvolutionSelection(BoundedRandomGenerator<Integer> randomGenerator) {
+    this.randomGenerator = randomGenerator ;
   }
 
   public void setIndex(int index) {
@@ -61,13 +67,13 @@ public class DifferentialEvolutionSelection implements SelectionOperator<List<Do
     int r1, r2, r3;
 
     do {
-      r1 = randomGenerator.nextInt(0, solutionSet.size() - 1);
+      r1 = randomGenerator.getRandomValue(0, solutionSet.size() - 1);
     } while (r1 == solutionListIndex);
     do {
-      r2 = randomGenerator.nextInt(0, solutionSet.size() - 1);
+      r2 = randomGenerator.getRandomValue(0, solutionSet.size() - 1);
     } while (r2 == solutionListIndex || r2 == r1);
     do {
-      r3 = randomGenerator.nextInt(0, solutionSet.size() - 1);
+      r3 = randomGenerator.getRandomValue(0, solutionSet.size() - 1);
     } while (r3 == solutionListIndex || r3 == r1 || r3 == r2);
 
     parents.add(solutionSet.get(r1));

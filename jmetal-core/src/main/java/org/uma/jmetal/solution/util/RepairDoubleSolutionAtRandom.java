@@ -14,6 +14,7 @@
 package org.uma.jmetal.solution.util;
 
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -22,13 +23,20 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 @SuppressWarnings("serial")
 public class RepairDoubleSolutionAtRandom implements RepairDoubleSolution {
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Double> randomGenerator ;
 
   /**
    * Constructor
    */
   public RepairDoubleSolutionAtRandom() {
-    randomGenerator = JMetalRandom.getInstance() ;
+	  this((a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Constructor
+   */
+  public RepairDoubleSolutionAtRandom(BoundedRandomGenerator<Double> randomGenerator) {
+    this.randomGenerator = randomGenerator ;
   }
   /**
    * Checks if the value is between its bounds; if not, a random value between the limits is returned
@@ -44,10 +52,10 @@ public class RepairDoubleSolutionAtRandom implements RepairDoubleSolution {
     }
     double result = value ;
     if (value < lowerBound) {
-      result = randomGenerator.nextDouble(lowerBound, upperBound) ;
+      result = randomGenerator.getRandomValue(lowerBound, upperBound) ;
     }
     if (value > upperBound) {
-      result = randomGenerator.nextDouble(lowerBound, upperBound) ;
+      result = randomGenerator.getRandomValue(lowerBound, upperBound) ;
     }
 
     return result ;

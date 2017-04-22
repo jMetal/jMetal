@@ -14,6 +14,7 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -314,6 +315,17 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return the number of the selected hypercube.
    */
   public int rouletteWheel() {
+	  return rouletteWheel((a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Returns a random hypercube using a rouleteWheel method.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for the roulette
+   * 
+   * @return the number of the selected hypercube.
+   */
+  public int rouletteWheel(BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
     double inverseSum = 0.0;
     for (int hypercube : hypercubes) {
@@ -323,7 +335,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     }
 
     //Calculate a random value between 0 and sumaInversa
-    double random = JMetalRandom.getInstance().nextDouble(0.0, inverseSum);
+    double random = randomGenerator.getRandomValue(0.0, inverseSum);
     int hypercube = 0;
     double accumulatedSum = 0.0;
     while (hypercube < hypercubes.length) {
@@ -379,7 +391,18 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return The hypercube.
    */
   public int randomOccupiedHypercube() {
-    int rand = JMetalRandom.getInstance().nextInt(0, occupied.length - 1);
+	  return randomOccupiedHypercube((a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Returns a random hypercube that has more than zero solutions.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for selecting the hypercube
+   *
+   * @return The hypercube.
+   */
+  public int randomOccupiedHypercube(BoundedRandomGenerator<Integer> randomGenerator) {
+    int rand = randomGenerator.getRandomValue(0, occupied.length - 1);
     return occupied[rand];
   }
 

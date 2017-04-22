@@ -17,6 +17,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a non-uniform mutation operator.
@@ -31,15 +32,20 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability;
 
   private int currentIteration;
-  private JMetalRandom randomGenenerator ;
+  private RandomGenerator<Double> randomGenenerator ;
 
   /** Constructor */
   public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations) {
+	  this(mutationProbability, perturbation, maxIterations, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations, RandomGenerator<Double> randomGenenerator) {
     this.perturbation = perturbation ;
     this.mutationProbability = mutationProbability ;
     this.maxIterations = maxIterations ;
 
-    randomGenenerator = JMetalRandom.getInstance() ;
+    this.randomGenenerator = randomGenenerator ;
   }
 
   /* Getters */
@@ -100,8 +106,8 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
    */
   public void doMutation(double probability, DoubleSolution solution){
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenenerator.nextDouble() < probability) {
-        double rand = randomGenenerator.nextDouble();
+      if (randomGenenerator.getRandomValue() < probability) {
+        double rand = randomGenenerator.getRandomValue();
         double tmp;
 
         if (rand <= 0.5) {
@@ -127,7 +133,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   /** Calculates the delta value used in NonUniform mutation operator */
   private double delta(double y, double bMutationParameter) {
-    double rand = randomGenenerator.nextDouble();
+    double rand = randomGenenerator.getRandomValue();
     int it, maxIt;
     it = currentIteration;
     maxIt = maxIterations;
