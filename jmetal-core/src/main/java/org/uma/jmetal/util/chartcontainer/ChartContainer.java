@@ -16,6 +16,10 @@ package org.uma.jmetal.util.chartcontainer;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.knowm.xchart.BitmapEncoder;
@@ -25,6 +29,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
@@ -35,41 +40,97 @@ import org.uma.jmetal.util.front.util.FrontUtils;
  */
 
 public class ChartContainer {
-
-    private XYChart chart;
+    private Map<String, XYChart> charts;
+    private XYChart frontChart;
+    private XYChart varChart;
     private SwingWrapper<XYChart> sw;
     private String name;
     private int delay;
+    private int objective1;
+    private int objective2;
+    private int variable1;
+    private int variable2;
+    private Map<String, List<Integer>> iterations;
+    private Map<String, List<Double>> indicatorValues;
 
     public ChartContainer(String name) {
-        this(name, 0, 600, 400);
+        this(name, 0);
     }
 
     public ChartContainer(String name, int delay) {
-        this(name, delay, 600, 400);
-    }
-
-    public ChartContainer(String name, int delay, int width, int height) {
         this.name = name;
         this.delay = delay;
-        this.chart = new XYChartBuilder().xAxisTitle("Objective 1").yAxisTitle("Objective 2").width(width)
-                .height(height).build();
-        this.chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
+        this.charts = new HashMap<String, XYChart>();
+        this.iterations = new HashMap<String, List<Integer>>();
+        this.indicatorValues = new HashMap<String, List<Double>>();
     }
 
-    public void InitChart(double[] xData, double[] yData) {
-        XYSeries series = this.chart.addSeries(this.name, xData, yData);
-        series.setMarkerColor(Color.blue);
-        this.sw = new SwingWrapper<XYChart>(this.chart);
-        this.sw.displayChart(this.name);
+    public void SetFrontChart(int objective1, int objective2) throws FileNotFoundException {
+        this.SetFrontChart(objective1, objective2, null);
     }
 
-    public void RefreshChart(double[] xData, double[] yData) {
-        this.RefreshChart(xData, yData, this.delay);
+    public void SetFrontChart(int objective1, int objective2, String referenceFront) throws FileNotFoundException {
+        this.objective1 = objective1;
+        this.objective2 = objective2;
+        this.frontChart = new XYChartBuilder().xAxisTitle("Objective " + this.objective1)
+                .yAxisTitle("Objective " + this.objective2).build();
+        this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
+
+        if (referenceFront != null) {
+            this.DisplayReferenceFront(referenceFront);
+        }
+
+        double[] xData = new double[] { 0 };
+        double[] yData = new double[] { 0 };
+        XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
+        frontChartSeries.setMarkerColor(Color.blue);
+
+        this.charts.put(this.name, this.frontChart);
     }
 
-    public void RefreshChart(double[] xData, double[] yData, int delay) {
-        this.chart.updateXYSeries(this.name, xData, yData, null);
+    public void SetVarChart(int variable1, int variable2) {
+        this.variable1 = variable1;
+        this.variable2 = variable2;
+        this.varChart = new XYChartBuilder().xAxisTitle("Variable " + this.variable1)
+                .yAxisTitle("Variable " + this.variable2).build();
+        this.varChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
+
+        double[] xData = new double[] { 0 };
+        double[] yData = new double[] { 0 };
+
+        XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
+        varChartSeries.setMarkerColor(Color.blue);
+
+        this.charts.put(this.name + "_VAR", this.varChart);
+    }
+
+    public void InitChart() {
+        this.sw = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
+        this.sw.displayChartMatrix(this.name);
+    }
+
+    public void UpdateFrontCharts(List<DoubleSolution> solutionList) {
+        double[] xData;
+        double[] yData;
+
+        if (this.frontChart != null) {
+            xData = this.getSolutionsForObjective(solutionList, this.objective1);
+            yData = this.getSolutionsForObjective(solutionList, this.objective2);
+            this.frontChart.updateXYSeries(this.name, xData, yData, null);
+        }
+
+        if (this.varChart != null) {
+            xData = this.getVariableValues(solutionList, this.variable1);
+            yData = this.getVariableValues(solutionList, this.variable2);
+            this.varChart.updateXYSeries(this.name, xData, yData, null);
+        }
+    }
+
+    public void RefreshCharts() {
+        this.RefreshCharts(this.delay);
+    }
+
+    public void RefreshCharts(int delay) {
         if (delay > 0) {
             try {
                 TimeUnit.MILLISECONDS.sleep(delay);
@@ -81,38 +142,64 @@ public class ChartContainer {
         this.Repaint();
     }
 
-    public void AddSeries(String seriesName, double[] xData, double[] yData) {
-        this.chart.addSeries(seriesName, xData, yData);
+    public void AddIndicatorChart(String indicator) {
+        XYChart indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
+        indicatorChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
+
+        List<Integer> indicatorIterations = new ArrayList<Integer>();
+        indicatorIterations.add(0);
+        List<Double> indicatorValues = new ArrayList<Double>();
+        indicatorValues.add(0.0);
+
+        XYSeries indicatorSeries = indicatorChart.addSeries(this.name, indicatorIterations, indicatorValues);
+        indicatorSeries.setMarkerColor(Color.blue);
+
+        this.iterations.put(indicator, indicatorIterations);
+        this.indicatorValues.put(indicator, indicatorValues);
+        this.charts.put(indicator, indicatorChart);
     }
 
-    public void UpdateSeries(String seriesName, double[] xData, double[] yData) {
-        this.chart.updateXYSeries(seriesName, xData, yData, null);
+    public void RemoveIndicator(String indicator) {
+        this.iterations.remove(indicator);
+        this.indicatorValues.remove(indicator);
+        this.charts.remove(indicator);
     }
 
-    public void RemoveSeries(String seriesName) {
-        this.chart.removeSeries(seriesName);
+    public void UpdateIndicatorChart(String indicator, Double value) {
+        this.indicatorValues.get(indicator).add(value);
+        this.iterations.get(indicator).add(this.indicatorValues.get(indicator).size());
+
+        this.charts.get(indicator).updateXYSeries(this.name, this.iterations.get(indicator),
+                this.indicatorValues.get(indicator), null);
     }
 
     public void Repaint() {
         try {
-            this.sw.repaintChart();
+            for (int i = 0; i < this.charts.values().size(); i++) {
+                this.sw.repaintChart(i);
+            }
         } catch (IndexOutOfBoundsException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public void DisplayFront(String name, String fileName) throws FileNotFoundException {
+    private void DisplayFront(String name, String fileName, int objective1, int objective2)
+            throws FileNotFoundException {
         ArrayFront front = new ArrayFront(fileName);
         double[][] data = FrontUtils.convertFrontToArray(front);
-        double[] xData = getObjectiveValues(data, 0);
-        double[] yData = getObjectiveValues(data, 1);
-        XYSeries referenceFront = this.chart.addSeries(name, xData, yData);
+        double[] xData = getObjectiveValues(data, objective1);
+        double[] yData = getObjectiveValues(data, objective2);
+        XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
         referenceFront.setMarkerColor(Color.red);
     }
 
-    public void DisplayReferenceFront(String fileName) throws FileNotFoundException {
-        this.DisplayFront("Reference Front", fileName);
+    private void DisplayReferenceFront(String fileName) throws FileNotFoundException {
+        this.DisplayReferenceFront(fileName, this.objective1, this.objective2);
+    }
+
+    private void DisplayReferenceFront(String fileName, int objective1, int objective2) throws FileNotFoundException {
+        this.DisplayFront("Reference Front", fileName, objective1, objective2);
     }
 
     private double[] getObjectiveValues(double[][] data, int obj) {
@@ -123,8 +210,26 @@ public class ChartContainer {
         return values;
     }
 
+    private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
+        double[] result = new double[solutionList.size()];
+        for (int i = 0; i < solutionList.size(); i++) {
+            result[i] = solutionList.get(i).getObjective(objective);
+        }
+        return result;
+    }
+
+    private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
+        double[] result = new double[solutionList.size()];
+        for (int i = 0; i < solutionList.size(); i++) {
+            result[i] = solutionList.get(i).getVariableValue(variable);
+        }
+        return result;
+    }
+
     public void SaveChart(String fileName, BitmapFormat format) throws IOException {
-        BitmapEncoder.saveBitmap(this.chart, fileName, format);
+        for (String chart : this.charts.keySet()) {
+            BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
+        }
     }
 
     public String getName() {
@@ -145,12 +250,15 @@ public class ChartContainer {
         return this;
     }
 
-    public XYChart getChart() {
-        return this.chart;
+    public XYChart getFrontChart() {
+        return this.frontChart;
     }
 
-    public ChartContainer setChart(XYChart chart) {
-        this.chart = chart;
-        return this;
+    public XYChart getVarChart() {
+        return this.varChart;
+    }
+
+    public XYChart getChart(String chartName) {
+        return this.charts.get(chartName);
     }
 }

@@ -13,14 +13,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,12 +21,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+
+@SuppressWarnings("serial")
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   public enum FunctionType {
     TCHE, PBI, AGG
   }
 
+  private String name;
   private DoubleProblem problem;
   private List<DoubleSolution> swarm ;
 
@@ -80,6 +82,19 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
                 FunctionType functionType, String dataDirectory, int maxAge) {
+      this(problem, swarmSize,
+           maxIterations, r1Min, r1Max,
+           r2Min, r2Max, c1Min, c1Max, c2Min, c2Max,
+           weightMin, weightMax, changeVelocity1, changeVelocity2,
+           functionType, dataDirectory, maxAge, "dMOPSO");
+  }
+  
+  public DMOPSO(DoubleProblem problem, int swarmSize,
+                int maxIterations, double r1Min, double r1Max,
+                double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
+                double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+                FunctionType functionType, String dataDirectory, int maxAge, String name) {
+    this.name = name;
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.maxIterations = maxIterations;
@@ -504,7 +519,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   @Override public String getName() {
-    return "dMOPSO" ;
+    return this.name ;
   }
 
   @Override public String getDescription() {

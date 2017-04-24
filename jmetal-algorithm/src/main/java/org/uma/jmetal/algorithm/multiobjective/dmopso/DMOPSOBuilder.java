@@ -58,7 +58,7 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     private DMOPSOVariant variant;
 
     public DMOPSOBuilder(DoubleProblem problem) {
-        this.name = "DMOPSO";
+        this.name = "dMOPSO";
         this.problem = problem;
 
         this.swarmSize = 100;
@@ -290,7 +290,8 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
         DMOPSO algorithm = null;
         if (variant.equals(DMOPSOVariant.DMOPSO)) {
             algorithm = new DMOPSO(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max, c2Min,
-                    c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory, maxAge);
+                    c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory, maxAge,
+                    name);
         } else if (variant.equals(DMOPSOVariant.Measures)) {
             algorithm = new DMOPSOMeasures(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
                     c2Min, c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory,
