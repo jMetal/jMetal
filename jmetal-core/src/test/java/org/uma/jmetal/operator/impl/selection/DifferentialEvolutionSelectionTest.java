@@ -5,10 +5,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -122,6 +125,40 @@ public class DifferentialEvolutionSelectionTest {
     assertThat(parents, hasItem(population.get(3))) ;
     assertThat(parents, not(hasItem(population.get(1)))) ;
   }
+  
+	@Test
+	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
+		// Configuration
+		List<DoubleSolution> solutions = Arrays.asList(mock(DoubleSolution.class), mock(DoubleSolution.class),
+        mock(DoubleSolution.class), mock(DoubleSolution.class));
+
+		// Check configuration leads to use default generator by default
+		final int[] defaultUses = { 0 };
+		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
+		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		defaultGenerator.setRandomGenerator(auditor);
+		auditor.addListener((a) -> defaultUses[0]++);
+
+		DifferentialEvolutionSelection selection = new DifferentialEvolutionSelection();
+		selection.setIndex(1);
+		selection.execute(solutions);
+		assertTrue("No use of the default generator", defaultUses[0] > 0);
+
+		// Test same configuration uses custom generator instead
+		solutions = Arrays.asList(mock(DoubleSolution.class), mock(DoubleSolution.class),
+        mock(DoubleSolution.class), mock(DoubleSolution.class));
+		defaultUses[0] = 0;
+		
+		final int[] customUses = { 0 };
+		selection = new DifferentialEvolutionSelection((a, b) -> {
+			customUses[0]++;
+			return new Random().nextInt(b+1-a)+a;
+		});
+		selection.setIndex(1);
+		selection.execute(solutions);
+		assertTrue("Default random generator used", defaultUses[0] == 0);
+		assertTrue("No use of the custom generator", customUses[0] > 0);
+	}
 }
 
 

@@ -20,15 +20,20 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -263,4 +268,44 @@ public class BLXAlphaCrossoverTest {
       solution.setObjective(1, 1.0);
     }
   }
+  
+	@Test
+	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
+		// Configuration
+		double crossoverProbability = 0.1;
+		int alpha = 20;
+		RepairDoubleSolutionAtBounds solutionRepair = new RepairDoubleSolutionAtBounds();
+		@SuppressWarnings("serial")
+		DoubleProblem problem = new AbstractDoubleProblem() {
+
+			@Override
+			public void evaluate(DoubleSolution solution) {
+				// Do nothing
+			}
+
+		};
+		List<DoubleSolution> solutions = new LinkedList<>();
+		solutions.add(problem.createSolution());
+		solutions.add(problem.createSolution());
+
+		// Check configuration leads to use default generator by default
+		final int[] defaultUses = { 0 };
+		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
+		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		defaultGenerator.setRandomGenerator(auditor);
+		auditor.addListener((a) -> defaultUses[0]++);
+
+		new BLXAlphaCrossover(crossoverProbability, alpha, solutionRepair).execute(solutions);
+		assertTrue("No use of the default generator", defaultUses[0] > 0);
+
+		// Test same configuration uses custom generator instead
+		defaultUses[0] = 0;
+		final int[] customUses = { 0 };
+		new BLXAlphaCrossover(crossoverProbability, alpha, solutionRepair, () -> {
+			customUses[0]++;
+			return new Random().nextDouble();
+		}).execute(solutions);
+		assertTrue("Default random generator used", defaultUses[0] == 0);
+		assertTrue("No use of the custom generator", customUses[0] > 0);
+	}
 }

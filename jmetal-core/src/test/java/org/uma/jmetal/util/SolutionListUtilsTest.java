@@ -23,11 +23,15 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
@@ -295,6 +299,38 @@ public class SolutionListUtilsTest {
     List<BinarySolution> result = SolutionListUtils.selectNRandomDifferentSolutions(solutionsToBeReturned, list);
     assertEquals(solutionsToBeReturned, result.size());
   }
+  
+	@Test
+	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvidedInSelectNRandomDifferentSolutions() {
+		// Configuration
+		List<BinarySolution> solutions = new LinkedList<>();
+		solutions.add(mock(BinarySolution.class));
+		solutions.add(mock(BinarySolution.class));
+		solutions.add(mock(BinarySolution.class));
+		solutions.add(mock(BinarySolution.class));
+		solutions.add(mock(BinarySolution.class));
+		solutions.add(mock(BinarySolution.class));
+
+		// Check configuration leads to use default generator by default
+		final int[] defaultUses = { 0 };
+		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
+		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		defaultGenerator.setRandomGenerator(auditor);
+		auditor.addListener((a) -> defaultUses[0]++);
+
+		SolutionListUtils.selectNRandomDifferentSolutions(3, solutions);
+		assertTrue("No use of the default generator", defaultUses[0] > 0);
+
+		// Test same configuration uses custom generator instead
+		defaultUses[0] = 0;
+		final int[] customUses = { 0 };
+		SolutionListUtils.selectNRandomDifferentSolutions(3, solutions, (a, b) -> {
+			customUses[0]++;
+			return new Random().nextInt(b+1-a)+a;
+		});
+		assertTrue("Default random generator used", defaultUses[0] == 0);
+		assertTrue("No use of the custom generator", customUses[0] > 0);
+	}
 
   /**
    * If the list contains 4 solutions, the result list must return all of them

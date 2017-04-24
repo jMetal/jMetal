@@ -21,15 +21,17 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -209,4 +211,31 @@ public class AdaptiveRandomNeighborhoodTest {
     assertEquals(list.get(2), result.get(0));
     assertEquals(list.get(0), result.get(1));
   }
+  
+	@Test
+	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
+		// Configuration
+		int solutionListSize = 3;
+		int numberOfRandomNeighbours = 1;
+
+		// Check configuration leads to use default generator by default
+		final int[] defaultUses = { 0 };
+		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
+		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		defaultGenerator.setRandomGenerator(auditor);
+		auditor.addListener((a) -> defaultUses[0]++);
+
+		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours);
+		assertTrue("No use of the default generator", defaultUses[0] > 0);
+
+		// Test same configuration uses custom generator instead
+		defaultUses[0] = 0;
+		final int[] customUses = { 0 };
+		new AdaptiveRandomNeighborhood<>(solutionListSize, numberOfRandomNeighbours, (a, b) -> {
+			customUses[0]++;
+			return new Random().nextInt(b-a+1)+a;
+		});
+		assertTrue("Default random generator used", defaultUses[0] == 0);
+		assertTrue("No use of the custom generator", customUses[0] > 0);
+	}
 }
