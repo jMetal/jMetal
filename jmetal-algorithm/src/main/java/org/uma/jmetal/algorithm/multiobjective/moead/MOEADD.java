@@ -38,6 +38,7 @@ import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+@SuppressWarnings("serial")
 public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution> {
 
     protected int[][] rankIdx;			// index matrix for the non-domination levels
@@ -50,7 +51,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
     protected HashMap<DoubleSolution, Double> associateDistSolution;
     protected HashMap<DoubleSolution, Integer> regionSolution;
 
-    public MOEADD(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations, CrossoverOperator crossoverOperator, MutationOperator mutation, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
+    public MOEADD(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations, CrossoverOperator<DoubleSolution> crossoverOperator, MutationOperator<DoubleSolution> mutation, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
         super(problem, populationSize, resultPopulationSize, maxEvaluations, crossoverOperator, mutation, functionType, dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborSize);
     }
 
@@ -58,11 +59,11 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
     public void run() {
 
         evaluations = 0;
-        population = new ArrayList(populationSize);
+        population = new ArrayList<>(populationSize);
 
         rankSolution = new HashMap<>();
-        associateDistSolution = new HashMap();
-        regionSolution = new HashMap();
+        associateDistSolution = new HashMap<>();
+        regionSolution = new HashMap<>();
 
         neighborhood = new int[populationSize][neighborSize];
         lambda = new double[populationSize][problem.getNumberOfObjectives()];
@@ -87,10 +88,10 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             subregionDist[i][i] = distance;
         }
 
-        Ranking ranking = computeRanking(population);
+        Ranking<DoubleSolution> ranking = computeRanking(population);
         for (int curRank = 0; curRank < ranking.getNumberOfSubfronts(); curRank++) {
-            List<Solution> front = ranking.getSubfront(curRank);
-            for (Solution s : front) {
+            List<DoubleSolution> front = ranking.getSubfront(curRank);
+            for (Solution<?> s : front) {
                 int position = this.population.indexOf(s);
                 rankIdx[curRank][position] = 1;
             }
@@ -1357,7 +1358,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param b
      * @return
      */
-    public int checkDominance(Solution a, Solution b) {
+    public int checkDominance(Solution<?> a, Solution<?> b) {
 
         int flag1 = 0;
         int flag2 = 0;
@@ -1392,7 +1393,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param nz_
      * @return
      */
-    public double calculateDistance(Solution individual, double[] lambda,
+    public double calculateDistance(Solution<?> individual, double[] lambda,
             double[] z_, double[] nz_) {
 
         double scale;
@@ -1422,7 +1423,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         return distance;
     }
 
-    public double calculateDistance2(Solution indiv, double[] lambda,
+    public double calculateDistance2(Solution<?> indiv, double[] lambda,
             double[] z_, double[] nz_) {
 
         // normalize the weight vector (line segment)
@@ -1522,7 +1523,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         }
     }
 
-    protected Ranking<DoubleSolution> computeRanking(List solutionList) {
+    protected Ranking<DoubleSolution> computeRanking(List<DoubleSolution> solutionList) {
         Ranking<DoubleSolution> ranking = new DominanceRanking<>();
         ranking.computeRanking(solutionList);
         return ranking;
