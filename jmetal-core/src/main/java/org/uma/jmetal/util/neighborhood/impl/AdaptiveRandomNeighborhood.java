@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.neighborhood.impl;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -23,13 +22,13 @@ import java.util.List;
 
 /**
  * This class implements the adaptive random neighborhood (topology) defined by M. Clerc.
- * Each {@link Solution} in a solution list must have a neighborhood composed by it itself and
+ * Each solution in a solution list must have a neighborhood composed by it itself and
  * K random selected neighbors (the same solution can be chosen several times).
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
+public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
   private int solutionListSize ;
   private int numberOfRandomNeighbours;
   private List<List<Integer>> neighbours;

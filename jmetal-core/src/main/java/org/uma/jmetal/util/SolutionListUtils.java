@@ -33,7 +33,7 @@ public class SolutionListUtils {
     return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
-  public <S extends Solution<?>> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
+  public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       throw new IllegalArgumentException("No solution provided: "+solutionList);
     }
@@ -54,7 +54,7 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static <S extends Solution<?>> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
+  public static <S> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -86,7 +86,7 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static int findIndexOfWorstSolution(List<? extends Solution<?>> solutionList, Comparator<Solution<?>> comparator) {
+  public static <S> int findIndexOfWorstSolution(List<? extends S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.isEmpty()) {
@@ -96,8 +96,8 @@ public class SolutionListUtils {
     }
 
     int index = 0;
-    Solution<?> worstKnown = solutionList.get(0) ;
-    Solution<?> candidateSolution ;
+    S worstKnown = solutionList.get(0) ;
+    S candidateSolution ;
 
     int flag;
     for (int i = 1; i < solutionList.size(); i++) {
@@ -112,7 +112,7 @@ public class SolutionListUtils {
     return index;
   }
 
-  public static <S extends Solution<?>> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
+  public static <S> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
     return solutionList.get(findIndexOfBestSolution(solutionList, comparator)) ;
   }
 
@@ -212,7 +212,7 @@ public class SolutionListUtils {
    * @param solutionList The front to invert
    * @return The inverted front
    */
-  public static <S extends Solution<?>> List<S> selectNRandomDifferentSolutions(
+  public static <S> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned, List<S> solutionList) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
@@ -267,7 +267,7 @@ public class SolutionListUtils {
    * @param newSolutionList A <code>Solution list</code>
    * @return true if both are contains the same solutions, false in other case
    */
-  public static <S extends Solution<?>> boolean solutionListsAreEquals(List<S> solutionList,
+  public static <S> boolean solutionListsAreEquals(List<S> solutionList,
                                        List<S> newSolutionList) {
     boolean found;
     for (int i = 0; i < solutionList.size(); i++) {
@@ -294,7 +294,7 @@ public class SolutionListUtils {
    * @param problem
    * @param percentageOfSolutionsToRemove
    */
-  public static <S extends Solution<?>> void restart(List<S> solutionList, Problem<S> problem,
+  public static <S> void restart(List<S> solutionList, Problem<S> problem,
                                                      int percentageOfSolutionsToRemove) {
     if (solutionList == null) {
       throw new JMetalException("The solution list is null") ;
@@ -316,7 +316,7 @@ public class SolutionListUtils {
    * @param solutionList The list of solutions
    * @param numberOfSolutionsToRemove
    */
-  public static <S extends Solution<?>> void removeSolutionsFromList(List<S> solutionList, int numberOfSolutionsToRemove) {
+  public static <S> void removeSolutionsFromList(List<S> solutionList, int numberOfSolutionsToRemove) {
     if (solutionList.size() < numberOfSolutionsToRemove) {
       throw new JMetalException("The list size (" + solutionList.size()+") is lower than " +
           "the number of solutions to remove ("+numberOfSolutionsToRemove+")") ;
@@ -334,7 +334,7 @@ public class SolutionListUtils {
    * @param maxListSize The target size of the list
    * @param <S> The type of the solutions to be created
    */
-  public static <S extends Solution<?>> void fillPopulationWithNewSolutions(
+  public static <S> void fillPopulationWithNewSolutions(
       List<S> solutionList,
       Problem<S> problem,
       int maxListSize) {

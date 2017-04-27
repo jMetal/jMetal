@@ -14,7 +14,6 @@
 package org.uma.jmetal.operator.impl.selection;
 
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 
@@ -28,7 +27,7 @@ import java.util.List;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class NaryRandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
+public class NaryRandomSelection<S> implements SelectionOperator<List<S>,List<S>> {
   private int numberOfSolutionsToBeReturned ;
 
   /** Constructor */

@@ -14,7 +14,6 @@
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -29,7 +28,7 @@ public class ProblemUtils {
    * @return An instance of the problem
    */
   @SuppressWarnings("unchecked")
-  public static <S extends Solution<?>> Problem<S> loadProblem(String problemName) {
+  public static <S> Problem<S> loadProblem(String problemName) {
     Problem<S> problem ;
     try {
       problem = (Problem<S>)Class.forName(problemName).getConstructor().newInstance() ;
