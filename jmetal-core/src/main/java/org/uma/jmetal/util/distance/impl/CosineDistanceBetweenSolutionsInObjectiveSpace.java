@@ -17,7 +17,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 
 /**
- * Class for calculating the cosene distance between two {@link Solution} objects in objective space.
+ * Class for calculating the cosine distance between two {@link Solution} objects in objective space.
  *
  * @author <antonio@lcc.uma.es>
  */
