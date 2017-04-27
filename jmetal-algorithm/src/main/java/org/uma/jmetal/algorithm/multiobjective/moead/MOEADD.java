@@ -121,8 +121,8 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<S> {
 
                 
                 updateIdealPoint(child);
-		updateNadirPoint(child);
-		updateArchive(child);
+                updateNadirPoint(child);
+                updateArchive(child);
                 //System.out.println(evaluations);
             } // for			
         } while (evaluations < maxEvaluations);
@@ -272,7 +272,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<S> {
             } else {
                 for (int i = 0; i < populationSize; i++) {
                     if (rankIdx[numRanks - 1][i] == 1) {
-                        lastFront.add((S) population.get(i));
+                        lastFront.add(population.get(i));
                     }
                 }
                 if (rankSolution.getOrDefault(indiv, 0) == (numRanks - 1)) {
