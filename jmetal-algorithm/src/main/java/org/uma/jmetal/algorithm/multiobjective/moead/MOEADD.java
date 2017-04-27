@@ -24,7 +24,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,14 +31,12 @@ import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.Solution ;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 @SuppressWarnings("serial")
-public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution> {
+public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<S> {
 
     protected int[][] rankIdx;			// index matrix for the non-domination levels
     protected int[][] subregionIdx;		// index matrix for subregion record
@@ -47,11 +44,11 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
     protected int numRanks;
 
     /*Hashmaps used instead add attributtes to Solution Class*/
-    protected HashMap<DoubleSolution, Integer> rankSolution;
-    protected HashMap<DoubleSolution, Double> associateDistSolution;
-    protected HashMap<DoubleSolution, Integer> regionSolution;
+    protected HashMap<S, Integer> rankSolution;
+    protected HashMap<S, Double> associateDistSolution;
+    protected HashMap<S, Integer> regionSolution;
 
-    public MOEADD(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize, int maxEvaluations, CrossoverOperator<DoubleSolution> crossoverOperator, MutationOperator<DoubleSolution> mutation, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
+    public MOEADD(Problem<S> problem, int populationSize, int resultPopulationSize, int maxEvaluations, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutation, FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability, int maximumNumberOfReplacedSolutions, int neighborSize) {
         super(problem, populationSize, resultPopulationSize, maxEvaluations, crossoverOperator, mutation, functionType, dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborSize);
     }
 
@@ -88,10 +85,10 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             subregionDist[i][i] = distance;
         }
 
-        Ranking<DoubleSolution> ranking = computeRanking(population);
+        Ranking<S> ranking = computeRanking(population);
         for (int curRank = 0; curRank < ranking.getNumberOfSubfronts(); curRank++) {
-            List<DoubleSolution> front = ranking.getSubfront(curRank);
-            for (Solution<?> s : front) {
+            List<S> front = ranking.getSubfront(curRank);
+            for (S s : front) {
                 int position = this.population.indexOf(s);
                 rankIdx[curRank][position] = 1;
             }
@@ -113,13 +110,10 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
                 } else {
                     type = 2; // whole population
                 }
-                DoubleSolution[] parentvect;
-                parentvect = matingSelection(cid, type);
-                ArrayList<DoubleSolution> parents = new ArrayList<>(Arrays.asList(parentvect));
+                List<S> parents = matingSelection(cid, type);
+                List<S> children = crossoverOperator.execute(parents);
 
-                List<DoubleSolution> children = crossoverOperator.execute(parents);
-
-                DoubleSolution child = children.get(0);
+                S child = children.get(0);
                 mutationOperator.execute(child);
                 problem.evaluate(child);
 
@@ -140,7 +134,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      */
     public void initPopulation() {
         for (int i = 0; i < populationSize; i++) {
-            DefaultDoubleSolution newSolution = (DefaultDoubleSolution) problem.createSolution();
+            S newSolution = problem.createSolution();
             problem.evaluate(newSolution);
             evaluations++;
             population.add(newSolution);
@@ -167,11 +161,11 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param type
      * @return
      */
-    public DoubleSolution[] matingSelection(int cid, int type) {
+    public List<S> matingSelection(int cid, int type) {
 
         int rnd1, rnd2;
 
-        DoubleSolution[] parents = new DoubleSolution[2];
+        List<S> parents = new ArrayList<>(2);
 
         int nLength = neighborhood[cid].length;
 
@@ -216,8 +210,8 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             }
             int p1 = randomGenerator.nextInt(0, list1.size() - 1);
             int p2 = randomGenerator.nextInt(0, list2.size() - 1);
-            parents[0] = population.get(list1.get(p1));
-            parents[1] = population.get(list2.get(p2));
+            parents.add(population.get(list1.get(p1)));
+            parents.add(population.get(list2.get(p2)));
         } else {
             for (int i = 0; i < populationSize; i++) {
                 for (int j = 0; j < populationSize; j++) {
@@ -246,8 +240,8 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             }
             int p1 = randomGenerator.nextInt(0, list1.size() - 1);
             int p2 = randomGenerator.nextInt(0, list2.size() - 1);
-            parents[0] = population.get(list1.get(p1));
-            parents[1] = population.get(list2.get(p2));
+            parents.add(population.get(list1.get(p1)));
+            parents.add(population.get(list2.get(p2)));
         }
 
         return parents;
@@ -259,7 +253,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      *
      * @param indiv
      */
-    public void updateArchive(DoubleSolution indiv) {
+    public void updateArchive(S indiv) {
 
         // find the location of 'indiv'
         setLocation(indiv, idealPoint, nadirPoint);
@@ -270,7 +264,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         if (numRanks == 1) {
             deleteRankOne(indiv, location);
         } else {
-            ArrayList<DoubleSolution> lastFront = new ArrayList<>(populationSize);
+            ArrayList<S> lastFront = new ArrayList<>(populationSize);
             int frontSize = countRankOnes(numRanks - 1);
             if (frontSize == 0) {	// the last non-domination level only contains 'indiv'
                 frontSize++;
@@ -278,7 +272,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             } else {
                 for (int i = 0; i < populationSize; i++) {
                     if (rankIdx[numRanks - 1][i] == 1) {
-                        lastFront.add((DoubleSolution) population.get(i));
+                        lastFront.add((S) population.get(i));
                     }
                 }
                 if (rankSolution.getOrDefault(indiv, 0) == (numRanks - 1)) {
@@ -310,7 +304,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
                     rankIdx[targetRank][targetIdx] = 0;
                     rankIdx[indivRank][targetIdx] = 1;
 
-                    DoubleSolution targetSol = population.get(targetIdx);
+                    S targetSol = population.get(targetIdx);
 
                     replace(targetIdx, indiv);
                     subregionIdx[parentLocation][targetIdx] = 0;
@@ -428,7 +422,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
                                 rankIdx[targetRank][idxArray[targetIdx]] = 0;
                                 rankIdx[indivRank][idxArray[targetIdx]] = 1;
                                 
-                                DoubleSolution targetSol = population.get(idxArray[targetIdx]);
+                                S targetSol = population.get(idxArray[targetIdx]);
                                 
                                 replace(idxArray[targetIdx], indiv);
                                 subregionIdx[crowdIdx][idxArray[targetIdx]] = 0;
@@ -448,7 +442,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      *
      * @param indiv
      */
-    public void nondominated_sorting_delete(DoubleSolution indiv) {
+    public void nondominated_sorting_delete(S indiv) {
 
         // find the non-domination level of 'indiv'
         //int indivRank = indiv.getRank();
@@ -543,7 +537,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indiv
      * @return
      */
-    public int nondominated_sorting_add(DoubleSolution indiv) {
+    public int nondominated_sorting_add(S indiv) {
 
         int flag = 0;
         int flag1, flag2, flag3;
@@ -827,7 +821,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indiv
      * @param location
      */
-    public void deleteCrowdRegion1(DoubleSolution indiv, int location) {
+    public void deleteCrowdRegion1(S indiv, int location) {
 
         // find the most crowded subregion, if more than one such subregion exists, keep them in the crowdList
         ArrayList<Integer> crowdList = new ArrayList<>();
@@ -906,7 +900,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         rankIdx[targetRank][targetIdx] = 0;
         rankIdx[indivRank][targetIdx] = 1;
 
-        DoubleSolution targetSol = population.get(targetIdx);
+        S targetSol = population.get(targetIdx);
 
         replace(targetIdx, indiv);
         subregionIdx[crowdIdx][targetIdx] = 0;
@@ -925,7 +919,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indiv
      * @param location
      */
-    public void deleteCrowdRegion2(DoubleSolution indiv, int location) {
+    public void deleteCrowdRegion2(S indiv, int location) {
 
         double indivFitness = fitnessFunction(indiv, lambda[location]);
 
@@ -1044,7 +1038,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
             rankIdx[targetRank][targetIdx] = 0;
             rankIdx[indivRank][targetIdx] = 1;
 
-            DoubleSolution targetSol = population.get(targetIdx);
+            S targetSol = population.get(targetIdx);
 
             replace(targetIdx, indiv);
             subregionIdx[crowdIdx][targetIdx] = 0;
@@ -1064,7 +1058,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indiv
      * @param location
      */
-    public void deleteRankOne(DoubleSolution indiv, int location) {
+    public void deleteRankOne(S indiv, int location) {
 
         double indivFitness = fitnessFunction(indiv, lambda[location]);
 
@@ -1183,7 +1177,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indivFitness
      * @param indiv
      */
-    public void deleteCrowdIndiv_same(int crowdIdx, int nicheCount, double indivFitness, DoubleSolution indiv) {
+    public void deleteCrowdIndiv_same(int crowdIdx, int nicheCount, double indivFitness, S indiv) {
 
         // find the solution indices within this crowdIdx subregion
         ArrayList<Integer> indList = new ArrayList<>();
@@ -1222,7 +1216,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param nicheCount
      * @param indiv
      */
-    public void deleteCrowdIndiv_diff(int crowdIdx, int curLocation, int nicheCount, DoubleSolution indiv) {
+    public void deleteCrowdIndiv_diff(int crowdIdx, int curLocation, int nicheCount, S indiv) {
 
         // find the solution indices within this crowdIdx subregion
         ArrayList<Integer> indList = new ArrayList<>();
@@ -1293,7 +1287,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param indiv
      * @return
      */
-    public int findPosition(DoubleSolution indiv) {
+    public int findPosition(S indiv) {
 
         for (int i = 0; i < populationSize; i++) {
             if (indiv.equals(population.get(i))) {
@@ -1328,7 +1322,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param z_
      * @param nz_
      */
-    public void setLocation(DoubleSolution indiv, double[] z_, double[] nz_) {
+    public void setLocation(S indiv, double[] z_, double[] nz_) {
 
         int minIdx;
         double distance, minDist;
@@ -1358,7 +1352,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param b
      * @return
      */
-    public int checkDominance(Solution<?> a, Solution<?> b) {
+    public int checkDominance(S a, S b) {
 
         int flag1 = 0;
         int flag2 = 0;
@@ -1393,7 +1387,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
      * @param nz_
      * @return
      */
-    public double calculateDistance(Solution<?> individual, double[] lambda,
+    public double calculateDistance(S individual, double[] lambda,
             double[] z_, double[] nz_) {
 
         double scale;
@@ -1423,7 +1417,7 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         return distance;
     }
 
-    public double calculateDistance2(Solution<?> indiv, double[] lambda,
+    public double calculateDistance2(S indiv, double[] lambda,
             double[] z_, double[] nz_) {
 
         // normalize the weight vector (line segment)
@@ -1510,11 +1504,11 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         return "MOEA/D-DD";
     }
 
-    public void replace(int position, DoubleSolution solution) {
+    public void replace(int position, S solution) {
         if (position > this.population.size()) {
             population.add(solution);
         } else {
-            DoubleSolution toRemove = population.get(position);
+            S toRemove = population.get(position);
             rankSolution.remove(toRemove);
             regionSolution.remove(toRemove);
             associateDistSolution.remove(toRemove);
@@ -1523,8 +1517,8 @@ public class MOEADD<S extends Solution<?>> extends AbstractMOEAD<DoubleSolution>
         }
     }
 
-    protected Ranking<DoubleSolution> computeRanking(List<DoubleSolution> solutionList) {
-        Ranking<DoubleSolution> ranking = new DominanceRanking<>();
+    protected Ranking<S> computeRanking(List<S> solutionList) {
+        Ranking<S> ranking = new DominanceRanking<>();
         ranking.computeRanking(solutionList);
         return ranking;
     }
