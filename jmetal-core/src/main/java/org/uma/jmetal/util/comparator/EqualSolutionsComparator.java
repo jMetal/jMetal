@@ -32,17 +32,17 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
   /**
    * Compares two solutions.
    *
-   * @param object1 Object representing the first <code>Solution</code>.
-   * @param object2 Object representing the second <code>Solution</code>.
+   * @param solution1 First <code>Solution</code>.
+   * @param solution2 Second <code>Solution</code>.
    * @return -1, or 0, or 1, or 2 if solution1 is dominates solution2, solution1
    * and solution2 are equals, or solution1 is greater than solution2,
    * respectively.
    */
   @Override
-  public int compare(S object1, S object2) {
-    if (object1 == null) {
+  public int compare(S solution1, S solution2) {
+    if (solution1 == null) {
       return 1;
-    } else if (object2 == null) {
+    } else if (solution2 == null) {
       return -1;
     }
 
@@ -52,9 +52,6 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
 
     dominate1 = 0;
     dominate2 = 0;
-
-    Solution<?> solution1 = (Solution<?>) object1;
-    Solution<?> solution2 = (Solution<?>) object2;
 
     int flag;
     double value1, value2;
