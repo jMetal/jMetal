@@ -55,8 +55,23 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
+  public PolynomialMutation(DoubleProblem problem,
+                            double distributionIndex,
+                            RandomGenerator<Double> randomGenerator) {
+    this(1.0/problem.getNumberOfVariables(), distributionIndex) ;
+    this.randomGenerator = randomGenerator ;
+  }
+
+  /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds()) ;
+  }
+
+  /** Constructor */
+  public PolynomialMutation(double mutationProbability,
+                            double distributionIndex,
+                            RandomGenerator<Double> randomGenerator) {
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds(), randomGenerator) ;
   }
 
   /** Constructor */
