@@ -20,6 +20,7 @@ import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a polynomial mutation operator to be applied to Integer solutions
@@ -41,7 +42,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public IntegerPolynomialMutation() {
@@ -61,6 +62,12 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
   /** Constructor */
   public IntegerPolynomialMutation(double mutationProbability, double distributionIndex,
       RepairDoubleSolution solutionRepair) {
+	  this(mutationProbability, distributionIndex, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public IntegerPolynomialMutation(double mutationProbability, double distributionIndex,
+      RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     if (mutationProbability < 0) {
       throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
     } else if (distributionIndex < 0) {
@@ -70,7 +77,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     this.distributionIndex = distributionIndex;
     this.solutionRepair  = solutionRepair ;
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getters */
@@ -107,7 +114,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenerator.nextDouble() <= probability) {
+      if (randomGenerator.getRandomValue() <= probability) {
         y = (double)solution.getVariableValue(i);
         yl = (double)solution.getLowerBound(i) ;
         yu = (double)solution.getUpperBound(i) ;
@@ -116,7 +123,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
         } else {
           delta1 = (y - yl) / (yu - yl);
           delta2 = (yu - y) / (yu - yl);
-          rnd = randomGenerator.nextDouble();
+          rnd = randomGenerator.getRandomValue();
           mutPow = 1.0 / (distributionIndex + 1.0);
           if (rnd <= 0.5) {
             xy = 1.0 - delta1;

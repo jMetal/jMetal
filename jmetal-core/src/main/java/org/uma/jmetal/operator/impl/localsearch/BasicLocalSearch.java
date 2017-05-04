@@ -19,6 +19,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.Comparator;
 
@@ -39,7 +40,7 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
   private int evaluations ;
   private int numberOfImprovements ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   private int numberOfNonComparableSolutions ;
   /**
@@ -53,13 +54,28 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
    */
   public BasicLocalSearch(int improvementRounds, MutationOperator<S> mutationOperator,
       Comparator<S> comparator, Problem<S> problem){
+	  this(improvementRounds, mutationOperator, comparator, problem, () -> JMetalRandom.getInstance().nextDouble());
+  }
+  
+  /**
+   * Constructor.
+   * Creates a new local search object.
+   * @param improvementRounds number of iterations
+   * @param mutationOperator mutation operator
+   * @param comparator comparator to determine which solution is the best
+   * @param problem problem to resolve
+   * @param randomGenerator the {@link RandomGenerator} to use when we must choose between equivalent solutions
+
+   */
+  public BasicLocalSearch(int improvementRounds, MutationOperator<S> mutationOperator,
+      Comparator<S> comparator, Problem<S> problem, RandomGenerator<Double> randomGenerator){
     this.problem=problem;
     this.mutationOperator=mutationOperator;
     this.improvementRounds=improvementRounds;
     this.comparator  = comparator ;
     constraintComparator = new OverallConstraintViolationComparator<S>();
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
     numberOfImprovements = 0 ;
   }
 
@@ -107,7 +123,7 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
       else {
         numberOfNonComparableSolutions ++ ;
 
-        if (randomGenerator.nextDouble() < 0.5) {
+        if (randomGenerator.getRandomValue() < 0.5) {
           solution = mutatedSolution ;
         }
       }

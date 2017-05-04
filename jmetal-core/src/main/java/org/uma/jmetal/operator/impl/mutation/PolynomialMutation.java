@@ -20,6 +20,7 @@ import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a polynomial mutation operator
@@ -41,7 +42,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public PolynomialMutation() {
@@ -61,6 +62,12 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex,
       RepairDoubleSolution solutionRepair) {
+	  this(mutationProbability, distributionIndex, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public PolynomialMutation(double mutationProbability, double distributionIndex,
+      RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     if (mutationProbability < 0) {
       throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
     } else if (distributionIndex < 0) {
@@ -70,7 +77,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     this.distributionIndex = distributionIndex;
     this.solutionRepair = solutionRepair ;
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getters */
@@ -108,7 +115,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenerator.nextDouble() <= probability) {
+      if (randomGenerator.getRandomValue() <= probability) {
         y = solution.getVariableValue(i);
         yl = solution.getLowerBound(i) ;
         yu = solution.getUpperBound(i) ;
@@ -117,7 +124,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
         } else {
           delta1 = (y - yl) / (yu - yl);
           delta2 = (yu - y) / (yu - yl);
-          rnd = randomGenerator.nextDouble();
+          rnd = randomGenerator.getRandomValue();
           mutPow = 1.0 / (distributionIndex + 1.0);
           if (rnd <= 0.5) {
             xy = 1.0 - delta1;

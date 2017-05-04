@@ -17,6 +17,7 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -56,7 +57,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
   private DoubleSolution currentSolution ;
 
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Integer> jRandomGenerator ;
+  private BoundedRandomGenerator<Double> crRandomGenerator ;
 
   /** Constructor */
   public DifferentialEvolutionCrossover() {
@@ -70,12 +72,25 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param variant
    */
   public DifferentialEvolutionCrossover(double cr, double f, String variant) {
+	  this(cr, f, variant, (a, b) -> JMetalRandom.getInstance().nextInt(a, b), (a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Constructor
+   * @param cr
+   * @param f
+   * @param variant
+   * @param jRandomGenerator
+   * @param crRandomGenerator
+   */
+  public DifferentialEvolutionCrossover(double cr, double f, String variant, BoundedRandomGenerator<Integer> jRandomGenerator, BoundedRandomGenerator<Double> crRandomGenerator) {
     this.cr = cr;
     this.f = f;
     this.k = DEFAULT_K ;
     this.variant = variant ;
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.jRandomGenerator = jRandomGenerator;
+    this.crRandomGenerator = crRandomGenerator ;
   }
 
   /** Constructor */
@@ -128,13 +143,13 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     child = (DoubleSolution)currentSolution.copy() ;
 
     int numberOfVariables = parentSolutions.get(0).getNumberOfVariables();
-    jrand = randomGenerator.nextInt(0, numberOfVariables - 1);
+    jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
 
     // STEP 4. Checking the DE variant
     if (("rand/1/bin".equals(variant)) ||
             "best/1/bin".equals(variant)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (randomGenerator.nextDouble(0, 1) < cr || j == jrand) {
+        if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
           double value;
           value = parentSolutions.get(2).getVariableValue(j) + f * (parentSolutions.get(0).getVariableValue(
             j) -
@@ -156,7 +171,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     } else if ("rand/1/exp".equals(variant) ||
             "best/1/exp".equals(variant)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (randomGenerator.nextDouble(0, 1) < cr || j == jrand) {
+        if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
           double value;
           value = parentSolutions.get(2).getVariableValue(j) + f * (parentSolutions.get(0).getVariableValue(j) -
                   parentSolutions.get(1).getVariableValue(j));
@@ -196,7 +211,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     } else if ("current-to-rand/1/bin".equals(variant) ||
             "current-to-best/1/bin".equals(variant)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (randomGenerator.nextDouble(0, 1) < cr || j == jrand) {
+        if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
           double value;
           value = currentSolution.getVariableValue(j) + k * (parentSolutions.get(2).getVariableValue(j) -
                   currentSolution.getVariableValue(j)) +
@@ -219,7 +234,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     } else if ("current-to-rand/1/exp".equals(variant) ||
             "current-to-best/1/exp".equals(variant)) {
       for (int j = 0; j < numberOfVariables; j++) {
-        if (randomGenerator.nextDouble(0, 1) < cr || j == jrand) {
+        if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
           double value;
           value = currentSolution.getVariableValue(j) + k * (parentSolutions.get(2).getVariableValue(j) -
                   currentSolution.getVariableValue(j)) +

@@ -16,6 +16,7 @@ package org.uma.jmetal.util;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
@@ -214,6 +215,20 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned, List<S> solutionList) {
+	  JMetalRandom random = JMetalRandom.getInstance();
+	  return selectNRandomDifferentSolutions(numberOfSolutionsToBeReturned, solutionList, (low, up) -> random.nextInt(low, up));
+  }
+  
+  /**
+   * This method receives a normalized list of non-dominated solutions and return the inverted one.
+   * This operation is needed for minimization problem
+   *
+   * @param solutionList The front to invert
+   * @param randomGenerator The random generator to use
+   * @return The inverted front
+   */
+  public static <S extends Solution<?>> List<S> selectNRandomDifferentSolutions(
+      int numberOfSolutionsToBeReturned, List<S> solutionList, BoundedRandomGenerator<Integer> randomGenerator) {
     if (null == solutionList) {
       throw new JMetalException("The solution list is null") ;
     } else if (solutionList.size() == 0) {
@@ -223,7 +238,6 @@ public class SolutionListUtils {
           + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
     }
 
-    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
     List<S> resultList = new ArrayList<>(numberOfSolutionsToBeReturned);
 
     if (solutionList.size() == 1) {
@@ -231,7 +245,7 @@ public class SolutionListUtils {
     } else {
       Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned);
       while (positions.size() < numberOfSolutionsToBeReturned) {
-        int nextPosition = randomGenerator.nextInt(0, solutionList.size() - 1);
+        int nextPosition = randomGenerator.getRandomValue(0, solutionList.size() - 1);
         if (!positions.contains(nextPosition)) {
           positions.add(nextPosition);
           resultList.add(solutionList.get(nextPosition));

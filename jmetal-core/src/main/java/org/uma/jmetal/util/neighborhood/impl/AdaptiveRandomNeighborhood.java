@@ -16,6 +16,7 @@ package org.uma.jmetal.util.neighborhood.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
   private int solutionListSize ;
   private int numberOfRandomNeighbours;
   private List<List<Integer>> neighbours;
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Integer> randomGenerator ;
 
   /**
    * Constructor
@@ -41,6 +42,16 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
    * @param numberOfRandomNeighbours The number of neighbors per solution
    */
   public AdaptiveRandomNeighborhood(int solutionListSize, int numberOfRandomNeighbours) {
+	  this(solutionListSize, numberOfRandomNeighbours, (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Constructor
+   * @param solutionListSize The expected size of the list of solutions
+   * @param numberOfRandomNeighbours The number of neighbors per solution
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for the randomisation
+   */
+  public AdaptiveRandomNeighborhood(int solutionListSize, int numberOfRandomNeighbours, BoundedRandomGenerator<Integer> randomGenerator) {
     if (numberOfRandomNeighbours < 0) {
       throw new JMetalException("The number of neighbors is negative: " + numberOfRandomNeighbours) ;
     } else if (solutionListSize <= numberOfRandomNeighbours) {
@@ -50,7 +61,7 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
 
     this.solutionListSize = solutionListSize ;
     this.numberOfRandomNeighbours = numberOfRandomNeighbours ;
-    this.randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
 
     createNeighborhoods();
     addRandomNeighbors() ;
@@ -74,7 +85,7 @@ public class AdaptiveRandomNeighborhood<S extends Solution<?>> implements Neighb
   private void addRandomNeighbors() {
     for (int i = 0; i < solutionListSize; i++) {
       while(neighbours.get(i).size() <= numberOfRandomNeighbours) {
-        int random = randomGenerator.nextInt(0, solutionListSize - 1);
+        int random = randomGenerator.getRandomValue(0, solutionListSize - 1);
         neighbours.get(i).add(random) ;
       }
     }

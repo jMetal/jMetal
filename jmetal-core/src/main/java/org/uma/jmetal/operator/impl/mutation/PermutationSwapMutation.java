@@ -16,7 +16,9 @@ package org.uma.jmetal.operator.impl.mutation;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a swap mutation. The solution type of the solution
@@ -28,17 +30,26 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 @SuppressWarnings("serial")
 public class PermutationSwapMutation<T> implements MutationOperator<PermutationSolution<T>> {
   private double mutationProbability ;
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> mutationRandomGenerator ;
+  private BoundedRandomGenerator<Integer> positionRandomGenerator ;
 
   /**
    * Constructor
    */
   public PermutationSwapMutation(double mutationProbability) {
+	  this(mutationProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a,  b));
+  }
+
+  /**
+   * Constructor
+   */
+  public PermutationSwapMutation(double mutationProbability, RandomGenerator<Double> mutationRandomGenerator, BoundedRandomGenerator<Integer> positionRandomGenerator) {
     if ((mutationProbability < 0) || (mutationProbability > 1)) {
       throw new JMetalException("Mutation probability value invalid: " + mutationProbability) ;
     }
     this.mutationProbability = mutationProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.mutationRandomGenerator = mutationRandomGenerator ;
+    this.positionRandomGenerator = positionRandomGenerator ;
   }
 
   /* Getters */
@@ -70,15 +81,15 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
     permutationLength = solution.getNumberOfVariables() ;
 
     if ((permutationLength != 0) && (permutationLength != 1)) {
-      if (randomGenerator.nextDouble() < mutationProbability) {
-        int pos1 = randomGenerator.nextInt(0, permutationLength - 1);
-        int pos2 = randomGenerator.nextInt(0, permutationLength - 1);
+      if (mutationRandomGenerator.getRandomValue() < mutationProbability) {
+        int pos1 = positionRandomGenerator.getRandomValue(0, permutationLength - 1);
+        int pos2 = positionRandomGenerator.getRandomValue(0, permutationLength - 1);
 
         while (pos1 == pos2) {
           if (pos1 == (permutationLength - 1))
-            pos2 = randomGenerator.nextInt(0, permutationLength - 2);
+            pos2 = positionRandomGenerator.getRandomValue(0, permutationLength - 2);
           else
-            pos2 = randomGenerator.nextInt(pos1, permutationLength - 1);
+            pos2 = positionRandomGenerator.getRandomValue(pos1, permutationLength - 1);
         }
 
         T temp = solution.getVariableValue(pos1);

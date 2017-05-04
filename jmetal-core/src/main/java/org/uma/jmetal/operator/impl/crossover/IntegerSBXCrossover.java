@@ -25,6 +25,7 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +43,15 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   private double distributionIndex ;
   private double crossoverProbability  ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public IntegerSBXCrossover(double crossoverProbability, double distributionIndex) {
+	  this(crossoverProbability, distributionIndex, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public IntegerSBXCrossover(double crossoverProbability, double distributionIndex, RandomGenerator<Double> randomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     } else if (distributionIndex < 0) {
@@ -54,7 +60,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getters */
@@ -102,11 +108,11 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
     double alpha, beta, betaq;
     int valueX1, valueX2;
 
-    if (randomGenerator.nextDouble() <= probability) {
+    if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
-        if (randomGenerator.nextDouble() <= 0.5) {
+        if (randomGenerator.getRandomValue() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
 
             if (valueX1 < valueX2) {
@@ -119,7 +125,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
             yL = parent1.getLowerBound(i);
             yu = parent1.getUpperBound(i);
-            rand = randomGenerator.nextDouble();
+            rand = randomGenerator.getRandomValue();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
@@ -159,7 +165,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
               c2 = yu;
             }
 
-            if (randomGenerator.nextDouble() <= 0.5) {
+            if (randomGenerator.getRandomValue() <= 0.5) {
               offspring.get(0).setVariableValue(i, (int)c2);
               offspring.get(1).setVariableValue(i, (int)c1);
             } else {

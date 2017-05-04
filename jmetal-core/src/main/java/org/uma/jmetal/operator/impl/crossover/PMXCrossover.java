@@ -16,7 +16,9 @@ package org.uma.jmetal.operator.impl.crossover;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +33,26 @@ import java.util.List;
 public class PMXCrossover implements
     CrossoverOperator<PermutationSolution<Integer>> {
   private double crossoverProbability = 1.0;
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Integer> cuttingPointRandomGenerator ;
+  private RandomGenerator<Double> crossoverRandomGenerator ;
 
   /**
    * Constructor
    */
   public PMXCrossover(double crossoverProbability) {
+	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Constructor
+   */
+  public PMXCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> cuttingPointRandomGenerator) {
     if ((crossoverProbability < 0) || (crossoverProbability > 1)) {
       throw new JMetalException("Crossover probability value invalid: " + crossoverProbability) ;
     }
     this.crossoverProbability = crossoverProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.crossoverRandomGenerator = crossoverRandomGenerator ;
+    this.cuttingPointRandomGenerator = cuttingPointRandomGenerator ;
   }
 
   /* Getters */
@@ -84,15 +95,15 @@ public class PMXCrossover implements
 
     int permutationLength = parents.get(0).getNumberOfVariables() ;
 
-    if (randomGenerator.nextDouble() < probability) {
+    if (crossoverRandomGenerator.getRandomValue() < probability) {
       int cuttingPoint1;
       int cuttingPoint2;
 
       // STEP 1: Get two cutting points
-      cuttingPoint1 = randomGenerator.nextInt(0, permutationLength - 1);
-      cuttingPoint2 = randomGenerator.nextInt(0, permutationLength - 1);
+      cuttingPoint1 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
+      cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
       while (cuttingPoint2 == cuttingPoint1)
-        cuttingPoint2 = randomGenerator.nextInt(0, permutationLength - 1);
+        cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
 
       if (cuttingPoint1 > cuttingPoint2) {
         int swap;

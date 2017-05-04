@@ -18,6 +18,7 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +36,20 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class HUXCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public HUXCrossover(double crossoverProbability) {
+	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public HUXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     }
     this.crossoverProbability = crossoverProbability ;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getter */
@@ -81,14 +87,14 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
     offspring.add((BinarySolution) parent1.copy()) ;
     offspring.add((BinarySolution) parent2.copy()) ;
 
-    if (randomGenerator.nextDouble() < probability) {
+    if (randomGenerator.getRandomValue() < probability) {
       for (int var = 0; var < parent1.getNumberOfVariables(); var++) {
         BinarySet p1 = parent1.getVariableValue(var) ;
         BinarySet p2 = parent2.getVariableValue(var) ;
 
         for (int bit = 0; bit < p1.size(); bit++) {
           if (p1.get(bit) != p2.get(bit)) {
-            if  (randomGenerator.nextDouble() < 0.5) {
+            if  (randomGenerator.getRandomValue() < 0.5) {
               offspring.get(0).getVariableValue(var).set(bit, p2.get(bit)) ;
               offspring.get(1).getVariableValue(var).set(bit, p1.get(bit)) ;
             }
