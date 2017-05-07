@@ -27,9 +27,6 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
     protected DurationMeasure durationMeasure;
     protected SimpleMeasureManager measureManager;
     protected BasicMeasure<List<S>> solutionListMeasure;
-//    protected BasicMeasure<Double> hypervolumeValue;
-//    protected BasicMeasure<Double> epsilonValue;
-//    protected Front referenceFront;
     
 	/**
 	 * Constructor
@@ -65,8 +62,6 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
     @Override
     protected void updateProgress() {
         this.iterations.increment();
-//        hypervolumeValue.push(new PISAHypervolume<DoubleSolution>(referenceFront).evaluate(getResult()));
-//        epsilonValue.push(new Epsilon<DoubleSolution>(referenceFront).evaluate(getResult()));
         solutionListMeasure.push(getResult());
     }
     
@@ -88,19 +83,13 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
         durationMeasure = new DurationMeasure();
         iterations = new CountingMeasure(0);
         solutionListMeasure = new BasicMeasure<>();
-//        hypervolumeValue = new BasicMeasure<>();
-//        epsilonValue = new BasicMeasure<>();
 
         measureManager = new SimpleMeasureManager();
         measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
         measureManager.setPullMeasure("currentEvaluation", iterations);
-//        measureManager.setPullMeasure("hypervolume", hypervolumeValue);
-//        measureManager.setPullMeasure("epsilon", epsilonValue);
 
         measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
         measureManager.setPushMeasure("currentEvaluation", iterations);
-//        measureManager.setPushMeasure("hypervolume", hypervolumeValue);
-//        measureManager.setPushMeasure("epsilon", epsilonValue);
     }
     
 	@Override public String getName() {
