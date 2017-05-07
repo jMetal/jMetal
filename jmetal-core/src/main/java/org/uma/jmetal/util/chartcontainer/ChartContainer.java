@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -60,7 +61,7 @@ public class ChartContainer {
     public ChartContainer(String name, int delay) {
         this.name = name;
         this.delay = delay;
-        this.charts = new HashMap<String, XYChart>();
+        this.charts = new LinkedHashMap<String, XYChart>();
         this.iterations = new HashMap<String, List<Integer>>();
         this.indicatorValues = new HashMap<String, List<Double>>();
     }
@@ -69,15 +70,15 @@ public class ChartContainer {
         this.SetFrontChart(objective1, objective2, null);
     }
 
-    public void SetFrontChart(int objective1, int objective2, String referenceFront) throws FileNotFoundException {
+    public void SetFrontChart(int objective1, int objective2, String referenceFrontFileName) throws FileNotFoundException {
         this.objective1 = objective1;
         this.objective2 = objective2;
         this.frontChart = new XYChartBuilder().xAxisTitle("Objective " + this.objective1)
                 .yAxisTitle("Objective " + this.objective2).build();
         this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
 
-        if (referenceFront != null) {
-            this.DisplayReferenceFront(referenceFront);
+        if (referenceFrontFileName != null) {
+            this.DisplayReferenceFront(referenceFrontFileName);
         }
 
         double[] xData = new double[] { 0 };
@@ -85,7 +86,16 @@ public class ChartContainer {
         XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
         frontChartSeries.setMarkerColor(Color.blue);
 
-        this.charts.put(this.name, this.frontChart);
+        this.charts.put("Front", this.frontChart);
+    }
+    
+    public void SetReferencePoint(List<Double> referencePoint){
+        double rp1 = referencePoint.get(this.objective1);
+        double rp2 = referencePoint.get(this.objective2);
+        XYSeries referencePointSeries = this.frontChart.addSeries("Reference Point ["+ rp1 + ", " + rp2 + "]",
+                                                                  new double[] { rp1 },
+                                                                  new double[] { rp2 });
+        referencePointSeries.setMarkerColor(Color.green);
     }
 
     public void SetVarChart(int variable1, int variable2) {
@@ -101,7 +111,7 @@ public class ChartContainer {
         XYSeries varChartSeries = this.varChart.addSeries(this.name, xData, yData);
         varChartSeries.setMarkerColor(Color.blue);
 
-        this.charts.put(this.name + "_VAR", this.varChart);
+        this.charts.put("VAR", this.varChart);
     }
 
     public void InitChart() {
@@ -110,19 +120,18 @@ public class ChartContainer {
     }
 
     public void UpdateFrontCharts(List<DoubleSolution> solutionList) {
-        double[] xData;
-        double[] yData;
-
         if (this.frontChart != null) {
-            xData = this.getSolutionsForObjective(solutionList, this.objective1);
-            yData = this.getSolutionsForObjective(solutionList, this.objective2);
-            this.frontChart.updateXYSeries(this.name, xData, yData, null);
+            this.frontChart.updateXYSeries(this.name,
+                                           this.getSolutionsForObjective(solutionList, this.objective1),
+                                           this.getSolutionsForObjective(solutionList, this.objective2),
+                                           null);
         }
 
         if (this.varChart != null) {
-            xData = this.getVariableValues(solutionList, this.variable1);
-            yData = this.getVariableValues(solutionList, this.variable2);
-            this.varChart.updateXYSeries(this.name, xData, yData, null);
+            this.varChart.updateXYSeries(this.name,
+                                         this.getVariableValues(solutionList, this.variable1),
+                                         this.getVariableValues(solutionList, this.variable2),
+                                         null);
         }
     }
 
