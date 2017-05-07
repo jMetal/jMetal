@@ -13,14 +13,15 @@
 
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-
-import java.util.List;
 
 /**
  * Class implementing the MOEA/D-DE algorithm described in :
@@ -87,6 +88,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
   }
 
   protected void initializePopulation() {
+    population = new ArrayList<>(populationSize);
     for (int i = 0; i < populationSize; i++) {
       DoubleSolution newSolution = (DoubleSolution)problem.createSolution();
 
