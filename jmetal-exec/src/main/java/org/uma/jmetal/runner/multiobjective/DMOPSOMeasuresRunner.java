@@ -16,7 +16,6 @@ package org.uma.jmetal.runner.multiobjective;
 import java.util.List;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
 import org.uma.jmetal.measure.MeasureListener;
@@ -51,7 +50,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
      */
     public static void main(String[] args) throws Exception {
         DoubleProblem problem;
-        DMOPSO algorithm;
+        DMOPSOMeasures algorithm;
 
         String referenceParetoFront = "";
 
@@ -63,7 +62,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
             referenceParetoFront = args[1];
         } else {
             problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-            referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
+            referenceParetoFront = "../jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
         }
 
         problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -71,7 +70,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
         algorithm = new DMOPSOMeasures(problem, 100, 150, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
                 FunctionType.TCHE, "MOEAD_Weights", 2);
 
-        ((DMOPSOMeasures) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
+        algorithm.setReferenceFront(new ArrayFront(referenceParetoFront));
 
         /* Measure management */
         MeasureManager measureManager = ((DMOPSOMeasures) algorithm).getMeasureManager();
