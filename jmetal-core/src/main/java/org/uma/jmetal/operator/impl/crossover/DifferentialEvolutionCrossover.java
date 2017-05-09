@@ -19,6 +19,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,18 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    */
   public DifferentialEvolutionCrossover(double cr, double f, String variant) {
 	  this(cr, f, variant, (a, b) -> JMetalRandom.getInstance().nextInt(a, b), (a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Constructor
+   * @param cr
+   * @param f
+   * @param variant
+   * @param jRandomGenerator
+   * @param crRandomGenerator
+   */
+  public DifferentialEvolutionCrossover(double cr, double f, String variant, RandomGenerator<Double> randomGenerator) {
+	  this(cr, f, variant, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator), BoundedRandomGenerator.bound(randomGenerator));
   }
 
   /**

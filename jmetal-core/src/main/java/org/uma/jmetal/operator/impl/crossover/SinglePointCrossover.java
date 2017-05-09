@@ -41,6 +41,11 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   }
 
   /** Constructor */
+  public SinglePointCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
+	  this(crossoverProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
+  }
+
+  /** Constructor */
   public SinglePointCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> pointRandomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;

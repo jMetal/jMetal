@@ -46,6 +46,13 @@ public class PMXCrossover implements
   /**
    * Constructor
    */
+  public PMXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
+	  this(crossoverProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
+  }
+
+  /**
+   * Constructor
+   */
   public PMXCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> cuttingPointRandomGenerator) {
     if ((crossoverProbability < 0) || (crossoverProbability > 1)) {
       throw new JMetalException("Crossover probability value invalid: " + crossoverProbability) ;
