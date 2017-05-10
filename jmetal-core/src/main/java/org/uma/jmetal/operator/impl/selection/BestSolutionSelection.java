@@ -14,7 +14,6 @@
 package org.uma.jmetal.operator.impl.selection;
 
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.Comparator;
@@ -27,7 +26,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class BestSolutionSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
+public class BestSolutionSelection<S> implements SelectionOperator<List<S>, S> {
 private Comparator<S> comparator ;
 
   public BestSolutionSelection(Comparator<S> comparator) {
