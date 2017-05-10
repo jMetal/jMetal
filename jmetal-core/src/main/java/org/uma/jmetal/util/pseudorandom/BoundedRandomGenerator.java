@@ -27,7 +27,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> {
 	 *            the maximal value which can be generated
 	 * @return the value generated
 	 */
-	public Value getRandomValue(Value lowerBound, Value upperBound);
+	Value getRandomValue(Value lowerBound, Value upperBound);
 
 	/**
 	 * Create a {@link BoundedRandomGenerator} which generates {@link Integer}
@@ -40,7 +40,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> {
 	 * @return {@link BoundedRandomGenerator} which generates {@link Integer}
 	 *         values based on the provided generator
 	 */
-	public static BoundedRandomGenerator<Integer> fromDoubleToInteger(BoundedRandomGenerator<Double> doubleGenerator) {
+	static BoundedRandomGenerator<Integer> fromDoubleToInteger(BoundedRandomGenerator<Double> doubleGenerator) {
 		return (min, max) -> (int) Math.floor(doubleGenerator.getRandomValue(min.doubleValue(), max.doubleValue() + 1));
 	}
 
@@ -55,7 +55,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> {
 	 * @return {@link BoundedRandomGenerator} which generates {@link Integer}
 	 *         values based on the provided generator
 	 */
-	public static BoundedRandomGenerator<Integer> fromDoubleToInteger(RandomGenerator<Double> doubleGenerator) {
+	static BoundedRandomGenerator<Integer> fromDoubleToInteger(RandomGenerator<Double> doubleGenerator) {
 		return fromDoubleToInteger(bound(doubleGenerator));
 	}
 
@@ -69,7 +69,7 @@ public interface BoundedRandomGenerator<Value extends Comparable<Value>> {
 	 * @return {@link BoundedRandomGenerator} which generates {@link Double}
 	 *         values based on the provided generator
 	 */
-	public static BoundedRandomGenerator<Double> bound(RandomGenerator<Double> unboundedGenerator) {
+	static BoundedRandomGenerator<Double> bound(RandomGenerator<Double> unboundedGenerator) {
 		return (min, max) -> {
 			/*
 			 * The modulo replaces the value 1 by 0. Because it is a generator

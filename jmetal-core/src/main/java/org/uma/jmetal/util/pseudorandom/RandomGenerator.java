@@ -37,7 +37,7 @@ public interface RandomGenerator<Value> {
 	 *            the values to return
 	 * @return a {@link RandomGenerator} on the provided values
 	 */
-	public static <T> RandomGenerator<T> forCollection(BoundedRandomGenerator<Integer> indexSelector,
+	static <T> RandomGenerator<T> forCollection(BoundedRandomGenerator<Integer> indexSelector,
 			Collection<T> values) {
 		ArrayList<T> list = new ArrayList<>(values);
 		return () -> list.get(indexSelector.getRandomValue(0, values.size() - 1));
@@ -54,7 +54,7 @@ public interface RandomGenerator<Value> {
 	 * @return a {@link RandomGenerator} on the provided values
 	 */
 	@SafeVarargs
-	public static <T> RandomGenerator<T> forArray(BoundedRandomGenerator<Integer> indexSelector, T... values) {
+	static <T> RandomGenerator<T> forArray(BoundedRandomGenerator<Integer> indexSelector, T... values) {
 		return forCollection(indexSelector, Arrays.asList(values));
 	}
 
@@ -68,7 +68,7 @@ public interface RandomGenerator<Value> {
 	 *            the {@link Enum} to cover
 	 * @return a {@link RandomGenerator} on the {@link Enum} values
 	 */
-	public static <T extends Enum<T>> RandomGenerator<T> forEnum(BoundedRandomGenerator<Integer> indexSelector,
+	static <T extends Enum<T>> RandomGenerator<T> forEnum(BoundedRandomGenerator<Integer> indexSelector,
 			Class<T> enumClass) {
 		return forArray(indexSelector, enumClass.getEnumConstants());
 	}
@@ -89,7 +89,7 @@ public interface RandomGenerator<Value> {
 	 *            the filter to pass to be an acceptable value
 	 * @return a {@link RandomGenerator} which provides only acceptable values
 	 */
-	public static <T> RandomGenerator<T> filter(RandomGenerator<T> generator, Predicate<T> filter) {
+	static <T> RandomGenerator<T> filter(RandomGenerator<T> generator, Predicate<T> filter) {
 		return new RandomGenerator<T>() {
 
 			@Override

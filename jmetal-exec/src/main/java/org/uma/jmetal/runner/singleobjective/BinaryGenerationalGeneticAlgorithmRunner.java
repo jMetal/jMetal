@@ -37,9 +37,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerationalGeneticAlgorithmRunner {
+public class BinaryGenerationalGeneticAlgorithmRunner {
   /**
-   * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.BinaryGenerationalGeneticAlgorithmRunner
    */
   public static void main(String[] args) throws Exception {
     Algorithm<BinarySolution> algorithm;

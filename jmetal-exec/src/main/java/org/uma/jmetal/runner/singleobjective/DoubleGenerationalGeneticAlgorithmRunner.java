@@ -42,9 +42,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class RealGenerationalGeneticAlgorithmRunner {
+public class DoubleGenerationalGeneticAlgorithmRunner {
   /**
-   * Usage: java org.uma.jmetal.runner.singleobjective.RealGenerationalGeneticAlgorithmRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.DoubleGenerationalGeneticAlgorithmRunner
    */
   public static void main(String[] args) throws Exception {
     Algorithm<DoubleSolution> algorithm;

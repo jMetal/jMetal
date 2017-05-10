@@ -74,7 +74,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 		initializeNadirPoint();
 
 		int generation = 0;
-		evaluations    = populationSize;
+		evaluations = populationSize;
 		do {
 			int[] permutation = new int[populationSize];
 			MOEADUtils.randomPermutation(permutation, populationSize);

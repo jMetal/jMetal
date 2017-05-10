@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class GenerationalGeneticAlgorithmTSPRunner {
   /**
-   * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.BinaryGenerationalGeneticAlgorithmRunner
    */
   public static void main(String[] args) throws Exception {
     PermutationProblem<PermutationSolution<Integer>> problem;
