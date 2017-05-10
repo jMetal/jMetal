@@ -1,5 +1,7 @@
 package org.uma.jmetal.operator;
 
+import org.uma.jmetal.solution.Solution;
+
 /**
  * Interface representing mutation operators
  *
@@ -7,5 +9,5 @@ package org.uma.jmetal.operator;
  *
  * @param <Source> The solution class of the solution to be mutated
  */
-public interface MutationOperator<Source> extends Operator<Source, Source> {
+public interface MutationOperator<Source extends Solution<?>> extends Operator<Source, Source> {
 }

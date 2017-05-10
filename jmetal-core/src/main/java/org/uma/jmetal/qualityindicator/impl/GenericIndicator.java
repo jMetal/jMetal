@@ -1,6 +1,7 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public abstract class GenericIndicator<S>
+public abstract class GenericIndicator<S extends Solution<?>>
     extends SimpleDescribedEntity
     implements QualityIndicator<List<S>, Double> {
 

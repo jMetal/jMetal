@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.operator;
 
+import org.uma.jmetal.solution.Solution;
+
 import java.util.List;
 
 /**
@@ -21,9 +23,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *
- * @param <Source> The class of the solutions
+ * @param <S> The class of the solutions
  */
-public interface CrossoverOperator<Source> extends Operator<List<Source>,List<Source>> {
+public interface CrossoverOperator<S extends Solution<?>> extends Operator<List<S>,List<S>> {
 
   /**
    * @return The number of parents required to apply the operator.

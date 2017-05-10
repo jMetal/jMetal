@@ -15,6 +15,8 @@ package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
+
 /**
  * Abstract class representing an evolution strategy algorithm
  *
@@ -22,7 +24,7 @@ import org.uma.jmetal.problem.Problem;
  */
 
 @SuppressWarnings("serial")
-public abstract class AbstractEvolutionStrategy<S, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
+public abstract class AbstractEvolutionStrategy<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
   protected MutationOperator<S> mutationOperator ;
 
   /* Getter */

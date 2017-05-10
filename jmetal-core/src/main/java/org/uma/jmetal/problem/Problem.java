@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.problem;
 
+import org.uma.jmetal.solution.Solution;
+
 import java.io.Serializable;
 
 /**
@@ -22,7 +24,7 @@ import java.io.Serializable;
  *
  * @param <S> Encoding
  */
-public interface Problem<S> extends Serializable {
+public interface Problem<S extends Solution<?>> extends Serializable {
   /* Getters */
   int getNumberOfVariables() ;
   int getNumberOfObjectives() ;
