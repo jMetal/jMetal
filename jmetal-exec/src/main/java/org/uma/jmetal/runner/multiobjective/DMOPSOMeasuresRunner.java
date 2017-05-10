@@ -83,11 +83,11 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
         BasicMeasure<Double> epsilonMeasure = (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("epsilon");
 
         ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
-        chart.SetFrontChart(0, 1, referenceParetoFront);
-        chart.SetVarChart(0, 1);
-        chart.AddIndicatorChart("Hypervolume");
-        chart.AddIndicatorChart("Epsilon");
-        chart.InitChart();
+        chart.setFrontChart(0, 1, referenceParetoFront);
+        chart.setVarChart(0, 1);
+        chart.addIndicatorChart("Hypervolume");
+        chart.addIndicatorChart("Epsilon");
+        chart.initChart();
 
         solutionListMeasure.register(new ChartListener(chart));
         iterationMeasure.register(new IterationListener(chart));
@@ -97,7 +97,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
         /* End of measure management */
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
-        chart.SaveChart("./chart", BitmapFormat.PNG);
+        chart.saveChart("./chart", BitmapFormat.PNG);
 
         List<DoubleSolution> population = algorithm.getResult();
         long computingTime = algorithmRunner.getComputingTime();
@@ -124,8 +124,8 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
             if (this.chart != null) {
                 iteration++;
                 this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
-                this.chart.UpdateFrontCharts(solutionList);
-                this.chart.RefreshCharts();
+                this.chart.updateFrontCharts(solutionList);
+                this.chart.refreshCharts();
             }
         }
 
@@ -163,8 +163,8 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
         @Override
         synchronized public void measureGenerated(Double value) {
             if (this.chart != null) {
-                this.chart.UpdateIndicatorChart(this.indicator, value);
-                this.chart.RefreshCharts(0);
+                this.chart.updateIndicatorChart(this.indicator, value);
+                this.chart.refreshCharts(0);
             }
         }
     }

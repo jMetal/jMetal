@@ -94,10 +94,10 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
-    chart.SetFrontChart(0, 1, referenceParetoFront);
-    chart.SetReferencePoint(referencePoint);
-    chart.SetVarChart(0, 1);
-    chart.InitChart();
+    chart.setFrontChart(0, 1, referenceParetoFront);
+    chart.setReferencePoint(referencePoint);
+    chart.setVarChart(0, 1);
+    chart.initChart();
 
     solutionListMeasure.register(new ChartListener(chart));
     iterationMeasure.register(new IterationListener(chart));
@@ -108,7 +108,7 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    chart.SaveChart("WASFGA", BitmapFormat.PNG);
+    chart.saveChart("WASFGA", BitmapFormat.PNG);
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
@@ -133,8 +133,8 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
           if (this.chart != null) {
               iteration++;
               this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
-              this.chart.UpdateFrontCharts(solutionList);
-              this.chart.RefreshCharts();
+              this.chart.updateFrontCharts(solutionList);
+              this.chart.refreshCharts();
           }
       }
 

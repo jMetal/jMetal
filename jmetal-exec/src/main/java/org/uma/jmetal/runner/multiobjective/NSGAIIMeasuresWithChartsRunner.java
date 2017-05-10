@@ -110,8 +110,8 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
                 .<Double>getPushMeasure("hypervolume");
 
         ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
-        chart.AddIndicatorChart("Hypervolume");
-        chart.InitChart();
+        chart.addIndicatorChart("Hypervolume");
+        chart.initChart();
 
         iterationMeasure.register(new IterationListener(chart));
         hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
@@ -162,8 +162,8 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         @Override
         synchronized public void measureGenerated(Double value) {
             if (this.chart != null) {
-                this.chart.UpdateIndicatorChart(this.indicator, value);
-                this.chart.RefreshCharts();
+                this.chart.updateIndicatorChart(this.indicator, value);
+                this.chart.refreshCharts();
             }
         }
     }

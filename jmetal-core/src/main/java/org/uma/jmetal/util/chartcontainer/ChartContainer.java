@@ -66,11 +66,11 @@ public class ChartContainer {
         this.indicatorValues = new HashMap<String, List<Double>>();
     }
 
-    public void SetFrontChart(int objective1, int objective2) throws FileNotFoundException {
-        this.SetFrontChart(objective1, objective2, null);
+    public void setFrontChart(int objective1, int objective2) throws FileNotFoundException {
+        this.setFrontChart(objective1, objective2, null);
     }
 
-    public void SetFrontChart(int objective1, int objective2, String referenceFrontFileName) throws FileNotFoundException {
+    public void setFrontChart(int objective1, int objective2, String referenceFrontFileName) throws FileNotFoundException {
         this.objective1 = objective1;
         this.objective2 = objective2;
         this.frontChart = new XYChartBuilder().xAxisTitle("Objective " + this.objective1)
@@ -78,7 +78,7 @@ public class ChartContainer {
         this.frontChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
 
         if (referenceFrontFileName != null) {
-            this.DisplayReferenceFront(referenceFrontFileName);
+            this.displayReferenceFront(referenceFrontFileName);
         }
 
         double[] xData = new double[] { 0 };
@@ -89,7 +89,7 @@ public class ChartContainer {
         this.charts.put("Front", this.frontChart);
     }
     
-    public void SetReferencePoint(List<Double> referencePoint){
+    public void setReferencePoint(List<Double> referencePoint){
         double rp1 = referencePoint.get(this.objective1);
         double rp2 = referencePoint.get(this.objective2);
         XYSeries referencePointSeries = this.frontChart.addSeries("Reference Point ["+ rp1 + ", " + rp2 + "]",
@@ -98,7 +98,7 @@ public class ChartContainer {
         referencePointSeries.setMarkerColor(Color.green);
     }
 
-    public void SetVarChart(int variable1, int variable2) {
+    public void setVarChart(int variable1, int variable2) {
         this.variable1 = variable1;
         this.variable2 = variable2;
         this.varChart = new XYChartBuilder().xAxisTitle("Variable " + this.variable1)
@@ -114,12 +114,12 @@ public class ChartContainer {
         this.charts.put("VAR", this.varChart);
     }
 
-    public void InitChart() {
+    public void initChart() {
         this.sw = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
         this.sw.displayChartMatrix(this.name);
     }
 
-    public void UpdateFrontCharts(List<DoubleSolution> solutionList) {
+    public void updateFrontCharts(List<DoubleSolution> solutionList) {
         if (this.frontChart != null) {
             this.frontChart.updateXYSeries(this.name,
                                            this.getSolutionsForObjective(solutionList, this.objective1),
@@ -135,11 +135,11 @@ public class ChartContainer {
         }
     }
 
-    public void RefreshCharts() {
-        this.RefreshCharts(this.delay);
+    public void refreshCharts() {
+        this.refreshCharts(this.delay);
     }
 
-    public void RefreshCharts(int delay) {
+    public void refreshCharts(int delay) {
         if (delay > 0) {
             try {
                 TimeUnit.MILLISECONDS.sleep(delay);
@@ -148,10 +148,10 @@ public class ChartContainer {
                 e.printStackTrace();
             }
         }
-        this.Repaint();
+        this.repaint();
     }
 
-    public void AddIndicatorChart(String indicator) {
+    public void addIndicatorChart(String indicator) {
         XYChart indicatorChart = new XYChartBuilder().xAxisTitle("n").yAxisTitle(indicator).build();
         indicatorChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter).setMarkerSize(5);
 
@@ -168,13 +168,13 @@ public class ChartContainer {
         this.charts.put(indicator, indicatorChart);
     }
 
-    public void RemoveIndicator(String indicator) {
+    public void removeIndicator(String indicator) {
         this.iterations.remove(indicator);
         this.indicatorValues.remove(indicator);
         this.charts.remove(indicator);
     }
 
-    public void UpdateIndicatorChart(String indicator, Double value) {
+    public void updateIndicatorChart(String indicator, Double value) {
         this.indicatorValues.get(indicator).add(value);
         this.iterations.get(indicator).add(this.indicatorValues.get(indicator).size());
 
@@ -182,7 +182,7 @@ public class ChartContainer {
                 this.indicatorValues.get(indicator), null);
     }
 
-    public void Repaint() {
+    public void repaint() {
         try {
             for (int i = 0; i < this.charts.values().size(); i++) {
                 this.sw.repaintChart(i);
@@ -193,7 +193,7 @@ public class ChartContainer {
         }
     }
 
-    private void DisplayFront(String name, String fileName, int objective1, int objective2)
+    private void displayFront(String name, String fileName, int objective1, int objective2)
             throws FileNotFoundException {
         ArrayFront front = new ArrayFront(fileName);
         double[][] data = FrontUtils.convertFrontToArray(front);
@@ -203,12 +203,12 @@ public class ChartContainer {
         referenceFront.setMarkerColor(Color.red);
     }
 
-    private void DisplayReferenceFront(String fileName) throws FileNotFoundException {
-        this.DisplayReferenceFront(fileName, this.objective1, this.objective2);
+    private void displayReferenceFront(String fileName) throws FileNotFoundException {
+        this.displayReferenceFront(fileName, this.objective1, this.objective2);
     }
 
-    private void DisplayReferenceFront(String fileName, int objective1, int objective2) throws FileNotFoundException {
-        this.DisplayFront("Reference Front", fileName, objective1, objective2);
+    private void displayReferenceFront(String fileName, int objective1, int objective2) throws FileNotFoundException {
+        this.displayFront("Reference Front", fileName, objective1, objective2);
     }
 
     private double[] getObjectiveValues(double[][] data, int obj) {
@@ -235,7 +235,7 @@ public class ChartContainer {
         return result;
     }
 
-    public void SaveChart(String fileName, BitmapFormat format) throws IOException {
+    public void saveChart(String fileName, BitmapFormat format) throws IOException {
         for (String chart : this.charts.keySet()) {
             BitmapEncoder.saveBitmap(this.charts.get(chart), fileName + "_" + chart, format);
         }
