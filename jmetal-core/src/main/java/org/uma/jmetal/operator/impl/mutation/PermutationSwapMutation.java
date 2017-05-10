@@ -43,6 +43,13 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
   /**
    * Constructor
    */
+  public PermutationSwapMutation(double mutationProbability, RandomGenerator<Double> randomGenerator) {
+	  this(mutationProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
+  }
+
+  /**
+   * Constructor
+   */
   public PermutationSwapMutation(double mutationProbability, RandomGenerator<Double> mutationRandomGenerator, BoundedRandomGenerator<Integer> positionRandomGenerator) {
     if ((mutationProbability < 0) || (mutationProbability > 1)) {
       throw new JMetalException("Mutation probability value invalid: " + mutationProbability) ;
