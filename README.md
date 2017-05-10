@@ -15,6 +15,7 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ### Algorithms
 * Algorithm [MOEA/DD](http://ieeexplore.ieee.org/document/6964796/). Contribution of @vinixnan.
+* Variants with measures of algorithms WASF-GA, DMOPSO, and SMPSO
 
 ### Quality indicators
 * The R2 indicator can be applied now to fronts with more than two objectives.
@@ -22,6 +23,9 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Miscelanea
 * Class [`ChartContainer`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/chartcontainer/ChartContainer.java), which is being developed by @georgero5. This class allows to display information of algorithms while they are running, such as the current Pareto front approximation or the evolution of indicators such as the Hypervolume. See classes [DMOPSOMeasuresRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/DMOPSOMeasuresRunner.java) and [NSGAIIMeasuresWithChartsRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/NSGAIIMeasuresWithChartsRunner.java) for examples using it.
 * Added getters and setters to all the parameters of the operators.
+
+### Bugs
+* Fixed a Bug in algorithm MOEA/D.
 
 ## jMetal is available as a Maven Project in The Central Repository
 
