@@ -15,8 +15,6 @@ package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public abstract class AbstractEvolutionaryAlgorithm<S extends Solution<?>, R>  implements Algorithm<R>{
+public abstract class AbstractEvolutionaryAlgorithm<S, R>  implements Algorithm<R>{
   protected List<S> population;
   protected Problem<S> problem ;
 

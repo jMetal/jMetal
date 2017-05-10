@@ -17,7 +17,6 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public abstract class AbstractGeneticAlgorithm<S extends Solution<?>, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
+public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolutionaryAlgorithm<S, Result> {
   protected int maxPopulationSize ;
   protected SelectionOperator<List<S>, S> selectionOperator ;
   protected CrossoverOperator<S> crossoverOperator ;

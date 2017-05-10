@@ -15,7 +15,6 @@ package org.uma.jmetal.util.evaluator.impl;
 
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -25,7 +24,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
-public class MultithreadedSolutionListEvaluator<S extends Solution<?>> implements SolutionListEvaluator<S> {
+public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
   private int numberOfThreads ;
 
   public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem<S> problem) {

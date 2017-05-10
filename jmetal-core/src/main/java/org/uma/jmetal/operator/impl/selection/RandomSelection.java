@@ -14,7 +14,6 @@
 package org.uma.jmetal.operator.impl.selection;
 
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 
@@ -27,7 +26,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class RandomSelection<S extends Solution<?>> implements SelectionOperator<List<S>, S> {
+public class RandomSelection<S> implements SelectionOperator<List<S>, S> {
 
   /** Execute() method */
   public S execute(List<S> solutionList) {

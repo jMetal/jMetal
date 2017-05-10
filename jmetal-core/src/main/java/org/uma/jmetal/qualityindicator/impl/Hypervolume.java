@@ -21,7 +21,6 @@
 
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 
 import java.io.FileNotFoundException;
@@ -34,7 +33,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public abstract class Hypervolume<S extends Solution<?>> extends GenericIndicator<S> {
+public abstract class Hypervolume<S> extends GenericIndicator<S> {
 
   public Hypervolume() {
   }

@@ -13,7 +13,6 @@
 
 package org.uma.jmetal.util.neighborhood.impl;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
@@ -25,7 +24,7 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class L5<S extends Solution<?>> extends TwoDimensionalMesh<S> {
+public class L5<S> extends TwoDimensionalMesh<S> {
   private static final int [] north      = {-1,  0};
   private static final int [] south      = { 1 , 0};
   private static final int [] east       = { 0 , 1};

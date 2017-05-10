@@ -14,7 +14,6 @@
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.solution.Solution;
 
 /**
  * This class is intended to perform no mutation. It can be useful when configuring a genetic
@@ -23,7 +22,7 @@ import org.uma.jmetal.solution.Solution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class NullMutation<S extends Solution<?>> implements MutationOperator<S> {
+public class NullMutation<S> implements MutationOperator<S> {
   public NullMutation() {
   }
 

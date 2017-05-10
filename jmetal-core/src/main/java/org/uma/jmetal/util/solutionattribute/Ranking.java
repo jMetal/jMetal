@@ -20,8 +20,6 @@
 
 package org.uma.jmetal.util.solutionattribute;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
 
 /**
@@ -29,7 +27,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Ranking<S extends Solution<?>> extends SolutionAttribute<S, Integer>{
+public interface Ranking<S> extends SolutionAttribute<S, Integer>{
   public Ranking<S> computeRanking(List<S> solutionList) ;
   public List<S> getSubfront(int rank) ;
   public int getNumberOfSubfronts() ;

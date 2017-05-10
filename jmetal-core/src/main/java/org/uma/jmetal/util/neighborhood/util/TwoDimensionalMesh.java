@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.neighborhood.util;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * Class defining a bi-dimensional mesh.
  */
 @SuppressWarnings("serial")
-public class TwoDimensionalMesh<S extends Solution<?>> implements Neighborhood<S> {
+public class TwoDimensionalMesh<S> implements Neighborhood<S> {
   private int rows ;
   private int columns ;
   private int[][] neighborhood ;
