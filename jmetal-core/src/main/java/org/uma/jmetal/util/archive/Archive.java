@@ -12,8 +12,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.uma.jmetal.util.archive;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Archive<S extends Solution<?>> extends Serializable{
+public interface Archive<S> extends Serializable{
   public boolean add(S solution) ;
   public S get(int index) ;
   public List<S> getSolutionList() ;

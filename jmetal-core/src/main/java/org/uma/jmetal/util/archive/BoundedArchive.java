@@ -12,8 +12,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package org.uma.jmetal.util.archive;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.Comparator;
 
 /**
@@ -21,7 +19,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface BoundedArchive<S extends Solution<?>> extends Archive<S> {
+public interface BoundedArchive<S> extends Archive<S> {
   int getMaxSize() ;
   Comparator<S> getComparator() ;
   void computeDensityEstimator() ;

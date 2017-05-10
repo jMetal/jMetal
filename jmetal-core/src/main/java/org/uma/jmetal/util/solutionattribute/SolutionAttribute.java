@@ -13,17 +13,15 @@
 
 package org.uma.jmetal.util.solutionattribute;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 
 /**
- * Attributes allows to extend the {@link Solution} classes to incorporate data required by
+ * Attributes allows to extend the solution classes to incorporate data required by
  * operators or algorithms manipulating them.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface SolutionAttribute <S extends Solution<?>, V> extends Serializable {
+public interface SolutionAttribute <S, V> extends Serializable {
   public void setAttribute(S solution, V value) ;
   public V getAttribute(S solution) ;
   public Object getAttributeIdentifier() ;

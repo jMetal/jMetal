@@ -13,14 +13,12 @@
 
 package org.uma.jmetal.operator;
 
-import org.uma.jmetal.solution.Solution;
-
 /**
  * Interface representing a local search operator
  *
  * Created by cbarba on 5/3/15.
  */
-public interface LocalSearchOperator <Source extends Solution<?>> extends Operator<Source, Source> {
+public interface LocalSearchOperator <Source> extends Operator<Source, Source> {
   int getEvaluations();
   int getNumberOfImprovements() ;
   int getNumberOfNonComparableSolutions() ;

@@ -13,8 +13,6 @@
 
 package org.uma.jmetal.util.solutionattribute;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface DensityEstimator<S extends Solution<?>> extends SolutionAttribute<S, Double>{
+public interface DensityEstimator<S> extends SolutionAttribute<S, Double>{
   public void computeDensityEstimator(List<S> solutionSet) ;
 }
 

@@ -9,7 +9,6 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.solution.Solution;
 
 /**
  * Abstract class representing a Coral Reefs Optimization Algorithm
@@ -23,7 +22,7 @@ import org.uma.jmetal.solution.Solution;
  * @author Inacio Medeiros <inaciogmedeiros@gmail.com>
  */
 @SuppressWarnings("serial")
-public abstract class AbstractCoralReefsOptimization<S extends Solution<?>, R>
+public abstract class AbstractCoralReefsOptimization<S, R>
 		implements Algorithm<R> {
 
 	protected List<S> population;

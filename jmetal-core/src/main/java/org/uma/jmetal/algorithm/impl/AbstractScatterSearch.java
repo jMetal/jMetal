@@ -14,7 +14,6 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public abstract class AbstractScatterSearch<S extends Solution<?>, R>  implements Algorithm<R>{
+public abstract class AbstractScatterSearch<S, R>  implements Algorithm<R>{
   private List<S> population;
 
   public List<S> getPopulation() {
