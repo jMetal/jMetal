@@ -18,6 +18,8 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     private final int crossovers;
 
     public NPointCrossover(double probability, int crossovers) {
+        if(probability < 0.0) throw new JMetalException("Probability can't be negative");
+        if(crossovers < 1) throw new JMetalException("Number of crossovers is less than one");
         this.probability = probability;
         this.crossovers = crossovers;
     }
@@ -30,6 +32,10 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     @Override
     public int getNumberOfParents() {
         return 2;
+    }
+
+    public double getCrossoverProbability() {
+        return probability;
     }
 
     @Override
@@ -50,6 +56,9 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
 
         if (mom.getNumberOfVariables() != dad.getNumberOfVariables()){
             throw new JMetalException("The 2 parents doesn't have the same number of variables");
+        }
+        if (mom.getNumberOfVariables() > crossovers){
+            throw new JMetalException("The number of crossovers is higher than the number of variables");
         }
 
         int[] crossoverPoints = new int[crossovers];
