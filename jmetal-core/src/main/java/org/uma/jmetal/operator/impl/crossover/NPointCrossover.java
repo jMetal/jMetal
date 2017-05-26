@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by khb on 23-03-2017.
+ * Created by FlapKap on 23-03-2017.
  */
 public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     private final JMetalRandom RNG = JMetalRandom.getInstance();

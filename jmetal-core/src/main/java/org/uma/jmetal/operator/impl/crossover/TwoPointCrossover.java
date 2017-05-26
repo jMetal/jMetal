@@ -6,7 +6,7 @@ import org.uma.jmetal.solution.Solution;
 import java.util.List;
 
 /**
- * Created by kaspe on 27-05-2017.
+ * Created by FlapKap on 27-05-2017.
  */
 public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>>{
     NPointCrossover<T> operator;
