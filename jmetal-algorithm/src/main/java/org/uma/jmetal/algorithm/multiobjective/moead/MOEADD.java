@@ -1,27 +1,3 @@
-//  MOEADD.java
-//
-//  Adapted to jMetal 5 by:
-//      Vinicius R. de Carvalho <viniciusrenan.carvalho@gmail.com>
-//
-//  Author:
-// 	Ke Li <keli.genius@gmail.com>
-//  Reference: Ke Li, Kalyanmoy Deb, Qingfu Zhang, Sam Kwong "An Evolutionary
-//  Many-Objective Optimization Algorithm Based on Dominance and Decomposition"
-//  IEEE Transactions on Evolutionary Computation, 2014, in press.
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import java.util.Arrays;
