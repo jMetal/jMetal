@@ -1,18 +1,3 @@
-//  MOP1.java
-//
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.problem.multiobjective.mop;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;

@@ -1,23 +1,3 @@
-//  NMMin.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
-
-
-
-
-//
-
-
-
-
-//
-
-
-//
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.impl.AbstractIntegerDoubleProblem;

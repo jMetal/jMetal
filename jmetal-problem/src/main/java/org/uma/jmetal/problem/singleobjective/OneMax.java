@@ -1,24 +1,3 @@
-//  OneMax.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-
-
-
-
-//
-
-
-
-
-// 
-
- * OneMax.java
-
 package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;

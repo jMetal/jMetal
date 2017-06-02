@@ -1,23 +1,3 @@
-//  Rastrigin.java
-//
-//  Author:
-//       Esteban López-Camacho <esteban@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-
-
-
-
-//
-
-
-
-
-//
-
-
-
 package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;

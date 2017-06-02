@@ -1,8 +1,3 @@
-/**
- * WFG9.java
- * @author Juan J. Durillo
- * @version 1.0
- */
 package org.uma.jmetal.problem.multiobjective.wfg;
 
 import org.uma.jmetal.solution.DoubleSolution;

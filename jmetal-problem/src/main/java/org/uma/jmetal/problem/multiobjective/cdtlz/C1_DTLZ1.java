@@ -1,16 +1,3 @@
-
-
-
-
-//
-
-
-
-
-//
-
-
-
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.ConstrainedProblem;

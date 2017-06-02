@@ -1,24 +1,3 @@
-//  Golinski.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.ConstrainedProblem;

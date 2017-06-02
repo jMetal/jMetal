@@ -1,23 +1,3 @@
-//  FourBarTruss.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//
-//  Copyright (c) 2012 Antonio J. Nebro
-//
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;

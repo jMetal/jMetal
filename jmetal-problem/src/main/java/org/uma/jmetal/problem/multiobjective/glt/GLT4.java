@@ -1,16 +1,3 @@
-
-
-
-
-//
-
-
-
-
-//
-
-
-
 package org.uma.jmetal.problem.multiobjective.glt;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;

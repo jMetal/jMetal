@@ -1,24 +1,3 @@
-//  LZ09_F2.java
-//
-//  Author:
-//       Antonio J. Nebro <antonio@lcc.uma.es>
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.problem.multiobjective.lz09;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
