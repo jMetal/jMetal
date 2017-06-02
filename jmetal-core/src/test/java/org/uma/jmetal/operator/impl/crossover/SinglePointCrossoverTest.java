@@ -343,7 +343,7 @@ public class SinglePointCrossoverTest {
 			protected int getBitsPerVariable(int index) {
 				return 5;
 			}
-			
+
 			@Override
 			public int getNumberOfVariables() {
 				return 5;
