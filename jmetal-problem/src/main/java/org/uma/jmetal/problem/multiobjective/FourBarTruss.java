@@ -49,7 +49,9 @@ public class FourBarTruss extends AbstractDoubleProblem {
     setUpperLimit(upperLimit);
   }
 
-  /** Evaluate() method */
+  /**
+   * Evaluate() method
+   */
   @Override
   public void evaluate(DoubleSolution solution) {
     double [] fx = new double[2] ;

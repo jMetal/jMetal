@@ -248,7 +248,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
                                       int variableIndex) {
-
     double result;
 
     double dmax = deltaMax[variableIndex];
