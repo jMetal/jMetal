@@ -23,6 +23,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Miscelanea
 * Class [`ChartContainer`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/chartcontainer/ChartContainer.java), which is being developed by @georgero5. This class allows to display information of algorithms while they are running, such as the current Pareto front approximation or the evolution of indicators such as the Hypervolume. See classes [DMOPSOMeasuresRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/DMOPSOMeasuresRunner.java) and [NSGAIIMeasuresWithChartsRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/NSGAIIMeasuresWithChartsRunner.java) for examples using it.
 * Added getters and setters to all the parameters of the operators.
+* New interfaces for random generators based on functional interfaces.
 
 ### Bugs
 * Fixed a Bug in algorithm MOEA/D.
