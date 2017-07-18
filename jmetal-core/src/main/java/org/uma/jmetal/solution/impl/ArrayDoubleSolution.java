@@ -14,6 +14,7 @@ import java.util.Map;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ArrayDoubleSolution implements DoubleSolution {
   private double[] objectives;
   private double[] variables;

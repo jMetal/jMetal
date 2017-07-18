@@ -1,23 +1,12 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.binarySet.BinarySet;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +19,27 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   private double crossoverProbability ;
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> crossoverRandomGenerator ;
+  private BoundedRandomGenerator<Integer> pointRandomGenerator ;
 
   /** Constructor */
   public SinglePointCrossover(double crossoverProbability) {
+	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /** Constructor */
+  public SinglePointCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
+	  this(crossoverProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
+  }
+
+  /** Constructor */
+  public SinglePointCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> pointRandomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     }
     this.crossoverProbability = crossoverProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.crossoverRandomGenerator = crossoverRandomGenerator ;
+    this.pointRandomGenerator = pointRandomGenerator ;
   }
 
   /* Getter */
@@ -75,12 +76,12 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
     offspring.add((BinarySolution) parent1.copy()) ;
     offspring.add((BinarySolution) parent2.copy()) ;
 
-    if (randomGenerator.nextDouble() < probability) {
+    if (crossoverRandomGenerator.getRandomValue() < probability) {
       // 1. Get the total number of bits
       int totalNumberOfBits = parent1.getTotalNumberOfBits();
 
       // 2. Calculate the point to make the crossover
-      int crossoverPoint = randomGenerator.nextInt(0, totalNumberOfBits - 1);
+      int crossoverPoint = pointRandomGenerator.getRandomValue(0, totalNumberOfBits - 1);
 
       // 3. Compute the variable containing the crossover bit
       int variable = 0;

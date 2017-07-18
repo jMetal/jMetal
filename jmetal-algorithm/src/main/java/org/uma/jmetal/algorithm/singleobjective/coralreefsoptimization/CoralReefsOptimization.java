@@ -5,7 +5,6 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
  * @author Inacio Medeiros <inaciogmedeiros@gmail.com>
  * 
  */
-public class CoralReefsOptimization<S extends Solution<?>>
+public class CoralReefsOptimization<S>
 		extends AbstractCoralReefsOptimization<S, List<S>> {
 
 	private Problem<S> problem;

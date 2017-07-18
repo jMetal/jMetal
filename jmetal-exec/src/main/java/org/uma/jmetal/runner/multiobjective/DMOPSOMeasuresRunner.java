@@ -1,34 +1,22 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.runner.multiobjective;
 
 import java.util.List;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO;
+import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
+import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 
 /**
  * Class for configuring and running the DMOPSO algorithm
@@ -49,7 +37,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
      */
     public static void main(String[] args) throws Exception {
         DoubleProblem problem;
-        DMOPSO algorithm;
+        DMOPSOMeasures algorithm;
 
         String referenceParetoFront = "";
 
@@ -60,40 +48,46 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
             problemName = args[0];
             referenceParetoFront = args[1];
         } else {
-            problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-            referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf";
+            problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+            referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
         }
 
         problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
         algorithm = new DMOPSOMeasures(problem, 100, 150, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-                DMOPSO.FunctionType.TCHE, "MOEAD_Weights", 2);
+                FunctionType.TCHE, "MOEAD_Weights", 2);
+
+        algorithm.setReferenceFront(new ArrayFront(referenceParetoFront));
 
         /* Measure management */
         MeasureManager measureManager = ((DMOPSOMeasures) algorithm).getMeasureManager();
 
-        // CountingMeasure currentEvalution = (CountingMeasure)
-        // measureManager.<Long>getPullMeasure("currentEvaluation");
-        // DurationMeasure currentComputingTime = (DurationMeasure)
-        // measureManager
-        // .<Long>getPullMeasure("currentExecutionTime");
-
         BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
                 .<List<DoubleSolution>>getPushMeasure("currentPopulation");
+        CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+        BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
+                .<Double>getPushMeasure("hypervolume");
+        BasicMeasure<Double> epsilonMeasure = (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("epsilon");
 
-        ChartContainer chart = new ChartContainer(algorithm.getName(), 200, 800, 600);
-        chart.DisplayReferenceFront(referenceParetoFront);
+        ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+        chart.setFrontChart(0, 1, referenceParetoFront);
+        chart.setVarChart(0, 1);
+        chart.addIndicatorChart("Hypervolume");
+        chart.addIndicatorChart("Epsilon");
+        chart.initChart();
 
         solutionListMeasure.register(new ChartListener(chart));
+        iterationMeasure.register(new IterationListener(chart));
+        hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
+        epsilonMeasure.register(new IndicatorListener("Epsilon", chart));
 
         /* End of measure management */
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
-        chart.SaveChart("./chart", BitmapFormat.PNG);
+        chart.saveChart("./chart", BitmapFormat.PNG);
 
         List<DoubleSolution> population = algorithm.getResult();
         long computingTime = algorithmRunner.getComputingTime();
-        // long computingTime = currentComputingTime.get();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
@@ -110,31 +104,55 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
         public ChartListener(ChartContainer chart) {
             this.chart = chart;
-            initChart();
-            this.chart.getChart().setTitle("Iteration: " + iteration);
-        }
-
-        private void initChart() {
-            if (this.chart != null) {
-                double[] xData = new double[] { 0 };
-                double[] yData = new double[] { 0 };
-                this.chart.InitChart(xData, yData);
-            }
+            this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
         }
 
         private void refreshChart(List<DoubleSolution> solutionList) {
             if (this.chart != null) {
-                double[] xData = SolutionListUtils.getObjectiveArrayFromSolutionList(solutionList, 0);
-                double[] yData = SolutionListUtils.getObjectiveArrayFromSolutionList(solutionList, 1);
                 iteration++;
-                this.chart.getChart().setTitle("Iteration: " + iteration);
-                this.chart.RefreshChart(xData, yData);
+                this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
+                this.chart.updateFrontCharts(solutionList);
+                this.chart.refreshCharts();
             }
         }
 
         @Override
         synchronized public void measureGenerated(List<DoubleSolution> solutions) {
             refreshChart(solutions);
+        }
+    }
+
+    private static class IterationListener implements MeasureListener<Long> {
+        ChartContainer chart;
+
+        public IterationListener(ChartContainer chart) {
+            this.chart = chart;
+            this.chart.getFrontChart().setTitle("Iteration: " + 0);
+        }
+
+        @Override
+        synchronized public void measureGenerated(Long iteration) {
+            if (this.chart != null) {
+                this.chart.getFrontChart().setTitle("Iteration: " + iteration);
+            }
+        }
+    }
+
+    private static class IndicatorListener implements MeasureListener<Double> {
+        ChartContainer chart;
+        String indicator;
+
+        public IndicatorListener(String indicator, ChartContainer chart) {
+            this.chart = chart;
+            this.indicator = indicator;
+        }
+
+        @Override
+        synchronized public void measureGenerated(Double value) {
+            if (this.chart != null) {
+                this.chart.updateIndicatorChart(this.indicator, value);
+                this.chart.refreshCharts(0);
+            }
         }
     }
 }

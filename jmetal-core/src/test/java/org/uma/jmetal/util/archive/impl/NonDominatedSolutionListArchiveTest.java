@@ -25,6 +25,7 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldConstructorAssignThePassedComparator() {
+    @SuppressWarnings("unchecked")
     DominanceComparator<IntegerSolution> comparator = mock(DominanceComparator.class) ;
 
     NonDominatedSolutionListArchive<IntegerSolution> archive ;

@@ -11,23 +11,34 @@ the new incoming features in advance.
 
 If you are interested in contributing with your ideas and comments, please take a look the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
-##Changelog of the next incoming release (jMetal 5.3)
+## Changelog of the next incoming release (jMetal 5.3)
 
-### New features
-* Added getters and setters to all the parameters of the operators.
+### Algorithms
+* Algorithm [MOEA/DD](http://ieeexplore.ieee.org/document/6964796/). Contribution of @vinixnan.
+* Variants with measures of algorithms WASF-GA, DMOPSO, and SMPSO
+
+### Quality indicators
 * The R2 indicator can be applied now to fronts with more than two objectives.
 
-##jMetal is available as a Maven Project in The Central Repository
+### Miscelanea
+* Class [`ChartContainer`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/chartcontainer/ChartContainer.java), which is being developed by @georgero5. This class allows to display information of algorithms while they are running, such as the current Pareto front approximation or the evolution of indicators such as the Hypervolume. See classes [DMOPSOMeasuresRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/DMOPSOMeasuresRunner.java) and [NSGAIIMeasuresWithChartsRunner](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/NSGAIIMeasuresWithChartsRunner.java) for examples using it.
+* Added getters and setters to all the parameters of the operators.
+* New interfaces for random generators based on functional interfaces.
+
+### Bugs
+* Fixed a Bug in algorithm MOEA/D.
+
+## jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
 
-##jMetal documentation
+## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
 
-##Publications
+## Publications
 A.J. Nebro, J.J. Durillo, M. Vergne: "Redesigning the jMetal Multi-Objective Optimization Framework". Proceedings of the Companion Publication of the 2015 on Genetic and Evolutionary Computation Conference (GECCO Companion '15) Pages 1093-1100. DOI: http://dx.doi.org/10.1145/2739482.2768462
 
-##Code coverage (4th April 2016)
+## Code coverage (4th April 2016)
 Coverage data of the jmetal-core package reported by IntelliJ Idea:
 
 |Class % |Method %| Line % |

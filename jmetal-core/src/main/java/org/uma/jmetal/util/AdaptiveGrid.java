@@ -1,19 +1,7 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -314,6 +302,17 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return the number of the selected hypercube.
    */
   public int rouletteWheel() {
+	  return rouletteWheel((a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Returns a random hypercube using a rouleteWheel method.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for the roulette
+   * 
+   * @return the number of the selected hypercube.
+   */
+  public int rouletteWheel(BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
     double inverseSum = 0.0;
     for (int hypercube : hypercubes) {
@@ -323,7 +322,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     }
 
     //Calculate a random value between 0 and sumaInversa
-    double random = JMetalRandom.getInstance().nextDouble(0.0, inverseSum);
+    double random = randomGenerator.getRandomValue(0.0, inverseSum);
     int hypercube = 0;
     double accumulatedSum = 0.0;
     while (hypercube < hypercubes.length) {
@@ -379,7 +378,18 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return The hypercube.
    */
   public int randomOccupiedHypercube() {
-    int rand = JMetalRandom.getInstance().nextInt(0, occupied.length - 1);
+	  return randomOccupiedHypercube((a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Returns a random hypercube that has more than zero solutions.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for selecting the hypercube
+   *
+   * @return The hypercube.
+   */
+  public int randomOccupiedHypercube(BoundedRandomGenerator<Integer> randomGenerator) {
+    int rand = randomGenerator.getRandomValue(0, occupied.length - 1);
     return occupied[rand];
   }
 

@@ -16,7 +16,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S>{
 
-	private final AbstractUtilityFunctionsSet<S> utilityFunctions;
+	protected final AbstractUtilityFunctionsSet<S> utilityFunctions;
 
 	public MOMBI(Problem<S> problem,
 							 int maxIterations,

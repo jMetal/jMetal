@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.uma.jmetal.operator.MutationOperator;
@@ -20,6 +7,7 @@ import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a polynomial mutation operator
@@ -41,7 +29,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private double mutationProbability ;
   private RepairDoubleSolution solutionRepair ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public PolynomialMutation() {
@@ -54,13 +42,34 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
+  public PolynomialMutation(DoubleProblem problem,
+                            double distributionIndex,
+                            RandomGenerator<Double> randomGenerator) {
+    this(1.0/problem.getNumberOfVariables(), distributionIndex) ;
+    this.randomGenerator = randomGenerator ;
+  }
+
+  /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds()) ;
   }
 
   /** Constructor */
+  public PolynomialMutation(double mutationProbability,
+                            double distributionIndex,
+                            RandomGenerator<Double> randomGenerator) {
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds(), randomGenerator) ;
+  }
+
+  /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex,
       RepairDoubleSolution solutionRepair) {
+	  this(mutationProbability, distributionIndex, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public PolynomialMutation(double mutationProbability, double distributionIndex,
+      RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     if (mutationProbability < 0) {
       throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
     } else if (distributionIndex < 0) {
@@ -70,7 +79,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     this.distributionIndex = distributionIndex;
     this.solutionRepair = solutionRepair ;
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getters */
@@ -108,7 +117,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenerator.nextDouble() <= probability) {
+      if (randomGenerator.getRandomValue() <= probability) {
         y = solution.getVariableValue(i);
         yl = solution.getLowerBound(i) ;
         yu = solution.getUpperBound(i) ;
@@ -117,7 +126,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
         } else {
           delta1 = (y - yl) / (yu - yl);
           delta2 = (yu - y) / (yu - yl);
-          rnd = randomGenerator.nextDouble();
+          rnd = randomGenerator.getRandomValue();
           mutPow = 1.0 / (distributionIndex + 1.0);
           if (rnd <= 0.5) {
             xy = 1.0 - delta1;

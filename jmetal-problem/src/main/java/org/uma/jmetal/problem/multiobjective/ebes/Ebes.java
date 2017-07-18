@@ -33,6 +33,7 @@ import java.util.logging.Logger;
  * Class representing problem Ebes
  * Spatial Bars Structure (Estructuras de Barras Espaciales)
  */
+@SuppressWarnings("serial")
 public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   /**
    * Constructor.
@@ -2273,7 +2274,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
     int n2 = numberOfLibertyDegree_ * numberOfNodes;
 
-    Salto1:
     for(i=1; i<n2 ;i++){
       if(MatrixStiffness_[s1 - 1] >= 1.0E+25){
         s1 = s1 + matrixWidthBand_;

@@ -4,17 +4,13 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -68,67 +64,14 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    Ranking<S> ranking = computeRanking(jointPopulation);
+    RankingAndCrowdingSelection<S> rankingAndCrowdingSelection ;
+    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize()) ;
 
-    return crowdingDistanceSelection(ranking);
+    return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }
 
   @Override public List<S> getResult() {
     return getNonDominatedSolutions(getPopulation());
-  }
-
-  protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>();
-    ranking.computeRanking(solutionList);
-
-    return ranking;
-  }
-
-  protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
-    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    int rankingIndex = 0;
-    while (populationIsNotFull(population)) {
-      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-        rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
-      }
-    }
-
-    return population;
-  }
-
-  protected boolean populationIsNotFull(List<S> population) {
-    return population.size() < getMaxPopulationSize();
-  }
-
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
-  }
-
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> front;
-
-    front = ranking.getSubfront(rank);
-
-    for (S solution : front) {
-      population.add(solution);
-    }
-  }
-
-  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubfront(rank);
-
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
-
-    int i = 0;
-    while (population.size() < getMaxPopulationSize()) {
-      population.add(currentRankedFront.get(i));
-      i++;
-    }
   }
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
