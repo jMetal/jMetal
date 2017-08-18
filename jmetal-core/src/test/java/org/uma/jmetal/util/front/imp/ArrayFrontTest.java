@@ -262,6 +262,7 @@ public class ArrayFrontTest {
     assertFalse(front.equals(null)) ;
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void shouldEqualsReturnFalseIfTheArgumentIsFromAWrongClass() {
     int numberOfPoints = 1 ;
