@@ -3,7 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
-import javax.management.JMException;
 import java.util.ArrayList;
 import java.util.List;
 

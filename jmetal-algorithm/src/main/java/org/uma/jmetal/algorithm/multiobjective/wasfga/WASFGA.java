@@ -72,7 +72,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	}
 
 	public void updatePointOfInterest(List<Double> newPointOfInterest) {
-		((ASFWASFGA)this.achievementScalarizingFunction).updatePointOfInterest(newPointOfInterest);
+		((ASFWASFGA<S>)this.achievementScalarizingFunction).updatePointOfInterest(newPointOfInterest);
 	}
 
 
