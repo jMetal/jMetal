@@ -99,7 +99,7 @@ public class ReferencePoint<S extends Solution<?>> {
   public void RemovePotentialMember(S solution) {
     Iterator<Pair<S, Double>> it = this.potentialMembers.iterator();
     while (it.hasNext()) {
-      if (it.next().getLeft() == solution) {
+      if (it.next().getLeft().equals(solution)) {
         it.remove();
         break;
       }
