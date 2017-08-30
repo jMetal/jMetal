@@ -1,6 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -8,7 +10,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>, List<S>>,
@@ -39,11 +44,13 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	   ideal_point = new ArrayList<>(numberOfObjectives);
 	   
 	   for (int f=0; f<numberOfObjectives; f+=1){
-			double minf = Double.MAX_VALUE;
-			for (int i=0; i<fronts.get(0).size(); i+=1) // min values must appear in the first front
-			{
-				minf = Math.min(minf, fronts.get(0).get(i).getObjective(f));
-			}
+
+	   		final int finalF = f;
+		   // min values must appear in the first front
+
+	   		double minf = fronts.get(0).stream().mapToDouble(sol -> sol.getObjective(finalF))
+					.min().orElseThrow(() -> new JMetalException("Trying to find minimal value but the first front is empty."));
+
 			ideal_point.add(minf);
 
 			for (List<S> list : fronts) 
@@ -84,16 +91,12 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		S min_indv = null;
 		for (int f=0; f < numberOfObjectives; f+=1)
 		{
-			double min_ASF = Double.MAX_VALUE;	
-			for (S s : fronts.get(0)) { // only consider the individuals in the first front
-				double asf = ASF(s, f);
-				if ( asf < min_ASF ) {
-					min_ASF = asf;
-					min_indv = s;
-				}
-			}
-			
-			extremePoints.add(min_indv);
+			final int finalF = f;
+			S min = fronts.get(0).stream()
+				.min(Comparator.comparingDouble(solution -> ASF(solution, finalF)))
+				.orElseThrow(() -> new JMetalException("Trying to find extreme point but first front is empty."));
+
+			extremePoints.add(min);
 		}
 		return extremePoints;
 	}
@@ -121,7 +124,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 
 	    for (int i = 0; i < N; i++)
 	    	x.add(0.0);
-	    
+
 	    for (int i=N-1; i>=0; i-=1)
 	    {
 	        for (int known=i+1; known<N; known+=1)
@@ -161,7 +164,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			List<Double> b = new ArrayList<>(); //(pop[0].objs().size(), 1.0);
 			for (int i =0; i < numberOfObjectives;i++)
 				b.add(1.0);
-			
+
 			List<List<Double>> A=new ArrayList<>();
 			for (S s : extreme_points)
 			{
@@ -176,31 +179,24 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			for (int f=0; f<numberOfObjectives; f+=1)
 			{
 				intercepts.add(1.0/x.get(f));
-				
+
 			}
 		}
 		return intercepts;
 	}
 	
 	public void normalizeObjectives(List<S> population, List<Double> intercepts, List<Double> ideal_point) {
-		for (int t=0; t<fronts.size(); t+=1)
-		{
-			for (S s : fronts.get(t)) {
-			
-				for (int f = 0; f < numberOfObjectives; f++) {
-					List<Double> conv_obj = (List<Double>)getAttribute(s);
-					if (Math.abs(intercepts.get(f)-ideal_point.get(f))> 10e-10)
-					{
-						conv_obj.set(f,conv_obj.get(f) / (intercepts.get(f)-ideal_point.get(f)));
-					}
-					else
-					{
-						conv_obj.set(f,conv_obj.get(f) / (10e-10));
-					}
-						
+		fronts.stream().flatMap(List::stream).forEach(s -> {
+			for (int f = 0; f < numberOfObjectives; f++) {
+				List<Double> conv_obj = getAttribute(s);
+				if (Math.abs(intercepts.get(f) - ideal_point.get(f)) > 10e-10) {
+					conv_obj.set(f, conv_obj.get(f) / (intercepts.get(f) - ideal_point.get(f)));
+				} else {
+					conv_obj.set(f, conv_obj.get(f) / (10e-10));
 				}
+
 			}
-		}
+		});
 	}
 	
 	public double perpendicularDistance(List<Double> direction, List<Double> point) {
@@ -222,50 +218,41 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	
 	
 	public void associate(List<S> population) {
-
-
 		for (int t = 0; t < fronts.size(); t++) {
 			for (S s : fronts.get(t)) {
-				int min_rp = -1;
-				double min_dist = Double.MAX_VALUE;
-				for (int r = 0; r < this.referencePoints.size(); r++) {
-					double d = perpendicularDistance(this.referencePoints.get(r).position,
-										             (List<Double>)getAttribute(s));
-					if (d < min_dist) {
-						min_dist=d;
-						min_rp = r; 
-					}
-				}
+
+				Pair<ReferencePoint<S>, Double> minRefPointPair = this.referencePoints.stream()
+					.map(refPoint -> Pair.of(refPoint, perpendicularDistance(refPoint.position, getAttribute(s))))
+					.min(Comparator.comparingDouble(Pair::getRight))
+					.orElseThrow(() -> new JMetalException("Trying to associate population to reference points, but referencePoints were empty."));
+
 				if (t+1 != fronts.size()) {
-					this.referencePoints.get(min_rp).AddMember();
+					minRefPointPair.getLeft().AddMember();
 				} else {
-					this.referencePoints.get(min_rp).AddPotentialMember(s, min_dist);
+					minRefPointPair.getLeft().AddPotentialMember(s, minRefPointPair.getRight());
 				}
 			}
 		}
 		
 	}
 	
-	int FindNicheReferencePoint()
+	ReferencePoint<S> FindNicheReferencePoint()
 	{
 		// find the minimal cluster size
-		int min_size = Integer.MAX_VALUE;
-		for (ReferencePoint<S> referencePoint : this.referencePoints)
-			min_size = Math.min(min_size,referencePoint.MemberSize());
-		
+		int min = this.referencePoints.stream().mapToInt(ReferencePoint::MemberSize).min()
+				.orElseThrow(() -> new JMetalException("Trying to find nice reference point but referencePoints were empty."));
+
 		// find the reference points with the minimal cluster size Jmin
-		List<Integer> min_rps=new ArrayList<>();
-		
-		
-		for (int r=0; r<this.referencePoints.size(); r+=1)
-		{
-			if (this.referencePoints.get(r).MemberSize() == min_size)
-			{
-				min_rps.add(r);
-			}
-		}
+		List<ReferencePoint<S>> pointsWithMinimalSize = this.referencePoints.stream()
+				.filter(refPoint -> refPoint.MemberSize() == min)
+				.collect(Collectors.toList());
+
 		// return a random reference point (j-bar)
-		return min_rps.get(min_rps.size() > 1 ? JMetalRandom.getInstance().nextInt(0, min_rps.size()-1):0);
+
+		int randomIndex = pointsWithMinimalSize.size() > 1 ?
+				JMetalRandom.getInstance().nextInt(0, pointsWithMinimalSize.size() - 1) : 0;
+
+		return pointsWithMinimalSize.get(randomIndex);
 	}
 	
 	// ----------------------------------------------------------------------
@@ -276,7 +263,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	//
 	// Check the last two paragraphs in Section IV-E in the original paper.
 	// ----------------------------------------------------------------------
-	S SelectClusterMember(ReferencePoint<S> rp)
+	Optional<S> SelectClusterMember(ReferencePoint<S> rp)
 	{
 		S chosen = null;
 		if (rp.HasPotentialMember())
@@ -290,7 +277,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 				chosen =  rp.RandomMember();
 			}
 		}
-		return chosen;
+		return Optional.ofNullable(chosen);
 	}
 	
 	@Override
@@ -315,18 +302,15 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		// ---------- Step 17 / Algorithm 4 ----------
 		while (source.size() < this.solutionsToSelect)
 		{
-			int min_rp = FindNicheReferencePoint();
+			ReferencePoint<S> minRefPoint = FindNicheReferencePoint();
 
-			S chosen = SelectClusterMember(this.referencePoints.get(min_rp));
-			if (chosen == null) // no potential member in Fl, disregard this reference point
-			{
-				this.referencePoints.remove(min_rp); 
-			}
-			else
-			{
-				this.referencePoints.get(min_rp).AddMember();
-				this.referencePoints.get(min_rp).RemovePotentialMember(chosen);
-				source.add(chosen);
+			Optional<S> chosen = SelectClusterMember(minRefPoint);
+			if (chosen.isPresent()) {
+				minRefPoint.AddMember();
+				minRefPoint.RemovePotentialMember(chosen.get());
+				source.add(chosen.get());
+			} else { // no potential member in Fl, disregard this reference point
+				this.referencePoints.remove(minRefPoint);
 			}
 		}
 		

@@ -8,6 +8,8 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Abstract class representing a genetic algorithm
@@ -52,32 +54,21 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
 
   /**
    * This method implements a default scheme create the initial population of genetic algorithm
-   * @return
+   * @return a List containing {@link #getMaxPopulationSize()} problems created by {@link Problem#createSolution()}, in no particular order.
    */
   protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
+    return Stream.generate(getProblem()::createSolution).limit(getMaxPopulationSize()).collect(Collectors.toList());
   }
 
   /**
    * This method iteratively applies a {@link SelectionOperator} to the population to fill the mating pool population.
    *
-   * @param population
-   * @return The mating pool population
+   * @param population the population list to be selected
+   * @return The mating pool population as selected by {@link SelectionOperator#execute(Object)}, in no particular order.
    */
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(population.size());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S solution = selectionOperator.execute(population);
-      matingPopulation.add(solution);
-    }
-
-    return matingPopulation;
+    return Stream.generate(() -> selectionOperator.execute(population)).limit(getMaxPopulationSize()).collect(Collectors.toList());
   }
 
   /**
@@ -104,11 +95,7 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
       }
 
       List<S> offspring = crossoverOperator.execute(parents);
-
-      for(S s: offspring){
-        mutationOperator.execute(s);
-        offspringPopulation.add(s);
-      }
+      offspringPopulation.addAll(offspring.stream().map(mutationOperator::execute).collect(Collectors.toList()));
     }
     return offspringPopulation;
   }
