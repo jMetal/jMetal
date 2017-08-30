@@ -101,6 +101,7 @@ public class ReferencePoint<S extends Solution<?>> {
     while (it.hasNext()) {
       if (it.next().getLeft() == solution) {
         it.remove();
+        break;
       }
     }
   }
