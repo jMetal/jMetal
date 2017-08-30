@@ -1,11 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by ajnebro on 5/11/14.
@@ -23,13 +25,18 @@ public class ReferencePoint<S extends Solution<?>> {
 
   /** Constructor */
   public ReferencePoint(int size) {
-    position = new ArrayList<>(Collections.nCopies(size, 0.0));
+    position = new ArrayList<>();
+    for (int i =0; i < size; i++)
+      position.add(0.0);
     memberSize = 0 ;
     potentialMembers = new ArrayList<>();
   }
 
   public ReferencePoint(ReferencePoint<S> point) {
-    position = new ArrayList<>(point.position);
+    position = new ArrayList<>(point.position.size());
+    for (Double d : point.position) {
+      position.add(new Double(d));
+    }
     memberSize = 0 ;
     potentialMembers = new ArrayList<>();
   }
@@ -68,12 +75,20 @@ public class ReferencePoint<S extends Solution<?>> {
   public void clear(){ memberSize=0; this.potentialMembers.clear();}
   public void AddMember(){this.memberSize++;}
   public void AddPotentialMember(S member_ind, double distance){
-    this.potentialMembers.add( Pair.of(member_ind, distance) );
+    this.potentialMembers.add(new ImmutablePair<S,Double>(member_ind,distance) );
   }
 
   public S FindClosestMember() {
-    return this.potentialMembers.stream().min(Comparator.comparing(Pair::getRight)).map(Pair::getLeft)
-            .orElseThrow(() -> new JMetalException("Trying to find closest member but potentialMembers list is empty."));
+    double minDistance = Double.MAX_VALUE;
+    S closetMember = null;
+    for (Pair<S,Double> p : this.potentialMembers) {
+      if (p.getRight() < minDistance) {
+        minDistance = p.getRight();
+        closetMember = p.getLeft();
+      }
+    }
+
+    return closetMember;
   }
   
   public S RandomMember() {
