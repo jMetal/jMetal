@@ -57,8 +57,8 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
             problemName = args[0];
             referenceParetoFront = args[1];
         } else {
-            problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-            referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
+            problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+            referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT2.pf";
         }
 
         problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
