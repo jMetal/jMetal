@@ -1,9 +1,12 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
+import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.measure.MeasureListener;
@@ -20,6 +23,7 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
@@ -34,12 +38,13 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     /**
      * @param args
      *            Command line arguments.
+     * @throws IOException 
      * @throws SecurityException
      *             Invoking command: java
      *             org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner
      *             problemName [referenceFront]
      */
-    public static void main(String[] args) throws JMetalException, InterruptedException, FileNotFoundException {
+    public static void main(String[] args) throws JMetalException, InterruptedException, IOException {
         Problem<DoubleSolution> problem;
         Algorithm<List<DoubleSolution>> algorithm;
         CrossoverOperator<DoubleSolution> crossover;
@@ -72,39 +77,39 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         int maxEvaluations = 25000;
         int populationSize = 100;
 
-        algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation).setSelectionOperator(selection)
-                .setMaxEvaluations(maxEvaluations).setPopulationSize(populationSize)
-                .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures).build();
+        algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+        		.setSelectionOperator(selection)
+                .setMaxEvaluations(maxEvaluations)
+                .setPopulationSize(populationSize)
+                .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+                .build();
 
         ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
-
-        /* Measure management */
+        
         MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>) algorithm).getMeasureManager();
 
-        DurationMeasure currentComputingTime = (DurationMeasure) measureManager
-                .<Long>getPullMeasure("currentExecutionTime");
-
+        /* Measure management */
+        BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+                .<List<DoubleSolution>>getPushMeasure("currentPopulation");
         CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
-
         BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
                 .<Double>getPushMeasure("hypervolume");
-
-        ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+        
+        ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
+        chart.setFrontChart(0, 1, referenceParetoFront);
         chart.addIndicatorChart("Hypervolume");
         chart.initChart();
 
+        solutionListMeasure.register(new ChartListener(chart));
         iterationMeasure.register(new IterationListener(chart));
         hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
-
         /* End of measure management */
 
-        Thread algorithmThread = new Thread(algorithm);
-        algorithmThread.start();
-
-        algorithmThread.join();
+        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+        chart.saveChart("./chart", BitmapFormat.PNG);
 
         List<DoubleSolution> population = algorithm.getResult();
-        long computingTime = currentComputingTime.get();
+        long computingTime = algorithmRunner.getComputingTime();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
@@ -143,8 +148,33 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         synchronized public void measureGenerated(Double value) {
             if (this.chart != null) {
                 this.chart.updateIndicatorChart(this.indicator, value);
-                this.chart.refreshCharts();
+                this.chart.refreshCharts(0);
             }
         }
     }
+    
+    private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
+        private ChartContainer chart;
+        private int iteration = 0;
+
+        public ChartListener(ChartContainer chart) {
+            this.chart = chart;
+            this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
+        }
+
+        private void refreshChart(List<DoubleSolution> solutionList) {
+            if (this.chart != null) {
+                iteration++;
+                this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
+                this.chart.updateFrontCharts(solutionList);
+                this.chart.refreshCharts();
+            }
+        }
+
+        @Override
+        synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+            refreshChart(solutions);
+        }
+    }
+
 }
