@@ -141,6 +141,7 @@ public class PointSolutionTest {
     assertFalse(solution.equals(null));
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void shouldEqualsReturnFalseIfTheClassIsNotAPoint() {
     int numberOfObjectives = 3 ;
