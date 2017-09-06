@@ -215,6 +215,7 @@ public class ArrayPointTest {
     assertFalse(point.equals(null));
   }
 
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void shouldEqualsReturnFalseIfTheClassIsNotAPoint() {
     int dimension = 5 ;
