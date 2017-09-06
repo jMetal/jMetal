@@ -9,18 +9,18 @@ import java.io.Serializable;
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {
-  public void setObjective(int index, double value) ;
-  public double getObjective(int index) ;
+  void setObjective(int index, double value) ;
+  double getObjective(int index) ;
 
-  public T getVariableValue(int index) ;
-  public void setVariableValue(int index, T value) ;
-  public String getVariableValueString(int index) ;
+  T getVariableValue(int index) ;
+  void setVariableValue(int index, T value) ;
+  String getVariableValueString(int index) ;
 
-  public int getNumberOfVariables() ;
-  public int getNumberOfObjectives() ;
+  int getNumberOfVariables() ;
+  int getNumberOfObjectives() ;
 
-  public Solution<T> copy() ;
+  Solution<T> copy() ;
 
-  public void setAttribute(Object id, Object value) ;
-  public Object getAttribute(Object id) ;
+  void setAttribute(Object id, Object value) ;
+  Object getAttribute(Object id) ;
 }
