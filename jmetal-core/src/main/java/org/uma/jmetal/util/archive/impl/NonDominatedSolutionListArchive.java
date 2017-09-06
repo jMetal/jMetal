@@ -87,7 +87,6 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
     return solutionInserted ;
   }
 
-  @Override
   public Archive<S> join(Archive<S> archive) {
     for (S solution : archive.getSolutionList()) {
       this.add(solution) ;
