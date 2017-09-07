@@ -14,6 +14,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.solutionattribute.impl.PreferenceDistance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ import java.util.List;
 public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
     protected List<Double> interestPoint = null;
-    protected List<Double> lowerBounds,upperBounds;
-    protected boolean estimateObjectivesBounds,normalization;
+    protected List<Double> lowerBounds,upperBounds = null;
+    protected boolean estimateObjectivesBounds;
     protected double epsilon;
     final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
     /**
@@ -35,11 +36,10 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
      * @param selectionOperator
      * @param evaluator
      */
-    public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator, List<Double> referencePoint, boolean estimateObjectivesBounds, boolean normalization, double epsilon, List<Double> lowerBounds, List<Double> upperBounds){
+    public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator, List<Double> referencePoint, boolean estimateObjectivesBounds, double epsilon, List<Double> lowerBounds, List<Double> upperBounds){
         super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
         this.interestPoint = referencePoint;
         this.estimateObjectivesBounds = estimateObjectivesBounds;
-        this.normalization = normalization;
         this.epsilon = epsilon;
         this.lowerBounds = lowerBounds;
         this.upperBounds = upperBounds;
@@ -108,7 +108,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
     }
 
     protected List<S> preferenceDistanceSelection(Ranking<S> ranking) {
-        CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
+        PreferenceDistance<S> preferenceDistance = new PreferenceDistance<>(interestPoint,upperBounds,lowerBounds);
         List<S> population = new ArrayList<>(getMaxPopulationSize());
         int rankingIndex = 0;
         while (populationIsNotFull(population)) {
@@ -116,13 +116,36 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
                 addRankedSolutionsToPopulation(ranking, rankingIndex, population);
                 rankingIndex++;
             } else {
-                crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+                preferenceDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
                 addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
             }
         }
 
         return population;
     }
+    @Override
+    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+        population.addAll(ranking.getSubfront(index));
+    }
+    @Override
+    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking,int index, List<S>population) {
+        List<S> front 	= ranking.getSubfront(index);
+        int remain 		= this.getPopulationSize() - population.size();
+        population.addAll(front.subList(0, remain));
+    }
+    public int getPopulationSize() {
+        return getMaxPopulationSize();
+    }
 
+    public void setReferencePoint(List<Double> interestPoint) {
+        this.interestPoint = interestPoint;
+    }
 
+    public void setLowerBounds(List<Double> lowerBounds) {
+        this.lowerBounds = lowerBounds;
+    }
+
+    public void setUpperBounds(List<Double> upperBounds) {
+        this.upperBounds = upperBounds;
+    }
 }

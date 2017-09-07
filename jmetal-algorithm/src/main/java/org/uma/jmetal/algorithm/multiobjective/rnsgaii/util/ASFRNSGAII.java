@@ -16,6 +16,7 @@ public class ASFRNSGAII <S extends Solution<?>> extends AbstractUtilityFunctions
     public ASFRNSGAII(double[][] weights, List<Double> interestPoint) {
         super(weights);
         this.interestPoint = interestPoint;
+
     }
 
     public ASFRNSGAII(double[][] weights) {
