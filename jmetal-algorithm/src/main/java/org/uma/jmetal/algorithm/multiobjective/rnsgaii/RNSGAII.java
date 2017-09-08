@@ -97,9 +97,7 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
                 addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
             }
         }
-        for (Point reference:referencePoints) {
-            Collections.sort(population,new PreferenceDistanceComparator(reference));
-        }
+
         return population;
     }
     @Override
@@ -131,11 +129,14 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
         List<S> front;
 
         front = ranking.getSubfront(rank);
-
+        for (Point reference:referencePoints) {
+            Collections.sort(front,new PreferenceDistanceComparator(reference));
+        }
 
         for (S solution : front) {
             population.add(solution);
         }
+
     }
 
 
