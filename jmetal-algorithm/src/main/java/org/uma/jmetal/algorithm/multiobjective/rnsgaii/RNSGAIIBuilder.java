@@ -2,8 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -100,10 +98,10 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
 
   public NSGAII<S> build() {
     List<Double> referencePoint = new ArrayList<>();
-    referencePoint.add(0.5d);
-    referencePoint.add(0.5d);
+    referencePoint.add(1.0);
+    referencePoint.add(1.0);
     RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator,referencePoint,true,1.0d,null,null);
+          mutationOperator, selectionOperator, evaluator,referencePoint,0.0005);
 
 
     return algorithm ;
