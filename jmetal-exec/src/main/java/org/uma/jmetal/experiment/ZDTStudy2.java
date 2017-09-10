@@ -62,7 +62,7 @@ import java.util.List;
  */
 public class ZDTStudy2 {
 
-  private static final int INDEPENDENT_RUNS = 25 ;
+  private static final int INDEPENDENT_RUNS = 5 ;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -86,7 +86,7 @@ public class ZDTStudy2 {
     zdt2Study.setExperimentBaseDirectory(experimentBaseDirectory);
     zdt2Study.setOutputParetoFrontFileName("FUN");
     zdt2Study.setOutputParetoSetFileName("VAR");
-    zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/referenceFronts");
+    zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/ZDTStudy2/referenceFronts");
     zdt2Study.setIndicatorList(Arrays.asList(
             new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
             new PISAHypervolume<DoubleSolution>(),
