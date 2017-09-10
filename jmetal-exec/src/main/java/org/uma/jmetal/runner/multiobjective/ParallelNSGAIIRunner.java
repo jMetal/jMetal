@@ -66,7 +66,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
+    SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem) ;
 
     NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
