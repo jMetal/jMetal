@@ -74,7 +74,7 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
     @Override
     protected Ranking<S> computeRanking(List<S> solutionList) {
-        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction);
+        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon);
         ranking.computeRanking(solutionList);
 
         return ranking;
@@ -96,6 +96,7 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
         return population;
     }
+
     public int getPopulationSize() {
         return this.getMaxPopulationSize();
     }
