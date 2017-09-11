@@ -98,8 +98,8 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
 
   public NSGAII<S> build() {
     List<Double> referencePoint = new ArrayList<>();
-    referencePoint.add(0.5);
-    referencePoint.add(0.5);
+    referencePoint.add(0.0);
+    referencePoint.add(0.0);
     RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator,referencePoint,0.0005);
 

@@ -1,7 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
+import org.uma.jmetal.algorithm.multiobjective.rnsgaii.util.PreferenceNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.util.RNSGAIIRanking;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -9,25 +10,20 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.PreferenceDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
 import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
-import org.uma.jmetal.util.solutionattribute.impl.PreferenceDistance;
 
 import java.util.*;
 
 public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
     protected List<Double> interestPoint = null;
-    protected Vector<Integer> numberOfDivisions  ;
-    protected List<Point> referencePoints  = null;
     protected double epsilon;
+    protected PreferenceNSGAII<S> achievementScalarizingFunction;
     /**
      * Constructor
      *
@@ -43,20 +39,21 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
         super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
         interestPoint = referencePoint;
         this.epsilon = epsilon;
-        referencePoints = new ArrayList<>() ;
-        updateReferencePoint(interestPoint);
+        this.achievementScalarizingFunction = this.createUtilityFunction();
     }
 
-    public void updateReferencePoint(List<Double> pointList){
-        int cont = pointList.size()/2;
-        int i=0;
-        for (int j = 0; j < cont ; j++) {
-            Point point = new ArrayPoint(2);
-            point.setDimensionValue(0,pointList.get(i));
-            i++;
-            point.setDimensionValue(1,pointList.get(i));
-            referencePoints.add(point);
+
+    public PreferenceNSGAII<S> createUtilityFunction() {
+        List<Double> weights = new ArrayList<>();
+        for(int i=0; i<getProblem().getNumberOfObjectives();i++){
+            weights.add(1.0d/getProblem().getNumberOfObjectives());
+
         }
+        PreferenceNSGAII<S> aux = new PreferenceNSGAII<S>(weights, this.interestPoint);
+        return aux;
+    }
+    public void updateReferencePoint(List<Double> pointList){
+        this.achievementScalarizingFunction.updatePointOfInterest(pointList);
     }
 
 
@@ -68,7 +65,7 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
         Ranking<S> ranking = computeRanking(jointPopulation);
 
-        return preferenceDistancieSelection(ranking);
+        return preferenceDistanceSelection(ranking);
     }
 
     @Override public List<S> getResult() {
@@ -77,72 +74,39 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
     @Override
     protected Ranking<S> computeRanking(List<S> solutionList) {
-        Ranking<S> ranking = new DominanceRanking<S>();//RNSGAIIRanking<>(referencePoints);
+        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction);
         ranking.computeRanking(solutionList);
 
         return ranking;
     }
 
-    protected List<S> preferenceDistancieSelection(Ranking<S> ranking) {
+    protected List<S> preferenceDistanceSelection(Ranking<S> ranking) {
 
-        CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-        List<S> population = new ArrayList<>(getMaxPopulationSize());
+        List<S> population = new ArrayList(this.getPopulationSize());
         int rankingIndex = 0;
-        while (populationIsNotFull(population)) {
-            if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-                addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-                rankingIndex++;
+
+        while(this.populationIsNotFull(population)) {
+            if (this.subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
+                this.addRankedSolutionsToPopulation(ranking, rankingIndex, population);
+                ++rankingIndex;
             } else {
-                crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-                addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
+                this.addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
             }
         }
 
         return population;
     }
-    @Override
-    protected boolean populationIsNotFull(List<S> population) {
-        return population.size() < getMaxPopulationSize();
+    public int getPopulationSize() {
+        return this.getMaxPopulationSize();
+    }
+    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+        population.addAll(ranking.getSubfront(index));
     }
 
-    @Override
-    protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-        return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
-    }
-
-    @Override
-    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-        List<S> currentRankedFront = ranking.getSubfront(rank);
-
-        for (Point reference:referencePoints) {
-            Collections.sort(population,new PreferenceDistanceComparator(reference));
-        }
-
-        int i = 0;
-        while (population.size() < getMaxPopulationSize()) {
-            population.add(currentRankedFront.get(i));
-            i++;
-        }
-    }
-    @Override
-    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-        List<S> front;
-
-        front = ranking.getSubfront(rank);
-        for (Point reference:referencePoints) {
-            Collections.sort(front,new PreferenceDistanceComparator(reference));
-        }
-
-        for (S solution : front) {
-            population.add(solution);
-        }
-
-    }
-
-
-    @Override
-    protected List<S> getNonDominatedSolutions(List<S> solutionList) {
-        return SolutionListUtils.getNondominatedSolutions(solutionList);
+    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+        List<S> front = ranking.getSubfront(index);
+        int remain = this.getPopulationSize() - population.size();
+        population.addAll(front.subList(0, remain));
     }
 
     @Override public String getName() {
