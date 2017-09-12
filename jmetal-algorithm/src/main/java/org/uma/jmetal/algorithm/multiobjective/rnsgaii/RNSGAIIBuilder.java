@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NSGAII<S>> {
+public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<RNSGAII<S>> {
 
 
   /**
@@ -34,13 +34,13 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
   private SelectionOperator<List<S>, S> selectionOperator;
   private SolutionListEvaluator<S> evaluator;
 
-  private NSGAIIBuilder.NSGAIIVariant variant;
+  private List<Double> referencePoint ;
 
   /**
    * NSGAIIBuilder constructor
    */
   public RNSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-                        MutationOperator<S> mutationOperator) {
+                        MutationOperator<S> mutationOperator, List<Double> referencePoint) {
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
@@ -48,8 +48,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
     evaluator = new SequentialSolutionListEvaluator<S>();
-
-    this.variant = NSGAIIBuilder.NSGAIIVariant.NSGAII ;
+    this.referencePoint = referencePoint ;
   }
 
   public RNSGAIIBuilder<S> setMaxEvaluations(int maxEvaluations) {
@@ -89,17 +88,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     return this;
   }
 
-
-  public RNSGAIIBuilder<S> setVariant(NSGAIIBuilder.NSGAIIVariant variant) {
-    this.variant = variant;
-
-    return this;
-  }
-
-  public NSGAII<S> build() {
-    List<Double> referencePoint = new ArrayList<>();
-    referencePoint.add(0.0);
-    referencePoint.add(0.0);
+  public RNSGAII<S> build() {
     RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, evaluator,referencePoint,0.0005);
 

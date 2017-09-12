@@ -32,6 +32,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +80,11 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    List<Double> referencePoint = new ArrayList<>() ;
+    referencePoint.add(0.0) ;
+    referencePoint.add(0.0) ;
+
+    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
