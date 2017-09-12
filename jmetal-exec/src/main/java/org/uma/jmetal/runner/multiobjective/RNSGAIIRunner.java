@@ -82,6 +82,8 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
 
     List<Double> referencePoint = new ArrayList<>() ;
     referencePoint.add(0.0) ;
+    referencePoint.add(1.0) ;
+    referencePoint.add(1.0) ;
     referencePoint.add(0.0) ;
 
     algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint)

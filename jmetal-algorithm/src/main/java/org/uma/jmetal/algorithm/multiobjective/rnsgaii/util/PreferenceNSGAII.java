@@ -40,20 +40,27 @@ public class PreferenceNSGAII<S extends Solution<?>>  {
                 objectiveValues.add(solution.getObjective(i));
             }
 
-            double distance  = 0.0D;
+
+            double totalDistance=0.0D;
             double normalizeDiff = 0.0D;
+            int numberOfPoint = this.interestPoint.size() / solution.getNumberOfObjectives();
 
-            for (int i =0;i < solution.getNumberOfObjectives();i++){
-                if(this.upperBounds!=null && this.lowerBounds!=null){
-                    normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(i))/
-                            (this.upperBounds.get(i)-this.lowerBounds.get(i));
-                }else{
-                    normalizeDiff = solution.getObjective(i) - this.interestPoint.get(i);
+            for (int j = 0; j < numberOfPoint ; j++) {
+                double distance  = 0.0D;
+                for (int i =0;i < solution.getNumberOfObjectives();i++){
+                    if(this.upperBounds!=null && this.lowerBounds!=null){
+                     normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(i+(2*j)))/
+                                (this.upperBounds.get(i)-this.lowerBounds.get(i));
+                     }else{
+                            normalizeDiff = solution.getObjective(i) - this.interestPoint.get(i+(2*j));
+                        }
+                    distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
                 }
-                distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
-            }
+                totalDistance += Math.sqrt(distance);
+        }
 
-            return Math.sqrt(distance);
+
+            return totalDistance;
 
     }
 
