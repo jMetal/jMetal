@@ -81,10 +81,23 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     List<Double> referencePoint = new ArrayList<>() ;
+    referencePoint.add(0.1) ;
+    referencePoint.add(0.6) ;
+
+    referencePoint.add(0.3) ;
+    referencePoint.add(0.6) ;
+
+    referencePoint.add(0.5) ;
+    referencePoint.add(0.2) ;
+
+    referencePoint.add(0.7) ;
+    referencePoint.add(0.2) ;
+
+    referencePoint.add(0.9) ;
     referencePoint.add(0.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(0.0) ;
+
+
+
 
     algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint)
         .setSelectionOperator(selection)

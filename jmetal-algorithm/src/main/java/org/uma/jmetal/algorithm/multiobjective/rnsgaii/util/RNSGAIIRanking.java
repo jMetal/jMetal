@@ -50,41 +50,49 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
             map.put(value,solution);
         }
 
-
+        int rank=0;
         List<S> populationOrder = new ArrayList<>(map.values());
         this.numberOfRanks = populationOrder.size()+1;
         this.rankedSubpopulations = new ArrayList(this.numberOfRanks);
         for (int i=0; i<numberOfRanks-1;i++){
             this.rankedSubpopulations.add(new ArrayList<>());
         }
-        int rank=1;
+        for (S solution:
+             populationOrder) {
+            this.setAttribute(solution, rank);
+            this.rankedSubpopulations.get(rank).add(solution);
+            rank++;
+        }
+        rank =0;
         int rankPreference=0;
         while(!populationOrder.isEmpty()){
-            int indexRandom =0;// JMetalRandom.getInstance().nextInt(0,populationOrder.size()-1);
+            int indexRandom =JMetalRandom.getInstance().nextInt(0,populationOrder.size()-1);//0
             S solutionRandom = populationOrder.get(indexRandom);
-            this.setAttribute(solutionRandom, rankPreference);
+            //this.setAttribute(solutionRandom, rank);
 
-            List<S> rankList= this.rankedSubpopulations.get(rankPreference);
-            if(rankList==null){
-                rankList= new ArrayList();
-            }
-            rankList.add(solutionRandom);
+            //List<S> rankList= this.rankedSubpopulations.get(rank);
+           // if(rankList==null){
+            //    rankList= new ArrayList();
+            //}
+            //rankList.add(solutionRandom);
             populationOrder.remove(indexRandom);
             for(int i=0;i<populationOrder.size();i++){
                 S solution = populationOrder.get(i);
                 double sum = this.preference(solutionRandom,solution,upperBound,lowerBound);
                 if(sum < epsilon){
-                    this.setAttribute(solutionRandom, rank);
+                    removeRank(solution);
+                   // this.rankedSubpopulations.get(0).remove(solution);
+                    this.setAttribute(solution, this.rankedSubpopulations.size()-1);
 
-                    List<S> rankListAux= this.rankedSubpopulations.get(rank);
+                    List<S> rankListAux= this.rankedSubpopulations.get(this.rankedSubpopulations.size()-1 );
                     if(rankListAux==null){
                         rankListAux= new ArrayList();
                     }
-                    rankListAux.add(solutionRandom);
+                    rankListAux.add(solution);
                     populationOrder.remove(i);
-                    rank++;
                 }
             }
+            rank++;
         }
         /*int rankGood =0;
         int rankBad=1;
@@ -113,6 +121,17 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         return this;
     }
 
+    private void removeRank(S solution){
+        boolean enc=false;
+        int i=0;
+        while(!enc && i< this.rankedSubpopulations.size()){
+            enc= this.rankedSubpopulations.get(i).contains(solution);
+            if(enc){
+                this.rankedSubpopulations.get(i).remove(solution);
+            }
+            i++;
+        }
+    }
     private double preference(S solution1, S solution2,List<Double> upperBounds,List<Double> lowerBounds){
         double result =0.0D;
 
@@ -131,6 +150,9 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         }
 
     public List<S> getSubfront(int rank) {
+        if(rank>= this.rankedSubpopulations.size()){
+            rank=this.rankedSubpopulations.size()-1;
+        }
         return (List)this.rankedSubpopulations.get(rank);
     }
 

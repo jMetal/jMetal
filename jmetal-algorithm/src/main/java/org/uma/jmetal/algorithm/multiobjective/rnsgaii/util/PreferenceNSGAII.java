@@ -45,16 +45,22 @@ public class PreferenceNSGAII<S extends Solution<?>>  {
             double normalizeDiff = 0.0D;
             int numberOfPoint = this.interestPoint.size() / solution.getNumberOfObjectives();
 
+            int index= 0;
             for (int j = 0; j < numberOfPoint ; j++) {
                 double distance  = 0.0D;
+
                 for (int i =0;i < solution.getNumberOfObjectives();i++){
+
                     if(this.upperBounds!=null && this.lowerBounds!=null){
-                     normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(i+(2*j)))/
+
+                     normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(index))/
                                 (this.upperBounds.get(i)-this.lowerBounds.get(i));
                      }else{
-                            normalizeDiff = solution.getObjective(i) - this.interestPoint.get(i+(2*j));
+                            normalizeDiff = solution.getObjective(i) - this.interestPoint.get(index);
                         }
                     distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
+
+                    index++;
                 }
                 totalDistance += Math.sqrt(distance);
         }

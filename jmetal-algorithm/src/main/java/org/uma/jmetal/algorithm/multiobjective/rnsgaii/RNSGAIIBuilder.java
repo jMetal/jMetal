@@ -90,7 +90,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
 
   public RNSGAII<S> build() {
     RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator,referencePoint,0.005);
+          mutationOperator, selectionOperator, evaluator,referencePoint,0.001);
 
 
     return algorithm ;
