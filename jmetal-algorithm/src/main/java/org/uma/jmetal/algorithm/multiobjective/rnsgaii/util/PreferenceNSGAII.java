@@ -8,77 +8,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PreferenceNSGAII<S extends Solution<?>>  {
-    private final List<Double> interestPoint;
+    private  List<Double> interestPoint;
     private List<Double> upperBounds = null;
     private List<Double> lowerBounds = null;
     private List<Double> weights = null;
 
-    public PreferenceNSGAII(List<Double> weights, List<Double> interestPoint) {
+    public PreferenceNSGAII(List<Double> weights) {
         this.weights = weights;
-        this.interestPoint = interestPoint;
+
 
     }
 
 
     public void updatePointOfInterest(List<Double> newInterestPoint) {
-        if (this.interestPoint.size() != newInterestPoint.size()) {
-            throw new JMetalException("Wrong dimension of the interest point vector");
-        } else {
-            for(int i = 0; i < newInterestPoint.size(); ++i) {
-                this.interestPoint.set(i, newInterestPoint.get(i));
-            }
-
-        }
+            interestPoint = newInterestPoint;
     }
 
     public Double evaluate(S solution) {
 
-
         List<Double> objectiveValues = new ArrayList(solution.getNumberOfObjectives());
 
-            for(int i = 0; i < solution.getNumberOfObjectives(); ++i) {
-                objectiveValues.add(solution.getObjective(i));
-            }
-
-
-            double totalDistance=0.0D;
-            double normalizeDiff = 0.0D;
-            int numberOfPoint = this.interestPoint.size() / solution.getNumberOfObjectives();
-
-            int index= 0;
-            for (int j = 0; j < numberOfPoint ; j++) {
-                double distance  = 0.0D;
-
-                for (int i =0;i < solution.getNumberOfObjectives();i++){
-
-                    if(this.upperBounds!=null && this.lowerBounds!=null){
-
-                     normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(index))/
-                                (this.upperBounds.get(i)-this.lowerBounds.get(i));
-                     }else{
-                            normalizeDiff = solution.getObjective(i) - this.interestPoint.get(index);
-                        }
-                    distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
-
-                    index++;
-                }
-                totalDistance += Math.sqrt(distance);
+        for(int i = 0; i < solution.getNumberOfObjectives(); ++i) {
+            objectiveValues.add(solution.getObjective(i));
         }
 
+        double normalizeDiff = 0.0D;
+        double distance  = 0.0D;
+        for (int i =0;i < solution.getNumberOfObjectives();i++){
+            if(this.upperBounds!=null && this.lowerBounds!=null){
+                normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(i))/
+                        (this.upperBounds.get(i)-this.lowerBounds.get(i));
+            }else{
+                normalizeDiff = solution.getObjective(i) - this.interestPoint.get(i);
+            }
+            distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
 
-            return totalDistance;
+        }
+
+        return Math.sqrt(distance);
 
     }
 
-   public int getSize(){
+    public int getSize(){
         return this.weights.size();
    }
-
     public void setUpperBounds(List<Double> upperBounds) {
         this.upperBounds = upperBounds;
     }
-
-
     public void setLowerBounds(List<Double> lowerBounds) {
         this.lowerBounds = lowerBounds;
     }

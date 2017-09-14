@@ -16,13 +16,15 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         implements Ranking<S> {
 
     private PreferenceNSGAII<S> utilityFunctions;
+    private List<Double> referencePoint;
     private List<List<S>> rankedSubpopulations;
     private int numberOfRanks = 0;
     private double epsilon ;
 
-    public RNSGAIIRanking(PreferenceNSGAII<S> utilityFunctions, double epsilon) {
+    public RNSGAIIRanking(PreferenceNSGAII<S> utilityFunctions, double epsilon,List<Double> interestPoint) {
         this.utilityFunctions = utilityFunctions;
         this.epsilon = epsilon;
+        referencePoint = interestPoint;
     }
 
     @Override
@@ -30,9 +32,9 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         int size = population.size();
         List<Double> upperBound = new ArrayList<>();
         List<Double> lowerBound = new ArrayList<>();
-
+        int numberObjectives = population.get(0).getNumberOfObjectives();
+        //get bounds
         for (int i = 0; i < population.get(0).getNumberOfObjectives(); i++) {
-            // Sort the population by Obj n
             Collections.sort(population, new ObjectiveComparator<S>(i)) ;
             double objetiveMinn = population.get(0).getObjective(i);
             double objetiveMaxn = population.get(population.size() - 1).getObjective(i);
@@ -44,44 +46,45 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         List<S> temporalList = new LinkedList();
         temporalList.addAll(population);
         //ordening the solution by weight euclidean distance
-        SortedMap<Double,S> map = new TreeMap<>();
-        for (S solution: temporalList) {
-            double value = this.utilityFunctions.evaluate(solution).doubleValue();
-            map.put(value,solution);
-        }
 
-        int rank=0;
-        List<S> populationOrder = new ArrayList<>(map.values());
-        this.numberOfRanks = populationOrder.size()+1;
+
+        //number of  reference points
+        int numberOfPoint = this.referencePoint.size() / numberObjectives;
+        int indexReference =0;
+        this.numberOfRanks = population.size()+1;
         this.rankedSubpopulations = new ArrayList(this.numberOfRanks);
         for (int i=0; i<numberOfRanks-1;i++){
             this.rankedSubpopulations.add(new ArrayList<>());
         }
-        for (S solution:
-             populationOrder) {
-            this.setAttribute(solution, rank);
-            this.rankedSubpopulations.get(rank).add(solution);
-            rank++;
+        for (int i = 0; i < numberOfPoint ; i++) {
+            //for each reference point, it calculates the euclidean distance
+            List<Double> interestPoint = nextInterestPoint(indexReference,numberObjectives);
+            indexReference += numberObjectives;
+            this.utilityFunctions.updatePointOfInterest(interestPoint);
+            SortedMap<Double,S> map = new TreeMap<>();
+            for (S solution: temporalList) {
+                double value = this.utilityFunctions.evaluate(solution).doubleValue();
+                map.put(value,solution);
+            }
+            int rank=0;
+            List<S> populationOrder = new ArrayList<>(map.values());
+            for (S solution:
+                    populationOrder) {
+                this.setAttribute(solution, rank);
+                this.rankedSubpopulations.get(rank).add(solution);
+                rank++;
+            }
         }
-        rank =0;
-        int rankPreference=0;
-        while(!populationOrder.isEmpty()){
-            int indexRandom =JMetalRandom.getInstance().nextInt(0,populationOrder.size()-1);//0
-            S solutionRandom = populationOrder.get(indexRandom);
-            //this.setAttribute(solutionRandom, rank);
-
-            //List<S> rankList= this.rankedSubpopulations.get(rank);
-           // if(rankList==null){
-            //    rankList= new ArrayList();
-            //}
-            //rankList.add(solutionRandom);
-            populationOrder.remove(indexRandom);
-            for(int i=0;i<populationOrder.size();i++){
-                S solution = populationOrder.get(i);
+        while(!temporalList.isEmpty()){
+            int indexRandom =JMetalRandom.getInstance().nextInt(0,temporalList.size()-1);//0
+            S solutionRandom = temporalList.get(indexRandom);
+            temporalList.remove(indexRandom);
+            for(int i=0;i<temporalList.size();i++){
+                S solution = temporalList.get(i);
                 double sum = this.preference(solutionRandom,solution,upperBound,lowerBound);
                 if(sum < epsilon){
                     removeRank(solution);
-                   // this.rankedSubpopulations.get(0).remove(solution);
+                    //assign the last rank
                     this.setAttribute(solution, this.rankedSubpopulations.size()-1);
 
                     List<S> rankListAux= this.rankedSubpopulations.get(this.rankedSubpopulations.size()-1 );
@@ -89,42 +92,31 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
                         rankListAux= new ArrayList();
                     }
                     rankListAux.add(solution);
-                    populationOrder.remove(i);
+                    temporalList.remove(i);
                 }
             }
-            rank++;
+
         }
-        /*int rankGood =0;
-        int rankBad=1;
-
-        Set<Double> keys= map.keySet();
-        List<Double> keyList = new ArrayList<>(keys);
-        Collections.sort(keyList);
-        int rank=0;
-        for (Double key: keyList) {
-            if(key<epsilon){
-                rank=rankBad;
-                rankBad++;
-            }else {
-                rank =rankGood;
-            }
-            S solution = map.get(key);
-            this.setAttribute(solution, rank);
-
-            List<S> rankList= this.rankedSubpopulations.get(rank);
-            if(rankList==null){
-                rankList= new ArrayList();
-            }
-            rankList.add(solution);
-        }*/
 
         return this;
+    }
+
+    private List<Double> nextInterestPoint(int index, int size){
+        List<Double> result= null;
+        if(index<this.referencePoint.size()){
+            result = new ArrayList<>(size);
+            for(int i=0;i<size;i++){
+                result.add(this.referencePoint.get(index));
+                index++;
+            }
+        }
+        return  result;
     }
 
     private void removeRank(S solution){
         boolean enc=false;
         int i=0;
-        while(!enc && i< this.rankedSubpopulations.size()){
+        while(i< this.rankedSubpopulations.size()){
             enc= this.rankedSubpopulations.get(i).contains(solution);
             if(enc){
                 this.rankedSubpopulations.get(i).remove(solution);
@@ -150,9 +142,6 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         }
 
     public List<S> getSubfront(int rank) {
-        if(rank>= this.rankedSubpopulations.size()){
-            rank=this.rankedSubpopulations.size()-1;
-        }
         return (List)this.rankedSubpopulations.get(rank);
     }
 

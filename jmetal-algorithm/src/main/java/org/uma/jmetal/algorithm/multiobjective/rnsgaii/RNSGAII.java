@@ -43,11 +43,11 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
             weights.add(1.0d/getProblem().getNumberOfObjectives());
 
         }
-        PreferenceNSGAII<S> aux = new PreferenceNSGAII<S>(weights, this.interestPoint);
+        PreferenceNSGAII<S> aux = new PreferenceNSGAII<S>(weights);
         return aux;
     }
-    public void updateReferencePoint(List<Double> pointList){
-        this.achievementScalarizingFunction.updatePointOfInterest(pointList);
+    public void updateReferencePoint(List<Double> newReferencePoints){
+        this.interestPoint = newReferencePoints;
     }
 
 
@@ -68,7 +68,7 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
     @Override
     protected Ranking<S> computeRanking(List<S> solutionList) {
-        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon);
+        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon,interestPoint);
         ranking.computeRanking(solutionList);
 
         return ranking;
@@ -102,6 +102,10 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
         List<S> front = ranking.getSubfront(index);
         int remain = this.getPopulationSize() - population.size();
         population.addAll(front.subList(0, remain));
+    }
+
+    public List<Double> getInterestPoint() {
+        return interestPoint;
     }
 
     @Override public String getName() {

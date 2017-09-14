@@ -33,14 +33,14 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
   private SolutionListEvaluator<S> evaluator;
-
+  private double epsilon;
   private List<Double> referencePoint ;
 
   /**
    * NSGAIIBuilder constructor
    */
   public RNSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-                        MutationOperator<S> mutationOperator, List<Double> referencePoint) {
+                        MutationOperator<S> mutationOperator, List<Double> referencePoint,double epsilon) {
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
@@ -49,6 +49,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
     evaluator = new SequentialSolutionListEvaluator<S>();
     this.referencePoint = referencePoint ;
+    this.epsilon = epsilon;
   }
 
   public RNSGAIIBuilder<S> setMaxEvaluations(int maxEvaluations) {
@@ -88,9 +89,14 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     return this;
   }
 
+  public RNSGAIIBuilder<S>  setEpsilon(double epsilon) {
+    this.epsilon = epsilon;
+    return this;
+  }
+
   public RNSGAII<S> build() {
     RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator,referencePoint,0.001);
+          mutationOperator, selectionOperator, evaluator,referencePoint,epsilon);
 
 
     return algorithm ;

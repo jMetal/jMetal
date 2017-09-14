@@ -36,9 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the R-NSGA-II algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
 public class RNSGAIIRunner extends AbstractAlgorithmRunner {
   /**
@@ -46,7 +47,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-    java org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
+    java org.uma.jmetal.runner.multiobjective.RNSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -81,6 +82,23 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     List<Double> referencePoint = new ArrayList<>() ;
+
+    /*referencePoint.add(0.0) ;
+    referencePoint.add(1.0) ;
+    referencePoint.add(1.0) ;
+    referencePoint.add(0.0) ;
+    referencePoint.add(0.5) ;
+    referencePoint.add(0.5) ;
+    referencePoint.add(0.2) ;
+    referencePoint.add(0.8) ;
+    referencePoint.add(0.8) ;
+    referencePoint.add(0.2) ;*/
+    //Example fig 2 paper Deb
+    /*referencePoint.add(0.2) ;
+    referencePoint.add(0.4) ;
+    referencePoint.add(0.8) ;
+    referencePoint.add(0.4) ;*/
+    //Example fig 3 paper Deb
     referencePoint.add(0.1) ;
     referencePoint.add(0.6) ;
 
@@ -96,10 +114,12 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.9) ;
     referencePoint.add(0.0) ;
 
+    double epsilon= 0.001;
 
 
 
-    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint)
+
+    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
