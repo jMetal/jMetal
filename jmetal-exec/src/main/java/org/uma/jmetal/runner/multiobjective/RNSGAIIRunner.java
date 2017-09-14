@@ -117,8 +117,6 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     double epsilon= 0.001;
 
 
-
-
     algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)

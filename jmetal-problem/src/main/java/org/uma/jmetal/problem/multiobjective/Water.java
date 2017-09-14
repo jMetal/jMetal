@@ -44,7 +44,7 @@ public class Water extends AbstractDoubleProblem implements ConstrainedProblem<D
   /** Evaluate() method */
   @Override
   public void evaluate(DoubleSolution solution)  {
-    double[] fx = new double[2];
+    double[] fx = new double[solution.getNumberOfObjectives()];
     double[] x = new double[solution.getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariableValue(i) ;

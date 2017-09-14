@@ -57,8 +57,8 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     
     referencePoint = new ArrayList<>();
-    referencePoint.add(0.1);
-    referencePoint.add(0.5);
+    referencePoint.add(0.8);
+    referencePoint.add(0.2);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -90,7 +90,6 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     iterationMeasure.register(new IterationListener(chart));
 
     /* End of measure management */
-    
     
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

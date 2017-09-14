@@ -33,9 +33,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.NSGAIIBinaryRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws
-          Exception {
-
+  public static void main(String[] args) throws Exception {
     BinaryProblem problem;
     Algorithm<List<BinarySolution>> algorithm;
     CrossoverOperator<BinarySolution> crossover;

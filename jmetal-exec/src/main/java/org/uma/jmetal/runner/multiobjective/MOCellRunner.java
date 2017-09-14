@@ -49,7 +49,7 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.wfg.WFG9";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT2.pf" ;
     }
 
