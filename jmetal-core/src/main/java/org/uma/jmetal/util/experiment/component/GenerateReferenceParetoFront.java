@@ -76,7 +76,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
 
-      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem.getProblem(),
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
           nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
@@ -95,7 +95,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   }
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
-      String outputDirectoryName, Problem<?> problem,
+      String outputDirectoryName, ExperimentProblem<?> problem,
       List<PointSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
@@ -109,7 +109,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
-              outputDirectoryName + "/" + problem.getName() + "." +
+              outputDirectoryName + "/" + problem.getTag() + "." +
                   algorithm.getAlgorithmTag() + ".rf"
           );
     }
