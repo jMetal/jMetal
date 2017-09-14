@@ -1,10 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.rnsgaii.util.ASFRNSGAII;
+import org.uma.jmetal.algorithm.multiobjective.rnsgaii.util.PreferenceNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.util.RNSGAIIRanking;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -12,22 +10,18 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
+public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
 
     protected List<Double> interestPoint = null;
-    protected List<Double> lowerBounds,upperBounds;
-    protected boolean estimateObjectivesBounds,normalization;
     protected double epsilon;
-    final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+    protected PreferenceNSGAII<S> achievementScalarizingFunction;
     /**
      * Constructor
-     *  @param problem
+     *
+     * @param problem
      * @param maxEvaluations
      * @param populationSize
      * @param crossoverOperator
@@ -35,94 +29,90 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
      * @param selectionOperator
      * @param evaluator
      */
-    public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator, List<Double> referencePoint, boolean estimateObjectivesBounds, boolean normalization, double epsilon, List<Double> lowerBounds, List<Double> upperBounds){
+    public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,List<Double> referencePoint, double epsilon) {
         super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
-        this.interestPoint = referencePoint;
-        this.estimateObjectivesBounds = estimateObjectivesBounds;
-        this.normalization = normalization;
+        interestPoint = referencePoint;
         this.epsilon = epsilon;
-        this.lowerBounds = lowerBounds;
-        this.upperBounds = upperBounds;
-        this.achievementScalarizingFunction =  createUtilityFunction();
-        if(this.estimateObjectivesBounds){
-            initializeBounds();
-        }
-
+        this.achievementScalarizingFunction = this.createUtilityFunction();
     }
-    public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
-        double[][] weights = WeightVector.initUniformWeights2D(0.005D, this.getMaxPopulationSize());
-        weights = WeightVector.invertWeights(weights, true);
-        ASFRNSGAII<S> aux = new ASFRNSGAII(weights, this.interestPoint);
+
+
+    public PreferenceNSGAII<S> createUtilityFunction() {
+        List<Double> weights = new ArrayList<>();
+        for(int i=0; i<getProblem().getNumberOfObjectives();i++){
+            weights.add(1.0d/getProblem().getNumberOfObjectives());
+
+        }
+        PreferenceNSGAII<S> aux = new PreferenceNSGAII<S>(weights);
         return aux;
     }
-
-    private void initializeBounds(){
-        this.lowerBounds = new ArrayList<>(getProblem().getNumberOfObjectives());
-        this.upperBounds = new ArrayList<>(getProblem().getNumberOfObjectives());
-        for (int i = 0; i < getProblem().getNumberOfObjectives(); i++) {
-            this.lowerBounds.add(Double.MAX_VALUE);
-            this.upperBounds.add(Double.MIN_VALUE);
-        }
-    }
-    private void updateLowerBounds(Solution individual) {
-        for (int i = 0; i < getProblem().getNumberOfObjectives(); i++) {
-            if (individual.getObjective(i) < this.lowerBounds.get(i)) {
-                this.lowerBounds.set(i,individual.getObjective(i));
-            }
-        }
-    }
-    private void updateUpperBounds(Solution individual){
-        for (int i = 0; i < getProblem().getNumberOfObjectives(); i++) {
-            if (individual.getObjective(i) > this.upperBounds.get(i)) {
-                this.upperBounds.set(i,individual.getObjective(i));
-            }
-        }
+    public void updateReferencePoint(List<Double> newReferencePoints){
+        this.interestPoint = newReferencePoints;
     }
 
-    private void updateBounds(Solution individual){
-        this.updateLowerBounds(individual);
-        this.updateUpperBounds(individual);
-    }
 
-    @Override
-    protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+
+    @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
         List<S> jointPopulation = new ArrayList<>();
         jointPopulation.addAll(population);
         jointPopulation.addAll(offspringPopulation);
 
-        if(estimateObjectivesBounds){
-            updateBounds(offspringPopulation.get(0));
-            updateBounds(offspringPopulation.get(1));
-        }
         Ranking<S> ranking = computeRanking(jointPopulation);
 
-        return preferenceDistanceSelection(ranking);//hay que cambiar el ranking
-
+        return preferenceDistanceSelection(ranking);
     }
+
+    @Override public List<S> getResult() {
+        return getNonDominatedSolutions(getPopulation());
+    }
+
     @Override
     protected Ranking<S> computeRanking(List<S> solutionList) {
-        Ranking<S> ranking = new RNSGAIIRanking<>(achievementScalarizingFunction,epsilon);
+        Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon,interestPoint);
         ranking.computeRanking(solutionList);
 
         return ranking;
     }
 
     protected List<S> preferenceDistanceSelection(Ranking<S> ranking) {
-        CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-        List<S> population = new ArrayList<>(getMaxPopulationSize());
+
+        List<S> population = new ArrayList(this.getPopulationSize());
         int rankingIndex = 0;
-        while (populationIsNotFull(population)) {
-            if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-                addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-                rankingIndex++;
+
+        while(this.populationIsNotFull(population)) {
+            if (this.subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
+                this.addRankedSolutionsToPopulation(ranking, rankingIndex, population);
+                ++rankingIndex;
             } else {
-                crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-                addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
+                this.addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
             }
         }
 
         return population;
     }
 
+    public int getPopulationSize() {
+        return this.getMaxPopulationSize();
+    }
+    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+        population.addAll(ranking.getSubfront(index));
+    }
 
+    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+        List<S> front = ranking.getSubfront(index);
+        int remain = this.getPopulationSize() - population.size();
+        population.addAll(front.subList(0, remain));
+    }
+
+    public List<Double> getInterestPoint() {
+        return interestPoint;
+    }
+
+    @Override public String getName() {
+        return "RNSGAII" ;
+    }
+
+    @Override public String getDescription() {
+        return "Nondominated Sorting Genetic Algorithm version II with Reference Point" ;
+    }
 }
