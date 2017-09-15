@@ -66,12 +66,20 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
     return getNonDominatedSolutions(getPopulation());
   }
 
-  @Override
+
   protected Ranking<S> computeRanking(List<S> solutionList) {
     Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon,interestPoint);
     ranking.computeRanking(solutionList);
 
     return ranking;
+  }
+
+  protected boolean populationIsNotFull(List<S> population) {
+    return population.size() < getMaxPopulationSize();
+  }
+
+  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
+    return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
   }
 
   protected List<S> preferenceDistanceSelection(Ranking<S> ranking) {
@@ -116,3 +124,4 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
     return "Nondominated Sorting Genetic Algorithm version II with Reference Point" ;
   }
 }
+
