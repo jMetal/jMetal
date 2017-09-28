@@ -36,7 +36,7 @@ public class WASFGAConstraintRunner extends AbstractAlgorithmRunner {
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.WASFGABinaryRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.WASFGAConstraintRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem;
