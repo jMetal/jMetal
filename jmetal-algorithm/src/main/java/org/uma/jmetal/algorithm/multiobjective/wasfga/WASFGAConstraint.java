@@ -38,7 +38,7 @@ public class WASFGAConstraint<S extends Solution<?>> extends WASFGA<S> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
+	//final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
 	final AbstractUtilityFunctionsSet<S> achievementScalarizingNadir;
 	/**
 	 * Constructor
@@ -75,20 +75,21 @@ public class WASFGAConstraint<S extends Solution<?>> extends WASFGA<S> {
 		for (int i = 1; i < weights.length; i = i + 2)
 			oddVectors[index++] = weights[i];
 
-		this.achievementScalarizingNadir  =  createUtilityFunction(this.getNadirPoint(), evenVectors);
-		this.achievementScalarizingUtopia =  createUtilityFunction(this.getReferencePoint(), oddVectors);
+		this.achievementScalarizingNadir  = super.createUtilityFunction();// createUtilityFunction(this.getReferencePoint(),this.getNadirPoint(),this.getReferencePoint(), evenVectors);
+		///this.achievementScalarizingUtopia =  createUtilityFunction(this.getReferencePoint(),this.getNadirPoint(),this.getReferencePoint(), oddVectors);
 
 	}
 
-	public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double [][] weights) {
+	/*public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint,List<Double> nadir,List<Double> utopia, double [][] weights) {
 		weights = WeightVector.invertWeights(weights,true);
 		ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
-
+		aux.setUtopia(utopia);
+		aux.setNadir(nadir);
 		return aux;
-	}
+	}*/
 	@Override
 	protected Ranking<S> computeRanking(List<S> solutionList) {
-		Ranking<S> ranking = new WASFGARankingConstraint<>(this.achievementScalarizingUtopia,this.achievementScalarizingNadir);//WASFGARankingConstraint //GWASFGARanking
+		Ranking<S> ranking = new WASFGARankingConstraint<>(this.achievementScalarizingNadir);//WASFGARankingConstraint //GWASFGARanking
 		ranking.computeRanking(solutionList);
 		return ranking;
 	}
