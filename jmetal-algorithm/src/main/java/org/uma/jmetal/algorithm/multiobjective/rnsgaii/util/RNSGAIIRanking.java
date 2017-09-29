@@ -86,7 +86,7 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
                 for (S solution:
                      solutionList) {
                     Integer nConstrains = numberOfViolatedConstraints.getAttribute(solution);
-                    if(nConstrains!=null && nConstrains==0) {
+                    if((nConstrains!=null && nConstrains==0)|| nConstrains==null) {
                         this.setAttribute(solution, rank);
                         this.rankedSubpopulations.get(rank).add(solution);
                     }else{
