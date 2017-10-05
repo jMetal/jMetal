@@ -55,7 +55,6 @@ public class SolutionUtils {
     return result;
   }
 
-
   /**
    * Returns the euclidean distance between a pair of solutions in the objective space
    */
@@ -63,6 +62,7 @@ public class SolutionUtils {
 
     double diff;
     double distance = 0.0;
+
     //euclidean distance
     for (int nObj = 0; nObj < firstSolution.getNumberOfObjectives(); nObj++) {
       diff = firstSolution.getObjective(nObj) - secondSolution.getObjective(nObj);
@@ -82,19 +82,16 @@ public class SolutionUtils {
    */
   public static double distanceToSolutionListInSolutionSpace(DoubleSolution solution,
                                                              List<DoubleSolution> solutionList) {
-    //At start point the distance is the max
     double distance = Double.MAX_VALUE;
 
-    // found the min distance respect to population
     for (int i = 0; i < solutionList.size(); i++) {
-      double aux = distanceBetweenSolutions(solution, solutionList.get(i));
+      double aux = distanceBetweenSolutionsInObjectiveSpace(solution, solutionList.get(i));
       if (aux < distance)
         distance = aux;
     }
 
-    //->Return the best distance
     return distance;
-  } // distanceToSolutionSetInSolutionSpace
+  }
 
   /**
    * Returns the distance between two solutions in the search space.
@@ -103,18 +100,15 @@ public class SolutionUtils {
    * @param solutionJ The second <code>Solution</code>.
    * @return the distance between solutions.
    */
-  public static double distanceBetweenSolutions(DoubleSolution solutionI, DoubleSolution solutionJ) {
+  public static double distanceBetweenSolutionsInObjectiveSpace(DoubleSolution solutionI, DoubleSolution solutionJ) {
     double distance = 0.0;
 
-    double diff;    //Auxiliar var
-    //-> Calculate the Euclidean distance
+    double diff;
     for (int i = 0; i < solutionI.getNumberOfVariables(); i++) {
       diff = solutionI.getVariableValue(i) - solutionJ.getVariableValue(i);
       distance += Math.pow(diff, 2.0);
-    } // for
-    //-> Return the euclidean distance
+    }
+
     return Math.sqrt(distance);
-  } // distanceBetweenSolutions
-
-
+  }
 }
