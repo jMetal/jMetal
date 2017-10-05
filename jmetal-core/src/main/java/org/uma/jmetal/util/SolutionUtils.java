@@ -111,4 +111,21 @@ public class SolutionUtils {
 
     return Math.sqrt(distance);
   }
+
+  /**
+   * Returns the average euclidean distance of a solution to the solutions of a list.
+   */
+  public static <S extends Solution<?>> double averageDistanceToSolutionList(
+          S solution,
+          List<S> solutionList) {
+
+    double sumOfDistances = 0.0;
+    for (S sol : solutionList) {
+      sumOfDistances += distanceBetweenObjectives(
+              solution,
+              sol);
+    }
+
+    return sumOfDistances / solutionList.size();
+  }
 }
