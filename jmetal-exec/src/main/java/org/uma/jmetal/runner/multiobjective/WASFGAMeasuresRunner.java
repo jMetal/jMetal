@@ -91,7 +91,6 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
 
     /* End of measure management */
     
-    
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 

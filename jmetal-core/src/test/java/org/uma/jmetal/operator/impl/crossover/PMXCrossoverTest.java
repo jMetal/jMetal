@@ -69,5 +69,4 @@ public class PMXCrossoverTest {
 		assertTrue("No use of the custom generator 1", custom1Uses[0] > 0);
 		assertTrue("No use of the custom generator 2", custom2Uses[0] > 0);
 	}
-
 }

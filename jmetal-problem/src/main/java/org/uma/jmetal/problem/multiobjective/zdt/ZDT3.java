@@ -77,7 +77,6 @@ public class ZDT3 extends AbstractDoubleProblem {
    * Returns the value of the ZDT2 function G.
    *
    * @param solution Solution
-   * @throws org.uma.jmetal45.util.JMetalException
    */
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
