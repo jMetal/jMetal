@@ -63,8 +63,8 @@ public class WASFGAConstraintRunner extends AbstractAlgorithmRunner {
     problem = new Tanaka();//Osyczka2
 
     referencePoint = new ArrayList<>();
-    referencePoint.add(0.1);
-    referencePoint.add(0.1);
+    referencePoint.add(0.5);
+    referencePoint.add(0.5);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;

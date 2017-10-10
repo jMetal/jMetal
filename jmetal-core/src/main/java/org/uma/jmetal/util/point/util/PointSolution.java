@@ -44,6 +44,20 @@ public class PointSolution implements Solution<Double> {
   }
 
   /**
+   * Constructor
+   *
+   * @param solution
+   */
+  public PointSolution(Solution<?> solution) {
+    this.numberOfObjectives = solution.getNumberOfObjectives() ;
+    objectives = new double[numberOfObjectives] ;
+
+    for (int i = 0; i < numberOfObjectives; i++) {
+      this.objectives[i] = solution.getObjective(i) ;
+    }
+  }
+
+  /**
    * Copy constructor
    *
    * @param point

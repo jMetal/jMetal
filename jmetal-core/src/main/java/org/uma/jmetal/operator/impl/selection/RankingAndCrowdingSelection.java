@@ -57,6 +57,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
     int rankingIndex = 0;
     while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
+        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
       } else {

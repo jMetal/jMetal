@@ -13,8 +13,8 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ## Changelog of the next incoming release (jMetal 5.4)
 
-No new features yet.
-
+### Algorithms
+* The algorithm R-NSGA-II (https://doi.org/10.1145/1143997.1144112) is available. Contribution of Cristóbal Barba (@cbarba).
 
 ## jMetal is available as a Maven Project in The Central Repository
 
