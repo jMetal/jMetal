@@ -23,6 +23,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -68,7 +69,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
-    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new Tanaka();//ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -99,7 +100,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.8) ;
     referencePoint.add(0.4) ;*/
     //Example fig 3 paper Deb
-    referencePoint.add(0.1) ;
+    /*referencePoint.add(0.1) ;
     referencePoint.add(0.6) ;
 
     referencePoint.add(0.3) ;
@@ -112,10 +113,20 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.2) ;
 
     referencePoint.add(0.9) ;
+    referencePoint.add(0.0) ;*/
+   /* referencePoint.add(0.1) ;
+    referencePoint.add(1.0) ;
+    referencePoint.add(1.0) ;
     referencePoint.add(0.0) ;
 
-    double epsilon= 0.001;
+    referencePoint.add(0.5) ;
+    referencePoint.add(0.8);
+    referencePoint.add(0.8) ;
+    referencePoint.add(0.6) ;*/
+    referencePoint.add(0.3) ;
+    referencePoint.add(0.6);
 
+    double epsilon= 0.001;
 
     algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
         .setSelectionOperator(selection)

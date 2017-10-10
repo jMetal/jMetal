@@ -7,6 +7,7 @@ import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,16 +20,16 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 
   private List<List<S>> rankedSubpopulations;
   private int numberOfRanks = 0;
-  private AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia;
-  private AbstractUtilityFunctionsSet<S> utilityFunctionsNadir;
+  //private AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia;
+  private AbstractUtilityFunctionsSet<S> utilityFunctions;
   private NumberOfViolatedConstraints<S> numberOfViolatedConstraints ;
+  private OverallConstraintViolation<S> constraintViolation;
 
-
-  public WASFGARankingConstraint(AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia, AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
-    this.utilityFunctionsNadir = utilityFunctionsNadir;
-    this.utilityFunctionsUtopia = utilityFunctionsUtopia;
+  public WASFGARankingConstraint( AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
+    this.utilityFunctions = utilityFunctionsNadir;
+    //this.utilityFunctionsUtopia = utilityFunctionsUtopia;
     this.numberOfViolatedConstraints = new NumberOfViolatedConstraints<S>() ;
-
+	this.constraintViolation = new OverallConstraintViolation<>();
   }
 
 	@Override
@@ -44,15 +45,17 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 		int numberOfFeasibleFrontiersInNewPopulation, numberOfUnfeasibleFrontiersInNewPopulation;
 
 		for (S solution:population) {
-			if(numberOfViolatedConstraints.getAttribute(solution)>0){
+
+			if((numberOfViolatedConstraints.getAttribute(solution)!= null &&
+					numberOfViolatedConstraints.getAttribute(solution)>0)){//|| (constraintViolation.getAttribute(solution)!=null && constraintViolation.getAttribute(solution)==-93)
 				unfeasibleList.add(solution);
-			}else{
+			}else {
 				feasibleList.add(solution);
 			}
 		}
 		temporalList.addAll(feasibleList);
 		temporalList.addAll(unfeasibleList);
-		int numberOfWeights = this.utilityFunctionsUtopia.getSize() ;
+		int numberOfWeights = this.utilityFunctions.getSize() ;
 		if(feasibleList.size() > 0){
 			if(feasibleList.size() > numberOfWeights){
 				numberOfFeasibleFrontiersInNewPopulation = 2;
@@ -82,14 +85,14 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 		}
 
 
-		if(feasibleList!=null && !feasibleList.isEmpty()){
-			for(int idx = 0 ;idx < numberOfFeasibleFrontiersInNewPopulation;idx++){
-				for (int weigth = 0; weigth < this.utilityFunctionsUtopia.getSize(); weigth++) {
-					int toRemoveIdx = 0;
-					if(!feasibleList.isEmpty()) {
-						double minimumValue = this.utilityFunctionsUtopia.evaluate(feasibleList.get(0), weigth);
+		for (int idx = 0; idx < this.numberOfRanks; idx++) {
+			if(feasibleList!=null && !feasibleList.isEmpty()) {
+				for (int weigth = 0; weigth < this.utilityFunctions.getSize(); weigth++) {
+					if(feasibleList!=null && !feasibleList.isEmpty()) {
+						int toRemoveIdx = 0;
+						double minimumValue = this.utilityFunctions.evaluate(feasibleList.get(0), weigth);
 						for (int solutionIdx = 1; solutionIdx < feasibleList.size(); solutionIdx++) {
-							double value = this.utilityFunctionsUtopia.evaluate(temporalList.get(solutionIdx), weigth);
+							double value = this.utilityFunctions.evaluate(feasibleList.get(solutionIdx), weigth);
 
 							if (value < minimumValue) {
 								minimumValue = value;
@@ -99,40 +102,16 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 
 						S solutionToInsert = feasibleList.remove(toRemoveIdx);
 						setAttribute(solutionToInsert, idx);
-						temporalList.remove(solutionToInsert);
 						this.rankedSubpopulations.get(idx).add(solutionToInsert);
 					}
 				}
-
-				for (int weigth = 0; weigth < this.utilityFunctionsNadir.getSize(); weigth++) {
-					int toRemoveIdx = 0;
-					if(!feasibleList.isEmpty()) {
-						double minimumValue = this.utilityFunctionsNadir.evaluate(feasibleList.get(0), weigth);
-						for (int solutionIdx = 1; solutionIdx < feasibleList.size(); solutionIdx++) {
-							double value = this.utilityFunctionsNadir.evaluate(feasibleList.get(solutionIdx), weigth);
-
-							if (value < minimumValue) {
-								minimumValue = value;
-								toRemoveIdx = solutionIdx;
-							}
-						}
-
-						S solutionToInsert = feasibleList.remove(toRemoveIdx);
-						setAttribute(solutionToInsert, idx);
-						temporalList.remove(solutionToInsert);
-						this.rankedSubpopulations.get(idx).add(solutionToInsert);
-					}
-				}
-			}
-		}
-		if(unfeasibleList!=null && !unfeasibleList.isEmpty()){
-			for(int idx = numberOfFeasibleFrontiersInNewPopulation ;idx < numberOfFeasibleFrontiersInNewPopulation + numberOfUnfeasibleFrontiersInNewPopulation;idx++){
-				for (int weigth = 0; weigth < this.utilityFunctionsUtopia.getSize(); weigth++) {
-					int toRemoveIdx = 0;
-					if(!unfeasibleList.isEmpty()) {
-						double minimumValue = this.utilityFunctionsUtopia.evaluate(unfeasibleList.get(0), weigth);
+			}else if(unfeasibleList!=null && !unfeasibleList.isEmpty()){
+				for (int weigth = 0; weigth < this.utilityFunctions.getSize(); weigth++) {
+					if(unfeasibleList!=null && !unfeasibleList.isEmpty()) {
+						int toRemoveIdx = 0;
+						double minimumValue = this.utilityFunctions.evaluate(unfeasibleList.get(0), weigth);
 						for (int solutionIdx = 1; solutionIdx < unfeasibleList.size(); solutionIdx++) {
-							double value = this.utilityFunctionsUtopia.evaluate(unfeasibleList.get(solutionIdx), weigth);
+							double value = this.utilityFunctions.evaluate(unfeasibleList.get(solutionIdx), weigth);
 
 							if (value < minimumValue) {
 								minimumValue = value;
@@ -142,67 +121,11 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 
 						S solutionToInsert = unfeasibleList.remove(toRemoveIdx);
 						setAttribute(solutionToInsert, idx);
-						temporalList.remove(solutionToInsert);
-						this.rankedSubpopulations.get(idx).add(solutionToInsert);
-					}
-				}
-
-				for (int weigth = 0; weigth < this.utilityFunctionsNadir.getSize(); weigth++) {
-					int toRemoveIdx = 0;
-					if(!unfeasibleList.isEmpty()) {
-						double minimumValue = this.utilityFunctionsNadir.evaluate(unfeasibleList.get(0), weigth);
-						for (int solutionIdx = 1; solutionIdx < unfeasibleList.size(); solutionIdx++) {
-							double value = this.utilityFunctionsNadir.evaluate(unfeasibleList.get(solutionIdx), weigth);
-
-							if (value < minimumValue) {
-								minimumValue = value;
-								toRemoveIdx = solutionIdx;
-							}
-						}
-
-						S solutionToInsert = unfeasibleList.remove(toRemoveIdx);
-						setAttribute(solutionToInsert, idx);
-						temporalList.remove(solutionToInsert);
 						this.rankedSubpopulations.get(idx).add(solutionToInsert);
 					}
 				}
 			}
 		}
-		/*for (int idx = 0; idx < this.numberOfRanks; idx++) {
-			for (int weigth = 0; weigth < this.utilityFunctionsUtopia.getSize(); weigth++) {
-				int toRemoveIdx = 0;
-				double minimumValue = this.utilityFunctionsUtopia.evaluate(temporalList.get(0), weigth);
-				for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
-					double value = this.utilityFunctionsUtopia.evaluate(temporalList.get(solutionIdx), weigth);
-
-					if (value < minimumValue) {
-						minimumValue = value;
-						toRemoveIdx = solutionIdx;
-					}
-				}
-
-				S solutionToInsert = temporalList.remove(toRemoveIdx);
-				setAttribute(solutionToInsert, idx);
-				this.rankedSubpopulations.get(idx).add(solutionToInsert);
-			}
-			for (int weigth = 0; weigth < this.utilityFunctionsNadir.getSize(); weigth++) {
-				int toRemoveIdx = 0;
-				double minimumValue = this.utilityFunctionsNadir.evaluate(temporalList.get(0), weigth);
-				for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
-					double value = this.utilityFunctionsNadir.evaluate(temporalList.get(solutionIdx), weigth);
-
-					if (value < minimumValue) {
-						minimumValue = value;
-						toRemoveIdx = solutionIdx;
-					}
-				}
-
-				S solutionToInsert = temporalList.remove(toRemoveIdx);
-				setAttribute(solutionToInsert, idx);
-				this.rankedSubpopulations.get(idx).add(solutionToInsert);
-			}
-
-		}*/
 
 
 

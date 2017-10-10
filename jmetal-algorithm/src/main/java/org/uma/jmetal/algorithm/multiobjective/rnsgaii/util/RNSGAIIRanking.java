@@ -9,6 +9,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 
 import java.util.*;
 
@@ -20,11 +21,14 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
     private List<List<S>> rankedSubpopulations;
     private int numberOfRanks = 0;
     private double epsilon ;
+    private NumberOfViolatedConstraints<S> numberOfViolatedConstraints ;
 
     public RNSGAIIRanking(PreferenceNSGAII<S> utilityFunctions, double epsilon,List<Double> interestPoint) {
         this.utilityFunctions = utilityFunctions;
         this.epsilon = epsilon;
         referencePoint = interestPoint;
+        this.numberOfViolatedConstraints = new NumberOfViolatedConstraints<S>() ;
+
     }
 
     @Override
@@ -61,17 +65,35 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
             List<Double> interestPoint = nextInterestPoint(indexReference,numberObjectives);
             indexReference += numberObjectives;
             this.utilityFunctions.updatePointOfInterest(interestPoint);
-            SortedMap<Double,S> map = new TreeMap<>();
+            SortedMap<Double,List<S>> map = new TreeMap<>();
             for (S solution: temporalList) {
                 double value = this.utilityFunctions.evaluate(solution).doubleValue();
-                map.put(value,solution);
+
+                //if(nConstrains!=null && nConstrains==0) {
+                    List<S> auxiliar = map.get(value);
+                    if (auxiliar == null) {
+                        auxiliar = new ArrayList<>();
+                    }
+                    auxiliar.add(solution);
+                    map.put(value, auxiliar);
+               // }
             }
             int rank=0;
-            List<S> populationOrder = new ArrayList<>(map.values());
-            for (S solution:
+
+            List<List<S>> populationOrder = new ArrayList<>(map.values());
+            for (List<S> solutionList:
                     populationOrder) {
-                this.setAttribute(solution, rank);
-                this.rankedSubpopulations.get(rank).add(solution);
+                for (S solution:
+                     solutionList) {
+                    Integer nConstrains = numberOfViolatedConstraints.getAttribute(solution);
+                    if((nConstrains!=null && nConstrains==0)|| nConstrains==null) {
+                        this.setAttribute(solution, rank);
+                        this.rankedSubpopulations.get(rank).add(solution);
+                    }else{
+                        this.setAttribute(solution, numberOfRanks-2);
+                        this.rankedSubpopulations.get(numberOfRanks-2).add(solution);
+                    }
+                }
                 rank++;
             }
         }
@@ -117,8 +139,8 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         boolean enc=false;
         int i=0;
         while(i< this.rankedSubpopulations.size()){
-            enc= this.rankedSubpopulations.get(i).contains(solution);
-            if(enc){
+           // enc= this.rankedSubpopulations.get(i).contains(solution);
+            while(this.rankedSubpopulations.get(i).contains(solution)){
                 this.rankedSubpopulations.get(i).remove(solution);
             }
             i++;
