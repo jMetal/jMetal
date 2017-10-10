@@ -58,7 +58,7 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     
     referencePoint = new ArrayList<>();
     referencePoint.add(0.8);
-    referencePoint.add(0.2);
+    referencePoint.add(0.3);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;

@@ -183,7 +183,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   @Override public void referenceSetUpdate(DoubleSolution solution) {
     if (refSet1Test(solution)) {
       for (DoubleSolution solutionInRefSet2 : referenceSet2) {
-        double aux = SolutionUtils.distanceBetweenSolutions(solution, solutionInRefSet2);
+        double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(solution, solutionInRefSet2);
         DoubleSolution auxSolution = solutionInRefSet2;
         if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
           distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -248,7 +248,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
       // Update distances to REFSET in population
       for (int j = 0; j < getPopulation().size(); j++) {
-        double aux = SolutionUtils.distanceBetweenSolutions(getPopulation().get(j), individual);
+        double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(getPopulation().get(j), individual);
 
         if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
           DoubleSolution auxSolution = getPopulation().get(j);
@@ -264,7 +264,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       for (int j = 0; j < referenceSet2.size(); j++) {
         for (int k = 0; k < referenceSet2.size(); k++) {
           if (i != j) {
-            double aux = SolutionUtils.distanceBetweenSolutions(referenceSet2.get(j), referenceSet2.get(k));
+            double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(referenceSet2.get(j), referenceSet2.get(k));
             DoubleSolution auxSolution = referenceSet2.get(j);
             if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
               distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -356,7 +356,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       referenceSet2.remove(index);
       //Update distances in REFSET2
       for (int j = 0; j < referenceSet2.size(); j++) {
-        aux = SolutionUtils.distanceBetweenSolutions(referenceSet2.get(j), solution);
+        aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(referenceSet2.get(j), solution);
         if (aux < distanceToSolutionListAttribute.getAttribute(referenceSet2.get(j))) {
           distanceToSolutionListAttribute.setAttribute(referenceSet2.get(j), aux);
         }

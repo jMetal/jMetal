@@ -14,7 +14,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -23,6 +22,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
-public class RNSGAIIRunner extends AbstractAlgorithmRunner {
+public class RNSGAIIConstraintRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -65,11 +65,11 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf" ;
     }
 
-    problem = new Tanaka();//ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -82,51 +82,16 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
+    problem = new Srinivas() ;// new Osyczka2();
+
     List<Double> referencePoint = new ArrayList<>() ;
 
-    /*referencePoint.add(0.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(0.0) ;
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.2) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.2) ;*/
-    //Example fig 2 paper Deb
-    /*referencePoint.add(0.2) ;
-    referencePoint.add(0.4) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.4) ;*/
-    //Example fig 3 paper Deb
-    /*referencePoint.add(0.1) ;
-    referencePoint.add(0.6) ;
-
-    referencePoint.add(0.3) ;
-    referencePoint.add(0.6) ;
-
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.2) ;
-
-    referencePoint.add(0.7) ;
-    referencePoint.add(0.2) ;
-
-    referencePoint.add(0.9) ;
-    referencePoint.add(0.0) ;*/
-   /* referencePoint.add(0.1) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(0.0) ;
-
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.8);
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.6) ;*/
-    referencePoint.add(0.3) ;
-    referencePoint.add(0.6);
+    referencePoint = new ArrayList<>();
+    referencePoint.add(150.0);
+    referencePoint.add(-50.0);
 
     double epsilon= 0.001;
+
 
     algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
         .setSelectionOperator(selection)
