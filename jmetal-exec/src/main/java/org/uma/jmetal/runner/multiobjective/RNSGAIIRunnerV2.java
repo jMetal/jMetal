@@ -14,8 +14,8 @@
 package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilderv2;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -23,8 +23,6 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.Tanaka;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
@@ -32,7 +30,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.io.FileNotFoundException;
@@ -45,7 +42,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
-public class RNSGAIIRunner extends AbstractAlgorithmRunner {
+public class RNSGAIIRunnerV2 extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -72,7 +69,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
-    problem =new ZDT2();//  ProblemUtils.<DoubleSolution> loadProblem(problemName);//Tanaka();//
+    problem =new ZDT1();//  ProblemUtils.<DoubleSolution> loadProblem(problemName);//Tanaka();//
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -98,12 +95,12 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.8) ;
     referencePoint.add(0.2) ;*/
     //Example fig 2 paper Deb
-    /*referencePoint.add(0.2) ;
+  /*  referencePoint.add(0.2) ;
     referencePoint.add(0.4) ;
     referencePoint.add(0.8) ;
     referencePoint.add(0.4) ;*/
     //Example fig 3 paper Deb
-    /*referencePoint.add(0.1) ;
+    referencePoint.add(0.1) ;
     referencePoint.add(0.6) ;
 
     referencePoint.add(0.3) ;
@@ -116,7 +113,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.2) ;
 
     referencePoint.add(0.9) ;
-    referencePoint.add(0.0) ;*/
+    referencePoint.add(0.0) ;
     /*referencePoint.add(0.1) ;
     referencePoint.add(1.0) ;
     referencePoint.add(1.0) ;
@@ -126,19 +123,18 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
     referencePoint.add(0.8);
     referencePoint.add(0.8) ;
     referencePoint.add(0.6) ;*/
-    //referencePoint.add(0.5) ;
-    //referencePoint.add(0.3);
+    //referencePoint.add(0.0) ;
+    //referencePoint.add(1.0);
 
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.5);
-
-    //referencePoint.add(0.8) ;
+    //referencePoint.add(1.0) ;
+    //referencePoint.add(0.6);
+    //referencePoint.add(0.4) ;
     //referencePoint.add(0.8);
 
     double epsilon= 0.0045;
 
 
-    algorithm = new RNSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
+    algorithm = new RNSGAIIBuilderv2<DoubleSolution>(problem, crossover, mutation, referencePoint,epsilon)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
         .setPopulationSize(100)
