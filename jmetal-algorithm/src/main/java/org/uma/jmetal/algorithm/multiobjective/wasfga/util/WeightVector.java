@@ -4,6 +4,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -21,7 +22,7 @@ public class WeightVector {
    * @param numberOfWeights Number of weight vectors to generate
    * @return A set of weight vectors
    */
-  public static double[][] initUniformWeights2D(double epsilon, int numberOfWeights) {
+  public double[][] initUniformWeights2D(double epsilon, int numberOfWeights) {
     double[][] weights = new double[numberOfWeights][2];
 
     int indexOfWeight;
@@ -51,16 +52,22 @@ public class WeightVector {
    * @param filePath A file containing the weight vectors
    * @return A set of weight vectors
    */
-  public static double[][] getWeightsFromFile(String filePath) {
+  public double[][] getWeightsFromFile(String filePath) {
     double[][] weights = new double[0][0];
 
     Vector<double[]> listOfWeights = new Vector<double[]>();
 
     try {
+			InputStream in = getClass().getResourceAsStream("/"  + filePath);
+			InputStreamReader isr = new InputStreamReader(in);
+			BufferedReader br = new BufferedReader(isr);
+    	
+    	/*
       // Open the file
       FileInputStream fis = new FileInputStream(filePath);
       InputStreamReader isr = new InputStreamReader(fis);
       BufferedReader br = new BufferedReader(isr);
+      */
 
       int numberOfObjectives = 0;
       int j = 0;
@@ -90,7 +97,7 @@ public class WeightVector {
         }
       }
     } catch (Exception e) {
-      throw new JMetalException("getWeightsFromFile: failed when reading for file: " + filePath) ;
+      throw new JMetalException("getWeightsFromFile: failed when reading for file: " + filePath +"", e) ;
     }
 
     return weights;

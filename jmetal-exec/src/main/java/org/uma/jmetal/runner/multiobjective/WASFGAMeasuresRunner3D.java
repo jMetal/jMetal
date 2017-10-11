@@ -1,9 +1,5 @@
 package org.uma.jmetal.runner.multiobjective;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGAMeasures;
@@ -28,7 +24,11 @@ import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -50,15 +50,16 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     
     referencePoint = new ArrayList<>();
-    referencePoint.add(200.0);
     referencePoint.add(0.0);
+		referencePoint.add(0.0);
+		referencePoint.add(0.0);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -74,7 +75,13 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     				problem,
 						100,
 						250,
-						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
+						crossover,
+						mutation,
+						selection,
+						new SequentialSolutionListEvaluator<DoubleSolution>(),
+						referencePoint,
+						//"/home/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/mombi2-weights/weight/weight_02D_152.sld") ;
+		"MOEAD_Weights/W3D_100.dat") ;
 
     
     /* Measure management */
