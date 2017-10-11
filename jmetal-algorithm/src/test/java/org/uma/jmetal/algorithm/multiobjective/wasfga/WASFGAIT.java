@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -18,6 +19,7 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -34,8 +36,40 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 public class WASFGAIT {
-  Algorithm<List<DoubleSolution>> algorithm;
-
+	
+	@Test (expected = Exception.class)
+	@Ignore
+	public void shouldTheAlgorithmReturnAnExceptionIfIndicatingANonExistingWeightVectorFile()  {
+		DoubleProblem problem = new ZDT1() ;
+		
+		Algorithm<List<DoubleSolution>> algorithm;
+		CrossoverOperator<DoubleSolution> crossover;
+		MutationOperator<DoubleSolution> mutation;
+		SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+		List<Double> referencePoint = null;
+		
+		referencePoint = new ArrayList<>();
+		referencePoint.add(0.0);
+		referencePoint.add(0.0);
+		
+		double crossoverProbability = 0.9 ;
+		double crossoverDistributionIndex = 20.0 ;
+		crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+		
+		double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+		double mutationDistributionIndex = 20.0 ;
+		mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+		
+		selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+		
+		algorithm = new WASFGA<DoubleSolution>(
+						problem,
+						100,
+						250,
+						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint,
+						"nonexistingfilename") ;
+	}
+  
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     DoubleProblem problem = new ZDT1() ;
