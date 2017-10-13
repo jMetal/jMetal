@@ -126,14 +126,10 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 				}
 			}
 		}
-
-
-
+		
 		return this;
 	}
-
-
-
+	
 	@Override
 	public List<S> getSubfront(int rank) {
 		return this.rankedSubpopulations.get(rank);

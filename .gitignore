@@ -146,4 +146,4 @@ coverage
 .RData
 .Rhistory
 
-
+*.png

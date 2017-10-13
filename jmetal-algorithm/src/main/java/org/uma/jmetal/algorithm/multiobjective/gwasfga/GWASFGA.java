@@ -35,7 +35,8 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
         null);
     setMaxPopulationSize(populationSize);
 
-    double [][] weights =  WeightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
+    WeightVector weightVector = new WeightVector() ;
+    double [][] weights =  weightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
 
     int halfVectorSize = weights.length  / 2;
     int evenVectorsSize    = (weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);

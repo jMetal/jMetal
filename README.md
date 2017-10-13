@@ -17,6 +17,12 @@ If you are interested in contributing with your ideas and comments, please take 
 * The algorithm R-NSGA-II (https://doi.org/10.1145/1143997.1144112) is available. Contribution of Cristóbal Barba (@cbarba).
 * Algorithm WASF-GA now can solve constrained problems (https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/WASFGAConstraintRunner.java). Contribution of Cristóbal Barba (@cbarba).
 
+### Bugs fixed
+* Algorithm WASF-GA now can solve problems with more than two objectives.
+
+### Operators
+* The `CrossoverOperator` interface contains a new method `numberOfGeneratedChildren()` and the former `getNumberOfParents()` has been renamed to `getNumberOfRequiredParents()`.
+
 ## jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal

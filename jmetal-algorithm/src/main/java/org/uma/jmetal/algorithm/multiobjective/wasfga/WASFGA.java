@@ -5,12 +5,14 @@ import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.Normalizer;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARanking;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARankingConstraint;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
@@ -42,11 +44,34 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
 	List<Double> interestPoint = null;
 
+	private String weightVectorsFileName = "" ;
+	
 	/**
 	 * Constructor
 	 *
-	 * @param problem
-	 *            Problem to solve
+	 * @param problem Problem to solve
+	 */
+	public WASFGA(Problem<S> problem,
+								int populationSize,
+								int maxIterations,
+								CrossoverOperator<S> crossoverOperator,
+								MutationOperator<S> mutationOperator,
+								SelectionOperator<List<S>, S> selectionOperator,
+								SolutionListEvaluator<S> evaluator,
+								List<Double> referencePoint,
+								String weightVectorsFileName) {
+
+		super(problem,maxIterations,crossoverOperator,mutationOperator,selectionOperator,evaluator);
+		this.weightVectorsFileName = weightVectorsFileName ;
+		setMaxPopulationSize(populationSize);
+		this.interestPoint = referencePoint;
+		this.achievementScalarizingFunction =  createUtilityFunction();
+	}
+	
+	/**
+	 * Constructor
+	 *
+	 * @param problem Problem to solve
 	 */
 	public WASFGA(Problem<S> problem,
 								int populationSize,
@@ -56,16 +81,33 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 								SelectionOperator<List<S>, S> selectionOperator,
 								SolutionListEvaluator<S> evaluator,
 								List<Double> referencePoint) {
-
-		super(problem,maxIterations,crossoverOperator,mutationOperator,selectionOperator,evaluator);
-		setMaxPopulationSize(populationSize);
-		this.interestPoint = referencePoint;
-		this.achievementScalarizingFunction =  createUtilityFunction();
+		
+		this(problem,
+						populationSize,
+						maxIterations,
+						crossoverOperator,
+						mutationOperator,
+						selectionOperator,
+						evaluator,
+						referencePoint,
+						"") ;
 	}
 
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
-		double [][] weights = WeightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
+		WeightVector weightVector = new WeightVector() ;
+		double [][] weights ;
+		if ("".equals(this.weightVectorsFileName)) {
+			weights = weightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
+		} else {
+			weights = weightVector.getWeightsFromFile(this.weightVectorsFileName) ;
+		}
 		weights = WeightVector.invertWeights(weights,true);
+		
+		if (weights.length != maxPopulationSize) {
+			throw new JMetalException("The number of weight vectors (" + weights.length +") and the population size(" +
+							maxPopulationSize + ") have different values") ;
+		}
+		
 		ASFWASFGA<S> aux = new ASFWASFGA<>(weights, interestPoint);
 
 		return aux;
@@ -96,7 +138,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	}
 	
 	protected Ranking<S> computeRanking(List<S> solutionList) {
-		Ranking<S> ranking = new WASFGARanking<>(this.achievementScalarizingFunction);
+		Ranking<S> ranking = new WASFGARankingConstraint<>(this.achievementScalarizingFunction);
 		ranking.computeRanking(solutionList);
 		return ranking;
 	}

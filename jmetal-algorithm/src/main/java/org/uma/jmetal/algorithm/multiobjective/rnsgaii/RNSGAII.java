@@ -56,10 +56,40 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
+    int numberObjectives = population.get(0).getNumberOfObjectives();
+    List<S> result = new ArrayList<>(maxPopulationSize);
+    int numberOfPoint = this.interestPoint.size() / numberObjectives;
+    int tam = maxPopulationSize/numberOfPoint;
+    for (int i = 0; i < numberOfPoint ; i++) {
+      List<Double> referencePoint = nextInterestPoint(i,numberObjectives);
+      Ranking<S> ranking = computeRanking(jointPopulation,referencePoint);
+      List<S> aux = preferenceDistanceSelection(ranking) ;
+      if(result.isEmpty()){
+        result.addAll(aux);
+      }else{
+        int inicio = maxPopulationSize/(numberOfPoint-i);
+        for (int j = 0; j < tam ; j++) {
+          result.add(inicio,aux.get(j));
+          inicio++;
+        }
+      }
+    }
 
-    Ranking<S> ranking = computeRanking(jointPopulation);
 
-    return preferenceDistanceSelection(ranking);
+
+
+    return result;//preferenceDistanceSelection(ranking);
+  }
+  private List<Double> nextInterestPoint(int index, int size){
+    List<Double> result= null;
+    if(index<this.interestPoint.size()){
+      result = new ArrayList<>(size);
+      for(int i=0;i<size;i++){
+        result.add(this.interestPoint.get(index));
+        index++;
+      }
+    }
+    return  result;
   }
 
   @Override public List<S> getResult() {
@@ -67,8 +97,8 @@ public class RNSGAII <S extends Solution<?>> extends NSGAII<S> {
   }
 
 
-  protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon,interestPoint);
+  protected Ranking<S> computeRanking(List<S> solutionList,List<Double> reference) {
+    Ranking<S> ranking = new RNSGAIIRanking<S>(achievementScalarizingFunction,epsilon,reference);
     ranking.computeRanking(solutionList);
 
     return ranking;

@@ -55,7 +55,14 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
     mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
 
     selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
+/**
+ * List<Double> inters = new ArrayList<>();
+ inters.add(0.0);
+ inters.add(0.0);
+ double epsilon =0.0001;
+ algorithm = new RNSGAIIBuilderv2<>(problem, crossover, mutation,inters,epsilon)
 
+ */
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxEvaluations(10000)
