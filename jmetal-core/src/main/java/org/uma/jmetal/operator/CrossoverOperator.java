@@ -11,10 +11,6 @@ import java.util.List;
  * @param <Source> The class of the solutions
  */
 public interface CrossoverOperator<Source> extends Operator<List<Source>,List<Source>> {
-
-  /**
-   * @return The number of parents required to apply the operator.
-   */
   int getNumberOfRequiredParents() ;
   int getNumberOfGeneratedChildren() ;
 }
