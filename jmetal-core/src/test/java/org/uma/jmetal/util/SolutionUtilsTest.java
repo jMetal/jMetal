@@ -133,6 +133,9 @@ public class SolutionUtilsTest {
     assertEquals(0.5, SolutionUtils.averageDistanceToSolutionList(solution1, solutionList), EPSILON) ;
   }
 
+  /*
+  TODO
+
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseD() {
     DoubleProblem problem = new MockedDoubleProblem(2) ;
@@ -158,7 +161,7 @@ public class SolutionUtilsTest {
 
     assertEquals(0.5, SolutionUtils.averageDistanceToSolutionList(solution1, solutionList), EPSILON) ;
   }
-
+*/
   private class MockedDoubleProblem extends AbstractDoubleProblem {
     public MockedDoubleProblem(int numberOfVariables) {
       setNumberOfVariables(numberOfVariables);
