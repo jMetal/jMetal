@@ -119,11 +119,13 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
     return offspring ;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  @Override
+  public int getNumberOfRequiredParents() {
     return 2 ;
+  }
+
+  @Override
+  public int getNumberOfGeneratedChildren() {
+    return 2;
   }
 }

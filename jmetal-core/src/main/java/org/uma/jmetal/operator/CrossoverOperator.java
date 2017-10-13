@@ -15,5 +15,6 @@ public interface CrossoverOperator<Source> extends Operator<List<Source>,List<So
   /**
    * @return The number of parents required to apply the operator.
    */
-  int getNumberOfParents() ;
+  int getNumberOfRequiredParents() ;
+  int getNumberOfGeneratedChildren() ;
 }

@@ -147,11 +147,11 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     return offspring;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  public int getNumberOfRequiredParents() {
+    return 2 ;
+  }
+
+  public int getNumberOfGeneratedChildren() {
     return 2 ;
   }
 }

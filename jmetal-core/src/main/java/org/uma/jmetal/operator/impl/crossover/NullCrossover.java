@@ -32,11 +32,12 @@ public class NullCrossover<S extends Solution<?>>
     return list ;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  public int getNumberOfRequiredParents() {
     return 2 ;
+  }
+
+  @Override
+  public int getNumberOfGeneratedChildren() {
+    return 2;
   }
 }

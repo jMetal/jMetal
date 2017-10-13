@@ -268,11 +268,11 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     return result;
   }
 
-  /**
-   * Three parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  public int getNumberOfRequiredParents() {
     return 3 ;
+  }
+
+  public int getNumberOfGeneratedChildren() {
+    return 1 ;
   }
 }
