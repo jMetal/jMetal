@@ -60,7 +60,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
  inters.add(0.0);
  inters.add(0.0);
  double epsilon =0.0001;
- algorithm = new RNSGAIIBuilderv2<>(problem, crossover, mutation,inters,epsilon)
+ algorithm = new RNSGAIIBuilder<>(problem, crossover, mutation,inters,epsilon)
 
  */
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation)

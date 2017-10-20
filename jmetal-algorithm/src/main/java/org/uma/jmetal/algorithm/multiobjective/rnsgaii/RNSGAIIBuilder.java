@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -14,14 +12,13 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<RNSGAII<S>> {
-
+  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45}
 
   /**
    * NSGAIIBuilder class
@@ -33,14 +30,15 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
   private SolutionListEvaluator<S> evaluator;
-  private double epsilon;
-  private List<Double> referencePoint ;
+private List<Double> interestPoint;
+private  double epsilon;
+  private NSGAIIVariant variant;
 
   /**
    * NSGAIIBuilder constructor
    */
   public RNSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-                        MutationOperator<S> mutationOperator, List<Double> referencePoint,double epsilon) {
+                        MutationOperator<S> mutationOperator, List<Double> interestPoint, double epsilon) {
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
@@ -48,8 +46,9 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
     evaluator = new SequentialSolutionListEvaluator<S>();
-    this.referencePoint = referencePoint ;
-    this.epsilon = epsilon;
+this.epsilon = epsilon;
+this.interestPoint = interestPoint;
+    this.variant = NSGAIIVariant.NSGAII ;
   }
 
   public RNSGAIIBuilder<S> setMaxEvaluations(int maxEvaluations) {
@@ -89,14 +88,18 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     return this;
   }
 
-  public RNSGAIIBuilder<S>  setEpsilon(double epsilon) {
-    this.epsilon = epsilon;
+
+  public RNSGAIIBuilder<S> setVariant(NSGAIIVariant variant) {
+    this.variant = variant;
+
     return this;
   }
 
   public RNSGAII<S> build() {
-    RNSGAII<S> algorithm  = new RNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator,referencePoint,epsilon);
+    RNSGAII<S> algorithm = null ;
+
+      algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, crossoverOperator,
+          mutationOperator, selectionOperator, evaluator,interestPoint,epsilon);
 
 
     return algorithm ;
