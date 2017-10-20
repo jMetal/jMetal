@@ -117,7 +117,6 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		((ASFWASFGA<S>)this.achievementScalarizingFunction).updatePointOfInterest(newPointOfInterest);
 	}
 
-
 	public int getPopulationSize() {
 		return getMaxPopulationSize();
 	}
