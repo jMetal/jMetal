@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
  */
 public class GenericSolutionAttributeTest {
   @Test
-  public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassName() {
+  public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassObject() {
     GenericSolutionAttribute<?, ?> genericSolutionAttribute ;
     genericSolutionAttribute = new GenericSolutionAttribute<>() ;
 
