@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * This class implements the Neighborhood interface with the neighborhood scheme of MOEA/D
+ *
+ * @param <S>
+ */
 public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
 	private int numberOfWeightVectors ;
 	private int weightVectorSize ;
