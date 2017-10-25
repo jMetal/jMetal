@@ -34,7 +34,7 @@ public class WeightVectorNeighborhoodTest {
 	}
 	
 	@Test
-	public void shouldGetNeighborsWorksProperly() {
+	public void shouldGetNeighborsWorksProperlyWithTwoObjectives() {
 		final int populationSize = 100;
 		final int neighborSize = 20;
 		WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(populationSize, neighborSize);
@@ -78,43 +78,6 @@ public class WeightVectorNeighborhoodTest {
 		}
 		
 		public void evaluate(DoubleSolution solution) {
-			double[] f = new double[getNumberOfObjectives()];
-			
-			f[0] = solution.getVariableValue(0) + 0.0;
-			double g = this.evalG(solution);
-			double h = this.evalH(f[0], g);
-			f[1] = h * g;
-			
-			solution.setObjective(0, f[0]);
-			solution.setObjective(1, f[1]);
-		}
-		
-		/**
-		 * Returns the value of the ZDT1 function G.
-		 *
-		 * @param solution Solution
-		 */
-		private double evalG(DoubleSolution solution) {
-			double g = 0.0;
-			for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-				g += solution.getVariableValue(i);
-			}
-			double constant = 9.0 / (solution.getNumberOfVariables() - 1.0);
-			g = constant * g;
-			g = g + 1.0;
-			return g;
-		}
-		
-		/**
-		 * Returns the value of the ZDT1 function H.
-		 *
-		 * @param f First argument of the function H.
-		 * @param g Second argument of the function H.
-		 */
-		public double evalH(double f, double g) {
-			double h;
-			h = 1.0 - Math.sqrt(f / g);
-			return h;
 		}
 		
 		@Override
