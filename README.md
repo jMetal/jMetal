@@ -24,7 +24,7 @@ If you are interested in contributing with your ideas and comments, please take 
 * The `CrossoverOperator` interface contains a new method `numberOfGeneratedChildren()` and the former `getNumberOfParents()` has been renamed to `getNumberOfRequiredParents()`.
 
 ### Util classes
-* Added a [`WeightVectorNeighborhood`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/WeightVectorNeighborhood.java) class, which implements the [`Neighborhood`]() interface with the neighborhood scheme of MOEA/D.
+* Added a [`WeightVectorNeighborhood`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/WeightVectorNeighborhood.java) class, which implements the [`Neighborhood`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/Neighborhood.java) interface with the neighborhood scheme of MOEA/D.
 
 ## jMetal is available as a Maven Project in The Central Repository
 
