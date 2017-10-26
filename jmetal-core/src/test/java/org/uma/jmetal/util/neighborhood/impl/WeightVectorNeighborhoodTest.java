@@ -5,7 +5,11 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -32,6 +36,23 @@ public class WeightVectorNeighborhoodTest {
 		assertArrayEquals(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, weightVectorNeighborhood.getNeighborhood()[0]);
 		assertArrayEquals(new int[]{69, 70, 68, 71, 67, 72, 66, 73, 65, 64, 74, 75, 63, 76, 62, 77, 61, 78, 60, 79}, weightVectorNeighborhood.getNeighborhood()[69]);
 	}
+	
+	@Test
+	public void shouldConstructorRaiseAnExceptionIfTheWeightFileDoesNotExist() {
+		final int populationSize = 100;
+		final int neighborSize = 20;
+		final int weightVectorSize = 2 ;
+		try {
+			WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(
+							populationSize,
+							weightVectorSize,
+							neighborSize,
+							"NonExistingFileVector");
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+		}
+	}
+	
 	
 	@Test
 	public void shouldGetNeighborsWorksProperlyWithTwoObjectives() {

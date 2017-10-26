@@ -4,10 +4,7 @@ import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -42,7 +39,7 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
 		initializeNeighborhood();
 	}
 	
-	public WeightVectorNeighborhood(int numberOfWeightVectors, int weightVectorSize, int neighborSize, String vectorFileName) {
+	public WeightVectorNeighborhood(int numberOfWeightVectors, int weightVectorSize, int neighborSize, String vectorFileName) throws FileNotFoundException {
 		this.numberOfWeightVectors = numberOfWeightVectors ;
 		this.weightVectorSize = weightVectorSize ;
 		this.neighborSize = neighborSize ;
@@ -53,16 +50,17 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
 		readWeightsFromFile(vectorFileName);
 	}
 	
-	private void readWeightsFromFile(String vectorFileName) {
-		try {
+	private void readWeightsFromFile(String vectorFileName) throws FileNotFoundException {
+		//try {
 			InputStream inputStream ;
 			inputStream = getClass().getResourceAsStream(vectorFileName);
 			if (null == inputStream) {
-				inputStream = new FileInputStream(vectorFileName) ;
-			}
+					inputStream = new FileInputStream(vectorFileName) ;
+				}
 			InputStreamReader isr = new InputStreamReader(inputStream);
 			BufferedReader br = new BufferedReader(isr);
 			
+			try {
 			int i = 0;
 			int j ;
 			String aux = br.readLine();
@@ -78,7 +76,7 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
 				i++;
 			}
 			br.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw new JMetalException("readWeightsFromFile: failed when reading for file: "
 							+ vectorFileName, e) ;
 		}
