@@ -26,6 +26,9 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Util classes
 * Added a [`WeightVectorNeighborhood`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/WeightVectorNeighborhood.java) class, which implements the [`Neighborhood`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/Neighborhood.java) interface with the neighborhood scheme of MOEA/D.
 
+### Refactoring
+* Changed case of class names in CEC benchmark problems. Contribution of @leechristie
+
 ## jMetal is available as a Maven Project in The Central Repository
 
 The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
