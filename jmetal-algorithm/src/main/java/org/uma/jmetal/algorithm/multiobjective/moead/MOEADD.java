@@ -1476,15 +1476,15 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     return sum;
   }
 
-  @Override
-  public String getName() {
-    return "MOEA/D-DD";
-  }
+    @Override
+    public String getName() {
+        return "MOEADD"; // removed slash to avoid subfolder creation
+    }
 
-  @Override
-  public String getDescription() {
-    return "MOEA/D-DD";
-  }
+    @Override
+    public String getDescription() {
+        return "Multi-objective Evolutionary Algorithm based on Dominance and Decomposition";
+    }
 
   public void replace(int position, S solution) {
     if (position > this.population.size()) {
