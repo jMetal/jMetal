@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Archive<S> extends Serializable{
+public interface Archive<S> extends Serializable {
   boolean add(S solution) ;
   S get(int index) ;
   List<S> getSolutionList() ;
