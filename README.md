@@ -16,6 +16,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Algorithms
 * The algorithm R-NSGA-II (https://doi.org/10.1145/1143997.1144112) is available. Contribution of Cristóbal Barba (@cbarba).
 * Algorithm WASF-GA now can solve constrained problems (https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/WASFGAConstraintRunner.java). Contribution of Cristóbal Barba (@cbarba).
+* Updated version of MOEA/DD and added a [runner class](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/MOEADDRunner.java) for it. Contribution of @fritsche.
 
 ### Bugs fixed
 * Algorithm WASF-GA now can solve problems with more than two objectives.
