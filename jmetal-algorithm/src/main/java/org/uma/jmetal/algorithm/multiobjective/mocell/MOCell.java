@@ -60,7 +60,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
     this.archive = archive ;
-    //this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
