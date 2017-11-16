@@ -1,19 +1,16 @@
 package org.uma.jmetal.runner.multiobjective;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.measure.impl.CountingMeasure;
-import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;

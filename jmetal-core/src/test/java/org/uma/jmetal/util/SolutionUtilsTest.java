@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.ArrayList;
