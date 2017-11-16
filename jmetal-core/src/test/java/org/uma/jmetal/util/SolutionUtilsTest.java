@@ -161,6 +161,7 @@ public class SolutionUtilsTest {
     assertEquals(0.5, SolutionUtils.averageDistanceToSolutionList(solution1, solutionList), EPSILON) ;
   }
 */
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem extends AbstractDoubleProblem {
     public MockedDoubleProblem(int numberOfVariables) {
       setNumberOfVariables(numberOfVariables);

@@ -11,6 +11,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+@SuppressWarnings("serial")
 public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   protected Ranking<S> ranking;

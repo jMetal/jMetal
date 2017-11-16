@@ -77,6 +77,7 @@ public class WeightVectorNeighborhoodTest {
 		assertSame(solutionList.get(79), neighbors.get(19)) ;
 	}
 	
+	@SuppressWarnings("serial")
 	private static class MockedDoubleProblem extends AbstractDoubleProblem {
 		public MockedDoubleProblem(int numberOfVariables, int numberOfObjectives) {
 			setNumberOfVariables(numberOfVariables);

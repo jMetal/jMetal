@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by FlapKap on 23-03-2017.
  */
+@SuppressWarnings("serial")
 public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   private final JMetalRandom randomNumberGenerator = JMetalRandom.getInstance();
   private final double probability;

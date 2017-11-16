@@ -7,6 +7,7 @@ import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.*;
 
+@SuppressWarnings("serial")
 public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
     private  List<Double> interestPoint;
 
