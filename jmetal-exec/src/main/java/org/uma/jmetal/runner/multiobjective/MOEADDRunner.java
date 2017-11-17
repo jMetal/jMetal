@@ -3,6 +3,7 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
+import org.uma.jmetal.problem.multiobjective.wfg.WFG7;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
@@ -36,18 +37,12 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     String problemName;
     String referenceParetoFront = "";
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.UF.UF2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/UF2.pf";
-    }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+//    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
+    int m = 10;
+    int k = 2 * (m - 1);
+    problem = new WFG7(k, 20, m);
         /**/
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
@@ -63,9 +58,9 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
     MOEADBuilder builder =  new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADD);
     builder.setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(150000)
-            .setPopulationSize(300)
-            .setResultPopulationSize(300)
+            .setMaxEvaluations(3000 * 275)
+            .setPopulationSize(275)
+            .setResultPopulationSize(275)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(1)
             .setNeighborSize(20)
@@ -82,8 +77,6 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
+    
   }
 }
