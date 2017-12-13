@@ -22,6 +22,8 @@ org.uma.jmetal.algorithm.multiobjective.paes
 org.uma.jmetal.algorithm.multiobjective.pesa2
 org.uma.jmetal.algorithm.multiobjective.pesa2.util
 org.uma.jmetal.algorithm.multiobjective.randomsearch
+org.uma.jmetal.algorithm.multiobjective.rnsgaii
+org.uma.jmetal.algorithm.multiobjective.rnsgaii.util
 org.uma.jmetal.algorithm.multiobjective.smpso
 org.uma.jmetal.algorithm.multiobjective.smsemoa
 org.uma.jmetal.algorithm.multiobjective.spea2
@@ -72,6 +74,7 @@ org.uma.jmetal.util
 org.uma.jmetal.util.archive
 org.uma.jmetal.util.archive.impl
 org.uma.jmetal.util.binarySet
+org.uma.jmetal.util.chartcontainer
 org.uma.jmetal.util.comparator
 org.uma.jmetal.util.comparator.impl
 org.uma.jmetal.util.distance
@@ -105,4 +108,5 @@ org.uma.jmetal.util.referencePoint
 org.uma.jmetal.util.referencePoint.impl
 org.uma.jmetal.util.solutionattribute
 org.uma.jmetal.util.solutionattribute.impl
+org.uma.jmetal.utility
 org.uma.jmetal.workingTest
