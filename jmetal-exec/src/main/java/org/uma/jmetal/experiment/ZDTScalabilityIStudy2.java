@@ -26,6 +26,8 @@ import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
 import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
 import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
 import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoFront;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
 import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
@@ -41,21 +43,20 @@ import java.util.List;
  * an scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and
  * SMPSO.
  *
- * This experiment assumes that the reference Pareto front is of problem ZDT1 is known,
- * so the name of file containing it and the directory where it are located must be specified. Note
- * that the name of the file must be replicated to be equal to the number of problem variants.
+ * This experiment assumes that the reference Pareto front is of problem ZDT1 is not known, so
+ * a reference front must be obtained.
  *
  * Six quality indicators are used for performance assessment.
  *
  * The steps to carry out the experiment are: 1. Configure the experiment 2. Execute the algorithms
- * 3. Generate the reference Pareto fronts 4. Compute the quality indicators 5. Generate Latex
+ * 3. Generate the reference Pareto sets and Pareto fronts 4. Compute the quality indicators 5. Generate Latex
  * tables reporting means and medians 6. Generate Latex tables with the result of applying the
  * Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by applying the
  * Friedman test 8. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ZDTScalabilityIStudy {
+public class ZDTScalabilityIStudy2 {
 
   private static final int INDEPENDENT_RUNS = 25;
 
@@ -75,8 +76,6 @@ public class ZDTScalabilityIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf");
-
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTScalabilityStudy")
                     .setAlgorithmList(algorithmList)
@@ -85,7 +84,7 @@ public class ZDTScalabilityIStudy {
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontFileNames(referenceFrontFileNames)
+                    .setReferenceFrontDirectory(experimentBaseDirectory+"/ZDTScalabilityStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -98,6 +97,7 @@ public class ZDTScalabilityIStudy {
                     .build();
 
     new ExecuteAlgorithms<>(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
