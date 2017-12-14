@@ -53,16 +53,71 @@ public class WFGHypervolumeTest {
     assertNotEquals(0, hv) ;
   }
 
+
   /**
-   * CASE 1: solution set -> front obtained from the ZDT1.rf file. Reference front: [0,1], [1,0]
-   * @throws FileNotFoundException
+   * CASE 1: solution set -> front composed of the points [0.25, 0.75] and [0.75, 0.25]. Reference point: [0,0]
    */
   @Test
   public void shouldEvaluateWorkProperlyCase1() throws FileNotFoundException {
-    Front referenceFront = new ArrayFront(2, 2) ;
-    referenceFront.setPoint(0, new ArrayPoint(new double[]{1.0, 0.0}));
-    referenceFront.setPoint(0, new ArrayPoint(new double[]{0.0, 1.0}));
+    DoubleProblem problem = new MockDoubleProblem(2) ;
 
+    List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
+
+    DoubleSolution solution = problem.createSolution() ;
+    solution.setObjective(0, 0.25);
+    solution.setObjective(1, 0.75);
+    frontToEvaluate.add(solution) ;
+
+    solution = problem.createSolution() ;
+    solution.setObjective(0, 0.75);
+    solution.setObjective(1, 0.25);
+    frontToEvaluate.add(solution) ;
+
+    WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
+    double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
+
+    System.out.println("F: " + result) ;
+    assertEquals(0.25*0.75 + 0.25*0.5, result, 0.0001) ;
+  }
+
+  /**
+   * CASE 2: solution set -> front composed of the points [0.25, 0.75], [0.75, 0.25] and [0.5, 0.5].
+   * Reference point: [0,0]
+   */
+  @Test
+  public void shouldEvaluateWorkProperlyCase2() throws FileNotFoundException {
+    DoubleProblem problem = new MockDoubleProblem(2) ;
+
+    List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
+
+    DoubleSolution solution = problem.createSolution() ;
+    solution.setObjective(0, 0.25);
+    solution.setObjective(1, 0.75);
+    frontToEvaluate.add(solution) ;
+
+    solution = problem.createSolution() ;
+    solution.setObjective(0, 0.75);
+    solution.setObjective(1, 0.25);
+    frontToEvaluate.add(solution) ;
+
+    solution = problem.createSolution() ;
+    solution.setObjective(0, 0.5);
+    solution.setObjective(1, 0.5);
+    frontToEvaluate.add(solution) ;
+
+    WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
+    double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
+
+    System.out.println("F: " + result) ;
+    assertEquals(0.25*0.75 + 0.25*0.5 + 0.25*0.25, result, 0.0001) ;
+  }
+  
+  /**
+   * CASE 3: solution set -> front obtained from the ZDT1.rf file. Reference front: [0,1], [1,0]
+   * @throws FileNotFoundException
+   */
+  @Test
+  public void shouldEvaluateWorkProperlyCase3() throws FileNotFoundException {
     Front storeFront = new ArrayFront("/pareto_fronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
@@ -76,7 +131,7 @@ public class WFGHypervolumeTest {
     }
 
     WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
-    double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{0.0, 1.0})) ;
+    double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
 
     System.out.println("F: " + result) ;
     assertEquals(0.6661, result, 0.0001) ;
