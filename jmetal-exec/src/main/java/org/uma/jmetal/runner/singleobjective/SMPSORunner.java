@@ -1,10 +1,12 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.Rosenbrock;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -13,8 +15,11 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,20 +42,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
-
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
-    }
-
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new Rosenbrock(10) ;
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
@@ -72,11 +64,15 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
     List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
 
-    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    new SolutionListOutput(population)
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
 
-    printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
-    }
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
   }
 }
