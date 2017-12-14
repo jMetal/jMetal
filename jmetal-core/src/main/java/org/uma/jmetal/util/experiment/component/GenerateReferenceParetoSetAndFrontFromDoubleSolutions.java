@@ -68,21 +68,21 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     List<String> referenceFrontFileNames = new LinkedList<>() ;
 
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-      List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem.getProblem()) ;
+      List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
 
       referenceFrontFileNames.add(problem.getTag() + ".rf");
 
-      writeReferenceFrontFile(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
-      writeReferenceSetFile(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
+      writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions) ;
+      writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions) ;
 
-      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem.getProblem(), nonDominatedSolutions) ;
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem, nonDominatedSolutions) ;
     }
 
     experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
-      String outputDirectoryName, Problem<?> problem,
+      String outputDirectoryName, ExperimentProblem<?> problem,
       List<DoubleSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
@@ -96,27 +96,27 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
-              outputDirectoryName + "/" + problem.getName() + "." +
+              outputDirectoryName + "/" + problem.getTag() + "." +
                   algorithm.getAlgorithmTag() + ".rf"
           );
       new SolutionListOutput(solutionsPerAlgorithm)
           .printVariablesToFile(
-              outputDirectoryName + "/" + problem.getName() + "." +
+              outputDirectoryName + "/" + problem.getTag() + "." +
                   algorithm.getAlgorithmTag() + ".rs"
           );
     }
   }
 
   private void writeReferenceFrontFile(
-      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
-    String referenceFrontFileName = outputDirectoryName + "/" + problem.getName() + ".rf" ;
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    String referenceFrontFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
 
     new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName);
   }
 
   private void writeReferenceSetFile(
-      String outputDirectoryName, Problem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
-    String referenceSetFileName = outputDirectoryName + "/" + problem.getName() + ".rs" ;
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+    String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rs" ;
     new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName);
   }
 
@@ -128,13 +128,13 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @return
    * @throws FileNotFoundException
    */
-  private List<DoubleSolution> getNonDominatedSolutions(Problem<?> problem) throws FileNotFoundException {
+  private List<DoubleSolution> getNonDominatedSolutions(ExperimentProblem<?> problem) throws FileNotFoundException {
     NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
         new NonDominatedSolutionListArchive<DoubleSolution>() ;
 
     for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
       String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-          algorithm.getAlgorithmTag() + "/" + problem.getName() ;
+          algorithm.getAlgorithmTag() + "/" + problem.getTag() ;
 
       for (int i = 0; i < experiment.getIndependentRuns(); i++) {
         String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +

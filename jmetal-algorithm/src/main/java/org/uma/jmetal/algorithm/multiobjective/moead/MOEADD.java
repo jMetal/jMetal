@@ -130,10 +130,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * Select two parents for reproduction
-   *
-   * @param cid
-   * @param type
-   * @return
    */
   public List<S> matingSelection(int cid, int type) {
 
@@ -222,10 +218,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   } // matingSelection
 
   /**
-   * update the parent population by using the ENLU method, instead of fast
-   * non-dominated sorting
-   *
-   * @param indiv
+   * update the parent population by using the ENLU method, instead of fast non-dominated sorting
    */
   public void updateArchive(S indiv) {
 
@@ -417,8 +410,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * update the non-domination level structure after deleting a solution
-   *
-   * @param indiv
    */
   public void nondominated_sorting_delete(S indiv) {
 
@@ -511,9 +502,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * update the non-domination level when adding a solution
-   *
-   * @param indiv
-   * @return
    */
   public int nondominated_sorting_add(S indiv) {
 
@@ -794,13 +782,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * Delete a solution from the most crowded subregion (this function only
-   * happens when: it should delete 'indiv' based on traditional method.
-   * However, the subregion of 'indiv' only has one solution, so it should be
-   * kept)
-   *
-   * @param indiv
-   * @param location
+   * Delete a solution from the most crowded subregion (this function only happens when: it should
+   * delete 'indiv' based on traditional method. However, the subregion of 'indiv' only has one
+   * solution, so it should be kept)
    */
   public void deleteCrowdRegion1(S indiv, int location) {
 
@@ -893,12 +877,9 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * delete a solution from the most crowded subregion (this function happens
-   * when: it should delete the solution in the 'parentLocation' subregion,
-   * but since this subregion only has one solution, it should be kept)
-   *
-   * @param indiv
-   * @param location
+   * delete a solution from the most crowded subregion (this function happens when: it should delete
+   * the solution in the 'parentLocation' subregion, but since this subregion only has one solution,
+   * it should be kept)
    */
   public void deleteCrowdRegion2(S indiv, int location) {
 
@@ -1032,12 +1013,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * if there is only one non-domination level (i.e., all solutions are
-   * non-dominated with each other), we should delete a solution from the most
-   * crowded subregion
-   *
-   * @param indiv
-   * @param location
+   * if there is only one non-domination level (i.e., all solutions are non-dominated with each
+   * other), we should delete a solution from the most crowded subregion
    */
   public void deleteRankOne(S indiv, int location) {
 
@@ -1135,9 +1112,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * calculate the sum of fitnesses of solutions in the location subregion
-   *
-   * @param location
-   * @return
    */
   public double sumFitness(int location) {
 
@@ -1152,14 +1126,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * delete one solution from the most crowded subregion, which is indiv's
-   * subregion. Compare indiv's fitness value and the worst one in this
-   * subregion
-   *
-   * @param crowdIdx
-   * @param nicheCount
-   * @param indivFitness
-   * @param indiv
+   * delete one solution from the most crowded subregion, which is indiv's subregion. Compare
+   * indiv's fitness value and the worst one in this subregion
    */
   public void deleteCrowdIndiv_same(int crowdIdx, int nicheCount, double indivFitness, S indiv) {
 
@@ -1191,14 +1159,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * delete one solution from the most crowded subregion, which is different
-   * from indiv's subregion. just use indiv to replace the worst solution in
-   * that subregion
-   *
-   * @param crowdIdx
-   * @param curLocation
-   * @param nicheCount
-   * @param indiv
+   * delete one solution from the most crowded subregion, which is different from indiv's subregion.
+   * just use indiv to replace the worst solution in that subregion
    */
   public void deleteCrowdIndiv_diff(int crowdIdx, int curLocation, int nicheCount, S indiv) {
 
@@ -1231,9 +1193,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * Count the number of 1s in the 'location'th subregion
-   *
-   * @param location
-   * @return
    */
   public int countOnes(int location) {
 
@@ -1249,9 +1208,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * count the number of 1s in a row of rank matrix
-   *
-   * @param location
-   * @return
    */
   public int countRankOnes(int location) {
 
@@ -1267,9 +1223,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * find the index of the solution 'indiv' in the population
-   *
-   * @param indiv
-   * @return
    */
   public int findPosition(S indiv) {
 
@@ -1284,9 +1237,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * find the subregion of the 'idx'th solution in the population
-   *
-   * @param idx
-   * @return
    */
   public int findRegion(int idx) {
 
@@ -1301,10 +1251,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * Set the location of a solution based on the orthogonal distance
-   *
-   * @param indiv
-   * @param z_
-   * @param nz_
    */
   public void setLocation(S indiv, double[] z_, double[] nz_) {
 
@@ -1329,12 +1275,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * check the dominance relationship between a and b: 1 -> a dominates b, -1
-   * -> b dominates a 0 -> non-dominated with each other
-   *
-   * @param a
-   * @param b
-   * @return
+   * check the dominance relationship between a and b: 1 -> a dominates b, -1 -> b dominates a 0 ->
+   * non-dominated with each other
    */
   public int checkDominance(S a, S b) {
 
@@ -1362,14 +1304,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   }
 
   /**
-   * Calculate the perpendicular distance between the solution and reference
-   * line
-   *
-   * @param individual
-   * @param lambda
-   * @param z_
-   * @param nz_
-   * @return
+   * Calculate the perpendicular distance between the solution and reference line
    */
   public double calculateDistance(S individual, double[] lambda,
                                   double[] z_, double[] nz_) {
@@ -1433,10 +1368,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * Calculate the dot product of two vectors
-   *
-   * @param vec1
-   * @param vec2
-   * @return
    */
   public double innerproduct(double[] vec1, double[] vec2) {
     double sum = 0;
@@ -1450,9 +1381,6 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
   /**
    * Calculate the norm of the vector
-   *
-   * @param z
-   * @return
    */
   public double norm_vector(double[] z) {
     double sum = 0;

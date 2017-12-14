@@ -114,7 +114,6 @@ public class BinaryProblemsStudy {
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(2).setDisplayNotch().run();
-
   }
 
   /**
