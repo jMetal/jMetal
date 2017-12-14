@@ -1,7 +1,7 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
@@ -13,46 +13,11 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
-/**
- * Created by ajnebro on 17/12/15.
- */
-public class WFGHypervolumeTest {
-  private Hypervolume<DoubleSolution> hypervolume ;
-
-  @Before
-  public void setup() {
-    hypervolume = new WFGHypervolume<>() ;
-  }
-
-  @Test
-  public void simpleTest() {
-    DoubleProblem problem = new MockDoubleProblem(2) ;
-
-    DoubleSolution solution = problem.createSolution() ;
-    solution.setObjective(0, 0.0);
-    solution.setObjective(1, 1.0);
-
-    DoubleSolution solution2 = problem.createSolution() ;
-    solution2.setObjective(0, -1.0);
-    solution2.setObjective(1, 2.0);
-
-    DoubleSolution solution3 = problem.createSolution() ;
-    solution3.setObjective(0, -2.0);
-    solution3.setObjective(1, 1.5);
-
-    List<DoubleSolution> list = Arrays.asList(solution, solution2, solution3) ;
-
-    double hv = hypervolume.evaluate(list) ;
-
-    assertNotEquals(0, hv) ;
-  }
-
+public class PISAHypervolumeTest {
   /**
    * CASE 1: solution set -> front obtained from the ZDT1.rf file. Reference front: [0,1], [1,0]
    * @throws FileNotFoundException
@@ -75,18 +40,14 @@ public class WFGHypervolumeTest {
       frontToEvaluate.add(solution) ;
     }
 
-    WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
-    double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{0.0, 1.0})) ;
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>(referenceFront) ;
+    double result = hypervolume.evaluate(frontToEvaluate) ;
 
-    System.out.println("F: " + result) ;
     assertEquals(0.6661, result, 0.0001) ;
   }
 
-  /**
-   * Mock class representing a binary problem
-   */
-  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
+
     /** Constructor */
     public MockDoubleProblem(Integer numberOfVariables) {
       setNumberOfVariables(numberOfVariables);

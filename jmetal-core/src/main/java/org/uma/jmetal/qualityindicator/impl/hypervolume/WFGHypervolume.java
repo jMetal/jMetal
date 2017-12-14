@@ -90,7 +90,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       this.referencePoint = referencePoint;
 
       if (numberOfObjectives == 2) {
-        Collections.sort(solutionList, new ObjectiveComparator<Solution<?>>(solutionList.size()-1,
+        Collections.sort(solutionList, new ObjectiveComparator<S>(0,
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
