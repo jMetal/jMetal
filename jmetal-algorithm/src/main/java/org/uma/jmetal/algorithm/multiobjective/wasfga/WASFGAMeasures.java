@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
-import java.util.List;
-
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
@@ -14,6 +12,8 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+
+import java.util.List;
 
 /**
  * Implementation of the preference based algorithm named WASF-GA on jMetal5.0

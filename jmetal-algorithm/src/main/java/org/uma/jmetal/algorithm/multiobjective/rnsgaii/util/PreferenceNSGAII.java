@@ -1,8 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii.util;
 
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;

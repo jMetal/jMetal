@@ -1,13 +1,13 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator.Audit;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator.RandomMethod;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator.Audit;
-import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator.RandomMethod;
+import static org.junit.Assert.*;
 
 public class AuditableRandomGeneratorTest {
 

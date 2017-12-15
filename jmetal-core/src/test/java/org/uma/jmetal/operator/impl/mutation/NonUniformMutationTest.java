@@ -1,15 +1,15 @@
 package org.uma.jmetal.operator.impl.mutation;
 
-import static org.junit.Assert.*;
-
-import java.util.Random;
-
 import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
+
+import java.util.Random;
+
+import static org.junit.Assert.assertTrue;
 
 public class NonUniformMutationTest {
 

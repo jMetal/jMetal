@@ -6,7 +6,7 @@ import org.uma.jmetal.util.point.util.PointSolution;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

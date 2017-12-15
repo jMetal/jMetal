@@ -1,12 +1,12 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-
-import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
  * An {@link AuditableRandomGenerator} is a {@link PseudoRandomGenerator} which can be audited

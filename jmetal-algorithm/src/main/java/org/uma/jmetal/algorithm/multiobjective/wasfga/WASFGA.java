@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.Normalizer;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARankingConstraint;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;

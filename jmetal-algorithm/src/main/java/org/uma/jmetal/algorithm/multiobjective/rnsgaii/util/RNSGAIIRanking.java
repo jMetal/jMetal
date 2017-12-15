@@ -1,11 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii.util;
 
 
-
 import org.uma.jmetal.solution.Solution;
-
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
-
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
