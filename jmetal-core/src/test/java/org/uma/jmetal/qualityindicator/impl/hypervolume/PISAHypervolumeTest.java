@@ -1,7 +1,6 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.junit.Test;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
@@ -15,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PISAHypervolumeTest {
   /**

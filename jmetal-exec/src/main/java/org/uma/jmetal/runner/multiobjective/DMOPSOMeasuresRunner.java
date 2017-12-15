@@ -1,7 +1,5 @@
 package org.uma.jmetal.runner.multiobjective;
 
-import java.util.List;
-
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
@@ -17,6 +15,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+
+import java.util.List;
 
 /**
  * Class for configuring and running the DMOPSO algorithm

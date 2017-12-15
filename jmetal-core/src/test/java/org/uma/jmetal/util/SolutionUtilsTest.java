@@ -4,13 +4,12 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SolutionUtilsTest {
   private static final double EPSILON = 0.0000000001 ;

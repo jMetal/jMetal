@@ -3,7 +3,7 @@ package org.uma.jmetal.util.archive.impl;
 import org.junit.Test;
 import org.uma.jmetal.solution.IntegerSolution;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by ajnebro on 16/11/16.

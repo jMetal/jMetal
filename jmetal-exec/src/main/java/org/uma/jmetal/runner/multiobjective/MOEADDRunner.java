@@ -3,8 +3,9 @@ package org.uma.jmetal.runner.multiobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
+import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.runner.AbstractAlgorithmRunner;
@@ -15,8 +16,6 @@ import org.uma.jmetal.util.ProblemUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 
 /**
  * Class for configuring and running the MOEA/DD algorithm

@@ -1,14 +1,14 @@
 package org.uma.jmetal.qualityindicator.impl;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.util.List;
-
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class R2Test {
 

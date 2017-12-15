@@ -1,8 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -10,6 +7,9 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 

@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
-import java.util.List;
-
 import org.uma.jmetal.measure.Measurable;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
@@ -14,6 +12,8 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class DMOPSOMeasures extends DMOPSO implements Measurable {

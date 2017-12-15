@@ -12,10 +12,10 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
-import java.util.Random;
 
 public class BitFlipMutationTest {
   private static final double EPSILON = 0.00000000000001 ;

@@ -3,8 +3,8 @@ package org.uma.jmetal.util.experiment.component;
 import org.apache.commons.lang3.StringUtils;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.io.File;

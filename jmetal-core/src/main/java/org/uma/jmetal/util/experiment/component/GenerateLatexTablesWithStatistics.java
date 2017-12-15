@@ -3,8 +3,8 @@ package org.uma.jmetal.util.experiment.component;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 
 import java.io.*;
 import java.util.*;

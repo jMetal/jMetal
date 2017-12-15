@@ -1,8 +1,8 @@
 package org.uma.jmetal.util.referencePoint.impl;
 
-import org.uma.jmetal.util.referencePoint.ReferencePoint;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.referencePoint.ReferencePoint;
 
 /**
  * Class representing a nadir point (minimization is assumed)

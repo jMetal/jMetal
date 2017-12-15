@@ -3,7 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.wasfga.util;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
