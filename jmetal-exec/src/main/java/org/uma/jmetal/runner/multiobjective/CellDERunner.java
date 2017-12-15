@@ -47,8 +47,8 @@ public class CellDERunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ1.3D.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -62,7 +62,7 @@ public class CellDERunner extends AbstractAlgorithmRunner {
 
     algorithm = new CellDE45(
         problem,
-        25000,
+        50000,
         100,
         new CrowdingDistanceArchive<DoubleSolution>(100),
         new C9<DoubleSolution>((int)Math.sqrt(100), (int)Math.sqrt(100)),
