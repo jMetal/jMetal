@@ -55,6 +55,31 @@ public class ArrayFrontTest {
     new ArrayFront(list) ;
   }
 
+  @Test
+  public void shouldConstructorCreateAnArranFrontFromAFileContainingA2DFront() throws FileNotFoundException {
+    Front storeFront = new ArrayFront("/pareto_fronts/ZDT1.pf") ;
+
+    assertEquals(1001, storeFront.getNumberOfPoints());
+    assertEquals(0.0, storeFront.getPoint(0).getValues()[0], 0.0001) ;
+    assertEquals(1.0, storeFront.getPoint(0).getValues()[1], 0.0001) ;
+    assertEquals(1.0, storeFront.getPoint(1000).getValues()[0], 0.0001) ;
+    assertEquals(0.0, storeFront.getPoint(1000).getValues()[1], 0.0001) ;
+  }
+
+  @Test
+  public void shouldConstructorCreateAnArranFrontFromAFileContainingA3DFront() throws FileNotFoundException {
+    Front storeFront = new ArrayFront("/pareto_fronts/DTLZ1.3D.pf") ;
+
+    assertEquals(9901, storeFront.getNumberOfPoints());
+
+    assertEquals(0.0, storeFront.getPoint(0).getValues()[0], 0.0001) ;
+    assertEquals(0.0, storeFront.getPoint(0).getValues()[1], 0.0001) ;
+    assertEquals(0.5, storeFront.getPoint(0).getValues()[2], 0.0001) ;
+    assertEquals(0.49005, storeFront.getPoint(9900).getValues()[0], 0.0001) ;
+    assertEquals(0.00495, storeFront.getPoint(9900).getValues()[1], 0.0001) ;
+    assertEquals(0.005, storeFront.getPoint(9900).getValues()[2], 0.0001) ;
+  }
+
   @Test public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingOneDoubleSolutionObject() {
     int numberOfObjectives = 3 ;
     DoubleProblem problem = new MockDoubleProblem(numberOfObjectives) ;

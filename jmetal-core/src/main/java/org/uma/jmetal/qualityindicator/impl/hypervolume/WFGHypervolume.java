@@ -73,6 +73,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
             ObjectiveComparator.Ordering.DESCENDING));
         hv = get2DHV(solutionList) ;
       } else {
+        updateReferencePoint(solutionList);
         WfgHypervolumeVersion wfgHv = new WfgHypervolumeVersion(numberOfObjectives, solutionList.size());
         hv = wfgHv.getHV(new WfgHypervolumeFront(solutionList));
       }
@@ -145,6 +146,13 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         if (maxObjectives[j] < front.getPoint(i).getDimensionValue(j)) {
           maxObjectives[j] = front.getPoint(i).getDimensionValue(j) ;
         }
+      }
+    }
+
+    if (referencePoint == null) {
+      referencePoint = new ArrayPoint(numberOfObjectives) ;
+      for (int i = 0; i < numberOfObjectives ; i++) {
+        referencePoint.setDimensionValue(i, Double.MAX_VALUE);
       }
     }
 

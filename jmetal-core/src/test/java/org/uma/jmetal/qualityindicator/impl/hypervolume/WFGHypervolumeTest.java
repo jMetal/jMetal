@@ -76,7 +76,6 @@ public class WFGHypervolumeTest {
     WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
     double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
 
-    System.out.println("F: " + result) ;
     assertEquals(0.25*0.75 + 0.25*0.5, result, 0.0001) ;
   }
 
@@ -108,16 +107,15 @@ public class WFGHypervolumeTest {
     WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
     double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
 
-    System.out.println("F: " + result) ;
     assertEquals(0.25*0.75 + 0.25*0.5 + 0.25*0.25, result, 0.0001) ;
   }
 
   /**
-   * CASE 4: solution set -> front composed of the points [0.25, 0.75], [0.75, 0.25] and [0.5, 0.5].
+   * CASE 3: solution set -> front composed of the points [0.25, 0.75], [0.75, 0.25] and [0.5, 0.5].
    * Reference point: [1.5, 1.5]
    */
   @Test
-  public void shouldEvaluateWorkProperlyCase4() throws FileNotFoundException {
+  public void shouldEvaluateWorkProperlyCase3() throws FileNotFoundException {
     DoubleProblem problem = new MockDoubleProblem(2) ;
 
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
@@ -148,7 +146,7 @@ public class WFGHypervolumeTest {
    * @throws FileNotFoundException
    */
   @Test
-  public void shouldEvaluateWorkProperlyCase3() throws FileNotFoundException {
+  public void shouldEvaluateWorkProperlyCase4() throws FileNotFoundException {
     Front storeFront = new ArrayFront("/pareto_fronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
@@ -164,7 +162,6 @@ public class WFGHypervolumeTest {
     WFGHypervolume<DoubleSolution> hypervolume = new WFGHypervolume<>() ;
     double result = hypervolume.computeHypervolume(frontToEvaluate, new ArrayPoint(new double[]{1.0, 1.0})) ;
 
-    System.out.println("F: " + result) ;
     assertEquals(0.6661, result, 0.0001) ;
   }
 
@@ -174,9 +171,9 @@ public class WFGHypervolumeTest {
   @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
     /** Constructor */
-    public MockDoubleProblem(Integer numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(2);
+    public MockDoubleProblem(Integer numberOfObjectives) {
+      setNumberOfVariables(10);
+      setNumberOfObjectives(numberOfObjectives);
 
       List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
       List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -198,8 +195,9 @@ public class WFGHypervolumeTest {
     /** Evaluate() method */
     @Override
     public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      for (int i = 0; i < getNumberOfObjectives(); i++) {
+        solution.setObjective(i, 1.0);
+      }
     }
   }
 }
