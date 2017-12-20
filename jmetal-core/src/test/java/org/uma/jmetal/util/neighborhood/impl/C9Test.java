@@ -8,6 +8,8 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -61,8 +63,7 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
 
   /**
@@ -86,8 +87,7 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
 
   /**
@@ -112,9 +112,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(1), list.get(2), list.get(3))) ;
+    assertThat(result, not(hasItems(list.get(0)))) ;
   }
 
   /**
@@ -124,7 +123,7 @@ public class C9Test {
    * 0 1
    * 2 3
    *
-   * The solution location is 1, the neighborhood is 1, 2, 3
+   * The solution location is 1, the neighborhood is 0, 2, 3
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
@@ -139,9 +138,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(0), list.get(2), list.get(3))) ;
+    assertThat(result, not(hasItems(list.get(1)))) ;
   }
 
   /**
@@ -166,9 +164,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1), list.get(3))) ;
+    assertThat(result, not(hasItems(list.get(2)))) ;
   }
 
   /**
@@ -193,9 +190,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1), list.get(2))) ;
+    assertThat(result, not(hasItems(list.get(3)))) ;
   }
 
   /**
@@ -220,11 +216,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(3))) ;
-    assertThat(result, hasItem(list.get(4))) ;
-    assertThat(result, hasItem(list.get(5))) ;
-    assertThat(result, hasItem(list.get(7))) ;
+    assertThat(result, hasItems(list.get(1), list.get(3), list.get(4), list.get(5), list.get(7))) ;
+    assertThat(result, not(hasItems(list.get(2), list.get(6)))) ;
   }
 
   /**
@@ -249,11 +242,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(4))) ;
-    assertThat(result, hasItem(list.get(6))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6))) ;
+    assertThat(result, not(hasItems(list.get(3), list.get(5), list.get(7)))) ;
   }
 
   /**
@@ -279,13 +269,8 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(4))) ;
-    assertThat(result, hasItem(list.get(6))) ;
-    assertThat(result, hasItem(list.get(8))) ;
-    assertThat(result, hasItem(list.get(9))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6), list.get(8), list.get(9))) ;
+    assertThat(result, not(hasItems(list.get(3), list.get(5), list.get(7), list.get(10), list.get(11)))) ;
   }
 
   /**
@@ -311,11 +296,7 @@ public class C9Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 11) ;
     assertEquals(8, result.size()) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(3))) ;
-    assertThat(result, hasItem(list.get(6))) ;
-    assertThat(result, hasItem(list.get(7))) ;
-    assertThat(result, hasItem(list.get(8))) ;
-    assertThat(result, hasItem(list.get(10))) ;
+    assertThat(result, hasItems(list.get(2), list.get(3), list.get(6), list.get(7), list.get(8), list.get(10))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(4), list.get(5), list.get(9), list.get(11)))) ;
   }
 }
