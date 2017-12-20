@@ -8,7 +8,10 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -31,13 +34,17 @@ public class L5Test {
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
     List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
-    for (int i = 0 ; i < rows*columns; i++) {
-      list.add(mock(IntegerSolution.class)) ;
-    }
+
+    IntegerSolution solution = mock(IntegerSolution.class) ;
+    list.add(solution) ;
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
+    assertSame(solution, result.get(0)) ;
+    assertSame(solution, result.get(1)) ;
+    assertSame(solution, result.get(2)) ;
+    assertSame(solution, result.get(3)) ;
   }
 
   /**
@@ -61,8 +68,7 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
 
   /**
@@ -86,8 +92,7 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(1))) ;
+    assertThat(result, hasItems(list.get(0), list.get(1))) ;
   }
 
   /**
@@ -112,8 +117,8 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
+    assertThat(result, hasItems(list.get(1), list.get(2))) ;
+    assertThat(result, not(hasItems(list.get(3), list.get(0)))) ;
   }
 
   /**
@@ -123,7 +128,7 @@ public class L5Test {
    * 0 1
    * 2 3
    *
-   * The solution location is 1, the neighborhood is 1, 2
+   * The solution location is 1, the neighborhood is 0, 3
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
@@ -138,8 +143,8 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(0), list.get(3))) ;
+    assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
   }
 
   /**
@@ -164,8 +169,8 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(0), list.get(3))) ;
+    assertThat(result, not(hasItems(list.get(1), list.get(2)))) ;
   }
 
   /**
@@ -188,10 +193,10 @@ public class L5Test {
       list.add(mock(IntegerSolution.class)) ;
     }
 
-    List<IntegerSolution> result = neighborhood.getNeighbors(list, 2) ;
+    List<IntegerSolution> result = neighborhood.getNeighbors(list, 3) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(0))) ;
-    assertThat(result, hasItem(list.get(3))) ;
+    assertThat(result, hasItems(list.get(1), list.get(2))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(3)))) ;
   }
 
   /**
@@ -201,7 +206,7 @@ public class L5Test {
    * 0 1 2 3
    * 4 5 6 7
    *
-   * The solution location is 5, the neighborhood is 0, 1, 2, 4, 6
+   * The solution location is 5, the neighborhood is 1, 1, 4, 6
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase8() {
@@ -216,9 +221,8 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(4))) ;
-    assertThat(result, hasItem(list.get(6))) ;
+    assertThat(result, hasItems(list.get(1), list.get(4), list.get(6))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(2), list.get(3), list.get(7), list.get(5)))) ;
   }
 
   /**
@@ -245,9 +249,8 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 5) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(3))) ;
-    assertThat(result, hasItem(list.get(4))) ;
-    assertThat(result, hasItem(list.get(7))) ;
+    assertThat(result, hasItems(list.get(3), list.get(4), list.get(7))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(5), list.get(6)))) ;
   }
 
   /**
@@ -274,8 +277,61 @@ public class L5Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
-    assertThat(result, hasItem(list.get(1))) ;
-    assertThat(result, hasItem(list.get(2))) ;
-    assertThat(result, hasItem(list.get(6))) ;
+    assertThat(result, hasItems(list.get(1), list.get(2), list.get(6))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(3), list.get(4), list.get(5), list.get(7)))) ;
+  }
+
+  /**
+   * Case 11
+   *
+   * Solution list:
+   * 0 1 2
+   * 3 4 5
+   * 6 7 8
+   *
+   * The solution location is 4, the neighborhood is 1, 3, 5, 7
+   */
+  @Test
+  public void shouldGetNeighborsReturnFourNeighborsCase11() {
+    int rows = 3 ;
+    int columns = 3 ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+
+    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
+    for (int i = 0 ; i < rows*columns; i++) {
+      list.add(mock(IntegerSolution.class)) ;
+    }
+
+    List<IntegerSolution> result = neighborhood.getNeighbors(list, 4) ;
+    assertEquals(4, result.size()) ;
+    assertThat(result, hasItems(list.get(1), list.get(3), list.get(5), list.get(7))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(2), list.get(4), list.get(6)))) ;
+  }
+
+  /**
+   * Case 12
+   *
+   * Solution list:
+   * 0 1 2
+   * 3 4 5
+   * 6 7 8
+   *
+   * The solution location is 8, the neighborhood is 2, 6, 5, 7
+   */
+  @Test
+  public void shouldGetNeighborsReturnFourNeighborsCase12() {
+    int rows = 3 ;
+    int columns = 3 ;
+    L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
+
+    List<IntegerSolution> list = new ArrayList<>(rows*columns) ;
+    for (int i = 0 ; i < rows*columns; i++) {
+      list.add(mock(IntegerSolution.class)) ;
+    }
+
+    List<IntegerSolution> result = neighborhood.getNeighbors(list, 8) ;
+    assertEquals(4, result.size()) ;
+    assertThat(result, hasItems(list.get(2), list.get(5), list.get(6), list.get(7))) ;
+    assertThat(result, not(hasItems(list.get(0), list.get(1), list.get(3), list.get(4), list.get(8)))) ;
   }
 }

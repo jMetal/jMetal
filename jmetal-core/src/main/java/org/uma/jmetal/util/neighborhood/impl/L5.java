@@ -21,7 +21,7 @@ public class L5<S> extends TwoDimensionalMesh<S> {
 
   /**
    * Constructor.
-   * Defines a neighborhood for solutionSetSize (it has to have an exact squared root)
+   * Defines a neighborhood for a solution set of rows x columns solutions (requirement: it has to have an exact squared root)
    */
   public L5(int rows, int columns) {
     super(rows, columns, neighborhood) ;
