@@ -41,10 +41,7 @@ public class L5Test {
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
-    assertSame(solution, result.get(0)) ;
-    assertSame(solution, result.get(1)) ;
-    assertSame(solution, result.get(2)) ;
-    assertSame(solution, result.get(3)) ;
+    assertEquals(4, result.stream().filter(s -> s == solution).count());
   }
 
   /**
@@ -69,6 +66,8 @@ public class L5Test {
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
+    assertEquals(2, result.stream().filter(s -> s == list.get(0)).count());
+    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
   }
 
   /**
@@ -93,6 +92,8 @@ public class L5Test {
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
+    assertEquals(2, result.stream().filter(s -> s == list.get(0)).count());
+    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
   }
 
   /**
@@ -119,5 +120,7 @@ public class L5Test {
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2))) ;
     assertThat(result, not(hasItems(list.get(3), list.get(0)))) ;
+    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
+    assertEquals(2, result.stream().filter(s -> s == list.get(2)).count());
   }
 }
