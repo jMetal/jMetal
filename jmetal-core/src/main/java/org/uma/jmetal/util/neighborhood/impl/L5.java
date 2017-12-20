@@ -3,9 +3,14 @@ package org.uma.jmetal.util.neighborhood.impl;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
- * Class defining a L5 neighborhood of a solution belonging to a list of solutions which is
- * structured as a bi-dimensional square mesh. The neighbors are those solutions that are in the positions
+ * Class defining an L5 neighborhood of a solution belonging to a list of solutions which is
+ * structured as a bi-dimensional mesh. The neighbors are those solutions that are in the positions
  * North, South, East and West
+ *
+ * Shape:
+ *                 *
+ *               * o *
+ *                 *
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
@@ -21,7 +26,7 @@ public class L5<S> extends TwoDimensionalMesh<S> {
 
   /**
    * Constructor.
-   * Defines a neighborhood for a solution set of rows x columns solutions (requirement: it has to have an exact squared root)
+   * Defines a neighborhood for a solution set of rows x columns solutions
    */
   public L5(int rows, int columns) {
     super(rows, columns, neighborhood) ;

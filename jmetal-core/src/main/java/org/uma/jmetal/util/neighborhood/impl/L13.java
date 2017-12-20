@@ -4,7 +4,14 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
- * Class representing neighborhoods for a solution into a list of solutions
+ * Class defining an L9 neighborhood of a solution belonging to a list of solutions which is
+ * structured as a bi-dimensional mesh. The neighbors is illustrated as follows:
+ *
+ *              *
+ *            * * *
+ *          * * o * *
+ *            * * *
+ *              *
  *
  * @author Esteban López Camacho
  */
@@ -21,7 +28,7 @@ public class L13<S extends Solution<?>> extends TwoDimensionalMesh<S> {
 
   /**
    * Constructor.
-   * Defines a neighborhood for solutionSetSize
+   * Defines a neighborhood for a solution set of rows x columns solutions
    */
   public L13(int rows, int columns) {
     super(rows, columns, neighborhood) ;

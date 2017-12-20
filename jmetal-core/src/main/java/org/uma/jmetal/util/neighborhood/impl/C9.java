@@ -3,7 +3,13 @@ package org.uma.jmetal.util.neighborhood.impl;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
- * Class representing neighborhoods for a solution into a list of solutions
+ * Class defining an L9 neighborhood of a solution belonging to a list of solutions which is
+ * structured as a bi-dimensional mesh. The neighbors are those solutions that are in 1-hop distance
+ *
+ * Shape:
+ *               * * *
+ *               * o *
+ *               * * *
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
@@ -29,7 +35,7 @@ public class C9<S> extends TwoDimensionalMesh<S> {
   /**
    * Constructor
    *
-   * Defines a neighborhood of shape rows x columns (rows x columns must equal solutionSetSize)
+   * Defines a neighborhood for a solution set of rows x columns solutions
    * @param rows the number of rows
    * @param columns the number of columns
    */

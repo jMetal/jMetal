@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 /**
  * This class implements the Neighborhood interface with the neighborhood scheme of MOEA/D
  *
- * @param <S>
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
     private int numberOfWeightVectors;
