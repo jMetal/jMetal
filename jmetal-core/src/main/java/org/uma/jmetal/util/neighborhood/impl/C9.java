@@ -4,7 +4,8 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
  * Class defining an L9 neighborhood of a solution belonging to a list of solutions which is
- * structured as a bi-dimensional mesh. The neighbors are those solutions that are in 1-hop distance
+ * structured as a bi-dimensional mesh. The neighbors are those solutions that are
+ * in 1-hop distance
  *
  * Shape:
  *               * * *
@@ -19,7 +20,7 @@ public class C9<S> extends TwoDimensionalMesh<S> {
 
   // There are 8 possible movements: north, south, east, west, northeast, northwest,southeast, southwest
   // Each movement is represented by an array of two positions: first component represents the
-  // movement in the file, the second one the movement in the column
+  // movement in the row, the second one the movement in the column
   private static final int [] north      = {-1,  0};
   private static final int [] south      = { 1 , 0};
   private static final int [] east       = { 0 , 1};

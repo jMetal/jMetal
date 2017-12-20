@@ -4,7 +4,18 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
- * Class representing neighborhoods for a solution into a list of solutions
+ * Class defining an C49 neighborhood of a solution belonging to a list of solutions which is
+ * structured as a bi-dimensional mesh. The neighbors are those solutions that are in
+ * 3-hop distance or less
+ *
+ * Shape:
+ *            * * * * * * *
+ *            * * * * * * *
+ *            * * * * * * *
+ *            * * * o * * *
+ *            * * * * * * *
+ *            * * * * * * *
+ *            * * * * * * *
  *
  * @author Esteban López Camacho
  */
