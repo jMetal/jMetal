@@ -113,8 +113,7 @@ public class L13Test {
 
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(12, result.size()) ;
-    assertThat(result, hasItems(list.get(1), list.get(2))) ;
-    assertThat(result, not(hasItems(list.get(0), list.get(3)))) ;
+    assertThat(result, hasItems(list.get(1), list.get(2), list.get(3))) ;
   }
 
   /**
