@@ -16,6 +16,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Miscelanea
 
 * Added class [KNearestNeighborhood](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/KNearestNeighborhood.java). 
+* Added new neighborhood classes: C25, C49, L13, L25 and L41 (https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl)
 
 ## jMetal is available as a Maven Project in The Central Repository
 
