@@ -13,7 +13,9 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ## Changelog of the next incoming release (jMetal 5.5)
 
-No changes yet.
+### Miscelanea
+
+* Added class [KNearestNeighborhood](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/KNearestNeighborhood.java). 
 
 ## jMetal is available as a Maven Project in The Central Repository
 
