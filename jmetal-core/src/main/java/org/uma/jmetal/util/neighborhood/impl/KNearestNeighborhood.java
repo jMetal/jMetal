@@ -1,16 +1,12 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * This class implements a neighborhood that select the k-nearest solutions according to a distance measure. By default,
