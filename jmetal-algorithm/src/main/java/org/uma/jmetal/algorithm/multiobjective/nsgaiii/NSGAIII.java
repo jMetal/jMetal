@@ -49,7 +49,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 
     int populationSize = referencePoints.size();
-    System.out.println(referencePoints.size());
     while (populationSize%4>0) {
       populationSize++;
     }
