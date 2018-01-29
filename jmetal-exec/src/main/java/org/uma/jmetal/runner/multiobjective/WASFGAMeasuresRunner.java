@@ -51,7 +51,7 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    
+
     referencePoint = new ArrayList<>();
     referencePoint.add(0.5);
     referencePoint.add(0.8);
