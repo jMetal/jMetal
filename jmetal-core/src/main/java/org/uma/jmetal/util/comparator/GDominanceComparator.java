@@ -9,7 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * This class implements a solution comparator taking into account the violation constraints
+ * This class implements a solution comparator according to the concept of g-dominance
+ * (https://doi.org/10.1016/j.ejor.2008.07.015)
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

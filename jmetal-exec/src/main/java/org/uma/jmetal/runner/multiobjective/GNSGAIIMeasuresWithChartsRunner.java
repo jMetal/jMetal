@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm (variant with measures)
+ * Class to configure and run the NSGA-II algorithm (variant with measures) with the G-Dominance Comparator.
  */
-public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
+public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner
@@ -68,11 +68,14 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     int maxEvaluations = 25000;
     int populationSize = 100;
 
+    List<Double> referencePoint = Arrays.asList(0.5, 0.5) ;
+
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
             .setSelectionOperator(selection)
             .setMaxEvaluations(maxEvaluations)
             .setPopulationSize(populationSize)
             .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+            .setDominanceComparator(new GDominanceComparator<>(referencePoint))
             .build();
 
     ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
@@ -83,17 +86,14 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
-    BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
-            .<Double>getPushMeasure("hypervolume");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
-    chart.addIndicatorChart("Hypervolume");
+    chart.setReferencePoint(referencePoint);
     chart.initChart();
 
     solutionListMeasure.register(new ChartListener(chart));
-    iterationMeasure.register(new IterationListener(chart));
-    hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
+   // iterationMeasure.register(new IterationListener(chart));
     /* End of measure management */
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
@@ -108,40 +108,8 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
-  }
 
-  private static class IterationListener implements MeasureListener<Long> {
-    ChartContainer chart;
-
-    public IterationListener(ChartContainer chart) {
-      this.chart = chart;
-      this.chart.getChart("Hypervolume").setTitle("Iteration: " + 0);
-    }
-
-    @Override
-    synchronized public void measureGenerated(Long iteration) {
-      if (this.chart != null) {
-        this.chart.getChart("Hypervolume").setTitle("Iteration: " + iteration);
-      }
-    }
-  }
-
-  private static class IndicatorListener implements MeasureListener<Double> {
-    ChartContainer chart;
-    String indicator;
-
-    public IndicatorListener(String indicator, ChartContainer chart) {
-      this.chart = chart;
-      this.indicator = indicator;
-    }
-
-    @Override
-    synchronized public void measureGenerated(Double value) {
-      if (this.chart != null) {
-        this.chart.updateIndicatorChart(this.indicator, value);
-        this.chart.refreshCharts(0);
-      }
-    }
+    System.exit(0) ;
   }
 
   private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
