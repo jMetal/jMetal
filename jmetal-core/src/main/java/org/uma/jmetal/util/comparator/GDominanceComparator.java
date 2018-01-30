@@ -6,6 +6,7 @@ import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints
@@ -13,27 +14,15 @@ import java.util.Comparator;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-  private ConstraintViolationComparator<S> constraintViolationComparator;
+public class GDominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
+
+  private List<Double> referencePoint ;
+  private DominanceComparator<S> dominanceComparator ;
 
   /** Constructor */
-  public DominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>(), 0.0) ;
-  }
-
-  /** Constructor */
-  public DominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator<S>(), epsilon) ;
-  }
-
-  /** Constructor */
-  public DominanceComparator(ConstraintViolationComparator<S> constraintComparator) {
-    this(constraintComparator, 0.0) ;
-  }
-
-  /** Constructor */
-  public DominanceComparator(ConstraintViolationComparator<S> constraintComparator, double epsilon) {
-    constraintViolationComparator = constraintComparator ;
+  public GDominanceComparator(List<Double> referencePoint) {
+    this.referencePoint = referencePoint ;
+    dominanceComparator = new DominanceComparator<>() ;
   }
 
   /**
@@ -55,38 +44,41 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
           solution1.getNumberOfObjectives()+ " objectives and solution2 has " +
           solution2.getNumberOfObjectives()) ;
     }
+
+    int result = flagComparison(solution1, solution2);
+
+    return result ;
+  }
+
+  private int flagComparison(S solution1, S solution2) {
     int result ;
-    result = constraintViolationComparator.compare(solution1, solution2) ;
-    if (result == 0) {
-      result = dominanceTest(solution1, solution2) ;
+    if (flag(solution1) > flag(solution2)) {
+      result = -1 ;
+    } else if (flag(solution1) < flag(solution2)) {
+      result = 1 ;
+    } else {
+      result = dominanceComparator.compare(solution1, solution2) ;
     }
 
     return result ;
   }
 
-  private int dominanceTest(S solution1, S solution2) {
-    int bestIsOne = 0 ;
-    int bestIsTwo = 0 ;
-    int result ;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      double value1 = solution1.getObjective(i);
-      double value2 = solution2.getObjective(i);
-      if (value1 != value2) {
-        if (value1 < value2) {
-          bestIsOne = 1;
-        }
-        if (value2 < value1) {
-          bestIsTwo = 1;
+  private int flag(S solution) {
+    int result = 1 ;
+    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+      if (solution.getObjective(i) > referencePoint.get(i)) {
+        result = 0 ;
+      }
+    }
+    if (result == 0) {
+      result = 1 ;
+      for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+        if (solution.getObjective(i) < referencePoint.get(i)) {
+          result = 0 ;
         }
       }
     }
-    if (bestIsOne > bestIsTwo) {
-      result = -1;
-    } else if (bestIsTwo > bestIsOne) {
-      result = 1;
-    } else {
-      result = 0;
-    }
+
     return result ;
   }
 }

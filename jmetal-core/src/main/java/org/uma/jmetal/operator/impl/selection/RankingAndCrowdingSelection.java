@@ -4,12 +4,14 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,10 +25,18 @@ import java.util.List;
 public class RankingAndCrowdingSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>,List<S>> {
   private final int solutionsToSelect ;
+  private Comparator<S> dominanceComparator ;
+
+
+  /** Constructor */
+  public RankingAndCrowdingSelection(int solutionsToSelect, Comparator<S> dominanceComparator) {
+    this.dominanceComparator = dominanceComparator ;
+    this.solutionsToSelect = solutionsToSelect ;
+  }
 
   /** Constructor */
   public RankingAndCrowdingSelection(int solutionsToSelect) {
-    this.solutionsToSelect = solutionsToSelect ;
+    this(solutionsToSelect, new DominanceComparator<S>()) ;
   }
 
   /* Getter */
@@ -45,7 +55,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
               "the solutions to selected ("+solutionsToSelect+")")  ;
     }
 
-    Ranking<S> ranking = new DominanceRanking<S>();
+    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(solutionList) ;
 
     return crowdingDistanceSelection(ranking);

@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -19,10 +20,10 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
    * Constructor
    */
   public SteadyStateNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+                           CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                           SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
     super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, evaluator);
+        selectionOperator, dominanceComparator, evaluator);
   }
 
   @Override protected void updateProgress() {

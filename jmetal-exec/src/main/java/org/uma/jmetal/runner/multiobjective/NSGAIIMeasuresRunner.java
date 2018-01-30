@@ -20,9 +20,11 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -66,7 +68,8 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>(
+            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     int maxEvaluations = 25000 ;
     int populationSize = 100 ;
@@ -121,6 +124,8 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront) ;
     }
+
+    System.exit(0) ;
   }
 
   private static class Listener implements MeasureListener<List<DoubleSolution>> {

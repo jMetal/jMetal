@@ -18,10 +18,12 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
+import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -71,6 +73,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
             .setMaxEvaluations(maxEvaluations)
             .setPopulationSize(populationSize)
             .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
+            .setDominanceComparator(new GDominanceComparator<>(Arrays.asList(0.5, 0.5)))
             .build();
 
     ((NSGAIIMeasures<DoubleSolution>) algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
@@ -84,7 +87,7 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
             .<Double>getPushMeasure("hypervolume");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.addIndicatorChart("Hypervolume");
     chart.initChart();

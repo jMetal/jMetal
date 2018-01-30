@@ -18,6 +18,7 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,10 +40,10 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
    * Constructor
    */
   public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+                        CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                        SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
     super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, evaluator) ;
+        selectionOperator, dominanceComparator, evaluator) ;
 
     referenceFront = new ArrayFront() ;
 
@@ -105,7 +106,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
       List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking<S> ranking = new DominanceRanking<S>();
+    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(population);
 
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
