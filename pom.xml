@@ -32,7 +32,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-5.2</tag>
+        <tag>jmetal-5.4</tag>
     </scm>
 
     <distributionManagement>
