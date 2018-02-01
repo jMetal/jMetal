@@ -3,11 +3,14 @@ package org.uma.jmetal.util.solutionattribute.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class implements some facilities for ranking set of solutions.

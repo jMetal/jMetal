@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.randomsearch.RandomSearchBuilder;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;

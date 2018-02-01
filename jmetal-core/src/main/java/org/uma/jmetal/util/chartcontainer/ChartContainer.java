@@ -1,7 +1,11 @@
 package org.uma.jmetal.util.chartcontainer;
 
-import org.knowm.xchart.*;
+import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -10,8 +14,11 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**

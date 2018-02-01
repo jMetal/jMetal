@@ -20,11 +20,9 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

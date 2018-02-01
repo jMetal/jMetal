@@ -19,11 +19,12 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.DistanceToSolutionListAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
-import javax.management.JMException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.management.JMException;
 
 /**
  * This class implements the AbYSS algorithm, a multiobjective scatter search metaheuristics,

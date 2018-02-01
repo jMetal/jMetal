@@ -8,7 +8,11 @@ import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Juanjo Durillo

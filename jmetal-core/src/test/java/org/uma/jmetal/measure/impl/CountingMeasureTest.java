@@ -3,7 +3,9 @@ package org.uma.jmetal.measure.impl;
 import org.junit.Test;
 import org.uma.jmetal.measure.MeasureListener;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CountingMeasureTest {
 

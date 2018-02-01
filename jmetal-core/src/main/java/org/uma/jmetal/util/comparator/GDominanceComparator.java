@@ -2,7 +2,6 @@ package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.io.Serializable;
 import java.util.Comparator;

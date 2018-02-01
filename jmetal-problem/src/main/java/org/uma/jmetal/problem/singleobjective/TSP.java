@@ -5,7 +5,11 @@ import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
 
 /**
  * Class representing a single-objective TSP (Traveling Salesman Problem) problem.

@@ -9,7 +9,9 @@ import org.uma.jmetal.util.JMetalException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
