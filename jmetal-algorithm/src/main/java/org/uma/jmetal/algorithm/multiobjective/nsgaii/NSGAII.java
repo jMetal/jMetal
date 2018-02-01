@@ -11,6 +11,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,13 +24,14 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected final SolutionListEvaluator<S> evaluator;
 
   protected int evaluations;
+  protected Comparator<S> dominanceComparator ;
 
   /**
    * Constructor
    */
   public NSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+      SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
     super(problem);
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize); ;
@@ -39,6 +41,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.selectionOperator = selectionOperator;
 
     this.evaluator = evaluator;
+    this.dominanceComparator = dominanceComparator ;
   }
 
   @Override protected void initProgress() {
@@ -65,7 +68,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     jointPopulation.addAll(offspringPopulation);
 
     RankingAndCrowdingSelection<S> rankingAndCrowdingSelection ;
-    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize()) ;
+    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize(), dominanceComparator) ;
 
     return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }

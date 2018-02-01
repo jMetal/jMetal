@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.selection.RankingAndPreferenceSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
   public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
                  CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
                  SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator, List<Double> interestPoint, double epsilon) {
-    super(problem,maxEvaluations,populationSize,crossoverOperator,mutationOperator,selectionOperator ,evaluator);
+    super(problem,maxEvaluations,populationSize,crossoverOperator,mutationOperator,selectionOperator, new DominanceComparator<S>(), evaluator);
     this.interestPoint= interestPoint;
     this.epsilon =epsilon;
   }

@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -25,9 +26,9 @@ public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {
   public NSGAIIStoppingByTime(Problem<S> problem, int populationSize,
                               long maxComputingTime,
                               CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-                              SelectionOperator<List<S>, S> selectionOperator) {
+                              SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator) {
     super(problem, 0, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, null);
+        selectionOperator, dominanceComparator, null);
 
     initComputingTime = System.currentTimeMillis() ;
     stoppingCondition = false ;
