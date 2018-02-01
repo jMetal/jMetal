@@ -50,15 +50,15 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     
     referencePoint = new ArrayList<>();
-    referencePoint.add(200.0);
-    referencePoint.add(0.0);
+    referencePoint.add(2.0);
+    referencePoint.add(2.0);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
