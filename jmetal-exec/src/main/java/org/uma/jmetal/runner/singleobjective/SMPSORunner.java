@@ -20,7 +20,7 @@ import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 import java.util.List;
 
 /**
- * Class for configuring and running the SMPSO algorithm
+ * Class for configuring and running the SMPSO algorithm to solve a single-objective problem
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

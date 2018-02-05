@@ -1,23 +1,3 @@
-//  CovarianceMatrixAdaptationEvolutionStrategyRunner.java
-//
-//  Author:
-//       Esteban López-Camacho <esteban@lcc.uma.es>
-//
-//  Copyright (c) 2014 Antonio J. Nebro
-//
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;

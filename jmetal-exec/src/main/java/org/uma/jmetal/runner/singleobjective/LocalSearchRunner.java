@@ -1,16 +1,3 @@
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.operator.LocalSearchOperator;
@@ -26,8 +13,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import java.util.Comparator;
 
 /**
- * Class to configure and run an elitist (mu + lambda) evolution strategy. The target problem is
- * OneMax.
+ * Class to configure and run a single objective local search. The target problem is OneMax.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -36,19 +22,19 @@ public class LocalSearchRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.LocalSearchRunner
    */
   public static void main(String[] args) throws Exception {
-    BinaryProblem problem = new OneMax(128) ;
+    BinaryProblem problem = new OneMax(256) ;
 
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    int improvementRounds = 1000 ;
+    int improvementRounds = 100 ;
 
     Comparator<BinarySolution> comparator = new DominanceComparator<>(0) ;
 
     LocalSearchOperator<BinarySolution> localSearch = new BasicLocalSearch(
             improvementRounds,
             mutationOperator,
-            new ObjectiveComparator(0),
+            comparator,
             problem) ;
 
     BinarySolution solution = problem.createSolution() ;

@@ -1,16 +1,3 @@
-
-
-
-
-//
-
-
-
-
-// 
-
-
-
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
