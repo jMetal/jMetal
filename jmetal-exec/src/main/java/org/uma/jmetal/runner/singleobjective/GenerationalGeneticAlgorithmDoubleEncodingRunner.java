@@ -6,10 +6,15 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.problem.singleobjective.Sphere;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -24,22 +29,24 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DoubleGenerationalGeneticAlgorithmRunner {
+public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
   /**
-   * Usage: java org.uma.jmetal.runner.singleobjective.DoubleGenerationalGeneticAlgorithmRunner
+   * Usage: java org.uma.jmetal.runner.singleobjective.GenerationalGeneticAlgorithmDoubleEncodingRunner
    */
   public static void main(String[] args) throws Exception {
     Algorithm<DoubleSolution> algorithm;
-    DoubleProblem problem = new Sphere(10) ;
+    DoubleProblem problem = new Sphere(20) ;
 
-    CrossoverOperator<DoubleSolution> crossoverOperator = new SBXCrossover(1.0, 20.0) ;
-    MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>();
+    CrossoverOperator<DoubleSolution> crossover =
+            new SBXCrossover(0.9, 20.0) ;
+    MutationOperator<DoubleSolution> mutation =
+            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>() ;
 
-    algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)
+    algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(100)
             .setMaxEvaluations(25000)
-            .setSelectionOperator(selectionOperator)
+            .setSelectionOperator(selection)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -61,5 +68,6 @@ public class DoubleGenerationalGeneticAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
   }
 }

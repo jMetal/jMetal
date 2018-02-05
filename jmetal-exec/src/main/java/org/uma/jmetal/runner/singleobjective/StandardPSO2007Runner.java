@@ -53,7 +53,7 @@ public class StandardPSO2007Runner {
 
     algorithm = new StandardPSO2007(problem,
             10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
-            80000, 3, evaluator) ;
+            25000, 3, evaluator) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
@@ -73,6 +73,8 @@ public class StandardPSO2007Runner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
+    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
+    JMetalLogger.logger.info("Solution: " + solution.getVariableValueString(0)) ;
     evaluator.shutdown();
   }
 }

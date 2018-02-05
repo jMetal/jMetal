@@ -63,5 +63,7 @@ public class SteadyStateGeneticAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
   }
 }

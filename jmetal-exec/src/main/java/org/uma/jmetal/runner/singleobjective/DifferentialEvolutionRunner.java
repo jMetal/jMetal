@@ -5,6 +5,7 @@ import org.uma.jmetal.algorithm.singleobjective.differentialevolution.Differenti
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -38,9 +39,7 @@ public class DifferentialEvolutionRunner {
     DifferentialEvolutionCrossover crossover;
     SolutionListEvaluator<DoubleSolution> evaluator ;
 
-    String problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
-
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new Sphere(20) ;
 
     int numberOfCores ;
     if (args.length == 1) {
@@ -62,7 +61,7 @@ public class DifferentialEvolutionRunner {
         .setCrossover(crossover)
         .setSelection(selection)
         .setSolutionListEvaluator(evaluator)
-        .setMaxEvaluations(250000)
+        .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .build() ;
 
@@ -83,6 +82,8 @@ public class DifferentialEvolutionRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
 
     evaluator.shutdown();
   }
