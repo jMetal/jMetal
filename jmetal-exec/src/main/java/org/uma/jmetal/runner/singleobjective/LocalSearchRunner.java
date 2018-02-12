@@ -23,12 +23,12 @@ public class LocalSearchRunner {
    * Usage: java org.uma.jmetal.runner.singleobjective.LocalSearchRunner
    */
   public static void main(String[] args) throws Exception {
-    BinaryProblem problem = new OneMax(256) ;
+    BinaryProblem problem = new OneMax(1024) ;
 
     MutationOperator<BinarySolution> mutationOperator =
         new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
 
-    int improvementRounds = 100 ;
+    int improvementRounds = 10000 ;
 
     Comparator<BinarySolution> comparator = new DominanceComparator<>(0) ;
 

@@ -67,8 +67,8 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(300)
+        .setMaxEvaluations(50000)
+        .setPopulationSize(100)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
