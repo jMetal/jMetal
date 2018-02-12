@@ -32,13 +32,11 @@ import java.util.List;
  *         DOI = {10.1007/s10898-014-0214-y}
  */
 public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	protected int maxEvaluations;
 	protected int evaluations;
 	protected Normalizer normalizer;
+	protected double epsilon ;
 	
 	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
 	List<Double> interestPoint = null;
@@ -57,6 +55,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 								MutationOperator<S> mutationOperator,
 								SelectionOperator<List<S>, S> selectionOperator,
 								SolutionListEvaluator<S> evaluator,
+                double epsilon,
 								List<Double> referencePoint,
 								String weightVectorsFileName) {
 
@@ -65,6 +64,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		setMaxPopulationSize(populationSize);
 		this.interestPoint = referencePoint;
 		this.achievementScalarizingFunction =  createUtilityFunction();
+		this.epsilon = epsilon ;
 	}
 	
 	/**
@@ -79,7 +79,8 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 								MutationOperator<S> mutationOperator,
 								SelectionOperator<List<S>, S> selectionOperator,
 								SolutionListEvaluator<S> evaluator,
-								List<Double> referencePoint) {
+                double epsilon,
+                List<Double> referencePoint) {
 		
 		this(problem,
 						populationSize,
@@ -88,6 +89,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 						mutationOperator,
 						selectionOperator,
 						evaluator,
+            epsilon,
 						referencePoint,
 						"") ;
 	}
@@ -96,7 +98,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 		WeightVector weightVector = new WeightVector() ;
 		double [][] weights ;
 		if ("".equals(this.weightVectorsFileName)) {
-			weights = weightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
+			weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
 		} else {
 			weights = weightVector.getWeightsFromFile(this.weightVectorsFileName) ;
 		}

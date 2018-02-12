@@ -70,12 +70,14 @@ public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
+    double epsilon = 0.01 ;
     algorithm = new WASFGAMeasures<DoubleSolution>(
     				problem,
 						100,
 						250,
-						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
-
+						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
+            epsilon,
+            referencePoint) ;
     
     /* Measure management */
     MeasureManager measureManager = ((WASFGAMeasures<DoubleSolution>) algorithm).getMeasureManager();

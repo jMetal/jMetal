@@ -55,17 +55,6 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
     String referenceParetoFront = "" ;
     List<Double> referencePoint = null;
 
-    /*String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
-    }*/
-
     //problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
 
@@ -83,7 +72,9 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());*/
 
-    algorithm = new WASFGA<PermutationSolution<Integer>>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<PermutationSolution<Integer>>(),referencePoint) ;
+double epsilon = 0.01 ;
+    algorithm = new WASFGA<PermutationSolution<Integer>>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<PermutationSolution<Integer>>(),epsilon, referencePoint) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

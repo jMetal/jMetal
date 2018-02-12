@@ -40,6 +40,7 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 												MutationOperator<S> mutationOperator,
 												SelectionOperator<List<S>, S> selectionOperator,
 												SolutionListEvaluator<S> evaluator,
+                        double epsilon,
 												List<Double> referencePoint,
 												String weightVectorsFileName) {
 		
@@ -50,6 +51,7 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 						mutationOperator,
 						selectionOperator,
 						evaluator,
+						epsilon,
 						referencePoint,
 						weightVectorsFileName);
 		this.initMeasures();
@@ -67,6 +69,7 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 												MutationOperator<S> mutationOperator,
 												SelectionOperator<List<S>, S> selectionOperator,
 												SolutionListEvaluator<S> evaluator,
+												double epsilon,
 												List<Double> referencePoint) {
 		this(problem,
 						populationSize,
@@ -75,7 +78,8 @@ public class WASFGAMeasures<S extends Solution<?>> extends WASFGA<S> implements 
 						mutationOperator,
 						selectionOperator,
 						evaluator,
-						referencePoint,
+            epsilon,
+            referencePoint,
 						"");
 	}
 	
