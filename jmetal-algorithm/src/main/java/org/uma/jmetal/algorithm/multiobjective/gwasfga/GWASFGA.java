@@ -30,8 +30,8 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
 
   public GWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
                  MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
-                 SolutionListEvaluator<S> evaluator) {
-    super(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator,
+                 SolutionListEvaluator<S> evaluator, double epsilon) {
+    super(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator, epsilon,
         null);
     setMaxPopulationSize(populationSize);
 
