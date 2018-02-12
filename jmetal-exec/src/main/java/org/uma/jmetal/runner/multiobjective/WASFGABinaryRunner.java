@@ -62,7 +62,9 @@ public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<BinarySolution>() ;
 
-    algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<BinarySolution>(),referencePoint) ;
+    double epsilon = 0.01 ;
+    algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<BinarySolution>(),epsilon, referencePoint) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

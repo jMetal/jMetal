@@ -31,8 +31,6 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 
 	@Override
 	public Ranking<S> computeRanking(List<S> population) {
-
-
 		List<S> temporalList 	= new LinkedList<>();
 		//temporalList.addAll(population);
 
@@ -80,7 +78,6 @@ public class WASFGARankingConstraint<S extends Solution<?>> extends GenericSolut
 		for (int i = 0; i < this.numberOfRanks; i++) {
 			this.rankedSubpopulations.add(new ArrayList<S>());
 		}
-
 
 		for (int idx = 0; idx < this.numberOfRanks; idx++) {
 			if(feasibleList!=null && !feasibleList.isEmpty()) {

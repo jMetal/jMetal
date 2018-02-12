@@ -60,7 +60,9 @@ public class GWASGFARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new GWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>()) ;
+    double epsilon = 0.01 ;
+    algorithm = new GWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<DoubleSolution>(),epsilon) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

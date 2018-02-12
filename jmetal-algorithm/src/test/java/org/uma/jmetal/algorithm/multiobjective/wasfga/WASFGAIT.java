@@ -48,12 +48,13 @@ public class WASFGAIT {
 		mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 		
 		selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-		
+
+		double epsilon = 0.01 ;
 		algorithm = new WASFGA<DoubleSolution>(
 						problem,
 						100,
 						250,
-						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint,
+						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),epsilon, referencePoint,
 						"nonexistingfilename") ;
 	}
   
@@ -80,12 +81,14 @@ public class WASFGAIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
   
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-  
-    algorithm = new WASFGA<DoubleSolution>(
+
+		double epsilon = 0.01 ;
+
+		algorithm = new WASFGA<DoubleSolution>(
             problem,
             100,
             250,
-            crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
+            crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),epsilon, referencePoint) ;
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
@@ -120,12 +123,14 @@ public class WASFGAIT {
 		mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 		
 		selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-		
+
+		double epsilon = 0.01 ;
+
 		algorithm = new WASFGA<DoubleSolution>(
 						problem,
 						100,
 						250,
-						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),referencePoint) ;
+						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),epsilon, referencePoint) ;
 		algorithm.run();
 		
 		List<DoubleSolution> population = algorithm.getResult();

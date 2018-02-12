@@ -71,6 +71,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
+    double epsilon = 0.01 ;
     algorithm = new WASFGAMeasures<DoubleSolution>(
     				problem,
 						100,
@@ -79,6 +80,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
 						mutation,
 						selection,
 						new SequentialSolutionListEvaluator<DoubleSolution>(),
+						epsilon,
 						referencePoint,
 						//"/home/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/mombi2-weights/weight/weight_02D_152.sld") ;
 		"MOEAD_Weights/W3D_100.dat") ;
