@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -31,7 +32,8 @@ import java.util.List;
  *         Issue 1, pp 101-129
  *         DOI = {10.1007/s10898-014-0214-y}
  */
-public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
+public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
+		InteractiveAlgorithm<S,List<S>> {
 	private static final long serialVersionUID = 1L;
 	protected int maxEvaluations;
 	protected int evaluations;
@@ -42,7 +44,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	List<Double> interestPoint = null;
 
 	private String weightVectorsFileName = "" ;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -189,4 +191,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	@Override public String getDescription() {
 		return "Weighting Achievement Scalarizing Function Genetic Algorithm" ;
 	}
+
+
+
 }
