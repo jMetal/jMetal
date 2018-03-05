@@ -25,7 +25,7 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
 
   @Override
   public Ranking<S> computeRanking(List<S> population) {
-
+	//TO REFACTOR
 	this.numberOfRanks 		= (population.size() + 1) / (this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize());	
 	
 	this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
