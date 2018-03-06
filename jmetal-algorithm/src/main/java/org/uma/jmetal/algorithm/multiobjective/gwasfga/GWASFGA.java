@@ -30,32 +30,35 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
 
   public GWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
                  MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
-                 SolutionListEvaluator<S> evaluator, double epsilon) {
+                 SolutionListEvaluator<S> evaluator, double epsilon, String weightVectorsFileName) {
     super(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator, epsilon,
-        null);
+            null, weightVectorsFileName);
+
     setMaxPopulationSize(populationSize);
 
-    WeightVector weightVector = new WeightVector() ;
-    double [][] weights =  weightVector.initUniformWeights2D(0.005, getMaxPopulationSize());
-
-    int halfVectorSize = weights.length  / 2;
-    int evenVectorsSize    = (weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
-    int oddVectorsSize     = halfVectorSize;
+    int halfVectorSize = super.weights.length  / 2;
+    int evenVectorsSize    = (super.weights.length%2==0) ? halfVectorSize : (halfVectorSize+1);
 
     double [][] evenVectors = new double[evenVectorsSize][getProblem().getNumberOfObjectives()];
-    double [][] oddVectors = new double[oddVectorsSize][getProblem().getNumberOfObjectives()];
+    double [][] oddVectors = new double[halfVectorSize][getProblem().getNumberOfObjectives()];
 
     int index = 0;
-    for (int i = 0; i < weights.length; i = i + 2)
-      evenVectors[index++] = weights[i];
+    for (int i = 0; i < super.weights.length; i = i + 2)
+      evenVectors[index++] = super.weights[i];
 
     index = 0;
-    for (int i = 1; i < weights.length; i = i + 2)
-      oddVectors[index++] = weights[i];
+    for (int i = 1; i < super.weights.length; i = i + 2)
+      oddVectors[index++] = super.weights[i];
 
     this.achievementScalarizingNadir  =  createUtilityFunction(this.getNadirPoint(), evenVectors);
     this.achievementScalarizingUtopia =  createUtilityFunction(this.getReferencePoint(), oddVectors);
+  }
 
+  public GWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
+                 MutationOperator<S> mutationOperator, SelectionOperator<List<S>, S> selectionOperator,
+                 SolutionListEvaluator<S> evaluator, double epsilon) {
+    this(problem, populationSize, maxIterations, crossoverOperator, mutationOperator, selectionOperator, evaluator, epsilon,
+             "");
   }
 
   public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double [][] weights) {
