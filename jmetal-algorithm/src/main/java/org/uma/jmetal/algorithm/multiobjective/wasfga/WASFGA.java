@@ -39,10 +39,10 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	protected int evaluations;
 	protected Normalizer normalizer;
 	protected double epsilon ;
+	protected double[][] weights;
 	
-	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
-	List<Double> interestPoint = null;
-
+	private final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+	private List<Double> interestPoint = null;
 	private String weightVectorsFileName = "" ;
 
 	/**
@@ -98,10 +98,19 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
 		WeightVector weightVector = new WeightVector() ;
-		double [][] weights ;
+
+		//If a file with weight vectors is not given as parameter, weights are calculated or read from the resources file of jMetal
 		if ("".equals(this.weightVectorsFileName)) {
-			weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
-		} else {
+			//For two biobjective problems weights are computed
+			if (problem.getNumberOfObjectives() == 2) {
+				weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
+			}
+			//For more than two objectives, weights are read from the resources file of jMetal
+			else {
+				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
+				weights = weightVector.getWeightsFromResourcesInJMetal("MOEAD_Weights/" + dataFileName);
+			}
+		} else { //If a file with weight vectors is given as parameter, weights are read from that file
 			weights = weightVector.getWeightsFromFile(this.weightVectorsFileName) ;
 		}
 		weights = WeightVector.invertWeights(weights,true);
