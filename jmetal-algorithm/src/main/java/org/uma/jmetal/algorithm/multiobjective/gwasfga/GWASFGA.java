@@ -62,7 +62,6 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
   }
 
   public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double [][] weights) {
-    weights = WeightVector.invertWeights(weights,true);
     ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
 
     return aux;
