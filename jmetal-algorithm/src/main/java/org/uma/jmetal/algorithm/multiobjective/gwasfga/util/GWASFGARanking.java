@@ -25,54 +25,54 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
 
   @Override
   public Ranking<S> computeRanking(List<S> population) {
+      int toRemoveIdx, numberOfWeights;
+      double minimumValue, value;
+      S solutionToInsert;
+      List<S> temporalList;
 
-	this.numberOfRanks 		= (population.size() + 1) / (this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize());	
-	
-	this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
-	
-	for (int i = 0; i < this.numberOfRanks; i++) {
-		this.rankedSubpopulations.add(new ArrayList<S>());
-	}
-	List<S> temporalList 	= new LinkedList<>();
-	temporalList.addAll(population);
-	  
-	
-	for (int idx = 0; idx < this.numberOfRanks; idx++) {
-		for (int weigth = 0; weigth < this.utilityFunctionsUtopia.getSize(); weigth++) {
-			int toRemoveIdx = 0;
-			double minimumValue = this.utilityFunctionsUtopia.evaluate(temporalList.get(0), weigth);			
-			for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
-				double value = this.utilityFunctionsUtopia.evaluate(temporalList.get(solutionIdx), weigth);
-				
-				if (value < minimumValue) {
-					minimumValue = value;
-					toRemoveIdx = solutionIdx;
-				}
-			}
-		
-			S solutionToInsert = temporalList.remove(toRemoveIdx);
-			setAttribute(solutionToInsert, idx);
-			this.rankedSubpopulations.get(idx).add(solutionToInsert);
-		}
-		for (int weigth = 0; weigth < this.utilityFunctionsNadir.getSize(); weigth++) {
-			int toRemoveIdx = 0;
-			double minimumValue = this.utilityFunctionsNadir.evaluate(temporalList.get(0), weigth);			
-			for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
-				double value = this.utilityFunctionsNadir.evaluate(temporalList.get(solutionIdx), weigth);
-				
-				if (value < minimumValue) {
-					minimumValue = value;
-					toRemoveIdx = solutionIdx;
-				}
-			}
-		
-			S solutionToInsert = temporalList.remove(toRemoveIdx);
-			setAttribute(solutionToInsert, idx);
-			this.rankedSubpopulations.get(idx).add(solutionToInsert);
-		}
-		
-	}
-	return this;
+      this.numberOfRanks = (population.size() + 1) / (this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize());
+
+      this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
+
+      for (int i = 0; i < this.numberOfRanks; i++) {
+          this.rankedSubpopulations.add(new ArrayList<S>());
+      }
+      temporalList = new LinkedList<>();
+      temporalList.addAll(population);
+
+      numberOfWeights = this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize();
+      for (int idx = 0; idx < this.numberOfRanks; idx++) {
+          for (int weight = 0; weight < numberOfWeights/2; weight++) {
+              toRemoveIdx = 0;
+              minimumValue = this.utilityFunctionsUtopia.evaluate(temporalList.get(0), weight);
+              for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
+                  value = this.utilityFunctionsUtopia.evaluate(temporalList.get(solutionIdx), weight);
+
+                  if (value < minimumValue) {
+                      minimumValue = value;
+                      toRemoveIdx = solutionIdx;
+                  }
+              }
+              solutionToInsert = temporalList.remove(toRemoveIdx);
+              setAttribute(solutionToInsert, idx);
+              this.rankedSubpopulations.get(idx).add(solutionToInsert);
+
+              toRemoveIdx = 0;
+              minimumValue = this.utilityFunctionsNadir.evaluate(temporalList.get(0), weight);
+              for (int solutionIdx = 1; solutionIdx < temporalList.size(); solutionIdx++) {
+                  value = this.utilityFunctionsNadir.evaluate(temporalList.get(solutionIdx), weight);
+
+                  if (value < minimumValue) {
+                      minimumValue = value;
+                      toRemoveIdx = solutionIdx;
+                  }
+              }
+              solutionToInsert = temporalList.remove(toRemoveIdx);
+              setAttribute(solutionToInsert, idx);
+              this.rankedSubpopulations.get(idx).add(solutionToInsert);
+          }
+      }
+      return this;
   }
 
   @Override

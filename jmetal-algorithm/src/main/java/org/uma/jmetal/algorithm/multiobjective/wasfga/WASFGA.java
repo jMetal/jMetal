@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -31,18 +32,19 @@ import java.util.List;
  *         Issue 1, pp 101-129
  *         DOI = {10.1007/s10898-014-0214-y}
  */
-public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
+public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
+		InteractiveAlgorithm<S,List<S>> {
 	private static final long serialVersionUID = 1L;
 	protected int maxEvaluations;
 	protected int evaluations;
 	protected Normalizer normalizer;
 	protected double epsilon ;
+	protected double[][] weights;
 	
-	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
-	List<Double> interestPoint = null;
-
+	private final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+	private List<Double> interestPoint = null;
 	private String weightVectorsFileName = "" ;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -96,10 +98,19 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
 		WeightVector weightVector = new WeightVector() ;
-		double [][] weights ;
+
+		//If a file with weight vectors is not given as parameter, weights are calculated or read from the resources file of jMetal
 		if ("".equals(this.weightVectorsFileName)) {
-			weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
-		} else {
+			//For two biobjective problems weights are computed
+			if (problem.getNumberOfObjectives() == 2) {
+				weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
+			}
+			//For more than two objectives, weights are read from the resources file of jMetal
+			else {
+				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
+				weights = weightVector.getWeightsFromResourcesInJMetal("MOEAD_Weights/" + dataFileName);
+			}
+		} else { //If a file with weight vectors is given as parameter, weights are read from that file
 			weights = weightVector.getWeightsFromFile(this.weightVectorsFileName) ;
 		}
 		weights = WeightVector.invertWeights(weights,true);
@@ -189,4 +200,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	@Override public String getDescription() {
 		return "Weighting Achievement Scalarizing Function Genetic Algorithm" ;
 	}
+
+
+
 }
