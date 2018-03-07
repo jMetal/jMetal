@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.wasfga.util;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -47,6 +48,52 @@ public class WeightVector {
 		
 		return weights;
 	}
+
+	/**
+	 * Read a set of weight vector from a file in the resources folder in jMetal
+	 *
+	 * @param filePath The name of file in the resources folder of jMetal
+	 * @return A set of weight vectors
+	 */
+	public double[][] getWeightsFromResourcesInJMetal(String filePath) {
+		double[][] weights = new double[0][0];
+
+		Vector<double[]> listOfWeights = new Vector<double[]>();
+
+		try {
+			InputStream in = getClass().getResourceAsStream("/" + filePath);
+			InputStreamReader isr = new InputStreamReader(in);
+			BufferedReader br = new BufferedReader(isr);
+
+			int numberOfObjectives = 0;
+			int j = 0;
+			String aux = br.readLine();
+			while (aux != null) {
+				StringTokenizer st = new StringTokenizer(aux);
+				j = 0;
+				numberOfObjectives = st.countTokens();
+				double[] weight = new double[numberOfObjectives];
+
+				while (st.hasMoreTokens()) {
+					weight[j] = new Double(st.nextToken());
+					j++;
+				}
+
+				listOfWeights.add(weight);
+				aux = br.readLine();
+			}
+			br.close();
+
+			weights = new double[listOfWeights.size()][numberOfObjectives];
+			for (int indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
+				System.arraycopy(listOfWeights.get(indexWeight), 0, weights[indexWeight], 0, numberOfObjectives);
+			}
+		} catch (Exception e) {
+			throw new JMetalException("getWeightsFromResourcesInJMetal: failed when reading for file: " + filePath + "", e);
+		}
+
+		return weights;
+	}
 	
 	/**
 	 * Read a set of weight vector from a file
@@ -60,16 +107,11 @@ public class WeightVector {
 		Vector<double[]> listOfWeights = new Vector<double[]>();
 		
 		try {
-			InputStream in = getClass().getResourceAsStream("/" + filePath);
-			InputStreamReader isr = new InputStreamReader(in);
-			BufferedReader br = new BufferedReader(isr);
-			
-    	/*
-      // Open the file
-      FileInputStream fis = new FileInputStream(filePath);
-      InputStreamReader isr = new InputStreamReader(fis);
-      BufferedReader br = new BufferedReader(isr);
-      */
+
+			  // Open the file
+			  FileInputStream fis = new FileInputStream(filePath);
+			  InputStreamReader isr = new InputStreamReader(fis);
+			  BufferedReader br = new BufferedReader(isr);
 			
 			int numberOfObjectives = 0;
 			int j = 0;
@@ -81,7 +123,7 @@ public class WeightVector {
 				double[] weight = new double[numberOfObjectives];
 				
 				while (st.hasMoreTokens()) {
-					weight[j] = (new Double(st.nextToken())).doubleValue();
+					weight[j] = new Double(st.nextToken());
 					j++;
 				}
 				
@@ -92,9 +134,7 @@ public class WeightVector {
 			
 			weights = new double[listOfWeights.size()][numberOfObjectives];
 			for (int indexWeight = 0; indexWeight < listOfWeights.size(); indexWeight++) {
-				for (int indexOfObjective = 0; indexOfObjective < numberOfObjectives; indexOfObjective++) {
-					weights[indexWeight][indexOfObjective] = listOfWeights.get(indexWeight)[indexOfObjective];
-				}
+				System.arraycopy(listOfWeights.get(indexWeight), 0, weights[indexWeight], 0, numberOfObjectives);
 			}
 		} catch (Exception e) {
 			throw new JMetalException("getWeightsFromFile: failed when reading for file: " + filePath + "", e);
