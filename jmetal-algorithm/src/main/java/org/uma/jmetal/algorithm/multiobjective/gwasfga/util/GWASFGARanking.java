@@ -16,9 +16,8 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   private AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia;
   private AbstractUtilityFunctionsSet<S> utilityFunctionsNadir;
   private List<List<S>> rankedSubpopulations;
-  private int numberOfRanks = 0;
 
-  public GWASFGARanking(AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia, AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
+    public GWASFGARanking(AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia, AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
     this.utilityFunctionsUtopia = utilityFunctionsUtopia;
     this.utilityFunctionsNadir  = utilityFunctionsNadir;
   }
@@ -30,18 +29,18 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
       S solutionToInsert;
       List<S> temporalList;
 
-      this.numberOfRanks = (population.size() + 1) / (this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize());
+      int numberOfRanks = (population.size() + 1) / (this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize());
 
-      this.rankedSubpopulations = new ArrayList<>(this.numberOfRanks);
+      this.rankedSubpopulations = new ArrayList<>(numberOfRanks);
 
-      for (int i = 0; i < this.numberOfRanks; i++) {
-          this.rankedSubpopulations.add(new ArrayList<S>());
+      for (int i = 0; i < numberOfRanks; i++) {
+          this.rankedSubpopulations.add(new ArrayList<>());
       }
       temporalList = new LinkedList<>();
       temporalList.addAll(population);
 
       numberOfWeights = this.utilityFunctionsUtopia.getSize() + this.utilityFunctionsNadir.getSize();
-      for (int idx = 0; idx < this.numberOfRanks; idx++) {
+      for (int idx = 0; idx < numberOfRanks; idx++) {
           for (int weight = 0; weight < numberOfWeights/2; weight++) {
               toRemoveIdx = 0;
               minimumValue = this.utilityFunctionsUtopia.evaluate(temporalList.get(0), weight);
@@ -84,11 +83,4 @@ public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttrib
   public int getNumberOfSubfronts() {
     return this.rankedSubpopulations.size();
   }
-  
-  /*public AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
-    return this.utilityFunctions;
-  }*/
-  
-  
-  
 }
