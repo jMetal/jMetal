@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -24,8 +23,8 @@ import java.util.List;
  * @author Juanjo Durillo
  */
 public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
-  final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
-  final AbstractUtilityFunctionsSet<S> achievementScalarizingNadir;
+  private final AbstractUtilityFunctionsSet<S> achievementScalarizingUtopia;
+  private final AbstractUtilityFunctionsSet<S> achievementScalarizingNadir;
   private static final long serialVersionUID = 1L;
 
   public GWASFGA(Problem<S> problem, int populationSize, int maxIterations, CrossoverOperator<S> crossoverOperator,
@@ -61,10 +60,8 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
              "");
   }
 
-  public AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double [][] weights) {
-    ASFWASFGA<S> aux = new ASFWASFGA<>(weights,referencePoint);
-
-    return aux;
+  private AbstractUtilityFunctionsSet<S> createUtilityFunction(List<Double> referencePoint, double[][] weights) {
+    return new ASFWASFGA<>(weights,referencePoint);
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
