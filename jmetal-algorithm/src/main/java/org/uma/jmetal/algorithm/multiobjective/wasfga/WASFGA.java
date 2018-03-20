@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARankingConstraint;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVectors;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -155,7 +155,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	}
 	
 	protected Ranking<S> computeRanking(List<S> solutionList) {
-		Ranking<S> ranking = new WASFGARankingConstraint<>(this.achievementScalarizingFunction);
+		Ranking<S> ranking = new WASFGARanking<>(this.achievementScalarizingFunction);
 		ranking.computeRanking(solutionList);
 		return ranking;
 	}
