@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.Normalizer;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARankingConstraint;
-import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVector;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WASFGARanking;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.util.WeightVectors;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -31,18 +31,18 @@ import java.util.List;
  *         Issue 1, pp 101-129
  *         DOI = {10.1007/s10898-014-0214-y}
  */
-public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
+public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
+		InteractiveAlgorithm<S,List<S>> {
 	private static final long serialVersionUID = 1L;
 	protected int maxEvaluations;
 	protected int evaluations;
-	protected Normalizer normalizer;
 	protected double epsilon ;
+	protected double[][] weights;
 	
-	final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
-	List<Double> interestPoint = null;
-
+	private final AbstractUtilityFunctionsSet<S> achievementScalarizingFunction;
+	private List<Double> interestPoint = null;
 	private String weightVectorsFileName = "" ;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -95,23 +95,40 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	}
 
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction() {
-		WeightVector weightVector = new WeightVector() ;
-		double [][] weights ;
+		//If a file with weight vectors is not given as parameter, weights are calculated or read from the resources file of jMetal
 		if ("".equals(this.weightVectorsFileName)) {
-			weights = weightVector.initUniformWeights2D(epsilon, getMaxPopulationSize());
-		} else {
-			weights = weightVector.getWeightsFromFile(this.weightVectorsFileName) ;
+			//For two biobjective problems weights are computed
+			if (problem.getNumberOfObjectives() == 2) {
+				weights = WeightVectors.initializeUniformlyInTwoDimensions(epsilon, getMaxPopulationSize());
+			}
+			//For more than two objectives, weights are read from the resources file of jMetal
+			else {
+				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
+				weights = WeightVectors.readFromResourcesInJMetal("MOEAD_Weights/" + dataFileName);
+			}
+		} else { //If a file with weight vectors is given as parameter, weights are read from that file
+			weights = WeightVectors.readFromFile(this.weightVectorsFileName) ;
 		}
-		weights = WeightVector.invertWeights(weights,true);
-		
-		if (weights.length != maxPopulationSize) {
-			throw new JMetalException("The number of weight vectors (" + weights.length +") and the population size(" +
-							maxPopulationSize + ") have different values") ;
-		}
-		
-		ASFWASFGA<S> aux = new ASFWASFGA<>(weights, interestPoint);
+		weights = WeightVectors.invert(weights,true);
 
-		return aux;
+		//We validate that the weight vectors are valid:
+		//The number of components of each weight is similar to the number of objectives of the problem being solved.
+		if (!WeightVectors.validate(weights, problem.getNumberOfObjectives()))
+		{
+			throw new JMetalException("Weight vectors are invalid. Check that weight vectors have as many components" +
+					" as objectives the problem being solved has.") ;
+		}
+
+		//By default, the algorithm uses as many weight vectors as individual in the population.
+		//In a future, a new parameter should be added to specify the number of weight vectors to use.
+		//As it is mentioned in the paper, the number of weight vectors must lower than or equal to the population size.
+		if (weights.length != maxPopulationSize) {
+			throw new JMetalException("The number of weight vectors (" + weights.length +") and the population size (" +
+							maxPopulationSize + ") have different values. This behaviour will change in a future " +
+					"version.") ;
+		}
+
+		return new ASFWASFGA<>(weights, interestPoint);
 	}
 
 	public void updatePointOfInterest(List<Double> newPointOfInterest) {
@@ -138,22 +155,22 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	}
 	
 	protected Ranking<S> computeRanking(List<S> solutionList) {
-		Ranking<S> ranking = new WASFGARankingConstraint<>(this.achievementScalarizingFunction);
+		Ranking<S> ranking = new WASFGARanking<>(this.achievementScalarizingFunction);
 		ranking.computeRanking(solutionList);
 		return ranking;
 	}
-	
-	protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
+
+    protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
 		population.addAll(ranking.getSubfront(index));
 	}
-	
-	protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking,int index, List<S>population) {
+
+    protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
 		List<S> front 	= ranking.getSubfront(index);
 		int remain 		= this.getPopulationSize() - population.size();
 		population.addAll(front.subList(0, remain));
 	}
-	
-	protected List<S> selectBest(Ranking<S> ranking) {
+
+    protected List<S> selectBest(Ranking<S> ranking) {
 		List<S> population = new ArrayList<>(this.getPopulationSize());
 		int rankingIndex = 0;
 
@@ -171,13 +188,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> {
 	private boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int index, List<S> population) {
 		return (population.size()+ranking.getSubfront(index).size() < this.getPopulationSize());
 	}
-	protected AbstractUtilityFunctionsSet<S> getUtilityFunctions() {
-		return this.achievementScalarizingFunction;
-	}
-	
+
 	@Override public List<S> getResult() {
 		return getNonDominatedSolutions(getPopulation());
 	}
+
 	protected List<S> getNonDominatedSolutions(List<S> solutionList) {
 		return SolutionListUtils.getNondominatedSolutions(solutionList);
 	}
