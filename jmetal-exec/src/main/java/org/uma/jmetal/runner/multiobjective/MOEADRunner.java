@@ -35,8 +35,6 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
-    JMetalRandom.getInstance().setSeed(1);
-
     String problemName ;
     String referenceParetoFront = "";
     if (args.length == 1) {
@@ -59,7 +57,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
             .setCrossover(crossover)
             .setMutation(mutation)
             .setMaxEvaluations(350000)
