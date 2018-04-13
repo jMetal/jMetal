@@ -13,10 +13,16 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ## Changelog of the next incoming release (jMetal 5.5)
 
+### Algorithms
+
+* Improvements in algorithms [WASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/wasfga) and [GWASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/gwasfga). Contribution of Rubén Saborido.
+* Algorithm MOEA/D and variants can now return a subset of evenly distributed solutions (see Miscelanea)
+
 ### Miscelanea
 
 * Added class [KNearestNeighborhood](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl/KNearestNeighborhood.java). 
-* Added new neighborhood classes: C25, C49, L13, L25 and L41 (https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl)
+* Added new neighborhood classes: C25, C49, L13, L25 and L41 (https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl).
+* Added method `getSubsetOfEvenlyDistributedSolutions()` to class [MOEADUtils](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/moead/util/MOEADUtils.java).
 
 ## jMetal is available as a Maven Project in The Central Repository
 
