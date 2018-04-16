@@ -13,10 +13,10 @@ import org.uma.jmetal.util.referencePoint.ReferencePoint;
 public class IdealPoint extends ReferencePoint {
   private static final double DEFAULT_INITIAL_VALUE = Double.POSITIVE_INFINITY ;
 
-  public IdealPoint(int numberOfPoints) {
-    super(numberOfPoints) ;
+  public IdealPoint(int dimension) {
+    super(dimension) ;
 
-    for (int i = 0; i < numberOfPoints; i++) {
+    for (int i = 0; i < dimension; i++) {
       this.setObjective(i, DEFAULT_INITIAL_VALUE);
     }
   }

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
@@ -28,6 +30,7 @@ import org.uma.jmetal.util.referencePoint.impl.NadirPoint;
 public class ArtificiallDecisionMakerIT {
   Algorithm<List<DoubleSolution>> algorithm;
 
+  @Ignore
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
     Problem<DoubleSolution> problem;
@@ -88,10 +91,7 @@ public class ArtificiallDecisionMakerIT {
           .execute();
       List<Double> referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
           .getReferencePoints();
-    /*
-    Rationale: the default problem is Kursawe, and usually NSGA-II, configured with standard
-    settings, should return 100 solutions
-    */
+
       assertTrue(referencePoints.size() >= numberObjectives * numberIterations);
     }
   }

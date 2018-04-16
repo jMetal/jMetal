@@ -12,6 +12,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -42,8 +43,8 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.UF.UF1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/UF1.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -56,11 +57,11 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(150000)
-            .setPopulationSize(100)
+            .setMaxEvaluations(350000)
+            .setPopulationSize(300)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
