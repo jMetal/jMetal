@@ -44,7 +44,7 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
 
     problem = ProblemUtils.loadProblem(problemName);
-    
+
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 30.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;

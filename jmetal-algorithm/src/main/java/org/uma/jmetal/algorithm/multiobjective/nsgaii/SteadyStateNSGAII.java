@@ -30,7 +30,6 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
     evaluations ++ ;
   }
 
-
   @Override protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(2);
 
