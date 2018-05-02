@@ -20,7 +20,7 @@ If you are interested in contributing with your ideas and comments, please take 
 * Algorithm [ESPEA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/espea). Contribution of Marlon Braun.
 
 ### Problems
-* Problems of the [CEC 2018 competition on many-objective optimization](https://www.cs.bham.ac.uk/%7Echengr/CEC_Comp_on_MaOO/2018/webpage.html). Contribution of Gian Mauricio Fritsche.
+* Problems of the [CEC 2018 competition on many-objective optimization](https://github.com/jMetal/jMetal/tree/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/maf). Contribution of Gian Mauricio Fritsche.
 
 ### Miscelanea
 
