@@ -71,8 +71,8 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(100)
+        .setMaxEvaluations(50000)
+        .setPopulationSize(200)
         .setHypervolumeImplementation(hypervolume)
         .build() ;
 
