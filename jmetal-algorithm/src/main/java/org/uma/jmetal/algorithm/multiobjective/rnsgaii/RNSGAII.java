@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
+import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -17,7 +18,8 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
+public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
+    InteractiveAlgorithm<S,List<S>> {
 
 
   private List<Double> interestPoint;
@@ -33,7 +35,8 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> {
     this.interestPoint= interestPoint;
     this.epsilon =epsilon;
   }
-  public void updateReferencePoint(List<Double> newReferencePoints){
+  @Override
+  public void updatePointOfInterest(List<Double> newReferencePoints){
     this.interestPoint = newReferencePoints;
   }
   @Override protected void initProgress() {

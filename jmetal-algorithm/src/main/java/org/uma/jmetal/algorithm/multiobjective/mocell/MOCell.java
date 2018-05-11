@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -137,9 +139,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     int flag = dominanceComparator.compare(population.get(currentIndividual),offspringPopulation.get(0));
 
     if (flag == 1) { //The new individual dominates
-      insertNewIndividualWhenDominates(population,offspringPopulation);
+      population= insertNewIndividualWhenDominates(population,offspringPopulation);
     } else if (flag == 0) { //The new individual is non-dominated
-      insertNewIndividualWhenNonDominated(population,offspringPopulation);
+      population= insertNewIndividualWhenNonDominated(population,offspringPopulation);
     }
     return population;
   }
@@ -149,18 +151,19 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     return archive.getSolutionList();
   }
 
-  private void insertNewIndividualWhenDominates(List<S> population, List<S> offspringPopulation) {
+  private List<S> insertNewIndividualWhenDominates(List<S> population, List<S> offspringPopulation) {
     location.setAttribute(offspringPopulation.get(0),
         location.getAttribute(population.get(currentIndividual)));
-
-    population.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
+    List<S> result = new ArrayList<>(population);
+    result.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
     archive.add(offspringPopulation.get(0));
+    return result;
   }
 
-  private void insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
+  private List<S> insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
     location.setAttribute(offspringPopulation.get(0), -1);
-
+    List<S> result = new ArrayList<>(population);
     Ranking<S> rank = new DominanceRanking<S>();
     rank.computeRanking(currentNeighbors);
 
@@ -177,9 +180,11 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     } else {
       location.setAttribute(offspringPopulation.get(0),
           location.getAttribute(worst));
-      population.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
+      result.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
       archive.add(offspringPopulation.get(0));
+
     }
+    return result;
   }
 
   @Override public String getName() {

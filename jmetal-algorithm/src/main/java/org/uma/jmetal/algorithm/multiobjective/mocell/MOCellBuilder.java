@@ -68,7 +68,8 @@ public class MOCellBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     }
 
     this.populationSize = populationSize;
-
+    this.neighborhood = new C9<S>((int)Math.sqrt(this.populationSize), (int)Math.sqrt(this.populationSize)) ;
+    this.archive = new CrowdingDistanceArchive<>(this.populationSize) ;
     return this;
   }
 

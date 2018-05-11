@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -9,7 +10,10 @@ import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -30,6 +34,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
   protected double offset ;
 
   protected Hypervolume<S> hypervolumeImplementation;
+  protected Comparator<S> dominanceComparator ;
 
   public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
@@ -43,6 +48,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     this.selectionOperator = new RandomSelection<S>() ;
+    this.dominanceComparator = new DominanceComparator<>()  ;
   }
 
   public SMSEMOABuilder<S> setPopulationSize(int populationSize) {
@@ -88,9 +94,19 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
+  public SMSEMOABuilder<S> setDominanceComparator(Comparator<S> dominanceComparator) {
+    if (dominanceComparator == null) {
+      throw new JMetalException("dominanceComparator is null");
+    }
+    this.dominanceComparator = dominanceComparator ;
+
+    return this;
+  }
+
   @Override public SMSEMOA<S> build() {
     return new SMSEMOA<S>(problem, maxEvaluations, populationSize, offset,
-        crossoverOperator, mutationOperator, selectionOperator, hypervolumeImplementation);
+        crossoverOperator, mutationOperator, selectionOperator, dominanceComparator,
+        hypervolumeImplementation);
   }
 
   /*

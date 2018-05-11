@@ -7,10 +7,14 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,13 +28,14 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected int evaluations;
 
   private Hypervolume<S> hypervolume;
+  protected Comparator<S> dominanceComparator ;
 
   /**
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, Hypervolume<S> hypervolumeImplementation) {
+      SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, Hypervolume<S> hypervolumeImplementation) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
@@ -40,7 +45,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-
+    this.dominanceComparator = dominanceComparator ;
     this.hypervolume = hypervolumeImplementation ;
   }
 
@@ -117,7 +122,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>();
+    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(solutionList);
 
     return ranking;
