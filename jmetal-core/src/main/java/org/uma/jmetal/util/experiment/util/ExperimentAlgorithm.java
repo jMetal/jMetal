@@ -19,6 +19,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   private Algorithm<Result> algorithm;
   private String algorithmTag;
   private String problemTag;
+  private int runId ;
 
   /**
    * Constructor
@@ -26,19 +27,22 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
           String algorithmTag,
-          String problemTag) {
+          String problemTag,
+          int runId) {
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
     this.problemTag = problemTag;
+    this.runId = runId ;
   }
 
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
-          String problemTag) {
-    this(algorithm, algorithm.getName(), problemTag) ;
+          String problemTag,
+          int runId) {
+    this(algorithm, algorithm.getName(), problemTag, runId) ;
   }
 
-  public void runAlgorithm(int id, Experiment<?, ?> experimentData) {
+  public void runAlgorithm(Experiment<?, ?> experimentData) {
     String outputDirectoryName = experimentData.getExperimentBaseDirectory()
             + "/data/"
             + algorithmTag
@@ -55,12 +59,12 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
       }
     }
 
-    String funFile = outputDirectoryName + "/FUN" + id + ".tsv";
-    String varFile = outputDirectoryName + "/VAR" + id + ".tsv";
+    String funFile = outputDirectoryName + "/FUN" + runId + ".tsv";
+    String varFile = outputDirectoryName + "/VAR" + runId + ".tsv";
     JMetalLogger.logger.info(
             " Running algorithm: " + algorithmTag +
                     ", problem: " + problemTag +
-                    ", run: " + id +
+                    ", run: " + runId +
                     ", funFile: " + funFile);
 
 

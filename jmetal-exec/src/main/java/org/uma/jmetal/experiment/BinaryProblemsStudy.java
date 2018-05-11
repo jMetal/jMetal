@@ -124,6 +124,7 @@ public class BinaryProblemsStudy {
   static List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureAlgorithmList(
           List<ExperimentProblem<BinarySolution>> problemList) {
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithms = new ArrayList<>();
+    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
     for (int i = 0; i < problemList.size(); i++) {
       Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<BinarySolution>(
@@ -133,7 +134,7 @@ public class BinaryProblemsStudy {
               .setMaxEvaluations(25000)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -144,7 +145,7 @@ public class BinaryProblemsStudy {
               .setMaxIterations(250)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -155,7 +156,7 @@ public class BinaryProblemsStudy {
               .setMaxEvaluations(25000)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -181,9 +182,9 @@ public class BinaryProblemsStudy {
               .setParentSelection(parentsSelection)
               .setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag()));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
     }
-
+}
     return algorithms;
   }
 }
