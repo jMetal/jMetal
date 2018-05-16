@@ -134,7 +134,7 @@ public class BinaryProblemsStudy {
               .setMaxEvaluations(25000)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -145,7 +145,7 @@ public class BinaryProblemsStudy {
               .setMaxIterations(250)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -156,7 +156,7 @@ public class BinaryProblemsStudy {
               .setMaxEvaluations(25000)
               .setPopulationSize(100)
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
     }
 
     for (int i = 0; i < problemList.size(); i++) {
@@ -182,7 +182,7 @@ public class BinaryProblemsStudy {
               .setParentSelection(parentsSelection)
               .setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
               .build();
-      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+      algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
     }
 }
     return algorithms;
