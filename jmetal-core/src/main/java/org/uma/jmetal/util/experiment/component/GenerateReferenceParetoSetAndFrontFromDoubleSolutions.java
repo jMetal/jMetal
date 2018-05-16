@@ -77,7 +77,6 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem, nonDominatedSolutions) ;
     }
 
-    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(

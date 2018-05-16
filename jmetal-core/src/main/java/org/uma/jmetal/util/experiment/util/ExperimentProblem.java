@@ -11,15 +11,22 @@ import org.uma.jmetal.solution.Solution;
 public class ExperimentProblem<S extends Solution<?>> {
   private Problem<S> problem ;
   private String tag ;
+  private String referenceFront;
 
   public ExperimentProblem(Problem<S> problem, String tag) {
     this.problem = problem;
     this.tag = tag;
+    this.referenceFront = this.problem.getName() + ".rf";
+
   }
 
   public ExperimentProblem(Problem<S> problem) {
-    this.problem = problem;
-    this.tag = problem.getName() ;
+    this(problem,problem.getName());
+  }
+
+  public ExperimentProblem<S> changeReferenceFrontTo(String referenceFront) {
+    this.referenceFront = referenceFront;
+    return this;
   }
 
   public Problem<S> getProblem() {
@@ -29,4 +36,6 @@ public class ExperimentProblem<S extends Solution<?>> {
   public String getTag() {
     return tag ;
   }
+
+  public String getReferenceFront() {return referenceFront;}
 }
