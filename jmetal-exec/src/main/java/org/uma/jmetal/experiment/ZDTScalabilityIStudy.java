@@ -71,11 +71,10 @@ public class ZDTScalabilityIStudy {
     problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
     problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
     problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
-
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf", "ZDT1.pf");
+
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTScalabilityStudy")
@@ -85,7 +84,6 @@ public class ZDTScalabilityIStudy {
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontFileNames(referenceFrontFileNames)
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -126,7 +124,7 @@ public class ZDTScalabilityIStudy {
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -135,7 +133,7 @@ public class ZDTScalabilityIStudy {
                 new SBXCrossover(1.0, 20.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -144,7 +142,7 @@ public class ZDTScalabilityIStudy {
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
     return algorithms ;

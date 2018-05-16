@@ -127,7 +127,7 @@ public class ConstraintProblemsStudy {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -136,7 +136,7 @@ public class ConstraintProblemsStudy {
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -149,7 +149,7 @@ public class ConstraintProblemsStudy {
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
       for (int i = 0; i < problemList.size(); i++) {
         double cr = 0.5;
@@ -162,7 +162,7 @@ public class ConstraintProblemsStudy {
                 .setPopulationSize(100)
                 .setSolutionSetEvaluator(new SequentialSolutionListEvaluator<>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -175,7 +175,7 @@ public class ConstraintProblemsStudy {
                 .setPopulationSize(100)
                 .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
     return algorithms;

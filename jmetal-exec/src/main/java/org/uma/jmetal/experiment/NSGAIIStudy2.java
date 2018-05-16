@@ -119,7 +119,7 @@ public class NSGAIIStudy2 {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -130,7 +130,7 @@ public class NSGAIIStudy2 {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -139,7 +139,7 @@ public class NSGAIIStudy2 {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -148,7 +148,7 @@ public class NSGAIIStudy2 {
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i),run));
       }
     }
     return algorithms;

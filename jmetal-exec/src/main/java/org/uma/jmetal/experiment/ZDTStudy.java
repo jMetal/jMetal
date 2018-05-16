@@ -76,14 +76,13 @@ public class ZDTStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf");
+
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontFileNames(referenceFrontFileNames)
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
@@ -111,7 +110,7 @@ public class ZDTStudy {
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-          List<ExperimentProblem<DoubleSolution>> problemList) {
+          List<ExperimentProblem<DoubleSolution>> problemList ) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
@@ -125,7 +124,7 @@ public class ZDTStudy {
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -134,7 +133,7 @@ public class ZDTStudy {
                 new SBXCrossover(1.0, 20.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -143,7 +142,7 @@ public class ZDTStudy {
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
     return algorithms;

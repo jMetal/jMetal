@@ -125,7 +125,7 @@ public class ZDTScalabilityIStudy2 {
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -134,7 +134,7 @@ public class ZDTScalabilityIStudy2 {
                 new SBXCrossover(1.0, 20.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -143,7 +143,7 @@ public class ZDTScalabilityIStudy2 {
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
       }
     }
     return algorithms ;

@@ -67,10 +67,10 @@ public class NSGAIIStudy {
     problemList.add(new ExperimentProblem<>(new ZDT4()));
     problemList.add(new ExperimentProblem<>(new ZDT6()));
 
+
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf");
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
@@ -80,7 +80,6 @@ public class NSGAIIStudy {
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontFileNames(referenceFrontFileNames)
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -119,7 +118,7 @@ public class NSGAIIStudy {
                   .setMaxEvaluations(25000)
                   .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
@@ -130,7 +129,7 @@ public class NSGAIIStudy {
                   .setMaxEvaluations(25000)
                   .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
@@ -139,7 +138,7 @@ public class NSGAIIStudy {
                   .setMaxEvaluations(25000)
                   .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
@@ -148,7 +147,7 @@ public class NSGAIIStudy {
                   .setMaxEvaluations(25000)
                   .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i),run));
         }
       }
     return algorithms;

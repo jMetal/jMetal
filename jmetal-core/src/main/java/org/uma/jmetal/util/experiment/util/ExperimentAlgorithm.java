@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.Experiment;
@@ -19,6 +20,7 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   private Algorithm<Result> algorithm;
   private String algorithmTag;
   private String problemTag;
+  private String referenceParetoFront;
   private int runId ;
 
   /**
@@ -27,19 +29,22 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
           String algorithmTag,
-          String problemTag,
+          ExperimentProblem<S> problem,
           int runId) {
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
-    this.problemTag = problemTag;
+    this.problemTag = problem.getTag();
+    this.referenceParetoFront = problem.getReferenceFront();
     this.runId = runId ;
   }
 
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
-          String problemTag,
+          ExperimentProblem<S> problem,
           int runId) {
-    this(algorithm, algorithm.getName(), problemTag, runId) ;
+
+    this(algorithm,algorithm.getName(),problem,runId);
+
   }
 
   public void runAlgorithm(Experiment<?, ?> experimentData) {
@@ -89,4 +94,8 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public String getProblemTag() {
     return problemTag;
   }
+
+  public String getReferenceParetoFront() { return referenceParetoFront; }
+
+  public int getRunId() { return this.runId;}
 }
