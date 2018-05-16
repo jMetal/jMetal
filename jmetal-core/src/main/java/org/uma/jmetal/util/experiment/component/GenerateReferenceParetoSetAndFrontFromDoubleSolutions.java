@@ -69,7 +69,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
       List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
 
-      referenceFrontFileNames.add(problem.getTag() + ".rf");
+      referenceFrontFileNames.add(problem.getTag() + ".pf");
 
       writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions) ;
       writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions) ;
@@ -107,14 +107,14 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   private void writeReferenceFrontFile(
       String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
-    String referenceFrontFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
+    String referenceFrontFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
 
     new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName);
   }
 
   private void writeReferenceSetFile(
       String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
-    String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rs" ;
+    String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps" ;
     new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName);
   }
 
