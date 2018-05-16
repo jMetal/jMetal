@@ -41,11 +41,14 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
- * SPEA2, and SMPSO
+ * Example of experimental study based on solving the problems (configured with 3 objectives) with the algorithms
+ * NSGAII, SPEA2, and SMPSO
  *
- * This experiment assumes that the reference Pareto front are known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and stored in files whose names are different
+ * from the default name expected for every problem. While the default would be "problem_name.pf" (e.g. DTLZ1.pf),
+ * the references are stored in files following the nomenclature "problem_name.3D.pf" (e.g. DTLZ1.3D.pf). This is
+ * indicated when creating the ExperimentProblem instance of each of the evaluated poblems by using the method
+ * changeReferenceFrontTo()
  *
  * Six quality indicators are used for performance assessment.
  *
@@ -55,7 +58,6 @@ import java.util.List;
  * 6. Generate Latex tables with the ranking obtained by applying the Friedman test 7. Generate R
  * scripts to obtain boxplots
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
 public class DTLZStudy {
