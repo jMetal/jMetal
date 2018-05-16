@@ -17,7 +17,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
   private List<ExperimentAlgorithm<S, Result>> algorithmList;
   private List<ExperimentProblem<S>> problemList;
-  private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
@@ -32,7 +31,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
     this.experimentName = experimentName ;
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
-    this.referenceFrontFileNames = null ;
     this.referenceFrontDirectory = null ;
   }
 
@@ -56,12 +54,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
 
   public ExperimentBuilder<S, Result> setReferenceFrontDirectory(String referenceFrontDirectory) {
     this.referenceFrontDirectory = referenceFrontDirectory ;
-
-    return this ;
-  }
-
-  public ExperimentBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
-    this.referenceFrontFileNames = referenceFrontFileNames ;
 
     return this ;
   }
@@ -132,10 +124,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
 
   public int getNumberOfCores() {
     return numberOfCores;
-  }
-
-  public List<String> getReferenceFrontFileNames() {
-    return referenceFrontFileNames;
   }
 
   public String getReferenceFrontDirectory() {

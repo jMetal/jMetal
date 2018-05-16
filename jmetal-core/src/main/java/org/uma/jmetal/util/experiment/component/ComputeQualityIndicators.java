@@ -24,10 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -51,44 +48,43 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
 
   @Override
   public void run() throws IOException {
+
+
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
       for (ExperimentAlgorithm<?,Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory ;
-        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getAlgorithmTag() ;
+        algorithmDirectory        = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag() ;
+        String problemDirectory   = algorithmDirectory + "/" + algorithm.getProblemTag() ;
 
-        for (int problemId = 0; problemId < experiment.getProblemList().size(); problemId++) {
-          String problemDirectory = algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getTag() ;
+        String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
 
-          String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
-          String referenceFrontName = referenceFrontDirectory +
-              "/" + experiment.getReferenceFrontFileNames().get(problemId) ;
 
-          JMetalLogger.logger.info("RF: " + referenceFrontName); ;
-          Front referenceFront = new ArrayFront(referenceFrontName) ;
 
-          FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
-          Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
 
-          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
-          resetFile(qualityIndicatorFile);
+        String referenceFrontName = referenceFrontDirectory + "/" + algorithm.getReferenceParetoFront();
 
-          indicator.setReferenceParetoFront(normalizedReferenceFront);
-          for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-            String frontFileName = problemDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + i + ".tsv";
+        JMetalLogger.logger.info("RF: " + referenceFrontName); ;
+        Front referenceFront = new ArrayFront(referenceFrontName) ;
 
-            Front front = new ArrayFront(frontFileName) ;
-            Front normalizedFront = frontNormalizer.normalize(front) ;
-            List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
-            Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
-            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
+        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
+        Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
 
-            writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
-          }
-        }
+        String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+
+
+        indicator.setReferenceParetoFront(normalizedReferenceFront);
+        String frontFileName = problemDirectory + "/" +
+        experiment.getOutputParetoFrontFileName() + algorithm.getRunId() + ".tsv";
+
+        Front front = new ArrayFront(frontFileName) ;
+        Front normalizedFront = frontNormalizer.normalize(front) ;
+        List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
+        Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
+        JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
+
+        writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
       }
     }
     findBestIndicatorFronts(experiment) ;

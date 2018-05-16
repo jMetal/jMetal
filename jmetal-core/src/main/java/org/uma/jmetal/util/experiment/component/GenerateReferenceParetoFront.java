@@ -79,7 +79,6 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
-    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {
