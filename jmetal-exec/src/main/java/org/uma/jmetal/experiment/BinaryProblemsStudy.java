@@ -60,8 +60,10 @@ import java.util.List;
  * Example of experimental study based on solving two binary problems with four algorithms: NSGAII,
  * SPEA2, MOCell, and MOCHC
  *
- * This experiment assumes that the reference Pareto front are not known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
+ * indicate the name of those files.
  *
  * Six quality indicators are used for performance assessment.
  *

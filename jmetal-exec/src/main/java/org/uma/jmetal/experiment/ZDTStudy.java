@@ -43,8 +43,10 @@ import java.util.List;
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
  * SPEA2, and SMPSO
  *
- * This experiment assumes that the reference Pareto front are known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
+ * indicate the name of those files.
  *
  * Six quality indicators are used for performance assessment.
  *
@@ -58,7 +60,7 @@ import java.util.List;
  */
 
 public class ZDTStudy {
-  private static final int INDEPENDENT_RUNS = 10;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {

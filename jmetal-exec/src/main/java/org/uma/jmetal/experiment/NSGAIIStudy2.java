@@ -84,9 +84,11 @@ public class NSGAIIStudy2 {
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
             .setIndicatorList(Arrays.asList(
-                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(), new GenerationalDistance<DoubleSolution>(),
+                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(),
+                new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
-                new InvertedGenerationalDistance<DoubleSolution>(), new InvertedGenerationalDistancePlus<DoubleSolution>()))
+                new InvertedGenerationalDistance<DoubleSolution>(),
+                new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
             .build();

@@ -41,9 +41,8 @@ import java.util.List;
  * an scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and
  * SMPSO.
  *
- * This experiment assumes that the reference Pareto front is of problem ZDT1 is known,
- * so the name of file containing it and the directory where it are located must be specified. Note
- * that the name of the file must be replicated to be equal to the number of problem variants.
+ * This experiment assumes that the reference Pareto front is of problem ZDT1 is known and that
+ * there is a file called ZDT1.pf containing it.
  *
  * Six quality indicators are used for performance assessment.
  *
