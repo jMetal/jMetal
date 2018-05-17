@@ -30,9 +30,11 @@ import java.util.List;
 
 public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
   /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws IOException
+   * Program to run the SMPSORP algorithm with three reference points and plotting a graph during the algorithm
+   * execution. SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With
+   * Reference Point Based Preference Articulation". Accepted in PPSN 2018.
+   *
+   * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException, IOException {
     DoubleProblem problem;

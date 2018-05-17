@@ -29,7 +29,14 @@ import java.util.Scanner;
 public class SMPSORPChangingTheReferencePointsAndChartsRunner {
 
   /**
-   * @param args Command line arguments.
+   * Program to run the SMPSORP algorithm allowing to change a reference point interactively.
+   * SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With
+   * Reference Point Based Preference Articulation". Accepted in PPSN 2018. This runner is the one used in
+   * the use case included in the paper.
+   *
+   * In the current implementation, only one reference point can be modified interactively.
+   *
+   * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException, IOException, InterruptedException {
     DoubleProblem problem;

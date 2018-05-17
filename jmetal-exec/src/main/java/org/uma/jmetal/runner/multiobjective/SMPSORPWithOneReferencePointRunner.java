@@ -23,61 +23,63 @@ import java.util.List;
 
 public class SMPSORPWithOneReferencePointRunner {
   /**
-   * @param args Command line arguments.
-   * @throws JMetalException
- * @throws IOException 
+   * Program to run the SMPSORP algorithm with one reference point. SMPSORP is described in "Extending the
+   * Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference Articulation".
+   * Accepted in PPSN 2018"
+   *
+   * @author Antonio J. Nebro
    */
   public static void main(String[] args) throws JMetalException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName ;
+    String problemName;
     if (args.length == 1) {
       problemName = args[0];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    referencePoints.add(Arrays.asList(0.2, 0.8)) ;
+    referencePoints.add(Arrays.asList(0.2, 0.8));
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int maxIterations = 250;
-    int swarmSize = 100 ;
+    int swarmSize = 100;
 
     List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
 
-    for (int i = 0 ; i < referencePoints.size(); i++) {
+    for (int i = 0; i < referencePoints.size(); i++) {
       archivesWithReferencePoints.add(
-          new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
-              swarmSize/referencePoints.size(), referencePoints.get(i))) ;
+              new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
+                      swarmSize / referencePoints.size(), referencePoints.get(i)));
     }
 
     algorithm = new SMPSORP(problem,
-        swarmSize,
-        archivesWithReferencePoints,
-        referencePoints,
-        mutation,
-        maxIterations,
-        0.0, 1.0,
-        0.0, 1.0,
-        2.5, 1.5,
-        2.5, 1.5,
-        0.1, 0.1,
-        -1.0, -1.0,
-        new SequentialSolutionListEvaluator<>() );
+            swarmSize,
+            archivesWithReferencePoints,
+            referencePoints,
+            mutation,
+            maxIterations,
+            0.0, 1.0,
+            0.0, 1.0,
+            2.5, 1.5,
+            2.5, 1.5,
+            0.1, 0.1,
+            -1.0, -1.0,
+            new SequentialSolutionListEvaluator<>());
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+            .execute();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<DoubleSolution> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
