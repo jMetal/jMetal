@@ -13,15 +13,12 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.referencePoint.impl.NadirPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,7 +101,6 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     changePointsThread.start();
 
     algorithmThread.join();
-    //changePointsThread.join();
 
     chart.saveChart("RSMPSO", BitmapEncoder.BitmapFormat.PNG);
     List<DoubleSolution> population = algorithm.getResult();

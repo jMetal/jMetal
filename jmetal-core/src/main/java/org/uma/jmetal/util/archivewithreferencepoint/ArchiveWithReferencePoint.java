@@ -8,6 +8,13 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * This class defines a bounded archive that has associated a reference point as described in the paper
+ * "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference Articulation
+ * Accepted in PPSN 2018.
+ *
+ * @param <S>
+ */
 public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends AbstractBoundedArchive<S> {
   protected List<Double> referencePoint ;
   protected S referencePointSolution ;

@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class for configuring and displaying a XChart.
+ * Class for configuring and displaying a char with a number of subpopulations and reference points. Designed to be
+ * used with the SMPSORP.
  *
- * @author Jorge Rodriguez Ordonez
+ * @author Antonio J. Nebro
  */
 
 public class ChartContainerWithReferencePoints {
@@ -78,10 +79,6 @@ public class ChartContainerWithReferencePoints {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
 
-      //if (referencePointName != null) {
-      //  this.frontChart.removeSeries(referencePointName) ;
-      //}
-
       referencePointName.add("Reference Point [" + rp1 + ", " + rp2 + "]") ;
 
       XYSeries referencePointSeries = this.frontChart.addSeries(referencePointName.get(i),
@@ -95,10 +92,6 @@ public class ChartContainerWithReferencePoints {
     for (int i = 0; i < referencePoint.size(); i++) {
       double rp1 = referencePoint.get(i).get(this.objective1);
       double rp2 = referencePoint.get(i).get(this.objective2);
-
-      //if (referencePointName != null) {
-      //  this.frontChart.removeSeries(referencePointName) ;
-      //}
 
       this.frontChart.removeSeries(referencePointName.get(i)) ;
 
@@ -147,7 +140,6 @@ public class ChartContainerWithReferencePoints {
         this.sw.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

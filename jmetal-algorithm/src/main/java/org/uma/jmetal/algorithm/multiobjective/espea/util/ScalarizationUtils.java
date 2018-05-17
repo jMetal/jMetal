@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.extremevalues.impl.FrontExtremeValues;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A class that contains methods for computing the scalarization values of

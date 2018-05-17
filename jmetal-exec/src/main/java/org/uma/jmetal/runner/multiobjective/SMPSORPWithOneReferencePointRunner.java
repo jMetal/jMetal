@@ -5,7 +5,6 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -16,7 +15,6 @@ import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiv
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.referencePoint.impl.IdealPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;

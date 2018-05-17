@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
 import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +18,8 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Antonio J. Nebro on 25/11/14.

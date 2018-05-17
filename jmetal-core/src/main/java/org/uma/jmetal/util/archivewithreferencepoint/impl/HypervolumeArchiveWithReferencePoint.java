@@ -23,8 +23,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+
 /**
- * Created by Antonio J. Nebro on 24/09/14.
+ * Class representing a {@link ArchiveWithReferencePoint} archive using a hypervolume contribution based
+ * density estimator.
+ *
+ * @author Antonio J. Nebro
  */
 public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
   private Hypervolume<S> hypervolume ;

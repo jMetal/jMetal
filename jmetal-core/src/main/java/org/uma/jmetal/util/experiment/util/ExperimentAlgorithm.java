@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.Experiment;

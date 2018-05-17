@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class representing a reference point-based archive using the
+ * Class representing a {@link ArchiveWithReferencePoint} archive using a crowding distance based density estimator
  * @author Antonio J. Nebro
  */
 public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
