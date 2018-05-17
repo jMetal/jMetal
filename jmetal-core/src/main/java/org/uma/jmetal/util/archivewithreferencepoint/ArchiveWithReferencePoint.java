@@ -1,14 +1,10 @@
-package org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint;
+package org.uma.jmetal.util.archivewithreferencepoint;
 
-import org.uma.jmetal.newideas.cosine.distance.AngleDistanceEstimator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,8 +12,6 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
   protected List<Double> referencePoint ;
   protected S referencePointSolution ;
   protected Comparator<S> comparator ;
-  protected int checkingOutOfReferencePointFrequency = 10 ;
-  protected int counter = 0 ;
 
   public ArchiveWithReferencePoint(
       int maxSize,
@@ -76,22 +70,6 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
 
       S worst = new SolutionListUtils().findWorstSolution(getSolutionList(), comparator);
       getSolutionList().remove(worst);
-
-      /*
-      counter ++ ;
-      if (counter == checkingOutOfReferencePointFrequency) {
-        int i = 0 ;
-        while (i < getSolutionList().size()) {
-          if (dominanceTest(getSolutionList().get(i), referencePointSolution) == 0) {
-            getSolutionList().remove(i) ;
-          } else {
-            i++;
-          }
-        }
-
-        counter = 0 ;
-      }
-      */
     }
   }
 

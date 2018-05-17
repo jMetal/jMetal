@@ -11,7 +11,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.newideas.cosine.rsmpso.algorithm;
+package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.measure.Measurable;
@@ -20,34 +20,30 @@ import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.measure.impl.SimpleMeasureManager;
-import org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import javax.management.JMException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * This class implements the SMPSO algorithm described in:
- * SMPSO: A new PSO-based metaheuristic for multi-objective optimization
- * MCDM 2009. DOI: http://dx.doi.org/10.1109/MCDM.2009.4938830
+ * This class implements the SMPSORP algorithm described in:
+ * Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference Articulation
+ * Accepted in PPSN 2018
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSORP
         extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>>
-        implements Measurable{
+        implements Measurable {
   private DoubleProblem problem;
 
   private double c1Max;
@@ -89,17 +85,14 @@ public class SMPSORP
 
   protected BasicMeasure<List<DoubleSolution>> solutionListMeasure ;
 
-  private int dominanceCheckFrequency = 100 ;
-  private int invokings = 0 ;
-
   private List<DoubleSolution> referencePointSolutions ;
 
   /**
    * Constructor
    */
   public SMPSORP(DoubleProblem problem, int swarmSize,
-      List<ArchiveWithReferencePoint<DoubleSolution>> leaders,
-      List<List<Double>> referencePoints,
+                 List<ArchiveWithReferencePoint<DoubleSolution>> leaders,
+                 List<List<Double>> referencePoints,
                  MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min, double r1Max,
                  double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                  double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
@@ -175,25 +168,6 @@ public class SMPSORP
     updateLeadersDensityEstimator();
 
     solutionListMeasure.push(getResult()) ;
-
-/*
-    OverallConstraintViolation<DoubleSolution> constraints = new OverallConstraintViolation() ;
-    int counter = 0 ;
-    for (DoubleSolution solution : getResult()) {
-        if (constraints.getAttribute(solution) > 0 ) {
-          counter ++ ;
-        }
-    }
-
-    System.out.println("Constraint: " + counter) ;
-*/
-/*
-    invokings ++ ;
-    if (invokings == dominanceCheckFrequency) {
-      invokings = 0 ;
-      removeDominatedSolutionsInArchives() ;
-    }
-*/
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -313,7 +287,6 @@ public class SMPSORP
   }
 
   @Override public List<DoubleSolution> getResult() {
-    //removeDominatedSolutionsInArchives();
     List<DoubleSolution> resultList = new ArrayList<>() ;
     for (BoundedArchive<DoubleSolution> leader : leaders) {
       for (DoubleSolution solution : leader.getSolutionList()) {
@@ -325,30 +298,15 @@ public class SMPSORP
   }
 
   protected DoubleSolution selectGlobalBest() {
-    boolean selected = false ;
-    int selectedSwarmIndex = 0 ;
+    int selectedSwarmIndex ;
 
-    /*
-    while (!selected) {
-      selectedSwarmIndex = randomGenerator.nextInt(0, leaders.size() - 1);
-      if (leaders.get(selectedSwarmIndex).size() != 0) {
-        selected = true;
-      }
-    }
-*/
-    selectedSwarmIndex  = randomGenerator.nextInt(0, leaders.size() - 1) ;
+    selectedSwarmIndex = randomGenerator.nextInt(0, leaders.size() - 1) ;
     BoundedArchive<DoubleSolution> selectedSwarm = leaders.get(selectedSwarmIndex) ;
 
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
     int pos1 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
     int pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
-
-    //if (leaders.size() > 2) {
-    //  while (pos2 == pos1) {
-    //    pos2 = randomGenerator.nextInt(0, selectedSwarm.getSolutionList().size() - 1);
-    //  }
-    //}
 
     one = selectedSwarm.getSolutionList().get(pos1);
     two = selectedSwarm.getSolutionList().get(pos2);
@@ -432,7 +390,6 @@ public class SMPSORP
   public synchronized void changeReferencePoints(List<List<Double>> referencePoints) {
     for (int i = 0; i < leaders.size(); i++) {
       leaders.get(i).changeReferencePoint(referencePoints.get(i));
-      System.out.println("New REF POINT: " + referencePoints.get(i).get(0) + ", " + referencePoints.get(i).get(1)) ;
     }
   }
 }

@@ -1,12 +1,9 @@
-package org.uma.jmetal.newideas.cosine.exec;
+package org.uma.jmetal.util.chartcontainer;
 
 import org.knowm.xchart.*;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.uma.jmetal.newideas.cosine.distance.CosineDistanceEstimator;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
@@ -23,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author Jorge Rodriguez Ordonez
  */
 
-public class ChartContainer {
+public class ChartContainerWithReferencePoints {
   private Map<String, XYChart> charts;
   private XYChart frontChart;
   private XYChart varChart;
@@ -40,11 +37,11 @@ public class ChartContainer {
 
   private int updateCounter = 1 ;
 
-  public ChartContainer(String name) {
+  public ChartContainerWithReferencePoints(String name) {
     this(name, 0);
   }
 
-  public ChartContainer(String name, int delay) {
+  public ChartContainerWithReferencePoints(String name, int delay) {
     this.name = name;
     this.delay = delay;
     this.charts = new LinkedHashMap<String, XYChart>();
@@ -125,29 +122,6 @@ public class ChartContainer {
           this.getSolutionsForObjective(solutionList, this.objective1),
           this.getSolutionsForObjective(solutionList, this.objective2),
           null);
-/*
-      CosineDistanceEstimator<DoubleSolution> cosineDistanceEstimator = new CosineDistanceEstimator<>() ;
-
-      System.out.println("Iter: " + updateCounter);
-      for (int i = 0; i < solutionList.size(); i++) {
-        DoubleSolution s = solutionList.get(i) ;
-        System.out.print("[" + s.getObjective(0) + ", " +s.getObjective(1) + "]" + " ") ;
-              System.out.print("Distance: " + (double)s.getAttribute(cosineDistanceEstimator.getAttributeID())) ;
-              System.out.print(". Angle: " + (double)s.getAttribute("ANGLE")) ;
-        System.out.println(". Length: " + (double)s.getAttribute("LENGTH")) ;
-        System.out.println(". Diff: " + (double)s.getAttribute("DIFF")) ;
-      }
-      System.out.println() ;
-      System.out.println() ;
-      System.out.println() ;
-
-      new SolutionListOutput(solutionList)
-          .setSeparator("\t")
-          .setFunFileOutputContext(new DefaultFileOutputContext("" + updateCounter + ".tsv"))
-          .print();
-
-      updateCounter++ ;
-*/
     }
   }
 
@@ -230,7 +204,7 @@ public class ChartContainer {
     return this.name;
   }
 
-  public ChartContainer setName(String name) {
+  public ChartContainerWithReferencePoints setName(String name) {
     this.name = name;
     return this;
   }
@@ -239,7 +213,7 @@ public class ChartContainer {
     return this.delay;
   }
 
-  public ChartContainer setDelay(int delay) {
+  public ChartContainerWithReferencePoints setDelay(int delay) {
     this.delay = delay;
     return this;
   }

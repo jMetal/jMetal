@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SMPSORWithOneReferencePointRunner {
+public class SMPSORPWithOneReferencePointRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException

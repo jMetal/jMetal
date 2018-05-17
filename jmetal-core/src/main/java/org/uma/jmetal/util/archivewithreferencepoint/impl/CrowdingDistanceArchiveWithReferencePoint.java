@@ -11,20 +11,21 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint.impl;
+package org.uma.jmetal.util.archivewithreferencepoint.impl;
 
-import java.util.Collections;
-import org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 24/09/14.
+ * Class representing a reference point-based archive using the
+ * @author Antonio J. Nebro
  */
 public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
   private DensityEstimator<S> densityEstimator ;

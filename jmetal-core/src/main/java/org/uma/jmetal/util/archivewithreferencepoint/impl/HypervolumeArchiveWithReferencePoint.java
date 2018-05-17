@@ -11,19 +11,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint.impl;
+package org.uma.jmetal.util.archivewithreferencepoint.impl;
+
+import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
+import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import org.uma.jmetal.newideas.cosine.rsmpso.archive.archivewithreferencepoint.ArchiveWithReferencePoint;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.WFGHypervolume;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 /**
  * Created by Antonio J. Nebro on 24/09/14.
