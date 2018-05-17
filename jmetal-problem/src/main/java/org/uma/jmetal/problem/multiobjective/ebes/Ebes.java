@@ -1020,7 +1020,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
     numberOfEval_++;
 
-    if((numberOfEval_ % 1000) == 0) System.out.println(numberOfEval_);
+    //if((numberOfEval_ % 1000) == 0) System.out.println(numberOfEval_);
 
     //  END OBJETIVES FUNCTION
 
