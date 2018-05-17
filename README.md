@@ -28,8 +28,11 @@ If you are interested in contributing with your ideas and comments, please take 
 * Added new neighborhood classes: C25, C49, L13, L25 and L41 (https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/util/neighborhood/impl).
 * Added method `getSubsetOfEvenlyDistributedSolutions()` to class [MOEADUtils](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/moead/util/MOEADUtils.java).
 
-### Bugs fixed
+### Bugs
 * Fixed a bug in the component of the experiment package that executes the algorithms in parallel. All the experiment classes in package jmetal-exec have been updated.
+* Fixed a bug in the experiment framework which led to recompute quality indicators more times than needed.
+* Fixed a bug in class `AbstractGenericSolution` caused by solutions stored as attributes. This issue might lead to infinite recursive calls when two solutions are compared.
+
 
 ## jMetal is available as a Maven Project in The Central Repository
 

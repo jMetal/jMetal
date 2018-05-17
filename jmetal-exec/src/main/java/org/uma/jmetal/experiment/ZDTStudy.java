@@ -43,8 +43,10 @@ import java.util.List;
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
  * SPEA2, and SMPSO
  *
- * This experiment assumes that the reference Pareto front are known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
+ * indicate the name of those files.
  *
  * Six quality indicators are used for performance assessment.
  *
@@ -58,7 +60,8 @@ import java.util.List;
  */
 
 public class ZDTStudy {
-  private static final int INDEPENDENT_RUNS = 10;
+
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -74,28 +77,26 @@ public class ZDTStudy {
     problemList.add(new ExperimentProblem<>(new ZDT6()));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
-            configureAlgorithmList(problemList);
-
-
+        configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
-                    .setAlgorithmList(algorithmList)
-                    .setProblemList(problemList)
-                    .setReferenceFrontDirectory("/pareto_fronts")
-                    .setExperimentBaseDirectory(experimentBaseDirectory)
-                    .setOutputParetoFrontFileName("FUN")
-                    .setOutputParetoSetFileName("VAR")
-                    .setIndicatorList(Arrays.asList(
-                            new Epsilon<DoubleSolution>(),
-                            new Spread<DoubleSolution>(),
-                            new GenerationalDistance<DoubleSolution>(),
-                            new PISAHypervolume<DoubleSolution>(),
-                            new InvertedGenerationalDistance<DoubleSolution>(),
-                            new InvertedGenerationalDistancePlus<DoubleSolution>()))
-                    .setIndependentRuns(INDEPENDENT_RUNS)
-                    .setNumberOfCores(8)
-                    .build();
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
+            .setAlgorithmList(algorithmList)
+            .setProblemList(problemList)
+            .setReferenceFrontDirectory("/pareto_fronts")
+            .setExperimentBaseDirectory(experimentBaseDirectory)
+            .setOutputParetoFrontFileName("FUN")
+            .setOutputParetoSetFileName("VAR")
+            .setIndicatorList(Arrays.asList(
+                new Epsilon<DoubleSolution>(),
+                new Spread<DoubleSolution>(),
+                new GenerationalDistance<DoubleSolution>(),
+                new PISAHypervolume<DoubleSolution>(),
+                new InvertedGenerationalDistance<DoubleSolution>(),
+                new InvertedGenerationalDistancePlus<DoubleSolution>()))
+            .setIndependentRuns(INDEPENDENT_RUNS)
+            .setNumberOfCores(8)
+            .build();
 
     new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
@@ -110,38 +111,41 @@ public class ZDTStudy {
    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
    */
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
-          List<ExperimentProblem<DoubleSolution>> problemList ) {
+      List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
       for (int i = 0; i < problemList.size(); i++) {
         double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
-        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i).getProblem(),
-                new CrowdingDistanceArchive<DoubleSolution>(100))
-                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
-                .setMaxIterations(250)
-                .setSwarmSize(100)
-                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-                .build();
+        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+            (DoubleProblem) problemList.get(i).getProblem(),
+            new CrowdingDistanceArchive<DoubleSolution>(100))
+            .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+            .setMaxIterations(250)
+            .setSwarmSize(100)
+            .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+            .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
-                problemList.get(i).getProblem(),
-                new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
-                .build();
+            problemList.get(i).getProblem(),
+            new SBXCrossover(1.0, 20.0),
+            new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                20.0))
+            .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
-                problemList.get(i).getProblem(),
-                new SBXCrossover(1.0, 10.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
-                .build();
+            problemList.get(i).getProblem(),
+            new SBXCrossover(1.0, 10.0),
+            new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                20.0))
+            .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }

@@ -70,8 +70,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
-      referenceFrontFileNames.add(problem.getTag() + ".rf");
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
+      referenceFrontFileNames.add(problem.getTag() + ".pf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
 
@@ -108,7 +108,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".rf"
+                  algorithm.getAlgorithmTag() + ".pf"
           );
     }
   }
