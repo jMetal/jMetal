@@ -55,9 +55,6 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-  problem = new DTLZ1();
-    referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ1.3D.pf" ;
-
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
