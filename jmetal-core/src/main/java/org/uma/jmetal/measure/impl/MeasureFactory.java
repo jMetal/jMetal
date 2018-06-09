@@ -122,21 +122,7 @@ public class MeasureFactory {
 				boolean isThreadNeeded = true;
 				long alreadyConsumed = 0;
 				while (isThreadNeeded) {
-					if (alreadyConsumed > period) {
-						long realConsumption = alreadyConsumed;
-						long missed = alreadyConsumed / period;
-						alreadyConsumed = alreadyConsumed % period;
-						log.warning("Too much time consumed in the last measuring ("
-								+ realConsumption
-								+ ">"
-								+ period
-								+ "), ignore the "
-								+ missed
-								+ " pushes missed and consider it has consumed "
-								+ alreadyConsumed);
-					} else {
-						// usual case.
-					}
+					alreadyConsumed = checkConsumed(period, alreadyConsumed);
 					try {
 						Thread.sleep(period - alreadyConsumed);
 					} catch (InterruptedException e) {
@@ -165,6 +151,25 @@ public class MeasureFactory {
 					long measureEnd = System.currentTimeMillis();
 					alreadyConsumed = measureEnd - measureStart;
 				}
+			}
+
+			private long checkConsumed(final long period, long alreadyConsumed) {
+				if (alreadyConsumed > period) {
+					long realConsumption = alreadyConsumed;
+					long missed = alreadyConsumed / period;
+					alreadyConsumed = alreadyConsumed % period;
+					log.warning("Too much time consumed in the last measuring ("
+							+ realConsumption
+							+ ">"
+							+ period
+							+ "), ignore the "
+							+ missed
+							+ " pushes missed and consider it has consumed "
+							+ alreadyConsumed);
+				} else {
+					// usual case.
+				}
+				return alreadyConsumed;
 			}
 		});
 		thread.setDaemon(true);
