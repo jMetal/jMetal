@@ -28,6 +28,8 @@ import java.io.IOException;
 public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
   private static final String APPEND_STRING = "\", append=TRUE)\n";
+  private static final String END_JUMP_STRING = "}\n";
+  private static final String END_STATEMENT = "\"){\n)";
 
   private final Experiment<?, Result> experiment;
 
@@ -156,10 +158,10 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) <= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
-          "      }\n" +
+          END_JUMP_STRING +
           "      else {" + "\n" +
           "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
-          "      }\n" +
+          END_JUMP_STRING +
           "    }\n" +
           "    else {" + "\n" +
           "      write(\"--\", \"" + latexFileName + APPEND_STRING +
@@ -187,14 +189,14 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) >= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
-          "      }\n" +
+          END_JUMP_STRING +
           "      else {" + "\n" +
           "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
-          "      }\n" +
-          "    }" + "\n" +
+          END_JUMP_STRING +
+          END_JUMP_STRING +
           "    else {" + "\n" +
           "      write(\"$-$\", \"" + latexFileName + APPEND_STRING +
-          "    }" + "\n" +
+          END_JUMP_STRING +
           "  }" + "\n" +
           "  else {" + "\n" +
           "    write(\" \", \"" + latexFileName + APPEND_STRING +
@@ -281,7 +283,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ "\") {" + "\n" +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ END_STATEMENT +
         "    write(i , \"" + latexFileName + APPEND_STRING +
         "    write(\" & \", \"" + latexFileName + APPEND_STRING + "\n" +
         "    jndx = 0" + "\n" +
@@ -294,8 +296,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "          else {" + "\n" +
         "            write(\"  \", \"" + latexFileName + APPEND_STRING +
         "          } " + "\n" +
-        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + "\") {" + "\n" +
-        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") {" + "\n" +
+        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + END_STATEMENT +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + END_STATEMENT +
         "              write(\" \\\\\\\\ \", \"" + latexFileName + APPEND_STRING +
         "            } " + "\n" +
         "            else {" + "\n" +
@@ -308,7 +310,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "        }" + "\n" +
         "      }" + "\n" +
         "      jndx = jndx + 1" + "\n" +
-        "    }" + "\n" +
+        END_JUMP_STRING +
         "    indx = indx + 1" + "\n" +
         "  }" + "\n" +
         "} # for algorithm" + "\n" + "\n" +
