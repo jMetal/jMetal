@@ -64,9 +64,8 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
       inputStream = new FileInputStream(vectorFileName);
     }
     InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
 
-    try {
+    try(BufferedReader br = new BufferedReader(isr)) {
       int i = 0;
       int j;
       String aux = br.readLine();
@@ -81,7 +80,6 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
         aux = br.readLine();
         i++;
       }
-      br.close();
     } catch (IOException e) {
       throw new JMetalException("readWeightsFromFile: failed when reading for file: "
               + vectorFileName, e);
