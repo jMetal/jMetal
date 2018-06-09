@@ -153,28 +153,29 @@ public class MeasureFactory {
 				}
 			}
 
-			private long checkConsumed(final long period, long alreadyConsumed) {
-				if (alreadyConsumed > period) {
-					long realConsumption = alreadyConsumed;
-					long missed = alreadyConsumed / period;
-					alreadyConsumed = alreadyConsumed % period;
-					log.warning("Too much time consumed in the last measuring ("
-							+ realConsumption
-							+ ">"
-							+ period
-							+ "), ignore the "
-							+ missed
-							+ " pushes missed and consider it has consumed "
-							+ alreadyConsumed);
-				} else {
-					// usual case.
-				}
-				return alreadyConsumed;
-			}
+			
 		});
 		thread.setDaemon(true);
 		thread.start();
 		return push;
+	}
+	private long checkConsumed(final long period, long alreadyConsumed) {
+		if (alreadyConsumed > period) {
+			long realConsumption = alreadyConsumed;
+			long missed = alreadyConsumed / period;
+			alreadyConsumed = alreadyConsumed % period;
+			log.warning("Too much time consumed in the last measuring ("
+					+ realConsumption
+					+ ">"
+					+ period
+					+ "), ignore the "
+					+ missed
+					+ " pushes missed and consider it has consumed "
+					+ alreadyConsumed);
+		} else {
+			// usual case.
+		}
+		return alreadyConsumed;
 	}
 
 	/**
