@@ -97,7 +97,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
 	private static double[][] readWeightsFrom(String file) throws java.io.IOException {
 		FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(isr);
+      try(BufferedReader br = new BufferedReader(isr)){
 
         String line = br.readLine();
         double[][] lambda;
@@ -118,9 +118,10 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
             line = br.readLine();
           }
 
-          br.close();
+          
         }
         return lambda;
+      }
 	}
 
 
