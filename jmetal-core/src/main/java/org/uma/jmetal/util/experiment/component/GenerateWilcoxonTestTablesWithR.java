@@ -156,14 +156,14 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) <= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
-          "      }" + "\n" +
+          "      }\n" +
           "      else {" + "\n" +
           "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
-          "      }" + "\n" +
-          "    }" + "\n" +
+          "      }\n" +
+          "    }\n" +
           "    else {" + "\n" +
           "      write(\"--\", \"" + latexFileName + APPEND_STRING +
-          "    }" + "\n" +
+          "    }\n" +
           "  }" + "\n" +
           "  else {" + "\n" +
           "    write(\" \", \"" + latexFileName + APPEND_STRING +
@@ -187,10 +187,10 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) >= median(data2)) {" + "\n" +
           "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
-          "      }" + "\n" +
+          "      }\n" +
           "      else {" + "\n" +
           "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
-          "      }" + "\n" +
+          "      }\n" +
           "    }" + "\n" +
           "    else {" + "\n" +
           "      write(\"$-$\", \"" + latexFileName + APPEND_STRING +
