@@ -10,7 +10,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 public class MersenneTwisterGenerator implements PseudoRandomGenerator {
   private MersenneTwister rnd ;
   private long seed ;
-  private static final String name = "MersenneTwister" ;
+  private static final String NAME = "MersenneTwister" ;
 
   /** Constructor */
   public MersenneTwisterGenerator() {
@@ -50,6 +50,6 @@ public class MersenneTwisterGenerator implements PseudoRandomGenerator {
 
   @Override
   public String getName() {
-    return name ;
+    return NAME ;
   }
 }
