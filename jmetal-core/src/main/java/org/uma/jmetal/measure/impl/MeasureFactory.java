@@ -122,12 +122,7 @@ public class MeasureFactory {
 				boolean isThreadNeeded = true;
 				long alreadyConsumed = 0;
 				while (isThreadNeeded) {
-					alreadyConsumed = checkConsumed(period, alreadyConsumed);
-					try {
-						Thread.sleep(period - alreadyConsumed);
-					} catch (InterruptedException e) {
-						throw new JMetalException("Error in run method: ", e) ;
-					}
+					alreadyConsumed = sleep(period, alreadyConsumed);
 
 					long measureStart = System.currentTimeMillis();
 
@@ -152,12 +147,20 @@ public class MeasureFactory {
 					alreadyConsumed = measureEnd - measureStart;
 				}
 			}
-
 			
 		});
 		thread.setDaemon(true);
 		thread.start();
 		return push;
+	}
+	private long sleep(final long period, long alreadyConsumed) {
+		alreadyConsumed = checkConsumed(period, alreadyConsumed);
+		try {
+			Thread.sleep(period - alreadyConsumed);
+		} catch (InterruptedException e) {
+			throw new JMetalException("Error in run method: ", e) ;
+		}
+		return alreadyConsumed;
 	}
 	private long checkConsumed(final long period, long alreadyConsumed) {
 		if (alreadyConsumed > period) {
