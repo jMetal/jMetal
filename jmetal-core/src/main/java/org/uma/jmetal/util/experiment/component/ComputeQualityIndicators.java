@@ -137,77 +137,92 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
             algorithm.getAlgorithmTag();
 
-        for (ExperimentProblem<?> problem :experiment.getProblemList()) {
-          String indicatorFileName =
-              algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
-          Path indicatorFile = Paths.get(indicatorFileName) ;
-          if (indicatorFile == null) {
-            throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist") ;
-          }
-
-          List<String> fileArray;
-          fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
-
-          List<Pair<Double, Integer>> list = new ArrayList<>() ;
-
-
-          for (int i = 0; i < fileArray.size(); i++) {
-            Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i) ;
-            list.add(pair) ;
-          }
-
-          Collections.sort(list, new Comparator<Pair<Double, Integer>>() {
-            @Override
-            public int compare(Pair<Double, Integer> pair1, Pair<Double, Integer> pair2) {
-              if (Math.abs(pair1.getLeft()) > Math.abs(pair2.getLeft())){
-                return 1;
-              } else if (Math.abs(pair1.getLeft()) < Math.abs(pair2.getLeft())) {
-                return -1;
-              } else {
-                return 0;
-              }
-            }
-          });
-          String bestFunFileName ;
-          String bestVarFileName ;
-          String medianFunFileName ;
-          String medianVarFileName ;
-
-          String outputDirectory = algorithmDirectory + "/" + problem.getTag() ;
-
-          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.tsv" ;
-          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.tsv" ;
-          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.tsv" ;
-          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.tsv" ;
-          if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
-            String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".tsv";
-            String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".tsv";
-
-            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
-            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
-          } else {
-            String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(list.size()-1).getRight() + ".tsv";
-            String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(list.size()-1).getRight() + ".tsv";
-
-            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
-            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
-          }
-
-          int medianIndex = list.size() / 2 ;
-          String medianFunFile = outputDirectory + "/" +
-              experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".tsv";
-          String medianVarFile = outputDirectory + "/" +
-              experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".tsv";
-
-          Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING) ;
-          Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING) ;
-        }
+        problemloop(experiment, indicator, algorithmDirectory);
       }
     }
   }
+
+private void problemloop(Experiment<?, Result> experiment, GenericIndicator<?> indicator, String algorithmDirectory)
+		throws IOException {
+	for (ExperimentProblem<?> problem :experiment.getProblemList()) {
+	  String indicatorFileName =
+	      algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
+	  Path indicatorFile = Paths.get(indicatorFileName) ;
+	  if (indicatorFile == null) {
+	    throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist") ;
+	  }
+
+	  List<String> fileArray;
+	  fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
+
+	  List<Pair<Double, Integer>> list = new ArrayList<>() ;
+
+
+	  pairs(fileArray, list);
+
+	  Collections.sort(list, new Comparator<Pair<Double, Integer>>() {
+	    @Override
+	    public int compare(Pair<Double, Integer> pair1, Pair<Double, Integer> pair2) {
+	      if (Math.abs(pair1.getLeft()) > Math.abs(pair2.getLeft())){
+	        return 1;
+	      } else if (Math.abs(pair1.getLeft()) < Math.abs(pair2.getLeft())) {
+	        return -1;
+	      } else {
+	        return 0;
+	      }
+	    }
+	  });
+	  String bestFunFileName ;
+	  String bestVarFileName ;
+	  String medianFunFileName ;
+	  String medianVarFileName ;
+
+	  String outputDirectory = algorithmDirectory + "/" + problem.getTag() ;
+
+	  bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.tsv" ;
+	  bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.tsv" ;
+	  medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.tsv" ;
+	  medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.tsv" ;
+	  indicatorislower(experiment, indicator, list, bestFunFileName, bestVarFileName, outputDirectory);
+
+	  int medianIndex = list.size() / 2 ;
+	  String medianFunFile = outputDirectory + "/" +
+	      experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".tsv";
+	  String medianVarFile = outputDirectory + "/" +
+	      experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".tsv";
+
+	  Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING) ;
+	  Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING) ;
+	}
+}
+
+private void indicatorislower(Experiment<?, Result> experiment, GenericIndicator<?> indicator,
+		List<Pair<Double, Integer>> list, String bestFunFileName, String bestVarFileName, String outputDirectory)
+		throws IOException {
+	if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
+	    String bestFunFile = outputDirectory + "/" +
+	        experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".tsv";
+	    String bestVarFile = outputDirectory + "/" +
+	        experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".tsv";
+
+	    Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
+	    Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
+	  } else {
+	    String bestFunFile = outputDirectory + "/" +
+	        experiment.getOutputParetoFrontFileName() + list.get(list.size()-1).getRight() + ".tsv";
+	    String bestVarFile = outputDirectory + "/" +
+	        experiment.getOutputParetoSetFileName() + list.get(list.size()-1).getRight() + ".tsv";
+
+	    Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
+	    Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
+	  }
+}
+
+private void pairs(List<String> fileArray, List<Pair<Double, Integer>> list) {
+	for (int i = 0; i < fileArray.size(); i++) {
+	    Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i) ;
+	    list.add(pair) ;
+	  }
+}
 }
 

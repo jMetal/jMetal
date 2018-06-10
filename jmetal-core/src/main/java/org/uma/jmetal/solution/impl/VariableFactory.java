@@ -165,50 +165,60 @@ public class VariableFactory {
 		} else {
 			Map<String, Method> getters = new HashMap<>();
 			Map<Class<?>, String> types = new HashMap<>();
-			for (Method method : solutionClass.getMethods()) {
-				Class<?> returnType = method.getReturnType();
-				if (method.getParameterTypes().length == 0
-						&& returnType != null
-						&& !method.getName().equals("getClass")
-						&& method.getName().matches("get[^a-z].*")) {
-					String name = method.getName().substring(3);
-					getters.put(name, method);
-					if (types.containsKey(returnType)) {
-						throw new IllegalArgumentException(
-								types.get(returnType) + " and " + name
-										+ " are both of type " + returnType
-										+ ", we cannot differentiate them");
-					} else {
-						types.put(returnType, name);
-					}
-				} else {
-					// not a getter, ignore it
-				}
-			}
+			methods(solutionClass, getters, types);
 
 			Collection<Variable<Solution, ?>> variables = new LinkedList<>();
-			for (Constructor<?> constructor : solutionClass.getConstructors()) {
-				Class<?>[] constructorTypes = constructor.getParameterTypes();
-				Set<Class<?>> uniqueTypes = new HashSet<>(
-						Arrays.asList(constructorTypes));
-				if (uniqueTypes.size() < constructorTypes.length) {
-					throw new IllegalArgumentException(
-							"Some constructor types are redundant, we cannot differentiate them: "
-									+ Arrays.asList(constructorTypes));
-				} else {
-					for (Class<?> type : constructorTypes) {
-						String name = types.remove(type);
-						if (name == null) {
-							// constructor value without getter or already done
-						} else {
-							Method getter = getters.get(name);
-							variables.add(createVariableOn(solutionClass,
-									getter, name, type));
-						}
+			constructor(solutionClass, getters, types, variables);
+			return variables;
+		}
+	}
+
+	private <Solution> void constructor(Class<Solution> solutionClass, Map<String, Method> getters,
+			Map<Class<?>, String> types, Collection<Variable<Solution, ?>> variables) {
+		for (Constructor<?> constructor : solutionClass.getConstructors()) {
+			Class<?>[] constructorTypes = constructor.getParameterTypes();
+			Set<Class<?>> uniqueTypes = new HashSet<>(
+					Arrays.asList(constructorTypes));
+			if (uniqueTypes.size() < constructorTypes.length) {
+				throw new IllegalArgumentException(
+						"Some constructor types are redundant, we cannot differentiate them: "
+								+ Arrays.asList(constructorTypes));
+			} else {
+				for (Class<?> type : constructorTypes) {
+					String name = types.remove(type);
+					if (name == null) {
+						// constructor value without getter or already done
+					} else {
+						Method getter = getters.get(name);
+						variables.add(createVariableOn(solutionClass,
+								getter, name, type));
 					}
 				}
 			}
-			return variables;
+		}
+	}
+
+	private <Solution> void methods(Class<Solution> solutionClass, Map<String, Method> getters,
+			Map<Class<?>, String> types) {
+		for (Method method : solutionClass.getMethods()) {
+			Class<?> returnType = method.getReturnType();
+			if (method.getParameterTypes().length == 0
+					&& returnType != null
+					&& !method.getName().equals("getClass")
+					&& method.getName().matches("get[^a-z].*")) {
+				String name = method.getName().substring(3);
+				getters.put(name, method);
+				if (types.containsKey(returnType)) {
+					throw new IllegalArgumentException(
+							types.get(returnType) + " and " + name
+									+ " are both of type " + returnType
+									+ ", we cannot differentiate them");
+				} else {
+					types.put(returnType, name);
+				}
+			} else {
+				// not a getter, ignore it
+			}
 		}
 	}
 

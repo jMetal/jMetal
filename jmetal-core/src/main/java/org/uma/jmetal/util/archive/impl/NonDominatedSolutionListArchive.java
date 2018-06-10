@@ -65,27 +65,44 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
       while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
         S listIndividual = iterator.next();
         int flag = dominanceComparator.compare(solution, listIndividual);
-        if (flag == -1) {
-          iterator.remove();
-        }  else if (flag == 1) {
-          isDominated = true; // dominated by one in the list
-        } else if (flag == 0) {
-          int equalflag = equalSolutions.compare(solution, listIndividual);
-          if (equalflag == 0) // solutions are equals
-            isContained = true;
-        }
+        isDominated = dominated(iterator, isDominated, flag); 
+        isContained = contained(solution, isContained, listIndividual, flag);
       }
       
-      if (!isDominated && !isContained) {
-    	  solutionList.add(solution);
-    	  solutionInserted = true;
-      }
+      solutionInserted = notdominatedandcontained(solution, solutionInserted, isDominated, isContained);
       
       return solutionInserted;
     }
 
     return solutionInserted ;
   }
+
+private boolean notdominatedandcontained(S solution, boolean solutionInserted, boolean isDominated,
+		boolean isContained) {
+	if (!isDominated && !isContained) {
+    	  solutionList.add(solution);
+    	  solutionInserted = true;
+      }
+	return solutionInserted;
+}
+
+private boolean contained(S solution, boolean isContained, S listIndividual, int flag) {
+	if (flag == 0) {
+	  int equalflag = equalSolutions.compare(solution, listIndividual);
+	  if (equalflag == 0) // solutions are equals
+	    isContained = true;
+	}
+	return isContained;
+}
+
+private boolean dominated(Iterator<S> iterator, boolean isDominated, int flag) {
+	if (flag == -1) {
+	  iterator.remove();
+	}  else if (flag == 1) {
+	  isDominated = true; // dominated by one in the list
+	}
+	return isDominated;
+}
 
   public Archive<S> join(Archive<S> archive) {
     for (S solution : archive.getSolutionList()) {

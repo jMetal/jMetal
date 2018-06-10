@@ -132,7 +132,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
       return false;
     }
 
-    for (Object key : attributes.keySet()) {
+    return equalsattr(that);
+  }
+
+private boolean equalsattr(AbstractGenericSolution<?, ?> that) {
+	for (Object key : attributes.keySet()) {
       Object value      = attributes.get(key);
       Object valueThat  = that.attributes.get(key);
 
@@ -158,7 +162,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     }
 
     return true;
-  }
+}
 
   @Override public int hashCode() {
     int result = Arrays.hashCode(objectives);

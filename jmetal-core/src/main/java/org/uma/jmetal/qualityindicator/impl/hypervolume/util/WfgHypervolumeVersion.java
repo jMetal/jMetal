@@ -231,23 +231,31 @@ public class WfgHypervolumeVersion {
 
     for (int i = currentDimension - 1; i >= 0; i--) {
       if (p.getDimensionValue(i) < q.getDimensionValue(i)) {
-        for (int j = i - 1; j >= 0; j--) {
-          if (q.getDimensionValue(j) < p.getDimensionValue(j)) {
-            return 0;
-          }
-        }
-        return -1;
+        return qtinythanp(p, q, i);
       } else if (q.getDimensionValue(i) < p.getDimensionValue(i)) {
-        for (int j = i - 1; j >= 0; j--) {
-          if (p.getDimensionValue(j) < q.getDimensionValue(j)) {
-            return 0;
-          }
-        }
-        return 1;
+        return ptinythanq(p, q, i);
       }
     }
     return 2;
   }
+
+private int ptinythanq(Point p, Point q, int i) {
+	for (int j = i - 1; j >= 0; j--) {
+	  if (p.getDimensionValue(j) < q.getDimensionValue(j)) {
+	    return 0;
+	  }
+	}
+	return 1;
+}
+
+private int qtinythanp(Point p, Point q, int i) {
+	for (int j = i - 1; j >= 0; j--) {
+	  if (q.getDimensionValue(j) < p.getDimensionValue(j)) {
+	    return 0;
+	  }
+	}
+	return -1;
+}
 
   public static void main(String args[]) throws IOException, JMetalException {
     WfgHypervolumeFront front = new WfgHypervolumeFront();

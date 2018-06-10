@@ -221,19 +221,26 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\hline");
 
     // write table head
-    for (int i = -1; i < experiment.getAlgorithmList().size(); i++) {
-      if (i == -1) {
-        os.write(" & ");
-      } else if (i == (experiment.getAlgorithmList().size() - 1)) {
-        os.write(" " + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\\\\" + "\n");
-      } else {
-        os.write("" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + " & ");
-      }
-    }
-    os.write("\\hline \n");
+    writetablehead(os);
 
     // write lines
-    for (int i = 0; i < experiment.getProblemList().size(); i++) {
+    writelines(indicatorIndex, centralTendency, dispersion, os);
+
+    // close table
+    closetable(os);
+  }
+
+private void closetable(FileWriter os) throws IOException {
+	os.write("\\hline" + "\n");
+    os.write("\\end{tabular}" + "\n");
+    os.write("\\end{scriptsize}" + "\n");
+    os.write("\\end{table}" + "\n");
+    os.close();
+}
+
+private void writelines(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, FileWriter os)
+		throws IOException {
+	for (int i = 0; i < experiment.getProblemList().size(); i++) {
       // find the best value and second best value
       double bestCentralTendencyValue;
       double bestDispersionValue;
@@ -315,13 +322,19 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           dispersion[indicatorIndex][i][experiment.getAlgorithmList().size() - 1]);
       os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
     }
+}
 
-    // close table
-    os.write("\\hline" + "\n");
-    os.write("\\end{tabular}" + "\n");
-    os.write("\\end{scriptsize}" + "\n");
-    os.write("\\end{table}" + "\n");
-    os.close();
-  }
+private void writetablehead(FileWriter os) throws IOException {
+	for (int i = -1; i < experiment.getAlgorithmList().size(); i++) {
+      if (i == -1) {
+        os.write(" & ");
+      } else if (i == (experiment.getAlgorithmList().size() - 1)) {
+        os.write(" " + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\\\\" + "\n");
+      } else {
+        os.write("" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + " & ");
+      }
+    }
+    os.write("\\hline \n");
+}
 
 }

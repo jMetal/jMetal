@@ -131,32 +131,15 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     /*Compute the average performance per algorithm for each data set*/
     double[][] mean = new double[numberOfProblems][numberOfAlgorithms];
 
-    for (int j = 0; j < numberOfAlgorithms; j++) {
-      for (int i = 0; i < numberOfProblems; i++) {
-        mean[i][j] = data.elementAt(j).elementAt(i);
-      }
-    }
+    mean(data, mean);
 
     /*We use the Pair class to compute and order rankings*/
     List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
     for (int i=0; i<numberOfProblems; i++) {
       order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
-      for (int j=0; j<numberOfAlgorithms; j++){
-        order.get(i).add(new ImmutablePair<Integer, Double>(j, mean[i][j]));
-      }
-      Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
-        @Override
-        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
-          if (Math.abs(pair1.getValue()) > Math.abs(pair2.getValue())){
-            return 1;
-          } else if (Math.abs(pair1.getValue()) < Math.abs(pair2.getValue())) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }
-      });
+      order(mean, order, i);
+      sort(order, i);
     }
 
     /*building of the rankings table per algorithms and data sets*/
@@ -217,6 +200,35 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
 
     return averageRanking ;
   }
+
+private void sort(List<List<Pair<Integer, Double>>> order, int i) {
+	Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
+        @Override
+        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
+          if (Math.abs(pair1.getValue()) > Math.abs(pair2.getValue())){
+            return 1;
+          } else if (Math.abs(pair1.getValue()) < Math.abs(pair2.getValue())) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      });
+}
+
+private void order(double[][] mean, List<List<Pair<Integer, Double>>> order, int i) {
+	for (int j=0; j<numberOfAlgorithms; j++){
+        order.get(i).add(new ImmutablePair<Integer, Double>(j, mean[i][j]));
+      }
+}
+
+private void mean(Vector<Vector<Double>> data, double[][] mean) {
+	for (int j = 0; j < numberOfAlgorithms; j++) {
+      for (int i = 0; i < numberOfProblems; i++) {
+        mean[i][j] = data.elementAt(j).elementAt(i);
+      }
+    }
+}
 
   public String prepareFileOutputContents(double[] averageRanking) {
     String fileContents = writeLatexHeader();

@@ -85,29 +85,42 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
 
     for (int i = 0; i < referenceFront.getNumberOfPoints(); i++) {
       for (int j = 0; j < front.getNumberOfPoints(); j++) {
-        for (int k = 0; k < numberOfObjectives; k++) {
-          epsTemp = front.getPoint(j).getDimensionValue(k)
-              - referenceFront.getPoint(i).getDimensionValue(k);
-          if (k == 0) {
-            epsK = epsTemp;
-          } else if (epsK < epsTemp) {
-            epsK = epsTemp;
-          }
-        }
-        if (j == 0) {
-          epsJ = epsK;
-        } else if (epsJ > epsK) {
-          epsJ = epsK;
-        }
+        epsK = numberofobjectives(front, referenceFront, epsK, numberOfObjectives, i, j);
+        epsJ = jzequalzero(epsJ, epsK, j);
       }
-      if (i == 0) {
+      eps = iequalzero(eps, epsJ, i);
+    }
+    return eps;
+  }
+
+private double iequalzero(double eps, double epsJ, int i) {
+	if (i == 0) {
         eps = epsJ;
       } else if (eps < epsJ) {
         eps = epsJ;
       }
-    }
-    return eps;
-  }
+	return eps;
+}
+
+private double jzequalzero(double epsJ, double epsK, int jz) {
+	if (jz == 0) {
+	  epsJ = epsK;
+	} else if (epsJ > epsK) {
+	  epsJ = epsK;
+	}
+	return epsJ;
+}
+
+private double numberofobjectives(Front front, Front referenceFront, double epsK, int numberOfObjectives, int i,
+		int j) {
+	double epsTemp;
+	for (int k = 0; k < numberOfObjectives; k++) {
+	  epsTemp = front.getPoint(j).getDimensionValue(k)
+	      - referenceFront.getPoint(i).getDimensionValue(k);
+	  epsK = iequalzero(epsK, epsTemp, k);
+	}
+	return epsK;
+}
 
   @Override public String getName() {
     return "EP" ;

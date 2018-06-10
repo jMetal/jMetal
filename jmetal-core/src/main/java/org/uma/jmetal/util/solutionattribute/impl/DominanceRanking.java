@@ -68,49 +68,48 @@ public class DominanceRanking <S extends Solution<?>>
     ArrayList<List<Integer>> front = new ArrayList<>(population.size() + 1);
 
     // Initialize the fronts
-    for (int i = 0; i < population.size() + 1; i++) {
-      front.add(new LinkedList<Integer>());
-    }
+    initializefronts(population, front);
 
     // Fast non dominated sorting algorithm
     // Contribution of Guillaume Jacquenot
-    for (int p = 0; p < population.size(); p++) {
-      // Initialize the list of individuals that i dominate and the number
-      // of individuals that dominate me
-      iDominate.add(new LinkedList<Integer>());
-      dominateMe[p] = 0;
-    }
+    nondominatedsorting(population, dominateMe, iDominate);
 
     int flagDominate;
     for (int p = 0; p < (population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
-      for (int q = p + 1; q < population.size(); q++) {
-        flagDominate =
-            CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
-        if (flagDominate == 0) {
-          flagDominate = dominanceComparator.compare(solutionSet.get(p), solutionSet.get(q));
-        }
-        if (flagDominate == -1) {
-          iDominate.get(p).add(q);
-          dominateMe[q]++;
-        } else if (flagDominate == 1) {
-          iDominate.get(q).add(p);
-          dominateMe[p]++;
-        }
-      }
+      calculatesdominance(solutionSet, population, dominateMe, iDominate, p);
     }
 
-    for (int i = 0; i < population.size(); i++) {
-      if (dominateMe[i] == 0) {
-        front.get(0).add(i);
-        solutionSet.get(i).setAttribute(getAttributeIdentifier(), 0);
-      }
-    }
+    solutionset(solutionSet, population, dominateMe, front);
 
     //Obtain the rest of fronts
     int i = 0;
     Iterator<Integer> it1, it2; // Iterators
-    while (front.get(i).size() != 0) {
+    i = restoffronts(solutionSet, dominateMe, iDominate, front, i);
+
+    rankedSubPopulations = new ArrayList<>();
+    //0,1,2,....,i-1 are fronts, then i fronts
+    rank(solutionSet, front, i);
+
+    return this;
+  }
+
+private void rank(List<S> solutionSet, ArrayList<List<Integer>> front, int i) {
+	Iterator<Integer> it1;
+	for (int j = 0; j < i; j++) {
+      rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
+      it1 = front.get(j).iterator();
+      while (it1.hasNext()) {
+        rankedSubPopulations.get(j).add(solutionSet.get(it1.next()));
+      }
+    }
+}
+
+private int restoffronts(List<S> solutionSet, int[] dominateMe, List<List<Integer>> iDominate,
+		ArrayList<List<Integer>> front, int i) {
+	Iterator<Integer> it1;
+	Iterator<Integer> it2;
+	while (front.get(i).size() != 0) {
       i++;
       it1 = front.get(i - 1).iterator();
       while (it1.hasNext()) {
@@ -126,19 +125,51 @@ public class DominanceRanking <S extends Solution<?>>
         }
       }
     }
+	return i;
+}
 
-    rankedSubPopulations = new ArrayList<>();
-    //0,1,2,....,i-1 are fronts, then i fronts
-    for (int j = 0; j < i; j++) {
-      rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
-      it1 = front.get(j).iterator();
-      while (it1.hasNext()) {
-        rankedSubPopulations.get(j).add(solutionSet.get(it1.next()));
+private void solutionset(List<S> solutionSet, List<S> population, int[] dominateMe, ArrayList<List<Integer>> front) {
+	for (int i = 0; i < population.size(); i++) {
+      if (dominateMe[i] == 0) {
+        front.get(0).add(i);
+        solutionSet.get(i).setAttribute(getAttributeIdentifier(), 0);
       }
     }
+}
 
-    return this;
-  }
+private void calculatesdominance(List<S> solutionSet, List<S> population, int[] dominateMe,
+		List<List<Integer>> iDominate, int p) {
+	int flagDominate;
+	for (int q = p + 1; q < population.size(); q++) {
+        flagDominate =
+            CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
+        if (flagDominate == 0) {
+          flagDominate = dominanceComparator.compare(solutionSet.get(p), solutionSet.get(q));
+        }
+        if (flagDominate == -1) {
+          iDominate.get(p).add(q);
+          dominateMe[q]++;
+        } else if (flagDominate == 1) {
+          iDominate.get(q).add(p);
+          dominateMe[p]++;
+        }
+      }
+}
+
+private void nondominatedsorting(List<S> population, int[] dominateMe, List<List<Integer>> iDominate) {
+	for (int p = 0; p < population.size(); p++) {
+      // Initialize the list of individuals that i dominate and the number
+      // of individuals that dominate me
+      iDominate.add(new LinkedList<Integer>());
+      dominateMe[p] = 0;
+    }
+}
+
+private void initializefronts(List<S> population, ArrayList<List<Integer>> front) {
+	for (int i = 0; i < population.size() + 1; i++) {
+      front.add(new LinkedList<Integer>());
+    }
+}
 
   @Override
   public List<S> getSubfront(int rank) {
