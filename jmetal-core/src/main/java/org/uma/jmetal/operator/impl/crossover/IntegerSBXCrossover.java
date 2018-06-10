@@ -108,49 +108,21 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
-            if (rand <= (1.0 / alpha)) {
-              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
-            } else {
-              betaq = Math
-                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
-            }
+            betaq = randless(rand, alpha);
 
             c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
             beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
-            if (rand <= (1.0 / alpha)) {
-              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
-            } else {
-              betaq = Math
-                .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
-            }
+            betaq = randless(rand, alpha);
 
             c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
 
-            if (c1 < yL) {
-              c1 = yL;
-            }
+            c1 = checkC(yL, yu, c1);
+            
+            c2 = checkC(yL, yu, c2);
 
-            if (c2 < yL) {
-              c2 = yL;
-            }
-
-            if (c1 > yu) {
-              c1 = yu;
-            }
-
-            if (c2 > yu) {
-              c2 = yu;
-            }
-
-            if (randomGenerator.getRandomValue() <= 0.5) {
-              offspring.get(0).setVariableValue(i, (int)c2);
-              offspring.get(1).setVariableValue(i, (int)c1);
-            } else {
-              offspring.get(0).setVariableValue(i, (int)c1);
-              offspring.get(1).setVariableValue(i, (int)c2);
-            }
+            randomless(offspring, i, c1, c2);
           } else {
             offspring.get(0).setVariableValue(i, valueX1);
             offspring.get(1).setVariableValue(i, valueX2);
@@ -164,6 +136,36 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
     return offspring;
   }
+
+private double checkC(double yL, double yu, double c) {
+	if (c < yL) {
+	  c = yL;
+	}else if (c > yu) {
+	  c = yu;
+	}
+	return c;
+}
+
+private void randomless(List<IntegerSolution> offspring, int i, double c1, double c2) {
+	if (randomGenerator.getRandomValue() <= 0.5) {
+	  offspring.get(0).setVariableValue(i, (int)c2);
+	  offspring.get(1).setVariableValue(i, (int)c1);
+	} else {
+	  offspring.get(0).setVariableValue(i, (int)c1);
+	  offspring.get(1).setVariableValue(i, (int)c2);
+	}
+}
+
+private double randless(double rand, double alpha) {
+	double betaq;
+	if (rand <= (1.0 / alpha)) {
+	  betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
+	} else {
+	  betaq = Math
+	    .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
+	}
+	return betaq;
+}
 
   public int getNumberOfRequiredParents() {
     return 2 ;
