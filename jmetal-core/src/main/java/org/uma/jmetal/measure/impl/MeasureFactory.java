@@ -133,14 +133,25 @@ public class MeasureFactory {
 
 					PullMeasure<Value> pull = weakPull.get();
 					SimplePushMeasure<Value> push = weakPush.get();
-					isThreadNeeded = pullOrpush(isThreadNeeded, pull, push,lastValue);
+					if (pull == null || push == null) {
+						isThreadNeeded = false;
+					} else {
+						Value value = pull.get();
+						if (value == lastValue || value != null
+								&& value.equals(lastValue)) {
+							// still the same, don't notify
+						} else {
+							lastValue = value;
+							push.push(value);
+						}
+					}
+					pull = null;
+					push = null;
 
 					long measureEnd = System.currentTimeMillis();
 					alreadyConsumed = measureEnd - measureStart;
 				}
 			}
-
-			
 
 			
 		});
@@ -165,24 +176,6 @@ public class MeasureFactory {
 			// usual case.
 		}
 		return alreadyConsumed;
-	}
-	private <Value> boolean pullOrpush(boolean isThreadNeeded, PullMeasure<Value> pull,
-			SimplePushMeasure<Value> push,Value lastValue) {
-		if (pull == null || push == null) {
-			isThreadNeeded = false;
-		} else {
-			Value value = pull.get();
-			if (value == lastValue || value != null
-					&& value.equals(lastValue)) {
-				// still the same, don't notify
-			} else {
-				lastValue = value;
-				push.push(value);
-			}
-		}
-		pull = null;
-		push = null;
-		return isThreadNeeded;
 	}
 
 	/**
