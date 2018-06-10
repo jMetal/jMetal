@@ -92,41 +92,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
         if (randomGenerator.getRandomValue() <= 0.5) {
-          if (Math.abs(valueX1 - valueX2) > EPS) {
-
-            if (valueX1 < valueX2) {
-              y1 = valueX1;
-              y2 = valueX2;
-            } else {
-              y1 = valueX2;
-              y2 = valueX1;
-            }
-
-            yL = parent1.getLowerBound(i);
-            yu = parent1.getUpperBound(i);
-            rand = randomGenerator.getRandomValue();
-            beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
-            alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
-
-            betaq = randless(rand, alpha);
-
-            c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
-            beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
-            alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
-
-            betaq = randless(rand, alpha);
-
-            c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
-
-            c1 = checkC(yL, yu, c1);
-            
-            c2 = checkC(yL, yu, c2);
-
-            randomless(offspring, i, c1, c2);
-          } else {
-            offspring.get(0).setVariableValue(i, valueX1);
-            offspring.get(1).setVariableValue(i, valueX2);
-          }
+          biggerthanEPS(parent1, offspring, i, valueX1, valueX2);
         } else {
           offspring.get(0).setVariableValue(i, valueX2);
           offspring.get(1).setVariableValue(i, valueX1);
@@ -136,6 +102,54 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
 
     return offspring;
   }
+
+private void biggerthanEPS(IntegerSolution parent1, List<IntegerSolution> offspring, int i, int valueX1, int valueX2) {
+	double rand;
+	double y1;
+	double y2;
+	double yL;
+	double yu;
+	double c1;
+	double c2;
+	double alpha;
+	double beta;
+	double betaq;
+	if (Math.abs(valueX1 - valueX2) > EPS) {
+
+	    if (valueX1 < valueX2) {
+	      y1 = valueX1;
+	      y2 = valueX2;
+	    } else {
+	      y1 = valueX2;
+	      y2 = valueX1;
+	    }
+
+	    yL = parent1.getLowerBound(i);
+	    yu = parent1.getUpperBound(i);
+	    rand = randomGenerator.getRandomValue();
+	    beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
+	    alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
+
+	    betaq = randless(rand, alpha);
+
+	    c1 = 0.5 * ((y1 + y2) - betaq * (y2 - y1));
+	    beta = 1.0 + (2.0 * (yu - y2) / (y2 - y1));
+	    alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
+
+	    betaq = randless(rand, alpha);
+
+	    c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
+
+	    c1 = checkC(yL, yu, c1);
+	    
+	    c2 = checkC(yL, yu, c2);
+
+	    randomless(offspring, i, c1, c2);
+	  } else {
+	    offspring.get(0).setVariableValue(i, valueX1);
+	    offspring.get(1).setVariableValue(i, valueX2);
+	  }
+}
 
 private double checkC(double yL, double yu, double c) {
 	if (c < yL) {
