@@ -144,16 +144,13 @@ private boolean equalsattr(AbstractGenericSolution<?, ?> that) {
 
         if (value == null) {
           return false;
-        } else if (valueThat == null) {
+        }
+        if (valueThat == null) {
           return false;
         } else { // both not null
 
           boolean areAttributeValuesEqual;
-          if (value instanceof AbstractGenericSolution) {
-            areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
-          } else {
-            areAttributeValuesEqual = !value.equals(valueThat);
-          }
+          areAttributeValuesEqual = instance(value, valueThat);
           if (!areAttributeValuesEqual) {
             return false;
           } // if equal the next attributeValue will be checked
@@ -162,6 +159,16 @@ private boolean equalsattr(AbstractGenericSolution<?, ?> that) {
     }
 
     return true;
+}
+
+private boolean instance(Object value, Object valueThat) {
+	boolean areAttributeValuesEqual;
+	if (value instanceof AbstractGenericSolution) {
+	    areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
+	  } else {
+	    areAttributeValuesEqual = !value.equals(valueThat);
+	  }
+	return areAttributeValuesEqual;
 }
 
   @Override public int hashCode() {

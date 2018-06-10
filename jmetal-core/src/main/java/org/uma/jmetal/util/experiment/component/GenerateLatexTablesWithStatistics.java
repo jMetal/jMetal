@@ -297,7 +297,29 @@ private void writelines(int indicatorIndex, double[][][] centralTendency, double
         }
       }
 
-      os.write(experiment.getProblemList().get(i).getTag().replace("_", "\\_") + " & ");
+      writecellcolor(indicatorIndex, centralTendency, dispersion, os, i, bestIndex, secondBestIndex);
+      writeIndex(indicatorIndex, centralTendency, dispersion, os, i, bestIndex, secondBestIndex);
+    }
+}
+
+private void writeIndex(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, FileWriter os, int i,
+		int bestIndex, int secondBestIndex) throws IOException {
+	if (bestIndex == (experiment.getAlgorithmList().size()- 1)) {
+        os.write("\\cellcolor{gray95}");
+      }
+      if (secondBestIndex == (experiment.getAlgorithmList().size()- 1)) {
+        os.write("\\cellcolor{gray25}");
+      }
+      String m = String.format(Locale.ENGLISH, "%10.2e",
+          centralTendency[indicatorIndex][i][experiment.getAlgorithmList().size() - 1]);
+      String s = String.format(Locale.ENGLISH, "%8.1e",
+          dispersion[indicatorIndex][i][experiment.getAlgorithmList().size() - 1]);
+      os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
+}
+
+private void writecellcolor(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, FileWriter os,
+		int i, int bestIndex, int secondBestIndex) throws IOException {
+	os.write(experiment.getProblemList().get(i).getTag().replace("_", "\\_") + " & ");
       for (int j = 0; j < (experiment.getAlgorithmList().size() - 1); j++) {
         if (j == bestIndex) {
           os.write("\\cellcolor{gray95}");
@@ -310,18 +332,6 @@ private void writelines(int indicatorIndex, double[][][] centralTendency, double
         String s = String.format(Locale.ENGLISH, "%8.1e", dispersion[indicatorIndex][i][j]);
         os.write("$" + m + "_{" + s + "}$ & ");
       }
-      if (bestIndex == (experiment.getAlgorithmList().size()- 1)) {
-        os.write("\\cellcolor{gray95}");
-      }
-      if (secondBestIndex == (experiment.getAlgorithmList().size()- 1)) {
-        os.write("\\cellcolor{gray25}");
-      }
-      String m = String.format(Locale.ENGLISH, "%10.2e",
-          centralTendency[indicatorIndex][i][experiment.getAlgorithmList().size() - 1]);
-      String s = String.format(Locale.ENGLISH, "%8.1e",
-          dispersion[indicatorIndex][i][experiment.getAlgorithmList().size() - 1]);
-      os.write("$" + m + "_{" + s + "}$ \\\\" + "\n");
-    }
 }
 
 private void writetablehead(FileWriter os) throws IOException {

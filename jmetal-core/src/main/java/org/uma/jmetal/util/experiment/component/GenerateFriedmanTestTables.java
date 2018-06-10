@@ -136,11 +136,7 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     /*We use the Pair class to compute and order rankings*/
     List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
-    for (int i=0; i<numberOfProblems; i++) {
-      order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
-      order(mean, order, i);
-      sort(order, i);
-    }
+    sortorder(mean, order);
 
     /*building of the rankings table per algorithms and data sets*/
    // Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
@@ -149,26 +145,32 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
     int position = 0;
     for (int i=0; i<numberOfProblems; i++) {
       rank.add(new ArrayList<MutablePair<Double, Double>>(numberOfAlgorithms)) ;
-      for (int j=0; j<numberOfAlgorithms; j++){
-        boolean found  = false;
-        for (int k=0; k<numberOfAlgorithms && !found; k++) {
-          if (order.get(i).get(k).getKey() == j) {
-            found = true;
-            position = k+1;
-          }
-        }
-        //rank[i][j] = new Pair(position,order[i][position-1].value);
-        rank.get(i).add(new MutablePair<Double, Double>((double)position, order.get(i).get(position-1).getValue())) ;
-      }
+      position = lookforposition(order, rank, position, i);
     }
 
     /*In the case of having the same performance, the rankings are equal*/
-    for (int i=0; i<numberOfProblems; i++) {
+    visited(rank);
+
+    /*compute the average ranking for each algorithm*/
+    double []averageRanking = new double[numberOfAlgorithms];
+    averagerank(rank, averageRanking);
+
+    return averageRanking ;
+  }
+
+private void visited(List<List<MutablePair<Double, Double>>> rank) {
+	for (int i=0; i<numberOfProblems; i++) {
       boolean[] hasBeenVisited = new boolean[numberOfAlgorithms];
       Vector<Integer> pendingToVisit= new Vector<Integer>();
 
       Arrays.fill(hasBeenVisited,false);
-      for (int j=0; j<numberOfAlgorithms; j++) {
+      pendingToVisit(rank, i, hasBeenVisited, pendingToVisit);
+    }
+}
+
+private void pendingToVisit(List<List<MutablePair<Double, Double>>> rank, int i, boolean[] hasBeenVisited,
+		Vector<Integer> pendingToVisit) {
+	for (int j=0; j<numberOfAlgorithms; j++) {
         pendingToVisit.removeAllElements();
         double sum = rank.get(i).get(j).getKey();
         hasBeenVisited[j] = true;
@@ -183,23 +185,57 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
         }
         sum /= (double)ig;
         rank.get(i).get(j).setLeft(sum);
-        for (int k=0; k<pendingToVisit.size(); k++) {
-          rank.get(i).get(pendingToVisit.elementAt(k)).setLeft(sum) ;
-        }
+        rank(rank, i, pendingToVisit, sum);
       }
-    }
+}
 
-    /*compute the average ranking for each algorithm*/
-    double []averageRanking = new double[numberOfAlgorithms];
-    for (int i=0; i<numberOfAlgorithms; i++){
+private void rank(List<List<MutablePair<Double, Double>>> rank, int i, Vector<Integer> pendingToVisit, double sum) {
+	for (int k=0; k<pendingToVisit.size(); k++) {
+	  rank.get(i).get(pendingToVisit.elementAt(k)).setLeft(sum) ;
+	}
+}
+
+private void averagerank(List<List<MutablePair<Double, Double>>> rank, double[] averageRanking) {
+	for (int i=0; i<numberOfAlgorithms; i++){
       averageRanking[i] = 0;
-      for (int j=0; j<numberOfProblems; j++) {
+      averageranking(rank, averageRanking, i);
+    }
+}
+
+private void averageranking(List<List<MutablePair<Double, Double>>> rank, double[] averageRanking, int i) {
+	for (int j=0; j<numberOfProblems; j++) {
         averageRanking[i] += rank.get(j).get(i).getKey() / ((double)numberOfProblems);
       }
-    }
+}
 
-    return averageRanking ;
-  }
+private int lookforposition(List<List<Pair<Integer, Double>>> order, List<List<MutablePair<Double, Double>>> rank,
+		int position, int i) {
+	for (int j=0; j<numberOfAlgorithms; j++){
+        boolean found  = false;
+        position = found(order, position, i, j, found);
+        //rank[i][j] = new Pair(position,order[i][position-1].value);
+        rank.get(i).add(new MutablePair<Double, Double>((double)position, order.get(i).get(position-1).getValue())) ;
+      }
+	return position;
+}
+
+private int found(List<List<Pair<Integer, Double>>> order, int position, int i, int j, boolean found) {
+	for (int k=0; k<numberOfAlgorithms && !found; k++) {
+	  if (order.get(i).get(k).getKey() == j) {
+	    found = true;
+	    position = k+1;
+	  }
+	}
+	return position;
+}
+
+private void sortorder(double[][] mean, List<List<Pair<Integer, Double>>> order) {
+	for (int i=0; i<numberOfProblems; i++) {
+      order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
+      order(mean, order, i);
+      sort(order, i);
+    }
+}
 
 private void sort(List<List<Pair<Integer, Double>>> order, int i) {
 	Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
