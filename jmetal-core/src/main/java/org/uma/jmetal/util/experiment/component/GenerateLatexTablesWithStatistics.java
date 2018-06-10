@@ -44,6 +44,9 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   private double[][][] max;
   private double[][][] min;
   private double[][][] numberOfValues;
+  
+  private int bestIndex = -1;
+  private int secondBestIndex = -1;
 
   public GenerateLatexTablesWithStatistics(Experiment<?, ?> configuration) {
     this.experiment = configuration ;
@@ -159,7 +162,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   }
 
   /**
-   * Computes the statistical values
+   * Computes the statistical values.
    * @param values
    * @return
    */
@@ -246,60 +249,73 @@ private void writelines(int indicatorIndex, double[][][] centralTendency, double
       double bestDispersionValue;
       double secondBestCentralTendencyValue;
       double secondBestDispersionValue;
-      int bestIndex = -1;
-      int secondBestIndex = -1;
+      
 
       if (experiment.getIndicatorList().get(indicatorIndex).isTheLowerTheIndicatorValueTheBetter()) {
         bestCentralTendencyValue = Double.MAX_VALUE;
         bestDispersionValue = Double.MAX_VALUE;
         secondBestCentralTendencyValue = Double.MAX_VALUE;
         secondBestDispersionValue = Double.MAX_VALUE;
-        for (int j = 0; j < (experiment.getAlgorithmList().size()); j++) {
-          if ((centralTendency[indicatorIndex][i][j] < bestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
-            secondBestIndex = bestIndex;
-            secondBestCentralTendencyValue = bestCentralTendencyValue;
-            secondBestDispersionValue = bestDispersionValue;
-            bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            bestDispersionValue = dispersion[indicatorIndex][i][j];
-            bestIndex = j;
-          } else if ((centralTendency[indicatorIndex][i][j] < secondBestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
-            secondBestIndex = j;
-            secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            secondBestDispersionValue = dispersion[indicatorIndex][i][j];
-          }
+        for (int j = 0; j < experiment.getAlgorithmList().size(); j++) {
+          lessthanbestcentraltendency(indicatorIndex, centralTendency, dispersion, i, bestCentralTendencyValue,
+				bestDispersionValue, secondBestCentralTendencyValue, secondBestDispersionValue, j);
         }
       } else {
         bestCentralTendencyValue = Double.MIN_VALUE;
         bestDispersionValue = Double.MIN_VALUE;
         secondBestCentralTendencyValue = Double.MIN_VALUE;
         secondBestDispersionValue = Double.MIN_VALUE;
-        for (int j = 0; j < (experiment.getAlgorithmList().size()); j++) {
-          if ((centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  bestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < bestDispersionValue))) {
-            secondBestIndex = bestIndex;
-            secondBestCentralTendencyValue = bestCentralTendencyValue;
-            secondBestDispersionValue = bestDispersionValue;
-            bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            bestDispersionValue = dispersion[indicatorIndex][i][j];
-            bestIndex = j;
-          } else if ((centralTendency[indicatorIndex][i][j] > secondBestCentralTendencyValue) ||
-              ((centralTendency[indicatorIndex][i][j] ==
-                  secondBestCentralTendencyValue) && (dispersion[indicatorIndex][i][j] < secondBestDispersionValue))) {
-            secondBestIndex = j;
-            secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
-            secondBestDispersionValue = dispersion[indicatorIndex][i][j];
-          }
+        for (int j = 0; j < experiment.getAlgorithmList().size(); j++) {
+          biggerthanbestcentraltendency(indicatorIndex, centralTendency, dispersion, i, bestCentralTendencyValue,
+				bestDispersionValue, secondBestCentralTendencyValue, secondBestDispersionValue, j);
         }
       }
 
       writecellcolor(indicatorIndex, centralTendency, dispersion, os, i, bestIndex, secondBestIndex);
       writeIndex(indicatorIndex, centralTendency, dispersion, os, i, bestIndex, secondBestIndex);
     }
+}
+
+private void biggerthanbestcentraltendency(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion,
+		int i, double bestCentralTendencyValue, double bestDispersionValue, double secondBestCentralTendencyValue,
+		double secondBestDispersionValue, int j) {
+	if (centralTendency[indicatorIndex][i][j] > bestCentralTendencyValue ||
+	      (centralTendency[indicatorIndex][i][j] ==
+	          bestCentralTendencyValue && dispersion[indicatorIndex][i][j] < bestDispersionValue)) {
+	    secondBestIndex = bestIndex;
+	    secondBestCentralTendencyValue = bestCentralTendencyValue;
+	    secondBestDispersionValue = bestDispersionValue;
+	    bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+	    bestDispersionValue = dispersion[indicatorIndex][i][j];
+	    bestIndex = j;
+	  } else if (centralTendency[indicatorIndex][i][j] > secondBestCentralTendencyValue ||
+	      (centralTendency[indicatorIndex][i][j] ==
+	          secondBestCentralTendencyValue && dispersion[indicatorIndex][i][j] < secondBestDispersionValue)) {
+	    secondBestIndex = j;
+	    secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+	    secondBestDispersionValue = dispersion[indicatorIndex][i][j];
+	  }
+}
+
+private void lessthanbestcentraltendency(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion,
+		int i, double bestCentralTendencyValue, double bestDispersionValue, double secondBestCentralTendencyValue,
+		double secondBestDispersionValue, int j) {
+	if (centralTendency[indicatorIndex][i][j] < bestCentralTendencyValue ||
+	      (centralTendency[indicatorIndex][i][j] ==
+	          bestCentralTendencyValue && dispersion[indicatorIndex][i][j] < bestDispersionValue)) {
+	    secondBestIndex = bestIndex;
+	    secondBestCentralTendencyValue = bestCentralTendencyValue;
+	    secondBestDispersionValue = bestDispersionValue;
+	    bestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+	    bestDispersionValue = dispersion[indicatorIndex][i][j];
+	    bestIndex = j;
+	  } else if (centralTendency[indicatorIndex][i][j] < secondBestCentralTendencyValue ||
+	      (centralTendency[indicatorIndex][i][j] ==
+	          secondBestCentralTendencyValue && dispersion[indicatorIndex][i][j] < secondBestDispersionValue)) {
+	    secondBestIndex = j;
+	    secondBestCentralTendencyValue = centralTendency[indicatorIndex][i][j];
+	    secondBestDispersionValue = dispersion[indicatorIndex][i][j];
+	  }
 }
 
 private void writeIndex(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, FileWriter os, int i,
@@ -320,7 +336,7 @@ private void writeIndex(int indicatorIndex, double[][][] centralTendency, double
 private void writecellcolor(int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, FileWriter os,
 		int i, int bestIndex, int secondBestIndex) throws IOException {
 	os.write(experiment.getProblemList().get(i).getTag().replace("_", "\\_") + " & ");
-      for (int j = 0; j < (experiment.getAlgorithmList().size() - 1); j++) {
+      for (int j = 0; j < experiment.getAlgorithmList().size() - 1; j++) {
         if (j == bestIndex) {
           os.write("\\cellcolor{gray95}");
         }
@@ -341,10 +357,9 @@ private void writetablehead(FileWriter os) throws IOException {
       } else if (i == (experiment.getAlgorithmList().size() - 1)) {
         os.write(" " + experiment.getAlgorithmList().get(i).getAlgorithmTag() + "\\\\" + "\n");
       } else {
-        os.write("" + experiment.getAlgorithmList().get(i).getAlgorithmTag() + " & ");
+        os.write(experiment.getAlgorithmList().get(i).getAlgorithmTag() + " & ");
       }
     }
     os.write("\\hline \n");
 }
-
 }
