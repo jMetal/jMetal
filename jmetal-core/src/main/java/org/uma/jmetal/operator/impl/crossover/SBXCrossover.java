@@ -113,56 +113,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
         if (randomGenerator.getRandomValue() <= 0.5) {
-          if (Math.abs(valueX1 - valueX2) > EPS) {
-
-            if (valueX1 < valueX2) {
-              y1 = valueX1;
-              y2 = valueX2;
-            } else {
-              y1 = valueX2;
-              y2 = valueX1;
-            }
-
-            lowerBound = parent1.getLowerBound(i);
-            upperBound = parent1.getUpperBound(i);
-
-            rand = randomGenerator.getRandomValue();
-            beta = 1.0 + (2.0 * (y1 - lowerBound) / (y2 - y1));
-            alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
-
-            if (rand <= (1.0 / alpha)) {
-              betaq = Math.pow(rand * alpha, (1.0 / (distributionIndex + 1.0)));
-            } else {
-              betaq = Math
-                  .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
-            }
-            c1 = 0.5 * (y1 + y2 - betaq * (y2 - y1));
-
-            beta = 1.0 + (2.0 * (upperBound - y2) / (y2 - y1));
-            alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
-
-            if (rand <= (1.0 / alpha)) {
-              betaq = Math.pow((rand * alpha), (1.0 / (distributionIndex + 1.0)));
-            } else {
-              betaq = Math
-                  .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
-            }
-            c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
-
-            c1 = solutionRepair.repairSolutionVariableValue(c1, lowerBound, upperBound) ;
-            c2 = solutionRepair.repairSolutionVariableValue(c2, lowerBound, upperBound) ;
-
-            if (randomGenerator.getRandomValue() <= 0.5) {
-              offspring.get(0).setVariableValue(i, c2);
-              offspring.get(1).setVariableValue(i, c1);
-            } else {
-              offspring.get(0).setVariableValue(i, c1);
-              offspring.get(1).setVariableValue(i, c2);
-            }
-          } else {
-            offspring.get(0).setVariableValue(i, valueX1);
-            offspring.get(1).setVariableValue(i, valueX2);
-          }
+          differencebiggerthanEPS(parent1, offspring, i, valueX1, valueX2);
         } else {
           offspring.get(0).setVariableValue(i, valueX1);
           offspring.get(1).setVariableValue(i, valueX2);
@@ -172,6 +123,75 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
     return offspring;
   }
+
+private void differencebiggerthanEPS(DoubleSolution parent1, List<DoubleSolution> offspring, int i, double valueX1,
+		double valueX2) {
+	double rand;
+	double y1;
+	double y2;
+	double lowerBound;
+	double upperBound;
+	double c1;
+	double c2;
+	double alpha;
+	double beta;
+	double betaq;
+	if (Math.abs(valueX1 - valueX2) > EPS) {
+
+	    if (valueX1 < valueX2) {
+	      y1 = valueX1;
+	      y2 = valueX2;
+	    } else {
+	      y1 = valueX2;
+	      y2 = valueX1;
+	    }
+
+	    lowerBound = parent1.getLowerBound(i);
+	    upperBound = parent1.getUpperBound(i);
+
+	    rand = randomGenerator.getRandomValue();
+	    beta = 1.0 + (2.0 * (y1 - lowerBound) / (y2 - y1));
+	    alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
+
+	    betaq = randc(rand, alpha);
+	    c1 = 0.5 * (y1 + y2 - betaq * (y2 - y1));
+
+	    beta = 1.0 + (2.0 * (upperBound - y2) / (y2 - y1));
+	    alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
+
+	    betaq = randc(rand, alpha);
+	    c2 = 0.5 * (y1 + y2 + betaq * (y2 - y1));
+
+	    c1 = solutionRepair.repairSolutionVariableValue(c1, lowerBound, upperBound) ;
+	    c2 = solutionRepair.repairSolutionVariableValue(c2, lowerBound, upperBound) ;
+
+	    offspring(offspring, i, c1, c2);
+	  } else {
+	    offspring.get(0).setVariableValue(i, valueX1);
+	    offspring.get(1).setVariableValue(i, valueX2);
+	  }
+}
+
+private void offspring(List<DoubleSolution> offspring, int i, double c1, double c2) {
+	if (randomGenerator.getRandomValue() <= 0.5) {
+	  offspring.get(0).setVariableValue(i, c2);
+	  offspring.get(1).setVariableValue(i, c1);
+	} else {
+	  offspring.get(0).setVariableValue(i, c1);
+	  offspring.get(1).setVariableValue(i, c2);
+	}
+}
+
+private double randc(double rand, double alpha) {
+	double betaq;
+	if (rand <= (1.0 / alpha)) {
+	  betaq = Math.pow(rand * alpha, (1.0 / (distributionIndex + 1.0)));
+	} else {
+	  betaq = Math
+	      .pow(1.0 / (2.0 - rand * alpha), 1.0 / (distributionIndex + 1.0));
+	}
+	return betaq;
+}
 
   @Override
   public int getNumberOfRequiredParents() {

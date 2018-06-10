@@ -109,20 +109,21 @@ public class PMXCrossover implements
       // STEP 2: Get the subchains to interchange
       int replacement1[] = new int[permutationLength];
       int replacement2[] = new int[permutationLength];
-      for (int i = 0; i < permutationLength; i++)
-        replacement1[i] = replacement2[i] = -1;
+      subchainsinterchange(permutationLength, replacement1, replacement2);
 
       // STEP 3: Interchange
-      for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {
-        offspring.get(0).setVariableValue(i, parents.get(1).getVariableValue(i));
-        offspring.get(1).setVariableValue(i, parents.get(0).getVariableValue(i));
-
-        replacement1[parents.get(1).getVariableValue(i)] = parents.get(0).getVariableValue(i) ;
-        replacement2[parents.get(0).getVariableValue(i)] = parents.get(1).getVariableValue(i) ;
-      }
+      interchange(parents, offspring, cuttingPoint1, cuttingPoint2, replacement1, replacement2);
 
       // STEP 4: Repair offspring
-      for (int i = 0; i < permutationLength; i++) {
+      repairoffspring(parents, offspring, permutationLength, cuttingPoint1, cuttingPoint2, replacement1, replacement2);
+    }
+
+    return offspring;
+  }
+
+private void repairoffspring(List<PermutationSolution<Integer>> parents, List<PermutationSolution<Integer>> offspring,
+		int permutationLength, int cuttingPoint1, int cuttingPoint2, int[] replacement1, int[] replacement2) {
+	for (int i = 0; i < permutationLength; i++) {
         if ((i >= cuttingPoint1) && (i <= cuttingPoint2))
           continue;
 
@@ -145,10 +146,23 @@ public class PMXCrossover implements
         offspring.get(0).setVariableValue(i, n1);
         offspring.get(1).setVariableValue(i, n2);
       }
-    }
+}
 
-    return offspring;
-  }
+private void interchange(List<PermutationSolution<Integer>> parents, List<PermutationSolution<Integer>> offspring,
+		int cuttingPoint1, int cuttingPoint2, int[] replacement1, int[] replacement2) {
+	for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {
+        offspring.get(0).setVariableValue(i, parents.get(1).getVariableValue(i));
+        offspring.get(1).setVariableValue(i, parents.get(0).getVariableValue(i));
+
+        replacement1[parents.get(1).getVariableValue(i)] = parents.get(0).getVariableValue(i) ;
+        replacement2[parents.get(0).getVariableValue(i)] = parents.get(1).getVariableValue(i) ;
+      }
+}
+
+private void subchainsinterchange(int permutationLength, int[] replacement1, int[] replacement2) {
+	for (int i = 0; i < permutationLength; i++)
+        replacement1[i] = replacement2[i] = -1;
+}
 
   @Override
   public int getNumberOfRequiredParents() {
