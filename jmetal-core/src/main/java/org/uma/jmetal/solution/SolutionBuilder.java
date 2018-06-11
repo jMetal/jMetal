@@ -13,8 +13,9 @@ import java.util.Collection;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  * @param <Solution>
+ * @param <Value>
  */
-public interface SolutionBuilder<Solution> {
+public interface SolutionBuilder<Solution, Value> {
 	/**
 	 * A {@link Variable} represents the fundamental information of a set of
 	 * homogeneous {@link Solution}s (e.g. a population of solutions returned by
@@ -46,7 +47,7 @@ public interface SolutionBuilder<Solution> {
 	 * @return the list of {@link Variable}s managed by this
 	 *         {@link SolutionBuilder}
 	 */
-	public Collection<Variable<Solution, ?>> getVariables();
+	public Collection<Variable<Solution, Value>> getVariables();
 
 	/**
 	 * This method tells which {@link Value} to assign to the next
