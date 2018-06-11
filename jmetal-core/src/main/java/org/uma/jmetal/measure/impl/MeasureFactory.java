@@ -19,9 +19,10 @@ import java.util.logging.Logger;
  * {@link Measure}s.
  * 
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @param <Value>
  * 
  */
-public class MeasureFactory {
+public class MeasureFactory<Value> {
 
 	private final Logger log = Logger.getLogger(MeasureFactory.class.getName());
 
@@ -188,9 +189,9 @@ public class MeasureFactory {
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
 	@SuppressWarnings("serial")
-	public Map<String, PullMeasure<?>> createPullsFromGetters(
+	public Map<String, PullMeasure<Value>> createPullsFromGetters(
 			final Object object) {
-		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
+		Map<String, PullMeasure<Value>> measures = new HashMap<String, PullMeasure<Value>>();
 		Class<? extends Object> clazz = object.getClass();
 		for (final Method method : clazz.getMethods()) {
 			if (method.getParameterTypes().length == 0
@@ -199,12 +200,12 @@ public class MeasureFactory {
 					&& method.getName().matches("get[^a-z].*")) {
 				String key = method.getName().substring(3);
 				// TODO exploit return type to restrict the generics
-				measures.put(key, new SimplePullMeasure<Object>(key) {
+				measures.put(key, new SimplePullMeasure<Value>(key) {
 
 					@Override
-					public Object get() {
+					public Value get() {
 						try {
-							return method.invoke(object);
+							return (Value) method.invoke(object);
 						} catch (IllegalAccessException
 								| IllegalArgumentException
 								| InvocationTargetException e) {
@@ -234,18 +235,18 @@ public class MeasureFactory {
 	 *         and the corresponding {@link PullMeasure} built from them
 	 */
 	@SuppressWarnings("serial")
-	public Map<String, PullMeasure<?>> createPullsFromFields(final Object object) {
-		Map<String, PullMeasure<?>> measures = new HashMap<String, PullMeasure<?>>();
+	public Map<String, PullMeasure<Value>> createPullsFromFields(final Object object) {
+		Map<String, PullMeasure<Value>> measures = new HashMap<String, PullMeasure<Value>>();
 		Class<? extends Object> clazz = object.getClass();
 		for (final Field field : clazz.getFields()) {
 			String key = field.getName();
 			// TODO exploit return type to restrict the generics
-			measures.put(key, new SimplePullMeasure<Object>(key) {
+			measures.put(key, new SimplePullMeasure<Value>(key) {
 
 				@Override
-				public Object get() {
+				public Value get() {
 					try {
-						return field.get(object);
+						return (Value) field.get(object);
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						throw new RuntimeException();
 					}
