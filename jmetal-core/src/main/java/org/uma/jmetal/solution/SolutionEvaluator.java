@@ -12,8 +12,9 @@ import java.util.Collection;
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
  * 
  * @param <Solution>
+ * @param <Value>
  */
-public interface SolutionEvaluator<Solution> {
+public interface SolutionEvaluator<Solution, Value> {
 
 	/**
 	 * An {@link Objective} represents the evaluation information of a set of
@@ -46,5 +47,5 @@ public interface SolutionEvaluator<Solution> {
 	 * @return the list of {@link Objective}s managed by this
 	 *         {@link SolutionEvaluator}
 	 */
-	public Collection<Objective<Solution, ?>> getObjectives();
+	public Collection<Objective<Solution, Value>> getObjectives();
 }
