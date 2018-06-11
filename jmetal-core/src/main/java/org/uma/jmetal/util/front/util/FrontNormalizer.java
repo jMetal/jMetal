@@ -4,6 +4,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class FrontNormalizer {
    * @param solutionList
    * @return
    */
-  public List<? extends Solution<?>> normalize(List<? extends Solution<?>> solutionList) {
+  public <S extends Solution> List<PointSolution> normalize(List<? extends Solution<?>> solutionList) {
     Front normalizedFront ;
     if (solutionList == null) {
       throw new JMetalException("The front is null") ;

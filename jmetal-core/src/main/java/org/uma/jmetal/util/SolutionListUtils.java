@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class SolutionListUtils {
 
-  public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
+  public static <S extends Solution> List<S> getNondominatedSolutions(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<S>() ;
     return ranking.computeRanking(solutionList).getSubfront(0);
   }
