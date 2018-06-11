@@ -18,9 +18,10 @@ import java.util.Set;
  * situations.
  * 
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @param <Value>
  * 
  */
-public class VariableFactory {
+public class VariableFactory<Value> {
 
 	/**
 	 * This method retrieves all the values accessible through a getter (
@@ -38,13 +39,13 @@ public class VariableFactory {
 	 * @see #createFromGettersAndSetters(Class)
 	 * @see #createFromGettersAndConstructors(Class)
 	 */
-	public <Solution> Collection<Variable<Solution, ?>> createFromGetters(
+	public <Solution> Collection<Variable<Solution, Value>> createFromGetters(
 			Class<Solution> solutionClass) {
-		Collection<Variable<Solution, ?>> variables = new LinkedList<>();
+		Collection<Variable<Solution, Value>> variables = new LinkedList<>();
 		for (Method method : solutionClass.getMethods()) {
 			if (isGetter(method)) {
 				String name = method.getName().substring(3);
-				variables.add(createVariableOn(solutionClass, method, name,
+				variables.add((Variable<Solution, Value>) createVariableOn(solutionClass, method, name,
 						method.getReturnType()));
 			} else {
 				// not a getter, ignore it
@@ -76,7 +77,7 @@ public class VariableFactory {
 	 *            the {@link Solution} class to analyze
 	 * @return the set of {@link Variable}s retrieved from this class
 	 */
-	public <Solution> Collection<Variable<Solution, ?>> createFromGettersAndSetters(
+	public <Solution> Collection<Variable<Solution, Value>> createFromGettersAndSetters(
 			Class<Solution> solutionClass) {
 		Map<String, Method> getters = new HashMap<>();
 		Map<String, Method> setters = new HashMap<>();
@@ -105,11 +106,11 @@ public class VariableFactory {
 			}
 		}
 
-		Collection<Variable<Solution, ?>> variables = new LinkedList<>();
+		Collection<Variable<Solution, Value>> variables = new LinkedList<>();
 		for (Entry<String, Method> entry : getters.entrySet()) {
 			String name = entry.getKey();
 			Method getter = entry.getValue();
-			variables.add(createVariableOn(solutionClass, getter, name,
+			variables.add((Variable<Solution, Value>) createVariableOn(solutionClass, getter, name,
 					getter.getReturnType()));
 		}
 		return variables;
@@ -158,7 +159,7 @@ public class VariableFactory {
 	 *             if the {@link Solution} class to analyze is an interface,
 	 *             thus constructors make no sense
 	 */
-	public <Solution> Collection<Variable<Solution, ?>> createFromGettersAndConstructors(
+	public <Solution> Collection<Variable<Solution, Value>> createFromGettersAndConstructors(
 			Class<Solution> solutionClass) {
 		if (solutionClass.isInterface()) {
 			throw new IsInterfaceException(solutionClass);
@@ -186,7 +187,7 @@ public class VariableFactory {
 				}
 			}
 
-			Collection<Variable<Solution, ?>> variables = new LinkedList<>();
+			Collection<Variable<Solution, Value>> variables = new LinkedList<>();
 			for (Constructor<?> constructor : solutionClass.getConstructors()) {
 				Class<?>[] constructorTypes = constructor.getParameterTypes();
 				Set<Class<?>> uniqueTypes = new HashSet<>(
@@ -202,7 +203,7 @@ public class VariableFactory {
 							// constructor value without getter or already done
 						} else {
 							Method getter = getters.get(name);
-							variables.add(createVariableOn(solutionClass,
+							variables.add((Variable<Solution, Value>) createVariableOn(solutionClass,
 									getter, name, type));
 						}
 					}
