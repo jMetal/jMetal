@@ -129,17 +129,18 @@ public class SolutionListUtils {
   /**
    * This method receives a list of non-dominated solutions and maximum and minimum values of the
    * objectives, and returns a the normalized set of solutions.
+ * @param <Value>
    *
    * @param solutionList A list of non-dominated solutions
    * @param maximumValue The maximum values of the objectives
    * @param minimumValue The minimum values of the objectives
    * @return the normalized list of non-dominated solutions
    */
-  public static List<Solution<?>> getNormalizedFront(List<Solution<?>> solutionList,
+  public static <Value> List<Solution<Value>> getNormalizedFront(List<Solution<?>> solutionList,
     List<Double> maximumValue,
     List<Double> minimumValue) {
 
-    List<Solution<?>> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
+    List<Solution<Value>> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
 
     int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
     for (int i = 0; i < solutionList.size(); i++) {
