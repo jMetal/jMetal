@@ -71,11 +71,25 @@ public class MeasureFactory {
 				return (Value) cache[0];
 			}
 
-			@Override
+			
+			/*
+			 * 
+			 * (non-Javadoc)
+			 * The Object.finalize() method is called on an object by the garbage 
+			 * collector when it determines that there are no more references to 
+			 * the object. But there is absolutely no warranty that this method 
+			 * will be called AS SOON AS the last references to the object are 
+			 * removed. It can be few microseconds to few minutes later. So when 
+			 * system resources need to be disposed by an object, it's better to 
+			 * not rely on this asynchronous mechanism to dispose them.
+			 */
+			
+		/*	@Override
 			protected void finalize() throws Throwable {
 				push.unregister(listener);
 				super.finalize();
 			}
+		*/
 		};
 	}
 
