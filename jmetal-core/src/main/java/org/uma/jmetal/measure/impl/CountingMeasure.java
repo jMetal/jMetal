@@ -181,13 +181,23 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 			linkedMeasures.remove(measure);
 		}
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * The Object.finalize() method is called on an object by the garbage collector 
+	 * when it determines that there are no more references to the object. But there 
+	 * is absolutely no warranty that this method will be called AS SOON AS the last 
+	 * references to the object are removed. It can be few microseconds to few minutes 
+	 * later. So when system resources need to be disposed by an object, it's better 
+	 * to not rely on this asynchronous mechanism to dispose them.
+	 */
 
-	@Override
+/*	@Override
 	protected void finalize() throws Throwable {
-		/*
+		*
 		 * Use an intermediary collection for the loop to avoid the concurrent
 		 * accesses leading to exceptions or inconsistent states.
-		 */
+		 *
 		Collection<PushMeasure<?>> remainingMeasures = new LinkedList<>(
 				linkedMeasures.keySet());
 		for (PushMeasure<?> measure : remainingMeasures) {
@@ -195,7 +205,8 @@ public class CountingMeasure extends SimplePushMeasure<Long> implements
 		}
 		super.finalize();
 	}
-
+*/
+	
 	/**
 	 * Restart the counter to zero. Generate a notification if the value was not
 	 * zero.
