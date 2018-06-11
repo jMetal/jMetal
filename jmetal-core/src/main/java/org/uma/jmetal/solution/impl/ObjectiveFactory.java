@@ -14,9 +14,10 @@ import java.util.Map.Entry;
  * situations.
  * 
  * @author Matthieu Vergne <matthieu.vergne@gmail.com>
+ * @param <Value>
  * 
  */
-public class ObjectiveFactory {
+public class ObjectiveFactory<Value> {
 
 	/**
 	 * This method retrieves all the values accessible through a getter (
@@ -33,16 +34,16 @@ public class ObjectiveFactory {
 	 * @return the set of {@link Objective}s retrieved from this class
 	 * @see #createFromLonelyGetters(Class)
 	 */
-	public <Solution> Collection<Objective<Solution, ?>> createFromGetters(
+	public <Solution> Collection<Objective<Solution, Value>> createFromGetters(
 			Class<Solution> solutionClass) {
-		Collection<Objective<Solution, ?>> objectives = new LinkedList<>();
+		Collection<Objective<Solution, Value>> objectives = new LinkedList<>();
 		for (Method method : solutionClass.getMethods()) {
 			if (method.getParameterTypes().length == 0
 					&& method.getReturnType() != null
 					&& !method.getName().equals("getClass")
 					&& method.getName().matches("get[^a-z].*")) {
 				String name = method.getName().substring(3);
-				objectives.add(createObjectiveOn(solutionClass, method, name,
+				objectives.add((Objective<Solution, Value>) createObjectiveOn(solutionClass, method, name,
 						method.getReturnType()));
 			} else {
 				// not a getter, ignore it
@@ -74,7 +75,7 @@ public class ObjectiveFactory {
 	 *            the {@link Solution} class to analyze
 	 * @return the set of {@link Objective}s retrieved from this class
 	 */
-	public <Solution> Collection<Objective<Solution, ?>> createFromGettersWithoutSetters(
+	public <Solution> Collection<Objective<Solution, Value>> createFromGettersWithoutSetters(
 			Class<Solution> solutionClass) {
 		Map<String, Method> getters = new HashMap<>();
 		Map<String, Method> setters = new HashMap<>();
@@ -92,11 +93,11 @@ public class ObjectiveFactory {
 
 		getters.keySet().removeAll(setters.keySet());
 
-		Collection<Objective<Solution, ?>> objectives = new LinkedList<>();
+		Collection<Objective<Solution, Value>> objectives = new LinkedList<>();
 		for (Entry<String, Method> entry : getters.entrySet()) {
 			String name = entry.getKey();
 			Method getter = entry.getValue();
-			objectives.add(createObjectiveOn(solutionClass, getter, name,
+			objectives.add((Objective<Solution, Value>) createObjectiveOn(solutionClass, getter, name,
 					getter.getReturnType()));
 		}
 		return objectives;
