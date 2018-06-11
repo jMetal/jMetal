@@ -111,7 +111,10 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
             dmean);
       }
 
-      return (dExtrems + mean) / (dExtrems + (numberOfPoints*dmean));
+      double denominator=(dExtrems + (numberOfPoints*dmean));
+      if(denominator==0) return -1;
+      
+      return (dExtrems + mean) / denominator;
     }
   }
 
