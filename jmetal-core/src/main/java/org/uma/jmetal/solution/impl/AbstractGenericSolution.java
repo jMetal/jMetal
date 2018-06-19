@@ -1,3 +1,16 @@
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.Problem;
@@ -15,6 +28,11 @@ import java.util.*;
 public abstract class AbstractGenericSolution<T, P extends Problem<?>> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
+  
+  private int[] g_;
+  private int[] rank_;
+  private int order_;
+  
   protected P problem ;
   protected Map<Object, Object> attributes ;
   protected final JMetalRandom randomGenerator ;
@@ -29,6 +47,10 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
 
     objectives = new double[problem.getNumberOfObjectives()] ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
+    
+    g_ = new int[problem.getNumberOfObjectives()] ; 
+    rank_ = new int[problem.getNumberOfObjectives()] ; 
+    
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       variables.add(i, null) ;
     }
@@ -54,6 +76,30 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     return objectives[index];
   }
 
+  public void setG(int index,int value){
+	  g_[index] = value;
+  }
+  
+  public int getG(int index){
+	  return g_[index];
+  }
+  
+  public void setOrder(int value){
+	  order_ = value;
+  }
+  
+  public int getOrder(){
+	  return order_;
+  }
+  
+  public void setRank(int index,int value){
+	  rank_[index] = value;
+  }
+  
+  public int getRank(int index){
+	  return rank_[index];
+  }
+  
   @Override
   public T getVariableValue(int index) {
     return variables.get(index);
@@ -96,7 +142,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     return result ;
   }
 
-  private boolean equalsIgnoringAttributes(Object o) {
+  @Override public boolean equals(Object o) {
     if (this == o)
       return true;
     if (o == null || getClass() != o.getClass())
@@ -104,58 +150,12 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
 
     AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
 
+    if (!attributes.equals(that.attributes))
+      return false;
     if (!Arrays.equals(objectives, that.objectives))
       return false;
-
     if (!variables.equals(that.variables))
       return false;
-
-    return true;
-  }
-
-  @Override public boolean equals(Object o) {
-
-    if (!this.equalsIgnoringAttributes(o)) {
-      return false;
-    }
-
-    AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
-    // avoid recursive infinite comparisons when solution as attribute
-
-    // examples when problems would arise with a simple comparison attributes.equals(that.attributes):
-    // if A contains itself as Attribute
-    // If A contains B as attribute, B contains A as attribute
-    //
-    // the following implementation takes care of this by considering solutions as attributes as a special case
-
-    if (attributes.size() != that.attributes.size()) {
-      return false;
-    }
-
-    for (Object key : attributes.keySet()) {
-      Object value      = attributes.get(key);
-      Object valueThat  = that.attributes.get(key);
-
-      if (value != valueThat) { // it only makes sense comparing when having different references
-
-        if (value == null) {
-          return false;
-        } else if (valueThat == null) {
-          return false;
-        } else { // both not null
-
-          boolean areAttributeValuesEqual;
-          if (value instanceof AbstractGenericSolution) {
-            areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
-          } else {
-            areAttributeValuesEqual = !value.equals(valueThat);
-          }
-          if (!areAttributeValuesEqual) {
-            return false;
-          } // if equal the next attributeValue will be checked
-        }
-      }
-    }
 
     return true;
   }
