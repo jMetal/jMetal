@@ -82,7 +82,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    ChartContainer chart = new ChartContainer(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setVarChart(0, 1);
     chart.initChart();
