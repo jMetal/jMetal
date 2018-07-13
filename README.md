@@ -18,6 +18,7 @@ If you are interested in contributing with your ideas and comments, please take 
 * Improvements in algorithms [WASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/wasfga) and [GWASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/gwasfga). Contribution of Rubén Saborido.
 * Algorithm MOEA/D and variants can now return a subset of evenly distributed solutions (see Miscelanea)
 * Algorithm [ESPEA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/espea). Contribution of Marlon Braun.
+* Algorithm [CDG-MOEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/cdg/CDG.java). Contribution of Feng Zhang and Xinye Cai.
 
 ### Problems
 * Problems of the [CEC 2018 competition on many-objective optimization](https://github.com/jMetal/jMetal/tree/master/jmetal-problem/src/main/java/org/uma/jmetal/problem/multiobjective/maf). Contribution of Gian Mauricio Fritsche.
