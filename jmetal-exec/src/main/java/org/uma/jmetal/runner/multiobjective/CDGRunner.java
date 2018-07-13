@@ -28,64 +28,63 @@ import org.uma.jmetal.util.JMetalLogger;
 
 /**
  * Class for configuring and running the CDG algorithm
- *  The paper and Matlab code can be download at 
- *  http://xinyecai.github.io/
+ * The paper and Matlab code can be download at
+ * http://xinyecai.github.io/
  *
  * @author Feng Zhang
  */
 public class CDGRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws ClassNotFoundException 
-   * @throws SecurityException
-   * Invoking command:
-   *	java org.uma.jmetal.runner.multiobjective.CDGRunner problemName [referenceFront]
+   * @throws ClassNotFoundException
+   * @throws SecurityException      Invoking command:
+   *                                java org.uma.jmetal.runner.multiobjective.CDGRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName ;
+    String problemName;
     String referenceParetoFront = "";
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
+      problemName = args[0];
+      referenceParetoFront = args[1];
     } else {
-//        problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-//        referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
+      // problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+      // referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
     }
 
     //problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
     problem = new GLT4(10);
-    
 
-    double cr = 1.0 ;
-    double f = 0.5 ;
+
+    double cr = 1.0;
+    double f = 0.5;
     crossover = new DifferentialEvolutionCrossover(cr, f, "rand/1/bin");
-    
+
     algorithm = new CDGBuilder(problem)
-        .setCrossover(crossover)
-        .setMaxEvaluations(300*1000)
-        .setPopulationSize(300)
-        .setResultPopulationSize(300)
-        .setNeighborhoodSelectionProbability(0.9)
-        .build() ;
+            .setCrossover(crossover)
+            .setMaxEvaluations(300 * 1000)
+            .setPopulationSize(300)
+            .setResultPopulationSize(300)
+            .setNeighborhoodSelectionProbability(0.9)
+            .build();
 
-    
+
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-    		.execute() ;
+            .execute();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<DoubleSolution> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }
