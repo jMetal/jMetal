@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

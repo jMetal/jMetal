@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;

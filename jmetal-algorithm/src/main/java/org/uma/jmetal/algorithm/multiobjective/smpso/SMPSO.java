@@ -280,7 +280,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return result;
   }
 
-  private double constrictionCoefficient(double c1, double c2) {
+  protected double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;

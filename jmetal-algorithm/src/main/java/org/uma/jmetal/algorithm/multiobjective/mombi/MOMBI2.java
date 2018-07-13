@@ -1,11 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFUtilityFunctionSet;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.MOMBI2History;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.Normalizer;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2Ranking;
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2RankingNormalized;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
