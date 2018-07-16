@@ -11,6 +11,8 @@ import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -56,6 +58,9 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+
+    problem = new DTLZ3(7,2);
+    referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ3.2D.pf" ;
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 

@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class NSGAIIStudy2 {
 
-  private static final int INDEPENDENT_RUNS = 25;
+  private static final int INDEPENDENT_RUNS = 20;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -81,7 +81,8 @@ public class NSGAIIStudy2 {
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory(experimentBaseDirectory + "/NSGAIIStudy2/referenceFronts")
             .setIndicatorList(Arrays.asList(
-                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(),
+                new Epsilon<DoubleSolution>(),
+                new Spread<DoubleSolution>(),
                 new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(),
@@ -90,11 +91,11 @@ public class NSGAIIStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-    new ComputeQualityIndicators<>(experiment).run();
-    new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
+    //new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    //new ComputeQualityIndicators<>(experiment).run();
+    //new GenerateLatexTablesWithStatistics(experiment).run();
+    //new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }
