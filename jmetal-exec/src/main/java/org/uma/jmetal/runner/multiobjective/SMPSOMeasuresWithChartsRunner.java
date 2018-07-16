@@ -14,11 +14,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
@@ -87,7 +83,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    ChartContainer chart = new ChartContainer(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setVarChart(0, 1);
     chart.initChart();

@@ -1,11 +1,12 @@
 package org.uma.jmetal.util.artificialdecisionmaker.impl;
 
-import java.util.List;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

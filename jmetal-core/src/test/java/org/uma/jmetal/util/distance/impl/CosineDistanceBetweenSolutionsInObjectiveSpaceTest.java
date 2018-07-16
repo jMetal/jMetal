@@ -38,7 +38,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
   }
 
   @Test
-  public void shouldIdenticalPointsInTheSameDirectionHaveADistanceOfOne() {
+  public void shouldPointsInTheSameDirectionHaveADistanceOfOne() {
     Solution<?> idealPoint = mock(Solution.class) ;
     when(idealPoint.getObjective(0)).thenReturn(0.0) ;
     when(idealPoint.getObjective(1)).thenReturn(0.0) ;
