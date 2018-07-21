@@ -42,7 +42,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     MutationOperator<DoubleSolution> mutation;
     String referenceParetoFront = "" ;
 
-    JMetalRandom.getInstance().setSeed(3);
+    //JMetalRandom.getInstance().setSeed(3);
 
     String problemName ;
     if (args.length == 1) {
@@ -59,9 +59,9 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    referencePoints.add(Arrays.asList(0.1, 1.0)) ;
-    referencePoints.add(Arrays.asList(0.3, 0.3)) ;
-    referencePoints.add(Arrays.asList(0.8, 0.2)) ;
+    referencePoints.add(Arrays.asList(0.0, 0.0)) ;
+    //referencePoints.add(Arrays.asList(0.3, 0.3)) ;
+    //referencePoints.add(Arrays.asList(0.8, 0.2)) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

@@ -49,14 +49,11 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT3.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
-
-    problem = new DTLZ3(7,2);
-    referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ3.2D.pf" ;
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
