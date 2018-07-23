@@ -211,7 +211,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = referenceFront.getPoint(0).getDimension() ;
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
@@ -254,8 +254,8 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
         Point point = invertedFront.getPoint(i) ;
 
-        for (int j = 0; j < point.getNumberOfDimensions(); j++) {
-          point.setDimensionValue(j, point.getDimensionValue(j)+ offsets[j]);
+        for (int j = 0; j < point.getDimension(); j++) {
+          point.setValue(j, point.getValue(j)+ offsets[j]);
         }
       }
 

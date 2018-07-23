@@ -42,8 +42,8 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -56,10 +56,10 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(350000)
+            .setMaxEvaluations(150000)
             .setPopulationSize(300)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)

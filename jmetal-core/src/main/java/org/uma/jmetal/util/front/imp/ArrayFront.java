@@ -43,7 +43,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, solutionList.get(i).getObjective(j));
+        point.setValue(j, solutionList.get(i).getObjective(j));
       }
       points[i] = point;
     }
@@ -57,7 +57,7 @@ public class ArrayFront implements Front {
       throw new JMetalException("The front is empty") ;
     }
     numberOfPoints = front.getNumberOfPoints();
-    pointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    pointDimensions = front.getPoint(0).getDimension() ;
     points = new Point[numberOfPoints] ;
 
     points = new Point[numberOfPoints];
@@ -75,7 +75,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < this.numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, 0.0) ;
+        point.setValue(j, 0.0) ;
       }
       points[i] = point ;
     }
@@ -113,7 +113,7 @@ public class ArrayFront implements Front {
         Point point = new ArrayPoint(numberOfObjectives) ;
         while (tokenizer.hasMoreTokens()) {
           double value = new Double(tokenizer.nextToken());
-          point.setDimensionValue(i, value);
+          point.setValue(i, value);
           i++;
         }
         list.add(point);
@@ -132,7 +132,7 @@ public class ArrayFront implements Front {
     if (numberOfPoints == 0) {
       pointDimensions = 0 ;
     } else {
-      pointDimensions = points[0].getNumberOfDimensions() ;
+      pointDimensions = points[0].getDimension() ;
     }
     for (int i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);

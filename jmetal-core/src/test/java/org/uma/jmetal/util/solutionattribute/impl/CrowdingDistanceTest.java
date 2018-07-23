@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.ArrayList;
 import java.util.List;
