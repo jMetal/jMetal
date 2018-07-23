@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.point.impl;
 
+import java.util.List;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 
 /**d
@@ -28,6 +30,12 @@ public class IdealPoint extends ArrayPoint {
       if (this.point[i] > point[i]) {
         this.point[i] = point[i];
       }
+    }
+  }
+
+  public void update(List<? extends Solution<?>> solutionList) {
+    for (Solution<?> solution : solutionList) {
+      update(solution.getObjectives()) ;
     }
   }
 }

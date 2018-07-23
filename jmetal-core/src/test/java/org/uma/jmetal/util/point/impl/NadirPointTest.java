@@ -1,5 +1,8 @@
 package org.uma.jmetal.util.point.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
@@ -32,7 +35,7 @@ public class NadirPointTest {
   }
 
   @Test
-  public void shouldUpdateWithOneSolutionMakeTheIdealPointHaveTheSolutionValues() {
+  public void shouldUpdateWithOneSolutionMakeTheNadirPointHaveTheSolutionValues() {
     int numberOfObjectives = 2 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
@@ -49,7 +52,7 @@ public class NadirPointTest {
   }
 
   @Test
-  public void shouldUpdateWithTwoSolutionsLeadToTheCorrectIdealPoint() {
+  public void shouldUpdateWithTwoSolutionsLeadToTheCorrectNadirPoint() {
     int numberOfObjectives = 2 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
@@ -74,7 +77,7 @@ public class NadirPointTest {
   }
 
   @Test
-  public void shouldUpdateWithThreeSolutionsLeadToTheCorrectIdealPoint() {
+  public void shouldUpdateWithThreeSolutionsLeadToTheCorrectNadirPoint() {
     int numberOfObjectives = 3 ;
 
     referencePoint = new NadirPoint(numberOfObjectives) ;
@@ -103,6 +106,42 @@ public class NadirPointTest {
     referencePoint.update(solution1.getObjectives());
     referencePoint.update(solution2.getObjectives());
     referencePoint.update(solution3.getObjectives());
+
+    assertEquals(5.0, referencePoint.getValue(0), EPSILON) ;
+    assertEquals(6.0, referencePoint.getValue(1), EPSILON) ;
+    assertEquals(5.5, referencePoint.getValue(2), EPSILON) ;
+  }
+
+  @Test
+  public void shouldUpdateAListOfSolutionsLeadToTheCorrectNadirPoint() {
+    int numberOfObjectives = 3 ;
+
+    referencePoint = new NadirPoint(numberOfObjectives) ;
+
+    IntegerSolution solution1 = mock(IntegerSolution.class) ;
+    when(solution1.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
+    when(solution1.getObjective(0)).thenReturn(3.0) ;
+    when(solution1.getObjective(1)).thenReturn(1.0) ;
+    when(solution1.getObjective(2)).thenReturn(2.0) ;
+    when(solution1.getObjectives()).thenReturn(new double[]{3.0, 1.0, 2.0}) ;
+
+    IntegerSolution solution2 = mock(IntegerSolution.class) ;
+    when(solution2.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
+    when(solution2.getObjective(0)).thenReturn(0.2) ;
+    when(solution2.getObjective(1)).thenReturn(4.0) ;
+    when(solution2.getObjective(2)).thenReturn(5.5) ;
+    when(solution2.getObjectives()).thenReturn(new double[]{0.2, 4.0, 5.5}) ;
+
+    IntegerSolution solution3 = mock(IntegerSolution.class) ;
+    when(solution3.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
+    when(solution3.getObjective(0)).thenReturn(5.0) ;
+    when(solution3.getObjective(1)).thenReturn(6.0) ;
+    when(solution3.getObjective(2)).thenReturn(1.5) ;
+    when(solution3.getObjectives()).thenReturn(new double[]{5.0, 6.0, 1.5}) ;
+
+    List<IntegerSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+
+    referencePoint.update(solutionList);
 
     assertEquals(5.0, referencePoint.getValue(0), EPSILON) ;
     assertEquals(6.0, referencePoint.getValue(1), EPSILON) ;
