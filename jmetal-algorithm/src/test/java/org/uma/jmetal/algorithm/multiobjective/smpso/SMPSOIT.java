@@ -45,7 +45,6 @@ public class SMPSOIT {
     DoubleProblem problem = new ZDT4() ;
 
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
-
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();

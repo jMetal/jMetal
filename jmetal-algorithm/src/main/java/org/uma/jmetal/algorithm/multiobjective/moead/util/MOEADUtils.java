@@ -145,10 +145,6 @@ public class MOEADUtils {
     IdealPoint idealPoint = new IdealPoint(2) ;
     solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
 
-    for (int v = 0 ; v < idealPoint.getDimension(); v++) {
-      System.out.println(idealPoint.getValue(v)) ;
-    }
-
     // Select the best solution for each weight vector
     for (int i = 0; i < newSolutionListSize; i++) {
       S currentBest = solutionList.get(0);

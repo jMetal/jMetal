@@ -48,7 +48,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
     initializeUniformWeight();
     initializeNeighborhood();
     initializePopulation();
-    initializeIdealPoint();
+    idealPoint.update(population);
 
     violationThresholdComparator.updateThreshold(population);
 
@@ -75,7 +75,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
         }
         evaluations++;
 
-        updateIdealPoint(child);
+        idealPoint.update(child.getObjectives());
         updateNeighborhood(child, subProblemId, neighborType);
       }
 
