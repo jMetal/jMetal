@@ -86,8 +86,8 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
     for (int i = 0; i < referenceFront.getNumberOfPoints(); i++) {
       for (int j = 0; j < front.getNumberOfPoints(); j++) {
         for (int k = 0; k < numberOfObjectives; k++) {
-          epsTemp = front.getPoint(j).getDimensionValue(k)
-              - referenceFront.getPoint(i).getDimensionValue(k);
+          epsTemp = front.getPoint(j).getValue(k)
+              - referenceFront.getPoint(i).getValue(k);
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {

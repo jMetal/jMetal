@@ -19,11 +19,11 @@ import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificialDecisionMakerD
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificiallDecisionMakerBuilder;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.referencePoint.impl.IdealPoint;
-import org.uma.jmetal.util.referencePoint.impl.NadirPoint;
+import org.uma.jmetal.util.point.impl.IdealPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 
 import static org.junit.Assert.assertTrue;
 
@@ -58,9 +58,9 @@ public class ArtificiallDecisionMakerIT {
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     IdealPoint idealPoint = new IdealPoint(problem.getNumberOfObjectives());
-    idealPoint.update(problem.createSolution());
+    idealPoint.update(problem.createSolution().getObjectives());
     NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
-    nadirPoint.update(problem.createSolution());
+    nadirPoint.update(problem.createSolution().getObjectives());
     double considerationProbability = 0.1;
     List<Double> rankingCoeficient = new ArrayList<>();
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {

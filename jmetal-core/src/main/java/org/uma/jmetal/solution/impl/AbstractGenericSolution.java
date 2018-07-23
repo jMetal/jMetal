@@ -35,6 +35,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   }
 
   @Override
+  public double[] getObjectives() {
+    return objectives ;
+  }
+
+  @Override
   public void setAttribute(Object id, Object value) {
     attributes.put(id, value) ;
   }

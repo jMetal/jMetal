@@ -95,6 +95,11 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
+    public double[] getObjectives() {
+      return null ;
+    }
+
+    @Override
     public double getObjective(int index) {
       return 0;
     }

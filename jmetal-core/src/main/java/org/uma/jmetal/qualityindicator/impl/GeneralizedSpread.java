@@ -71,15 +71,15 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
    *  @return the value of the generalized spread metric
    **/
   public double generalizedSpread(Front front, Front referenceFront) {
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = front.getPoint(0).getDimension() ;
 
     Point[] extremeValues = new Point[numberOfObjectives] ;
     for (int i = 0; i < numberOfObjectives; i++) {
       referenceFront.sort(new PointDimensionComparator(i));
       Point newPoint = new ArrayPoint(numberOfObjectives) ;
       for (int j = 0 ; j < numberOfObjectives; j++) {
-        newPoint.setDimensionValue(j,
-            referenceFront.getPoint(referenceFront.getNumberOfPoints()-1).getDimensionValue(j));
+        newPoint.setValue(j,
+            referenceFront.getPoint(referenceFront.getNumberOfPoints()-1).getValue(j));
       }
       extremeValues[i] = newPoint ;
     }

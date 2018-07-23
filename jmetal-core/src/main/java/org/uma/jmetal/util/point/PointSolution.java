@@ -1,11 +1,9 @@
-package org.uma.jmetal.util.point.util;
-
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.point.Point;
+package org.uma.jmetal.util.point;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.
@@ -35,11 +33,11 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(Point point) {
-    this.numberOfObjectives = point.getNumberOfDimensions() ;
+    this.numberOfObjectives = point.getDimension() ;
     objectives = new double[numberOfObjectives] ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getDimensionValue(i) ;
+      this.objectives[i] = point.getValue(i) ;
     }
   }
 
@@ -76,6 +74,11 @@ public class PointSolution implements Solution<Double> {
 
   @Override public double getObjective(int index) {
     return objectives[index];
+  }
+
+  @Override
+  public double[] getObjectives() {
+    return objectives ;
   }
 
   @Override public Double getVariableValue(int index) {

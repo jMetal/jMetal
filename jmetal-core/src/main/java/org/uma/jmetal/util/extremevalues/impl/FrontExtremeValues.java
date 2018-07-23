@@ -31,8 +31,8 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (front.getPoint(i).getDimensionValue(j) < minimumValue.get(j)) {
-          minimumValue.set(j, front.getPoint(i).getDimensionValue(j));
+        if (front.getPoint(i).getValue(j) < minimumValue.get(j)) {
+          minimumValue.set(j, front.getPoint(i).getValue(j));
         }
       }
     }
@@ -57,8 +57,8 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (front.getPoint(i).getDimensionValue(j) > maximumValue.get(j)) {
-          maximumValue.set(j, front.getPoint(i).getDimensionValue(j));
+        if (front.getPoint(i).getValue(j) > maximumValue.get(j)) {
+          maximumValue.set(j, front.getPoint(i).getValue(j));
         }
       }
     }

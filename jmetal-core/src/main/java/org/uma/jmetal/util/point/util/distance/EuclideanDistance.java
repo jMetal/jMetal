@@ -16,15 +16,15 @@ public class EuclideanDistance implements PointDistance {
       throw new JMetalException("The first point is null") ;
     } else if (b == null) {
       throw new JMetalException("The second point is null") ;
-    } else if (a.getNumberOfDimensions() != b.getNumberOfDimensions()) {
+    } else if (a.getDimension() != b.getDimension()) {
       throw new JMetalException("The dimensions of the points are different: "
-          + a.getNumberOfDimensions() + ", " + b.getNumberOfDimensions()) ;
+          + a.getDimension() + ", " + b.getDimension()) ;
     }
 
     double distance = 0.0;
 
-    for (int i = 0; i < a.getNumberOfDimensions(); i++) {
-      distance += Math.pow(a.getDimensionValue(i) - b.getDimensionValue(i), 2.0);
+    for (int i = 0; i < a.getDimension(); i++) {
+      distance += Math.pow(a.getValue(i) - b.getValue(i), 2.0);
     }
     return Math.sqrt(distance);
   }

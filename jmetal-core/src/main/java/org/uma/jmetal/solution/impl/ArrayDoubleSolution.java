@@ -66,6 +66,11 @@ public class ArrayDoubleSolution implements DoubleSolution {
   }
 
   @Override
+  public double[] getObjectives() {
+    return objectives ;
+  }
+
+  @Override
   public Double getVariableValue(int index) {
     return variables[index];
   }

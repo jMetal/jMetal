@@ -5,7 +5,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.referencePoint.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.IdealPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,10 +143,10 @@ public class MOEADUtils {
     }
 
     IdealPoint idealPoint = new IdealPoint(2) ;
-    solutionList.stream().forEach(solution -> idealPoint.update(solution));
+    solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
 
-    for (int v = 0 ; v < idealPoint.getNumberOfObjectives(); v++) {
-      System.out.println(idealPoint.getObjective(v)) ;
+    for (int v = 0 ; v < idealPoint.getDimension(); v++) {
+      System.out.println(idealPoint.getValue(v)) ;
     }
 
     // Select the best solution for each weight vector
@@ -211,8 +211,8 @@ public class MOEADUtils {
 
     double maxFun = -1.0e+30;
 
-    for (int n = 0; n < idealPoint.getNumberOfObjectives(); n++) {
-      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getObjective(n));
+    for (int n = 0; n < idealPoint.getDimension(); n++) {
+      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getValue(n));
 
       double functionValue;
       if (lambda[n] == 0) {
