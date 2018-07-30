@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.5.3-SNAPSHOT</version>
+    <version>5.5.3</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -237,22 +237,22 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.5.3-SNAPSHOT</version>
+                <version>5.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-exec</artifactId>
-                <version>5.5.3-SNAPSHOT</version>
+                <version>5.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>5.5.3-SNAPSHOT</version>
+                <version>5.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>5.5.3-SNAPSHOT</version>
+                <version>5.5.3</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
