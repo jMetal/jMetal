@@ -31,8 +31,11 @@ import java.util.List;
 public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
   /**
    * Program to run the SMPSORP algorithm with three reference points and plotting a graph during the algorithm
-   * execution. SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With
-   * Reference Point Based Preference Articulation". Accepted in PPSN 2018.
+   * execution. SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
+   * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
+   * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
+   * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
+   * pp. 298-310. 2018".
    *
    * @author Antonio J. Nebro
    */

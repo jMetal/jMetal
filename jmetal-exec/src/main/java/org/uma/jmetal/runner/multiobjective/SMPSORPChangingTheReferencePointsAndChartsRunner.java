@@ -30,9 +30,11 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
 
   /**
    * Program to run the SMPSORP algorithm allowing to change a reference point interactively.
-   * SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With
-   * Reference Point Based Preference Articulation". Accepted in PPSN 2018. This runner is the one used in
-   * the use case included in the paper.
+   * SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
+   * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
+   * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
+   * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
+   *  pp. 298-310. 2018." This runner is the one used in the use case included in the paper.
    *
    * In the current implementation, only one reference point can be modified interactively.
    *
@@ -44,7 +46,6 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     MutationOperator<DoubleSolution> mutation;
     String referenceParetoFront ;
 
-    problem = new Ebes("ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"}) ;
     problem = new Ebes("ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"}) ;
     referenceParetoFront = null ;
     List<List<Double>> referencePoints;
