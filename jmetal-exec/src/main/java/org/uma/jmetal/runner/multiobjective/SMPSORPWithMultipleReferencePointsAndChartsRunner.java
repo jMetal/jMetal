@@ -42,8 +42,6 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     MutationOperator<DoubleSolution> mutation;
     String referenceParetoFront = "" ;
 
-    //JMetalRandom.getInstance().setSeed(3);
-
     String problemName ;
     if (args.length == 1) {
       problemName = args[0];
@@ -59,9 +57,9 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    referencePoints.add(Arrays.asList(0.0, 0.0)) ;
-    //referencePoints.add(Arrays.asList(0.3, 0.3)) ;
-    //referencePoints.add(Arrays.asList(0.8, 0.2)) ;
+    //referencePoints.add(Arrays.asList(0.6, 0.1)) ;
+    referencePoints.add(Arrays.asList(0.2, 0.3)) ;
+    referencePoints.add(Arrays.asList(0.8, 0.2)) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
@@ -112,7 +110,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    chart.saveChart("RSMPSO", BitmapEncoder.BitmapFormat.PNG);
+    chart.saveChart("SMPSORP", BitmapEncoder.BitmapFormat.PNG);
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 

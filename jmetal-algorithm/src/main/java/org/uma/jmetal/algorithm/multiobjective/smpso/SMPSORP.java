@@ -355,7 +355,7 @@ public class SMPSORP
   }
 
   @Override public String getName() {
-    return "SMPSO" ;
+    return "SMPSO/RP" ;
   }
 
   @Override public String getDescription() {

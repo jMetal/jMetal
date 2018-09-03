@@ -14,10 +14,9 @@ public class Kursawe extends AbstractDoubleProblem {
 
   /**
    * Constructor.
-   * Creates a default instance of the Kursawe problem.
+   * Creates a default instance (3 variables) of the Kursawe problem
    */
   public Kursawe() {
-    // 3 variables by default
     this(3);
   }
 
