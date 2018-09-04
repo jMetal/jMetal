@@ -34,8 +34,8 @@ public class PISAHypervolumeTest {
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
     for (int i = 0 ; i < storeFront.getNumberOfPoints(); i++) {
       DoubleSolution solution = problem.createSolution() ;
-      solution.setObjective(0, storeFront.getPoint(i).getDimensionValue(0));
-      solution.setObjective(1, storeFront.getPoint(i).getDimensionValue(1));
+      solution.setObjective(0, storeFront.getPoint(i).getValue(0));
+      solution.setObjective(1, storeFront.getPoint(i).getValue(1));
       frontToEvaluate.add(solution) ;
     }
 

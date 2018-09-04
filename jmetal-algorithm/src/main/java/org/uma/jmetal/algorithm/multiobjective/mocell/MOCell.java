@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -95,7 +93,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
-    location = new LocationAttribute<>(population);
     return population;
   }
 
@@ -136,6 +133,8 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    location = new LocationAttribute<>(population);
+
     int flag = dominanceComparator.compare(population.get(currentIndividual),offspringPopulation.get(0));
 
     if (flag == 1) { //The new individual dominates

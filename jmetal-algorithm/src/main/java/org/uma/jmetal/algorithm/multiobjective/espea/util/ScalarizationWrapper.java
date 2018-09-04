@@ -1,8 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
-import java.util.List;
-
 import org.uma.jmetal.solution.Solution;
+
+import java.util.List;
 
 /**
  * A class for simplifying the access to {@link ScalarizationUtils}.

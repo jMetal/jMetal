@@ -8,12 +8,7 @@ import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
         implements Ranking<S> {

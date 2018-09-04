@@ -154,16 +154,16 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
        front = frontNormalizer.normalize(front);
     }
 
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+    int numberOfObjectives = front.getPoint(0).getDimension();
 
     // STEP 3. compute all the matrix of Tschebyscheff values if it is null
     double[][] matrix = new double[front.getNumberOfPoints()][lambda.length];
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < lambda.length; j++) {
-        matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getDimensionValue(0));
+        matrix[i][j] = lambda[j][0] * Math.abs(front.getPoint(i).getValue(0));
         for (int n = 1; n < numberOfObjectives; n++) {
           matrix[i][j] = Math.max(matrix[i][j],
-          lambda[j][n] * Math.abs(front.getPoint(i).getDimensionValue(n)));
+          lambda[j][n] * Math.abs(front.getPoint(i).getValue(n)));
         }
       }
     }

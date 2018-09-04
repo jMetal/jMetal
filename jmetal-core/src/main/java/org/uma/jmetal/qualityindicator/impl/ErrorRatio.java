@@ -91,7 +91,7 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
         Point currentParetoFrontPoint = referenceFront.getPoint(j);
         boolean found = true;
         for (int k = 0; k < numberOfObjectives; k++) {
-          if(currentPoint.getDimensionValue(k) != currentParetoFrontPoint.getDimensionValue(k)){
+          if(currentPoint.getValue(k) != currentParetoFrontPoint.getValue(k)){
             found = false;
             break;
           }

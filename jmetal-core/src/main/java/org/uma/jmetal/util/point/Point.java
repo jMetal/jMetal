@@ -6,8 +6,9 @@ package org.uma.jmetal.util.point;
  * @author Antonio J. Nebro
  */
 public interface Point {
-  public int getNumberOfDimensions();
-  public double[] getValues() ;
-  public double getDimensionValue(int index) ;
-  public void setDimensionValue(int index, double value) ;
+  int getDimension();
+  double[] getValues() ;
+  double getValue(int index) ;
+  void setValue(int index, double value) ;
+  void update(double[] point) ;
 }

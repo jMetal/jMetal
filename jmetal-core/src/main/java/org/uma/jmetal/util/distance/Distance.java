@@ -6,5 +6,5 @@ package org.uma.jmetal.util.distance;
  * @author <antonio@lcc.uma.es>
  */
 public interface Distance<E, J> {
-  public double getDistance(E element1, J element2) ;
+  double getDistance(E element1, J element2) ;
 }

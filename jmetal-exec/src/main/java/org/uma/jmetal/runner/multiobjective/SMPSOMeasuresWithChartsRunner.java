@@ -11,12 +11,10 @@ import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
@@ -51,8 +49,8 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT3.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -82,7 +80,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
     CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentIteration");
 
-    ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
+    ChartContainer chart = new ChartContainer(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
     chart.setVarChart(0, 1);
     chart.initChart();

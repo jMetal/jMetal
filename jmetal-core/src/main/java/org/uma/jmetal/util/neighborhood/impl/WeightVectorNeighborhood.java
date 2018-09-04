@@ -4,12 +4,7 @@ import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;

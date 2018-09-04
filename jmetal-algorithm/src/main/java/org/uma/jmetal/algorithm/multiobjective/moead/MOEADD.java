@@ -5,6 +5,8 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
@@ -42,8 +44,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     neighborhood = new int[populationSize][neighborSize];
     lambda = new double[populationSize][problem.getNumberOfObjectives()];
 
-    idealPoint = new double[problem.getNumberOfObjectives()]; // ideal point for Pareto-based population
-    nadirPoint = new double[problem.getNumberOfObjectives()]; // nadir point for Pareto-based population
+    idealPoint = new IdealPoint(problem.getNumberOfObjectives()); // ideal point for Pareto-based population
+    nadirPoint = new NadirPoint(problem.getNumberOfObjectives()); // nadir point for Pareto-based population
 
     rankIdx = new int[populationSize][populationSize];
     subregionIdx = new int[populationSize][populationSize];
@@ -53,12 +55,13 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     initializeUniformWeight();
     initializeNeighborhood();
     initPopulation();
-    initializeIdealPoint();
-    initializeNadirPoint();
+    idealPoint.update(population);
+    nadirPoint.update(population);
 
     // initialize the distance
     for (int i = 0; i < populationSize; i++) {
-      double distance = calculateDistance2(population.get(i), lambda[i], idealPoint, nadirPoint);
+      double distance = calculateDistance2(
+          population.get(i), lambda[i], idealPoint.getValues(), nadirPoint.getValues());
       subregionDist[i][i] = distance;
     }
 
@@ -97,11 +100,10 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
         evaluations++;
 
-        updateIdealPoint(child);
-        updateNadirPoint(child);
+        idealPoint.update(child.getObjectives());
+        nadirPoint.update(child.getObjectives());
         updateArchive(child);
-        //System.out.println(evaluations);
-      } // for
+      }
     } while (evaluations < maxEvaluations);
   }
 
@@ -116,23 +118,12 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
       population.add(newSolution);
       subregionIdx[i][i] = 1;
     }
-  } // initPopulation
-
-  void RefreshNadirPoint() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      nadirPoint[i] = -1.0e+30;
-    }
-
-    for (int i = 0; i < populationSize; i++) {
-      updateNadirPoint(population.get(i));
-    }
-  } // initNadirPoint
+  }
 
   /**
    * Select two parents for reproduction
    */
   public List<S> matingSelection(int cid, int type) {
-
     int rnd1, rnd2;
 
     List<S> parents = new ArrayList<>(2);
@@ -223,7 +214,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void updateArchive(S indiv) {
 
     // find the location of 'indiv'
-    setLocation(indiv, idealPoint, nadirPoint);
+    setLocation(indiv, idealPoint.getValues(), nadirPoint.getValues());
     int location = (int) indiv.getAttribute("region");
 
     numRanks = nondominated_sorting_add(indiv);

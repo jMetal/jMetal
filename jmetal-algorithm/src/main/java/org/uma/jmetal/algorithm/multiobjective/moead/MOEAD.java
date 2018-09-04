@@ -45,7 +45,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
     initializePopulation() ;
     initializeUniformWeight();
     initializeNeighborhood();
-    initializeIdealPoint() ;
+    idealPoint.update(population); ;
 
     evaluations = populationSize ;
     do {
@@ -67,7 +67,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
 
         evaluations++;
 
-        updateIdealPoint(child);
+        idealPoint.update(child.getObjectives());
         updateNeighborhood(child, subProblemId, neighborType);
       }
     } while (evaluations < maxEvaluations);

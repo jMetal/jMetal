@@ -5,28 +5,14 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+import org.uma.jmetal.problem.multiobjective.zdt.*;
+import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
-import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
@@ -54,7 +40,7 @@ import java.util.List;
  */
 public class NSGAIIStudy2 {
 
-  private static final int INDEPENDENT_RUNS = 25;
+  private static final int INDEPENDENT_RUNS = 20;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -81,7 +67,8 @@ public class NSGAIIStudy2 {
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory(experimentBaseDirectory + "/NSGAIIStudy2/referenceFronts")
             .setIndicatorList(Arrays.asList(
-                new Epsilon<DoubleSolution>(), new Spread<DoubleSolution>(),
+                new Epsilon<DoubleSolution>(),
+                new Spread<DoubleSolution>(),
                 new GenerationalDistance<DoubleSolution>(),
                 new PISAHypervolume<DoubleSolution>(),
                 new InvertedGenerationalDistance<DoubleSolution>(),
@@ -90,11 +77,11 @@ public class NSGAIIStudy2 {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-    new ComputeQualityIndicators<>(experiment).run();
-    new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
+    //new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    //new ComputeQualityIndicators<>(experiment).run();
+    //new GenerateLatexTablesWithStatistics(experiment).run();
+    //new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }

@@ -2,14 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import org.uma.jmetal.solution.Solution;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
