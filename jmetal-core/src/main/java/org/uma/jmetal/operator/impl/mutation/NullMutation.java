@@ -11,6 +11,7 @@ import org.uma.jmetal.operator.MutationOperator;
 @SuppressWarnings("serial")
 public class NullMutation<S> implements MutationOperator<S> {
   public NullMutation() {
+	  //This method is intended to perform no mutation.
   }
 
   /** Execute() method */

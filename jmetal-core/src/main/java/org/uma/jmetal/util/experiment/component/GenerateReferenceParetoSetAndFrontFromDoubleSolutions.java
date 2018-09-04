@@ -227,6 +227,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     }
 
     @Override public void evaluate(DoubleSolution solution) {
+    	//This method is an intentionally-blank override.
     }
   }
 }

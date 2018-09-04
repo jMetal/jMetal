@@ -28,6 +28,6 @@ public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator
   }
 
   @Override public void shutdown() {
-    ;
+	  // This method is an intentionally-blank override.
   }
 }
