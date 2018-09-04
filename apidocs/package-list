@@ -2,8 +2,11 @@ org.uma.jmetal.algorithm
 org.uma.jmetal.algorithm.impl
 org.uma.jmetal.algorithm.multiobjective.abyss
 org.uma.jmetal.algorithm.multiobjective.abyss.util
+org.uma.jmetal.algorithm.multiobjective.cdg
 org.uma.jmetal.algorithm.multiobjective.cellde
 org.uma.jmetal.algorithm.multiobjective.dmopso
+org.uma.jmetal.algorithm.multiobjective.espea
+org.uma.jmetal.algorithm.multiobjective.espea.util
 org.uma.jmetal.algorithm.multiobjective.gde3
 org.uma.jmetal.algorithm.multiobjective.gwasfga
 org.uma.jmetal.algorithm.multiobjective.gwasfga.util
@@ -54,6 +57,7 @@ org.uma.jmetal.problem.multiobjective.dtlz
 org.uma.jmetal.problem.multiobjective.ebes
 org.uma.jmetal.problem.multiobjective.glt
 org.uma.jmetal.problem.multiobjective.lz09
+org.uma.jmetal.problem.multiobjective.maf
 org.uma.jmetal.problem.multiobjective.mop
 org.uma.jmetal.problem.multiobjective.wfg
 org.uma.jmetal.problem.multiobjective.zdt
@@ -64,7 +68,6 @@ org.uma.jmetal.qualityindicator
 org.uma.jmetal.qualityindicator.impl
 org.uma.jmetal.qualityindicator.impl.hypervolume
 org.uma.jmetal.qualityindicator.impl.hypervolume.util
-org.uma.jmetal.runner
 org.uma.jmetal.runner.multiobjective
 org.uma.jmetal.runner.singleobjective
 org.uma.jmetal.solution
@@ -73,6 +76,10 @@ org.uma.jmetal.solution.util
 org.uma.jmetal.util
 org.uma.jmetal.util.archive
 org.uma.jmetal.util.archive.impl
+org.uma.jmetal.util.archivewithreferencepoint
+org.uma.jmetal.util.archivewithreferencepoint.impl
+org.uma.jmetal.util.artificialdecisionmaker
+org.uma.jmetal.util.artificialdecisionmaker.impl
 org.uma.jmetal.util.binarySet
 org.uma.jmetal.util.chartcontainer
 org.uma.jmetal.util.comparator
@@ -99,13 +106,10 @@ org.uma.jmetal.util.neighborhood.impl
 org.uma.jmetal.util.neighborhood.util
 org.uma.jmetal.util.point
 org.uma.jmetal.util.point.impl
-org.uma.jmetal.util.point.util
 org.uma.jmetal.util.point.util.comparator
 org.uma.jmetal.util.point.util.distance
 org.uma.jmetal.util.pseudorandom
 org.uma.jmetal.util.pseudorandom.impl
-org.uma.jmetal.util.referencePoint
-org.uma.jmetal.util.referencePoint.impl
 org.uma.jmetal.util.solutionattribute
 org.uma.jmetal.util.solutionattribute.impl
 org.uma.jmetal.utility
