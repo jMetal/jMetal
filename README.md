@@ -29,7 +29,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ## Changelog of the next incoming release (jMetal 5.5)
 
 ### Algorithms
-
+* Algorithm [SMPSO/RP](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/smpso/SMPSORP.java). 
 * Improvements in algorithms [WASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/wasfga) and [GWASF-GA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/gwasfga). Contribution of Rubén Saborido.
 * Algorithm MOEA/D and variants can now return a subset of evenly distributed solutions (see Miscelanea)
 * Algorithm [ESPEA](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/espea). Contribution of Marlon Braun.
@@ -49,20 +49,15 @@ If you are interested in contributing with your ideas and comments, please take 
 * Fixed a bug in the experiment framework which led to recompute quality indicators more times than needed.
 * Fixed a bug in class `AbstractGenericSolution` caused by solutions stored as attributes. This issue might lead to infinite recursive calls when two solutions are compared.
 
-
-## jMetal is available as a Maven Project in The Central Repository
-
-The link to the modules is: https://search.maven.org/#search%7Cga%7C1%7Cjmetal
-
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
 
 ## Publications
 A.J. Nebro, J.J. Durillo, M. Vergne: "Redesigning the jMetal Multi-Objective Optimization Framework". Proceedings of the Companion Publication of the 2015 on Genetic and Evolutionary Computation Conference (GECCO Companion '15) Pages 1093-1100. DOI: http://dx.doi.org/10.1145/2739482.2768462
 
-## Code coverage (4th April 2016)
+## Code coverage (5th October 2018)
 Coverage data of the jmetal-core package reported by IntelliJ Idea:
 
 |Class % |Method %| Line % |
 |--------|--------|--------|
-|51,8% (93/181) |	40.0% (375/393) | 37% (1183/5084)
+|58% (122/210) |	42% (529/1236) | 40% (2524/6263)
