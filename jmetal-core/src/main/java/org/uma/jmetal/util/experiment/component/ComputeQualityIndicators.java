@@ -42,9 +42,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ComputeQualityIndicators<S extends Solution<?>, Result> implements ExperimentComponent {
-	
-
-  private static final String FILE_STRING = "File ";
   private final Experiment<S, Result> experiment;
 
   public ComputeQualityIndicators(Experiment<S, Result> experiment) {
@@ -111,25 +108,25 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
   private void resetFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      JMetalLogger.logger.info(FILE_STRING + file + " exist.");
+      JMetalLogger.logger.info("Already existing file " + file);
 
       if (f.isDirectory()) {
-        JMetalLogger.logger.info(FILE_STRING + file + " is a directory. Deleting directory.");
+        JMetalLogger.logger.info("Deleting directory " + file);
         if (f.delete()) {
           JMetalLogger.logger.info("Directory successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting directory.");
         }
       } else {
-        JMetalLogger.logger.info(FILE_STRING + file + " is a file. Deleting file.");
+        JMetalLogger.logger.info("Deleting file " + file);
         if (f.delete()) {
-          JMetalLogger.logger.info("File succesfully deleted.");
+          JMetalLogger.logger.info("File successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting file.");
         }
       }
     } else {
-      JMetalLogger.logger.info(FILE_STRING + file + " does NOT exist.");
+      JMetalLogger.logger.info("File " + file + " does NOT exist.");
     }
   }
 
