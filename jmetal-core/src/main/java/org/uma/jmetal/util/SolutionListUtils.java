@@ -19,7 +19,10 @@ import java.util.List;
  * Modified by Juanjo 13/03/15
  */
 public class SolutionListUtils {
-
+	
+	private static final String SOLUTION_LIST_NULL_EXCEPTION="The solution list is null";
+	private static final String SOLUTION_LIST_EMPTY_EXCEPTION="The solution list is empty";
+	
   public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<S>() ;
     return ranking.computeRanking(solutionList).getSubfront(0);
@@ -48,9 +51,9 @@ public class SolutionListUtils {
    */
   public static <S> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new JMetalException(SOLUTION_LIST_NULL_EXCEPTION) ;
     } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new JMetalException(SOLUTION_LIST_EMPTY_EXCEPTION) ;
     } else if (comparator == null) {
       throw new JMetalException("The comparator is null") ;
     }
@@ -80,9 +83,9 @@ public class SolutionListUtils {
    */
   public static <S> int findIndexOfWorstSolution(List<? extends S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new JMetalException(SOLUTION_LIST_NULL_EXCEPTION) ;
     } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new JMetalException(SOLUTION_LIST_EMPTY_EXCEPTION) ;
     } else if (comparator == null) {
       throw new JMetalException("The comparator is null") ;
     }
@@ -221,9 +224,9 @@ public class SolutionListUtils {
   public static <S> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned, List<S> solutionList, BoundedRandomGenerator<Integer> randomGenerator) {
     if (null == solutionList) {
-      throw new JMetalException("The solution list is null") ;
+      throw new JMetalException(SOLUTION_LIST_NULL_EXCEPTION) ;
     } else if (solutionList.size() == 0) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new JMetalException(SOLUTION_LIST_EMPTY_EXCEPTION) ;
     } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
       throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "
           + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
@@ -302,7 +305,7 @@ public class SolutionListUtils {
   public static <S> void restart(List<S> solutionList, Problem<S> problem,
                                                      int percentageOfSolutionsToRemove) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new JMetalException(SOLUTION_LIST_NULL_EXCEPTION) ;
     } else if (problem == null) {
       throw new JMetalException("The problem is null") ;
     } else if ((percentageOfSolutionsToRemove < 0) || (percentageOfSolutionsToRemove > 100)) {

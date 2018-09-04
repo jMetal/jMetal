@@ -146,7 +146,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
 
     // STEP 4. Checking the DE variant
-    if (("rand/1/bin".equals(variant)) ||
+    if ((DEFAULT_DE_VARIANT.equals(variant)) ||
             "best/1/bin".equals(variant)) {
       for (int j = 0; j < numberOfVariables; j++) {
         if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {

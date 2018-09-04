@@ -27,6 +27,9 @@ import java.io.IOException;
  */
 public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
+  private static final String APPEND_STRING = "\", append=TRUE)\n";
+  private static final String END_JUMP_STRING = "}\n";
+  private static final String END_STATEMENT = "\"){\n)";
 
   private final Experiment<?, Result> experiment;
 
@@ -67,14 +70,14 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     String dataDirectory = experiment.getExperimentBaseDirectory() + "/data";
     os.write("resultDirectory<-\"" + dataDirectory + "\"" + "\n");
     output = "latexHeader <- function() {" + "\n" +
-        "  write(\"\\\\documentclass{article}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\title{StandardStudy}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\usepackage{amssymb}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\author{A.J.Nebro}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\begin{document}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\maketitle\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\section{Tables}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
+        "  write(\"\\\\documentclass{article}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\title{StandardStudy}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\usepackage{amssymb}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\author{A.J.Nebro}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\begin{document}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\maketitle\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\section{Tables}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\\", \"" + latexFileName + APPEND_STRING + "}" + "\n";
     os.write(output + "\n");
 
     }
@@ -83,7 +86,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
   private void printEndLatexCommands(String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
     String output = "latexTail <- function() { " + "\n" +
-        "  write(\"\\\\end{document}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
+        "  write(\"\\\\end{document}\", \"" + latexFileName + APPEND_STRING + "}" + "\n";
     os.write(output + "\n");
     }
   }
@@ -95,27 +98,27 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     String latexTableCaption = "";
 
     // Write function latexTableHeader
-    latexTableCaption = "  write(\"\\\\caption{\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+    latexTableCaption = "  write(\"\\\\caption{\", \"" + latexFileName + APPEND_STRING +
+        "  write(problem, \"" + latexFileName + APPEND_STRING +
+        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
+    latexTableLabel = "  write(\"\\\\label{Table:\", \"" + latexFileName + APPEND_STRING +
         "  write(problem, \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + "\", append=TRUE)" + "\n";
-    latexTableLabel = "  write(\"\\\\label{Table:\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(problem, \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + "\", append=TRUE)" + "\n";
+        "  write(\"." + indicator.getName() + ".}\", \"" + latexFileName + APPEND_STRING;
 
     // Generate function latexTableHeader()
     String output = "latexTableHeader <- function(problem, tabularString, latexTableFirstLine) {" + "\n" +
-        "  write(\"\\\\begin{table}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "  write(\"\\\\begin{table}\", \"" + latexFileName + APPEND_STRING +
         latexTableCaption + "\n" +
         latexTableLabel + "\n" +
-        "  write(\"\\\\centering\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\begin{scriptsize}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "  write(\"\\\\centering\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\begin{scriptsize}\", \"" + latexFileName + APPEND_STRING +
         //"  write(\"\\\\begin{tabular}{" + latexTabularAlignment + "}\", \"" + texFile + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\begin{tabular}{\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(tabularString, \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "  write(\"\\\\begin{tabular}{\", \"" + latexFileName + APPEND_STRING +
+        "  write(tabularString, \"" + latexFileName + APPEND_STRING +
+        "  write(\"}\", \"" + latexFileName + APPEND_STRING +
         //latexTableFirstLine +
-        "  write(latexTableFirstLine, \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\hline \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
+        "  write(latexTableFirstLine, \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\hline \", \"" + latexFileName + APPEND_STRING + "}" + "\n";
     os.write(output + "\n");
     }
   }
@@ -125,10 +128,10 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     String output = "latexTableTail <- function() { " + "\n" +
-        "  write(\"\\\\hline\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\end{tabular}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\end{scriptsize}\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "  write(\"\\\\end{table}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
+        "  write(\"\\\\hline\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\end{tabular}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\end{scriptsize}\", \"" + latexFileName + APPEND_STRING +
+        "  write(\"\\\\end{table}\", \"" + latexFileName + APPEND_STRING + "}" + "\n";
     os.write(output + "\n");
 
     }
@@ -149,23 +152,23 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
           "  data2<-scan(file2)" + "\n" +
           "  if (i == j) {" + "\n" +
-          "    write(\"-- \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "    write(\"-- \", \"" + latexFileName + APPEND_STRING +
           "  }" + "\n" +
           "  else if (i < j) {" + "\n" +
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) <= median(data2)) {" + "\n" +
-          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-          "      }" + "\n" +
+          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
+          END_JUMP_STRING +
           "      else {" + "\n" +
-          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "      }" + "\n" +
-          "    }" + "\n" +
+          "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
+          END_JUMP_STRING +
+          "    }\n" +
           "    else {" + "\n" +
-          "      write(\"--\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "    }" + "\n" +
+          "      write(\"--\", \"" + latexFileName + APPEND_STRING +
+          "    }\n" +
           "  }" + "\n" +
           "  else {" + "\n" +
-          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "    write(\" \", \"" + latexFileName + APPEND_STRING +
           "  }" + "\n" +
           "}" + "\n";
 
@@ -180,23 +183,23 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "  file2<-paste(file2, indicator, sep=\"/\")" + "\n" +
           "  data2<-scan(file2)" + "\n" +
           "  if (i == j) {" + "\n" +
-          "    write(\"--\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "    write(\"--\", \"" + latexFileName + APPEND_STRING +
           "  }" + "\n" +
           "  else if (i < j) {" + "\n" +
           "    if (is.finite(wilcox.test(data1, data2)$p.value) & wilcox.test(data1, data2)$p.value <= 0.05) {" + "\n" +
           "      if (median(data1) >= median(data2)) {" + "\n" +
-          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
-          "      }" + "\n" +
+          "        write(\"$\\\\blacktriangle$\", \"" + latexFileName + APPEND_STRING +
+          END_JUMP_STRING +
           "      else {" + "\n" +
-          "        write(\"$\\\\triangledown$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "      }" + "\n" +
-          "    }" + "\n" +
+          "        write(\"$\\\\triangledown$\", \"" + latexFileName + APPEND_STRING +
+          END_JUMP_STRING +
+          END_JUMP_STRING +
           "    else {" + "\n" +
-          "      write(\"$-$\", \"" + latexFileName + "\", append=TRUE) " + "\n" +
-          "    }" + "\n" +
+          "      write(\"$-$\", \"" + latexFileName + APPEND_STRING +
+          END_JUMP_STRING +
           "  }" + "\n" +
           "  else {" + "\n" +
-          "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+          "    write(\" \", \"" + latexFileName + APPEND_STRING +
           "  }" + "\n" +
           "}" + "\n";
       }
@@ -280,9 +283,9 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ "\") {" + "\n" +
-        "    write(i , \"" + latexFileName + "\", append=TRUE)" + "\n" +
-        "    write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "\n" +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ END_STATEMENT +
+        "    write(i , \"" + latexFileName + APPEND_STRING +
+        "    write(\" & \", \"" + latexFileName + APPEND_STRING + "\n" +
         "    jndx = 0" + "\n" +
         "    for (j in algorithmList) {" + "\n" +
         "      for (problem in problemList) {" + "\n" +
@@ -291,23 +294,23 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "            printTableLine(indicator, i, j, indx, jndx, problem)" + "\n" +
         "          }" + "\n" +
         "          else {" + "\n" +
-        "            write(\"  \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "            write(\"  \", \"" + latexFileName + APPEND_STRING +
         "          } " + "\n" +
-        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + "\") {" + "\n" +
-        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") {" + "\n" +
-        "              write(\" \\\\\\\\ \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + END_STATEMENT +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + END_STATEMENT +
+        "              write(\" \\\\\\\\ \", \"" + latexFileName + APPEND_STRING +
         "            } " + "\n" +
         "            else {" + "\n" +
-        "              write(\" & \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "              write(\" & \", \"" + latexFileName + APPEND_STRING +
         "            }" + "\n" +
         "          }" + "\n" +
         "     else {" + "\n" +
-        "    write(\"&\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
+        "    write(\"&\", \"" + latexFileName + APPEND_STRING +
         "     }" + "\n" +
         "        }" + "\n" +
         "      }" + "\n" +
         "      jndx = jndx + 1" + "\n" +
-        "    }" + "\n" +
+        END_JUMP_STRING +
         "    indx = indx + 1" + "\n" +
         "  }" + "\n" +
         "} # for algorithm" + "\n" + "\n" +
