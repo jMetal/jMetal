@@ -10,7 +10,7 @@ import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 public class Well44497bGenerator implements PseudoRandomGenerator {
   private Well44497b rnd ;
   private long seed ;
-  private static final String name = "Well44497b" ;
+  private static final String NAME = "Well44497b" ;
 
   /** Constructor */
   public Well44497bGenerator() {
@@ -50,6 +50,6 @@ public class Well44497bGenerator implements PseudoRandomGenerator {
 
   @Override
   public String getName() {
-    return name ;
+    return NAME ;
   }
 }
