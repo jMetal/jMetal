@@ -60,7 +60,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
   }
 
   private void printHeaderLatexCommands(String rFileName, String latexFileName) throws IOException {
-    FileWriter os = new FileWriter(rFileName, false);
+    try(FileWriter os = new FileWriter(rFileName, false)){
     String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
     os.write(output + "\n");
 
@@ -77,19 +77,19 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "  write(\"\\\\\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
     os.write(output + "\n");
 
-    os.close();
+    }
   }
 
   private void printEndLatexCommands(String rFileName, String latexFileName) throws IOException {
-    FileWriter os = new FileWriter(rFileName, true);
+    try(FileWriter os = new FileWriter(rFileName, true)){
     String output = "latexTail <- function() { " + "\n" +
         "  write(\"\\\\end{document}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
     os.write(output + "\n");
-    os.close();
+    }
   }
 
   private void printTableHeader(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
-    FileWriter os = new FileWriter(rFileName, true);
+    try(FileWriter os = new FileWriter(rFileName, true)){
 
     String latexTableLabel = "";
     String latexTableCaption = "";
@@ -117,12 +117,12 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "  write(latexTableFirstLine, \"" + latexFileName + "\", append=TRUE)" + "\n" +
         "  write(\"\\\\hline \", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
     os.write(output + "\n");
-    os.close();
+    }
   }
 
   private void printTableTail(String rFileName, String latexFileName) throws IOException {
     // Generate function latexTableTail()
-    FileWriter os = new FileWriter(rFileName, true);
+    try(FileWriter os = new FileWriter(rFileName, true)){
 
     String output = "latexTableTail <- function() { " + "\n" +
         "  write(\"\\\\hline\", \"" + latexFileName + "\", append=TRUE)" + "\n" +
@@ -131,11 +131,11 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "  write(\"\\\\end{table}\", \"" + latexFileName + "\", append=TRUE)" + "\n" + "}" + "\n";
     os.write(output + "\n");
 
-    os.close();
+    }
   }
 
   private void printLines(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
-    FileWriter os = new FileWriter(rFileName, true);
+    try(FileWriter os = new FileWriter(rFileName, true)){
 
     String output ;
     if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
@@ -199,13 +199,13 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
           "    write(\" \", \"" + latexFileName + "\", append=TRUE)" + "\n" +
           "  }" + "\n" +
           "}" + "\n";
+      }
+      os.write(output + "\n");
     }
-    os.write(output + "\n");
-    os.close();
   }
 
   private void printGenerateMainScript(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
-    FileWriter os = new FileWriter(rFileName, true);
+    try(FileWriter os = new FileWriter(rFileName, true)){
 
     // Start of the R script
     String output = "### START OF SCRIPT ";
@@ -320,6 +320,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTail()" + "\n";
     os.write(output + "\n");
 
-    os.close();
+    }
   }
 }

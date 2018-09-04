@@ -68,9 +68,9 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
-      String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
+     String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
-      FileWriter os = new FileWriter(rFileName, false);
+     try(FileWriter os = new FileWriter(rFileName, false)){
       os.write("postscript(\"" +
                indicator.getName() +
               ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
@@ -116,8 +116,7 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       for (ExperimentProblem<?> problem : experiment.getProblemList()) {
         os.write("qIndicator(indicator, \"" + problem.getTag() + "\")" + "\n");
       }
-
-      os.close();
+     }
     }
   }
 }

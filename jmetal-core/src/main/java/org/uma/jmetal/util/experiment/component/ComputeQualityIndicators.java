@@ -91,11 +91,9 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
   }
 
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {
-    FileWriter os;
-    try {
-      os = new FileWriter(qualityIndicatorFile, true);
+     
+    try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) { 
       os.write("" + indicatorValue + "\n");
-      os.close();
     } catch (IOException ex) {
       throw new JMetalException("Error writing indicator file" + ex) ;
     }
