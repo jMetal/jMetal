@@ -83,6 +83,7 @@ public class PointSolution implements Solution<Double> {
   }
 
   @Override public void setVariableValue(int index, Double value) {
+	  //This method is an intentionally-blank override.
   }
 
   @Override public String getVariableValueString(int index) {

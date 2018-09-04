@@ -44,7 +44,7 @@ public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvalua
   }
   
   @Override public void shutdown() {
-    ;
+	  //This method is an intentionally-blank override.
   }
 
 }
