@@ -159,12 +159,12 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
               offspring.get(1).setVariableValue(i, c2);
             }
           } else {
-            offspring.get(0).setVariableValue(i, valueX2);
-            offspring.get(1).setVariableValue(i, valueX1);
+            offspring.get(0).setVariableValue(i, valueX1);
+            offspring.get(1).setVariableValue(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariableValue(i, valueX1);
-          offspring.get(1).setVariableValue(i, valueX2);
+          offspring.get(0).setVariableValue(i, valueX2);
+          offspring.get(1).setVariableValue(i, valueX1);
         }
       }
     }

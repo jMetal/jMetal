@@ -219,7 +219,7 @@ public class SBXCrossoverTest {
   }
 
   @Test
-  public void shouldCrossingTheSecondVariableReturnTheOtherVariablesUnchanged() {
+  public void shouldCrossingTheSecondVariableReturnTheOtherVariablesUnchangedInTheOffspringSolutions() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
@@ -235,9 +235,13 @@ public class SBXCrossoverTest {
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON);
+    assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(1).getVariableValue(0), EPSILON);
     assertNotEquals(solutions.get(0).getVariableValue(1), newSolutions.get(0).getVariableValue(1), EPSILON);
-    assertEquals(solutions.get(0).getVariableValue(2), newSolutions.get(0).getVariableValue(2), EPSILON);
+    assertEquals(solutions.get(0).getVariableValue(2), newSolutions.get(1).getVariableValue(2), EPSILON);
+
+    assertEquals(solutions.get(1).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON);
+    assertNotEquals(solutions.get(1).getVariableValue(1), newSolutions.get(1).getVariableValue(1), EPSILON);
+    assertEquals(solutions.get(1).getVariableValue(2), newSolutions.get(0).getVariableValue(2), EPSILON);
 
     verify(randomGenerator, times(6)).getRandomValue();
   }

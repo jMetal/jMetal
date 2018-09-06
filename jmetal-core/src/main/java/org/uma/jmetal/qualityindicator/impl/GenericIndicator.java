@@ -20,7 +20,6 @@ public abstract class GenericIndicator<S>
     implements QualityIndicator<List<S>, Double> {
 
   protected Front referenceParetoFront = null ;
-  private static final String REFERENCE_PARETO_FRONT_EXCEPTION = "The reference pareto front is null";
   /**
    * Default constructor
    */
@@ -33,7 +32,7 @@ public abstract class GenericIndicator<S>
 
   public GenericIndicator(Front referenceParetoFront) {
     if (referenceParetoFront == null) {
-      throw new JMetalException(REFERENCE_PARETO_FRONT_EXCEPTION);
+      throw new NullParetoFrontException();
     }
 
     this.referenceParetoFront = referenceParetoFront ;
@@ -41,7 +40,7 @@ public abstract class GenericIndicator<S>
 
   public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
     if (referenceParetoFrontFile == null) {
-      throw new JMetalException(REFERENCE_PARETO_FRONT_EXCEPTION);
+      throw new NullParetoFrontException();
     }
 
     Front front = new ArrayFront(referenceParetoFrontFile);
@@ -50,7 +49,7 @@ public abstract class GenericIndicator<S>
 
   public void setReferenceParetoFront(Front referenceFront) throws FileNotFoundException {
     if (referenceFront == null) {
-      throw new JMetalException(REFERENCE_PARETO_FRONT_EXCEPTION);
+      throw new NullParetoFrontException();
     }
 
     referenceParetoFront = referenceFront ;
@@ -61,4 +60,10 @@ public abstract class GenericIndicator<S>
    * @return
    */
   public abstract boolean isTheLowerTheIndicatorValueTheBetter() ;
+  
+  private static class NullParetoFrontException extends JMetalException {
+    public NullParetoFrontException() {
+      super("The reference pareto front is null");
+    }
+  }
 }
