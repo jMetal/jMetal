@@ -225,18 +225,15 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private void writeLatexFile(GenericIndicator<?> indicator, String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
-    try( FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-    		DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);	) {
-      File latexOutput;
-      latexOutput = new File(latexDirectoryName);
-      if(!latexOutput.exists()){
-        latexOutput.mkdirs();
-      }
-     
-      dataOutputStream.writeBytes(fileContents);
-
+    File latexOutput;
+    latexOutput = new File(latexDirectoryName);
+    if(!latexOutput.exists()){
+      latexOutput.mkdirs();
     }
-    catch (IOException e) {
+    
+    try(DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
+      dataOutputStream.writeBytes(fileContents);
+    } catch (IOException e) {
       throw new JMetalException("Error writing data ", e) ;
     }
   }

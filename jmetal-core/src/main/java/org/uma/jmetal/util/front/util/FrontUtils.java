@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class FrontUtils {
 	
-	private static final String  FRONT_NULL_EXCEPTION= "The front is null";
-	private static final String  FRONT_EMPTY_EXCEPTION= "The front is empty";
 
   /**
    * Gets the maximum values for each objectives in a front
@@ -29,9 +27,9 @@ public class FrontUtils {
    */
   public static double[] getMaximumValues(Front front) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION) ;
+      throw new NullFrontException() ;
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException(FRONT_EMPTY_EXCEPTION) ;
+      throw new EmptyFrontException() ;
     }
 
     int numberOfObjectives = front.getPoint(0).getDimension() ;
@@ -60,9 +58,9 @@ public class FrontUtils {
    */
   public static double[] getMinimumValues(Front front) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION) ;
+      throw new NullFrontException() ;
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException(FRONT_EMPTY_EXCEPTION) ;
+      throw new EmptyFrontException() ;
     }
 
     int numberOfObjectives = front.getPoint(0).getDimension() ;
@@ -105,9 +103,9 @@ public class FrontUtils {
    */
   public static double distanceToNearestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION);
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException(FRONT_EMPTY_EXCEPTION);
+      throw new EmptyFrontException();
     } else if (point == null) {
       throw new JMetalException("The point is null");
     }
@@ -147,9 +145,9 @@ public class FrontUtils {
    */
   public static double distanceToClosestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION);
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException(FRONT_EMPTY_EXCEPTION);
+      throw new EmptyFrontException();
     } else if (point == null) {
       throw new JMetalException("The point is null");
     }
@@ -175,9 +173,9 @@ public class FrontUtils {
    */
   public static Front getInvertedFront(Front front) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION);
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException(FRONT_EMPTY_EXCEPTION);
+      throw new EmptyFrontException();
     }
 
     int numberOfDimensions = front.getPoint(0).getDimension() ;
@@ -206,7 +204,7 @@ public class FrontUtils {
    */
   public static double[][] convertFrontToArray(Front front) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION);
+      throw new NullFrontException();
     }
 
     double[][] arrayFront = new double[front.getNumberOfPoints()][] ;
@@ -263,7 +261,7 @@ public class FrontUtils {
 
   public static List<PointSolution> convertFrontToSolutionList(Front front) {
     if (front == null) {
-      throw new JMetalException(FRONT_NULL_EXCEPTION);
+      throw new NullFrontException();
     }
 
     int numberOfObjectives ;
@@ -285,5 +283,19 @@ public class FrontUtils {
     }
 
     return solutionSet ;
+  }
+  
+  @SuppressWarnings("serial")
+  private static class NullFrontException extends JMetalException {
+    public NullFrontException() {
+      super("The front is null");
+    }
+  }
+  
+  @SuppressWarnings("serial")
+  private static class EmptyFrontException extends JMetalException {
+    public EmptyFrontException() {
+      super("The front is empty");
+    }
   }
 }
