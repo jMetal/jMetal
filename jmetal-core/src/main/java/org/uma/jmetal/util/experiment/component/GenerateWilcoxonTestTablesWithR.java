@@ -29,7 +29,6 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
   private static final String DEFAULT_R_DIRECTORY = "R";
   private static final String APPEND_STRING = "\", append=TRUE)\n";
   private static final String END_JUMP_STRING = "}\n";
-  private static final String END_STATEMENT = "\"){\n)";
 
   private final Experiment<?, Result> experiment;
 
@@ -283,7 +282,7 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "latexTableHeader(\"" + problemList + "\", tabularString, latexTableFirstLine)" + "\n\n" +
         "indx = 0" + "\n" +
         "for (i in algorithmList) {" + "\n" +
-        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ END_STATEMENT +
+        "  if (i != \"" +  experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag()+ "\") {" + "\n" +
         "    write(i , \"" + latexFileName + APPEND_STRING +
         "    write(\" & \", \"" + latexFileName + APPEND_STRING + "\n" +
         "    jndx = 0" + "\n" +
@@ -296,8 +295,8 @@ public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentCompon
         "          else {" + "\n" +
         "            write(\"  \", \"" + latexFileName + APPEND_STRING +
         "          } " + "\n" +
-        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + END_STATEMENT +
-        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + END_STATEMENT +
+        "          if (problem == \"" + experiment.getProblemList().get(experiment.getProblemList().size()- 1).getTag() + "\") {" + "\n" +
+        "            if (j == \"" + experiment.getAlgorithmList().get(experiment.getAlgorithmList().size() - 1).getAlgorithmTag() + "\") {" + "\n" +
         "              write(\" \\\\\\\\ \", \"" + latexFileName + APPEND_STRING +
         "            } " + "\n" +
         "            else {" + "\n" +
