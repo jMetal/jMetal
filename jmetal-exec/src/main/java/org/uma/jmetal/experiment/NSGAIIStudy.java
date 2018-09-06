@@ -84,7 +84,7 @@ public class NSGAIIStudy {
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 
   /**

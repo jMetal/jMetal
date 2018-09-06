@@ -1,9 +1,13 @@
 package org.uma.jmetal.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -28,7 +32,7 @@ import java.util.List;
 
 /**
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
- * SPEA2, and SMPSO
+ * MOEA/D, and SMPSO
  *
  * This experiment assumes that the reference Pareto front are known and that, given a problem named
  * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
@@ -90,7 +94,7 @@ public class ZDTStudy {
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 
   /**
@@ -127,12 +131,19 @@ public class ZDTStudy {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
-            problemList.get(i).getProblem(),
-            new SBXCrossover(1.0, 10.0),
-            new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+        Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problemList.get(i).getProblem(), MOEADBuilder.Variant.MOEAD)
+            .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, "rand/1/bin"))
+            .setMutation(new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                 20.0))
-            .build();
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .setResultPopulationSize(100)
+            .setNeighborhoodSelectionProbability(0.9)
+            .setMaximumNumberOfReplacedSolutions(2)
+            .setNeighborSize(20)
+            .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+            .build() ;
+
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }

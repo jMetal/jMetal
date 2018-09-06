@@ -1,9 +1,12 @@
 package org.uma.jmetal.experiment;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
+import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -27,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with algorithms NSGAII, SPEA2,
+ * Example of experimental study based on solving the ZDT problems with algorithms NSGAII, MOEA/D,
  * and SMPSO
  *
  * This experiment assumes that the reference Pareto front are not known, so the names of files
@@ -132,12 +135,18 @@ public class ZDTStudy2 {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
-            problemList.get(i).getProblem(),
-            new SBXCrossover(1.0, 10.0),
-            new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+        Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problemList.get(i).getProblem(), MOEADBuilder.Variant.MOEAD)
+            .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, "rand/1/bin"))
+            .setMutation(new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                 20.0))
-            .build();
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .setResultPopulationSize(100)
+            .setNeighborhoodSelectionProbability(0.9)
+            .setMaximumNumberOfReplacedSolutions(2)
+            .setNeighborSize(20)
+            .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+            .build() ;
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
