@@ -2,6 +2,7 @@ package org.uma.jmetal.util.distance.impl;
 
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import weka.core.ListOptions;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Double>, L extends List<S>>
         implements Distance<S, L> {
 
-  private int k ;
+  private final int k ;
   private Distance<S, S> distance ;
 
   public DistanceBetweenSolutionAndKNearestNeighbors(int k, Distance<S, S> distance) {
@@ -29,17 +30,30 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Doub
     this(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<S>()) ;
   }
 
+  /**
+   * Computes the knn distance. If the solution list size is lower than k, then k = size in the computation
+   * @param solution
+   * @param solutionList
+   * @return
+   */
   @Override
   public double getDistance(S solution, L solutionList) {
     List<Double> listOfDistances = knnDistances(solution, solutionList) ;
     listOfDistances.sort(Comparator.naturalOrder());
 
-    double sum = 0.0 ;
-    for (int i = 0 ; i < k; i++) {
-      sum += listOfDistances.get(i) ;
-    }
+    int limit = Math.min(k, listOfDistances.size()) ;
 
-    return Math.sqrt(sum/k);
+    double result ;
+    if (limit == 0) {
+      result = 0.0 ;
+    } else {
+      double sum = 0.0;
+      for (int i = 0; i < limit; i++) {
+        sum += listOfDistances.get(i);
+      }
+      result = sum/limit ;
+    }
+    return result;
   }
 
   /**
