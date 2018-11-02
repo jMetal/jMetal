@@ -4,30 +4,41 @@ import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasuresNovelty;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSONovelty;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
 import org.uma.jmetal.measure.impl.CountingMeasure;
+import org.uma.jmetal.measure.impl.DurationMeasure;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
+import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2Novelty;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Class to configure and run the NSGA-II algorithm (variant with measures)
+ * Class for configuring and running the SMPSO algorithm using an HypervolumeArchive, i.e, the
+ * SMPSOhv algorithm described in:
+ * A.J Nebro, J.J. Durillo, C.A. Coello Coello. Analysis of Leader Selection Strategies in a
+ * Multi-Objective Particle Swarm Optimizer. 2013 IEEE Congress on Evolutionary Computation. June 2013
+ * DOI: 10.1109/CEC.2013.6557955
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
+public class SMPSOHvNoveltyMeasuresRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
@@ -50,10 +61,10 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT3.pf" ;
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf" ;
     }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new LZ09F2Novelty() ;
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
@@ -64,17 +75,12 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     int maxIterations = 250 ;
     int swarmSize = 100 ;
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(maxIterations)
-        .setSwarmSize(swarmSize)
-        .setRandomGenerator(new MersenneTwisterGenerator())
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
-        .build();
+    algorithm = new SMPSOMeasuresNovelty(problem, 100, archive,
+            mutation, 1750, 0, 1, 0, 1, 1.5, 2.5, 1.5, 2.5,
+            0.1, 0.1, -1, -1, new SequentialSolutionListEvaluator<>()) ;
 
     /* Measure management */
-    MeasureManager measureManager = ((SMPSOMeasures)algorithm).getMeasureManager() ;
+    MeasureManager measureManager = ((SMPSOMeasuresNovelty)algorithm).getMeasureManager() ;
 
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
@@ -85,8 +91,8 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     //chart.setVarChart(0, 1);
     chart.initChart();
 
-    solutionListMeasure.register(new ChartListener(chart));
-    iterationMeasure.register(new IterationListener(chart));
+    solutionListMeasure.register(new SMPSOHvNoveltyMeasuresRunner.ChartListener(chart));
+    iterationMeasure.register(new SMPSOHvNoveltyMeasuresRunner.IterationListener(chart));
 
     /* End of measure management */
 
