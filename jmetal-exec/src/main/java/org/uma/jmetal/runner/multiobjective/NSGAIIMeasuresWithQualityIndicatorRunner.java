@@ -114,7 +114,7 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
   }
 
   private static class Listener implements MeasureListener<List<DoubleSolution>> {
-    private static int counter = 0 ;
+    private static int counter = 1 ;
 
     ArrayFront referenceParetoFront ;
 
