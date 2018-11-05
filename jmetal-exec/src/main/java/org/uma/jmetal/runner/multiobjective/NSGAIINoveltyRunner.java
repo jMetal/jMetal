@@ -11,6 +11,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.problem.novelty.KursaweNovelty;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -23,6 +24,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class to configure and run the NSGA-II algorithm
@@ -44,7 +46,9 @@ public class NSGAIINoveltyRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new KursaweNovelty(20) ;
+    JMetalRandom.getInstance().setSeed(1);
+
+    problem = new Kursawe() ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -57,7 +61,7 @@ public class NSGAIINoveltyRunner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAIINovelty2(problem, 250000, 100,
+    algorithm = new NSGAIINovelty2(problem, 25000, 100,
             crossover, mutation, selection,  new DominanceComparator<>(), new SequentialSolutionListEvaluator()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
