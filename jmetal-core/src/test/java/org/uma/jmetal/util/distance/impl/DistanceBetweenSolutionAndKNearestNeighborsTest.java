@@ -26,7 +26,9 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution) ;
 
-    DistanceBetweenSolutionAndKNearestNeighbors distance = new DistanceBetweenSolutionAndKNearestNeighbors(1) ;
+    int k = 1  ;
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
 
     double receivedValue = distance.getDistance(solution, solutionList) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
@@ -49,8 +51,8 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     solutionList.add(solution2) ;
 
     int k = 1 ;
-    DistanceBetweenSolutionAndKNearestNeighbors distance = new DistanceBetweenSolutionAndKNearestNeighbors(k) ;
-
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
     double receivedValue = distance.getDistance(solution, solutionList) ;
     assertEquals(Math.sqrt(2)/k, receivedValue, EPSILON) ;
   }
@@ -84,7 +86,8 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     solutionList.add(solution4) ;
 
     int k = 2 ;
-    DistanceBetweenSolutionAndKNearestNeighbors distance = new DistanceBetweenSolutionAndKNearestNeighbors(k) ;
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
 
     double receivedValue = distance.getDistance(solution, solutionList) ;
     assertEquals((Math.sqrt(1+1) + Math.sqrt(4+4))/k, receivedValue, EPSILON) ;
