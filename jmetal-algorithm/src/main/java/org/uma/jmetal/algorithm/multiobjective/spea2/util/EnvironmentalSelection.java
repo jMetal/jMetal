@@ -17,11 +17,18 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
-  private int solutionsToSelect = 0;
-  private final StrengthRawFitness<S> strengthRawFitness= new StrengthRawFitness<S>();
+  private int solutionsToSelect ;
+  private int k ;
+  private StrengthRawFitness<S> strengthRawFitness ;
 
   public EnvironmentalSelection(int solutionsToSelect) {
-    this.solutionsToSelect = solutionsToSelect;
+    this(solutionsToSelect, 1) ;
+  }
+
+  public EnvironmentalSelection(int solutionsToSelect, int k) {
+    this.solutionsToSelect = solutionsToSelect ;
+    this.k = k ;
+    this.strengthRawFitness = new StrengthRawFitness<>(k) ;
   }
 
   @Override
