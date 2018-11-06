@@ -50,7 +50,7 @@ public class TournamentSelectionTest {
   public void shouldConstructorAssignTheCorrectValueToTheNumberOfTournaments() {
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(5) ;
 
-    int result = (int) ReflectionTestUtils.getField(selection, "numberOfTournaments");
+    int result = (int) ReflectionTestUtils.getField(selection, "n_arity");
     int expectedResult = 5 ;
     assertEquals(expectedResult, result) ;
   }
@@ -61,7 +61,7 @@ public class TournamentSelectionTest {
     Comparator<Solution<?>> comparator = mock(Comparator.class) ;
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(comparator, 7) ;
 
-    int result = (int) ReflectionTestUtils.getField(selection, "numberOfTournaments");
+    int result = (int) ReflectionTestUtils.getField(selection, "n_arity");
     Object comp = ReflectionTestUtils.getField(selection, "comparator");
 
     int expectedResult = 7 ;

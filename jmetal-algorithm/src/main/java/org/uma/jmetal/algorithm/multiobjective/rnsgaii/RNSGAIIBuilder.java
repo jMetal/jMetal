@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -24,6 +25,9 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   private final Problem<S> problem;
   private int maxEvaluations;
   private int populationSize;
+  protected int matingPoolSize;
+  protected int offspringPopulationSize ;
+
   private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
@@ -39,6 +43,8 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
+    this.matingPoolSize = 100 ;
+    this.offspringPopulationSize = 100 ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>());
@@ -84,11 +90,30 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
     return this;
   }
 
+  public RNSGAIIBuilder<S> setMatingPoolSize(int matingPoolSize) {
+    if (matingPoolSize < 0) {
+      throw new JMetalException("The mating pool size is negative: " + populationSize);
+    }
+
+    this.matingPoolSize = matingPoolSize;
+
+    return this;
+  }
+  public RNSGAIIBuilder<S> setOffspringPopulationSize(int offspringPopulationSize) {
+    if (offspringPopulationSize < 0) {
+      throw new JMetalException("Offspring population size is negative: " + populationSize);
+    }
+
+    this.offspringPopulationSize = offspringPopulationSize;
+
+    return this;
+  }
+
   public RNSGAII<S> build() {
     RNSGAII<S> algorithm;
 
-    algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, crossoverOperator,
-            mutationOperator, selectionOperator, evaluator, interestPoint, epsilon);
+    algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+            crossoverOperator, mutationOperator, selectionOperator, evaluator, interestPoint, epsilon);
 
     return algorithm;
   }

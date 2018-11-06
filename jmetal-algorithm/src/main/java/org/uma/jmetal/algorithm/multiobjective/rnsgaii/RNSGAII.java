@@ -40,9 +40,12 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
    * Constructor
    */
   public RNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
+                 int matingPoolSize, int offspringPopulationSize,
                  CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-                 SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator, List<Double> interestPoint, double epsilon) {
-    super(problem,maxEvaluations,populationSize,crossoverOperator,mutationOperator,selectionOperator, new DominanceComparator<S>(), evaluator);
+                 SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,
+                 List<Double> interestPoint, double epsilon) {
+    super(problem,maxEvaluations, populationSize,matingPoolSize, offspringPopulationSize, crossoverOperator,
+            mutationOperator,selectionOperator, new DominanceComparator<S>(), evaluator);
     this.interestPoint = interestPoint;
     this.epsilon = epsilon;
 

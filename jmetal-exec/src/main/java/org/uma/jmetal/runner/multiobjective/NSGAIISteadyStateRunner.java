@@ -20,13 +20,12 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
+public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
-   * @throws FileNotFoundException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.SteadyStateNSGAIIRunner problemName [referenceFront]
+   * @throws FileNotFoundException Invoking command:
+   *                               java org.uma.jmetal.runner.multiobjective.NSGAIISteadyStateRunner problemName [referenceFront]
    */
 
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
@@ -36,49 +35,51 @@ public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName ;
-    String referenceParetoFront = "" ;
+    String problemName;
+    String referenceParetoFront = "";
 
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
+      problemName = args[0];
+      referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
     }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(100)
-        .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
-        .build() ;
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(100)
+            .setMatingPoolSize(2)
+            .setOffspringPopulationSize(1)
+            .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
+            .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+            .execute();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<DoubleSolution> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }
