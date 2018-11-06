@@ -62,10 +62,10 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>(
             new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setPopulationSize(100)
             .setMatingPoolSize(2)
             .setOffspringPopulationSize(1)
             .build();
@@ -78,9 +78,8 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-    printFinalSolutionSet(population);
-    //if (!referenceParetoFront.equals("")) {
-    //  printQualityIndicators(population, referenceParetoFront) ;
-    //}
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront);
+    }
   }
 }

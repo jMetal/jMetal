@@ -64,10 +64,10 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem) ;
 
-    NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    int populationSize = 100;
+    NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
-        .setPopulationSize(100)
         .setSolutionListEvaluator(evaluator) ;
 
     algorithm = builder.build() ;

@@ -60,10 +60,10 @@ public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setPopulationSize(100)
             .setMatingPoolSize(2)
             .setOffspringPopulationSize(1)
             .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)

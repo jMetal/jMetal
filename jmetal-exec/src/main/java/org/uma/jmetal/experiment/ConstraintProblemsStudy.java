@@ -34,14 +34,14 @@ import java.util.List;
 
 /**
  * Example of experimental study based on solving the unconstrained problems included in jMetal.
- *
+ * <p>
  * This experiment assumes that the reference Pareto front are known and that, given a problem named
  * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
  * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
  * indicate the name of those files.
- *
+ * <p>
  * Six quality indicators are used for performance assessment.
- *
+ * <p>
  * The steps to carry out the experiment are:
  * 1. Configure the experiment
  * 2. Execute the algorithms
@@ -114,11 +114,11 @@ public class ConstraintProblemsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
+                100)
                 .setMaxEvaluations(25000)
-                .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i),run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {

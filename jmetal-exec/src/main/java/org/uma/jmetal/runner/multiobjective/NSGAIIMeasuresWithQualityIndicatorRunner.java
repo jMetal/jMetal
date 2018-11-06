@@ -76,10 +76,9 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
     int maxEvaluations = 25000 ;
     int populationSize = 100 ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
         .setSelectionOperator(selection)
         .setMaxEvaluations(maxEvaluations)
-        .setPopulationSize(populationSize)
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
 

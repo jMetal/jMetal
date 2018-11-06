@@ -43,12 +43,12 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
    * NSGAIIBuilder constructor
    */
   public NSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator) {
+      MutationOperator<S> mutationOperator, int populationSize) {
     this.problem = problem;
     maxEvaluations = 25000;
-    populationSize = 100;
-    matingPoolSize = 100 ;
-    offspringPopulationSize = 100 ;
+    this.populationSize = populationSize;
+    matingPoolSize = populationSize;
+    offspringPopulationSize = populationSize ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
@@ -82,16 +82,6 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     }
 
     this.offspringPopulationSize = offspringPopulationSize;
-
-    return this;
-  }
-
-  public NSGAIIBuilder<S> setPopulationSize(int populationSize) {
-    if (populationSize < 0) {
-      throw new JMetalException("Population size is negative: " + populationSize);
-    }
-
-    this.populationSize = populationSize;
 
     return this;
   }

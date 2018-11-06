@@ -70,10 +70,9 @@ public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
 
     List<Double> referencePoint = Arrays.asList(0.5, 0.5) ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(maxEvaluations)
-            .setPopulationSize(populationSize)
             .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
             .setDominanceComparator(new GDominanceComparator<>(referencePoint))
             .build();

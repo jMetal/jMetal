@@ -38,7 +38,8 @@ public class NSGAIIIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation).build() ;
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
     new AlgorithmRunner.Executor(algorithm).execute() ;
 
@@ -65,7 +66,8 @@ public class NSGAIIIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation).build() ;
+    int populationSize  = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
     new AlgorithmRunner.Executor(algorithm).execute() ;
 
