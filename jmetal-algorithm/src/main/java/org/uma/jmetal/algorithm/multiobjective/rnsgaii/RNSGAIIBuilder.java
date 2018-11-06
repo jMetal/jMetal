@@ -18,7 +18,6 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<RNSGAII<S>> {
-
   /**
    * NSGAIIBuilder class
    */

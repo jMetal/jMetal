@@ -130,7 +130,6 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
 
     solutionListMeasure.register(new ChartListener(chart));
     iterationMeasure.register(new IterationListener(chart));
-
     /* End of measure management */
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
