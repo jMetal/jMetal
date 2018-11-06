@@ -27,6 +27,14 @@ The jMetal development version is hosted in this repository; this way, intereste
 If you are interested in contributing with your ideas and comments, please take a look at the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ## Changelog of the next incoming release (jMetal 5.7)
+### Algorithms
+* [mIBEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/ibea/mIBEA). Variant of IBEA contributed buy @vinixnan.
+
+### New features
+* The [NSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/NSGAII.java) class has been refactored to allow to indicate the size of the mating pool and the offspring population. This allows, for example, to configure a state version of it by assigning the values `matingPoolSize = 2` and `offspringPopulationSize = 1`, so classes such as [SteadyStateNSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/SteadyStateNSGAII.java) are not necessary. All the classes related to NSGA-II have been refactored as a consequence.
+
+### Bugs
+* Fixed a bug in class [EnviromentalSelection](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/spea2/util/EnvironmentalSelection.java). Thanks to @zorrozork
 
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
