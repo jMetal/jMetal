@@ -106,17 +106,17 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    * The number of solutions returned by the {@link CrossoverOperator} must be equal to the offspringPopulationSize
    * state variable
    *
-   * @param population
+   * @param matingPool
    * @return The new created offspring population
    */
   @Override
-  protected List<S> reproduction(List<S> population) {
+  protected List<S> reproduction(List<S> matingPool) {
     int numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
 
-    checkNumberOfParents(population, numberOfParents);
+    checkNumberOfParents(matingPool, numberOfParents);
 
-    List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < population.size(); i += numberOfParents) {
+    List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
+    for (int i = 0; i < matingPool.size(); i += numberOfParents) {
       List<S> parents = new ArrayList<>(numberOfParents);
       for (int j = 0; j < numberOfParents; j++) {
         parents.add(population.get(i+j));
