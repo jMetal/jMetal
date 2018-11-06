@@ -18,7 +18,6 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<RNSGAII<S>> {
-  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45}
 
   /**
    * NSGAIIBuilder class
@@ -26,13 +25,12 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   private final Problem<S> problem;
   private int maxEvaluations;
   private int populationSize;
-  private CrossoverOperator<S>  crossoverOperator;
+  private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
   private SolutionListEvaluator<S> evaluator;
-private List<Double> interestPoint;
-private  double epsilon;
-  private NSGAIIVariant variant;
+  private List<Double> interestPoint;
+  private double epsilon;
 
   /**
    * NSGAIIBuilder constructor
@@ -42,13 +40,12 @@ private  double epsilon;
     this.problem = problem;
     maxEvaluations = 25000;
     populationSize = 100;
-    this.crossoverOperator = crossoverOperator ;
-    this.mutationOperator = mutationOperator ;
-    selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
+    this.crossoverOperator = crossoverOperator;
+    this.mutationOperator = mutationOperator;
+    selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>());
     evaluator = new SequentialSolutionListEvaluator<S>();
-this.epsilon = epsilon;
-this.interestPoint = interestPoint;
-    this.variant = NSGAIIVariant.NSGAII ;
+    this.epsilon = epsilon;
+    this.interestPoint = interestPoint;
   }
 
   public RNSGAIIBuilder<S> setMaxEvaluations(int maxEvaluations) {
@@ -88,21 +85,13 @@ this.interestPoint = interestPoint;
     return this;
   }
 
-
-  public RNSGAIIBuilder<S> setVariant(NSGAIIVariant variant) {
-    this.variant = variant;
-
-    return this;
-  }
-
   public RNSGAII<S> build() {
-    RNSGAII<S> algorithm = null ;
+    RNSGAII<S> algorithm;
 
-      algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator,interestPoint,epsilon);
+    algorithm = new RNSGAII<>(problem, maxEvaluations, populationSize, crossoverOperator,
+            mutationOperator, selectionOperator, evaluator, interestPoint, epsilon);
 
-
-    return algorithm ;
+    return algorithm;
   }
 
   /* Getters */

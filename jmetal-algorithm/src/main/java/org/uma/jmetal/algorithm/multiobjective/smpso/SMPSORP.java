@@ -83,9 +83,7 @@ public class SMPSORP
 
   protected List<List<Double>> referencePoints ;
   protected CountingMeasure currentIteration ;
-  protected DurationMeasure durationMeasure ;
   protected SimpleMeasureManager measureManager ;
-
   protected BasicMeasure<List<DoubleSolution>> solutionListMeasure ;
 
   private List<DoubleSolution> referencePointSolutions ;
