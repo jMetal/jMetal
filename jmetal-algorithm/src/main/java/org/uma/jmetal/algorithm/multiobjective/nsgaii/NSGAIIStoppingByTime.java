@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,30 +20,28 @@ import java.util.List;
 public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {
   private long initComputingTime ;
   private long thresholdComputingTime ;
-  private boolean stoppingCondition ;
   /**
    * Constructor
    */
   public NSGAIIStoppingByTime(Problem<S> problem, int populationSize,
                               long maxComputingTime, int matingPoolSize, int offspringPopulationSize,
                               CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-                              SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator) {
+                              SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator,
+                              SolutionListEvaluator<S> evaluator) {
     super(problem, 0, populationSize, matingPoolSize, offspringPopulationSize,
             crossoverOperator, mutationOperator,
-        selectionOperator, dominanceComparator, null);
+        selectionOperator, dominanceComparator, evaluator);
 
     initComputingTime = System.currentTimeMillis() ;
-    stoppingCondition = false ;
     thresholdComputingTime = maxComputingTime ;
   }
 
-  @Override protected void initProgress() {
-    evaluations = getMaxPopulationSize();
-  }
-
-  @Override protected void updateProgress() {
-  }
-
+  /**
+   * This method is to be removed
+   * @param population
+   * @return
+   */
+  /*
   @Override protected List<S> evaluatePopulation(List<S> population) {
     int index = 0 ;
 
@@ -64,9 +63,11 @@ public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {
 
     return population;
   }
+  */
 
   @Override protected boolean isStoppingConditionReached() {
-    return stoppingCondition ;
+    long currentComputingTime = System.currentTimeMillis() - initComputingTime ;
+    return currentComputingTime > thresholdComputingTime ;
   }
 
   @Override public String getName() {

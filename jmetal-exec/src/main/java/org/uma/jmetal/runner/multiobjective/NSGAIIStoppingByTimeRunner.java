@@ -13,6 +13,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -70,13 +71,14 @@ public class NSGAIIStoppingByTimeRunner extends AbstractAlgorithmRunner {
     algorithm = new NSGAIIStoppingByTime<DoubleSolution>(
             problem,
             populationSize,
+            thresholdComputingTimeInMilliseconds,
             matingPoolSize,
             offspringPopulationSize,
-            thresholdComputingTimeInMilliseconds,
             crossover,
             mutation,
             selection,
-            new DominanceComparator<>()) ;
+            new DominanceComparator<>(),
+            new SequentialSolutionListEvaluator<>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
