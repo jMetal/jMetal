@@ -40,6 +40,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   }
 
   @Override
+  public List<T> getVariables() {
+    return variables ;
+  }
+
+  @Override
   public void setAttribute(Object id, Object value) {
     attributes.put(id, value) ;
   }

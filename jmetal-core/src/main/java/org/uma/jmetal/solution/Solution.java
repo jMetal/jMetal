@@ -1,6 +1,7 @@
 package org.uma.jmetal.solution;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Interface representing a Solution
@@ -14,6 +15,7 @@ public interface Solution<T> extends Serializable {
   double[] getObjectives() ;
 
   T getVariableValue(int index) ;
+  List<T> getVariables() ;
   void setVariableValue(int index, T value) ;
   String getVariableValueString(int index) ;
 

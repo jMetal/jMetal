@@ -1,7 +1,9 @@
 package org.uma.jmetal.util.point;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 
@@ -79,6 +81,11 @@ public class PointSolution implements Solution<Double> {
   @Override
   public double[] getObjectives() {
     return objectives ;
+  }
+
+  @Override
+  public List<Double> getVariables() {
+    return Collections.emptyList() ;
   }
 
   @Override public Double getVariableValue(int index) {

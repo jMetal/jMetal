@@ -1,5 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
@@ -63,6 +66,15 @@ public class ArrayDoubleSolution implements DoubleSolution {
   @Override
   public double getObjective(int index) {
     return objectives[index];
+  }
+
+  @Override
+  public List<Double> getVariables() {
+    List<Double> vars = new ArrayList<>(getNumberOfVariables()) ;
+    for (int i = 0 ; i < getNumberOfVariables(); i++) {
+      vars.add(variables[i]) ;
+    }
+    return vars ;
   }
 
   @Override
