@@ -36,45 +36,8 @@ public class NSGAIIStoppingByTime<S extends Solution<?>> extends NSGAII<S> {
     thresholdComputingTime = maxComputingTime ;
   }
 
-  /**
-   * This method is to be removed
-   * @param population
-   * @return
-   */
-  /*
-  @Override protected List<S> evaluatePopulation(List<S> population) {
-    int index = 0 ;
-
-    while ((index < population.size()) && !stoppingCondition) {
-      if (getProblem() instanceof ConstrainedProblem) {
-        getProblem().evaluate(population.get(index));
-        ((ConstrainedProblem<S>) getProblem()).evaluateConstraints(population.get(index));
-      } else {
-        getProblem().evaluate(population.get(index));
-      }
-
-      if ((System.currentTimeMillis() - initComputingTime) > thresholdComputingTime) {
-        stoppingCondition = true ;
-      } else {
-        evaluations++ ;
-        index ++ ;
-      }
-    }
-
-    return population;
-  }
-  */
-
   @Override protected boolean isStoppingConditionReached() {
     long currentComputingTime = System.currentTimeMillis() - initComputingTime ;
     return currentComputingTime > thresholdComputingTime ;
-  }
-
-  @Override public String getName() {
-    return "NSGAII" ;
-  }
-
-  @Override public String getDescription() {
-    return "NSGAII" ;
   }
 }

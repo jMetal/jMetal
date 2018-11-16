@@ -12,6 +12,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -63,7 +64,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     if (referenceFront.getNumberOfPoints() > 0) {
       hypervolumeValue.push(
               new PISAHypervolume<S>(referenceFront).evaluate(
-                      getNonDominatedSolutions(getPopulation())));
+                  SolutionListUtils.getNondominatedSolutions(getPopulation())));
     }
   }
 

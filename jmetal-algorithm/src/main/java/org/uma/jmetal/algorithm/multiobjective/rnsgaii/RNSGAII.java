@@ -110,10 +110,6 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
     return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }
 
-  @Override public List<S> getResult() {
-    return getNonDominatedSolutions(getPopulation());
-  }
-
   @Override public String getName() {
     return "RNSGAII" ;
   }
