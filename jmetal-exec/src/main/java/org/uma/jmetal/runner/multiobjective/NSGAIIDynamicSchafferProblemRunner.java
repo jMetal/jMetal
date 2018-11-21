@@ -10,7 +10,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.impl.DynamicProblem;
+import org.uma.jmetal.problem.impl.DynamicDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -19,11 +19,13 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm to solve the
+ * {@link org.uma.jmetal.problem.multiobjective.Schaffer} problem, which is defined dynamically by
+ * using the {@link DynamicDoubleProblem} class.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIOnTheFlySchafferProblemRunner extends AbstractAlgorithmRunner {
+public class NSGAIIDynamicSchafferProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -32,14 +34,14 @@ public class NSGAIIOnTheFlySchafferProblemRunner extends AbstractAlgorithmRunner
     java org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    DynamicProblem problem;
+    DynamicDoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Schaffer.pf" ;
 
-    problem = new DynamicProblem()
+    problem = new DynamicDoubleProblem()
         .setName("Schaffer")
         .addVariable(-10, 10)
         .addVariable(-10, 10)

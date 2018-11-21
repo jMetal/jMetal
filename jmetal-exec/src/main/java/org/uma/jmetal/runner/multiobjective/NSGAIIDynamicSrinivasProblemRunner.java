@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.DynamicProblem;
+import org.uma.jmetal.problem.impl.DynamicDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -20,11 +20,13 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm to solve the
+ * {@link org.uma.jmetal.problem.multiobjective.Srinivas} problem, which is defined dynamically by
+ * using the {@link DynamicDoubleProblem} class.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIOnTheFlySrinivasProblemRunner extends AbstractAlgorithmRunner {
+public class NSGAIIDynamicSrinivasProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -38,7 +40,7 @@ public class NSGAIIOnTheFlySrinivasProblemRunner extends AbstractAlgorithmRunner
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf" ;
 
-    problem = new DynamicProblem()
+    problem = new DynamicDoubleProblem()
         .setName("Srinivas")
         .addVariable(-20.0, 20.0)
         .addVariable(-20.0, 20.0)

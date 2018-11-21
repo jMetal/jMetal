@@ -15,7 +15,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  * every decision variable, the objective functions and the constraints.  For example, the Schaffer
  * unconstrained problem (1 decision variable, two objectives) can be defined as follows:
  *
- *     DynamicProblem problem = new DynamicProblem()
+ *     DynamicDoubleProblem problem = new DynamicDoubleProblem()
  *         .setName("Schaffer")
  *         .addVariable(-10, 10)
  *         .addVariable(-10, 10)
@@ -24,8 +24,8 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *
  * The Srinivas constrained problem can be defined in this way:
  *
- *     DoubleProblem problem;
- *     problem = new DynamicProblem()
+ *     DynamicDoubleProblem problem;
+ *     problem = new DynamicDoubleProblem()
  *         .setName("Srinivas")
  *         .addVariable(-20.0, 20.0)
  *         .addVariable(-20.0, 20.0)
@@ -42,7 +42,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *  This class does not intend to be a replacement of the existing of {@link AbstractDoubleProblem};
  *  it is merely an alternative way of defining a problem.
  */
-public class DynamicProblem implements DoubleProblem {
+public class DynamicDoubleProblem implements DoubleProblem {
 
   private List<Function<Double[], Double>> objectiveFunction ;
   private List<Function<Double[], Double>> constraints ;
@@ -52,7 +52,7 @@ public class DynamicProblem implements DoubleProblem {
   private OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   private NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
-  public DynamicProblem() {
+  public DynamicDoubleProblem() {
     objectiveFunction = new ArrayList<>() ;
     constraints = new ArrayList<>() ;
     lowerBounds = new ArrayList<>() ;
@@ -63,23 +63,23 @@ public class DynamicProblem implements DoubleProblem {
     name = "" ;
   }
 
-  public DynamicProblem addFunction(Function<Double[], Double> objective) {
+  public DynamicDoubleProblem addFunction(Function<Double[], Double> objective) {
     objectiveFunction.add(objective) ;
     return this ;
   }
 
-  public DynamicProblem addConstraint(Function<Double[], Double> constraint) {
+  public DynamicDoubleProblem addConstraint(Function<Double[], Double> constraint) {
     constraints.add(constraint) ;
     return this ;
   }
 
-  public DynamicProblem addVariable(double lowerBound, double upperBound) {
+  public DynamicDoubleProblem addVariable(double lowerBound, double upperBound) {
     lowerBounds.add(lowerBound) ;
     upperBounds.add(upperBound) ;
     return this ;
   }
 
-  public DynamicProblem setName(String name) {
+  public DynamicDoubleProblem setName(String name) {
     this.name = name ;
 
     return this ;
