@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.comparator.impl.ViolationThresholdComparator;
@@ -70,9 +69,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
         DoubleSolution child = children.get(0) ;
         mutationOperator.execute(child);
         problem.evaluate(child);
-        if (problem instanceof ConstrainedProblem) {
-          ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(child);
-        }
+
         evaluations++;
 
         idealPoint.update(child.getObjectives());
@@ -89,9 +86,6 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
       DoubleSolution newSolution = (DoubleSolution)problem.createSolution() ;
 
       problem.evaluate(newSolution);
-      if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(newSolution);
-      }
       population.add(newSolution);
     }
   }

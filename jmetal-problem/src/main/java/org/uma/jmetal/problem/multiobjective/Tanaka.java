@@ -1,19 +1,17 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class representing problem Tanaka
  */
 @SuppressWarnings("serial")
-public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class Tanaka extends AbstractDoubleProblem {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
@@ -46,11 +44,12 @@ public class Tanaka extends AbstractDoubleProblem implements ConstrainedProblem<
   public void evaluate(DoubleSolution solution)  {
     solution.setObjective(0, solution.getVariableValue(0));
     solution.setObjective(1, solution.getVariableValue(1));
+
+    this.evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
-  @Override
-  public void evaluateConstraints(DoubleSolution solution)  {
+  private void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.getVariableValue(0) ;

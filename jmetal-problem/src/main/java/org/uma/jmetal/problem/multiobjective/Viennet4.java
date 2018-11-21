@@ -1,19 +1,17 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Class representing problem Viennet4
  */
 @SuppressWarnings("serial")
-public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class Viennet4 extends AbstractDoubleProblem {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
@@ -67,12 +65,13 @@ public class Viennet4 extends AbstractDoubleProblem implements ConstrainedProble
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       solution.setObjective(i,f[i]);        
     }
-  } // evaluate
+
+    this.evaluateConstraints(solution);
+  }
 
 
   /** EvaluateConstraints() method  */
-  @Override
-  public void evaluateConstraints(DoubleSolution solution)  {
+  private void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.getVariableValue(0);

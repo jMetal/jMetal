@@ -1,13 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.util.HashMap;
+import java.util.Map;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Problem ConvexC2-DTLZ2, defined in:
@@ -18,7 +16,7 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class ConvexC2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution> {
+public class ConvexC2_DTLZ2 extends DTLZ2 {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
@@ -48,7 +46,12 @@ public class ConvexC2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSo
   }
 
   @Override
-  public void evaluateConstraints(DoubleSolution solution) {
+  public void evaluate(DoubleSolution solution) {
+    super.evaluate(solution);
+    this.evaluateConstraints(solution);
+  }
+
+  private void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
 
 

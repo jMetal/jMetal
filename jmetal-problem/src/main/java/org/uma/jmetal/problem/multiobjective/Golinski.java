@@ -1,19 +1,17 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Class representing problem Golinski.
  */
 @SuppressWarnings("serial")
-public class Golinski extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class Golinski extends AbstractDoubleProblem {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
@@ -58,11 +56,12 @@ public class Golinski extends AbstractDoubleProblem implements ConstrainedProble
 
     solution.setObjective(0,f1);
     solution.setObjective(1,f2);
+
+    this.evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
-  @Override
-  public void evaluateConstraints(DoubleSolution solution)  {
+  private void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
     double x1,x2,x3,x4,x5,x6,x7;
 
