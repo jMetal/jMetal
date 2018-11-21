@@ -47,9 +47,6 @@
 
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -58,6 +55,8 @@ import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 public class Benchmark {
   // Fixed (class) parameters

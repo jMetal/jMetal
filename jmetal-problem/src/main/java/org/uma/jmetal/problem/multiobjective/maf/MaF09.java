@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class representing problem MaF05

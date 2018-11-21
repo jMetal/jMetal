@@ -99,7 +99,7 @@ public class MOEADIT {
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("/pareto_fronts/LZ09_F2.pf");
 
-    // Rationale: the default problem is LZ09F", and MOEA/D-DRA, configured with standard settings, should
+    // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
     double hv = hypervolume.evaluate(population);
 

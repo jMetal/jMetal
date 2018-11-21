@@ -28,7 +28,6 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
 
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
   java org.uma.jmetal.runner.multiobjective.AbYSSRunner problemName [referenceFront]

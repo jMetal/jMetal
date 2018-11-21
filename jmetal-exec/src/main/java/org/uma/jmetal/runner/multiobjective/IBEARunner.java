@@ -16,6 +16,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 
 import java.util.List;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class for configuring and running the IBEA algorithm
