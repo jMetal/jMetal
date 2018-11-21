@@ -30,7 +30,10 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Algorithms
 * [mIBEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/ibea/mIBEA). Variant of IBEA contributed buy @vinixnan.
 
-### New features
+### Features
+* Added the [DynamicDoubleProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/impl/DynamicDoubleProblem.java) class, which allows to define a double problem dynamically.
+* Class [ConstrainedProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/ConstrainedProblem.java) is deprecated, and all the problems depending on it have been refactored. 
+* A method `getVariables()` has been added to class [`Solution`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java).
 * The [NSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/NSGAII.java) class has been refactored to allow to indicate the size of the mating pool and the offspring population. This allows, for example, to configure a state version of it by assigning the values `matingPoolSize = 2` and `offspringPopulationSize = 1`, so classes such as [SteadyStateNSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/SteadyStateNSGAII.java) are not necessary. All the classes related to NSGA-II have been refactored as a consequence.
 
 ### Bugs
