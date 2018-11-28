@@ -1,20 +1,6 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.Experiment;
@@ -23,7 +9,6 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Class defining tasks for the execution of algorithms in parallel.
@@ -34,6 +19,8 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   private Algorithm<Result> algorithm;
   private String algorithmTag;
   private String problemTag;
+  private String referenceParetoFront;
+  private int runId ;
 
   /**
    * Constructor
@@ -41,19 +28,25 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
           String algorithmTag,
-          String problemTag) {
+          ExperimentProblem<S> problem,
+          int runId) {
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
-    this.problemTag = problemTag;
+    this.problemTag = problem.getTag();
+    this.referenceParetoFront = problem.getReferenceFront();
+    this.runId = runId ;
   }
 
   public ExperimentAlgorithm(
           Algorithm<Result> algorithm,
-          String problemTag) {
-    this(algorithm, algorithm.getName(), problemTag) ;
+          ExperimentProblem<S> problem,
+          int runId) {
+
+    this(algorithm,algorithm.getName(),problem,runId);
+
   }
 
-  public void runAlgorithm(int id, Experiment<?, ?> experimentData) {
+  public void runAlgorithm(Experiment<?, ?> experimentData) {
     String outputDirectoryName = experimentData.getExperimentBaseDirectory()
             + "/data/"
             + algorithmTag
@@ -70,12 +63,12 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
       }
     }
 
-    String funFile = outputDirectoryName + "/FUN" + id + ".tsv";
-    String varFile = outputDirectoryName + "/VAR" + id + ".tsv";
+    String funFile = outputDirectoryName + "/FUN" + runId + ".tsv";
+    String varFile = outputDirectoryName + "/VAR" + runId + ".tsv";
     JMetalLogger.logger.info(
             " Running algorithm: " + algorithmTag +
                     ", problem: " + problemTag +
-                    ", run: " + id +
+                    ", run: " + runId +
                     ", funFile: " + funFile);
 
 
@@ -100,4 +93,8 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public String getProblemTag() {
     return problemTag;
   }
+
+  public String getReferenceParetoFront() { return referenceParetoFront; }
+
+  public int getRunId() { return this.runId;}
 }

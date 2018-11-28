@@ -1,23 +1,9 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/
-
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -196,7 +182,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   @Override public void referenceSetUpdate(DoubleSolution solution) {
     if (refSet1Test(solution)) {
       for (DoubleSolution solutionInRefSet2 : referenceSet2) {
-        double aux = SolutionUtils.distanceBetweenSolutions(solution, solutionInRefSet2);
+        double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(solution, solutionInRefSet2);
         DoubleSolution auxSolution = solutionInRefSet2;
         if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
           distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -261,7 +247,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
       // Update distances to REFSET in population
       for (int j = 0; j < getPopulation().size(); j++) {
-        double aux = SolutionUtils.distanceBetweenSolutions(getPopulation().get(j), individual);
+        double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(getPopulation().get(j), individual);
 
         if (aux < distanceToSolutionListAttribute.getAttribute(individual)) {
           DoubleSolution auxSolution = getPopulation().get(j);
@@ -277,7 +263,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       for (int j = 0; j < referenceSet2.size(); j++) {
         for (int k = 0; k < referenceSet2.size(); k++) {
           if (i != j) {
-            double aux = SolutionUtils.distanceBetweenSolutions(referenceSet2.get(j), referenceSet2.get(k));
+            double aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(referenceSet2.get(j), referenceSet2.get(k));
             DoubleSolution auxSolution = referenceSet2.get(j);
             if (aux < distanceToSolutionListAttribute.getAttribute(auxSolution)) {
               distanceToSolutionListAttribute.setAttribute(auxSolution, aux);
@@ -369,7 +355,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       referenceSet2.remove(index);
       //Update distances in REFSET2
       for (int j = 0; j < referenceSet2.size(); j++) {
-        aux = SolutionUtils.distanceBetweenSolutions(referenceSet2.get(j), solution);
+        aux = SolutionUtils.distanceBetweenSolutionsInObjectiveSpace(referenceSet2.get(j), solution);
         if (aux < distanceToSolutionListAttribute.getAttribute(referenceSet2.get(j))) {
           distanceToSolutionListAttribute.setAttribute(referenceSet2.get(j), aux);
         }
@@ -432,10 +418,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     List<DoubleSolution> resultList = new ArrayList<>() ;
     for (List<DoubleSolution> pair : solutionList) {
       List<DoubleSolution> offspring = (List<DoubleSolution>) crossover.execute(pair);
-      if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(0));
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(1));
-      }
 
       problem.evaluate(offspring.get(0));
       problem.evaluate(offspring.get(1));
@@ -492,9 +474,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   private void fillPopulationWithRandomSolutions() {
     while (getPopulation().size() < getPopulationSize()) {
       DoubleSolution solution = diversificationGeneration();
-      if (problem instanceof ConstrainedProblem){
-        ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
-      }
 
       problem.evaluate(solution);
       evaluations++;

@@ -1,19 +1,7 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -27,6 +15,7 @@ import java.util.List;
 public class AdaptiveGrid<S extends Solution<?>> {
   private int bisections;
   private int numberOfObjectives;
+
   private int[] hypercubes;
 
   private double[] gridLowerLimits;
@@ -45,11 +34,11 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * Creates an instance of AdaptiveGrid.
    *
    * @param bisections Number of bi-divisions of the objective space.
-   * @param objetives  Number of numberOfObjectives of the problem.
+   * @param objectives Number of numberOfObjectives of the problem.
    */
-  public AdaptiveGrid(int bisections, int objetives) {
+  public AdaptiveGrid(int bisections, int objectives) {
     this.bisections = bisections;
-    numberOfObjectives = objetives;
+    numberOfObjectives = objectives;
     gridLowerLimits = new double[numberOfObjectives];
     gridUpperLimits = new double[numberOfObjectives];
     divisionSize = new double[numberOfObjectives];
@@ -145,7 +134,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @param solution    <code>Solution</code> considered to update the grid.
    * @param solutionSet <code>SolutionSet</code> used to update the grid.
    */
-  public void updateGrid(S solution, List<S>  solutionSet) {
+  public void updateGrid(S solution, List<S> solutionSet) {
 
     int location = location(solution);
     if (location == -1) {
@@ -190,7 +179,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     //Calculate the position for each objective
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       if ((solution.getObjective(obj) > gridUpperLimits[obj])
-        || (solution.getObjective(obj) < gridLowerLimits[obj])) {
+              || (solution.getObjective(obj) < gridLowerLimits[obj])) {
         return -1;
       } else if (solution.getObjective(obj) == gridLowerLimits[obj]) {
         position[obj] = 0;
@@ -272,7 +261,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     //Increase the solutions in the location specified.
     hypercubes[location]++;
 
-    //Update the most poblated hypercube
+    //Update the most populated hypercube
     if (hypercubes[location] > hypercubes[mostPopulatedHypercube]) {
       mostPopulatedHypercube = location;
     }
@@ -302,7 +291,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     String result = "Grid\n";
     for (int obj = 0; obj < numberOfObjectives; obj++) {
       result += "Objective " + obj + " " + gridLowerLimits[obj] + " "
-        + gridUpperLimits[obj] + "\n";
+              + gridUpperLimits[obj] + "\n";
     }
     return result;
   }
@@ -313,6 +302,17 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return the number of the selected hypercube.
    */
   public int rouletteWheel() {
+	  return rouletteWheel((a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Returns a random hypercube using a rouleteWheel method.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for the roulette
+   * 
+   * @return the number of the selected hypercube.
+   */
+  public int rouletteWheel(BoundedRandomGenerator<Double> randomGenerator) {
     //Calculate the inverse sum
     double inverseSum = 0.0;
     for (int hypercube : hypercubes) {
@@ -322,7 +322,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
     }
 
     //Calculate a random value between 0 and sumaInversa
-    double random = JMetalRandom.getInstance().nextDouble(0.0, inverseSum);
+    double random = randomGenerator.getRandomValue(0.0, inverseSum);
     int hypercube = 0;
     double accumulatedSum = 0.0;
     while (hypercube < hypercubes.length) {
@@ -344,7 +344,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * Calculates the number of hypercubes having one or more solutions.
    * return the number of hypercubes with more than zero solutions.
    */
-  public int calculateOccupied() {
+  public void calculateOccupied() {
     int total = 0;
     for (int hypercube : hypercubes) {
       if (hypercube > 0) {
@@ -360,8 +360,6 @@ public class AdaptiveGrid<S extends Solution<?>> {
         base++;
       }
     }
-
-    return total;
   }
 
   /**
@@ -380,8 +378,45 @@ public class AdaptiveGrid<S extends Solution<?>> {
    * @return The hypercube.
    */
   public int randomOccupiedHypercube() {
-    int rand = JMetalRandom.getInstance().nextInt(0, occupied.length - 1);
+	  return randomOccupiedHypercube((a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Returns a random hypercube that has more than zero solutions.
+   * 
+   * @param randomGenerator the {@link BoundedRandomGenerator} to use for selecting the hypercube
+   *
+   * @return The hypercube.
+   */
+  public int randomOccupiedHypercube(BoundedRandomGenerator<Integer> randomGenerator) {
+    int rand = randomGenerator.getRandomValue(0, occupied.length - 1);
     return occupied[rand];
   }
-}
+
+  /**
+   * Return the average number of solutions in the occupied hypercubes
+   */
+  public double getAverageOccupation() {
+    calculateOccupied();
+    double result;
+
+    if (occupiedHypercubes() == 0) {
+      result = 0.0;
+    } else {
+      double sum = 0.0;
+
+      for (int value : occupied) {
+        sum += hypercubes[value];
+      }
+
+      result = sum / occupiedHypercubes();
+    }
+    return result;
+  }
+
+  /* Getters */
+    public int[] getHypercubes () {
+      return hypercubes;
+    }
+  }
 

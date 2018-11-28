@@ -1,18 +1,3 @@
-//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
@@ -226,7 +211,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = referenceFront.getPoint(0).getDimension() ;
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
     return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
@@ -269,8 +254,8 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
         Point point = invertedFront.getPoint(i) ;
 
-        for (int j = 0; j < point.getNumberOfDimensions(); j++) {
-          point.setDimensionValue(j, point.getDimensionValue(j)+ offsets[j]);
+        for (int j = 0; j < point.getDimension(); j++) {
+          point.setValue(j, point.getValue(j)+ offsets[j]);
         }
       }
 

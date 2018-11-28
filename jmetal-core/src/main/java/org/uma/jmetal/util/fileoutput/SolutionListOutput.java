@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.fileoutput;
 
 import org.uma.jmetal.solution.Solution;
@@ -31,7 +18,6 @@ public class SolutionListOutput {
   private String funFileName = "FUN";
   private String separator = "\t";
   private List<? extends Solution<?>> solutionList;
-  private boolean selectFeasibleSolutions;
   private List<Boolean> isObjectiveToBeMinimized ;
 
   public SolutionListOutput(List<? extends Solution<?>> solutionList) {
@@ -40,7 +26,6 @@ public class SolutionListOutput {
     varFileContext.setSeparator(separator);
     funFileContext.setSeparator(separator);
     this.solutionList = solutionList;
-    selectFeasibleSolutions = false;
     isObjectiveToBeMinimized = null ;
   }
 
@@ -59,11 +44,6 @@ public class SolutionListOutput {
   public SolutionListOutput setObjectiveMinimizingObjectiveList(List<Boolean> isObjectiveToBeMinimized) {
     this.isObjectiveToBeMinimized = isObjectiveToBeMinimized ;
 
-    return this;
-  }
-
-  public SolutionListOutput selectFeasibleSolutions() {
-    selectFeasibleSolutions = true ;
     return this;
   }
 

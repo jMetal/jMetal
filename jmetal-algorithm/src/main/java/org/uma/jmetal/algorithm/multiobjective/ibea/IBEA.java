@@ -1,26 +1,3 @@
-//  IBEA.java
-//
-//  Author:
-//       Juan J. Durillo <durillo@lcc.uma.es>
-//
-//  Copyright (c) 2011 Juan J. Durillo
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-// This implementation is based on the PISA code:
-// http://www.tik.ee.ethz.ch/sop/pisa/selectors/ibea/?page=ibea.php
-
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -41,24 +18,24 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
-  private Problem<S> problem;
+  protected Problem<S> problem;
 
   public static final int TOURNAMENTS_ROUNDS = 1;
 
-  private List<List<Double>> indicatorValues;
-  private double maxIndicatorValue;
+  protected List<List<Double>> indicatorValues;
+  protected double maxIndicatorValue;
 
-  private int populationSize;
-  private int archiveSize;
-  private int maxEvaluations;
+  protected int populationSize;
+  protected int archiveSize;
+  protected int maxEvaluations;
 
-  private List<S> archive;
+  protected List<S> archive;
 
-  private CrossoverOperator<S> crossoverOperator;
-  private MutationOperator<S> mutationOperator;
-  private SelectionOperator<List<S>, S> selectionOperator;
+  protected CrossoverOperator<S> crossoverOperator;
+  protected MutationOperator<S> mutationOperator;
+  protected SelectionOperator<List<S>, S> selectionOperator;
 
-  private Fitness<S> solutionFitness = new Fitness<S>();
+  protected Fitness<S> solutionFitness = new Fitness<S>();
 
   /**
    * Constructor

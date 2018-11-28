@@ -15,25 +15,29 @@
  */
 package org.uma.jmetal.problem.multiobjective.ebes;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Class representing problem Ebes
  * Spatial Bars Structure (Estructuras de Barras Espaciales)
  */
-public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+@SuppressWarnings("serial")
+public class Ebes extends AbstractDoubleProblem {
   /**
    * Constructor.
    * Creates a default instance of the Ebes problem.
@@ -1014,7 +1018,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
     numberOfEval_++;
 
-    if((numberOfEval_ % 1000) == 0) System.out.println(numberOfEval_);
+    //if((numberOfEval_ % 1000) == 0) System.out.println(numberOfEval_);
 
     //  END OBJETIVES FUNCTION
 
@@ -1044,6 +1048,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 */
     // END NOT USED ------------------------------------------------------------------------------
 
+    this.evaluateConstraints(solution);
   } // evaluate
 
   /**
@@ -1051,8 +1056,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
    * @param solution The solution
    * @throws JMetalException
    */
-  @Override
-  public void evaluateConstraints(DoubleSolution solution) {
+  private void evaluateConstraints(DoubleSolution solution) {
     double [] constraint = new double[this.getNumberOfConstraints()];
     double[] x = new double[getNumberOfVariables()] ;
 
@@ -1269,11 +1273,11 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
 
     double total = 0.0;
-    int number = 0;
+    //int number = 0;
     for (int i = 0; i < this.getNumberOfConstraints(); i++)
       if (constraint[i]<0.0){
         total+=constraint[i];
-        number++;
+        //number++;
       }
     overallConstraintViolationDegree.setAttribute(solution, total);
     //solution.setOverallConstraintViolationDegree(total);
@@ -2273,7 +2277,6 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
     int n2 = numberOfLibertyDegree_ * numberOfNodes;
 
-    Salto1:
     for(i=1; i<n2 ;i++){
       if(MatrixStiffness_[s1 - 1] >= 1.0E+25){
         s1 = s1 + matrixWidthBand_;
@@ -3743,7 +3746,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // [2]: TensiÃƒÂ³n tangencial
     double [][][]Strain = new double [3][numberOfElements_][numberOfWeigthHypothesis_];
     double z, y;
-    double ez, ey;
+    //double ez, ey;
     double  A, Iz, Iy, It;
     // Effort
     double Nxx, Qxy, Qxz, Mxx, Mxy, Mxz;
@@ -3777,8 +3780,8 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 
         y = Groups_[idx][Y_];
         z = Groups_[idx][Z_];
-        ey = Groups_[idx][eY_];
-        ez = Groups_[idx][eZ_];
+        //ey = Groups_[idx][eY_];
+        //ez = Groups_[idx][eZ_];
         A = Groups_[idx][AREA];
         Az = Groups_[idx][Az_];
         Ay = Groups_[idx][Ay_];
@@ -4324,9 +4327,10 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
     // z: longitud en sentido del eje Z princial local
     // ey: espesor en sentido eje Y, es decir coincidente con el espesor de cada ala
     // ez: espesor en sentido Z, es decir coincidente con el espesor del alma
-    double y1, z1, yi, zi;
-    double as, ys, es, al, yl, el;
-    double zl, ae, ze, ee;
+    //double y1, z1, yi, zi;
+    //double as, ys, es, al, yl, el;
+    //double zl, ae, ze, ee;
+    double yi, zi;
 
     // distancia Y en ejes locales principales
     Groups_[gr][Y_]=y;
@@ -5556,7 +5560,7 @@ public void EbesMutation(int groupId, int hi, Variable[] x) {
       double S2Z = 0.0; // variance Z distance
       double SY = 0.0; // variance Y distance
       double SZ = 0.0; // variance Z distance
-      double CS2 = 0.0; // covariance
+      //double CS2 = 0.0; // covariance
       double r = 0.0; // Pearson correlation
 
       for (int j = 0; j < geometryCheck_[i].length; j++) {

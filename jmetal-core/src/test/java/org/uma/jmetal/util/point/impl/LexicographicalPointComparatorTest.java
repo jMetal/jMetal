@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.point.impl;
 
 import org.junit.Before;
@@ -26,8 +13,6 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  */
 public class LexicographicalPointComparatorTest {
-  private static final double EPSILON = 0.0000000000001 ;
-
   private Point point1 ;
   private Point point2 ;
 
@@ -55,12 +40,12 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareIdenticalPointsReturnZero() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 3.0);
 
     assertEquals(0, comparator.compare(point1, point2));
   }
@@ -68,16 +53,16 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnMinus1() {
     point1 = new ArrayPoint(4) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 0.0);
-    point1.setDimensionValue(2, 5.0);
-    point1.setDimensionValue(3, 7.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 0.0);
+    point1.setValue(2, 5.0);
+    point1.setValue(3, 7.0);
 
     point2 = new ArrayPoint(4) ;
-    point2.setDimensionValue(0, -1.0);
-    point2.setDimensionValue(0, 0.0);
-    point2.setDimensionValue(0, 5.0);
-    point2.setDimensionValue(0, 7.0);
+    point2.setValue(0, -1.0);
+    point2.setValue(0, 0.0);
+    point2.setValue(0, 5.0);
+    point2.setValue(0, 7.0);
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
@@ -85,16 +70,16 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnPlus1() {
     point1 = new ArrayPoint(4) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 0.0);
-    point1.setDimensionValue(2, 5.0);
-    point1.setDimensionValue(3, 7.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 0.0);
+    point1.setValue(2, 5.0);
+    point1.setValue(3, 7.0);
 
     point2 = new ArrayPoint(4) ;
-    point2.setDimensionValue(0, -1.0);
-    point2.setDimensionValue(0, 0.0);
-    point2.setDimensionValue(0, 5.0);
-    point2.setDimensionValue(0, 7.0);
+    point2.setValue(0, -1.0);
+    point2.setValue(0, 0.0);
+    point2.setValue(0, 5.0);
+    point2.setValue(0, 7.0);
 
     assertEquals(1, comparator.compare(point2, point1));
   }
@@ -102,16 +87,16 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnMinus1() {
     point1 = new ArrayPoint(4) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 0.0);
-    point1.setDimensionValue(2, 5.0);
-    point1.setDimensionValue(3, 0.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 0.0);
+    point1.setValue(2, 5.0);
+    point1.setValue(3, 0.0);
 
     point2 = new ArrayPoint(4) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(0, 0.0);
-    point2.setDimensionValue(0, 5.0);
-    point2.setDimensionValue(0, 7.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(0, 0.0);
+    point2.setValue(0, 5.0);
+    point2.setValue(0, 7.0);
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
@@ -119,16 +104,16 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnPlus1() {
     point1 = new ArrayPoint(4) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 0.0);
-    point1.setDimensionValue(2, 5.0);
-    point1.setDimensionValue(3, 7.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 0.0);
+    point1.setValue(2, 5.0);
+    point1.setValue(3, 7.0);
 
     point2 = new ArrayPoint(4) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(0, 0.0);
-    point2.setDimensionValue(0, 5.0);
-    point2.setDimensionValue(0, 0.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(0, 0.0);
+    point2.setValue(0, 5.0);
+    point2.setValue(0, 0.0);
 
     assertEquals(1, comparator.compare(point1, point2));
   }
@@ -144,15 +129,15 @@ public class LexicographicalPointComparatorTest {
   @Test
   public void shouldCompareDifferentLengthPointsReturnTheCorrectValue() {
     point1 = new ArrayPoint(4) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 0.0);
-    point1.setDimensionValue(2, 5.0);
-    point1.setDimensionValue(3, 7.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 0.0);
+    point1.setValue(2, 5.0);
+    point1.setValue(3, 7.0);
 
     point2 = new ArrayPoint(3) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 0.0);
-    point2.setDimensionValue(2, 5.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 0.0);
+    point2.setValue(2, 5.0);
 
     assertEquals(0, comparator.compare(point1, point2));
   }

@@ -1,19 +1,7 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.solution;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Interface representing a Solution
@@ -22,18 +10,20 @@ import java.io.Serializable;
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {
-  public void setObjective(int index, double value) ;
-  public double getObjective(int index) ;
+  void setObjective(int index, double value) ;
+  double getObjective(int index) ;
+  double[] getObjectives() ;
 
-  public T getVariableValue(int index) ;
-  public void setVariableValue(int index, T value) ;
-  public String getVariableValueString(int index) ;
+  T getVariableValue(int index) ;
+  List<T> getVariables() ;
+  void setVariableValue(int index, T value) ;
+  String getVariableValueString(int index) ;
 
-  public int getNumberOfVariables() ;
-  public int getNumberOfObjectives() ;
+  int getNumberOfVariables() ;
+  int getNumberOfObjectives() ;
 
-  public Solution<T> copy() ;
+  Solution<T> copy() ;
 
-  public void setAttribute(Object id, Object value) ;
-  public Object getAttribute(Object id) ;
+  void setAttribute(Object id, Object value) ;
+  Object getAttribute(Object id) ;
 }

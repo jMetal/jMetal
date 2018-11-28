@@ -8,27 +8,28 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**
    * Constructor
    */
   public SteadyStateNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, evaluator);
+                           CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                           SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
+    super(problem, maxEvaluations, populationSize,100, 100, crossoverOperator, mutationOperator,
+        selectionOperator, dominanceComparator, evaluator);
   }
 
   @Override protected void updateProgress() {
     evaluations ++ ;
   }
-
 
   @Override protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(2);

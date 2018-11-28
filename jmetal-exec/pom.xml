@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.uma.jmetal</groupId>
         <artifactId>jmetal</artifactId>
-        <version>5.3-SNAPSHOT</version>
+        <version>5.7-SNAPSHOT</version>
     </parent>
     <artifactId>jmetal-exec</artifactId>
     <packaging>jar</packaging>
@@ -68,6 +68,11 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.knowm.xchart</groupId>
+            <artifactId>xchart</artifactId>
+            <version>3.2.2</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -28,7 +15,7 @@ import org.uma.jmetal.util.AlgorithmBuilder;
  * @version 1.0
  */
 public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSolution>> {
-  public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA, MOEADSTM} ;
+  public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA, MOEADSTM, MOEADD} ;
 
   protected Problem<DoubleSolution> problem ;
 
@@ -200,8 +187,11 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
         algorithm =  new MOEADSTM(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
                 crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
                 maximumNumberOfReplacedSolutions, neighborSize);
+    } else if (moeadVariant.equals(Variant.MOEADD)) {
+      algorithm = new MOEADD(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation,
+              functionType, dataDirectory, neighborhoodSelectionProbability,
+              maximumNumberOfReplacedSolutions, neighborSize);
     }
-
     return algorithm ;
   }
 }

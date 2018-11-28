@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 * @param filePath The path in the file system of the file containing the weight vectors
 	 */
 	public void loadWeightsFromFile(String filePath) {
-    System.out.println("FILE PATH: " + filePath) ;
+    JMetalLogger.logger.info("FILE PATH: " + filePath); ;
 		InputStream in = getClass().getResourceAsStream("/" + filePath);
 		InputStreamReader isr = new InputStreamReader(in);
 		BufferedReader buffer = new BufferedReader(isr);

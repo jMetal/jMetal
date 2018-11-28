@@ -9,6 +9,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	protected final MOMBI2History<S> history;
 	protected final Double alpha		= 0.5;
 	protected final Double epsilon 		= 1.0e-3;
-	protected  List<Double> maxs;
+	protected List<Double> maxs;
 	protected Normalizer normalizer;
 
 	/**
@@ -44,14 +45,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	public MOMBI2(Problem<S> problem, int maxIterations, CrossoverOperator<S> crossover, MutationOperator<S> mutation,
 			SelectionOperator<List<S>, S> selection, SolutionListEvaluator<S> evaluator, String pathWeights) {
 		super(problem, maxIterations, crossover, mutation, selection, evaluator, pathWeights);
+
 		this.history = new MOMBI2History<>(problem.getNumberOfObjectives());
 	}
 	
-	private void updateMax(List<S> population) {
-		if (this.maxs.isEmpty())
-			for (int i = 0; i < this.getProblem().getNumberOfObjectives(); i++)
-				this.maxs.add(Double.NEGATIVE_INFINITY);
-		
+	protected void updateMax(List<S> population) {
+
 		for (S solution : population)
 			for (int i = 0; i < this.maxs.size(); i++)
 				this.maxs.set(i,Math.max(this.maxs.get(i),solution.getObjective(i)));
@@ -64,13 +63,13 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 		super.initProgress();
 		this.updateMax(this.getPopulation());
 	}
-	
+
+	@Override
 	public AbstractUtilityFunctionsSet<S> createUtilityFunction(String pathWeights) {
 		System.out.println("MOMBI 2");
-		//this.mins    = new ArrayList<>(getProblem().getNumberOfObjectives());		
-		this.maxs    = new ArrayList<>(getProblem().getNumberOfObjectives());
+		this.maxs    = new ArrayList<>(Collections.nCopies(getProblem().getNumberOfObjectives(),
+															Double.NEGATIVE_INFINITY));
 		this.normalizer = new Normalizer(this.getReferencePoint(), maxs);
-		//this.utilityFunctions = new TchebycheffUtilityFunctionsSet<>(pathWeights,this.getReferencePoint());		
 		ASFUtilityFunctionSet<S> aux = new ASFUtilityFunctionSet<>(pathWeights);
 		aux.setNormalizer(this.normalizer);
 		return aux;

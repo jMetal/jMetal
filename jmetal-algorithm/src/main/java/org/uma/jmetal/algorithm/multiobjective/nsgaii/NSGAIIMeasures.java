@@ -10,10 +10,16 @@ import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -27,15 +33,21 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
   protected BasicMeasure<List<S>> solutionListMeasure ;
   protected BasicMeasure<Integer> numberOfNonDominatedSolutionsInPopulation ;
+  protected BasicMeasure<Double> hypervolumeValue ;
+
+  protected Front referenceFront ;
 
   /**
    * Constructor
    */
   public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, evaluator) ;
+                        int matingPoolSize, int offspringPopulationSize,
+                        CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                        SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
+    super(problem, maxIterations, populationSize, matingPoolSize, offspringPopulationSize,
+            crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator) ;
+
+    referenceFront = new ArrayFront() ;
 
     initMeasures() ;
   }
@@ -48,6 +60,12 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     evaluations.increment(getMaxPopulationSize());
 
     solutionListMeasure.push(getPopulation());
+
+    if (referenceFront.getNumberOfPoints() > 0) {
+      hypervolumeValue.push(
+              new PISAHypervolume<S>(referenceFront).evaluate(
+                  SolutionListUtils.getNondominatedSolutions(getPopulation())));
+    }
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -68,6 +86,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     evaluations = new CountingMeasure(0) ;
     numberOfNonDominatedSolutionsInPopulation = new BasicMeasure<>() ;
     solutionListMeasure = new BasicMeasure<>() ;
+    hypervolumeValue = new BasicMeasure<>() ;
 
     measureManager = new SimpleMeasureManager() ;
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
@@ -77,6 +96,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
     measureManager.setPushMeasure("currentPopulation", solutionListMeasure);
     measureManager.setPushMeasure("currentEvaluation", evaluations);
+    measureManager.setPushMeasure("hypervolume", hypervolumeValue);
   }
 
   @Override
@@ -88,7 +108,9 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
       List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking<S> ranking = computeRanking(pop);
+    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
+    ranking.computeRanking(population);
+
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
 
     return pop;
@@ -104,5 +126,9 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
 
   @Override public String getDescription() {
     return "Nondominated Sorting Genetic Algorithm version II. Version using measures" ;
+  }
+
+  public void setReferenceFront(Front referenceFront) {
+    this.referenceFront = referenceFront ;
   }
 }

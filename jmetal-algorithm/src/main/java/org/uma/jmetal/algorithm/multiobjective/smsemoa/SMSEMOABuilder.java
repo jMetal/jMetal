@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -22,7 +9,10 @@ import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,6 +33,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
   protected double offset ;
 
   protected Hypervolume<S> hypervolumeImplementation;
+  protected Comparator<S> dominanceComparator ;
 
   public SMSEMOABuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
@@ -56,6 +47,7 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     this.selectionOperator = new RandomSelection<S>() ;
+    this.dominanceComparator = new DominanceComparator<>()  ;
   }
 
   public SMSEMOABuilder<S> setPopulationSize(int populationSize) {
@@ -101,9 +93,19 @@ public class SMSEMOABuilder<S extends Solution<?>> implements AlgorithmBuilder<S
     return this ;
   }
 
+  public SMSEMOABuilder<S> setDominanceComparator(Comparator<S> dominanceComparator) {
+    if (dominanceComparator == null) {
+      throw new JMetalException("dominanceComparator is null");
+    }
+    this.dominanceComparator = dominanceComparator ;
+
+    return this;
+  }
+
   @Override public SMSEMOA<S> build() {
     return new SMSEMOA<S>(problem, maxEvaluations, populationSize, offset,
-        crossoverOperator, mutationOperator, selectionOperator, hypervolumeImplementation);
+        crossoverOperator, mutationOperator, selectionOperator, dominanceComparator,
+        hypervolumeImplementation);
   }
 
   /*

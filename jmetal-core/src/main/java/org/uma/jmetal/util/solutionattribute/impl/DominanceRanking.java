@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.solution.Solution;
@@ -37,7 +24,7 @@ import java.util.*;
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
-  private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR = new DominanceComparator<Solution<?>>();
+  private Comparator<S> dominanceComparator ;
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
       new OverallConstraintViolationComparator<Solution<?>>();
 
@@ -46,8 +33,16 @@ public class DominanceRanking <S extends Solution<?>>
   /**
    * Constructor
    */
-  public DominanceRanking() {
+  public DominanceRanking(Comparator<S> comparator) {
+    this.dominanceComparator = comparator ;
     rankedSubPopulations = new ArrayList<>();
+  }
+
+  /**
+   * Constructor
+   */
+  public DominanceRanking() {
+    this(new DominanceComparator<>()) ;
   }
 
   public DominanceRanking(Object id) {
@@ -89,7 +84,7 @@ public class DominanceRanking <S extends Solution<?>>
         flagDominate =
             CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
         if (flagDominate == 0) {
-          flagDominate = DOMINANCE_COMPARATOR.compare(solutionSet.get(p), solutionSet.get(q));
+          flagDominate = dominanceComparator.compare(solutionSet.get(p), solutionSet.get(q));
         }
         if (flagDominate == -1) {
           iDominate.get(p).add(q);

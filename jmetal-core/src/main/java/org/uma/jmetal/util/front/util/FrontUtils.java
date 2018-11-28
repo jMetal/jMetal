@@ -1,23 +1,10 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
 import org.uma.jmetal.util.point.util.distance.PointDistance;
 
@@ -30,6 +17,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FrontUtils {
+	
 
   /**
    * Gets the maximum values for each objectives in a front
@@ -39,12 +27,12 @@ public class FrontUtils {
    */
   public static double[] getMaximumValues(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null") ;
+      throw new NullFrontException() ;
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty") ;
+      throw new EmptyFrontException() ;
     }
 
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = front.getPoint(0).getDimension() ;
 
     double[] maximumValue = new double[numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
@@ -53,8 +41,8 @@ public class FrontUtils {
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (front.getPoint(i).getDimensionValue(j) > maximumValue[j]) {
-          maximumValue[j] = front.getPoint(i).getDimensionValue(j);
+        if (front.getPoint(i).getValue(j) > maximumValue[j]) {
+          maximumValue[j] = front.getPoint(i).getValue(j);
         }
       }
     }
@@ -70,12 +58,12 @@ public class FrontUtils {
    */
   public static double[] getMinimumValues(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null") ;
+      throw new NullFrontException() ;
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty") ;
+      throw new EmptyFrontException() ;
     }
 
-    int numberOfObjectives = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfObjectives = front.getPoint(0).getDimension() ;
 
     double[] minimumValue = new double[numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
@@ -84,8 +72,8 @@ public class FrontUtils {
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (front.getPoint(i).getDimensionValue(j) < minimumValue[j]) {
-          minimumValue[j] = front.getPoint(i).getDimensionValue(j);
+        if (front.getPoint(i).getValue(j) < minimumValue[j]) {
+          minimumValue[j] = front.getPoint(i).getValue(j);
         }
       }
     }
@@ -115,9 +103,9 @@ public class FrontUtils {
    */
   public static double distanceToNearestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
-      throw new JMetalException("The front is null");
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty");
+      throw new EmptyFrontException();
     } else if (point == null) {
       throw new JMetalException("The point is null");
     }
@@ -157,9 +145,9 @@ public class FrontUtils {
    */
   public static double distanceToClosestPoint(Point point, Front front, PointDistance distance) {
     if (front == null) {
-      throw new JMetalException("The front is null");
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty");
+      throw new EmptyFrontException();
     } else if (point == null) {
       throw new JMetalException("The point is null");
     }
@@ -185,23 +173,23 @@ public class FrontUtils {
    */
   public static Front getInvertedFront(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null");
+      throw new NullFrontException();
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty");
+      throw new EmptyFrontException();
     }
 
-    int numberOfDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfDimensions = front.getPoint(0).getDimension() ;
     Front invertedFront = new ArrayFront(front.getNumberOfPoints(), numberOfDimensions);
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfDimensions; j++) {
-        if (front.getPoint(i).getDimensionValue(j)  <= 1.0
-            && front.getPoint(i).getDimensionValue(j) >= 0.0) {
-          invertedFront.getPoint(i).setDimensionValue(j, 1.0 - front.getPoint(i).getDimensionValue(j));
-        } else if (front.getPoint(i).getDimensionValue(j) > 1.0) {
-          invertedFront.getPoint(i).setDimensionValue(j, 0.0) ;
-        } else if (front.getPoint(i).getDimensionValue(j) < 0.0) {
-          invertedFront.getPoint(i).setDimensionValue(j, 1.0) ;
+        if (front.getPoint(i).getValue(j)  <= 1.0
+            && front.getPoint(i).getValue(j) >= 0.0) {
+          invertedFront.getPoint(i).setValue(j, 1.0 - front.getPoint(i).getValue(j));
+        } else if (front.getPoint(i).getValue(j) > 1.0) {
+          invertedFront.getPoint(i).setValue(j, 0.0) ;
+        } else if (front.getPoint(i).getValue(j) < 0.0) {
+          invertedFront.getPoint(i).setValue(j, 1.0) ;
         }
       }
     }
@@ -216,15 +204,15 @@ public class FrontUtils {
    */
   public static double[][] convertFrontToArray(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null");
+      throw new NullFrontException();
     }
 
     double[][] arrayFront = new double[front.getNumberOfPoints()][] ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      arrayFront[i] = new double[front.getPoint(i).getNumberOfDimensions()] ;
-      for (int j = 0 ; j < front.getPoint(i).getNumberOfDimensions(); j++) {
-        arrayFront[i][j] = front.getPoint(i).getDimensionValue(j) ;
+      arrayFront[i] = new double[front.getPoint(i).getDimension()] ;
+      for (int j = 0 ; j < front.getPoint(i).getDimension(); j++) {
+        arrayFront[i][j] = front.getPoint(i).getValue(j) ;
       }
     }
 
@@ -248,14 +236,14 @@ public class FrontUtils {
     if (front.getNumberOfPoints() == 0) {
       numberOfObjectives = 0 ;
     } else {
-      numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+      numberOfObjectives = front.getPoint(0).getDimension();
     }
     List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       PointSolution solution = new PointSolution(numberOfObjectives);
       for (int j = 0 ; j < numberOfObjectives; j++) {
-        solution.setObjective(j, front.getPoint(i).getDimensionValue(j));
+        solution.setObjective(j, front.getPoint(i).getValue(j));
       }
 
       solutionSet.add(solution) ;
@@ -273,7 +261,7 @@ public class FrontUtils {
 
   public static List<PointSolution> convertFrontToSolutionList(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null");
+      throw new NullFrontException();
     }
 
     int numberOfObjectives ;
@@ -281,19 +269,33 @@ public class FrontUtils {
     if (front.getNumberOfPoints() == 0) {
       numberOfObjectives = 0 ;
     } else {
-      numberOfObjectives = front.getPoint(0).getNumberOfDimensions();
+      numberOfObjectives = front.getPoint(0).getDimension();
     }
     List<PointSolution> solutionSet = new ArrayList<>(solutionSetSize) ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       PointSolution solution = new PointSolution(numberOfObjectives);
       for (int j = 0 ; j < numberOfObjectives; j++) {
-        solution.setObjective(j, front.getPoint(i).getDimensionValue(j));
+        solution.setObjective(j, front.getPoint(i).getValue(j));
       }
 
       solutionSet.add(solution) ;
     }
 
     return solutionSet ;
+  }
+  
+  @SuppressWarnings("serial")
+  private static class NullFrontException extends JMetalException {
+    public NullFrontException() {
+      super("The front is null");
+    }
+  }
+  
+  @SuppressWarnings("serial")
+  private static class EmptyFrontException extends JMetalException {
+    public EmptyFrontException() {
+      super("The front is empty");
+    }
   }
 }

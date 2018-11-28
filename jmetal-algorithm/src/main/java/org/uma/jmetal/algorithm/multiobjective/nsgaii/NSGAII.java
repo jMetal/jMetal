@@ -4,17 +4,15 @@ import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -27,13 +25,29 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected final SolutionListEvaluator<S> evaluator;
 
   protected int evaluations;
+  protected Comparator<S> dominanceComparator ;
+
+  protected int matingPoolSize;
+  protected int offspringPopulationSize ;
 
   /**
    * Constructor
    */
   public NSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
+                int matingPoolSize, int offspringPopulationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+    this(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+            crossoverOperator, mutationOperator, selectionOperator, new DominanceComparator<S>(), evaluator);
+  }
+  /**
+   * Constructor
+   */
+  public NSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
+                int matingPoolSize, int offspringPopulationSize,
+                CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator,
+                SolutionListEvaluator<S> evaluator) {
     super(problem);
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize); ;
@@ -43,6 +57,10 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.selectionOperator = selectionOperator;
 
     this.evaluator = evaluator;
+    this.dominanceComparator = dominanceComparator ;
+
+    this.matingPoolSize = matingPoolSize ;
+    this.offspringPopulationSize = offspringPopulationSize ;
   }
 
   @Override protected void initProgress() {
@@ -50,7 +68,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override protected void updateProgress() {
-    evaluations += getMaxPopulationSize() ;
+    evaluations += offspringPopulationSize ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -63,76 +81,72 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     return population;
   }
 
+  /**
+   * This method iteratively applies a {@link SelectionOperator} to the population to fill the mating pool population.
+   *
+   * @param population
+   * @return The mating pool population
+   */
+  @Override
+  protected List<S> selection(List<S> population) {
+    List<S> matingPopulation = new ArrayList<>(population.size());
+    for (int i = 0; i < matingPoolSize; i++) {
+      S solution = selectionOperator.execute(population);
+      matingPopulation.add(solution);
+    }
+
+    return matingPopulation;
+  }
+
+  /**
+   * This methods iteratively applies a {@link CrossoverOperator} a  {@link MutationOperator} to the population to
+   * create the offspring population. The population size must be divisible by the number of parents required
+   * by the {@link CrossoverOperator}; this way, the needed parents are taken sequentially from the population.
+   *
+   * The number of solutions returned by the {@link CrossoverOperator} must be equal to the offspringPopulationSize
+   * state variable
+   *
+   * @param matingPool
+   * @return The new created offspring population
+   */
+  @Override
+  protected List<S> reproduction(List<S> matingPool) {
+    int numberOfParents = crossoverOperator.getNumberOfRequiredParents() ;
+
+    checkNumberOfParents(matingPool, numberOfParents);
+
+    List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
+    for (int i = 0; i < matingPool.size(); i += numberOfParents) {
+      List<S> parents = new ArrayList<>(numberOfParents);
+      for (int j = 0; j < numberOfParents; j++) {
+        parents.add(population.get(i+j));
+      }
+
+      List<S> offspring = crossoverOperator.execute(parents);
+
+      for(S s: offspring){
+        mutationOperator.execute(s);
+        offspringPopulation.add(s);
+        if (offspringPopulation.size() >= offspringPopulationSize)
+          break;
+      }
+    }
+    return offspringPopulation;
+  }
+
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    Ranking<S> ranking = computeRanking(jointPopulation);
+    RankingAndCrowdingSelection<S> rankingAndCrowdingSelection ;
+    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<S>(getMaxPopulationSize(), dominanceComparator) ;
 
-    return crowdingDistanceSelection(ranking);
+    return rankingAndCrowdingSelection.execute(jointPopulation) ;
   }
 
   @Override public List<S> getResult() {
-    return getNonDominatedSolutions(getPopulation());
-  }
-
-  protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>();
-    ranking.computeRanking(solutionList);
-
-    return ranking;
-  }
-
-  protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
-    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    int rankingIndex = 0;
-    while (populationIsNotFull(population)) {
-      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-        rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
-        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
-      }
-    }
-
-    return population;
-  }
-
-  protected boolean populationIsNotFull(List<S> population) {
-    return population.size() < getMaxPopulationSize();
-  }
-
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
-  }
-
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> front;
-
-    front = ranking.getSubfront(rank);
-
-    for (S solution : front) {
-      population.add(solution);
-    }
-  }
-
-  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubfront(rank);
-
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
-
-    int i = 0;
-    while (population.size() < getMaxPopulationSize()) {
-      population.add(currentRankedFront.get(i));
-      i++;
-    }
-  }
-
-  protected List<S> getNonDominatedSolutions(List<S> solutionList) {
-    return SolutionListUtils.getNondominatedSolutions(solutionList);
+    return SolutionListUtils.getNondominatedSolutions(getPopulation());
   }
 
   @Override public String getName() {

@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.IntegerDoubleProblem;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
 @SuppressWarnings("serial")
-public abstract class AbstractIntegerDoubleProblem<S extends Solution<Number>>
+public abstract class AbstractIntegerDoubleProblem<S>
   extends AbstractGenericProblem<S>
   implements IntegerDoubleProblem<S> {
 

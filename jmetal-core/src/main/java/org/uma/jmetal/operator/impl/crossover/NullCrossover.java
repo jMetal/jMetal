@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -45,11 +32,12 @@ public class NullCrossover<S extends Solution<?>>
     return list ;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  public int getNumberOfRequiredParents() {
     return 2 ;
+  }
+
+  @Override
+  public int getNumberOfGeneratedChildren() {
+    return 2;
   }
 }

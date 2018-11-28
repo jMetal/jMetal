@@ -39,8 +39,7 @@ public class SteadyStateGeneticAlgorithmTestIT {
             .setSelectionOperator(selectionOperator)
             .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     BinarySolution solution = algorithm.getResult() ;
     assertEquals(NUMBER_OF_BITS, -1 * (int)solution.getObjective(0)) ;

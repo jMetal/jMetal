@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.point.impl;
 
 import org.junit.After;
@@ -34,13 +21,13 @@ public class PointDimensionComparatorTest {
 
   @Before public void setup() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, -2.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, -2.0);
 
     point2 = new ArrayPoint(3) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, -3.0);
-    point2.setDimensionValue(2, 5.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, -3.0);
+    point2.setValue(2, 5.0);
   }
 
   @After public void clean() {
@@ -55,14 +42,14 @@ public class PointDimensionComparatorTest {
 
   @Test public void shouldCompareReturnMinusOneIfTheFirstValueIsLower() throws Exception {
     comparator = new PointDimensionComparator(0) ;
-    point1.setDimensionValue(0, 0.0);
+    point1.setValue(0, 0.0);
 
     assertEquals(-1, comparator.compare(point1, point2)) ;
   }
 
   @Test public void shouldCompareReturnPlusOneIfTheFirstValueIsGreater() throws Exception {
     comparator = new PointDimensionComparator(0) ;
-    point1.setDimensionValue(0, 3.0);
+    point1.setValue(0, 3.0);
 
     assertEquals(1, comparator.compare(point1, point2)) ;
   }

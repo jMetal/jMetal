@@ -47,8 +47,7 @@ public class MOMBI2IT {
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
         "mombi2-weights/weight/weight_03D_12.sld");
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
@@ -83,8 +82,7 @@ public class MOMBI2IT {
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
         "mombi2-weights/weight/weight_03D_12.sld");
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
@@ -100,7 +98,7 @@ public class MOMBI2IT {
 
     double hv = (Double)hypervolume.evaluate(population) ;
 
-    assertTrue(hv > 0.968) ;
+    assertTrue(hv > 0.96) ;
 
     randomGenerator.setSeed(System.currentTimeMillis());
   }

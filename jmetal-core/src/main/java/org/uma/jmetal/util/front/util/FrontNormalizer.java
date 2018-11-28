@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.solution.Solution;
@@ -104,14 +91,14 @@ public class FrontNormalizer {
   private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
    if (front.getNumberOfPoints() == 0) {
       throw new JMetalException("The front is empty") ;
-    } else if (front.getPoint(0).getNumberOfDimensions() != maximumValues.length) {
+    } else if (front.getPoint(0).getDimension() != maximumValues.length) {
       throw new JMetalException("The length of the point dimensions ("
-          + front.getPoint(0).getNumberOfDimensions() + ") "
+          + front.getPoint(0).getDimension() + ") "
           + "is different from the length of the maximum array (" + maximumValues.length+")") ;
     }
 
     Front normalizedFront = new ArrayFront(front) ;
-    int numberOfPointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfPointDimensions = front.getPoint(0).getDimension() ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfPointDimensions; j++) {
@@ -120,7 +107,7 @@ public class FrontNormalizer {
               + "are the same: " + maximumValues[j]);
         }
 
-        normalizedFront.getPoint(i).setDimensionValue(j, (front.getPoint(i).getDimensionValue(j)
+        normalizedFront.getPoint(i).setValue(j, (front.getPoint(i).getValue(j)
             - minimumValues[j]) / (maximumValues[j] - minimumValues[j]));
       }
     }

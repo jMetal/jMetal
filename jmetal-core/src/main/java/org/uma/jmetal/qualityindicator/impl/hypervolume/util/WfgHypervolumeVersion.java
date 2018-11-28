@@ -24,27 +24,10 @@ public class WfgHypervolumeVersion {
   private int currentDeep;
   private int currentDimension;
   private int maxNumberOfPoints;
-  private int maxNumberOfObjectives;
   private Comparator<Point> pointComparator;
 
   public WfgHypervolumeVersion(int dimension, int maxNumberOfPoints) {
-    referencePoint = new ArrayPoint(dimension);
-    for (int i = 0; i < dimension; i++) {
-      referencePoint.setDimensionValue(i, 0.0);
-    }
-
-    maximizing = false;
-    currentDeep = 0;
-    currentDimension = dimension;
-    this.maxNumberOfPoints = maxNumberOfPoints;
-    maxNumberOfObjectives = dimension;
-    pointComparator = new PointComparator();
-
-    int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
-    fs = new WfgHypervolumeFront[maxd];
-    for (int i = 0; i < maxd; i++) {
-      fs[i] = new WfgHypervolumeFront(maxNumberOfPoints, dimension);
-    }
+    this(dimension, maxNumberOfPoints, new ArrayPoint(dimension));
   }
 
   public WfgHypervolumeVersion(int dimension, int maxNumberOfPoints, Point referencePoint) {
@@ -53,7 +36,6 @@ public class WfgHypervolumeVersion {
     currentDeep = 0;
     currentDimension = dimension;
     this.maxNumberOfPoints = maxNumberOfPoints;
-    maxNumberOfObjectives = dimension;
     pointComparator = new PointComparator();
 
     int maxd = this.maxNumberOfPoints - (OPT / 2 + 1);
@@ -66,13 +48,12 @@ public class WfgHypervolumeVersion {
   public double get2DHV(WfgHypervolumeFront front) {
     double hv = 0.0;
 
-    hv = Math.abs((front.getPoint(0).getDimensionValue(0) - referencePoint.getDimensionValue(0)) *
-        (front.getPoint(0).getDimensionValue(1) - referencePoint.getDimensionValue(1))) ;
+    hv = Math.abs((front.getPoint(0).getValue(0) - referencePoint.getValue(0)) *
+        (front.getPoint(0).getValue(1) - referencePoint.getValue(1))) ;
 
-    int v = front.getNumberOfPoints() ;
     for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      hv += Math.abs((front.getPoint(i).getDimensionValue(0) - referencePoint.getDimensionValue(0)) *
-          (front.getPoint(i).getDimensionValue(1) - front.getPoint(i - 1).getDimensionValue(1)));
+      hv += Math.abs((front.getPoint(i).getValue(0) - referencePoint.getValue(0)) *
+          (front.getPoint(i).getValue(1) - front.getPoint(i - 1).getValue(1)));
 
     }
 
@@ -82,7 +63,7 @@ public class WfgHypervolumeVersion {
   public double getInclusiveHV(Point point) {
     double volume = 1;
     for (int i = 0; i < currentDimension; i++) {
-      volume *= Math.abs(point.getDimensionValue(i) - referencePoint.getDimensionValue(i));
+      volume *= Math.abs(point.getValue(i) - referencePoint.getValue(i));
     }
 
     return volume;
@@ -114,8 +95,8 @@ public class WfgHypervolumeVersion {
       currentDimension--;
       int numberOfPoints = front.getNumberOfPoints() ;
       for (int i = numberOfPoints - 1; i >= 0; i--) {
-        volume += Math.abs(front.getPoint(i).getDimensionValue(currentDimension) -
-            referencePoint.getDimensionValue(currentDimension)) *
+        volume += Math.abs(front.getPoint(i).getValue(currentDimension) -
+            referencePoint.getValue(currentDimension)) *
             this.getExclusiveHV(front, i);
       }
       currentDimension++;
@@ -132,10 +113,9 @@ public class WfgHypervolumeVersion {
       for (int j = 0; j < currentDimension; j++) {
         Point point1 = front.getPoint(p) ;
         Point point2 = front.getPoint(p + 1 + i) ;
-        double worseValue = worse(point1.getDimensionValue(j), point2.getDimensionValue(j), false) ;
-        int cd = currentDeep ;
+        double worseValue = worse(point1.getValue(j), point2.getValue(j), false) ;
         Point point3 = fs[currentDeep].getPoint(i) ;
-        point3.setDimensionValue(j, worseValue);
+        point3.setValue(j, worseValue);
       }
     }
 
@@ -216,7 +196,7 @@ public class WfgHypervolumeVersion {
       if (i != notLoadingIndex) {
         Point point = new ArrayPoint(dimensions) ;
         for (int j = 0; j < dimensions; j++) {
-          point.setDimensionValue(j, solutionSet.get(i).getObjective(j));
+          point.setValue(j, solutionSet.get(i).getObjective(j));
         }
         front.setPoint(index++, point);
       }
@@ -250,16 +230,16 @@ public class WfgHypervolumeVersion {
     // domination could be checked in either order
 
     for (int i = currentDimension - 1; i >= 0; i--) {
-      if (p.getDimensionValue(i) < q.getDimensionValue(i)) {
+      if (p.getValue(i) < q.getValue(i)) {
         for (int j = i - 1; j >= 0; j--) {
-          if (q.getDimensionValue(j) < p.getDimensionValue(j)) {
+          if (q.getValue(j) < p.getValue(j)) {
             return 0;
           }
         }
         return -1;
-      } else if (q.getDimensionValue(i) < p.getDimensionValue(i)) {
+      } else if (q.getValue(i) < p.getValue(i)) {
         for (int j = i - 1; j >= 0; j--) {
-          if (p.getDimensionValue(j) < q.getDimensionValue(j)) {
+          if (p.getValue(j) < q.getValue(j)) {
             return 0;
           }
         }
@@ -298,7 +278,7 @@ public class WfgHypervolumeVersion {
     JMetalLogger.logger.info("Using reference point: " + referencePoint);
 
     WfgHypervolumeVersion wfghv =
-        new WfgHypervolumeVersion(referencePoint.getNumberOfDimensions(), front.getNumberOfPoints(), referencePoint);
+        new WfgHypervolumeVersion(referencePoint.getDimension(), front.getNumberOfPoints(), referencePoint);
 
     System.out.println("HV: " + wfghv.getHV(front)) ;
   }

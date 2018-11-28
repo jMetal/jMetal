@@ -192,12 +192,9 @@ public class MeasureFactoryTest {
 		// create the push measure
 		MeasureFactory factory = new MeasureFactory();
 		final int period = 10;
-		@SuppressWarnings("unused")
-		PushMeasure<Integer> push = factory.createPushFromPull(pull, period);
-
+		factory.createPushFromPull(pull, period);
+		
 		// destroy the push measure
-		push = null;
-		System.gc();
 		System.gc();
 
 		// check no periodical check are made anymore

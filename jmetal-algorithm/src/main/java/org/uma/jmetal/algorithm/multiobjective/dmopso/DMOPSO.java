@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -22,18 +9,21 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+@SuppressWarnings("serial")
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
-  /**
-	 * 
-	 */
-  private static final long serialVersionUID = 1L;
+
+  public enum FunctionType {
+    TCHE, PBI, AGG
+  }
+
+  private String name;
   private DoubleProblem problem;
   private List<DoubleSolution> swarm ;
 
@@ -50,10 +40,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private double changeVelocity1;
   private double changeVelocity2;
 
-  private int swarmSize;
-  private int maxIterations;
-  private int iterations;
-  private int maxAge ;
+  protected int swarmSize;
+  protected int maxIterations;
+  protected int iterations;
+  protected int maxAge ;
 
   private DoubleSolution[] localBest ;
   private DoubleSolution[] globalBest ;
@@ -69,7 +59,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   String dataDirectory ;
 
-  String functionType = "_PBI";//"_PBI";//"_TCHE";//"_AGG";
+  FunctionType functionType = FunctionType.PBI ;
 
   private JMetalRandom randomGenerator;
   private SolutionListEvaluator<DoubleSolution> evaluator;
@@ -78,7 +68,20 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
                 int maxIterations, double r1Min, double r1Max,
                 double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                 double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-                String functionType, String dataDirectory, int maxAge) {
+                FunctionType functionType, String dataDirectory, int maxAge) {
+      this(problem, swarmSize,
+           maxIterations, r1Min, r1Max,
+           r2Min, r2Max, c1Min, c1Max, c2Min, c2Max,
+           weightMin, weightMax, changeVelocity1, changeVelocity2,
+           functionType, dataDirectory, maxAge, "dMOPSO");
+  }
+  
+  public DMOPSO(DoubleProblem problem, int swarmSize,
+                int maxIterations, double r1Min, double r1Max,
+                double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
+                double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+                FunctionType functionType, String dataDirectory, int maxAge, String name) {
+    this.name = name;
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.maxIterations = maxIterations;
@@ -222,20 +225,17 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
         lambda[n][1] = 1 - a;
-      } // for
-    } // if
+      }
+    }
     else {
       String dataFileName;
-      dataDirectory = "/Users/antelverde/Softw/pruebas/data/MOEAD_parameters/Weight";
       dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
               swarmSize + ".dat";
 
       try {
-        // Open the file
-        FileInputStream fis = new FileInputStream(dataDirectory + "/" + dataFileName);
-        InputStreamReader isr = new InputStreamReader(fis);
+        InputStream in = getClass().getResourceAsStream("/" + dataDirectory + "/" + dataFileName);
+        InputStreamReader isr = new InputStreamReader(in);
         BufferedReader br = new BufferedReader(isr);
-
 
         int i = 0;
         int j = 0;
@@ -246,7 +246,6 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
           while (st.hasMoreTokens()) {
             double value = (new Double(st.nextToken())).doubleValue();
             lambda[i][j] = value;
-            //System.out.println("lambda["+i+","+j+"] = " + value) ;
             j++;
           }
           aux = br.readLine();
@@ -319,7 +318,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private double fitnessFunction(DoubleSolution sol, double[] lambda){
     double fitness = 0.0;
 
-    if (functionType.equals("_TCHE")) {
+    if (functionType == FunctionType.TCHE) {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
@@ -338,7 +337,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       fitness = maxFun;
 
-    }else if(functionType.equals("_AGG")){
+    }else if(functionType == FunctionType.AGG){
       double sum = 0.0;
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
@@ -346,7 +345,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       fitness = sum;
 
-    }else if(functionType.equals("_PBI")){
+    }else if(functionType == FunctionType.PBI){
       double d1, d2, nl;
       double theta = 5.0;
 
@@ -507,7 +506,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   @Override public String getName() {
-    return "dMOPSO" ;
+    return this.name ;
   }
 
   @Override public String getDescription() {

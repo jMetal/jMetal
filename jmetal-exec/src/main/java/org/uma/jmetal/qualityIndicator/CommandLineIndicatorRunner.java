@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.qualityIndicator;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -22,7 +9,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -108,8 +95,9 @@ public class CommandLineIndicatorRunner {
     Front front = new ArrayFront(args[2]);
 
     if (normalize) {
-      referenceFront = new FrontNormalizer(referenceFront).normalize(referenceFront) ;
-      front = new FrontNormalizer(referenceFront).normalize(front) ;
+      FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+      referenceFront = frontNormalizer.normalize(referenceFront);
+      front = frontNormalizer.normalize(front);
       JMetalLogger.logger.info("The fronts are NORMALIZED before computing the indicators"); ;
     } else {
       JMetalLogger.logger.info("The fronts are NOT NORMALIZED before computing the indicators") ;

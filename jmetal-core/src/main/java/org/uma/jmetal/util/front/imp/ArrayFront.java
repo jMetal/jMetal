@@ -1,17 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-
 package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
@@ -57,7 +43,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, solutionList.get(i).getObjective(j));
+        point.setValue(j, solutionList.get(i).getObjective(j));
       }
       points[i] = point;
     }
@@ -71,7 +57,7 @@ public class ArrayFront implements Front {
       throw new JMetalException("The front is empty") ;
     }
     numberOfPoints = front.getNumberOfPoints();
-    pointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    pointDimensions = front.getPoint(0).getDimension() ;
     points = new Point[numberOfPoints] ;
 
     points = new Point[numberOfPoints];
@@ -89,7 +75,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < this.numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, 0.0) ;
+        point.setValue(j, 0.0) ;
       }
       points[i] = point ;
     }
@@ -127,7 +113,7 @@ public class ArrayFront implements Front {
         Point point = new ArrayPoint(numberOfObjectives) ;
         while (tokenizer.hasMoreTokens()) {
           double value = new Double(tokenizer.nextToken());
-          point.setDimensionValue(i, value);
+          point.setValue(i, value);
           i++;
         }
         list.add(point);
@@ -146,7 +132,7 @@ public class ArrayFront implements Front {
     if (numberOfPoints == 0) {
       pointDimensions = 0 ;
     } else {
-      pointDimensions = points[0].getNumberOfDimensions() ;
+      pointDimensions = points[0].getDimension() ;
     }
     for (int i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);

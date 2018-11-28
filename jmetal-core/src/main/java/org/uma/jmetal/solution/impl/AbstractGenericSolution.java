@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.Problem;
@@ -45,6 +32,16 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
       variables.add(i, null) ;
     }
+  }
+
+  @Override
+  public double[] getObjectives() {
+    return objectives ;
+  }
+
+  @Override
+  public List<T> getVariables() {
+    return variables ;
   }
 
   @Override
@@ -109,7 +106,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     return result ;
   }
 
-  @Override public boolean equals(Object o) {
+  private boolean equalsIgnoringAttributes(Object o) {
     if (this == o)
       return true;
     if (o == null || getClass() != o.getClass())
@@ -117,12 +114,58 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
 
     AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
 
-    if (!attributes.equals(that.attributes))
-      return false;
     if (!Arrays.equals(objectives, that.objectives))
       return false;
+
     if (!variables.equals(that.variables))
       return false;
+
+    return true;
+  }
+
+  @Override public boolean equals(Object o) {
+
+    if (!this.equalsIgnoringAttributes(o)) {
+      return false;
+    }
+
+    AbstractGenericSolution<?, ?> that = (AbstractGenericSolution<?, ?>) o;
+    // avoid recursive infinite comparisons when solution as attribute
+
+    // examples when problems would arise with a simple comparison attributes.equals(that.attributes):
+    // if A contains itself as Attribute
+    // If A contains B as attribute, B contains A as attribute
+    //
+    // the following implementation takes care of this by considering solutions as attributes as a special case
+
+    if (attributes.size() != that.attributes.size()) {
+      return false;
+    }
+
+    for (Object key : attributes.keySet()) {
+      Object value      = attributes.get(key);
+      Object valueThat  = that.attributes.get(key);
+
+      if (value != valueThat) { // it only makes sense comparing when having different references
+
+        if (value == null) {
+          return false;
+        } else if (valueThat == null) {
+          return false;
+        } else { // both not null
+
+          boolean areAttributeValuesEqual;
+          if (value instanceof AbstractGenericSolution) {
+            areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
+          } else {
+            areAttributeValuesEqual = !value.equals(valueThat);
+          }
+          if (!areAttributeValuesEqual) {
+            return false;
+          } // if equal the next attributeValue will be checked
+        }
+      }
+    }
 
     return true;
   }

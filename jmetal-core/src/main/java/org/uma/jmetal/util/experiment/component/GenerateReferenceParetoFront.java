@@ -1,31 +1,16 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-// package org.uma.jmetal.util.experiment.component;
-
 package org.uma.jmetal.util.experiment.component;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
@@ -61,7 +46,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   public void run() throws IOException {
     String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
 
-    File outputDirectory = createOutputDirectory(outputDirectoryName) ;
+    createOutputDirectory(outputDirectoryName) ;
 
     List<String> referenceFrontFileNames = new LinkedList<>() ;
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
@@ -85,16 +70,15 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
-      referenceFrontFileNames.add(problem.getTag() + ".rf");
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
+      referenceFrontFileNames.add(problem.getTag() + ".pf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
 
-      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem.getProblem(),
+      writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
           nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
-    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {
@@ -109,7 +93,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
   }
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
-      String outputDirectoryName, Problem<?> problem,
+      String outputDirectoryName, ExperimentProblem<?> problem,
       List<PointSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
@@ -123,8 +107,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
-              outputDirectoryName + "/" + problem.getName() + "." +
-                  algorithm.getAlgorithmTag() + ".rf"
+              outputDirectoryName + "/" + problem.getTag() + "." +
+                  algorithm.getAlgorithmTag() + ".pf"
           );
     }
   }

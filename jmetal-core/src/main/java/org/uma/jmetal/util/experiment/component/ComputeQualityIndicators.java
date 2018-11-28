@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -20,24 +7,29 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING ;
-import java.util.*;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
  * This class computes the {@link QualityIndicator}s of an experiment. Once the algorithms of an
@@ -50,7 +42,6 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ComputeQualityIndicators<S extends Solution<?>, Result> implements ExperimentComponent {
-
   private final Experiment<S, Result> experiment;
 
   public ComputeQualityIndicators(Experiment<S, Result> experiment) {
@@ -59,55 +50,52 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
 
   @Override
   public void run() throws IOException {
+
+
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
       for (ExperimentAlgorithm<?,Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory ;
-        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getAlgorithmTag() ;
+        algorithmDirectory        = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag() ;
+        String problemDirectory   = algorithmDirectory + "/" + algorithm.getProblemTag() ;
 
-        for (int problemId = 0; problemId < experiment.getProblemList().size(); problemId++) {
-          String problemDirectory = algorithmDirectory + "/" + experiment.getProblemList().get(problemId).getTag() ;
+        String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
 
-          String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
-          String referenceFrontName = referenceFrontDirectory +
-              "/" + experiment.getReferenceFrontFileNames().get(problemId) ;
 
-          JMetalLogger.logger.info("RF: " + referenceFrontName); ;
-          Front referenceFront = new ArrayFront(referenceFrontName) ;
 
-          FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
-          Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
 
-          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
-          resetFile(qualityIndicatorFile);
+        String referenceFrontName = referenceFrontDirectory + "/" + algorithm.getReferenceParetoFront();
 
-          indicator.setReferenceParetoFront(normalizedReferenceFront);
-          for (int i = 0; i < experiment.getIndependentRuns(); i++) {
-            String frontFileName = problemDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + i + ".tsv";
+        JMetalLogger.logger.info("RF: " + referenceFrontName); ;
+        Front referenceFront = new ArrayFront(referenceFrontName) ;
 
-            Front front = new ArrayFront(frontFileName) ;
-            Front normalizedFront = frontNormalizer.normalize(front) ;
-            List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
-            Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
-            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
+        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
+        Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
 
-            writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
-          }
-        }
+        String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+
+
+        indicator.setReferenceParetoFront(normalizedReferenceFront);
+        String frontFileName = problemDirectory + "/" +
+        experiment.getOutputParetoFrontFileName() + algorithm.getRunId() + ".tsv";
+
+        Front front = new ArrayFront(frontFileName) ;
+        Front normalizedFront = frontNormalizer.normalize(front) ;
+        List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
+        Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
+        JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
+
+        writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
       }
     }
     findBestIndicatorFronts(experiment) ;
   }
 
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {
-    FileWriter os;
-    try {
-      os = new FileWriter(qualityIndicatorFile, true);
+     
+    try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) { 
       os.write("" + indicatorValue + "\n");
-      os.close();
     } catch (IOException ex) {
       throw new JMetalException("Error writing indicator file" + ex) ;
     }
@@ -120,19 +108,19 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
   private void resetFile(String file) {
     File f = new File(file);
     if (f.exists()) {
-      JMetalLogger.logger.info("File " + file + " exist.");
+      JMetalLogger.logger.info("Already existing file " + file);
 
       if (f.isDirectory()) {
-        JMetalLogger.logger.info("File " + file + " is a directory. Deleting directory.");
+        JMetalLogger.logger.info("Deleting directory " + file);
         if (f.delete()) {
           JMetalLogger.logger.info("Directory successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting directory.");
         }
       } else {
-        JMetalLogger.logger.info("File " + file + " is a file. Deleting file.");
+        JMetalLogger.logger.info("Deleting file " + file);
         if (f.delete()) {
-          JMetalLogger.logger.info("File succesfully deleted.");
+          JMetalLogger.logger.info("File successfully deleted.");
         } else {
           JMetalLogger.logger.info("Error deleting file.");
         }

@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
@@ -73,7 +60,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
     this.archive = archive ;
-    //this.archive = new CrowdingDistanceArchive<>(archiveSize);
     this.neighborhood = neighborhood ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
@@ -107,7 +93,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       S newIndividual = getProblem().createSolution();
       population.add(newIndividual);
     }
-    location = new LocationAttribute<>(population);
     return population;
   }
 
@@ -129,7 +114,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     currentNeighbors.add(population.get(currentIndividual));
 
     parents.add(selectionOperator.execute(currentNeighbors));
-    if (archive.size() > 0) {
+    if (archive.size() > 0) { // TODO. REVISAR EN EL CASO DE TAMAÑO 1
       parents.add(selectionOperator.execute(archive.getSolutionList()));
     } else {
       parents.add(selectionOperator.execute(currentNeighbors));
@@ -148,12 +133,14 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+    location = new LocationAttribute<>(population);
+
     int flag = dominanceComparator.compare(population.get(currentIndividual),offspringPopulation.get(0));
 
     if (flag == 1) { //The new individual dominates
-      insertNewIndividualWhenDominates(population,offspringPopulation);
+      population= insertNewIndividualWhenDominates(population,offspringPopulation);
     } else if (flag == 0) { //The new individual is non-dominated
-      insertNewIndividualWhenNonDominated(population,offspringPopulation);
+      population= insertNewIndividualWhenNonDominated(population,offspringPopulation);
     }
     return population;
   }
@@ -163,18 +150,19 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     return archive.getSolutionList();
   }
 
-  private void insertNewIndividualWhenDominates(List<S> population, List<S> offspringPopulation) {
+  private List<S> insertNewIndividualWhenDominates(List<S> population, List<S> offspringPopulation) {
     location.setAttribute(offspringPopulation.get(0),
         location.getAttribute(population.get(currentIndividual)));
-
-    population.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
+    List<S> result = new ArrayList<>(population);
+    result.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
     archive.add(offspringPopulation.get(0));
+    return result;
   }
 
-  private void insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
+  private List<S> insertNewIndividualWhenNonDominated(List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
     location.setAttribute(offspringPopulation.get(0), -1);
-
+    List<S> result = new ArrayList<>(population);
     Ranking<S> rank = new DominanceRanking<S>();
     rank.computeRanking(currentNeighbors);
 
@@ -191,9 +179,11 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     } else {
       location.setAttribute(offspringPopulation.get(0),
           location.getAttribute(worst));
-      population.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
+      result.set(location.getAttribute(offspringPopulation.get(0)),offspringPopulation.get(0));
       archive.add(offspringPopulation.get(0));
+
     }
+    return result;
   }
 
   @Override public String getName() {

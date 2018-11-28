@@ -9,7 +9,8 @@ import org.uma.jmetal.solution.DoubleSolution;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -55,6 +56,7 @@ public class ArrayDoubleSolutionTest {
     assertEquals(problem.getUpperBound(2), solution.getUpperBound(2));
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleProblem extends AbstractDoubleProblem {
     public MockedDoubleProblem() {
       setNumberOfVariables(3);

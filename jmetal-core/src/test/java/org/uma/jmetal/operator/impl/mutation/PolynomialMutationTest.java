@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.hamcrest.Matchers;
@@ -21,15 +8,20 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
+import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -125,11 +117,12 @@ public class PolynomialMutationTest {
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfItIsNotMutated() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(1.0) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -141,16 +134,17 @@ public class PolynomialMutationTest {
     mutation.execute(solution) ;
 
     assertEquals(oldSolution, solution) ;
-    verify(randomGenerator, times(1)).nextDouble();
+    verify(randomGenerator, times(1)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnAValidSolution() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.6) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -163,16 +157,17 @@ public class PolynomialMutationTest {
     assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(
         solution.getLowerBound(0))) ;
     assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
-    verify(randomGenerator, times(2)).nextDouble();
+    verify(randomGenerator, times(2)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionReturnAnotherValidSolution() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
@@ -184,16 +179,17 @@ public class PolynomialMutationTest {
 
     assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
     assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
-    verify(randomGenerator, times(2)).nextDouble();
+    verify(randomGenerator, times(2)).getRandomValue();
   }
 
   @Test
   public void shouldMutateASingleVariableSolutionWithSameLowerAndUpperBoundsReturnTheBoundValue() {
-    JMetalRandom randomGenerator = mock(JMetalRandom.class) ;
+    @SuppressWarnings("unchecked")
+	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
-    Mockito.when(randomGenerator.nextDouble()).thenReturn(0.005, 0.1) ;
+    Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
 
@@ -245,4 +241,57 @@ public class PolynomialMutationTest {
       solution.setObjective(1, 1.0);
     }
   }
+  
+	@Test
+	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
+		// Configuration
+		double crossoverProbability = 0.1;
+		int alpha = 20;
+		RepairDoubleSolutionAtBounds solutionRepair = new RepairDoubleSolutionAtBounds();
+		@SuppressWarnings("serial")
+		DoubleProblem problem = new AbstractDoubleProblem() {
+
+			@Override
+			public void evaluate(DoubleSolution solution) {
+				// Do nothing
+			}
+			
+			@Override
+			public int getNumberOfVariables() {
+				return 5;
+			}
+			
+			@Override
+			public Double getLowerBound(int index) {
+				return 0.0;
+			}
+			
+			@Override
+			public Double getUpperBound(int index) {
+				return 10.0;
+			}
+
+		};
+		DoubleSolution solution = problem.createSolution();
+
+		// Check configuration leads to use default generator by default
+		final int[] defaultUses = { 0 };
+		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
+		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
+		defaultGenerator.setRandomGenerator(auditor);
+		auditor.addListener((a) -> defaultUses[0]++);
+
+		new PolynomialMutation(crossoverProbability, alpha, solutionRepair).execute(solution);
+		assertTrue("No use of the default generator", defaultUses[0] > 0);
+
+		// Test same configuration uses custom generator instead
+		defaultUses[0] = 0;
+		final int[] customUses = { 0 };
+		new PolynomialMutation(crossoverProbability, alpha, solutionRepair, () -> {
+			customUses[0]++;
+			return new Random().nextDouble();
+		}).execute(solution);
+		assertTrue("Default random generator used", defaultUses[0] == 0);
+		assertTrue("No use of the custom generator", customUses[0] > 0);
+	}
 }

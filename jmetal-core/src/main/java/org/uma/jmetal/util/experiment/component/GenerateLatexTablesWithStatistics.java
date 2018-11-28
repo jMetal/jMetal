@@ -1,23 +1,10 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.experiment.component;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
 import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.ExperimentComponent;
 
 import java.io.*;
 import java.util.*;
@@ -56,8 +43,6 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
 
   @Override
   public void run() throws IOException {
-    String latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
-
     List<List<List<List<Double>>>> data = readDataFromFiles() ;
     computeDataStatistics(data) ;
     generateLatexScript(data) ;
@@ -83,13 +68,13 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           // Read values from data files
           FileInputStream fis = new FileInputStream(directory);
           InputStreamReader isr = new InputStreamReader(fis);
-          BufferedReader br = new BufferedReader(isr);
+          try(BufferedReader br = new BufferedReader(isr)){
           String aux = br.readLine();
           while (aux != null) {
             data.get(indicator).get(problem).get(algorithm).add(Double.parseDouble(aux));
             aux = br.readLine();
           }
-          br.close();
+          }
         }
       }
     }
@@ -150,7 +135,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     File latexOutput;
     latexOutput = new File(latexDirectoryName);
     if (!latexOutput.exists()) {
-      boolean result = new File(latexDirectoryName).mkdirs();
+      new File(latexDirectoryName).mkdirs();
       JMetalLogger.logger.info("Creating " + latexDirectoryName + " directory");
     }
     //System.out.println("Experiment name: " + experimentName_);
@@ -188,7 +173,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   }
 
   void printHeaderLatexCommands(String fileName) throws IOException {
-    FileWriter os = new FileWriter(fileName, false);
+    try(FileWriter os = new FileWriter(fileName, false)){
     os.write("\\documentclass{article}" + "\n");
     os.write("\\title{" + experiment.getExperimentName() + "}" + "\n");
     os.write("\\usepackage{colortbl}" + "\n");
@@ -199,19 +184,18 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{document}" + "\n");
     os.write("\\maketitle" + "\n");
     os.write("\\section{Tables}" + "\n");
-
-    os.close();
+    }
   }
 
   void printEndLatexCommands(String fileName) throws IOException {
-    FileWriter os = new FileWriter(fileName, true);
+    try(FileWriter os = new FileWriter(fileName, true)){
     os.write("\\end{document}" + "\n");
-    os.close();
+    }
   }
 
   private void printData(String latexFile, int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, String caption) throws IOException {
     // Generate header of the table
-    FileWriter os = new FileWriter(latexFile, true);
+    try(FileWriter os = new FileWriter(latexFile, true)){
     os.write("\n");
     os.write("\\begin{table}" + "\n");
     os.write("\\caption{" + experiment.getIndicatorList().get(indicatorIndex).getName() + ". " + caption + "}" + "\n");
@@ -221,9 +205,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{tabular}{l");
 
     // calculate the number of columns
-    for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
-      os.write("l");
-    }
+    os.write(StringUtils.repeat("l", experiment.getAlgorithmList().size()));
     os.write("}\n");
     os.write("\\hline");
 
@@ -328,7 +310,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\end{tabular}" + "\n");
     os.write("\\end{scriptsize}" + "\n");
     os.write("\\end{table}" + "\n");
-    os.close();
+    }
   }
 
 }

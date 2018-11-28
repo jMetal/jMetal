@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.experiment.component;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -95,8 +82,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
     String string = "";
 
-    try {
-      FileInputStream fis = new FileInputStream(path);
+    try(FileInputStream fis = new FileInputStream(path)) {
+      
 
       byte[] bytes = new byte[4096];
       int readBytes = 0;
@@ -109,7 +96,6 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
         }
       }
 
-      fis.close();
     } catch (IOException e) {
       throw new JMetalException("Error reading data ", e) ;
     }
@@ -239,21 +225,15 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private void writeLatexFile(GenericIndicator<?> indicator, String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
-    try {
-      File latexOutput;
-      latexOutput = new File(latexDirectoryName);
-      if(!latexOutput.exists()){
-        latexOutput.mkdirs();
-      }
-      FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-      DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
-
-      dataOutputStream.writeBytes(fileContents);
-
-      dataOutputStream.close();
-      fileOutputStream.close();
+    File latexOutput;
+    latexOutput = new File(latexDirectoryName);
+    if(!latexOutput.exists()){
+      latexOutput.mkdirs();
     }
-    catch (IOException e) {
+    
+    try(DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
+      dataOutputStream.writeBytes(fileContents);
+    } catch (IOException e) {
       throw new JMetalException("Error writing data ", e) ;
     }
   }

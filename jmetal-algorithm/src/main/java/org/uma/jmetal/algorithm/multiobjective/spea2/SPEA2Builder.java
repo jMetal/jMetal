@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.spea2;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -40,6 +27,7 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
   protected MutationOperator<S> mutationOperator;
   protected SelectionOperator<List<S>, S> selectionOperator;
   protected SolutionListEvaluator<S> evaluator;
+  protected int k ;
 
   /**
    * SPEA2Builder constructor
@@ -53,6 +41,7 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>();
     evaluator = new SequentialSolutionListEvaluator<S>();
+    k = 1 ;
   }
 
   public SPEA2Builder<S> setMaxIterations(int maxIterations) {
@@ -92,10 +81,16 @@ public class SPEA2Builder<S extends Solution<?>> implements AlgorithmBuilder<SPE
     return this;
   }
 
+  public SPEA2Builder<S> setK(int k) {
+    this.k = k ;
+
+    return this;
+  }
+
   public SPEA2<S> build() {
     SPEA2<S> algorithm = null ;
     algorithm = new SPEA2<S>(problem, maxIterations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, evaluator);
+          mutationOperator, selectionOperator, evaluator, k);
     
     return algorithm ;
   }

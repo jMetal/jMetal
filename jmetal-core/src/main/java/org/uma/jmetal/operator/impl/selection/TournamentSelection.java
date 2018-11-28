@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.selection;
 
 import org.uma.jmetal.operator.SelectionOperator;
@@ -33,16 +20,16 @@ import java.util.List;
 public class TournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>,S> {
   private Comparator<S> comparator;
 
-  private final int numberOfTournaments;
+  private final int n_arity;
 
   /** Constructor */
-  public TournamentSelection(int numberOfTournaments) {
-    this(new DominanceComparator<S>(), numberOfTournaments) ;
+  public TournamentSelection(int n_arity) {
+    this(new DominanceComparator<S>(), n_arity) ;
   }
 
   /** Constructor */
-  public TournamentSelection(Comparator<S> comparator, int numberOfTournaments) {
-    this.numberOfTournaments = numberOfTournaments;
+  public TournamentSelection(Comparator<S> comparator, int n_arity) {
+    this.n_arity = n_arity;
     this.comparator = comparator ;
   }
 
@@ -64,7 +51,7 @@ public class TournamentSelection<S extends Solution<?>> implements SelectionOper
       do {
         S candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
-      } while (++count < this.numberOfTournaments);
+      } while (++count < this.n_arity);
     }
 
     return result;

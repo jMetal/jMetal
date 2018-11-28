@@ -2,9 +2,8 @@ package org.uma.jmetal.util.distance.impl;
 
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.distance.impl.CosineDistanceBetweenSolutionsInObjectiveSpace ;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +38,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
   }
 
   @Test
-  public void shouldIdenticalPointsInTheSameDirectionHaveADistanceOfOne() {
+  public void shouldPointsInTheSameDirectionHaveADistanceOfOne() {
     Solution<?> idealPoint = mock(Solution.class) ;
     when(idealPoint.getObjective(0)).thenReturn(0.0) ;
     when(idealPoint.getObjective(1)).thenReturn(0.0) ;

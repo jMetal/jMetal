@@ -1,21 +1,9 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
@@ -27,13 +15,13 @@ import java.util.*;
  * Modified by Juanjo 13/03/15
  */
 public class SolutionListUtils {
-
+	
   public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<S>() ;
     return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
-  public <S extends Solution<?>> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
+  public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
     if ((solutionList == null) || (solutionList.isEmpty())) {
       throw new IllegalArgumentException("No solution provided: "+solutionList);
     }
@@ -54,11 +42,11 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static <S extends Solution<?>> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
+  public static <S> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new NullSolutionListException() ;
     } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new EmptySolutionListException() ;
     } else if (comparator == null) {
       throw new JMetalException("The comparator is null") ;
     }
@@ -86,18 +74,18 @@ public class SolutionListUtils {
    * @param comparator
    * @return The index of the best solution
    */
-  public static int findIndexOfWorstSolution(List<? extends Solution<?>> solutionList, Comparator<Solution<?>> comparator) {
+  public static <S> int findIndexOfWorstSolution(List<? extends S> solutionList, Comparator<S> comparator) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new NullSolutionListException() ;
     } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new EmptySolutionListException() ;
     } else if (comparator == null) {
       throw new JMetalException("The comparator is null") ;
     }
 
     int index = 0;
-    Solution<?> worstKnown = solutionList.get(0) ;
-    Solution<?> candidateSolution ;
+    S worstKnown = solutionList.get(0) ;
+    S candidateSolution ;
 
     int flag;
     for (int i = 1; i < solutionList.size(); i++) {
@@ -112,7 +100,7 @@ public class SolutionListUtils {
     return index;
   }
 
-  public static <S extends Solution<?>> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
+  public static <S> S findBestSolution(List<S> solutionList, Comparator<S> comparator) {
     return solutionList.get(findIndexOfBestSolution(solutionList, comparator)) ;
   }
 
@@ -212,18 +200,31 @@ public class SolutionListUtils {
    * @param solutionList The front to invert
    * @return The inverted front
    */
-  public static <S extends Solution<?>> List<S> selectNRandomDifferentSolutions(
+  public static <S> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned, List<S> solutionList) {
+	  JMetalRandom random = JMetalRandom.getInstance();
+	  return selectNRandomDifferentSolutions(numberOfSolutionsToBeReturned, solutionList, (low, up) -> random.nextInt(low, up));
+  }
+  
+  /**
+   * This method receives a normalized list of non-dominated solutions and return the inverted one.
+   * This operation is needed for minimization problem
+   *
+   * @param solutionList The front to invert
+   * @param randomGenerator The random generator to use
+   * @return The inverted front
+   */
+  public static <S> List<S> selectNRandomDifferentSolutions(
+      int numberOfSolutionsToBeReturned, List<S> solutionList, BoundedRandomGenerator<Integer> randomGenerator) {
     if (null == solutionList) {
-      throw new JMetalException("The solution list is null") ;
+      throw new NullSolutionListException() ;
     } else if (solutionList.size() == 0) {
-      throw new JMetalException("The solution list is empty") ;
+      throw new EmptySolutionListException() ;
     } else if (solutionList.size() < numberOfSolutionsToBeReturned) {
       throw new JMetalException("The solution list size (" + solutionList.size() +") is less than "
           + "the number of requested solutions ("+numberOfSolutionsToBeReturned+")") ;
     }
 
-    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
     List<S> resultList = new ArrayList<>(numberOfSolutionsToBeReturned);
 
     if (solutionList.size() == 1) {
@@ -231,7 +232,7 @@ public class SolutionListUtils {
     } else {
       Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned);
       while (positions.size() < numberOfSolutionsToBeReturned) {
-        int nextPosition = randomGenerator.nextInt(0, solutionList.size() - 1);
+        int nextPosition = randomGenerator.getRandomValue(0, solutionList.size() - 1);
         if (!positions.contains(nextPosition)) {
           positions.add(nextPosition);
           resultList.add(solutionList.get(nextPosition));
@@ -267,7 +268,7 @@ public class SolutionListUtils {
    * @param newSolutionList A <code>Solution list</code>
    * @return true if both are contains the same solutions, false in other case
    */
-  public static <S extends Solution<?>> boolean solutionListsAreEquals(List<S> solutionList,
+  public static <S> boolean solutionListsAreEquals(List<S> solutionList,
                                        List<S> newSolutionList) {
     boolean found;
     for (int i = 0; i < solutionList.size(); i++) {
@@ -294,10 +295,10 @@ public class SolutionListUtils {
    * @param problem
    * @param percentageOfSolutionsToRemove
    */
-  public static <S extends Solution<?>> void restart(List<S> solutionList, Problem<S> problem,
+  public static <S> void restart(List<S> solutionList, Problem<S> problem,
                                                      int percentageOfSolutionsToRemove) {
     if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
+      throw new NullSolutionListException() ;
     } else if (problem == null) {
       throw new JMetalException("The problem is null") ;
     } else if ((percentageOfSolutionsToRemove < 0) || (percentageOfSolutionsToRemove > 100)) {
@@ -316,7 +317,7 @@ public class SolutionListUtils {
    * @param solutionList The list of solutions
    * @param numberOfSolutionsToRemove
    */
-  public static <S extends Solution<?>> void removeSolutionsFromList(List<S> solutionList, int numberOfSolutionsToRemove) {
+  public static <S> void removeSolutionsFromList(List<S> solutionList, int numberOfSolutionsToRemove) {
     if (solutionList.size() < numberOfSolutionsToRemove) {
       throw new JMetalException("The list size (" + solutionList.size()+") is lower than " +
           "the number of solutions to remove ("+numberOfSolutionsToRemove+")") ;
@@ -334,12 +335,44 @@ public class SolutionListUtils {
    * @param maxListSize The target size of the list
    * @param <S> The type of the solutions to be created
    */
-  public static <S extends Solution<?>> void fillPopulationWithNewSolutions(
+  public static <S> void fillPopulationWithNewSolutions(
       List<S> solutionList,
       Problem<S> problem,
       int maxListSize) {
     while (solutionList.size() < maxListSize) {
       solutionList.add(problem.createSolution());
+    }
+  }
+
+  /**
+   * Given a solution list and the identifier of an objective (0, 1, etc), returns an array with
+   * the values of that objective in all the solutions of the list
+   *
+   * @param solutionList
+   * @param objective
+   * @param <S>
+   * @return
+   */
+  public static <S extends Solution<?>> double[] getObjectiveArrayFromSolutionList(List<S> solutionList, int objective) {
+    double[] result = new double[solutionList.size()] ;
+
+    for(int i=0; i<solutionList.size();i++){
+      result[i] = solutionList.get(i).getObjective(objective);
+    }
+    return result;
+  }
+  
+  @SuppressWarnings("serial")
+  private static class NullSolutionListException extends JMetalException {
+    public NullSolutionListException() {
+      super("The solution list is null");
+    }
+  }
+  
+  @SuppressWarnings("serial")
+  private static class EmptySolutionListException extends JMetalException {
+    public EmptySolutionListException() {
+      super("The solution list is empty");
     }
   }
 }

@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.junit.Rule;
@@ -23,7 +10,7 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.List;
 
@@ -69,9 +56,9 @@ public class EpsilonTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 10.0);
-    point1.setDimensionValue(1, 12.0);
-    point1.setDimensionValue(2, -1.0);
+    point1.setValue(0, 10.0);
+    point1.setValue(1, 12.0);
+    point1.setValue(2, -1.0);
 
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point1);
@@ -96,11 +83,11 @@ public class EpsilonTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 2.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 2.0);
+    point1.setValue(1, 3.0);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 2.0);
 
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point2);
@@ -125,28 +112,28 @@ public class EpsilonTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 1.5);
-    point1.setDimensionValue(1, 4.0);
+    point1.setValue(0, 1.5);
+    point1.setValue(1, 4.0);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 2.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 2.0);
+    point2.setValue(1, 3.0);
     Point point3 = new ArrayPoint(numberOfDimensions) ;
-    point3.setDimensionValue(0, 3.0);
-    point3.setDimensionValue(1, 2.0);
+    point3.setValue(0, 3.0);
+    point3.setValue(1, 2.0);
 
     frontApproximation.setPoint(0, point1);
     frontApproximation.setPoint(1, point2);
     frontApproximation.setPoint(2, point3);
 
     Point point4 = new ArrayPoint(numberOfDimensions) ;
-    point4.setDimensionValue(0, 1.0);
-    point4.setDimensionValue(1, 3.0);
+    point4.setValue(0, 1.0);
+    point4.setValue(1, 3.0);
     Point point5 = new ArrayPoint(numberOfDimensions) ;
-    point5.setDimensionValue(0, 1.5);
-    point5.setDimensionValue(1, 2.0);
+    point5.setValue(0, 1.5);
+    point5.setValue(1, 2.0);
     Point point6 = new ArrayPoint(numberOfDimensions) ;
-    point6.setDimensionValue(0, 2.0);
-    point6.setDimensionValue(1, 1.5);
+    point6.setValue(0, 2.0);
+    point6.setValue(1, 1.5);
 
     referenceFront.setPoint(0, point4);
     referenceFront.setPoint(1, point5);
@@ -171,28 +158,28 @@ public class EpsilonTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 1.5);
-    point1.setDimensionValue(1, 4.0);
+    point1.setValue(0, 1.5);
+    point1.setValue(1, 4.0);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 1.5);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.5);
+    point2.setValue(1, 2.0);
     Point point3 = new ArrayPoint(numberOfDimensions) ;
-    point3.setDimensionValue(0, 2.0);
-    point3.setDimensionValue(1, 1.5);
+    point3.setValue(0, 2.0);
+    point3.setValue(1, 1.5);
 
     frontApproximation.setPoint(0, point1);
     frontApproximation.setPoint(1, point2);
     frontApproximation.setPoint(2, point3);
 
     Point point4 = new ArrayPoint(numberOfDimensions) ;
-    point4.setDimensionValue(0, 1.0);
-    point4.setDimensionValue(1, 3.0);
+    point4.setValue(0, 1.0);
+    point4.setValue(1, 3.0);
     Point point5 = new ArrayPoint(numberOfDimensions) ;
-    point5.setDimensionValue(0, 1.5);
-    point5.setDimensionValue(1, 2.0);
+    point5.setValue(0, 1.5);
+    point5.setValue(1, 2.0);
     Point point6 = new ArrayPoint(numberOfDimensions) ;
-    point6.setDimensionValue(0, 2.0);
-    point6.setDimensionValue(1, 1.5);
+    point6.setValue(0, 2.0);
+    point6.setValue(1, 1.5);
 
     referenceFront.setPoint(0, point4);
     referenceFront.setPoint(1, point5);
@@ -216,28 +203,28 @@ public class EpsilonTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 1.5);
-    point1.setDimensionValue(1, 4.0);
+    point1.setValue(0, 1.5);
+    point1.setValue(1, 4.0);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 1.5);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.5);
+    point2.setValue(1, 2.0);
     Point point3 = new ArrayPoint(numberOfDimensions) ;
-    point3.setDimensionValue(0, 2.0);
-    point3.setDimensionValue(1, 1.5);
+    point3.setValue(0, 2.0);
+    point3.setValue(1, 1.5);
 
     frontApproximation.setPoint(0, point1);
     frontApproximation.setPoint(1, point2);
     frontApproximation.setPoint(2, point3);
 
     Point point4 = new ArrayPoint(numberOfDimensions) ;
-    point4.setDimensionValue(0, 1.0);
-    point4.setDimensionValue(1, 3.0);
+    point4.setValue(0, 1.0);
+    point4.setValue(1, 3.0);
     Point point5 = new ArrayPoint(numberOfDimensions) ;
-    point5.setDimensionValue(0, 1.5);
-    point5.setDimensionValue(1, 2.0);
+    point5.setValue(0, 1.5);
+    point5.setValue(1, 2.0);
     Point point6 = new ArrayPoint(numberOfDimensions) ;
-    point6.setDimensionValue(0, 2.0);
-    point6.setDimensionValue(1, 1.5);
+    point6.setValue(0, 2.0);
+    point6.setValue(1, 1.5);
 
     referenceFront.setPoint(0, point4);
     referenceFront.setPoint(1, point5);

@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
@@ -24,6 +11,7 @@ import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -37,13 +25,14 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected int evaluations;
 
   private Hypervolume<S> hypervolume;
+  protected Comparator<S> dominanceComparator ;
 
   /**
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, Hypervolume<S> hypervolumeImplementation) {
+      SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, Hypervolume<S> hypervolumeImplementation) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
@@ -53,7 +42,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-
+    this.dominanceComparator = dominanceComparator ;
     this.hypervolume = hypervolumeImplementation ;
   }
 
@@ -130,7 +119,7 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>();
+    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(solutionList);
 
     return ranking;

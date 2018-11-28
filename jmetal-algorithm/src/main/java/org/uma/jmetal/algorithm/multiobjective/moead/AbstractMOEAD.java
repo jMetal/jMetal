@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -20,6 +7,8 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.BufferedReader;
@@ -43,9 +32,9 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
   protected Problem<S> problem ;
 
   /** Z vector in Zhang & Li paper */
-  protected double[] idealPoint;
+  protected IdealPoint idealPoint;
   // nadir point
-  protected double[] nadirPoint;
+  protected NadirPoint nadirPoint;
   /** Lambda vectors */
   protected double[][] lambda;
   /** T in Zhang & Li paper */
@@ -97,8 +86,8 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     population = new ArrayList<>(populationSize);
     indArray = new Solution[problem.getNumberOfObjectives()];
     neighborhood = new int[populationSize][neighborSize];
-    idealPoint = new double[problem.getNumberOfObjectives()];
-    nadirPoint = new double[problem.getNumberOfObjectives()];
+    idealPoint = new IdealPoint(problem.getNumberOfObjectives());
+    nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
     lambda = new double[populationSize][problem.getNumberOfObjectives()];
   }
 
@@ -162,41 +151,6 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       MOEADUtils.minFastSort(x, idx, populationSize, neighborSize);
 
       System.arraycopy(idx, 0, neighborhood[i], 0, neighborSize);
-    }
-  }
-
-  protected void initializeIdealPoint() {
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      idealPoint[i] = 1.0e+30;
-    }
-
-    for (int i = 0; i < populationSize; i++) {
-      updateIdealPoint(population.get(i));
-    }
-  }
-  
-//initialize the nadir point
-	protected void initializeNadirPoint() {
-		for (int i = 0; i < problem.getNumberOfObjectives(); i++)
-			nadirPoint[i] = -1.0e+30;
-		for (int i = 0; i < populationSize; i++)
-			updateNadirPoint(population.get(i));
-	}
-	
-	// update the current nadir point
-	void updateNadirPoint(S individual) {
-		for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-			if (individual.getObjective(i) > nadirPoint[i]) {
-				nadirPoint[i] = individual.getObjective(i);
-			}
-		}
-	}
-
-  protected void updateIdealPoint(S individual) {
-    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-      if (individual.getObjective(n) < idealPoint[n]) {
-        idealPoint[n] = individual.getObjective(n);
-      }
     }
   }
 
@@ -313,7 +267,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        double diff = Math.abs(individual.getObjective(n) - idealPoint[n]);
+        double diff = Math.abs(individual.getObjective(n) - idealPoint.getValue(n));
 
         double feval;
         if (lambda[n] == 0) {
@@ -342,14 +296,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       d1 = d2 = nl = 0.0;
 
       for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-        d1 += (individual.getObjective(i) - idealPoint[i]) * lambda[i];
+        d1 += (individual.getObjective(i) - idealPoint.getValue(i)) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
       for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-        d2 += Math.pow((individual.getObjective(i) - idealPoint[i]) - d1 * (lambda[i] / nl), 2.0);
+        d2 += Math.pow((individual.getObjective(i) - idealPoint.getValue(i)) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);
 
@@ -360,7 +314,12 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     return fitness;
   }
 
-  @Override public List<S> getResult() {
-    return population ;
+  @Override
+  public List<S> getResult() {
+    if (populationSize > resultPopulationSize) {
+      return MOEADUtils.getSubsetOfEvenlyDistributedSolutions(population, resultPopulationSize) ;
+    } else {
+      return population;
+    }
   }
 }

@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.experiment;
 
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
@@ -30,7 +17,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
   private final String experimentName ;
   private List<ExperimentAlgorithm<S, Result>> algorithmList;
   private List<ExperimentProblem<S>> problemList;
-  private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
   private String experimentBaseDirectory;
   private String outputParetoFrontFileName;
@@ -45,7 +31,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
     this.experimentName = experimentName ;
     this.independentRuns = 1 ;
     this.numberOfCores = 1 ;
-    this.referenceFrontFileNames = null ;
     this.referenceFrontDirectory = null ;
   }
 
@@ -69,12 +54,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
 
   public ExperimentBuilder<S, Result> setReferenceFrontDirectory(String referenceFrontDirectory) {
     this.referenceFrontDirectory = referenceFrontDirectory ;
-
-    return this ;
-  }
-
-  public ExperimentBuilder<S, Result> setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
-    this.referenceFrontFileNames = referenceFrontFileNames ;
 
     return this ;
   }
@@ -145,10 +124,6 @@ public class ExperimentBuilder<S extends Solution<?>, Result> {
 
   public int getNumberOfCores() {
     return numberOfCores;
-  }
-
-  public List<String> getReferenceFrontFileNames() {
-    return referenceFrontFileNames;
   }
 
   public String getReferenceFrontDirectory() {

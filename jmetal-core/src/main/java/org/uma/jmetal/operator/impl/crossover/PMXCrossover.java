@@ -1,22 +1,11 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +20,43 @@ import java.util.List;
 public class PMXCrossover implements
     CrossoverOperator<PermutationSolution<Integer>> {
   private double crossoverProbability = 1.0;
-  private JMetalRandom randomGenerator ;
+  private BoundedRandomGenerator<Integer> cuttingPointRandomGenerator ;
+  private RandomGenerator<Double> crossoverRandomGenerator ;
 
   /**
    * Constructor
    */
   public PMXCrossover(double crossoverProbability) {
+	  this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble(), (a, b) -> JMetalRandom.getInstance().nextInt(a, b));
+  }
+
+  /**
+   * Constructor
+   */
+  public PMXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
+	  this(crossoverProbability, randomGenerator, BoundedRandomGenerator.fromDoubleToInteger(randomGenerator));
+  }
+
+  /**
+   * Constructor
+   */
+  public PMXCrossover(double crossoverProbability, RandomGenerator<Double> crossoverRandomGenerator, BoundedRandomGenerator<Integer> cuttingPointRandomGenerator) {
     if ((crossoverProbability < 0) || (crossoverProbability > 1)) {
       throw new JMetalException("Crossover probability value invalid: " + crossoverProbability) ;
     }
     this.crossoverProbability = crossoverProbability;
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.crossoverRandomGenerator = crossoverRandomGenerator ;
+    this.cuttingPointRandomGenerator = cuttingPointRandomGenerator ;
+  }
+
+  /* Getters */
+  public double getCrossoverProbability() {
+    return crossoverProbability;
+  }
+
+  /* Setters */
+  public void setCrossoverProbability(double crossoverProbability) {
+    this.crossoverProbability = crossoverProbability;
   }
 
   /**
@@ -74,15 +89,15 @@ public class PMXCrossover implements
 
     int permutationLength = parents.get(0).getNumberOfVariables() ;
 
-    if (randomGenerator.nextDouble() < probability) {
+    if (crossoverRandomGenerator.getRandomValue() < probability) {
       int cuttingPoint1;
       int cuttingPoint2;
 
       // STEP 1: Get two cutting points
-      cuttingPoint1 = randomGenerator.nextInt(0, permutationLength - 1);
-      cuttingPoint2 = randomGenerator.nextInt(0, permutationLength - 1);
+      cuttingPoint1 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
+      cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
       while (cuttingPoint2 == cuttingPoint1)
-        cuttingPoint2 = randomGenerator.nextInt(0, permutationLength - 1);
+        cuttingPoint2 = cuttingPointRandomGenerator.getRandomValue(0, permutationLength - 1);
 
       if (cuttingPoint1 > cuttingPoint2) {
         int swap;
@@ -135,11 +150,13 @@ public class PMXCrossover implements
     return offspring;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  @Override
+  public int getNumberOfRequiredParents() {
     return 2 ;
+  }
+
+  @Override
+  public int getNumberOfGeneratedChildren() {
+    return 2;
   }
 }

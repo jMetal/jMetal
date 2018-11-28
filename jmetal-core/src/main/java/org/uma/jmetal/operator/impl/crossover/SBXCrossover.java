@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-// 
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -19,6 +6,7 @@ import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +31,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   private double crossoverProbability  ;
   private RepairDoubleSolution solutionRepair ;
 
-  private JMetalRandom randomGenerator ;
+  private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex) {
@@ -51,7 +39,17 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   }
 
   /** Constructor */
+  public SBXCrossover(double crossoverProbability, double distributionIndex, RandomGenerator<Double> randomGenerator) {
+    this (crossoverProbability, distributionIndex, new RepairDoubleSolutionAtBounds(), randomGenerator) ;
+  }
+
+  /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
+	  this(crossoverProbability, distributionIndex, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public SBXCrossover(double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     if (crossoverProbability < 0) {
       throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
     } else if (distributionIndex < 0) {
@@ -62,7 +60,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     this.distributionIndex = distributionIndex ;
     this.solutionRepair = solutionRepair ;
 
-    randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = randomGenerator ;
   }
 
   /* Getters */
@@ -110,13 +108,12 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     double alpha, beta, betaq;
     double valueX1, valueX2;
 
-    if (randomGenerator.nextDouble() <= probability) {
+    if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
         valueX1 = parent1.getVariableValue(i);
         valueX2 = parent2.getVariableValue(i);
-        if (randomGenerator.nextDouble() <= 0.5) {
+        if (randomGenerator.getRandomValue() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
-
             if (valueX1 < valueX2) {
               y1 = valueX1;
               y2 = valueX2;
@@ -128,7 +125,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
             lowerBound = parent1.getLowerBound(i);
             upperBound = parent1.getUpperBound(i);
 
-            rand = randomGenerator.nextDouble();
+            rand = randomGenerator.getRandomValue();
             beta = 1.0 + (2.0 * (y1 - lowerBound) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));
 
@@ -154,7 +151,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
             c1 = solutionRepair.repairSolutionVariableValue(c1, lowerBound, upperBound) ;
             c2 = solutionRepair.repairSolutionVariableValue(c2, lowerBound, upperBound) ;
 
-            if (randomGenerator.nextDouble() <= 0.5) {
+            if (randomGenerator.getRandomValue() <= 0.5) {
               offspring.get(0).setVariableValue(i, c2);
               offspring.get(1).setVariableValue(i, c1);
             } else {
@@ -166,8 +163,8 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
             offspring.get(1).setVariableValue(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariableValue(i, valueX1);
-          offspring.get(1).setVariableValue(i, valueX2);
+          offspring.get(0).setVariableValue(i, valueX2);
+          offspring.get(1).setVariableValue(i, valueX1);
         }
       }
     }
@@ -175,11 +172,13 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
     return offspring;
   }
 
-  /**
-   * Two parents are required to apply this operator.
-   * @return
-   */
-  public int getNumberOfParents() {
+  @Override
+  public int getNumberOfRequiredParents() {
     return 2 ;
+  }
+
+  @Override
+  public int getNumberOfGeneratedChildren() {
+    return 2;
   }
 }

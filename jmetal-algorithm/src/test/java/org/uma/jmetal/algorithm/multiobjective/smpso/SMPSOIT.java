@@ -14,7 +14,7 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.List;
 
@@ -45,7 +45,6 @@ public class SMPSOIT {
     DoubleProblem problem = new ZDT4() ;
 
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
-
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
@@ -66,8 +65,7 @@ public class SMPSOIT {
 
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    new AlgorithmRunner.Executor(algorithm).execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
 

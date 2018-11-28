@@ -15,35 +15,45 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSet<S> {
 
-	private final List<Double> referencePoint; 	
+	private final List<Double> interestPoint;
 	private double augmentationCoefficient = 0.001;
 	private List<Double> utopia = null;
 	private List<Double> nadir  = null;
 	
 	
-	public ASFWASFGA(double [][] weights, List<Double> referencePoint) {
+	public ASFWASFGA(double [][] weights, List<Double> interestPoint) {
 		super(weights);
-		this.referencePoint = referencePoint;
+		this.interestPoint = interestPoint;
 	}
 	
 	public ASFWASFGA(double [][] weights) {
 		super(weights);
-		this.referencePoint = new ArrayList<>(this.getVectorSize());
+		this.interestPoint = new ArrayList<>(this.getVectorSize());
 		for (int i = 0; i < this.getVectorSize(); i++)
-			this.referencePoint.add(0.0);
+			this.interestPoint.add(0.0);
 	}
 	
-	public ASFWASFGA(String file_path, List<Double> referencePoint) {
+	public ASFWASFGA(String file_path, List<Double> interestPoint) {
 		super(file_path);
-		this.referencePoint = referencePoint;
+		this.interestPoint = interestPoint;
 	}
 	
 	public ASFWASFGA(String file_path) {
 		super(file_path);
-		this.referencePoint = new ArrayList<>(this.getVectorSize());
+		this.interestPoint = new ArrayList<>(this.getVectorSize());
 		for (int i = 0; i < this.getVectorSize(); i++)
-			this.referencePoint.add(0.0);
+			this.interestPoint.add(0.0);
 	}
+
+	public void updatePointOfInterest(List<Double> newInterestPoint ) {
+		if (this.interestPoint.size()!=newInterestPoint.size())
+			throw new JMetalException("Wrong dimension of the interest point vector");
+
+		for (int i = 0; i < newInterestPoint.size(); i++) {
+            this.interestPoint.set(i,newInterestPoint.get(i));
+		}
+	}
+
 
 	@Override
 	public Double evaluate(S solution, int vector) {
@@ -62,7 +72,7 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 		double secondSum = 0.0;
 		for (int i = 0; i < weightVector.size(); i++) {
 									
-			double temp = objectiveValues.get(i) - this.referencePoint.get(i);
+			double temp = objectiveValues.get(i) - this.interestPoint.get(i);
 						 
 			
 			if (nadir!=null && utopia!=null) {
@@ -79,6 +89,9 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 		return result + (secondSum * this.augmentationCoefficient);		
 	}
+
+
+
 	
 	public void setNadir(List<Double> nadir) {
 		this.nadir = nadir;

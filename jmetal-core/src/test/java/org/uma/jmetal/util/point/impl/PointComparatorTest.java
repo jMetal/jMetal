@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.point.impl;
 
 import org.junit.Test;
@@ -58,12 +45,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstPointIsBetterThanTheSecondOneWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 2.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -74,12 +61,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareReturnOneIfTheSecondPointIsBetterThanTheFirstOneWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 5.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 5.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -90,12 +77,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareBetterReturnZeroIfBothPointsAreEqualWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 3.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -106,12 +93,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareBetterReturnZeroIfBothPointsAreEqualWhenMinimizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 3.0);
 
     comparator = new PointComparator() ;
     comparator.setMinimizing();

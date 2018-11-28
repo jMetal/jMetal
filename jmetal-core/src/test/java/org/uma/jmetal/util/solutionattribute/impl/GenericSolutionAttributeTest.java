@@ -1,30 +1,7 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.Solution;
@@ -32,7 +9,8 @@ import org.uma.jmetal.solution.Solution;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,81 +18,97 @@ import static org.mockito.Mockito.when;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenericSolutionAttributeTest {
-  @Test
-  public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassName() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
 
-    Object solutionAttributeId = ReflectionTestUtils.getField(genericSolutionAttribute, "identifier") ;
+  @Test
+  public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassObject() {
+    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
+    genericSolutionAttribute = new GenericSolutionAttribute<>();
+
+    Object solutionAttributeId = ReflectionTestUtils
+        .getField(genericSolutionAttribute, "identifier");
 
     assertEquals(genericSolutionAttribute.getClass(), solutionAttributeId);
   }
 
   @Test
   public void shouldConstructorCreateASolutionAttributedWithThePassedIdentifier() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute ;
-    Object attributeIdentifier = new Double(4) ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier) ;
+    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
+    Object attributeIdentifier = new Double(4);
+    genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
 
-    Object solutionAttributeId = ReflectionTestUtils.getField(genericSolutionAttribute, "identifier") ;
+    Object solutionAttributeId = ReflectionTestUtils
+        .getField(genericSolutionAttribute, "identifier");
 
     assertEquals(attributeIdentifier, solutionAttributeId);
   }
 
   @Test
   public void shouldGetAttributeIdentifierReturnTheRightIdentifier() {
-    GenericSolutionAttribute<?, ?> genericSolutionAttribute ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
+    GenericSolutionAttribute<?, ?> genericSolutionAttribute;
+    genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    assertEquals(genericSolutionAttribute.getClass(), genericSolutionAttribute.getAttributeIdentifier());
+    assertEquals(genericSolutionAttribute.getClass(),
+        genericSolutionAttribute.getAttributeIdentifier());
   }
 
   @Test
   public void shouldGetAttributeReturnNullIfTheSolutionHasNoAttribute() {
-    GenericSolutionAttribute<MockedDoubleSolution, ?> genericSolutionAttribute ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
+    GenericSolutionAttribute<MockedDoubleSolution, ?> genericSolutionAttribute;
+    genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    MockedDoubleSolution solution = new MockedDoubleSolution() ;
+    MockedDoubleSolution solution = new MockedDoubleSolution();
 
     assertNull(genericSolutionAttribute.getAttribute(solution));
   }
 
   @Test
   public void shouldGetAttributeReturnTheAttributeValue() {
-    GenericSolutionAttribute<MockedDoubleSolution, Integer> genericSolutionAttribute ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
+    GenericSolutionAttribute<MockedDoubleSolution, Integer> genericSolutionAttribute;
+    genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object value = new Double(5) ;
+    Object value = new Double(5);
 
-    MockedDoubleSolution solution = mock(MockedDoubleSolution.class) ;
-    when(solution.getAttribute(genericSolutionAttribute.getAttributeIdentifier())).thenReturn(value) ;
+    MockedDoubleSolution solution = mock(MockedDoubleSolution.class);
+    when(solution.getAttribute(genericSolutionAttribute.getAttributeIdentifier()))
+        .thenReturn(value);
 
     assertEquals(value, genericSolutionAttribute.getAttribute(solution));
   }
 
   @Test
   public void shouldSetAttributeAssignTheAttributeValueToTheSolution() {
-    GenericSolutionAttribute<Solution<?>, Object> genericSolutionAttribute ;
-    genericSolutionAttribute = new GenericSolutionAttribute<>() ;
+    GenericSolutionAttribute<Solution<?>, Object> genericSolutionAttribute;
+    genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object value = new Double(5) ;
+    Object value = new Double(5);
 
-    MockedDoubleSolution solution = new MockedDoubleSolution() ;
+    MockedDoubleSolution solution = new MockedDoubleSolution();
     genericSolutionAttribute.setAttribute(solution, value);
 
     assertEquals(value, genericSolutionAttribute.getAttribute(solution));
   }
 
+  @SuppressWarnings("serial")
   private class MockedDoubleSolution implements Solution<Double> {
-    protected Map<Object, Object> attributes ;
+
+    protected Map<Object, Object> attributes;
 
     public MockedDoubleSolution() {
-      attributes = new HashMap<>() ;
+      attributes = new HashMap<>();
     }
 
     @Override
     public void setObjective(int index, double value) {
+    }
 
+    @Override
+    public double[] getObjectives() {
+      return null;
+    }
+
+    @Override
+    public List<Double> getVariables() {
+      return Collections.emptyList();
     }
 
     @Override
@@ -154,12 +148,12 @@ public class GenericSolutionAttributeTest {
 
     @Override
     public void setAttribute(Object id, Object value) {
-      attributes.put(id, value) ;
+      attributes.put(id, value);
     }
 
     @Override
     public Object getAttribute(Object id) {
-      return attributes.get(id) ;
+      return attributes.get(id);
     }
   }
 }

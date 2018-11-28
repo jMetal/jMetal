@@ -1,16 +1,3 @@
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
@@ -54,7 +41,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private int swarmSize;
   private int maxIterations;
   private int iterations;
-  
+
   private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
   private double[][] speed;
 
@@ -116,21 +103,25 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     leaders.computeDensityEstimator();
   }
 
-  @Override protected void initProgress() {
+  @Override
+  protected void initProgress() {
     iterations = 1;
     updateLeadersDensityEstimator();
   }
 
-  @Override protected void updateProgress() {
+  @Override
+  protected void updateProgress() {
     iterations += 1;
     updateLeadersDensityEstimator();
   }
 
-  @Override protected boolean isStoppingConditionReached() {
+  @Override
+  protected boolean isStoppingConditionReached() {
     return iterations >= maxIterations;
   }
 
-  @Override protected List<DoubleSolution> createInitialSwarm() {
+  @Override
+  protected List<DoubleSolution> createInitialSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>(swarmSize);
 
     DoubleSolution newSolution;
@@ -142,19 +133,22 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return swarm;
   }
 
-  @Override protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
+  @Override
+  protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
     swarm = evaluator.evaluate(swarm, problem);
 
     return swarm;
   }
 
-  @Override protected void initializeLeader(List<DoubleSolution> swarm) {
+  @Override
+  protected void initializeLeader(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       leaders.add(particle);
     }
   }
 
-  @Override protected void initializeVelocity(List<DoubleSolution> swarm) {
+  @Override
+  protected void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = 0.0;
@@ -162,13 +156,15 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
+  @Override
+  protected void initializeParticlesMemory(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       localBest.setAttribute(particle, (DoubleSolution) particle.copy());
     }
   }
 
-  @Override protected void updateVelocity(List<DoubleSolution> swarm) {
+  @Override
+  protected void updateVelocity(List<DoubleSolution> swarm) {
     double r1, r2, c1, c2;
     double wmax, wmin;
     DoubleSolution bestGlobal;
@@ -188,15 +184,16 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) * (
-                inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
-                    c1 * r1 * (bestParticle.getVariableValue(var) - particle.getVariableValue(var)) +
-                    c2 * r2 * (bestGlobal.getVariableValue(var) - particle.getVariableValue(var))),
-            deltaMax, deltaMin, var);
+                        inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
+                                c1 * r1 * (bestParticle.getVariableValue(var) - particle.getVariableValue(var)) +
+                                c2 * r2 * (bestGlobal.getVariableValue(var) - particle.getVariableValue(var))),
+                deltaMax, deltaMin, var);
       }
     }
   }
 
-  @Override protected void updatePosition(List<DoubleSolution> swarm) {
+  @Override
+  protected void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
@@ -214,7 +211,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override protected void perturbation(List<DoubleSolution> swarm) {
+  @Override
+  protected void perturbation(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       if ((i % 6) == 0) {
         mutation.execute(swarm.get(i));
@@ -222,13 +220,15 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override protected void updateLeaders(List<DoubleSolution> swarm) {
+  @Override
+  protected void updateLeaders(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
-      leaders.add((DoubleSolution)particle.copy());
+      leaders.add((DoubleSolution) particle.copy());
     }
   }
 
-  @Override protected void updateParticlesMemory(List<DoubleSolution> swarm) {
+  @Override
+  protected void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
       int flag = dominanceComparator.compare(swarm.get(i), localBest.getAttribute(swarm.get(i)));
       if (flag != 1) {
@@ -238,7 +238,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  @Override public List<DoubleSolution> getResult() {
+  @Override
+  public List<DoubleSolution> getResult() {
     return leaders.getSolutionList();
   }
 
@@ -261,7 +262,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   private double velocityConstriction(double v, double[] deltaMax, double[] deltaMin,
                                       int variableIndex) {
-
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -280,7 +280,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return result;
   }
 
-  private double constrictionCoefficient(double c1, double c2) {
+  protected double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;
@@ -293,27 +293,29 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return wma;
   }
 
-  @Override public String getName() {
-    return "SMPSO" ;
+  @Override
+  public String getName() {
+    return "SMPSO";
   }
 
-  @Override public String getDescription() {
-    return "Speed contrained Multiobjective PSO" ;
+  @Override
+  public String getDescription() {
+    return "Speed contrained Multiobjective PSO";
   }
-  
+
   /* Getters */
   public int getSwarmSize() {
     return swarmSize;
   }
-  
+
   public int getMaxIterations() {
     return maxIterations;
   }
-  
+
   public int getIterations() {
     return iterations;
   }
-  
+
   /* Setters */
   public void setIterations(int iterations) {
     this.iterations = iterations;
