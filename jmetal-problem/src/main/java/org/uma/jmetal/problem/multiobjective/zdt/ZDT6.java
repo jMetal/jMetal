@@ -30,7 +30,7 @@ import org.uma.jmetal.solution.DoubleSolution;
  * Class representing problem ZDT6
  */
 @SuppressWarnings("serial")
-public class ZDT6 extends AbstractDoubleProblem {
+public class ZDT6 extends ZDT1 {
 
   /** Constructor. Creates a default instance of problem ZDT6 (10 decision variables) */
   public ZDT6()  {
@@ -43,34 +43,8 @@ public class ZDT6 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables
    */
   public ZDT6(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
-    setNumberOfObjectives(2);
+    super(numberOfVariables) ;
     setName("ZDT6");
-
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      lowerLimit.add(0.0);
-      upperLimit.add(1.0);
-    }
-
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
-
-    double x1 = solution.getVariableValue(0);
-    f[0] = 1.0 - Math.exp((-4.0) * x1) * Math.pow(Math.sin(6.0 * Math.PI * x1), 6.0);
-    double g = this.evalG(solution);
-    double h = this.evalH(f[0], g);
-    f[1] = h * g;
-
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
   }
 
   /**
@@ -78,7 +52,7 @@ public class ZDT6 extends AbstractDoubleProblem {
    *
    * @param solution Solution
    */
-  public double evalG(DoubleSolution solution) {
+  protected double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int var = 1; var < solution.getNumberOfVariables(); var++) {
       g += solution.getVariableValue(var);
@@ -96,7 +70,7 @@ public class ZDT6 extends AbstractDoubleProblem {
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
-  public double evalH(double f, double g) {
+  protected double evalH(double f, double g) {
     return 1.0 - Math.pow((f / g), 2.0);
   }
 }

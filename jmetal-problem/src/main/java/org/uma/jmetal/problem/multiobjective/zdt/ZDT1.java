@@ -75,15 +75,14 @@ public class ZDT1 extends AbstractDoubleProblem {
    *
    * @param solution Solution
    */
-  private double evalG(DoubleSolution solution) {
+  protected double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int i = 1; i < solution.getNumberOfVariables(); i++) {
       g += solution.getVariableValue(i);
     }
     double constant = 9.0 / (solution.getNumberOfVariables() - 1);
-    g = constant * g;
-    g = g + 1.0;
-    return g;
+
+    return constant * g + 1.0;
   }
 
   /**
@@ -92,7 +91,7 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param f First argument of the function H.
    * @param g Second argument of the function H.
    */
-  public double evalH(double f, double g) {
+  protected double evalH(double f, double g) {
     double h ;
     h = 1.0 - Math.sqrt(f / g);
     return h;

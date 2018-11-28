@@ -4,19 +4,19 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
-public class Tschebyscheff<S extends Solution<?>> implements AggregativeFunction<S> {
+public class Tschebyscheff implements AggregativeFunction {
   private IdealPoint idealPoint ;
 
-  public Tschebyscheff(IdealPoint idealPoint) {
-    this.idealPoint = idealPoint ;
+  public Tschebyscheff() {
+    this.idealPoint = null ;
   }
 
   @Override
-  public double compute(S solution, double[] weightVector) {
+  public double compute(double[] vector, double[] weightVector) {
     double maxFun = -1.0e+30;
 
-    for (int n = 0; n < solution.getNumberOfObjectives(); n++) {
-      double diff = Math.abs(solution.getObjective(n) - idealPoint.getValue(n));
+    for (int n = 0; n < vector.length; n++) {
+      double diff = Math.abs(vector[n] - idealPoint.getValue(n));
 
       double feval;
       if (weightVector[n] == 0) {
@@ -30,5 +30,14 @@ public class Tschebyscheff<S extends Solution<?>> implements AggregativeFunction
     }
 
     return maxFun;
+  }
+
+
+  @Override
+  public void update(double[] vector) {
+    if (idealPoint == null) {
+      idealPoint = new IdealPoint(vector.length) ;
+    }
+    idealPoint.update(vector);
   }
 }

@@ -5,6 +5,7 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
@@ -49,7 +50,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new LZ09F2() ;
 
     BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
 
@@ -59,7 +60,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMPSOBuilder(problem, archive)
         .setMutation(mutation)
-        .setMaxIterations(250)
+        .setMaxIterations(1500)
         .setSwarmSize(100)
         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
         .build();
