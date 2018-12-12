@@ -5,12 +5,15 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -86,4 +89,25 @@ public class ArrayDoubleSolutionTest {
       return new ArrayDoubleSolution(this)  ;
     }
   }
+  
+	@Test
+	public void shouldReturnAnEmptyListWhenInitiateAnSolution() {
+
+		DoubleSolution solution = problem.createSolution() ;
+
+		assertTrue(solution.getAttributes().isEmpty());
+	}
+
+	@Test
+	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+		DoubleSolution solution = problem.createSolution() ;
+
+		solution.setAttribute("fake-atribute-1", 1);
+		solution.setAttribute("fake-atribute-2", 2);
+
+		assertFalse(solution.getAttributes().isEmpty());
+		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+	}
 }

@@ -1,18 +1,21 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.uma.jmetal.util.point.PointSolution;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -87,6 +90,27 @@ public class GenericSolutionAttributeTest {
 
     assertEquals(value, genericSolutionAttribute.getAttribute(solution));
   }
+  
+	@Test
+	public void shouldReturnAnEmptyListWhenInitiateAnSolution() {
+
+		MockedDoubleSolution s = new MockedDoubleSolution();
+
+		assertTrue(s.getAttributes().isEmpty());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+		MockedDoubleSolution solution = new MockedDoubleSolution();
+
+		solution.setAttribute("fake-atribute-1", 1);
+		solution.setAttribute("fake-atribute-2", 2);
+
+		assertFalse(solution.getAttributes().isEmpty());
+		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+	}
 
   @SuppressWarnings("serial")
   private class MockedDoubleSolution implements Solution<Double> {
@@ -155,5 +179,10 @@ public class GenericSolutionAttributeTest {
     public Object getAttribute(Object id) {
       return attributes.get(id);
     }
+
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
   }
 }

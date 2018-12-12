@@ -6,8 +6,11 @@ import org.junit.Test;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class DefaultBinarySolutionTest {
   private static final int NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM = 5 ;
@@ -117,4 +120,27 @@ public class DefaultBinarySolutionTest {
       solution.setObjective(1, 1);
     }
   }
+  
+	@Test
+	public void shouldReturnAnEmptyListWhenInitiateAnSolution() {
+
+		BinaryProblem problem = new MockBinaryProblem(1);
+		BinarySolution solution = problem.createSolution();
+
+		assertTrue(solution.getAttributes().isEmpty());
+	}
+
+	@Test
+	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+		BinaryProblem problem = new MockBinaryProblem(1);
+		BinarySolution solution = problem.createSolution();
+
+		solution.setAttribute("fake-atribute-1", 1);
+		solution.setAttribute("fake-atribute-2", 2);
+
+		assertFalse(solution.getAttributes().isEmpty());
+		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+	}
 }
