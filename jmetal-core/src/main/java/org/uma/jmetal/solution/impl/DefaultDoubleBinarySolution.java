@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.DoubleBinarySolution;
 
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description:
@@ -112,4 +113,9 @@ public class DefaultDoubleBinarySolution
     }
     return bitSet ;
   }
+  
+  	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }
