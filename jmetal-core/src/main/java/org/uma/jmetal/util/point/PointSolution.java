@@ -144,4 +144,9 @@ public class PointSolution implements Solution<Double> {
 	public String toString() {
 		return Arrays.toString(objectives);
 	}
+
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }
