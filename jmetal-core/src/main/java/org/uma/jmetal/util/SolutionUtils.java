@@ -128,4 +128,44 @@ public class SolutionUtils {
 
     return sumOfDistances / solutionList.size();
   }
+  
+  	/**
+	 * It returns the normalized solution given the minimum and maximum values for
+	 * each objective
+	 * 
+	 * @param solution  to be normalized
+	 * @param minValues minimum values for each objective
+	 * @param maxValues maximum value for each objective
+	 * @return normalized solution
+	 */
+	public static Solution<?> normalize(Solution<?> solution, double[] minValues, double[] maxValues) {
+
+		if (solution == null) {
+			throw new JMetalException("The solution should not be null");
+		}
+		
+		if (minValues == null || maxValues == null) {
+			throw new JMetalException("The minValues and maxValues should not be null");
+		}
+		
+		if (minValues.length == 0 || maxValues.length == 0) {
+			throw new JMetalException("The minValues and maxValues should not be empty");
+		}
+
+		if (minValues.length != maxValues.length) {
+			throw new JMetalException("The minValues and maxValues should have the same length");
+		}
+
+		if (solution.getNumberOfObjectives() != minValues.length) {
+			throw new JMetalException("The number of objectives should be the same to min and max length");
+		}
+
+		Solution<?> copy = (Solution<?>) solution.copy();
+
+		for (int i = 0; i < copy.getNumberOfObjectives(); i++) {
+			copy.setObjective(i, NormalizeUtils.normalize(solution.getObjective(i), minValues[i], maxValues[i]));
+		}
+
+		return copy;
+	}
 }
