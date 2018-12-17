@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class SolutionUtilsTest {
   private static final double EPSILON = 0.0000000001 ;
@@ -205,6 +206,7 @@ public class SolutionUtilsTest {
 
 		DoubleSolution normalized = (DoubleSolution) SolutionUtils.normalize(solution, minValue, maxValue);
 		
+		assertNotSame(normalized, solution);
 		assertEquals(0.0, normalized.getObjective(0), EPSILON);
 		assertEquals(1.0, normalized.getObjective(1), EPSILON);
 	}
