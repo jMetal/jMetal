@@ -4,6 +4,7 @@ import org.uma.jmetal.problem.IntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Defines an implementation of a class for solutions having integers and doubles
@@ -89,4 +90,9 @@ public class DefaultIntegerDoubleSolution
       setVariableValue(i, value) ;
     }
   }
+  
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }

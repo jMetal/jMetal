@@ -159,4 +159,25 @@ public class PointSolutionTest {
 
     assertEquals(Arrays.hashCode(values), solution.hashCode());
   }
+  
+	@Test
+	public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
+
+		PointSolution solution = new PointSolution(3);
+
+		assertTrue(solution.getAttributes().isEmpty());
+	}
+
+	@Test
+	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+		PointSolution solution = new PointSolution(3);
+
+		solution.setAttribute("fake-atribute-1", 1);
+		solution.setAttribute("fake-atribute-2", 2);
+
+		assertFalse(solution.getAttributes().isEmpty());
+		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+	}
 }

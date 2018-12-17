@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Defines an implementation of a binary solution
@@ -92,4 +93,9 @@ public class DefaultBinarySolution
       setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i)));
     }
   }
+
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }
