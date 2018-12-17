@@ -33,7 +33,7 @@ public class NormalizeUtils {
 	 */
 	public static double normalize(double value, double a, double b, double min, double max) {
 		
-		if (max - min == 0.0) {
+		if (max == min) {
 			throw new JMetalException("The max minus min should not be zero");
 		}
 		
