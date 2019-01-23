@@ -6,9 +6,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
+import org.uma.jmetal.problem.impl.DynamicDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * Class representing a bi-objective TSP (Traveling Salesman Problem) problem.
@@ -21,6 +29,12 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   protected double [][] distanceMatrix ;
   protected double [][] costMatrix;
 
+  protected List<Function<PermutationSolution<Integer>, Double>> constraints ;
+
+  private OverallConstraintViolation<PermutationSolution<Integer>> overallConstraintViolationDegree ;
+  private NumberOfViolatedConstraints<PermutationSolution<Integer>> numberOfViolatedConstraints ;
+
+
   /**
    * Creates a new MultiobjectiveTSP problem instance
    */
@@ -28,9 +42,25 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     distanceMatrix = readProblem(distanceFile) ;
     costMatrix     = readProblem(costFile);
 
+    constraints = new ArrayList<>() ;
+
     setNumberOfVariables(numberOfCities);
     setNumberOfObjectives(2);
     setName("MultiobjectiveTSP");
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<>() ;
+  }
+
+  public MultiobjectiveTSP addConstraint(Function<PermutationSolution<Integer>, Double> constraint) {
+    constraints.add(constraint) ;
+
+    return this ;
+  }
+
+  @Override
+  public int getNumberOfConstraints() {
+    return constraints.size() ;
   }
 
   /** Evaluate() method */
@@ -60,11 +90,29 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
 
+    evaluateConstraints(solution) ;
+
     solution.setObjective(0, fitness1);
     solution.setObjective(1, fitness2);
   }
 
-  private double [][] readProblem(String file) throws IOException {
+  private void evaluateConstraints(PermutationSolution<Integer> solution) {
+    if (getNumberOfConstraints() > 0) {
+      double overallConstraintViolation = 0.0 ;
+      int violatedConstraints = 0 ;
+      for (int i = 0; i < getNumberOfConstraints(); i++) {
+        double violationDegree = constraints.get(i).apply(solution) ;
+        if (violationDegree < 0) {
+          overallConstraintViolation += violationDegree ;
+          violatedConstraints ++ ;
+        }
+      }
+      overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+      numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
+    }
+  }
+
+  private double [][] readProblem(String file) {
     double [][] matrix = null;
 
     InputStream in = getClass().getResourceAsStream(file);
