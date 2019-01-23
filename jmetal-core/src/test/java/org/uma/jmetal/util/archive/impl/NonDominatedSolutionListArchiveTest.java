@@ -5,10 +5,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

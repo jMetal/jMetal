@@ -5,6 +5,7 @@ package org.uma.jmetal.problem;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public interface ConstrainedProblem<S> extends Problem<S> {
 
 	/* Getters */

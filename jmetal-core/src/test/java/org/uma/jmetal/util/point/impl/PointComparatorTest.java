@@ -45,12 +45,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstPointIsBetterThanTheSecondOneWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 2.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -61,12 +61,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareReturnOneIfTheSecondPointIsBetterThanTheFirstOneWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 5.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 5.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -77,12 +77,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareBetterReturnZeroIfBothPointsAreEqualWhenMaximizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 3.0);
 
     comparator = new PointComparator() ;
     comparator.setMaximizing();
@@ -93,12 +93,12 @@ public class PointComparatorTest {
   @Test
   public void shouldCompareBetterReturnZeroIfBothPointsAreEqualWhenMinimizing() {
     point1 = new ArrayPoint(2) ;
-    point1.setDimensionValue(0, 1.0);
-    point1.setDimensionValue(1, 3.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 3.0);
 
     point2 = new ArrayPoint(2) ;
-    point2.setDimensionValue(0, 1.0);
-    point2.setDimensionValue(1, 3.0);
+    point2.setValue(0, 1.0);
+    point2.setValue(1, 3.0);
 
     comparator = new PointComparator() ;
     comparator.setMinimizing();

@@ -11,9 +11,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 /**

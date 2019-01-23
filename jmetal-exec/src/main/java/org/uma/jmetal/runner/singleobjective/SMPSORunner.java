@@ -6,7 +6,6 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Rosenbrock;
-import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;

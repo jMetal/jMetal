@@ -2,16 +2,11 @@ package org.uma.jmetal.util.point.impl;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Antonio J. Nebro
@@ -164,4 +159,25 @@ public class PointSolutionTest {
 
     assertEquals(Arrays.hashCode(values), solution.hashCode());
   }
+  
+	@Test
+	public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
+
+		PointSolution solution = new PointSolution(3);
+
+		assertTrue(solution.getAttributes().isEmpty());
+	}
+
+	@Test
+	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+		PointSolution solution = new PointSolution(3);
+
+		solution.setAttribute("fake-atribute-1", 1);
+		solution.setAttribute("fake-atribute-2", 2);
+
+		assertFalse(solution.getAttributes().isEmpty());
+		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+	}
 }

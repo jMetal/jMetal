@@ -13,19 +13,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Note: this class does check that the SBX crossover operator does not return invalid
@@ -227,7 +219,7 @@ public class SBXCrossoverTest {
   }
 
   @Test
-  public void shouldCrossingTheSecondVariableReturnTheOtherVariablesUnchanged() {
+  public void shouldCrossingTheSecondVariableReturnTheOtherVariablesUnchangedInTheOffspringSolutions() {
     @SuppressWarnings("unchecked")
 	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double crossoverProbability = 0.9;
@@ -243,9 +235,13 @@ public class SBXCrossoverTest {
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON);
+    assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(1).getVariableValue(0), EPSILON);
     assertNotEquals(solutions.get(0).getVariableValue(1), newSolutions.get(0).getVariableValue(1), EPSILON);
-    assertEquals(solutions.get(0).getVariableValue(2), newSolutions.get(0).getVariableValue(2), EPSILON);
+    assertEquals(solutions.get(0).getVariableValue(2), newSolutions.get(1).getVariableValue(2), EPSILON);
+
+    assertEquals(solutions.get(1).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON);
+    assertNotEquals(solutions.get(1).getVariableValue(1), newSolutions.get(1).getVariableValue(1), EPSILON);
+    assertEquals(solutions.get(1).getVariableValue(2), newSolutions.get(0).getVariableValue(2), EPSILON);
 
     verify(randomGenerator, times(6)).getRandomValue();
   }

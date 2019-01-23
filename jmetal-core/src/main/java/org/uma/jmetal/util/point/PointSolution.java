@@ -1,11 +1,11 @@
-package org.uma.jmetal.util.point.util;
-
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.point.Point;
+package org.uma.jmetal.util.point;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.
@@ -35,11 +35,11 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(Point point) {
-    this.numberOfObjectives = point.getNumberOfDimensions() ;
+    this.numberOfObjectives = point.getDimension() ;
     objectives = new double[numberOfObjectives] ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getDimensionValue(i) ;
+      this.objectives[i] = point.getValue(i) ;
     }
   }
 
@@ -78,11 +78,22 @@ public class PointSolution implements Solution<Double> {
     return objectives[index];
   }
 
+  @Override
+  public double[] getObjectives() {
+    return objectives ;
+  }
+
+  @Override
+  public List<Double> getVariables() {
+    return Collections.emptyList() ;
+  }
+
   @Override public Double getVariableValue(int index) {
     return null;
   }
 
   @Override public void setVariableValue(int index, Double value) {
+	  //This method is an intentionally-blank override.
   }
 
   @Override public String getVariableValueString(int index) {
@@ -132,5 +143,10 @@ public class PointSolution implements Solution<Double> {
   @Override
 	public String toString() {
 		return Arrays.toString(objectives);
+	}
+
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
 	}
 }

@@ -1,5 +1,7 @@
 package org.uma.jmetal.runner.multiobjective;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -9,51 +11,43 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.impl.DynamicDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
-
-import java.io.FileNotFoundException;
-import java.util.List;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 /**
- * Class to configure and run the NSGA-II (steady state version) algorithm
+ * Class to configure and run the NSGA-II algorithm to solve the
+ * {@link org.uma.jmetal.problem.multiobjective.Srinivas} problem, which is defined dynamically by
+ * using the {@link DynamicDoubleProblem} class.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
+public class NSGAIIDynamicSrinivasProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.SteadyStateNSGAIIRunner problemName [referenceFront]
    */
-
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf" ;
 
-    String problemName ;
-    String referenceParetoFront = "" ;
-
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
-    }
-
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new DynamicDoubleProblem()
+        .setName("Srinivas")
+        .addVariable(-20.0, 20.0)
+        .addVariable(-20.0, 20.0)
+        .addFunction((x) ->  2.0 + (x[0] - 2.0) * (x[0] - 2.0) + (x[1] - 1.0) * (x[1] - 1.0))
+        .addFunction((x) ->  9.0 * x[0] - (x[1] - 1.0) * (x[1] - 1.0))
+        .addConstraint((x) -> 1.0 - (x[0] * x[0] + x[1] * x[1]) / 225.0)
+        .addConstraint((x) -> (3.0 * x[1] - x[0]) / 10.0 - 1.0) ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -63,13 +57,12 @@ public class SteadyStateNSGAIIRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>();
+    selection = new BinaryTournamentSelection<DoubleSolution>(
+        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, 100)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
-        .setPopulationSize(100)
-        .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

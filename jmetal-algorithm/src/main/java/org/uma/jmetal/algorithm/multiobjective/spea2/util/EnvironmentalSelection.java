@@ -8,11 +8,7 @@ import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Juanjo Durillo
@@ -21,11 +17,18 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
-  private int solutionsToSelect = 0;
-  private final StrengthRawFitness<S> strengthRawFitness= new StrengthRawFitness<S>();
+  private int solutionsToSelect ;
+  private int k ;
+  private StrengthRawFitness<S> strengthRawFitness ;
 
   public EnvironmentalSelection(int solutionsToSelect) {
-    this.solutionsToSelect = solutionsToSelect;
+    this(solutionsToSelect, 1) ;
+  }
+
+  public EnvironmentalSelection(int solutionsToSelect, int k) {
+    this.solutionsToSelect = solutionsToSelect ;
+    this.k = k ;
+    this.strengthRawFitness = new StrengthRawFitness<>(k) ;
   }
 
   @Override
@@ -77,21 +80,16 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
       distanceList.add(distanceNodeList);
     }
 
-
     for (int q = 0; q < distanceList.size(); q++){
-      Collections.sort(distanceList.get(q),new Comparator<Pair<Integer, Double>> () {
-        @Override
-        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
-          if (pair1.getRight()  < pair2.getRight()) {
-            return -1;
-          } else if (pair1.getRight()  > pair2.getRight()) {
-            return 1;
-          } else {
-            return 0;
-          }
+      Collections.sort(distanceList.get(q), (pair1, pair2) -> {
+        if (pair1.getRight()  < pair2.getRight()) {
+          return -1;
+        } else if (pair1.getRight()  > pair2.getRight()) {
+          return 1;
+        } else {
+          return 0;
         }
       });
-
     }
 
     while (aux.size() > size) {
@@ -105,10 +103,10 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
           toRemove = i;
           minDistance = dn.get(0).getRight();
           //i y toRemove have the same distance to the first solution
-        } else if (dn.get(0).getRight() == minDistance) {
+        } else if (dn.get(0).getRight().equals(minDistance)) {
           int k = 0;
-          while ((dn.get(k).getRight() ==
-              distanceList.get(toRemove).get(k).getRight()) &&
+          while ((dn.get(k).getRight().equals(
+              distanceList.get(toRemove).get(k).getRight())) &&
               k < (distanceList.get(i).size()-1)) {
             k++;
           }

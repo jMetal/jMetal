@@ -8,18 +8,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.io.*;
+import java.util.*;
 
 /**
  * This class computes the Friedman test ranking and generates a Latex script that produces a table per
@@ -92,8 +82,8 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private void readDataFromFile(String path, Vector<Vector<Double>> data, int algorithmIndex) {
     String string = "";
 
-    try {
-      FileInputStream fis = new FileInputStream(path);
+    try(FileInputStream fis = new FileInputStream(path)) {
+      
 
       byte[] bytes = new byte[4096];
       int readBytes = 0;
@@ -106,7 +96,6 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
         }
       }
 
-      fis.close();
     } catch (IOException e) {
       throw new JMetalException("Error reading data ", e) ;
     }
@@ -236,21 +225,15 @@ public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
   private void writeLatexFile(GenericIndicator<?> indicator, String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
-    try {
-      File latexOutput;
-      latexOutput = new File(latexDirectoryName);
-      if(!latexOutput.exists()){
-        latexOutput.mkdirs();
-      }
-      FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
-      DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
-
-      dataOutputStream.writeBytes(fileContents);
-
-      dataOutputStream.close();
-      fileOutputStream.close();
+    File latexOutput;
+    latexOutput = new File(latexDirectoryName);
+    if(!latexOutput.exists()){
+      latexOutput.mkdirs();
     }
-    catch (IOException e) {
+    
+    try(DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
+      dataOutputStream.writeBytes(fileContents);
+    } catch (IOException e) {
       throw new JMetalException("Error writing data ", e) ;
     }
   }

@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.PermutationSolution;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Defines an implementation of solution composed of a permuation of integers
@@ -56,4 +57,9 @@ public class DefaultIntegerPermutationSolution
   public DefaultIntegerPermutationSolution copy() {
     return new DefaultIntegerPermutationSolution(this);
   }
+  
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }

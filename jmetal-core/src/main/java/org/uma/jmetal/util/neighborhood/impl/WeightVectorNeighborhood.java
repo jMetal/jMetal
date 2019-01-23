@@ -4,12 +4,7 @@ import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -64,9 +59,8 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
       inputStream = new FileInputStream(vectorFileName);
     }
     InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
 
-    try {
+    try(BufferedReader br = new BufferedReader(isr)) {
       int i = 0;
       int j;
       String aux = br.readLine();
@@ -81,7 +75,6 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
         aux = br.readLine();
         i++;
       }
-      br.close();
     } catch (IOException e) {
       throw new JMetalException("readWeightsFromFile: failed when reading for file: "
               + vectorFileName, e);

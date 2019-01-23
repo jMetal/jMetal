@@ -15,19 +15,13 @@ public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
-      if (problem instanceof ConstrainedProblem) {
-        solutionList.stream().forEach(s -> {
-          problem.evaluate(s);
-          ((ConstrainedProblem<S>) problem).evaluateConstraints(s);
-        });
-      } else {
-        solutionList.stream().forEach(s -> problem.evaluate(s));
-      }
+    solutionList.stream().forEach(s -> problem.evaluate(s));
 
     return solutionList;
   }
 
-  @Override public void shutdown() {
-    ;
+  @Override
+  public void shutdown() {
+    // This method is an intentionally-blank override.
   }
 }

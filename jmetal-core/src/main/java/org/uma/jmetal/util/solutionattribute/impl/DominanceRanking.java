@@ -6,11 +6,7 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class implements some facilities for ranking set of solutions.

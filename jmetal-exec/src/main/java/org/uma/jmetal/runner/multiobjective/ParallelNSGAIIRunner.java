@@ -10,11 +10,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
@@ -68,10 +64,10 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem) ;
 
-    NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    int populationSize = 100;
+    NSGAIIBuilder<DoubleSolution> builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
-        .setPopulationSize(100)
         .setSolutionListEvaluator(evaluator) ;
 
     algorithm = builder.build() ;

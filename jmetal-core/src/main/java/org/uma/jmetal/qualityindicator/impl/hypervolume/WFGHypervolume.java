@@ -123,12 +123,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     if (referencePoint == null) {
       referencePoint = new ArrayPoint(numberOfObjectives) ;
       for (int i = 0; i < numberOfObjectives ; i++) {
-        referencePoint.setDimensionValue(i, Double.MAX_VALUE);
+        referencePoint.setValue(i, Double.MAX_VALUE);
       }
     }
 
-    for (int i = 0; i < referencePoint.getNumberOfDimensions(); i++) {
-      referencePoint.setDimensionValue(i, maxObjectives[i] + offset);
+    for (int i = 0; i < referencePoint.getDimension(); i++) {
+      referencePoint.setValue(i, maxObjectives[i] + offset);
     }
   }
 
@@ -143,8 +143,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (maxObjectives[j] < front.getPoint(i).getDimensionValue(j)) {
-          maxObjectives[j] = front.getPoint(i).getDimensionValue(j) ;
+        if (maxObjectives[j] < front.getPoint(i).getValue(j)) {
+          maxObjectives[j] = front.getPoint(i).getValue(j) ;
         }
       }
     }
@@ -152,12 +152,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     if (referencePoint == null) {
       referencePoint = new ArrayPoint(numberOfObjectives) ;
       for (int i = 0; i < numberOfObjectives ; i++) {
-        referencePoint.setDimensionValue(i, Double.MAX_VALUE);
+        referencePoint.setValue(i, Double.MAX_VALUE);
       }
     }
 
-    for (int i = 0; i < referencePoint.getNumberOfDimensions(); i++) {
-      referencePoint.setDimensionValue(i, maxObjectives[i] + offset);
+    for (int i = 0; i < referencePoint.getDimension(); i++) {
+      referencePoint.setValue(i, maxObjectives[i] + offset);
     }
   }
 
@@ -171,12 +171,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   public double get2DHV(List<? extends Solution<?>> solutionSet) {
     double hv = 0.0;
     if (solutionSet.size() > 0) {
-      hv = Math.abs((solutionSet.get(0).getObjective(0) - referencePoint.getDimensionValue(0)) *
-          (solutionSet.get(0).getObjective(1) - referencePoint.getDimensionValue(1)));
+      hv = Math.abs((solutionSet.get(0).getObjective(0) - referencePoint.getValue(0)) *
+          (solutionSet.get(0).getObjective(1) - referencePoint.getValue(1)));
 
       for (int i = 1; i < solutionSet.size(); i++) {
         double tmp ;
-        tmp = Math.abs((solutionSet.get(i).getObjective(0) - referencePoint.getDimensionValue(0)) * (solutionSet.get(i).getObjective(1) - solutionSet.get(i - 1).getObjective(1)));
+        tmp = Math.abs((solutionSet.get(i).getObjective(0) - referencePoint.getValue(0)) * (solutionSet.get(i).getObjective(1) - solutionSet.get(i - 1).getObjective(1)));
         hv += tmp;
       }
     }

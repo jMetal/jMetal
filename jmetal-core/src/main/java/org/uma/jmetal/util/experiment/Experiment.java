@@ -23,7 +23,6 @@ public class Experiment<S extends Solution<?>, Result> {
 	private String outputParetoSetFileName;
 	private int independentRuns;
 
-  private List<String> referenceFrontFileNames ;
   private String referenceFrontDirectory;
 
   private List<GenericIndicator<S>> indicatorList ;
@@ -41,7 +40,6 @@ public class Experiment<S extends Solution<?>, Result> {
     this.outputParetoSetFileName = builder.getOutputParetoSetFileName() ;
     this.numberOfCores = builder.getNumberOfCores() ;
     this.referenceFrontDirectory = builder.getReferenceFrontDirectory() ;
-    this.referenceFrontFileNames = builder.getReferenceFrontFileNames() ;
     this.indicatorList = builder.getIndicatorList() ;
   }
 
@@ -78,10 +76,6 @@ public class Experiment<S extends Solution<?>, Result> {
     return numberOfCores ;
   }
 
-  public List<String> getReferenceFrontFileNames() {
-    return referenceFrontFileNames;
-  }
-
   public String getReferenceFrontDirectory() {
     return referenceFrontDirectory;
   }
@@ -93,10 +87,6 @@ public class Experiment<S extends Solution<?>, Result> {
   /* Setters */
   public void setReferenceFrontDirectory(String referenceFrontDirectory) {
     this.referenceFrontDirectory = referenceFrontDirectory ;
-  }
-
-  public void setReferenceFrontFileNames(List<String> referenceFrontFileNames) {
-    this.referenceFrontFileNames = referenceFrontFileNames ;
   }
 
   public void setAlgorithmList(List<ExperimentAlgorithm<S, Result>> algorithmList) {

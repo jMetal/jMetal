@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -19,12 +18,11 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.DistanceToSolutionListAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
+import javax.management.JMException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.management.JMException;
 
 /**
  * This class implements the AbYSS algorithm, a multiobjective scatter search metaheuristics,
@@ -420,10 +418,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     List<DoubleSolution> resultList = new ArrayList<>() ;
     for (List<DoubleSolution> pair : solutionList) {
       List<DoubleSolution> offspring = (List<DoubleSolution>) crossover.execute(pair);
-      if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(0));
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(1));
-      }
 
       problem.evaluate(offspring.get(0));
       problem.evaluate(offspring.get(1));
@@ -480,9 +474,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   private void fillPopulationWithRandomSolutions() {
     while (getPopulation().size() < getPopulationSize()) {
       DoubleSolution solution = diversificationGeneration();
-      if (problem instanceof ConstrainedProblem){
-        ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
-      }
 
       problem.evaluate(solution);
       evaluations++;

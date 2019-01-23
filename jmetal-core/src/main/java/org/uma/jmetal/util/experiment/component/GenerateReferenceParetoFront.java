@@ -10,7 +10,7 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.PointSolution;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
@@ -70,8 +70,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".rf" ;
-      referenceFrontFileNames.add(problem.getTag() + ".rf");
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
+      referenceFrontFileNames.add(problem.getTag() + ".pf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
 
@@ -79,7 +79,6 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           nonDominatedSolutionArchive.getSolutionList()) ;
     }
 
-    experiment.setReferenceFrontFileNames(referenceFrontFileNames);
   }
 
   private File createOutputDirectory(String outputDirectoryName) {
@@ -109,7 +108,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".rf"
+                  algorithm.getAlgorithmTag() + ".pf"
           );
     }
   }

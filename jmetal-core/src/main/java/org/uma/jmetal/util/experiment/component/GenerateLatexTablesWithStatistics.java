@@ -6,18 +6,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * This class computes a number of statistical values (mean, median, standard deviation, interquartile range)
@@ -78,13 +68,13 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
           // Read values from data files
           FileInputStream fis = new FileInputStream(directory);
           InputStreamReader isr = new InputStreamReader(fis);
-          BufferedReader br = new BufferedReader(isr);
+          try(BufferedReader br = new BufferedReader(isr)){
           String aux = br.readLine();
           while (aux != null) {
             data.get(indicator).get(problem).get(algorithm).add(Double.parseDouble(aux));
             aux = br.readLine();
           }
-          br.close();
+          }
         }
       }
     }
@@ -183,7 +173,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
   }
 
   void printHeaderLatexCommands(String fileName) throws IOException {
-    FileWriter os = new FileWriter(fileName, false);
+    try(FileWriter os = new FileWriter(fileName, false)){
     os.write("\\documentclass{article}" + "\n");
     os.write("\\title{" + experiment.getExperimentName() + "}" + "\n");
     os.write("\\usepackage{colortbl}" + "\n");
@@ -194,19 +184,18 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\begin{document}" + "\n");
     os.write("\\maketitle" + "\n");
     os.write("\\section{Tables}" + "\n");
-
-    os.close();
+    }
   }
 
   void printEndLatexCommands(String fileName) throws IOException {
-    FileWriter os = new FileWriter(fileName, true);
+    try(FileWriter os = new FileWriter(fileName, true)){
     os.write("\\end{document}" + "\n");
-    os.close();
+    }
   }
 
   private void printData(String latexFile, int indicatorIndex, double[][][] centralTendency, double[][][] dispersion, String caption) throws IOException {
     // Generate header of the table
-    FileWriter os = new FileWriter(latexFile, true);
+    try(FileWriter os = new FileWriter(latexFile, true)){
     os.write("\n");
     os.write("\\begin{table}" + "\n");
     os.write("\\caption{" + experiment.getIndicatorList().get(indicatorIndex).getName() + ". " + caption + "}" + "\n");
@@ -321,7 +310,7 @@ public class GenerateLatexTablesWithStatistics implements ExperimentComponent {
     os.write("\\end{tabular}" + "\n");
     os.write("\\end{scriptsize}" + "\n");
     os.write("\\end{table}" + "\n");
-    os.close();
+    }
   }
 
 }

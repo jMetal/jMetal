@@ -1,19 +1,17 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Class representing problem Water
  */
 @SuppressWarnings("serial")
-public class Water extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class Water extends AbstractDoubleProblem {
   public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
@@ -61,10 +59,11 @@ public class Water extends AbstractDoubleProblem implements ConstrainedProblem<D
     solution.setObjective(2,fx[2]);
     solution.setObjective(3,fx[3]);
     solution.setObjective(4,fx[4]);
+
+    this.evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
-  @Override
   public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[getNumberOfConstraints()];
     double[] x = new double[solution.getNumberOfVariables()];

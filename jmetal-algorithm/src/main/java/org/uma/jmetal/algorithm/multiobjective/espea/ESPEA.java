@@ -1,8 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.espea;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.EnergyArchive.ReplacementStrategy;
@@ -13,6 +10,9 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of the Electrostatic Potential Energy Evolutionary Algorithm

@@ -98,7 +98,7 @@ public class MOMBI2IT {
 
     double hv = (Double)hypervolume.evaluate(population) ;
 
-    assertTrue(hv > 0.968) ;
+    assertTrue(hv > 0.96) ;
 
     randomGenerator.setSeed(System.currentTimeMillis());
   }

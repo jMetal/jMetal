@@ -16,11 +16,7 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -70,10 +66,9 @@ public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     int maxEvaluations = 25000;
     int populationSize = 100;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation)
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(maxEvaluations)
-            .setPopulationSize(populationSize)
             .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
             .build();
 

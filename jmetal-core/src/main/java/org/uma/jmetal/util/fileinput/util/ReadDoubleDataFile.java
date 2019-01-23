@@ -2,12 +2,7 @@ package org.uma.jmetal.util.fileinput.util;
 
 import org.uma.jmetal.util.JMetalException;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -26,11 +21,11 @@ public class ReadDoubleDataFile {
       inputStream = new FileInputStream(fileName);
     }
     InputStreamReader isr = new InputStreamReader(inputStream);
-    BufferedReader br = new BufferedReader(isr);
+    
 
     List<Double> list = new ArrayList<>();
     String line ;
-    try {
+    try(BufferedReader br = new BufferedReader(isr)) {
       line = br.readLine();
 
       while (line != null) {
@@ -41,7 +36,7 @@ public class ReadDoubleDataFile {
         }
         line = br.readLine();
       }
-      br.close();
+      
     } catch (IOException e) {
       throw new JMetalException("Error reading file", e);
     } catch (NumberFormatException e) {

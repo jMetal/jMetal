@@ -12,6 +12,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -40,10 +41,11 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
    * Constructor
    */
   public NSGAIIMeasures(Problem<S> problem, int maxIterations, int populationSize,
+                        int matingPoolSize, int offspringPopulationSize,
                         CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
                         SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator,
-        selectionOperator, dominanceComparator, evaluator) ;
+    super(problem, maxIterations, populationSize, matingPoolSize, offspringPopulationSize,
+            crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator) ;
 
     referenceFront = new ArrayFront() ;
 
@@ -62,7 +64,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     if (referenceFront.getNumberOfPoints() > 0) {
       hypervolumeValue.push(
               new PISAHypervolume<S>(referenceFront).evaluate(
-                      getNonDominatedSolutions(getPopulation())));
+                  SolutionListUtils.getNondominatedSolutions(getPopulation())));
     }
   }
 

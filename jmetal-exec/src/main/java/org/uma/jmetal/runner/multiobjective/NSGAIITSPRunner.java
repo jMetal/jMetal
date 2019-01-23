@@ -64,10 +64,9 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
 
  */
     int populationSize = 100;
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation)
+    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(100000)
-            .setPopulationSize(populationSize)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

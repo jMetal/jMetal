@@ -5,27 +5,14 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT6;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
-import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicator.impl.Spread;
+import org.uma.jmetal.problem.multiobjective.zdt.*;
+import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
-import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
@@ -38,8 +25,10 @@ import java.util.List;
  * Example of experimental study based on solving the ZDT problems with four versions of NSGA-II,
  * each of them applying a different crossover probability (from 0.7 to 1.0).
  *
- * This experiment assumes that the reference Pareto front are known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
+ * indicate the name of those files.
  *
  * Six quality indicators are used for performance assessment.
  *
@@ -67,10 +56,9 @@ public class NSGAIIStudy {
     problemList.add(new ExperimentProblem<>(new ZDT4()));
     problemList.add(new ExperimentProblem<>(new ZDT6()));
 
+
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
-
-    List<String> referenceFrontFileNames = Arrays.asList("ZDT1.pf", "ZDT2.pf", "ZDT3.pf", "ZDT4.pf", "ZDT6.pf");
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy")
@@ -80,7 +68,6 @@ public class NSGAIIStudy {
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontFileNames(referenceFrontFileNames)
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -97,7 +84,7 @@ public class NSGAIIStudy {
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 
   /**
@@ -115,40 +102,40 @@ public class NSGAIIStudy {
           Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                   problemList.get(i).getProblem(),
                   new SBXCrossover(1.0, 5),
-                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0))
+                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0),
+                  100)
                   .setMaxEvaluations(25000)
-                  .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
           Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                   problemList.get(i).getProblem(),
                   new SBXCrossover(1.0, 20.0),
-                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
+                  100)
                   .setMaxEvaluations(25000)
-                  .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
           Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(), new SBXCrossover(1.0, 40.0),
-                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 40.0))
+                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 40.0),
+                  10)
                   .setMaxEvaluations(25000)
-                  .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i),run));
         }
 
         for (int i = 0; i < problemList.size(); i++) {
           Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(problemList.get(i).getProblem(), new SBXCrossover(1.0, 80.0),
-                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 80.0))
+                  new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 80.0),
+                  100)
                   .setMaxEvaluations(25000)
-                  .setPopulationSize(100)
                   .build();
-          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i).getTag(), run));
+          algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i),run));
         }
       }
     return algorithms;

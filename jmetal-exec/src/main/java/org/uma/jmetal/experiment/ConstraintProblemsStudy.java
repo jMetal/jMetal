@@ -13,12 +13,7 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.Binh2;
-import org.uma.jmetal.problem.multiobjective.ConstrEx;
-import org.uma.jmetal.problem.multiobjective.Golinski;
-import org.uma.jmetal.problem.multiobjective.Srinivas;
-import org.uma.jmetal.problem.multiobjective.Tanaka;
-import org.uma.jmetal.problem.multiobjective.Water;
+import org.uma.jmetal.problem.multiobjective.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
@@ -28,13 +23,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
-import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
-import org.uma.jmetal.util.experiment.component.GenerateFriedmanTestTables;
-import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
-import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
-import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
@@ -46,8 +35,10 @@ import java.util.List;
 /**
  * Example of experimental study based on solving the unconstrained problems included in jMetal.
  * <p>
- * This experiment assumes that the reference Pareto front are not known, so the names of files containing
- * them and the directory where they are located must be specified.
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
+ * indicate the name of those files.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
@@ -123,11 +114,11 @@ public class ConstraintProblemsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
+                100)
                 .setMaxEvaluations(25000)
-                .setPopulationSize(100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -136,7 +127,7 @@ public class ConstraintProblemsStudy {
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -149,7 +140,7 @@ public class ConstraintProblemsStudy {
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
       for (int i = 0; i < problemList.size(); i++) {
         double cr = 0.5;
@@ -162,7 +153,7 @@ public class ConstraintProblemsStudy {
                 .setPopulationSize(100)
                 .setSolutionSetEvaluator(new SequentialSolutionListEvaluator<>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -175,7 +166,7 @@ public class ConstraintProblemsStudy {
                 .setPopulationSize(100)
                 .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i).getTag(), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
     return algorithms;

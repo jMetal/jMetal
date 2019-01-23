@@ -6,6 +6,7 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -53,10 +54,10 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ1.3D.pf" ;
+      referenceParetoFront = "" ;
     }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new LZ09F2() ;
 
     BoundedArchive<DoubleSolution> archive =
         new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>()) ;
@@ -67,7 +68,7 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMPSOBuilder(problem, archive)
         .setMutation(mutation)
-        .setMaxIterations(250)
+        .setMaxIterations(1750)
         .setSwarmSize(100)
         .setRandomGenerator(new MersenneTwisterGenerator())
         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())

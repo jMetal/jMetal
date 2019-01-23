@@ -10,13 +10,10 @@ import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -68,15 +65,20 @@ public class NSGAIIStoppingByTimeRunner extends AbstractAlgorithmRunner {
 
     int thresholdComputingTimeInMilliseconds = 4000 ;
     int populationSize = 100 ;
+    int matingPoolSize = 100 ;
+    int offspringPopulationSize = 100 ;
 
     algorithm = new NSGAIIStoppingByTime<DoubleSolution>(
             problem,
             populationSize,
             thresholdComputingTimeInMilliseconds,
+            matingPoolSize,
+            offspringPopulationSize,
             crossover,
             mutation,
             selection,
-            new DominanceComparator<>()) ;
+            new DominanceComparator<>(),
+            new SequentialSolutionListEvaluator<>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
