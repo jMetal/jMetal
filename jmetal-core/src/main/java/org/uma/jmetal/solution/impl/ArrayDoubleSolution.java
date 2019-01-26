@@ -152,4 +152,9 @@ public class ArrayDoubleSolution implements DoubleSolution {
     result = 31 * result + (problem != null ? problem.hashCode() : 0);
     return result;
   }
+
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }

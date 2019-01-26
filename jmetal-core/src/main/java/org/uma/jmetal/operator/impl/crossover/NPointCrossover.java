@@ -52,7 +52,7 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     if (mom.getNumberOfVariables() != dad.getNumberOfVariables()) {
       throw new JMetalException("The 2 parents doesn't have the same number of variables");
     }
-    if (mom.getNumberOfVariables() > crossovers) {
+    if (mom.getNumberOfVariables() < crossovers) {
       throw new JMetalException("The number of crossovers is higher than the number of variables");
     }
 

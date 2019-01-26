@@ -2,9 +2,12 @@ package org.uma.jmetal.utility;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.fileoutput.FileOutputContext;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -37,34 +40,33 @@ public class GenerateReferenceFrontFromFile {
     String inputFileName = args[0] ;
     String outputFileName = args[1] ;
 
-    NonDominatedSolutionListArchive<DoubleSolution> archive = null;
+    NonDominatedSolutionListArchive<Solution<?>> archive = new NonDominatedSolutionListArchive<>();
+    List<String> fileNameList = new ArrayList<>();
 
     if (Files.isRegularFile(Paths.get(inputFileName))) {
-      archive = readDataFromFile(inputFileName) ;
+      fileNameList.add(inputFileName);
 
     } else if (Files.isDirectory(Paths.get(inputFileName))) {
 
-      List<String> fileNameList = Files
-              .list(Paths.get(inputFileName))
-              .map(s -> s.toString())
-              .collect(toList());
-
-      archive = new NonDominatedSolutionListArchive<>() ;
-      for (String fileName: fileNameList) {
-        System.out.println(fileName) ;
-        archive.join(readDataFromFile(fileName)) ;
-      }
+      fileNameList.addAll(Files
+        .list(Paths.get(inputFileName))
+        .map(s -> s.toString())
+        .collect(toList()));
     } else {
       throw new JMetalException("Error opening file/directory") ;
     }
 
-    new SolutionListOutput(archive.getSolutionList())
-            .setSeparator("\t")
-            .setFunFileOutputContext(new DefaultFileOutputContext(outputFileName))
-            .print();
+    int numberOfObjectives = determineNumberOfObjectives(fileNameList.get(0));
+    for (String fileName: fileNameList) {
+      System.out.println(fileName) ;
+      archive.addAll(StoredSolutionsUtils.readSolutionsFromFile(fileName,numberOfObjectives)) ;
+    }
+
+    StoredSolutionsUtils.writeToOutput(archive, new DefaultFileOutputContext(outputFileName));
   }
 
-  private static NonDominatedSolutionListArchive<DoubleSolution> readDataFromFile(String inputFileName)  {
+
+  private static int determineNumberOfObjectives(String inputFileName) {
     Stream<String> lines ;
 
     try {
@@ -73,47 +75,6 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException(e) ;
     }
 
-    List<List<Double>> numbers = lines
-            .map(line -> {
-              String[] textNumbers = line.split(" ") ;
-              List<Double> listOfNumbers = new ArrayList<>() ;
-              for (String number : textNumbers) {
-                listOfNumbers.add(Double.parseDouble(number)) ;
-              }
-
-              return listOfNumbers ;
-            })
-            .collect(toList()) ;
-
-    int numberOfObjectives = numbers.get(0).size() ;
-    DummyProblem dummyProblem = new DummyProblem(numberOfObjectives);
-
-    NonDominatedSolutionListArchive<DoubleSolution> archive ;
-    archive = new NonDominatedSolutionListArchive<>() ;
-
-    numbers
-            .stream()
-            .forEach(list -> {
-              DoubleSolution solution = new DefaultDoubleSolution(dummyProblem);
-              for (int i = 0; i < numberOfObjectives; i++) {
-                solution.setObjective(i, list.get(i));
-              }
-              archive.add(solution) ;
-            });
-
-
-    return archive ;
-  }
-
-  private static class DummyProblem extends AbstractDoubleProblem {
-
-    public DummyProblem(int numberOfObjectives) {
-      this.setNumberOfObjectives(numberOfObjectives);
-    }
-
-    @Override
-    public void evaluate(DoubleSolution solution) {
-
-    }
+    return lines.findFirst().get().split(" ").length;
   }
 }
