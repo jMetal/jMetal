@@ -20,7 +20,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NSGAII<S>> {
-  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45}
+  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45, DNSGAII}
 
   /**
    * NSGAIIBuilder class
@@ -132,6 +132,9 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     } else if (variant.equals(NSGAIIVariant.Measures)) {
       algorithm = new NSGAIIMeasures<S>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
               crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator);
+    }else if(variant.equals(NSGAIIVariant.DNSGAII)){
+      algorithm = new DNSGAII<>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+              crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator) ;
     }
 
     return algorithm ;
