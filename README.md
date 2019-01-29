@@ -29,6 +29,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ## Changelog of the next incoming release (jMetal 5.7)
 ### Algorithms
 * [mIBEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/ibea/mIBEA). Variant of IBEA contributed buy @vinixnan.
+* [d-NSGA-II](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/DNSGAII.java). Algorithm D-NSGA-II contributed by @dynamic-sevn
 
 ### Features
 * Added the [DynamicDoubleProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/impl/DynamicDoubleProblem.java) class, which allows to define a double problem dynamically.
