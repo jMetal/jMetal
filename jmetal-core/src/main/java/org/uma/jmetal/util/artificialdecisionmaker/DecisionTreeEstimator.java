@@ -46,7 +46,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //System.out.println(attr1.isNominal());
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List)null);
+      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
       //System.out.println(attr2.isString());
 
       //2.create dataset
@@ -134,7 +134,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List)null);
+      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
 
       //2.create dataset
       ArrayList<Attribute> attrs = new ArrayList<>();

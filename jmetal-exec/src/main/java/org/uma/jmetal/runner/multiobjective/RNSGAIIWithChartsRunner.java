@@ -117,7 +117,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
         .build() ;
 
     /* Measure management */
-    MeasureManager measureManager = ((RNSGAII) algorithm).getMeasureManager();
+    MeasureManager measureManager = ((RNSGAII<DoubleSolution>) algorithm).getMeasureManager();
 
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
