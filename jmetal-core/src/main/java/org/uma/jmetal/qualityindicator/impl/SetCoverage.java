@@ -19,7 +19,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class SetCoverage
     extends SimpleDescribedEntity
-    implements QualityIndicator<Pair<List<? extends Solution<?>>, List<? extends Solution<?>>>, Pair<Double, Double>> {
+    implements QualityIndicator<Pair<? extends List<? extends Solution<?>>, ? extends List<? extends Solution<?>>>, Pair<Double, Double>> {
 
   /**
    * Constructor
@@ -30,7 +30,7 @@ public class SetCoverage
 
   @Override
   public Pair<Double, Double> evaluate(
-      Pair<List<? extends Solution<?>>, List<? extends Solution<?>>> pairOfSolutionLists) {
+      Pair<? extends List<? extends Solution<?>>, ? extends List<? extends Solution<?>>> pairOfSolutionLists) {
     List<? extends Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
     List<? extends Solution<?>> front2 = pairOfSolutionLists.getRight() ;
 
