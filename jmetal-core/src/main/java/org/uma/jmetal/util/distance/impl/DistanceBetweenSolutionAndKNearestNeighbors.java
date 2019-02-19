@@ -2,9 +2,7 @@ package org.uma.jmetal.util.distance.impl;
 
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
-import weka.core.ListOptions;
 
 import java.util.ArrayList;
 import java.util.Comparator;

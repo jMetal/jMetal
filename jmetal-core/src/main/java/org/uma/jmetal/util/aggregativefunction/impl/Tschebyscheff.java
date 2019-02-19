@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.aggregativefunction.impl;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 

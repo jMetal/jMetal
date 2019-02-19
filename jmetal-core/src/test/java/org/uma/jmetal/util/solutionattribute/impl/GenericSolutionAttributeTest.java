@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.HashMap;
 import java.util.Map;
