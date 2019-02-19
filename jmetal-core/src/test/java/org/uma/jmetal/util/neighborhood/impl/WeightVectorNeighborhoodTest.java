@@ -40,7 +40,7 @@ public class WeightVectorNeighborhoodTest {
 		final int neighborSize = 20;
 		final int weightVectorSize = 2 ;
 		try {
-			WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(
+			new WeightVectorNeighborhood<>(
 							populationSize,
 							weightVectorSize,
 							neighborSize,

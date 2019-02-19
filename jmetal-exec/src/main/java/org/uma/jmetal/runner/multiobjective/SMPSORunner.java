@@ -49,6 +49,8 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
+    System.out.println("Warning: the problem name is not used anymore and may be removed later.") ;
+    System.out.println("Warning: current problem name: " + problemName) ;
 
     problem = new LZ09F2() ;
 

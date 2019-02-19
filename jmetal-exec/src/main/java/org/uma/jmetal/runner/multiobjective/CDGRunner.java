@@ -53,11 +53,11 @@ public class CDGRunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      // problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-      // referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
+       problemName = "(none)";
     }
+    System.out.println("Warning: the problem name is not used anymore and may be removed later.") ;
+    System.out.println("Warning: current problem name: " + problemName) ;
 
-    //problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
     problem = new GLT4(10);
 
 

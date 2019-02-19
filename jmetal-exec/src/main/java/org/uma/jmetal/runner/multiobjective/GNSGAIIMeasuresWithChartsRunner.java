@@ -84,7 +84,6 @@ public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         /* Measure management */
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -92,7 +91,6 @@ public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     chart.initChart();
 
     solutionListMeasure.register(new ChartListener(chart));
-   // iterationMeasure.register(new IterationListener(chart));
     /* End of measure management */
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

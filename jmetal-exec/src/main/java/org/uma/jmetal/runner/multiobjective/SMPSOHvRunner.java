@@ -56,6 +56,8 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
       referenceParetoFront = "" ;
     }
+    System.out.println("Warning: the problem name is not used anymore and may be removed later.") ;
+    System.out.println("Warning: current problem name: " + problemName) ;
 
     problem = new LZ09F2() ;
 
