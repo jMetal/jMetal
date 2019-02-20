@@ -166,7 +166,7 @@ public class MOEADUtils {
           int newSolutionListSize) {
 
     Distance<S, List<S>> distance =
-            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace() ;
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>() ;
 
     int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1) ;
 
