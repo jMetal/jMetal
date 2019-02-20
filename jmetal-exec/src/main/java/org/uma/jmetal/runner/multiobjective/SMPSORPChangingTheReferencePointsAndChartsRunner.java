@@ -191,33 +191,35 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
 
     @Override
     public void run() {
-      Scanner scanner = new Scanner(System.in);
-
-      double v1 ;
-      double v2 ;
-
-      while (true) {
-        System.out.println("Introduce the new reference point (between commas):");
-        String s = scanner.nextLine() ;
-        Scanner sl= new Scanner(s);
-        sl.useDelimiter(",");
-
-        for (int i = 0; i < referencePoints.size(); i++) {
-          try {
-            v1 = Double.parseDouble(sl.next());
-            v2 = Double.parseDouble(sl.next());
-          } catch (Exception e) {//any problem
-            v1 = 0;
-            v2 = 0;
+      try (Scanner scanner = new Scanner(System.in)) {
+        double v1 ;
+        double v2 ;
+        
+        while (true) {
+          System.out.println("Introduce the new reference point (between commas):");
+          String s = scanner.nextLine() ;
+          
+          try (Scanner sl = new Scanner(s)) {
+            sl.useDelimiter(",");
+            
+            for (int i = 0; i < referencePoints.size(); i++) {
+              try {
+                v1 = Double.parseDouble(sl.next());
+                v2 = Double.parseDouble(sl.next());
+              } catch (Exception e) {//any problem
+                v1 = 0;
+                v2 = 0;
+              }
+              
+              referencePoints.get(i).set(0, v1);
+              referencePoints.get(i).set(1, v2);
+            }
           }
-
-          referencePoints.get(i).set(0, v1);
-          referencePoints.get(i).set(1, v2);
+          
+          chart.updateReferencePoint(referencePoints);
+          
+          algorithm.changeReferencePoints(referencePoints);
         }
-
-        chart.updateReferencePoint(referencePoints);
-
-        algorithm.changeReferencePoints(referencePoints);
       }
     }
   }
