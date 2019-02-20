@@ -10,6 +10,7 @@ import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 
 import java.util.*;
 
+@SuppressWarnings("serial")
 public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
         implements Ranking<S> {
 

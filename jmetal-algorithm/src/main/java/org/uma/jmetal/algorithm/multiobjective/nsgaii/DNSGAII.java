@@ -18,6 +18,7 @@ import java.util.List;
  * "Cai X, Sun H, Fan Z. A diversity indicator based on reference vectors for many-objective optimization[J]. Information Sciences, 2018, 430-431:467-486.".
  * @author sunhaoran <nuaa_sunhr@yeah.net>
  */
+@SuppressWarnings("serial")
 public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
 
     private double[][] referenceVectors ;

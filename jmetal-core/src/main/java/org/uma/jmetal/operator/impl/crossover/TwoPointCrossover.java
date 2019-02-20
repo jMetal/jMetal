@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by FlapKap on 27-05-2017.
  */
+@SuppressWarnings("serial")
 public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   NPointCrossover<T> operator;
 

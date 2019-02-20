@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 /**
  * Class representing problem MaF15
  */
+@SuppressWarnings("serial")
 public class MaF15 extends AbstractDoubleProblem {
   public static int nk15;
   public static int sublen15[], len15[];

@@ -28,6 +28,7 @@ import java.util.List;
  * - If two solutions have equal overall constraint values it compares de values of the utility function.
  *
  */
+@SuppressWarnings("serial")
 public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
         implements Ranking<S> {
 

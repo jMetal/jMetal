@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends AbstractBoundedArchive<S> {
   protected List<Double> referencePoint ;
   protected S referencePointSolution ;

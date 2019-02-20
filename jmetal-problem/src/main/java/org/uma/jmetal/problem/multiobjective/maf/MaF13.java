@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 /**
  * Class representing problem MaF13
  */
+@SuppressWarnings("serial")
 public class MaF13 extends AbstractDoubleProblem {
 
   /**

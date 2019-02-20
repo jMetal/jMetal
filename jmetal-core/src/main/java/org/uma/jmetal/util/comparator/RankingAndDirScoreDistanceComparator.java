@@ -12,6 +12,7 @@ import java.util.Comparator;
  * @see DirScoreComparator
  * @author sunhaoran <nuaa_sunhr@yeah.net>
  */
+@SuppressWarnings("serial")
 public class RankingAndDirScoreDistanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
     private final Comparator<S> rankingComparator = new RankingComparator<>();
     private final Comparator<S> dirScoreComparator = new DirScoreComparator<>() ;
