@@ -9,7 +9,6 @@ import org.uma.jmetal.util.JMetalException;
  *
  * @author Antonio J.Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class NadirPoint extends ArrayPoint {
 
   public NadirPoint(int dimension) {

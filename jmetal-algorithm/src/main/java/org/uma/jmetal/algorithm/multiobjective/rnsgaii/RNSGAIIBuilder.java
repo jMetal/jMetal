@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;

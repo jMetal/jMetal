@@ -156,7 +156,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
 
           boolean areAttributeValuesEqual;
           if (value instanceof AbstractGenericSolution) {
-            areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
+            areAttributeValuesEqual = ((AbstractGenericSolution<?, ?>) value).equalsIgnoringAttributes(valueThat);
           } else {
             areAttributeValuesEqual = !value.equals(valueThat);
           }

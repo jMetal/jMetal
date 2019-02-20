@@ -7,7 +7,6 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.measure.MeasureListener;
 import org.uma.jmetal.measure.MeasureManager;
 import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -84,7 +83,6 @@ public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
         /* Measure management */
     BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
             .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 100);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -92,7 +90,6 @@ public class GNSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     chart.initChart();
 
     solutionListMeasure.register(new ChartListener(chart));
-   // iterationMeasure.register(new IterationListener(chart));
     /* End of measure management */
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

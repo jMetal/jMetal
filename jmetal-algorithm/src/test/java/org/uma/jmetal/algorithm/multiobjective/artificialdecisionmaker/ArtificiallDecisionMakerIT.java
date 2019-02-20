@@ -66,7 +66,6 @@ public class ArtificiallDecisionMakerIT {
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       rankingCoeficient.add(1.0 / problem.getNumberOfObjectives());
     }
-    double tolerance = 0.5;
 
     for (int cont = 0; cont < numberIterations; cont++) {
       List<Double> referencePoint = new ArrayList<>();
@@ -87,8 +86,7 @@ public class ArtificiallDecisionMakerIT {
           .setTolerance(0.001)
           .setAsp(asp)
           .build();
-      AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-          .execute();
+      new AlgorithmRunner.Executor(algorithm).execute();
       List<Double> referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
           .getReferencePoints();
 

@@ -99,7 +99,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
     public List<S> epsilonClean(List<S> solutionList){
         List<S> preference = new ArrayList<>();
-        List<S> temporalList = new LinkedList();
+        List<S> temporalList = new LinkedList<>();
         temporalList.addAll(solutionList);
         int numerOfObjectives = solutionList.get(0).getNumberOfObjectives();
 

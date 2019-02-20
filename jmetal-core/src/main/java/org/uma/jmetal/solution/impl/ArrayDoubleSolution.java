@@ -1,7 +1,6 @@
 package org.uma.jmetal.solution.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;

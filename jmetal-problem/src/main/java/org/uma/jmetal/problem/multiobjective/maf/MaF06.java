@@ -60,7 +60,6 @@ public class MaF06 extends AbstractDoubleProblem {
       x[i] = solution.getVariableValue(i);
     }
     double[] thet = new double[numberOfObjectives_ - 1];
-    int lb, ub, ri = 0;
     double g = 0, sub1, sub2;
     // evaluate g,thet
     for (int i = numberOfObjectives_ - 1; i < numberOfVariables_; i++) {
@@ -76,7 +75,7 @@ public class MaF06 extends AbstractDoubleProblem {
     }
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives_ - 1] = Math.sin(thet[0]) * sub1;
-    double subf1 = 1, subf2, subf3;
+    double subf1 = 1;
     // fi=cos(thet1)cos(thet2)...cos(thet[m-i])*sin(thet(m-i+1))*(1+g[i]),fi=subf1*subf2*subf3
     for (int i = numberOfObjectives_ - 2; i > 0; i--) {
       subf1 *= Math.cos(thet[numberOfObjectives_ - i - 2]);
