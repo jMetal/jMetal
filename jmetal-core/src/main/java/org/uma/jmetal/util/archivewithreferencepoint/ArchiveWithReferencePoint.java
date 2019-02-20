@@ -36,7 +36,9 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
     boolean result ;
 
     if (referencePointSolution == null) {
-      referencePointSolution = (S) solution.copy();
+      @SuppressWarnings("unchecked")
+      S copy = (S) solution.copy();
+      referencePointSolution = copy;
       for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
         referencePointSolution.setObjective(i, this.referencePoint.get(i));
       }
