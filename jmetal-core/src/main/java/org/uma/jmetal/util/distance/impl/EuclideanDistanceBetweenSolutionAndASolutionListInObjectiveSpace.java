@@ -12,7 +12,7 @@ import java.util.List;
  * @author <antonio@lcc.uma.es>
  */
 public class EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace
-        <S extends Solution<Double>, L extends List<S>>
+        <S extends Solution<?>, L extends List<S>>
         implements Distance<S, L> {
 
   private EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> distance ;
