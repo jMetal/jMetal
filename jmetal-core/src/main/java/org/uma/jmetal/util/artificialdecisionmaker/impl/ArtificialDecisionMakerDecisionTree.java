@@ -60,10 +60,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
 
     if(asp!=null){
-      this.asp= new ArrayList<>();
-      for (Double obj:asp) {
-        this.asp.add(obj);
-      }
+      this.asp = new ArrayList<>(asp);
     }
   }
 
