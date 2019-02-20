@@ -2,10 +2,8 @@ package org.uma.jmetal.util.artificialdecisionmaker.impl;
 
 
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
+import org.uma.jmetal.problem.BoundedProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractIntegerDoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.artificialdecisionmaker.ArtificialDecisionMaker;
@@ -85,20 +83,8 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
       idealOjectiveVector.add(objetiveMinn);
       nadirObjectiveVector.add(objetiveMaxn);
     }
-    if(problem instanceof AbstractDoubleProblem){
-      AbstractDoubleProblem aux =(AbstractDoubleProblem)problem;
-      for (int i = 0; i < numberOfObjectives ; i++) {
-        idealOjectiveVector.add(aux.getLowerBound(i));
-        nadirObjectiveVector.add(aux.getUpperBound(i));
-      }
-    }else if(problem instanceof AbstractIntegerProblem){
-      AbstractIntegerProblem aux =(AbstractIntegerProblem)problem;
-      for (int i = 0; i < numberOfObjectives ; i++) {
-        idealOjectiveVector.add(new Double(aux.getLowerBound(i)));
-        nadirObjectiveVector.add(new Double(aux.getUpperBound(i)));
-      }
-    }else if(problem instanceof AbstractIntegerDoubleProblem){
-      AbstractIntegerDoubleProblem aux =(AbstractIntegerDoubleProblem)problem;
+    if(problem instanceof BoundedProblem){
+      BoundedProblem<?, ?> aux =(BoundedProblem<?, ?>)problem;
       for (int i = 0; i < numberOfObjectives ; i++) {
         idealOjectiveVector.add(aux.getLowerBound(i).doubleValue());
         nadirObjectiveVector.add(aux.getUpperBound(i).doubleValue());
