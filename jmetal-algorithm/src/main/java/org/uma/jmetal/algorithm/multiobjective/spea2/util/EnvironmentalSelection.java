@@ -18,7 +18,6 @@ import java.util.*;
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>,List<S>> {
 
   private int solutionsToSelect ;
-  private int k ;
   private StrengthRawFitness<S> strengthRawFitness ;
 
   public EnvironmentalSelection(int solutionsToSelect) {
@@ -27,7 +26,6 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 
   public EnvironmentalSelection(int solutionsToSelect, int k) {
     this.solutionsToSelect = solutionsToSelect ;
-    this.k = k ;
     this.strengthRawFitness = new StrengthRawFitness<>(k) ;
   }
 

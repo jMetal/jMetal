@@ -112,15 +112,6 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
     }
 
 
-    private void removeRank(S solution){
-        int i=0;
-        while(i< this.rankedSubpopulations.size()){
-            while(this.rankedSubpopulations.get(i).contains(solution)){
-                this.rankedSubpopulations.get(i).remove(solution);
-            }
-            i++;
-        }
-    }
     private double preference(S solution1, S solution2,List<Double> upperBounds,List<Double> lowerBounds){
         double result =0.0D;
 

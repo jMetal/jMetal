@@ -174,7 +174,6 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
   private static class ChangeReferencePoint implements Runnable {
     ChartContainerWithReferencePoints chart ;
     List<List<Double>> referencePoints;
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints;
     SMPSORP algorithm ;
 
     public ChangeReferencePoint(
@@ -184,7 +183,6 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
             ChartContainerWithReferencePoints chart)
         throws InterruptedException {
       this.referencePoints = referencePoints;
-      this.archivesWithReferencePoints = archivesWithReferencePoints;
       this.chart = chart ;
       this.algorithm = (SMPSORP) algorithm ;
     }

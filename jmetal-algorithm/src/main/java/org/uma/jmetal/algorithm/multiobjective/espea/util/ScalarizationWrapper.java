@@ -105,11 +105,6 @@ public class ScalarizationWrapper {
      * they are computed on the fly.
      */
     private double[][] extremePoints;
-
-    /**
-     * A reference set.
-     */
-    private double[][] referenceSet;
   }
 
   /**
