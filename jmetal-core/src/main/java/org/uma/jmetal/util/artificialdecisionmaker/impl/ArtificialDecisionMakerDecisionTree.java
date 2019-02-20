@@ -207,8 +207,6 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     DoubleSolution result = (DoubleSolution)problem.createSolution();
     for (int i = 0; i < result.getNumberOfObjectives(); i++) {
       result.setObjective(i,referencePoint.get(i));
-      result.setVariableValue(i,referencePoint.get(i));
-
     }
     return result;
   }
