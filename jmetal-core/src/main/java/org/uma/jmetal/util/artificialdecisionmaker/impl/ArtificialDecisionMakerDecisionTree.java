@@ -27,7 +27,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   protected List<Double> idealOjectiveVector = null;
   protected List<Double> nadirObjectiveVector = null;
   protected List<Double> rankingCoeficient = null;
-  protected List<Double>asp = null;
+  protected List<Double> asp = null;
   protected double tolerance;
  // protected int numberReferencePoints;
   protected JMetalRandom random = null;
@@ -40,6 +40,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   protected List<Double> currentReferencePoint;
   protected List<Double> distances;
   private S solutionRun=null;
+  
   public ArtificialDecisionMakerDecisionTree(Problem<S> problem,
       InteractiveAlgorithm<S,List<S>> algorithm,double considerationProbability,double tolerance,int maxEvaluations
   ,List<Double> rankingCoeficient,List<Double> asp) {
