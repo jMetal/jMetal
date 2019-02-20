@@ -68,7 +68,7 @@ public class DTLZStudy {
             configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZtudy")
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setReferenceFrontDirectory("/pareto_fronts")

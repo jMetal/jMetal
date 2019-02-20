@@ -90,15 +90,6 @@ public class NaryTournamentSelectionTest {
   }
 
   @Test
-  public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
-    IntegerSolution solution1 = mock(IntegerSolution.class) ;
-    IntegerSolution solution2 = mock(IntegerSolution.class) ;
-
-    List<IntegerSolution> population = Arrays.asList(solution1, solution2) ;
-    assertEquals(2, population.size());
-  }
-
-  @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
     exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list size (1) is less than " +
