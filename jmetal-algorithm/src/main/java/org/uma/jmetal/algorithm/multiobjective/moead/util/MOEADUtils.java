@@ -156,7 +156,9 @@ public class MOEADUtils {
           currentBest = solutionList.get(j);
         }
       }
-      resultSolutionList.add((S) currentBest.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) currentBest.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 
@@ -196,7 +198,9 @@ public class MOEADUtils {
 
       // add the selected to res and remove from candidate list
       S removedSolution = candidate.remove(index) ;
-      resultSolutionList.add((S)removedSolution.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) removedSolution.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 
