@@ -47,6 +47,8 @@ public class StoredSolutionsUtils {
         return solution;
       })
       .collect(toList());
+    
+    lines.close();
 
     return solutions;
   }

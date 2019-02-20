@@ -70,6 +70,9 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException(e) ;
     }
 
-    return lines.findFirst().get().split(" ").length;
+    int numberOfObjectives = lines.findFirst().get().split(" ").length ;
+    lines.close();
+    
+    return numberOfObjectives;
   }
 }
