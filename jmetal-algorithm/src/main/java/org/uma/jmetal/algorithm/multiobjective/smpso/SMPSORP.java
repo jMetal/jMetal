@@ -43,6 +43,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class SMPSORP
         extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>>
         implements Measurable {

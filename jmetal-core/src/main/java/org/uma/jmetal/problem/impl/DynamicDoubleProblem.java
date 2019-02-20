@@ -42,6 +42,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  *  This class does not intend to be a replacement of the existing of {@link AbstractDoubleProblem};
  *  it is merely an alternative way of defining a problem.
  */
+@SuppressWarnings("serial")
 public class DynamicDoubleProblem implements DoubleProblem {
 
   private List<Function<Double[], Double>> objectiveFunction ;

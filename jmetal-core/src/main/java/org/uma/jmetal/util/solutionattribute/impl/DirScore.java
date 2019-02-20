@@ -12,6 +12,7 @@ import java.util.List;
  * Estimate DIR scores for solutions, used in D-NSGA-II
  * @author sunhaoran <nuaa_sunhr@yeah.net>
  */
+@SuppressWarnings("serial")
 public class DirScore<S extends Solution<?>>  extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
 
     private double[][] referenceVectors ;

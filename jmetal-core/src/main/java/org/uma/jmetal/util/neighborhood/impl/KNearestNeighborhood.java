@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @param <S>
  */
+@SuppressWarnings("serial")
 public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
   private int neighborSize;
   private Distance<S, S> distance;

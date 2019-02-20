@@ -73,6 +73,7 @@ public class StoredSolutionsUtils {
   }
 
 
+  @SuppressWarnings("serial")
   private static class DummyProblem extends AbstractDoubleProblem {
 
     public DummyProblem(int numberOfObjectives) {

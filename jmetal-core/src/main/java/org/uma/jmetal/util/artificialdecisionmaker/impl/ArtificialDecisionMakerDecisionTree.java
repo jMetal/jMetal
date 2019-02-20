@@ -23,6 +23,7 @@ import java.util.*;
  * In International Conference on Parallel Problem Solving from Nature (pp. 483-492). Springer, Cham.
  * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends ArtificialDecisionMaker<S,List<S>> {
 
   protected List<Double> idealOjectiveVector = null;
