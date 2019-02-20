@@ -9,6 +9,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class generates a R script that generates an eps file containing boxplots
@@ -22,7 +23,7 @@ import java.io.IOException;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
+public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
   private final Experiment<?, Result> experiment;

@@ -10,6 +10,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class generates a R script that computes the Wilcoxon Signed Rank Test and generates a Latex script
@@ -25,7 +26,7 @@ import java.io.IOException;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateWilcoxonTestTablesWithR<Result> implements ExperimentComponent {
+public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
   private static final String APPEND_STRING = "\", append=TRUE)\n";
   private static final String END_JUMP_STRING = "}\n";
