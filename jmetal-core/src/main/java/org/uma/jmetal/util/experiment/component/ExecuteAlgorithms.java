@@ -7,6 +7,7 @@ import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class
@@ -18,7 +19,7 @@ import java.io.File;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ExecuteAlgorithms<S extends Solution<?>, Result> implements ExperimentComponent {
+public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>> implements ExperimentComponent {
   private Experiment<S, Result> experiment;
 
   /**
