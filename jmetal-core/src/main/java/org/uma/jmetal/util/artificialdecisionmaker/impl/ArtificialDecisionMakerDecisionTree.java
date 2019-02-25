@@ -4,7 +4,6 @@ package org.uma.jmetal.util.artificialdecisionmaker.impl;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.BoundedProblem;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.artificialdecisionmaker.ArtificialDecisionMaker;
 import org.uma.jmetal.util.artificialdecisionmaker.DecisionTreeEstimator;
@@ -28,7 +27,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   protected List<Double> idealOjectiveVector = null;
   protected List<Double> nadirObjectiveVector = null;
   protected List<Double> rankingCoeficient = null;
-  protected List<Double>asp = null;
+  protected List<Double> asp = null;
   protected double tolerance;
  // protected int numberReferencePoints;
   protected JMetalRandom random = null;
@@ -41,6 +40,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   protected List<Double> currentReferencePoint;
   protected List<Double> distances;
   private S solutionRun=null;
+  
   public ArtificialDecisionMakerDecisionTree(Problem<S> problem,
       InteractiveAlgorithm<S,List<S>> algorithm,double considerationProbability,double tolerance,int maxEvaluations
   ,List<Double> rankingCoeficient,List<Double> asp) {
@@ -60,10 +60,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
 
     if(asp!=null){
-      this.asp= new ArrayList<>();
-      for (Double obj:asp) {
-        this.asp.add(obj);
-      }
+      this.asp = new ArrayList<>(asp);
     }
   }
 
@@ -200,18 +197,16 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   }
 
   private void calculateDistance(S solution, List<Double> referencePoint) {
-    EuclideanDistanceBetweenSolutionsInObjectiveSpace euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace();
+    EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
 
     double distance = euclidean
-        .getDistance((DoubleSolution) solution, getSolutionFromRP(referencePoint));
+        .getDistance(solution, getSolutionFromRP(referencePoint));
     distances.add(distance);
   }
-  private DoubleSolution getSolutionFromRP(List<Double> referencePoint){
-    DoubleSolution result = (DoubleSolution)problem.createSolution();
+  private S getSolutionFromRP(List<Double> referencePoint){
+    S result = problem.createSolution();
     for (int i = 0; i < result.getNumberOfObjectives(); i++) {
       result.setObjective(i,referencePoint.get(i));
-      result.setVariableValue(i,referencePoint.get(i));
-
     }
     return result;
   }
@@ -242,9 +237,9 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   private S getSolution(List<S> front, List<Double> referencePoint) {
     S result = front.get(0);
-    EuclideanDistanceBetweenSolutionsInObjectiveSpace euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace();
+    EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
     SortedMap<Double, S> map = new TreeMap<>();
-    DoubleSolution aux = getSolutionFromRP(referencePoint);
+    S aux = getSolutionFromRP(referencePoint);
     for (S solution : front) {
       double distance = euclidean.getDistance(solution,aux);
       map.put(distance, solution);
