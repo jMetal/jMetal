@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 /**
  * Class representing problem MaF02, DTLZ2BZ
  */
+@SuppressWarnings("serial")
 public class MaF02 extends AbstractDoubleProblem {
 
   public static int const2;

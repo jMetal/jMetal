@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 /**
  * Class representing problem MaF03, convex DTLZ3
  */
+@SuppressWarnings("serial")
 public class MaF03 extends AbstractDoubleProblem {
 
   /**

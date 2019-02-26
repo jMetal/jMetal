@@ -10,6 +10,7 @@ import java.util.Comparator;
  * The comparator of DIR score used in D-NSGA-II
  * @author sunhaoran <nuaa_sunhr@yeah.net>
  */
+@SuppressWarnings("serial")
 public class DirScoreComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
 
     @Override

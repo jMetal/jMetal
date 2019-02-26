@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
   private int numberOfWeightVectors;
   private int weightVectorSize;
