@@ -32,7 +32,7 @@ If you are interested in contributing with your ideas and comments, please take 
 * [d-NSGA-II](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/DNSGAII.java). Algorithm D-NSGA-II contributed by @dynamic-sevn
 
 ### Features
-* When the quality indicators of an experiment are computed, a summary file called `QualityIndicatorSummary.csv` is generated. This is a CSV file containing the following fields: `Algorithm`, `Problem`, `IndicatorName`, `ExecutionId`, `IndicatorValue.
+* When the quality indicators of an experiment are computed, a summary file called `QualityIndicatorSummary.csv` is generated. This is a CSV file containing the following fields: `Algorithm`, `Problem`, `IndicatorName`, `ExecutionId`, `IndicatorValue`.
 * Added the [DynamicDoubleProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/impl/DynamicDoubleProblem.java) class, which allows to define a double problem dynamically.
 * Class [ConstrainedProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/ConstrainedProblem.java) is deprecated, and all the problems depending on it have been refactored. 
 * A method `getVariables()` has been added to class [`Solution`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java).
