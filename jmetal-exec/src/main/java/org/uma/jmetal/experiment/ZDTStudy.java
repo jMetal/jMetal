@@ -87,12 +87,14 @@ public class ZDTStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
+    /*
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+    */
   }
 
   /**

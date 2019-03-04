@@ -52,6 +52,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   public  GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
+    experiment.removeDuplicatedAlgorithms();
   }
 
   /**
