@@ -1,4 +1,4 @@
-package org.uma.jmetal.measure;
+package org.uma.jmetal.util.measure;
 
 /**
  * A {@link Measurable} entity is an entity which provides one or several

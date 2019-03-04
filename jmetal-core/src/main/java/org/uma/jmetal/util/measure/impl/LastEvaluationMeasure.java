@@ -1,7 +1,7 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.measure.PushMeasure;
-import org.uma.jmetal.measure.impl.LastEvaluationMeasure.Evaluation;
+import org.uma.jmetal.util.measure.PushMeasure;
+import org.uma.jmetal.util.measure.impl.LastEvaluationMeasure.Evaluation;
 
 /**
  * {@link LastEvaluationMeasure} is a {@link PushMeasure} providing the last

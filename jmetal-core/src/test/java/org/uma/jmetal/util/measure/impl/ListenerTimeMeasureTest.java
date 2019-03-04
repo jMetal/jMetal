@@ -1,10 +1,10 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.PushMeasure;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.PushMeasure;
 
 import static org.junit.Assert.*;
 

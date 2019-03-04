@@ -1,8 +1,8 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.measure.Measure;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.PushMeasure;
+import org.uma.jmetal.util.measure.Measure;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.PushMeasure;
 
 import java.util.HashSet;
 import java.util.Set;

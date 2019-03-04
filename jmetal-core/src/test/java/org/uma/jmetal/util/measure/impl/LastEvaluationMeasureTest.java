@@ -1,8 +1,8 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.impl.LastEvaluationMeasure.Evaluation;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.impl.LastEvaluationMeasure.Evaluation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

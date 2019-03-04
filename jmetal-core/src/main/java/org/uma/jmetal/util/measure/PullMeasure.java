@@ -1,4 +1,4 @@
-package org.uma.jmetal.measure;
+package org.uma.jmetal.util.measure;
 
 /**
  * A {@link PullMeasure} is a {@link Measure} from which the {@link Value} can

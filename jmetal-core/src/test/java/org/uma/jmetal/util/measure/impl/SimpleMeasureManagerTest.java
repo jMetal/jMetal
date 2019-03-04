@@ -1,7 +1,7 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.measure.Measure;
+import org.uma.jmetal.util.measure.Measure;
 
 import java.util.Arrays;
 import java.util.HashMap;

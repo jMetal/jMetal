@@ -1,4 +1,4 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
 /**
  * This measure allows to have a simple way to compute the time spent in doing

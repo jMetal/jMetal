@@ -1,4 +1,4 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
 import org.junit.Test;
 

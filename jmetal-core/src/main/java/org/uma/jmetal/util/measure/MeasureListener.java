@@ -1,4 +1,4 @@
-package org.uma.jmetal.measure;
+package org.uma.jmetal.util.measure;
 
 /**
  * A {@link MeasureListener} allows to register a given behavior to

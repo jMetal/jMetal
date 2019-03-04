@@ -1,9 +1,9 @@
-package org.uma.jmetal.measure.impl;
+package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.PullMeasure;
-import org.uma.jmetal.measure.PushMeasure;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.PullMeasure;
+import org.uma.jmetal.util.measure.PushMeasure;
 
 import java.util.Collection;
 import java.util.LinkedList;
