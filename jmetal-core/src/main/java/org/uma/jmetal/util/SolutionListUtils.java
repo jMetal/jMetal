@@ -122,32 +122,26 @@ public class SolutionListUtils {
     return objectives;
   }
 
-  /**
-   * This method receives a list of non-dominated solutions and maximum and minimum values of the
-   * objectives, and returns a the normalized set of solutions.
-   *
-   * @param solutionList A list of non-dominated solutions
-   * @param maximumValue The maximum values of the objectives
-   * @param minimumValue The minimum values of the objectives
-   * @return the normalized list of non-dominated solutions
-   */
-  public static List<Solution<?>> getNormalizedFront(List<Solution<?>> solutionList,
-    List<Double> maximumValue,
-    List<Double> minimumValue) {
+  	/**
+	 * This method receives a list of non-dominated solutions and maximum and
+	 * minimum values of the objectives, and returns a normalized set of
+	 * solutions.
+	 *
+	 * @param solutions    A list of non-dominated solutions
+	 * @param maximumValue The maximum values of the objectives
+	 * @param minimumValue The minimum values of the objectives
+	 * @return the normalized list of non-dominated solutions
+	 */
+	public static List<? extends Solution<?>> normalize(List<? extends Solution<?>> solutions, double[] minValues, double[] maxValues) {
 
-    List<Solution<?>> normalizedSolutionSet = new ArrayList<>(solutionList.size()) ;
+		List<Solution<?>> normalizedSolutions = new ArrayList<>(solutions.size());
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
-    for (int i = 0; i < solutionList.size(); i++) {
-      Solution<?> solution = solutionList.get(i).copy() ;
-      for (int j = 0; j < numberOfObjectives; j++) {
-        double normalizedValue = (solutionList.get(i).getObjective(j) - minimumValue.get(j)) /
-          (maximumValue.get(j) - minimumValue.get(j));
-        solution.setObjective(j, normalizedValue);
-      }
-    }
-    return normalizedSolutionSet;
-  }
+		for (Solution<?> solution : solutions) {
+			normalizedSolutions.add(SolutionUtils.normalize(solution, minValues, maxValues));
+		}
+
+		return normalizedSolutions;
+	}
 
   /**
    * This method receives a normalized list of non-dominated solutions and return the inverted one.
