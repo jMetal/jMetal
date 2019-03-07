@@ -28,7 +28,7 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ## Changelog of the next incoming release (jMetal 5.7)
 ### Algorithms
-* [FAME](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/fame/FAME). Algorithm FAME ([DOI](https://doi.org/10.1016/j.ins.2018.09.005)), contributed by buy @AASantiago.
+* [FAME](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/fame). Algorithm FAME ([DOI](https://doi.org/10.1016/j.ins.2018.09.005)), contributed by buy @AASantiago.
 * [mIBEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/ibea/mIBEA). Variant of IBEA contributed buy @vinixnan.
 * [d-NSGA-II](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/DNSGAII.java). Algorithm D-NSGA-II contributed by @dynamic-sevn
 
