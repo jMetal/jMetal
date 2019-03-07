@@ -69,8 +69,6 @@ public class FAMERunner extends AbstractAlgorithmRunner {
             populationSize,
             archiveSize,
             maxEvaluations,
-            null,
-            null,
             selection,
             new SequentialSolutionListEvaluator()) ;
 
