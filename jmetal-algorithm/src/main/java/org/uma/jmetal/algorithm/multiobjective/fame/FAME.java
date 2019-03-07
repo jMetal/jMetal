@@ -74,16 +74,15 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     OpProb = new double[operators];
     Utilization = new double[operators];
     windowSize = (int) Math.ceil(3.33333 * operators);
-    System.out.println("windowSize " + windowSize);
     for (int x = 0; x < operators; x++) {
       OpProb[x] = (1.0);
       Utilization[x] = 0.0;
     }
-    Load_FIS();
+    loadFIS();
     System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
   }
 
-  private void Load_FIS() {
+  private void loadFIS() {
     engine = new Engine();
     engine.setName("Probabilides-operadores");
     stagnation = new InputVariable();

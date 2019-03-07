@@ -4,8 +4,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;

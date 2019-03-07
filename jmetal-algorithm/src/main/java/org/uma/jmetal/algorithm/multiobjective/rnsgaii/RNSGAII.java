@@ -2,12 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.util.measure.Measurable;
-import org.uma.jmetal.util.measure.MeasureManager;
-import org.uma.jmetal.util.measure.impl.BasicMeasure;
-import org.uma.jmetal.util.measure.impl.CountingMeasure;
-import org.uma.jmetal.util.measure.impl.DurationMeasure;
-import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -16,6 +10,12 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.measure.Measurable;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
+import org.uma.jmetal.util.measure.impl.DurationMeasure;
+import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,12 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Problem C1-DTLZ3, defined in:

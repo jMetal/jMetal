@@ -1,8 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -14,6 +11,10 @@ import org.uma.jmetal.problem.multiobjective.lz09.LZ09F3;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 public class MOEADDRAIT {
 

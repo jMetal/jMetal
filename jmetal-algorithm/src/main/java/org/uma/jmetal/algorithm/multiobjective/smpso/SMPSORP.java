@@ -14,11 +14,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
-import org.uma.jmetal.util.measure.Measurable;
-import org.uma.jmetal.util.measure.MeasureManager;
-import org.uma.jmetal.util.measure.impl.BasicMeasure;
-import org.uma.jmetal.util.measure.impl.CountingMeasure;
-import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -26,6 +21,11 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.measure.Measurable;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
+import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 

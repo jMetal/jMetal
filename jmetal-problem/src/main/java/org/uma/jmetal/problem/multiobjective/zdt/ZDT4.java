@@ -21,9 +21,10 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
+import org.uma.jmetal.solution.DoubleSolution;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem ZDT4

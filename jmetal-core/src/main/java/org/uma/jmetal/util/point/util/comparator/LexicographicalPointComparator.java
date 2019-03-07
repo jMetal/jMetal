@@ -1,8 +1,9 @@
 package org.uma.jmetal.util.point.util.comparator;
 
-import java.util.Comparator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
+
+import java.util.Comparator;
 
 /**
  * This class implements the Comparator interface for comparing tow points.

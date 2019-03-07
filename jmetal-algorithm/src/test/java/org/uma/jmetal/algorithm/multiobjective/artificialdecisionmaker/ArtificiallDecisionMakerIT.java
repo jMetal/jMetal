@@ -20,10 +20,10 @@ import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificiallDecisionMaker
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.util.point.impl.NadirPoint;
 
 import static org.junit.Assert.assertTrue;
 

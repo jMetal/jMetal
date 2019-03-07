@@ -1,9 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import java.util.logging.Level;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+
+import java.util.logging.Level;
 
 /**
  * This class implements the WFG1 problem

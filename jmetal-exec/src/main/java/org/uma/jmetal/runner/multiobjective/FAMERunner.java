@@ -19,6 +19,7 @@ import org.uma.jmetal.algorithm.multiobjective.fame.FAME;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.selection.SpatialSpreadDeviationSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -57,8 +58,8 @@ public class FAMERunner extends AbstractAlgorithmRunner {
     } 
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);//
+    problem = new ZDT1() ;
+    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
 
     int populationSize=25 ;
     int archiveSize=200 ;
