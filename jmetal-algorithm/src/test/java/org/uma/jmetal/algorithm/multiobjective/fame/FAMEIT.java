@@ -39,8 +39,6 @@ public class FAMEIT {
             populationSize,
             archiveSize,
             maxEvaluations,
-            null,
-            null,
             selection,
             new SequentialSolutionListEvaluator()) ;
 
@@ -73,8 +71,6 @@ public class FAMEIT {
             populationSize,
             archiveSize,
             maxEvaluations,
-            null,
-            null,
             selection,
             new SequentialSolutionListEvaluator());
 

@@ -58,19 +58,19 @@ public class FAMERunner extends AbstractAlgorithmRunner {
     } 
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    problem = new ZDT1() ;
+
     selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
 
     int populationSize=25 ;
     int archiveSize=200 ;
     int maxEvaluations=45000;
 
-    algorithm = new FAME(problem,
+    algorithm = new FAME<>(problem,
             populationSize,
             archiveSize,
             maxEvaluations,
             selection,
-            new SequentialSolutionListEvaluator()) ;
+            new SequentialSolutionListEvaluator<>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;
