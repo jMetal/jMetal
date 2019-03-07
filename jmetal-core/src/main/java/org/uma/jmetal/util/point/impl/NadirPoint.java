@@ -1,8 +1,9 @@
 package org.uma.jmetal.util.point.impl;
 
-import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.List;
 
 /**
  * Class representing a nadir point (minimization is assumed)

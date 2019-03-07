@@ -10,8 +10,8 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**

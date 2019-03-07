@@ -16,11 +16,7 @@ package org.uma.jmetal.runner.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.fame.FAME;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.selection.SpatialSpreadDeviationSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;

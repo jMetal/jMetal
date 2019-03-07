@@ -1,7 +1,5 @@
 package org.uma.jmetal.runner.multiobjective;
 
-import java.io.FileNotFoundException;
-import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
@@ -15,6 +13,9 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * Class for configuring and running the MOEA/D algorithm

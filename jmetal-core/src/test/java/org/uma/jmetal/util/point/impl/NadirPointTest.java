@@ -1,11 +1,11 @@
 package org.uma.jmetal.util.point.impl;
 
-import java.util.Arrays;
-import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.util.point.impl.NadirPoint;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

@@ -1,10 +1,10 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}

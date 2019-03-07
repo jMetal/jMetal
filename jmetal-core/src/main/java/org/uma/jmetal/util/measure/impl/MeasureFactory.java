@@ -1,10 +1,10 @@
 package org.uma.jmetal.util.measure.impl;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.measure.Measure;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.PullMeasure;
 import org.uma.jmetal.util.measure.PushMeasure;
-import org.uma.jmetal.util.JMetalException;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;

@@ -1,14 +1,15 @@
 package org.uma.jmetal.problem.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.IntStream;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 /**
  * This class allows to define a continuous (double) problem dynamically, by adding the ranges of

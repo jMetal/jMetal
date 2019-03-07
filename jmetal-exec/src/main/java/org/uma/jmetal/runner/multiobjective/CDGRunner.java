@@ -13,18 +13,18 @@
 
 package org.uma.jmetal.runner.multiobjective;
 
-import java.io.FileNotFoundException;
-import java.util.List;
-
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.cdg.CDGBuilder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.glt.GLT4;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * Class for configuring and running the CDG algorithm
