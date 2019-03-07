@@ -257,6 +257,17 @@ public class SolutionListUtils {
     return distance;
   }
 
+  public static  <S extends Solution<?>> double [][] distanceMatrix_normalize(List<S> solutionSet,double maxs[],double mins[]) {
+    double [][] distance = new double [solutionSet.size()][solutionSet.size()];
+    for (int i = 0; i < solutionSet.size(); i++){
+      distance[i][i] = 0.0;
+      for (int j = i + 1; j < solutionSet.size(); j++){
+        distance[i][j] = SolutionUtils.distanceBetweenObjectives_normalize(solutionSet.get(i),solutionSet.get(j),maxs,mins);
+        distance[j][i] = distance[i][j];
+      }
+    }
+    return distance;
+  }
   /**
    * Compares two solution lists to determine if both are equals
    *

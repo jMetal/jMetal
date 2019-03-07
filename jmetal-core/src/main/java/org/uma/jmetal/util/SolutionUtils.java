@@ -72,6 +72,20 @@ public class SolutionUtils {
     return Math.sqrt(distance);
   }
 
+  static <S extends Solution<?>> double distanceBetweenObjectives_normalize(S firstSolution, S secondSolution,double maxs[],double mins[]) {
+
+    double diff;
+    double distance = 0.0;
+    //euclidean distance
+    for (int nObj = 0; nObj < firstSolution.getNumberOfObjectives();nObj++){
+      diff = (firstSolution.getObjective(nObj)/(maxs[nObj]-mins[nObj])) - (secondSolution.getObjective(nObj)/(maxs[nObj]-mins[nObj]));
+      distance += Math.pow(diff,2.0);
+      //distance += Math.abs(diff);//<----- solo pa ver que carajos pasa
+    } // for
+
+    return Math.sqrt(distance);
+  }
+
   /**
    * Returns the minimum distance from a <code>Solution</code> to a <code>SolutionSet according to
    * the encodings.variable values</code>.
