@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
  * every decision variable, the objective functions and the constraints.  For example, the Schaffer
  * unconstrained problem (1 decision variable, two objectives) can be defined as follows:
  *
- *     DynamicDoubleProblem problem = new DynamicDoubleProblem()
+ *     ComposableDoubleProblem problem = new ComposableDoubleProblem()
  *         .setName("Schaffer")
  *         .addVariable(-10, 10)
  *         .addVariable(-10, 10)
@@ -25,8 +25,8 @@ import java.util.stream.IntStream;
  *
  * The Srinivas constrained problem can be defined in this way:
  *
- *     DynamicDoubleProblem problem;
- *     problem = new DynamicDoubleProblem()
+ *     ComposableDoubleProblem problem;
+ *     problem = new ComposableDoubleProblem()
  *         .setName("Srinivas")
  *         .addVariable(-20.0, 20.0)
  *         .addVariable(-20.0, 20.0)
@@ -44,7 +44,7 @@ import java.util.stream.IntStream;
  *  it is merely an alternative way of defining a problem.
  */
 @SuppressWarnings("serial")
-public class DynamicDoubleProblem implements DoubleProblem {
+public class ComposableDoubleProblem implements DoubleProblem {
 
   private List<Function<Double[], Double>> objectiveFunction ;
   private List<Function<Double[], Double>> constraints ;
@@ -54,7 +54,7 @@ public class DynamicDoubleProblem implements DoubleProblem {
   private OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
   private NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
-  public DynamicDoubleProblem() {
+  public ComposableDoubleProblem() {
     objectiveFunction = new ArrayList<>() ;
     constraints = new ArrayList<>() ;
     lowerBounds = new ArrayList<>() ;
@@ -65,23 +65,23 @@ public class DynamicDoubleProblem implements DoubleProblem {
     name = "" ;
   }
 
-  public DynamicDoubleProblem addFunction(Function<Double[], Double> objective) {
+  public ComposableDoubleProblem addFunction(Function<Double[], Double> objective) {
     objectiveFunction.add(objective) ;
     return this ;
   }
 
-  public DynamicDoubleProblem addConstraint(Function<Double[], Double> constraint) {
+  public ComposableDoubleProblem addConstraint(Function<Double[], Double> constraint) {
     constraints.add(constraint) ;
     return this ;
   }
 
-  public DynamicDoubleProblem addVariable(double lowerBound, double upperBound) {
+  public ComposableDoubleProblem addVariable(double lowerBound, double upperBound) {
     lowerBounds.add(lowerBound) ;
     upperBounds.add(upperBound) ;
     return this ;
   }
 
-  public DynamicDoubleProblem setName(String name) {
+  public ComposableDoubleProblem setName(String name) {
     this.name = name ;
 
     return this ;
