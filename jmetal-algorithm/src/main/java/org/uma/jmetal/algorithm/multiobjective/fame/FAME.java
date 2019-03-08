@@ -58,16 +58,14 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
       int populationSize,
       int archiveSize,
       int maxEvaluations,
-      CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator,
       SolutionListEvaluator<S> evaluator) {
     super(
         problem,
         maxEvaluations,
         populationSize,
-        crossoverOperator,
-        mutationOperator,
+        null,
+        null,
         selectionOperator,
         new DominanceComparator<>(),
         evaluator);
