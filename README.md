@@ -4,7 +4,7 @@
 
 **jMetal** is an object-oriented Java-based framework for multi-objective optimization with metaheuristics.
 The Web page of the project is: [http://jmetal.github.io/jMetal/](http://jmetal.github.io/jMetal/).
-Former jMetal versions can be found in [SourceForge](http://jmetal.sourceforge.net). The current version is jMetal 5.6. 
+Former jMetal versions can be found in [SourceForge](http://jmetal.sourceforge.net). The current version is jMetal 5.7. 
 
 ## How to use
 
@@ -26,21 +26,10 @@ The jMetal development version is hosted in this repository; this way, intereste
 
 If you are interested in contributing with your ideas and comments, please take a look at the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
-## Changelog of the next incoming release (jMetal 5.7)
+## Changelog of the next incoming release (jMetal 5.8)
 ### Algorithms
-* [FAME](https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/fame). Algorithm FAME ([DOI](https://doi.org/10.1016/j.ins.2018.09.005)), contributed by buy @AASantiago.
-* [mIBEA](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/ibea/mIBEA). Variant of IBEA contributed buy @vinixnan.
-* [d-NSGA-II](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/DNSGAII.java). Algorithm D-NSGA-II contributed by @dynamic-sevn
-
 ### Features
-* When the quality indicators of an experiment are computed, a summary file called `QualityIndicatorSummary.csv` is generated. This is a CSV file containing the following fields: `Algorithm`, `Problem`, `IndicatorName`, `ExecutionId`, `IndicatorValue`.
-* Added the [DynamicDoubleProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/impl/DynamicDoubleProblem.java) class, which allows to define a double problem dynamically.
-* Class [ConstrainedProblem](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/ConstrainedProblem.java) is deprecated, and all the problems depending on it have been refactored. 
-* A method `getVariables()` has been added to class [`Solution`](https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java).
-* The [NSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/NSGAII.java) class has been refactored to allow to indicate the size of the mating pool and the offspring population. This allows, for example, to configure a state version of it by assigning the values `matingPoolSize = 2` and `offspringPopulationSize = 1`, so classes such as [SteadyStateNSGAII](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii/SteadyStateNSGAII.java) are not necessary. All the classes related to NSGA-II have been refactored as a consequence.
-
 ### Bugs
-* Fixed a bug in class [EnviromentalSelection](https://github.com/jMetal/jMetal/blob/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/spea2/util/EnvironmentalSelection.java). Thanks to @zorrozork
 
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
