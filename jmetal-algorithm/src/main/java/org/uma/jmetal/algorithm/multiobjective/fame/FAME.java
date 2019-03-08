@@ -1,4 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.fame;
+
 import com.fuzzylite.Engine;
 import com.fuzzylite.rule.Rule;
 import com.fuzzylite.rule.RuleBlock;
@@ -6,8 +7,6 @@ import com.fuzzylite.term.Triangle;
 import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
@@ -19,7 +18,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.SpatialSpreadDeviationComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -33,11 +31,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class implements the FAME algorithm described in:
- * A. Santiago, B. Dorronsoro, A.J. Nebro, J.J. Durillo, O. Castillo, H.J. Fraire
- * A Novel Multi-Objective Evolutionary Algorithm with Fuzzy Logic Based Adaptive Selection of Operators: FAME.
- * Information Sciences. Volume 471, January 2019, Pages 233-251.
- * DOI: https://doi.org/10.1016/j.ins.2018.09.005
+ * This class implements the FAME algorithm described in: A. Santiago, B. Dorronsoro, A.J. Nebro,
+ * J.J. Durillo, O. Castillo, H.J. Fraire A Novel Multi-Objective Evolutionary Algorithm with Fuzzy
+ * Logic Based Adaptive Selection of Operators: FAME. Information Sciences. Volume 471, January
+ * 2019, Pages 233-251. DOI: https://doi.org/10.1016/j.ins.2018.09.005
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
@@ -139,7 +136,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     ruleBlock.addRule(
         Rule.parse("if Stagnation is LOW and OperatorUse is MID then Probability is MID", engine));
     engine.addRuleBlock(ruleBlock);
-    //
+
     engine.configure("Minimum", "Maximum", "Minimum", "Maximum", "Centroid");
 
     StringBuilder status = new StringBuilder();
@@ -154,24 +151,16 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     evaluations++;
     if (window == windowSize) {
       for (int x = 0; x < operators; x++) {
-        // System.out.println("El Stagnation REAL es "+Stagnation);
         engine.setInputValue("Stagnation", Stagnation);
-        // engine.setInputValue("Contribucion", contribucion_de_operadores[x]);
         engine.setInputValue("OperatorUse", Utilization[x]);
         engine.process();
-        // FuzzyLite.logger().info(String.format(
-        //        "Stagnation.input = %s -> OperatorUse.input = %s -> Probability.output = %s",
-        //        Op.str(Stagnation), Op.str(Utilization[x]),
-        // Op.str(probability.getOutputValue())));
 
         OpProb[x] = probability.getOutputValue();
         Utilization[x] = 0.0;
       }
       window = 0;
-      // System.out.println("Stagnation global "+estancamiento_global);
       Stagnation = 0.0;
     }
-    // System.out.println("Evaluacion "+evaluations);
   }
 
   @Override
@@ -339,8 +328,8 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
-    Ranking<S> ranking = new DominanceRanking<>() ;
-    ranking.computeRanking(jointPopulation) ;
+    Ranking<S> ranking = new DominanceRanking<>();
+    ranking.computeRanking(jointPopulation);
 
     return fast_nondonimated_sort(ranking);
   }
@@ -366,7 +355,8 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     return population.size() < getMaxPopulationSize();
   }
 
-  protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected boolean subfrontFillsIntoThePopulation(
+      Ranking<S> ranking, int rank, List<S> population) {
     return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
   }
 
@@ -380,7 +370,8 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     }
   }
 
-  protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
+  protected void addLastRankedSolutionsToPopulation(
+      Ranking<S> ranking, int rank, List<S> population) {
     List<S> currentRankedFront = ranking.getSubfront(rank);
 
     Collections.sort(currentRankedFront, new SpatialSpreadDeviationComparator<>());
