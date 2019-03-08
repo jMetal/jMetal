@@ -16,7 +16,7 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndDirScoreDistanceComparator;
-import org.uma.jmetal.util.fileinput.util.ReadReferenceVectorsUtils;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -58,7 +58,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
             .setSelectionOperator(selection).build();
 
     // reference vectors
-    double[][] referenceVectors = ReadReferenceVectorsUtils.readReferenceVectors("MOEAD_Weights/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
+    double[][] referenceVectors = VectorFileUtils.readVectors("MOEAD_Weights/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
     ((DNSGAII<DoubleSolution>) algorithm).setReferenceVectors(referenceVectors);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

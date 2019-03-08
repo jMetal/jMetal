@@ -14,6 +14,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -104,10 +105,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 			//For more than two objectives, weights are read from the resources file of jMetal
 			else {
 				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
-				weights = WeightVectors.readFromResourcesInJMetal("MOEAD_Weights/" + dataFileName);
+				weights = VectorFileUtils.readVectors("MOEAD_Weights/" + dataFileName);
 			}
 		} else { //If a file with weight vectors is given as parameter, weights are read from that file
-			weights = WeightVectors.readFromFile(this.weightVectorsFileName) ;
+			//weights = WeightVectors.readFromFile(this.weightVectorsFileName) ;
+			weights = VectorFileUtils.readVectors(this.weightVectorsFileName) ;
 		}
 		weights = WeightVectors.invert(weights,true);
 

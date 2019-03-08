@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADRunner extends AbstractAlgorithmRunner {
+public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
@@ -42,8 +42,8 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -66,6 +66,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+            .setDataDirectory("MOEAD_Weights")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
