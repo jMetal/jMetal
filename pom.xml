@@ -49,8 +49,9 @@
   <modules>
     <module>jmetal-core</module>
     <module>jmetal-algorithm</module>
-    <module>jmetal-problem</module>
     <module>jmetal-exec</module>
+    <module>jmetal-problem</module>
+    <module>jmetal-auto</module>
   </modules>
 
   <properties>
