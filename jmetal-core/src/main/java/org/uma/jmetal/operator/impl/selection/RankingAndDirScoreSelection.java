@@ -53,11 +53,11 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
         int rankingIndex = 0;
         while (population.size() < solutionsToSelect){
             if(subfrontFillsIntoThePopulation(ranking, rankingIndex, population)){
-                dirScore.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+                dirScore.computeDensityEstimator(ranking.getSubFront(rankingIndex));
                 addRankedSolutionsToPopulation(ranking, rankingIndex, population);
                 rankingIndex ++ ;
             }else {
-                dirScore.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+                dirScore.computeDensityEstimator(ranking.getSubFront(rankingIndex));
                 addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
             }
         }
@@ -66,7 +66,7 @@ public class RankingAndDirScoreSelection<S extends Solution<?>>
 
     @Override
     protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
-        List<S> currentRankedFront = ranking.getSubfront(rank) ;
+        List<S> currentRankedFront = ranking.getSubFront(rank) ;
 
         currentRankedFront.sort(new DirScoreComparator<>());
 

@@ -68,7 +68,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
             addRankedSolutionsToPopulation(ranking, rankingIndex, auxPopulation);
             rankingIndex++;
           } else {
-            preferenceDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+            preferenceDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
             addLastRankedSolutionsToPopulation(ranking, rankingIndex, auxPopulation);
           }
         }
@@ -81,13 +81,13 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   }
 
   protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubfront(rank).size() < (solutionsToSelect - population.size());
+    return ranking.getSubFront(rank).size() < (solutionsToSelect - population.size());
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> front;
 
-    front = ranking.getSubfront(rank);
+    front = ranking.getSubFront(rank);
 
     for (int i = 0; i < front.size(); i++) {
       population.add(front.get(i));
@@ -95,7 +95,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubfront(rank);
+    List<S> currentRankedFront = ranking.getSubFront(rank);
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
 
