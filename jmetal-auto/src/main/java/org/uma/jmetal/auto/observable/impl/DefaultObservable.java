@@ -35,7 +35,7 @@ public class DefaultObservable<D> implements Observable<D> {
 	@Override
 	public synchronized void notifyObservers(D data) {
 		if (dataHasChanged) {
-      observers.stream().forEach(observer -> observer.update(this, data));
+      observers.forEach(observer -> observer.update(this, data));
 		}
 		clearChanged();
 	}
@@ -72,6 +72,5 @@ public class DefaultObservable<D> implements Observable<D> {
 
 	@Override
 	public synchronized void run() {
-
 	}
 }
