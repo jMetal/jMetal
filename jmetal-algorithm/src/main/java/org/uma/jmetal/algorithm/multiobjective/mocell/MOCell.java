@@ -167,8 +167,8 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     rank.computeRanking(currentNeighbors);
 
     CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
-    for (int j = 0; j < rank.getNumberOfSubfronts(); j++) {
-      crowdingDistance.computeDensityEstimator(rank.getSubfront(j));
+    for (int j = 0; j < rank.getNumberOfSubFronts(); j++) {
+      crowdingDistance.computeDensityEstimator(rank.getSubFront(j));
     }
 
     Collections.sort(this.currentNeighbors,new RankingAndCrowdingDistanceComparator<S>());

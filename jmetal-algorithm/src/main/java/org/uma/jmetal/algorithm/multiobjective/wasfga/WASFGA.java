@@ -163,11 +163,11 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	}
 
     protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
-		population.addAll(ranking.getSubfront(index));
+		population.addAll(ranking.getSubFront(index));
 	}
 
     protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int index, List<S> population) {
-		List<S> front 	= ranking.getSubfront(index);
+		List<S> front 	= ranking.getSubFront(index);
 		int remain 		= this.getPopulationSize() - population.size();
 		population.addAll(front.subList(0, remain));
 	}
@@ -188,7 +188,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	}
 
 	private boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int index, List<S> population) {
-		return (population.size()+ranking.getSubfront(index).size() < this.getPopulationSize());
+		return (population.size()+ranking.getSubFront(index).size() < this.getPopulationSize());
 	}
 
 	@Override public List<S> getResult() {

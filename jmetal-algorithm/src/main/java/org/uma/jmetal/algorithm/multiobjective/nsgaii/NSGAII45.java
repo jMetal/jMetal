@@ -133,7 +133,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
       } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+        crowdingDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }
@@ -146,13 +146,13 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected boolean subfrontFillsIntoThePopulation(Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubfront(rank).size() < (populationSize - population.size());
+    return ranking.getSubFront(rank).size() < (populationSize - population.size());
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> front;
 
-    front = ranking.getSubfront(rank);
+    front = ranking.getSubFront(rank);
 
     for (S solution : front) {
       population.add(solution);
@@ -160,7 +160,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubfront(rank);
+    List<S> currentRankedFront = ranking.getSubFront(rank);
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
 

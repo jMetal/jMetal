@@ -67,8 +67,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     }
 
     ranking = computeRanking(population);
-    for (int curRank = 0; curRank < ranking.getNumberOfSubfronts(); curRank++) {
-      List<S> front = ranking.getSubfront(curRank);
+    for (int curRank = 0; curRank < ranking.getNumberOfSubFronts(); curRank++) {
+      List<S> front = ranking.getSubFront(curRank);
       for (S s : front) {
         int position = this.population.indexOf(s);
         rankIdx[curRank][position] = 1;

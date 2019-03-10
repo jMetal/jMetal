@@ -96,13 +96,13 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation);
 
     Ranking<S> ranking = computeRanking(jointPopulation);
-    List<S> lastSubfront = ranking.getSubfront(ranking.getNumberOfSubfronts()-1) ;
+    List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
     List<S> resultPopulation = new ArrayList<>() ;
-    for (int i = 0; i < ranking.getNumberOfSubfronts()-1; i++) {
-      for (S solution : ranking.getSubfront(i)) {
+    for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
+      for (S solution : ranking.getSubFront(i)) {
         resultPopulation.add(solution);
       }
     }

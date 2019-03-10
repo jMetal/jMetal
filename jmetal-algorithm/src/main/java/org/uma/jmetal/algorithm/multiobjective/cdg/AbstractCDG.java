@@ -575,7 +575,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 	void updateNadirPoint() {
 	    Ranking<S> ranking = new DominanceRanking<S>();
 	    ranking.computeRanking(population);
-	    List<S> nondominatedPopulation = ranking.getSubfront(0);
+	    List<S> nondominatedPopulation = ranking.getSubFront(0);
 	    
 		for(int i = 0;i < nondominatedPopulation.size();i++){
 			S individual = nondominatedPopulation.get(i);

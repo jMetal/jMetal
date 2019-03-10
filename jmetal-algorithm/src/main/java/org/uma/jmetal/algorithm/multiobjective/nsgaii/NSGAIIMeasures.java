@@ -111,7 +111,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(population);
 
-    numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
+    numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubFront(0).size());
 
     return pop;
   }

@@ -107,7 +107,7 @@ public class CellDE45 implements Algorithm<List<DoubleSolution>> {
         } else if (result == 0) {
           Ranking<DoubleSolution> ranking = computeRanking(currentNeighbors);
 
-          distance.computeDensityEstimator(ranking.getSubfront(0));
+          distance.computeDensityEstimator(ranking.getSubFront(0));
           boolean deleteMutant = true ;
           int compareResult = comparator.compare(solution, offspring) ;
 

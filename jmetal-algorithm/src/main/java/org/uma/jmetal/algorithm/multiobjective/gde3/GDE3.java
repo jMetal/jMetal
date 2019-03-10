@@ -168,7 +168,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
       } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubfront(rankingIndex));
+        crowdingDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }
@@ -182,14 +182,14 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   protected boolean subfrontFillsIntoThePopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
-    return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
+    return ranking.getSubFront(rank).size() < (getMaxPopulationSize() - population.size());
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
     List<DoubleSolution> front;
 
-    front = ranking.getSubfront(rank);
+    front = ranking.getSubFront(rank);
 
     for (DoubleSolution solution : front) {
       population.add(solution);
@@ -198,7 +198,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   protected void addLastRankedSolutionsToPopulation(Ranking<DoubleSolution> ranking, int rank,
       List<DoubleSolution> population) {
-    List<DoubleSolution> currentRankedFront = ranking.getSubfront(rank);
+    List<DoubleSolution> currentRankedFront = ranking.getSubFront(rank);
 
     Collections.sort(currentRankedFront, new CrowdingDistanceComparator<DoubleSolution>());
 
