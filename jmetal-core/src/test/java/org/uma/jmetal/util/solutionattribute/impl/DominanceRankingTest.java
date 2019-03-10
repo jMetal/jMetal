@@ -28,7 +28,7 @@ public class DominanceRankingTest {
     Ranking<Solution<?>> ranking = new DominanceRanking<Solution<?>>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(0, ranking.getNumberOfSubfronts()) ;
+    assertEquals(0, ranking.getNumberOfSubFronts()) ;
   }
 
   @Test
@@ -42,7 +42,7 @@ public class DominanceRankingTest {
     Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(1, ranking.getNumberOfSubfronts());
+    assertEquals(1, ranking.getNumberOfSubFronts());
   }
 
   @Test
@@ -65,13 +65,13 @@ public class DominanceRankingTest {
     Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(1, ranking.getNumberOfSubfronts()) ;
-    assertEquals(2, ranking.getSubfront(0).size()) ;
+    assertEquals(1, ranking.getNumberOfSubFronts()) ;
+    assertEquals(2, ranking.getSubFront(0).size()) ;
 
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(0, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
+    List<DoubleSolution> subfront = ranking.getSubFront(0) ;
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
   }
 
@@ -96,17 +96,17 @@ public class DominanceRankingTest {
     Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(2, ranking.getNumberOfSubfronts()) ;
+    assertEquals(2, ranking.getNumberOfSubFronts()) ;
 
-    assertNotNull(ranking.getSubfront(0));
-    assertEquals(1, ranking.getSubfront(0).size()) ;
-    assertEquals(1, ranking.getSubfront(1).size()) ;
+    assertNotNull(ranking.getSubFront(0));
+    assertEquals(1, ranking.getSubFront(0).size()) ;
+    assertEquals(1, ranking.getSubFront(1).size()) ;
 
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
-    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubFront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubFront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -136,19 +136,19 @@ public class DominanceRankingTest {
     Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(3, ranking.getNumberOfSubfronts()) ;
+    assertEquals(3, ranking.getNumberOfSubFronts()) ;
 
-    assertNotNull(ranking.getSubfront(0));
-    assertEquals(1, ranking.getSubfront(0).size()) ;
-    assertEquals(1, ranking.getSubfront(1).size()) ;
-    assertEquals(1, ranking.getSubfront(2).size()) ;
+    assertNotNull(ranking.getSubFront(0));
+    assertEquals(1, ranking.getSubFront(0).size()) ;
+    assertEquals(1, ranking.getSubFront(1).size()) ;
+    assertEquals(1, ranking.getSubFront(2).size()) ;
 
     assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
-    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
-    List<DoubleSolution> subfront2 = ranking.getSubfront(2) ;
+    List<DoubleSolution> subfront = ranking.getSubFront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubFront(1) ;
+    List<DoubleSolution> subfront2 = ranking.getSubFront(2) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
@@ -187,17 +187,17 @@ public class DominanceRankingTest {
     Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
-    assertEquals(2, ranking.getNumberOfSubfronts()) ;
+    assertEquals(2, ranking.getNumberOfSubFronts()) ;
 
-    assertNotNull(ranking.getSubfront(0));
-    assertEquals(3, ranking.getSubfront(0).size()) ;
-    assertEquals(2, ranking.getSubfront(1).size()) ;
+    assertNotNull(ranking.getSubFront(0));
+    assertEquals(3, ranking.getSubFront(0).size()) ;
+    assertEquals(2, ranking.getSubFront(1).size()) ;
 
     //assertEquals(0, (int) ranking.getAttribute(population.get(0))) ;
     //assertEquals(1, (int) ranking.getAttribute(population.get(1))) ;
 
-    List<DoubleSolution> subfront = ranking.getSubfront(0) ;
-    List<DoubleSolution> subfront1 = ranking.getSubfront(1) ;
+    List<DoubleSolution> subfront = ranking.getSubFront(0) ;
+    List<DoubleSolution> subfront1 = ranking.getSubFront(1) ;
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0))) ;
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0))) ;
