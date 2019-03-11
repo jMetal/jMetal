@@ -46,7 +46,7 @@ public class NSGAIICommandLineParsingRunner {
       "--mutationProbability",
       "0.001",
       "--variation",
-      "rankingAndCrowding",
+      "rankingAndCrowding", "--PV", "adfasf"
     };
 
     AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), arguments);

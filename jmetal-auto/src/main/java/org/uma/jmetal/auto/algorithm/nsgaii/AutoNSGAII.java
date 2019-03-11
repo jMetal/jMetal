@@ -5,6 +5,7 @@ import org.uma.jmetal.auto.createinitialsolutions.CreateInitialSolutions;
 import org.uma.jmetal.auto.createinitialsolutions.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.evaluation.Evaluation;
 import org.uma.jmetal.auto.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.auto.irace.mutation.MutationParameter;
 import org.uma.jmetal.auto.replacement.Replacement;
 import org.uma.jmetal.auto.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.selection.MatingPoolSelection;
@@ -30,6 +31,7 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;
@@ -56,6 +58,10 @@ enum CrossoverType {
   sbx,
   blx_alpha
 }
+
+@CommandLine.Command(name = "autonsgaII", subcommands = {
+        NaryTournamentMatingPoolSelection.class,
+})
 
 public class AutoNSGAII {
   /* Fixed parameters */
@@ -173,6 +179,8 @@ public class AutoNSGAII {
     variation = getVariation();
     selection = getSelection() ;
     evaluation = new SequentialEvaluation<>(getProblem());
+
+    System.out.println("PV_: " + ((NaryTournamentMatingPoolSelection)getSelection()).getPv()) ;
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(

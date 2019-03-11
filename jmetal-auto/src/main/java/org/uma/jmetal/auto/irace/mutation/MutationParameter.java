@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.irace.mutation;
 
 import org.uma.jmetal.auto.irace.Parameter;
 import org.uma.jmetal.auto.irace.ParameterType;
+import picocli.CommandLine;
 
 import java.util.Arrays;
 
