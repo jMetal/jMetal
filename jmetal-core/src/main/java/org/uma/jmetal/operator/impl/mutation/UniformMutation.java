@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.impl.mutation;
 
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -16,18 +18,20 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 public class UniformMutation implements MutationOperator<DoubleSolution> {
   private double perturbation;
   private Double mutationProbability = null;
-  private RandomGenerator<Double> randomGenenerator ;
+  private RandomGenerator<Double> randomGenerator;
+  private RepairDoubleSolution solutionRepair ;
 
   /** Constructor */
   public UniformMutation(double mutationProbability, double perturbation) {
-	  this(mutationProbability, perturbation, () -> JMetalRandom.getInstance().nextDouble());
+	  this(mutationProbability, perturbation, new RepairDoubleSolutionWithBoundValue(), () -> JMetalRandom.getInstance().nextDouble());
   }
 
   /** Constructor */
-  public UniformMutation(double mutationProbability, double perturbation, RandomGenerator<Double> randomGenenerator) {
+  public UniformMutation(double mutationProbability, double perturbation, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     this.mutationProbability = mutationProbability ;
     this.perturbation = perturbation ;
-    this.randomGenenerator = randomGenenerator ;
+    this.randomGenerator = randomGenerator;
+    this.solutionRepair = solutionRepair ;
   }
 
   /* Getters */
@@ -56,8 +60,8 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
    */
   public void doMutation(double probability, DoubleSolution solution)  {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenenerator.getRandomValue() < probability) {
-        double rand = randomGenenerator.getRandomValue();
+      if (randomGenerator.getRandomValue() < probability) {
+        double rand = randomGenerator.getRandomValue();
         double tmp = (rand - 0.5) * perturbation;
 
         tmp += solution.getVariableValue(i);

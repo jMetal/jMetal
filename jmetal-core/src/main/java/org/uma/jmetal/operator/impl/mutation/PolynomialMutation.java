@@ -78,7 +78,6 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
     this.solutionRepair = solutionRepair ;
-
     this.randomGenerator = randomGenerator ;
   }
 
