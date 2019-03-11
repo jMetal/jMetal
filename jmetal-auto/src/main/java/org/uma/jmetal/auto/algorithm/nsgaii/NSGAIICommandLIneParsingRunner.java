@@ -41,7 +41,8 @@ public class NSGAIICommandLIneParsingRunner {
       "polynomial",
       "--mutationProbability",
       "0.001",
-            "--variation", "rankingAndCrowding"
+      "--variation",
+      "rankingAndCrowding"
     };
 
     DoubleProblem problem = new ZDT1();

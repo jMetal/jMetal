@@ -85,6 +85,16 @@ public class AutoNSGAII {
       description = "Crossover probability (default: ${DEFAULT-VALUE})")
   private double crossoverProbability = 0.9;
 
+  @Option(
+          names = {"--sbxCrossoverDistributionIndex"},
+          description = "SBX Crossover Distribution Index (default: ${DEFAULT-VALUE})")
+  private double sbxCrossoverDistributionIndex = 0.20;
+
+  @Option(
+          names = {"--blxAlphaCrossoverAlphaValue"},
+          description = "BLX-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
+  private double blxAlphaCrossoverAlphaValue = 0.5;
+
   CrossoverOperator<DoubleSolution> crossover ;
 
   /* Mutation */
@@ -99,7 +109,19 @@ public class AutoNSGAII {
       description = "Mutation probability (default: ${DEFAULT-VALUE})")
   private double mutationProbability = 0.01;
 
+  @Option(
+          names = {"--polynomialMutationDistributionIndex"},
+          description = "Polynomial Mutation Distribution Index (default: ${DEFAULT-VALUE})")
+  private double polynomialMutationDistributionIndex = 0.20;
+
+  @Option(
+          names = {"--uniformMutationPerturbation"},
+          description = "Uniform Mutation Perturbation (default: ${DEFAULT-VALUE})")
+  private double uniformMutationPerturbation = 0.5;
+
+
   MutationOperator<DoubleSolution> mutation ;
+
 
   @Option(
       names = {"--offspringPopulationSize"},
@@ -115,6 +137,7 @@ public class AutoNSGAII {
 
   CreateInitialSolutions<DoubleSolution> createInitialSolutions ;
 
+  /* Variation */
   @Option(
       names = {"--variation"},
       required = true,
@@ -180,9 +203,9 @@ public class AutoNSGAII {
   CrossoverOperator<DoubleSolution> getCrossover() {
     switch (crossoverType) {
       case sbx:
-        return new SBXCrossover(crossoverProbability, 0.20);
+        return new SBXCrossover(crossoverProbability, sbxCrossoverDistributionIndex);
       case blx_alpha:
-        return new BLXAlphaCrossover(crossoverProbability, 0.5);
+        return new BLXAlphaCrossover(crossoverProbability, blxAlphaCrossoverAlphaValue);
       default:
         throw new RuntimeException(crossoverType + " is not a valid crossover operator");
     }
@@ -191,9 +214,9 @@ public class AutoNSGAII {
   MutationOperator<DoubleSolution> getMutation() {
     switch (mutationType) {
       case polynomial:
-        return new PolynomialMutation(mutationProbability, 0.20);
+        return new PolynomialMutation(mutationProbability, polynomialMutationDistributionIndex);
       case uniform:
-        return new UniformMutation(crossoverProbability, 0.5);
+        return new UniformMutation(crossoverProbability, uniformMutationPerturbation);
       default:
         throw new RuntimeException(mutationType + " is not a valid mutation operator");
     }
