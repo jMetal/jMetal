@@ -20,15 +20,15 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIICommandLIneParsingRunner {
+public class NSGAIICommandLineParsingRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 
     String[] arguments = {
       "--problemName",
-      "org.uma.jmetal.problem.multiobjective.zdt.ZDT2",
+      "org.uma.jmetal.problem.multiobjective.zdt.ZDT1",
       "--referenceFront",
-      "ZDT2.pf",
+      "ZDT1.pf",
       "--createInitialSolutions",
       "random",
       "--offspringPopulationSize",
@@ -46,7 +46,7 @@ public class NSGAIICommandLIneParsingRunner {
       "--mutationProbability",
       "0.001",
       "--variation",
-      "rankingAndCrowding"
+      "rankingAndCrowding",
     };
 
     AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), arguments);
