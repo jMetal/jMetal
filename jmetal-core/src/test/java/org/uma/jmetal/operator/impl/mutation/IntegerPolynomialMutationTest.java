@@ -8,7 +8,7 @@ import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -243,7 +243,7 @@ public class IntegerPolynomialMutationTest {
 		// Configuration
 		double crossoverProbability = 0.1;
 		int alpha = 20;
-		RepairDoubleSolutionAtBounds solutionRepair = new RepairDoubleSolutionAtBounds();
+		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 		@SuppressWarnings("serial")
 		IntegerProblem problem = new AbstractIntegerProblem() {
 

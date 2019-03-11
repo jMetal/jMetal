@@ -4,7 +4,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -51,14 +51,14 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
-    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds()) ;
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue()) ;
   }
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability,
                             double distributionIndex,
                             RandomGenerator<Double> randomGenerator) {
-    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds(), randomGenerator) ;
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue(), randomGenerator) ;
   }
 
   /** Constructor */

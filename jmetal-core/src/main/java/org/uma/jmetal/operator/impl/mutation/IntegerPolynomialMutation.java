@@ -4,7 +4,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -43,7 +43,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
 
   /** Constructor */
   public IntegerPolynomialMutation(double mutationProbability, double distributionIndex) {
-    this(mutationProbability, distributionIndex, new RepairDoubleSolutionAtBounds()) ;
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue()) ;
   }
 
   /** Constructor */

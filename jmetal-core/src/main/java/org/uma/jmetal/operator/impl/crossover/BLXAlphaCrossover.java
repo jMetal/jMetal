@@ -3,7 +3,7 @@ package org.uma.jmetal.operator.impl.crossover;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -29,12 +29,12 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability) {
-    this (crossoverProbability, DEFAULT_ALPHA, new RepairDoubleSolutionAtBounds()) ;
+    this (crossoverProbability, DEFAULT_ALPHA, new RepairDoubleSolutionWithBoundValue()) ;
   }
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability, double alpha) {
-    this (crossoverProbability, alpha, new RepairDoubleSolutionAtBounds()) ;
+    this (crossoverProbability, alpha, new RepairDoubleSolutionWithBoundValue()) ;
   }
 
   /** Constructor */

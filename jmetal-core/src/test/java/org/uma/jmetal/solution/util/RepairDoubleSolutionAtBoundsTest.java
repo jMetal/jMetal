@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.util;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +17,7 @@ public class RepairDoubleSolutionAtBoundsTest {
 
   @Before
   public void setup() {
-    repair = new RepairDoubleSolutionAtBounds() ;
+    repair = new RepairDoubleSolutionWithBoundValue() ;
   }
 
   @Test (expected = JMetalException.class)

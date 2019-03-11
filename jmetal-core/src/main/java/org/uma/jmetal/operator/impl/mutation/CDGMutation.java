@@ -17,7 +17,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -54,7 +54,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public CDGMutation(double mutationProbability, double delta) {
-    this(mutationProbability, delta, new RepairDoubleSolutionAtBounds()) ;
+    this(mutationProbability, delta, new RepairDoubleSolutionWithBoundValue()) ;
   }
 
   /** Constructor */

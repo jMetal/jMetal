@@ -40,7 +40,7 @@ public class Parameter {
   }
 
   public String getSwitch() {
-    return switchName;
+    return "\"" + switchName + "\"";
   }
 
   public ParameterType getType() {

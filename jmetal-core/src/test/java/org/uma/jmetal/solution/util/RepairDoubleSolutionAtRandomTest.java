@@ -3,6 +3,7 @@ package org.uma.jmetal.solution.util;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -20,7 +21,7 @@ public class RepairDoubleSolutionAtRandomTest {
   private RepairDoubleSolution repair;
 
   @Before public void setup() {
-    repair = new RepairDoubleSolutionAtRandom();
+    repair = new RepairDoubleSolutionWithRandomValue();
   }
 
   @Test(expected = JMetalException.class)
@@ -64,13 +65,13 @@ public class RepairDoubleSolutionAtRandomTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new RepairDoubleSolutionAtRandom().repairSolutionVariableValue(value, lowerBound, upperBound);
+		new RepairDoubleSolutionWithRandomValue().repairSolutionVariableValue(value, lowerBound, upperBound);
 		assertTrue("No use of the default generator", defaultUses[0] > 0);
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
 		final int[] customUses = { 0 };
-		new RepairDoubleSolutionAtRandom((a, b) -> {
+		new RepairDoubleSolutionWithRandomValue((a, b) -> {
 			customUses[0]++;
 			return new Random().nextDouble()*(b-a)+a;
 		}).repairSolutionVariableValue(value, lowerBound, upperBound);

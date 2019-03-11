@@ -1,5 +1,6 @@
-package org.uma.jmetal.solution.util;
+package org.uma.jmetal.solution.util.impl;
 
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 /**
@@ -7,9 +8,11 @@ import org.uma.jmetal.util.JMetalException;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class RepairDoubleSolutionAtBounds implements RepairDoubleSolution {
+public class RepairDoubleSolutionWithOppositeBoundValue implements RepairDoubleSolution {
   /**
-   * Checks if the value is between its bounds; if not, the lower or upper bound is returned
+   * Checks if the value is between its bounds; if not, if it lower/higher than the lower/upper bound, the upper/lower
+   * bound value is returned
+   *
    * @param value The value to be checked
    * @param lowerBound
    * @param upperBound
@@ -23,10 +26,10 @@ public class RepairDoubleSolutionAtBounds implements RepairDoubleSolution {
 
     double result = value ;
     if (value < lowerBound) {
-      result = lowerBound ;
+      result = upperBound ;
     }
     if (value > upperBound) {
-      result = upperBound ;
+      result = lowerBound ;
     }
 
     return result ;

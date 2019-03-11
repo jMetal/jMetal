@@ -1,5 +1,6 @@
-package org.uma.jmetal.solution.util;
+package org.uma.jmetal.solution.util.impl;
 
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -9,20 +10,20 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class RepairDoubleSolutionAtRandom implements RepairDoubleSolution {
+public class RepairDoubleSolutionWithRandomValue implements RepairDoubleSolution {
   private BoundedRandomGenerator<Double> randomGenerator ;
 
   /**
    * Constructor
    */
-  public RepairDoubleSolutionAtRandom() {
+  public RepairDoubleSolutionWithRandomValue() {
 	  this((a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
   }
 
   /**
    * Constructor
    */
-  public RepairDoubleSolutionAtRandom(BoundedRandomGenerator<Double> randomGenerator) {
+  public RepairDoubleSolutionWithRandomValue(BoundedRandomGenerator<Double> randomGenerator) {
     this.randomGenerator = randomGenerator ;
   }
   /**
