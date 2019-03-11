@@ -2,7 +2,7 @@ package org.uma.jmetal.auto.algorithm.impl;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.createinitialsolutions.CreateInitialSolutions;
-import org.uma.jmetal.auto.createinitialsolutions.impl.RandomSolutionListCreation;
+import org.uma.jmetal.auto.createinitialsolutions.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.evaluation.Evaluation;
 import org.uma.jmetal.auto.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.observer.impl.EvaluationObserver;
@@ -27,7 +27,6 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.DefaultAlgorithmOutputData;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
@@ -42,8 +41,6 @@ public class NSGAII {
     int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 25000;
 
-    JMetalLogger.logger.setUseParentHandlers(false);
-
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
     CrossoverOperator<DoubleSolution> crossover =
@@ -56,8 +53,8 @@ public class NSGAII {
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    CreateInitialSolutions<DoubleSolution> createInitialSolutionList =
-        new RandomSolutionListCreation<>(problem, populationSize);
+    CreateInitialSolutions<DoubleSolution> createInitialPopulation =
+        new RandomSolutionsCreation<>(problem, populationSize);
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
@@ -82,7 +79,7 @@ public class NSGAII {
         new EvolutionaryAlgorithm<>(
                 "NSGA-II",
                 evaluation,
-                createInitialSolutionList,
+                createInitialPopulation,
                 termination,
                 selection,
                 variation,

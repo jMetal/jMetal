@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class RandomSolutionListCreation<S extends Solution<?>> implements CreateInitialSolutions<S> {
+public class RandomSolutionsCreation<S extends Solution<?>> implements CreateInitialSolutions<S> {
   private final int numberOfSolutionsToCreate;
   private final Problem<S> problem ;
 
-  public RandomSolutionListCreation(Problem problem, int numberOfSolutionsToCreate) {
+  public RandomSolutionsCreation(Problem<S> problem, int numberOfSolutionsToCreate) {
     this.problem = problem ;
     this.numberOfSolutionsToCreate = numberOfSolutionsToCreate ;
   }
