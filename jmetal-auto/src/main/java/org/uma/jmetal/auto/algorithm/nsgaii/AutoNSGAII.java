@@ -1,6 +1,5 @@
-package org.uma.jmetal.auto.algorithm.impl;
+package org.uma.jmetal.auto.algorithm.nsgaii;
 
-import org.omg.CORBA.DoubleSeqHelper;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.createinitialsolutions.CreateInitialSolutions;
 import org.uma.jmetal.auto.createinitialsolutions.impl.RandomSolutionsCreation;
@@ -25,13 +24,11 @@ import org.uma.jmetal.operator.impl.crossover.BLXAlphaCrossover;
 import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.operator.impl.mutation.UniformMutation;
-import org.uma.jmetal.operator.impl.selection.NaryTournamentSelection;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;
@@ -88,7 +85,7 @@ public class AutoNSGAII {
       description = "Crossover probability (default: ${DEFAULT-VALUE})")
   private double crossoverProbability = 0.9;
 
-  CrossoverOperator<DoubleSolution> crossover = getCrossover();
+  CrossoverOperator<DoubleSolution> crossover ;
 
   /* Mutation */
   @Option(
@@ -102,7 +99,7 @@ public class AutoNSGAII {
       description = "Mutation probability (default: ${DEFAULT-VALUE})")
   private double mutationProbability = 0.01;
 
-  MutationOperator<DoubleSolution> mutation = getMutation();
+  MutationOperator<DoubleSolution> mutation ;
 
   @Option(
       names = {"--offspringPopulationSize"},
@@ -116,15 +113,14 @@ public class AutoNSGAII {
   private CreateInitialSolutionsStrategyList createInitialSolutionsType =
       CreateInitialSolutionsStrategyList.random;
 
-  CreateInitialSolutions<DoubleSolution> createInitialSolutions = getCreateInitialSolutionStrategy() ;
+  CreateInitialSolutions<DoubleSolution> createInitialSolutions ;
 
   @Option(
       names = {"--variation"},
       required = true,
       description = "Variation: ${COMPLETION-CANDIDATES}")
   private VariationType variationType;
-
-  Variation<DoubleSolution> variation = getVariation();
+  Variation<DoubleSolution> variation ;
 
   /* Selection */
   @Option(
@@ -138,9 +134,15 @@ public class AutoNSGAII {
           description = "Selection: number of selected solutions")
   private int selectionTournamentSize = 2;
 
-  MatingPoolSelection<DoubleSolution> selection = getSelection() ;
+  MatingPoolSelection<DoubleSolution> selection ;
 
   EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {
+    crossover = getCrossover();
+    mutation = getMutation();
+    createInitialSolutions = getCreateInitialSolutionStrategy() ;
+    variation = getVariation();
+    selection = getSelection() ;
+
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(
             "NSGAII",

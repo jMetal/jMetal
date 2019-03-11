@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.impl;
+package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.createinitialsolutions.CreateInitialSolutions;
