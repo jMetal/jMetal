@@ -25,6 +25,10 @@ public class NSGAIICommandLIneParsingRunner {
   public static void main(String[] args) throws FileNotFoundException {
 
     String[] arguments = {
+      "--problemName",
+      "org.uma.jmetal.problem.multiobjective.zdt.ZDT2",
+      "--referenceFront",
+      "ZDT2.pf",
       "--createInitialSolutions",
       "random",
       "--offspringPopulationSize",
@@ -45,15 +49,12 @@ public class NSGAIICommandLIneParsingRunner {
       "rankingAndCrowding"
     };
 
-    DoubleProblem problem = new ZDT1();
-    String paretoFrontFile = "pareto_fronts/ZDT1.pf";
-
     AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), arguments);
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
 
-    Front referenceFront = new ArrayFront(paretoFrontFile);
+    Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
     Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
     Front normalizedFront = frontNormalizer.normalize(new ArrayFront(autoNSGAII.getResult()));

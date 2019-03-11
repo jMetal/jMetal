@@ -27,6 +27,7 @@ import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import picocli.CommandLine.Option;
@@ -59,11 +60,18 @@ enum CrossoverType {
 public class AutoNSGAII {
   /* Fixed parameters */
   int populationSize = 100;
-  DoubleProblem problem = new ZDT1();
+
+  @Option(names = {"-p","--problemName"}, required = true,
+          description = "problem name})")
+  private String problemName ;
+
+  @Option(names = {"-rf","--referenceFront"}, required = true,
+          description = "reference front")
+  private String referenceParetoFront ;
 
   /* Fixed components */
   Termination termination = new TerminationByEvaluations(25000);
-  Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+  Evaluation<DoubleSolution> evaluation ;
   Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
   DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
   MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
@@ -122,7 +130,6 @@ public class AutoNSGAII {
 
   MutationOperator<DoubleSolution> mutation ;
 
-
   @Option(
       names = {"--offspringPopulationSize"},
       description = "offspring population size (default: ${DEFAULT-VALUE})")
@@ -165,6 +172,7 @@ public class AutoNSGAII {
     createInitialSolutions = getCreateInitialSolutionStrategy() ;
     variation = getVariation();
     selection = getSelection() ;
+    evaluation = new SequentialEvaluation<>(getProblem());
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(
@@ -225,10 +233,18 @@ public class AutoNSGAII {
   CreateInitialSolutions<DoubleSolution> getCreateInitialSolutionStrategy() {
     switch (createInitialSolutionsType) {
       case random:
-        return new RandomSolutionsCreation(problem, populationSize);
+        return new RandomSolutionsCreation(getProblem(), populationSize);
       default:
         throw new RuntimeException(
             createInitialSolutions + " is not a valid initialization strategy");
     }
   }
+
+  DoubleProblem getProblem(){
+    return  (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+  }
+  String getReferenceParetoFront(){
+    return "pareto_fronts/"+referenceParetoFront;
+  }
+
 }
