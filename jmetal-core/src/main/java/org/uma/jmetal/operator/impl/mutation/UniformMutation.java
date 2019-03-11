@@ -4,6 +4,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -19,19 +20,27 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
   private double perturbation;
   private Double mutationProbability = null;
   private RandomGenerator<Double> randomGenerator;
-  private RepairDoubleSolution solutionRepair ;
+  private RepairDoubleSolution solutionRepair;
 
   /** Constructor */
   public UniformMutation(double mutationProbability, double perturbation) {
-	  this(mutationProbability, perturbation, new RepairDoubleSolutionWithBoundValue(), () -> JMetalRandom.getInstance().nextDouble());
+    this(
+        mutationProbability,
+        perturbation,
+        new RepairDoubleSolutionWithBoundValue(),
+        () -> JMetalRandom.getInstance().nextDouble());
   }
 
   /** Constructor */
-  public UniformMutation(double mutationProbability, double perturbation, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
-    this.mutationProbability = mutationProbability ;
-    this.perturbation = perturbation ;
+  public UniformMutation(
+      double mutationProbability,
+      double perturbation,
+      RepairDoubleSolution solutionRepair,
+      RandomGenerator<Double> randomGenerator) {
+    this.mutationProbability = mutationProbability;
+    this.perturbation = perturbation;
     this.randomGenerator = randomGenerator;
-    this.solutionRepair = solutionRepair ;
+    this.solutionRepair = solutionRepair;
   }
 
   /* Getters */
@@ -56,9 +65,9 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
    * Perform the operation
    *
    * @param probability Mutation setProbability
-   * @param solution    The solution to mutate
+   * @param solution The solution to mutate
    */
-  public void doMutation(double probability, DoubleSolution solution)  {
+  public void doMutation(double probability, DoubleSolution solution) {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() < probability) {
         double rand = randomGenerator.getRandomValue();
@@ -66,11 +75,9 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
 
         tmp += solution.getVariableValue(i);
 
-        if (tmp < solution.getLowerBound(i)) {
-          tmp = solution.getLowerBound(i);
-        } else if (tmp > solution.getUpperBound(i)) {
-          tmp = solution.getUpperBound(i);
-        }
+        tmp =
+            solutionRepair.repairSolutionVariableValue(
+                tmp, solution.getLowerBound(i), solution.getUpperBound(i));
 
         solution.setVariableValue(i, tmp);
       }

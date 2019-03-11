@@ -12,10 +12,10 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 /**
  * This class implements a polynomial mutation operator
  *
- * The implementation is based on the NSGA-II code available in
+ * <p>The implementation is based on the NSGA-II code available in
  * http://www.iitk.ac.in/kangal/codes.shtml
  *
- * If the lower and upper bounds of a variable are the same, no mutation is carried out and the
+ * <p>If the lower and upper bounds of a variable are the same, no mutation is carried out and the
  * bound value is returned.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -23,62 +23,73 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  */
 @SuppressWarnings("serial")
 public class PolynomialMutation implements MutationOperator<DoubleSolution> {
-  private static final double DEFAULT_PROBABILITY = 0.01 ;
-  private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0 ;
-  private double distributionIndex ;
-  private double mutationProbability ;
-  private RepairDoubleSolution solutionRepair ;
+  private static final double DEFAULT_PROBABILITY = 0.01;
+  private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
+  private double distributionIndex;
+  private double mutationProbability;
+  private RepairDoubleSolution solutionRepair;
 
-  private RandomGenerator<Double> randomGenerator ;
+  private RandomGenerator<Double> randomGenerator;
 
   /** Constructor */
   public PolynomialMutation() {
-    this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX) ;
+    this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
   }
 
   /** Constructor */
   public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
-    this(1.0/problem.getNumberOfVariables(), distributionIndex) ;
+    this(1.0 / problem.getNumberOfVariables(), distributionIndex);
   }
 
   /** Constructor */
-  public PolynomialMutation(DoubleProblem problem,
-                            double distributionIndex,
-                            RandomGenerator<Double> randomGenerator) {
-    this(1.0/problem.getNumberOfVariables(), distributionIndex) ;
-    this.randomGenerator = randomGenerator ;
+  public PolynomialMutation(
+      DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
+    this(1.0 / problem.getNumberOfVariables(), distributionIndex);
+    this.randomGenerator = randomGenerator;
   }
 
   /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
-    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue()) ;
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
   }
 
   /** Constructor */
-  public PolynomialMutation(double mutationProbability,
-                            double distributionIndex,
-                            RandomGenerator<Double> randomGenerator) {
-    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue(), randomGenerator) ;
+  public PolynomialMutation(
+      double mutationProbability,
+      double distributionIndex,
+      RandomGenerator<Double> randomGenerator) {
+    this(
+        mutationProbability,
+        distributionIndex,
+        new RepairDoubleSolutionWithBoundValue(),
+        randomGenerator);
   }
 
   /** Constructor */
-  public PolynomialMutation(double mutationProbability, double distributionIndex,
-      RepairDoubleSolution solutionRepair) {
-	  this(mutationProbability, distributionIndex, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  public PolynomialMutation(
+      double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
+    this(
+        mutationProbability,
+        distributionIndex,
+        solutionRepair,
+        () -> JMetalRandom.getInstance().nextDouble());
   }
 
   /** Constructor */
-  public PolynomialMutation(double mutationProbability, double distributionIndex,
-      RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
+  public PolynomialMutation(
+      double mutationProbability,
+      double distributionIndex,
+      RepairDoubleSolution solutionRepair,
+      RandomGenerator<Double> randomGenerator) {
     if (mutationProbability < 0) {
-      throw new JMetalException("Mutation probability is negative: " + mutationProbability) ;
+      throw new JMetalException("Mutation probability is negative: " + mutationProbability);
     } else if (distributionIndex < 0) {
-      throw new JMetalException("Distribution index is negative: " + distributionIndex) ;
+      throw new JMetalException("Distribution index is negative: " + distributionIndex);
     }
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
-    this.solutionRepair = solutionRepair ;
-    this.randomGenerator = randomGenerator ;
+    this.solutionRepair = solutionRepair;
+    this.randomGenerator = randomGenerator;
   }
 
   /* Getters */
@@ -92,18 +103,18 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /* Setters */
   public void setMutationProbability(double probability) {
-    this.mutationProbability = probability ;
+    this.mutationProbability = probability;
   }
 
   public void setDistributionIndex(double distributionIndex) {
-    this.distributionIndex = distributionIndex ;
+    this.distributionIndex = distributionIndex;
   }
 
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
     if (null == solution) {
-      throw new JMetalException("Null parameter") ;
+      throw new JMetalException("Null parameter");
     }
 
     doMutation(mutationProbability, solution);
@@ -118,10 +129,10 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
         y = solution.getVariableValue(i);
-        yl = solution.getLowerBound(i) ;
-        yu = solution.getUpperBound(i) ;
+        yl = solution.getLowerBound(i);
+        yu = solution.getUpperBound(i);
         if (yl == yu) {
-          y = yl ;
+          y = yl;
         } else {
           delta1 = (y - yl) / (yu - yl);
           delta2 = (yu - y) / (yu - yl);
