@@ -2,7 +2,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;

@@ -3,7 +3,7 @@ package org.uma.jmetal.operator.impl.crossover;
 import org.junit.Test;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 

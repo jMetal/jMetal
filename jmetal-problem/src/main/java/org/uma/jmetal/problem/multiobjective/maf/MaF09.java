@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.awt.geom.Point2D;

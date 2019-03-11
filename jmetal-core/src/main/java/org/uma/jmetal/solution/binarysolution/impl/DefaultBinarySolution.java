@@ -1,10 +1,13 @@
-package org.uma.jmetal.solution.impl;
+package org.uma.jmetal.solution.binarysolution.impl;
 
 import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.impl.AbstractSolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,26 +17,30 @@ import java.util.Map;
  */
 @SuppressWarnings("serial")
 public class DefaultBinarySolution
-    extends AbstractGenericSolution<BinarySet, BinaryProblem>
+    extends AbstractSolution<BinarySet>
     implements BinarySolution {
 
+  protected List<Integer> bitsPerVariable ;
+
   /** Constructor */
-  public DefaultBinarySolution(BinaryProblem problem) {
-    super(problem) ;
+  public DefaultBinarySolution(int numberOfVariables, int numberOfObjectives, List<Integer> bitsPerVariable) {
+    super(numberOfVariables, numberOfObjectives) ;
+    this.bitsPerVariable = bitsPerVariable ;
 
     initializeBinaryVariables();
-    initializeObjectiveValues();
   }
 
   /** Copy constructor */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.problem);
+    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives()) ;
 
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+    this.bitsPerVariable = solution.bitsPerVariable ;
+
+    for (int i = 0; i < getNumberOfVariables(); i++) {
       setVariableValue(i, (BinarySet) solution.getVariableValue(i).clone());
     }
 
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i)) ;
     }
 
@@ -44,7 +51,7 @@ public class DefaultBinarySolution
     BinarySet bitSet = new BinarySet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
-      double rnd = randomGenerator.nextDouble() ;
+      double rnd = JMetalRandom.getInstance().nextDouble() ;
       if (rnd < 0.5) {
         bitSet.set(i);
       } else {
@@ -89,8 +96,8 @@ public class DefaultBinarySolution
   }
   
   private void initializeBinaryVariables() {
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i)));
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      setVariableValue(i, createNewBitSet(bitsPerVariable.get(i)));
     }
   }
 

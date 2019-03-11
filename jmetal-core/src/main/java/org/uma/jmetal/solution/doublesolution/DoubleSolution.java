@@ -1,4 +1,6 @@
-package org.uma.jmetal.solution;
+package org.uma.jmetal.solution.doublesolution;
+
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Interface representing a double solutions
@@ -6,6 +8,6 @@ package org.uma.jmetal.solution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface DoubleSolution extends Solution<Double> {
-  public Double getLowerBound(int index) ;
-  public Double getUpperBound(int index) ;
+  Double getLowerBound(int index) ;
+  Double getUpperBound(int index) ;
 }

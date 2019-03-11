@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.util.chartcontainer;
 
 import org.knowm.xchart.*;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;

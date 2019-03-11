@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 

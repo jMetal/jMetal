@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Interface representing continuous problems

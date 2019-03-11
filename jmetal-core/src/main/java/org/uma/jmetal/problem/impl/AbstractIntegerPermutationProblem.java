@@ -1,8 +1,8 @@
 package org.uma.jmetal.problem.impl;
 
 import org.uma.jmetal.problem.PermutationProblem;
-import org.uma.jmetal.solution.PermutationSolution;
-import org.uma.jmetal.solution.impl.DefaultIntegerPermutationSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
+import org.uma.jmetal.solution.permutationsolution.integerpermutation.DefaultIntegerPermutationSolution;
 
 @SuppressWarnings("serial")
 public abstract class AbstractIntegerPermutationProblem

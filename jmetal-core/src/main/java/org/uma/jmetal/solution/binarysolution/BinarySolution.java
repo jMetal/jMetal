@@ -1,5 +1,6 @@
-package org.uma.jmetal.solution;
+package org.uma.jmetal.solution.binarysolution;
 
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
 /**
@@ -8,6 +9,6 @@ import org.uma.jmetal.util.binarySet.BinarySet;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface BinarySolution extends Solution<BinarySet> {
-  public int getNumberOfBits(int index) ;
-  public int getTotalNumberOfBits() ;
+  int getNumberOfBits(int index) ;
+  int getTotalNumberOfBits() ;
 }

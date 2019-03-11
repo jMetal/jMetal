@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
 
 /**
  * Interface representing binary problems

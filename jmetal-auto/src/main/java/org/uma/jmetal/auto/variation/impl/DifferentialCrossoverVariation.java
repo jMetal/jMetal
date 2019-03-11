@@ -2,7 +2,7 @@ package org.uma.jmetal.auto.variation.impl;
 
 import org.uma.jmetal.auto.variation.Variation;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;

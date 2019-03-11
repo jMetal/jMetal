@@ -16,7 +16,7 @@ package org.uma.jmetal.algorithm.multiobjective.cdg;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 
 /**

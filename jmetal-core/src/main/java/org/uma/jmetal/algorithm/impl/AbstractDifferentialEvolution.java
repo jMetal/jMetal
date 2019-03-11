@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Abstract class representing differential evolution (DE) algorithms

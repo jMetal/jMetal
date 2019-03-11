@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.artificialdecisionmaker;
 
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;

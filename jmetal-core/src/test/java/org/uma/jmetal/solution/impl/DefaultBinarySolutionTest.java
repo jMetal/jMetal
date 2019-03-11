@@ -5,7 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.DefaultBinarySolution;
 
 import static org.junit.Assert.assertEquals;
 

@@ -3,8 +3,7 @@ package org.uma.jmetal.util.neighborhood.impl;
 import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.ArrayDoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

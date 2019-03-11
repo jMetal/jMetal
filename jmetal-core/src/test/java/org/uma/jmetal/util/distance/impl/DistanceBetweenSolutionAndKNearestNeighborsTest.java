@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.distance.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;

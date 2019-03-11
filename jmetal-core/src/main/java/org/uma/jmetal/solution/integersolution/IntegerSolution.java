@@ -1,4 +1,6 @@
-package org.uma.jmetal.solution;
+package org.uma.jmetal.solution.integersolution;
+
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Interface representing a integer solutions
@@ -6,6 +8,6 @@ package org.uma.jmetal.solution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface IntegerSolution extends Solution<Integer> {
-  public Integer getLowerBound(int index) ;
-  public Integer getUpperBound(int index) ;
+  Integer getLowerBound(int index) ;
+  Integer getUpperBound(int index) ;
 }
