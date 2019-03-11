@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -54,7 +55,7 @@ public class UniformMutationTest {
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
 		final int[] customUses = { 0 };
-		new UniformMutation(0.5, 0.5, () -> {
+		new UniformMutation(0.5, 0.5, new RepairDoubleSolutionWithBoundValue(), () -> {
 			customUses[0]++;
 			return new Random().nextDouble();
 		}).execute(solution);

@@ -1,8 +1,9 @@
-package org.uma.jmetal.solution.util;
+package org.uma.jmetal.solution.util.impl;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class RepairDoubleSolutionAtRandomTest {
+public class RepairDoubleSolutionWithRandomValueTest {
   private RepairDoubleSolution repair;
 
   @Before public void setup() {
@@ -25,12 +26,12 @@ public class RepairDoubleSolutionAtRandomTest {
   }
 
   @Test(expected = JMetalException.class)
-  public void shouldRRepairDoubleSolutionAtRandomRaiseAnExceptionIfTheBoundsAreIncorrect() {
+  public void shouldRRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
     repair.repairSolutionVariableValue(0.0, 1.0, -1.0);
   }
 
   @Test
-  public void shouldRRepairDoubleSolutionAtRandomAssignARandomValueIfValueIsLessThanTheLowerBound() {
+  public void shouldRepairAssignARandomValueIfValueIsLessThanTheLowerBound() {
     double lowerBound = -1.0;
     double upperBound = 1.0;
     assertThat(repair.repairSolutionVariableValue(-3, lowerBound, upperBound),
@@ -41,7 +42,7 @@ public class RepairDoubleSolutionAtRandomTest {
   }
 
   @Test
-  public void shouldRRepairDoubleSolutionAtRandomAssignARandomValueIfValueIsGreaterThanTheUpperBound() {
+  public void shouldRepairAssignARandomValueIfValueIsGreaterThanTheUpperBound() {
     double lowerBound = -1.0;
     double upperBound = 1.0;
     assertThat(repair.repairSolutionVariableValue(4, lowerBound, upperBound),
