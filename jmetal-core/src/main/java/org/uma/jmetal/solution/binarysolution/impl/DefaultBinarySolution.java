@@ -1,8 +1,7 @@
 package org.uma.jmetal.solution.binarysolution.impl;
 
-import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.impl.AbstractSolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -23,8 +22,8 @@ public class DefaultBinarySolution
   protected List<Integer> bitsPerVariable ;
 
   /** Constructor */
-  public DefaultBinarySolution(int numberOfVariables, int numberOfObjectives, List<Integer> bitsPerVariable) {
-    super(numberOfVariables, numberOfObjectives) ;
+  public DefaultBinarySolution(List<Integer> bitsPerVariable, int numberOfObjectives) {
+    super(bitsPerVariable.size(), numberOfObjectives) ;
     this.bitsPerVariable = bitsPerVariable ;
 
     initializeBinaryVariables();

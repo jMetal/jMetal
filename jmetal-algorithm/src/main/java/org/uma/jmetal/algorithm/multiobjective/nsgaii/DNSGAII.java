@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.RankingAndDirScoreSelection;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.RankingAndDirScoreSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -24,10 +24,10 @@ public class DNSGAII<S extends Solution<?>> extends NSGAII<S> {
     private double[][] referenceVectors ;
 
     public DNSGAII(Problem<S> problem, int maxEvaluations,
-                                           int populationSize, int matingPoolSize, int offspringPopulationSize,
-                                           CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-                                           SelectionOperator<List<S>,S> selectionOperator, Comparator<S> dominanceComparator,
-                                           SolutionListEvaluator<S> evaluator) {
+                   int populationSize, int matingPoolSize, int offspringPopulationSize,
+                   CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                   SelectionOperator<List<S>,S> selectionOperator, Comparator<S> dominanceComparator,
+                   SolutionListEvaluator<S> evaluator) {
         super(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
                 crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator);
     }

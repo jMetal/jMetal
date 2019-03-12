@@ -1,8 +1,8 @@
 package org.uma.jmetal.workingTest;
 
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
-import org.uma.jmetal.problem.IntegerProblem;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
+import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.singleobjective.NIntegerMin;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;

@@ -1,9 +1,8 @@
 package org.uma.jmetal.auto.selection.impl;
 
 import org.uma.jmetal.auto.selection.MatingPoolSelection;
-import org.uma.jmetal.operator.impl.selection.NaryTournamentSelection;
+import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
-import picocli.CommandLine;
 
 import java.util.ArrayList;
 import java.util.Comparator;

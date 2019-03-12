@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
@@ -36,8 +36,8 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
    * Constructor
    */
   public GDE3(DoubleProblem problem, int populationSize, int maxEvaluations,
-      DifferentialEvolutionSelection selection, DifferentialEvolutionCrossover crossover,
-      SolutionListEvaluator<DoubleSolution> evaluator) {
+              DifferentialEvolutionSelection selection, DifferentialEvolutionCrossover crossover,
+              SolutionListEvaluator<DoubleSolution> evaluator) {
     setProblem(problem);
     setMaxPopulationSize(populationSize);
     this.maxEvaluations = maxEvaluations;

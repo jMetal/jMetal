@@ -2,13 +2,10 @@ package org.uma.jmetal.auto.selection.impl;
 
 import org.uma.jmetal.auto.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.util.checking.Checker;
-import org.uma.jmetal.operator.impl.selection.NaryTournamentSelection;
-import org.uma.jmetal.operator.impl.selection.RandomSelection;
+import org.uma.jmetal.operator.selection.impl.RandomSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingPoolSelection<S> {

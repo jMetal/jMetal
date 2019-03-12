@@ -1,7 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.SolutionEvaluator.Objective;
+import org.uma.jmetal.solution.util.ObjectiveFactory;
+import org.uma.jmetal.solution.util.SolutionEvaluator.Objective;
 
 import java.util.Arrays;
 import java.util.Collection;

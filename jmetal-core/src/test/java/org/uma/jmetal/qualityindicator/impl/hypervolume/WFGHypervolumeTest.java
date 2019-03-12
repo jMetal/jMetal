@@ -2,8 +2,8 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -183,13 +183,7 @@ public class WFGHypervolumeTest {
         upperLimit.add(4.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
-    }
-
-    @Override
-    public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(this) ;
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     /** Evaluate() method */

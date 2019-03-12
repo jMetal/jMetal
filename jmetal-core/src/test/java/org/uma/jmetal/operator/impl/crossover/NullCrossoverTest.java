@@ -1,9 +1,10 @@
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.junit.Test;
-import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -55,8 +56,7 @@ public class NullCrossoverTest {
         upperLimit.add(4.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     @Override public int getNumberOfVariables() {
@@ -78,10 +78,6 @@ public class NullCrossoverTest {
     @Override public void evaluate(DoubleSolution solution) {
       solution.setObjective(0, randomGenerator.nextDouble());
       solution.setObjective(1, randomGenerator.nextDouble());
-    }
-
-    @Override public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(this);
     }
 
     @Override public Double getLowerBound(int index) {

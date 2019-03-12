@@ -1,6 +1,6 @@
 package org.uma.jmetal.solution.doublesolution.impl.util.impl;
 
-import com.sun.tools.doclint.Checker;
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.doublesolution.impl.util.DoubleVariableGenerator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -16,21 +16,21 @@ public class ScatterSearchDoubleVariableGenerator extends DoubleVariableGenerato
   protected int[][] reverseFrequency;
 
   public ScatterSearchDoubleVariableGenerator() {
-    this(4) ;
+    this(4);
   }
 
   public ScatterSearchDoubleVariableGenerator(int numberOfSubRanges) {
-    this.numberOfSubRanges = numberOfSubRanges ;
+    this.numberOfSubRanges = numberOfSubRanges;
   }
 
   @Override
-  public void configure(int numberOfVariables, List<Double> lowerBounds, List<Double> upperBounds) {
-    super.configure(numberOfVariables, lowerBounds, upperBounds) ;
+  public void configure(List<Pair<Double, Double>> bounds) {
+    super.configure(bounds);
 
-    sumOfFrequencyValues = new int[numberOfVariables] ;
-    sumOfReverseFrequencyValues = new int[numberOfVariables] ;
-    frequency = new int[numberOfSubRanges][numberOfVariables] ;
-    reverseFrequency = new int[numberOfSubRanges][numberOfVariables] ;
+    sumOfFrequencyValues = new int[bounds.size()];
+    sumOfReverseFrequencyValues = new int[bounds.size()];
+    frequency = new int[numberOfSubRanges][bounds.size()];
+    reverseFrequency = new int[numberOfSubRanges][bounds.size()];
   }
 
   @Override
@@ -39,12 +39,12 @@ public class ScatterSearchDoubleVariableGenerator extends DoubleVariableGenerato
       throw new JMetalException("The generator is not configured");
     }
 
-    List<Double> vars = new ArrayList<>(numberOfVariables);
+    List<Double> vars = new ArrayList<>(bounds.size());
 
     double value;
     int range;
 
-    for (int i = 0; i < numberOfVariables; i++) {
+    for (int i = 0; i < bounds.size(); i++) {
       sumOfReverseFrequencyValues[i] = 0;
       for (int j = 0; j < numberOfSubRanges; j++) {
         reverseFrequency[j][i] = sumOfFrequencyValues[i] - frequency[j][i];
@@ -65,10 +65,12 @@ public class ScatterSearchDoubleVariableGenerator extends DoubleVariableGenerato
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      double low = lowerBounds.get(i) + range * (upperBounds.get(i) - lowerBounds.get(i)) / numberOfSubRanges;
-      double high = low + (upperBounds.get(i) - lowerBounds.get(i))/ numberOfSubRanges;
+      double low =
+          bounds.get(i).getLeft()
+              + range * (bounds.get(i).getRight() - bounds.get(i).getLeft()) / numberOfSubRanges;
+      double high = low + (bounds.get(i).getRight() - bounds.get(i).getLeft()) / numberOfSubRanges;
 
-      vars.add(i, JMetalRandom.getInstance().nextDouble(low, high)) ;
+      vars.add(i, JMetalRandom.getInstance().nextDouble(low, high));
     }
 
     return vars;

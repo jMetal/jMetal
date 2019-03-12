@@ -1,8 +1,6 @@
 package org.uma.jmetal.solution.integersolution.impl.util.impl;
 
-import org.uma.jmetal.solution.doublesolution.impl.util.DoubleVariableGenerator;
 import org.uma.jmetal.solution.integersolution.impl.util.IntegerVariableGenerator;
-import org.uma.jmetal.solution.util.VariableGenerator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -18,11 +16,11 @@ public class RandomIntegerVariableGenerator extends IntegerVariableGenerator {
       throw new JMetalException("The generator is not configured");
     }
 
-    List<Integer> vars = new ArrayList<>(numberOfVariables);
+    List<Integer> vars = new ArrayList<>(bounds.size());
 
     IntStream
-        .range(0, numberOfVariables)
-        .forEach(i -> vars.add(i, JMetalRandom.getInstance().nextInt(lowerBounds.get(i), upperBounds.get(i))));
+        .range(0, bounds.size())
+        .forEach(i -> vars.add(i, JMetalRandom.getInstance().nextInt(bounds.get(i).getLeft(), bounds.get(i).getRight())));
 
     return vars;
   }

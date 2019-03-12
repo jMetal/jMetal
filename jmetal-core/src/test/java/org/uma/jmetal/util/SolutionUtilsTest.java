@@ -1,8 +1,8 @@
 package org.uma.jmetal.util;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 
@@ -260,18 +260,12 @@ public class SolutionUtilsTest {
         upperLimit.add(10.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     @Override
     public void evaluate(DoubleSolution solution) {
 
-    }
-
-    @Override
-    public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(this)  ;
     }
   }
 }

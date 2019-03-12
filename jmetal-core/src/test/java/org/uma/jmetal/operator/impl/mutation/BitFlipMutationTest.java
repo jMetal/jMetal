@@ -3,16 +3,20 @@ package org.uma.jmetal.operator.impl.mutation;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
+import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.DefaultBinarySolution;
+import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -154,13 +158,18 @@ public class BitFlipMutationTest {
     }
 
     @Override
-    protected int getBitsPerVariable(int index) {
+    public int getBitsFromVariable(int index) {
       return bitsPerVariable[index] ;
     }
 
     @Override
+    public List<Integer> getBitsPerVariable() {
+      return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
+    }
+
+    @Override
     public BinarySolution createSolution() {
-      return new DefaultBinarySolution(this) ;
+      return new DefaultBinarySolution(getBitsPerVariable(), getNumberOfObjectives()) ;
     }
 
     /** Evaluate() method */
@@ -184,10 +193,15 @@ public class BitFlipMutationTest {
 			}
 
 			@Override
-			protected int getBitsPerVariable(int index) {
+			public int getBitsFromVariable(int index) {
 				return 5;
 			}
-			
+
+			@Override
+      public List<Integer> getBitsPerVariable() {
+			  return null ;
+      }
+
 			@Override
 			public int getNumberOfVariables() {
 				return 10;

@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
@@ -33,8 +33,7 @@ public class Water extends AbstractDoubleProblem {
     List<Double> lowerLimit = Arrays.asList(LOWERLIMIT) ;
     List<Double> upperLimit = Arrays.asList(UPPERLIMIT) ;
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
 
     overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
     numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;

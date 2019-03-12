@@ -1,7 +1,7 @@
 package org.uma.jmetal.operator.impl.localsearch;
 
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;

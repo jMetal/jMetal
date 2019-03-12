@@ -1,14 +1,12 @@
 package org.uma.jmetal.solution.integersolution.impl;
 
-import org.uma.jmetal.problem.IntegerProblem;
+import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.util.DoubleVariableGenerator;
 import org.uma.jmetal.solution.doublesolution.impl.util.impl.RandomDoubleVariableGenerator;
-import org.uma.jmetal.solution.impl.AbstractSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.util.IntegerVariableGenerator;
 import org.uma.jmetal.solution.integersolution.impl.util.impl.RandomIntegerVariableGenerator;
-import org.uma.jmetal.solution.util.VariableGenerator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -25,43 +23,26 @@ import java.util.Map;
 public class DefaultIntegerSolution
     extends AbstractSolution<Integer>
     implements IntegerSolution {
-
-  protected List<Integer> lowerBounds ;
-  protected List<Integer> upperBounds ;
+  protected List<Pair<Integer, Integer>> bounds ;
 
   /** Constructor */
   public DefaultIntegerSolution(
-      int numberOfVariables,
-      int numberOfObjectives,
-      List<Integer> lowerBounds,
-      List<Integer> upperBounds) {
-    this(numberOfVariables, numberOfObjectives, lowerBounds, upperBounds, new RandomIntegerVariableGenerator()) ;
+      List<Pair<Integer, Integer>> bounds,
+      int numberOfObjectives) {
+    this(bounds, numberOfObjectives, new RandomIntegerVariableGenerator()) ;
   }
 
   /** Constructor */
   public DefaultIntegerSolution(
-      int numberOfVariables,
+      List<Pair<Integer, Integer>> bounds,
       int numberOfObjectives,
-      List<Integer> lowerBounds,
-      List<Integer> upperBounds,
       IntegerVariableGenerator generator) {
-    super(numberOfVariables, numberOfObjectives) ;
+    super(bounds.size(), numberOfObjectives) ;
 
-    if (numberOfVariables != lowerBounds.size()) {
-      throw new JMetalException("The number of lower bounds is not equal to the number of variables: " +
-          lowerBounds.size() + " -> " +  numberOfVariables) ;
-    } else if (numberOfVariables != upperBounds.size()) {
-      throw new JMetalException("The number of upper bounds is not equal to the number of variables: " +
-          upperBounds.size() + " -> " +  numberOfVariables) ;
-    }
-
-    this.lowerBounds = lowerBounds ;
-    this.upperBounds = upperBounds ;
-
-    generator.configure(numberOfVariables, lowerBounds, upperBounds);
+    generator.configure(bounds);
 
     List<Integer> vars = generator.generate() ;
-    for (int i = 0 ; i < numberOfVariables; i++) {
+    for (int i = 0 ; i < bounds.size(); i++) {
       setVariableValue(i, vars.get(i)); ;
     }
   }
@@ -78,20 +59,19 @@ public class DefaultIntegerSolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    lowerBounds = solution.lowerBounds ;
-    upperBounds = solution.upperBounds ;
+    bounds = solution.bounds ;
 
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
-  }
-
-  @Override
-  public Integer getUpperBound(int index) {
-    return getUpperBound(index);
+    attributes = new HashMap<>(solution.attributes) ;
   }
 
   @Override
   public Integer getLowerBound(int index) {
-    return getLowerBound(index) ;
+    return this.bounds.get(index).getLeft() ;
+  }
+
+  @Override
+  public Integer getUpperBound(int index) {
+    return this.bounds.get(index).getRight() ;
   }
 
   @Override
@@ -103,17 +83,4 @@ public class DefaultIntegerSolution
   public String getVariableValueString(int index) {
     return getVariableValue(index).toString() ;
   }
-  
-  private void initializeIntegerVariables() {
-    for (int i = 0 ; i < getNumberOfVariables(); i++) {
-      Integer value = JMetalRandom.getInstance().nextInt(getLowerBound(i), getUpperBound(i));
-      setVariableValue(i, value) ;
-    }
-  }
-  
-  
-	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
 }

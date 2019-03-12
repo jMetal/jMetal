@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.selection.impl;
 
 import org.uma.jmetal.auto.selection.MatingPoolSelection;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
+import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;

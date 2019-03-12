@@ -1,8 +1,9 @@
 package org.uma.jmetal.solution.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.SolutionBuilder.Variable;
-import org.uma.jmetal.solution.impl.VariableFactory.IsInterfaceException;
+import org.uma.jmetal.solution.util.SolutionBuilder.Variable;
+import org.uma.jmetal.solution.util.VariableFactory;
+import org.uma.jmetal.solution.util.VariableFactory.IsInterfaceException;
 
 import java.util.Arrays;
 import java.util.Collection;

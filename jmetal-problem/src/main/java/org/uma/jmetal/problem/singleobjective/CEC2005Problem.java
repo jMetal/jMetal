@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.TestFunc;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -88,8 +88,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
       upperLimit.add(ulimit);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

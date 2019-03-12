@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.cec2015OptBigDataCompetition;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
@@ -47,8 +47,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
       upperLimit.add(8.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

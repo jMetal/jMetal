@@ -1,10 +1,10 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.localsearch.BasicLocalSearch;
-import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
-import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -25,7 +25,7 @@ public class LocalSearchRunner {
     BinaryProblem problem = new OneMax(1024) ;
 
     MutationOperator<BinarySolution> mutationOperator =
-        new BitFlipMutation(1.0 / problem.getNumberOfBits(0)) ;
+        new BitFlipMutation(1.0 / problem.getBitsFromVariable(0)) ;
 
     int improvementRounds = 10000 ;
 

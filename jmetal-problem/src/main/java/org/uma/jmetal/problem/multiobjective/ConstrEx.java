@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
@@ -30,8 +30,7 @@ public class ConstrEx extends AbstractDoubleProblem {
     List<Double> lowerLimit = Arrays.asList(0.1, 0.0) ;
     List<Double> upperLimit = Arrays.asList(1.0, 5.0) ;
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
 
     overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
     numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;

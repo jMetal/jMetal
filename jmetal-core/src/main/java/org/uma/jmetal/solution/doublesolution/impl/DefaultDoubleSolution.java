@@ -1,61 +1,41 @@
 package org.uma.jmetal.solution.doublesolution.impl;
 
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.Solution;
+import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.util.DoubleVariableGenerator;
 import org.uma.jmetal.solution.doublesolution.impl.util.impl.RandomDoubleVariableGenerator;
-import org.uma.jmetal.solution.impl.AbstractSolution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Defines an implementation of a double solution
+ * Defines an implementation of a double solution. Each variable is given by a pair <lower bound, upper bound>.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class DefaultDoubleSolution extends AbstractSolution<Double> implements DoubleSolution {
-  protected List<Double> lowerBounds ;
-  protected List<Double> upperBounds ;
+  protected List<Pair<Double, Double>> bounds ;
 
   /** Constructor */
   public DefaultDoubleSolution(
-      int numberOfVariables,
-      int numberOfObjectives,
-      List<Double> lowerBounds,
-      List<Double> upperBounds) {
-    this(numberOfVariables, numberOfObjectives, lowerBounds, upperBounds, new RandomDoubleVariableGenerator()) ;
+      List<Pair<Double, Double>> bounds,
+      int numberOfObjectives) {
+    this(bounds, numberOfObjectives, new RandomDoubleVariableGenerator()) ;
   }
 
   /** Constructor */
   public DefaultDoubleSolution(
-      int numberOfVariables,
+      List<Pair<Double, Double>> bounds,
       int numberOfObjectives,
-      List<Double> lowerBounds,
-      List<Double> upperBounds,
       DoubleVariableGenerator generator) {
-    super(numberOfVariables, numberOfObjectives) ;
+    super(bounds.size(), numberOfObjectives) ;
 
-    if (numberOfVariables != lowerBounds.size()) {
-      throw new JMetalException("The number of lower bounds is not equal to the number of variables: " +
-          lowerBounds.size() + " -> " +  numberOfVariables) ;
-    } else if (numberOfVariables != upperBounds.size()) {
-      throw new JMetalException("The number of upper bounds is not equal to the number of variables: " +
-          upperBounds.size() + " -> " +  numberOfVariables) ;
-    }
-
-    this.lowerBounds = lowerBounds ;
-    this.upperBounds = upperBounds ;
-
-    generator.configure(numberOfVariables, lowerBounds, upperBounds);
+    generator.configure(bounds);
 
     List<Double> vars = generator.generate() ;
-    for (int i = 0 ; i < numberOfVariables; i++) {
+    for (int i = 0 ; i < bounds.size(); i++) {
       setVariableValue(i, vars.get(i)); ;
     }
   }
@@ -72,20 +52,19 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    lowerBounds = solution.lowerBounds ;
-    upperBounds = solution.upperBounds ;
+    bounds = solution.bounds ;
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
   @Override
   public Double getLowerBound(int index) {
-    return this.lowerBounds.get(index) ;
+    return this.bounds.get(index).getLeft() ;
   }
 
   @Override
   public Double getUpperBound(int index) {
-    return this.upperBounds.get(index) ;
+    return this.bounds.get(index).getRight() ;
   }
 
   @Override

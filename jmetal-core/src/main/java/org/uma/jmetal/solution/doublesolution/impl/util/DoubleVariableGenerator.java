@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.doublesolution.impl.util;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.util.VariableGenerator;
 
 import java.util.List;
@@ -8,15 +9,11 @@ import java.util.List;
  * Abstract class representing variable generator for double variables
  */
 public abstract class DoubleVariableGenerator implements VariableGenerator<Double> {
-  protected int numberOfVariables ;
-  protected List<Double> lowerBounds ;
-  protected List<Double> upperBounds ;
+  protected List<Pair<Double, Double>> bounds ;
   protected boolean configured = false ;
 
-  public void configure(int numberOfVariables, List<Double> lowerBounds, List<Double> upperBounds) {
-    this.numberOfVariables = numberOfVariables ;
-    this.lowerBounds = lowerBounds ;
-    this.upperBounds = upperBounds ;
+  public void configure(List<Pair<Double, Double>> bounds) {
+    this.bounds = bounds ;
     this.configured = true ;
   }
 }

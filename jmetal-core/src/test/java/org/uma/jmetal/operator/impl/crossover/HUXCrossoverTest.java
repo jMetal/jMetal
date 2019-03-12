@@ -1,8 +1,9 @@
 package org.uma.jmetal.operator.impl.crossover;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.operator.crossover.impl.HUXCrossover;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
+import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -27,10 +28,16 @@ public class HUXCrossoverTest {
 			}
 
 			@Override
-			protected int getBitsPerVariable(int index) {
+			public List<Integer> getBitsPerVariable() {
+				return null ;
+			}
+
+			@Override
+			public int getBitsFromVariable(int index) {
 				return 5;
 			}
 		};
+
 		List<BinarySolution> parents = new LinkedList<>();
 		parents.add(problem.createSolution());
 		parents.add(problem.createSolution());
@@ -55,5 +62,4 @@ public class HUXCrossoverTest {
 		assertTrue("Default random generator used", defaultUses[0] == 0);
 		assertTrue("No use of the custom generator", customUses[0] > 0);
 	}
-
 }

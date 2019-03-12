@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 
@@ -57,13 +57,7 @@ public abstract class WFG extends AbstractDoubleProblem {
       upperLimit.add(2.0*(i+1));
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-  }
-
-  @Override
-  public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(this)  ;
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /**

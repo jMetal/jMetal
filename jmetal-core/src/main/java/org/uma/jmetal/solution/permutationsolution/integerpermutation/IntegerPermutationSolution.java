@@ -1,7 +1,6 @@
 package org.uma.jmetal.solution.permutationsolution.integerpermutation;
 
-import org.uma.jmetal.problem.PermutationProblem;
-import org.uma.jmetal.solution.impl.AbstractSolution;
+import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
 import java.util.ArrayList;

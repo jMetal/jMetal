@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
@@ -41,8 +41,7 @@ public class MaF04 extends AbstractDoubleProblem {
       upper.add(1.0);
     }
 
-    setLowerLimit(lower);
-    setUpperLimit(upper);
+    setVariableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
     double[] c4 = new double[numberOfObjectives];

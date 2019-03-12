@@ -4,8 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.IntegerProblem;
-import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
+import org.uma.jmetal.problem.integerproblem.IntegerProblem;
+import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
@@ -111,7 +112,7 @@ public class IntegerPolynomialMutationTest {
   @Test
   public void shouldMutateASingleVariableSolutionReturnTheSameSolutionIfItIsNotMutated() {
     @SuppressWarnings("unchecked")
-	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
+    RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
     double mutationProbability = 0.1;
     double distributionIndex = 20.0 ;
 
@@ -221,13 +222,7 @@ public class IntegerPolynomialMutationTest {
         upperLimit.add(4);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
-    }
-
-    @Override
-    public IntegerSolution createSolution() {
-      return new DefaultIntegerSolution(this) ;
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     /** Evaluate() method */

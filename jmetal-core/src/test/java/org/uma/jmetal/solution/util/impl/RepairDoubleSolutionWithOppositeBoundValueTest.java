@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RepairDoubleSolutionWithOppositeBoundValueTest {
   private static final double EPSILON = 0.0000000000001 ;

@@ -1,11 +1,13 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.DefaultBinarySolution;
+import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
 
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * Class representing problem OneMax. The problem consist of maximizing the
@@ -30,16 +32,21 @@ public class OneMax extends AbstractBinaryProblem {
   }
 
   @Override
-  protected int getBitsPerVariable(int index) {
+  public int getBitsFromVariable(int index) {
   	if (index != 0) {
   		throw new JMetalException("Problem OneMax has only a variable. Index = " + index) ;
   	}
   	return bits ;
   }
-   
+
+  @Override
+  public List<Integer> getBitsPerVariable() {
+    return Arrays.asList(bits) ;
+  }
+
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(this) ;
+    return new DefaultBinarySolution(getBitsPerVariable(), getNumberOfObjectives()) ;
   }
 
   /** Evaluate() method */

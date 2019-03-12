@@ -15,7 +15,7 @@
  */
 package org.uma.jmetal.problem.multiobjective.ebes;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
@@ -922,8 +922,7 @@ public class Ebes extends AbstractDoubleProblem {
       } // end if
     } // gr
 
-    setLowerLimit(new ArrayList<Double>(Arrays.<Double>asList(lowerLimit_)));
-    setUpperLimit(new ArrayList<Double>(Arrays.<Double>asList(upperLimit_)));
+    setVariableBounds(new ArrayList<Double>(Arrays.<Double>asList(lowerLimit_)), new ArrayList<Double>(Arrays.<Double>asList(upperLimit_)));
 
     // greates difference between nodes
     elementsBetweenDiffGreat_ = 0;
@@ -938,10 +937,10 @@ public class Ebes extends AbstractDoubleProblem {
 
   } // end InitializeEBEs
 
-  @Override
-  public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(this) ;
-  }
+  //@Override
+  //public DoubleSolution createSolution() {
+  //  return new DefaultDoubleSolution(this) ;
+  //}
 
   /**
    * Evaluates a solution

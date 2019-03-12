@@ -18,12 +18,12 @@ public interface BoundedProblem<T extends Number, S> extends Problem<S> {
    *          index of the variable
    * @return lower bound of the variable
    */
-  public T getLowerBound(int index);
+  T getLowerBound(int index);
 
   /**
    * @param index
    *          index of the variable
    * @return upper bound of the variable
    */
-  public T getUpperBound(int index);
+  T getUpperBound(int index);
 }

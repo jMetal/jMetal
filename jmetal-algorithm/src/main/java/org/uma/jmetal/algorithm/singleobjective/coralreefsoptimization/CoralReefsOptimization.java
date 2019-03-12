@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
 import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
@@ -26,11 +26,11 @@ public class CoralReefsOptimization<S>
 	private MersenneTwisterGenerator random;
 
 	public CoralReefsOptimization(Problem<S> problem,
-			int maxEvaluations, Comparator<S> comparator,
-			SelectionOperator<List<S>, S> selectionOperator,
-			CrossoverOperator<S> crossoverOperator,
-			MutationOperator<S> mutationOperator, int n, int m, double rho,
-			double fbs, double fa, double pd, int attemptsToSettle) {
+																int maxEvaluations, Comparator<S> comparator,
+																SelectionOperator<List<S>, S> selectionOperator,
+																CrossoverOperator<S> crossoverOperator,
+																MutationOperator<S> mutationOperator, int n, int m, double rho,
+																double fbs, double fa, double pd, int attemptsToSettle) {
 
 		super(comparator, selectionOperator, crossoverOperator,
 				mutationOperator, n, m, rho, fbs, fa, pd, attemptsToSettle);

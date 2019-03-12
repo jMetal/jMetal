@@ -4,8 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
@@ -107,7 +108,7 @@ public class BLXAlphaCrossoverTest {
   @Test
   public void shouldCrossingTwoSingleVariableSolutionsReturnTheSameSolutionsIfNotCrossoverIsApplied() {
     @SuppressWarnings("unchecked")
-	RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
+    RandomGenerator<Double> randomGenerator = mock(RandomGenerator.class) ;
 
     double crossoverProbability = 0.9;
     double alpha = 0.3 ;
@@ -241,8 +242,7 @@ public class BLXAlphaCrossoverTest {
         upperLimit.add(4.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     /** Evaluate() method */

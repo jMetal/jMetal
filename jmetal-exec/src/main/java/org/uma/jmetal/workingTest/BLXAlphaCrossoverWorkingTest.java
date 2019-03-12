@@ -1,8 +1,8 @@
 package org.uma.jmetal.workingTest;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.impl.crossover.BLXAlphaCrossover;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;

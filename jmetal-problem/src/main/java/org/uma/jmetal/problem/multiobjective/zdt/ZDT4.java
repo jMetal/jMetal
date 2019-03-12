@@ -55,8 +55,7 @@ public class ZDT4 extends ZDT1 {
       upperLimit.add(5.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /**

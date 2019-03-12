@@ -2,10 +2,10 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
-import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.archive.Archive;
@@ -70,10 +70,10 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   protected Comparator<DoubleSolution> crowdingDistanceComparator;
 
   public ABYSS(DoubleProblem problem, int maxEvaluations, int populationSize, int referenceSet1Size,
-      int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
-      LocalSearchOperator<DoubleSolution> localSearch,
-      CrossoverOperator<DoubleSolution> crossoverOperator,
-      int numberOfSubRanges) {
+               int referenceSet2Size, int archiveSize, Archive<DoubleSolution> archive,
+               LocalSearchOperator<DoubleSolution> localSearch,
+               CrossoverOperator<DoubleSolution> crossoverOperator,
+               int numberOfSubRanges) {
 
     setPopulationSize(populationSize);
 

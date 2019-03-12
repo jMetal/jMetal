@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.experiment.component;
 
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.AbstractSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -66,7 +66,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     List<String> referenceFrontFileNames = new LinkedList<>() ;
 
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
-      List<DoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
+      List<DummyDoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
 
       referenceFrontFileNames.add(problem.getReferenceFront());
 
@@ -80,7 +80,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
       String outputDirectoryName, ExperimentProblem<?> problem,
-      List<DoubleSolution> nonDominatedSolutions) throws IOException {
+      List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
     for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
@@ -105,14 +105,14 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
   }
 
   private void writeReferenceFrontFile(
-      String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
     String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront() ;
 
     new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName);
   }
 
   private void writeReferenceSetFile(
-      String outputDirectoryName, ExperimentProblem<?> problem, List<DoubleSolution> nonDominatedSolutions) throws IOException {
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
     String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps" ;
     new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName);
   }
@@ -125,9 +125,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @return
    * @throws FileNotFoundException
    */
-  private List<DoubleSolution> getNonDominatedSolutions(ExperimentProblem<?> problem) throws FileNotFoundException {
-    NonDominatedSolutionListArchive<DoubleSolution> nonDominatedSolutionArchive =
-        new NonDominatedSolutionListArchive<DoubleSolution>() ;
+  private List<DummyDoubleSolution> getNonDominatedSolutions(ExperimentProblem<?> problem) throws FileNotFoundException {
+    NonDominatedSolutionListArchive<DummyDoubleSolution> nonDominatedSolutionArchive =
+        new NonDominatedSolutionListArchive<>() ;
 
     for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()
                                                         .stream()
@@ -142,9 +142,9 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
           algorithm.getRunId() + ".tsv";
       Front frontWithObjectiveValues = new ArrayFront(frontFileName) ;
       Front frontWithVariableValues = new ArrayFront(paretoSetFileName) ;
-      List<DoubleSolution> solutionList =
+      List<DummyDoubleSolution> solutionList =
           createSolutionListFrontFiles(algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues) ;
-      for (DoubleSolution solution : solutionList) {
+      for (DummyDoubleSolution solution : solutionList) {
         nonDominatedSolutionArchive.add(solution) ;
       }
     }
@@ -175,22 +175,21 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @param frontWithObjectiveValues
    * @return
    */
-  private List<DoubleSolution> createSolutionListFrontFiles(String algorithmName, Front frontWithVariableValues, Front frontWithObjectiveValues) {
+  private List<DummyDoubleSolution> createSolutionListFrontFiles(String algorithmName, Front frontWithVariableValues, Front frontWithObjectiveValues) {
     if (frontWithVariableValues.getNumberOfPoints() != frontWithObjectiveValues.getNumberOfPoints()) {
       throw new JMetalException("The number of solutions in the variable and objective fronts are not equal") ;
     } else if (frontWithObjectiveValues.getNumberOfPoints() == 0) {
       throw new JMetalException("The front of solutions is empty") ;
     }
 
-    GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
+    GenericSolutionAttribute<DummyDoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DummyDoubleSolution, String>()  ;
 
     int numberOfVariables = frontWithVariableValues.getPointDimensions() ;
     int numberOfObjectives = frontWithObjectiveValues.getPointDimensions() ;
-    DummyProblem problem = new DummyProblem(numberOfVariables, numberOfObjectives) ;
 
-    List<DoubleSolution> solutionList = new ArrayList<>() ;
+    List<DummyDoubleSolution> solutionList = new ArrayList<>() ;
     for (int i = 0 ; i < frontWithVariableValues.getNumberOfPoints(); i++) {
-      DoubleSolution solution = new DefaultDoubleSolution(problem);
+      DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives) ;
       for (int vars = 0; vars < numberOfVariables; vars++) {
         solution.setVariableValue(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
       }
@@ -205,30 +204,31 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     return solutionList ;
   }
 
-  /**
-   * This private class is intended to create{@link DoubleSolution} objects from the stored values of variables and
-   * objectives obtained in files after running an experiment. The values of the lower and upper limits are useless.
-   */
-  @SuppressWarnings("serial")
-  private static class DummyProblem extends AbstractDoubleProblem {
-    public DummyProblem(int numberOfVariables, int numberOfObjectives) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(numberOfObjectives);
 
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+  private static class DummyDoubleSolution extends AbstractSolution<Double> implements DoubleSolution {
 
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(-1.0);
-        upperLimit.add(1.0);
-      }
-
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
+    public DummyDoubleSolution(int numberOfVariables, int numberOfObjectives) {
+      super(numberOfVariables, numberOfObjectives) ;
     }
 
-    @Override public void evaluate(DoubleSolution solution) {
-    	//This method is an intentionally-blank override.
+    @Override
+    public String getVariableValueString(int index) {
+      return null;
+    }
+
+    @Override
+    public Solution<Double> copy() {
+      return null;
+    }
+
+    @Override
+    public Double getLowerBound(int index) {
+      return null;
+    }
+
+    @Override
+    public Double getUpperBound(int index) {
+      return null;
     }
   }
 }

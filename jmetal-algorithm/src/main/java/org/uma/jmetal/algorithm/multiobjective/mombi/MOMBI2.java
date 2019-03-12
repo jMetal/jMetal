@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -43,7 +43,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 	 * @param pathWeights
 	 */
 	public MOMBI2(Problem<S> problem, int maxIterations, CrossoverOperator<S> crossover, MutationOperator<S> mutation,
-			SelectionOperator<List<S>, S> selection, SolutionListEvaluator<S> evaluator, String pathWeights) {
+								SelectionOperator<List<S>, S> selection, SolutionListEvaluator<S> evaluator, String pathWeights) {
 		super(problem, maxIterations, crossover, mutation, selection, evaluator, pathWeights);
 
 		this.history = new MOMBI2History<>(problem.getNumberOfObjectives());

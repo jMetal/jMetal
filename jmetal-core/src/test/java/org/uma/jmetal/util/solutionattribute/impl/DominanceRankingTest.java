@@ -1,10 +1,10 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
@@ -33,11 +33,11 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnOneSubfronts(){
-    problem = new DummyProblem(2) ;
+    //problem = new DummyProblem(2) ;
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
-            new DefaultDoubleSolution(problem),
-            new DefaultDoubleSolution(problem),
-            new DefaultDoubleSolution(problem));
+            new DefaultDoubleSolution(null, 2),
+            new DefaultDoubleSolution(null, 2),
+            new DefaultDoubleSolution(null, 2));
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>() ;
     ranking.computeRanking(population) ;

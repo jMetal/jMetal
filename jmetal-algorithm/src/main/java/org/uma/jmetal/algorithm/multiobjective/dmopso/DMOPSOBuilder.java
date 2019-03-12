@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;

@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 import java.util.ArrayList;
@@ -34,8 +34,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
       upperLimit.add(upperBound);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

@@ -18,21 +18,23 @@
 // 
 
 
-
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Checker;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * Class representing problem ZDT5
  */
 @SuppressWarnings("serial")
 public class ZDT5 extends AbstractBinaryProblem {
-	private int[] bitsPerVariable ;
+	private List<Integer> bitsPerVariable ;
+  private Checker checker = new Checker() ;
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
@@ -49,20 +51,24 @@ public class ZDT5 extends AbstractBinaryProblem {
     setNumberOfObjectives(2);
     setName("ZDT5");
 
-    bitsPerVariable = new int[numberOfVariables] ;
+    bitsPerVariable = new ArrayList<>(numberOfVariables) ;
 
-    bitsPerVariable[0] = 30;
+    bitsPerVariable.add(30);
     for (int var = 1; var < numberOfVariables; var++) {
-      bitsPerVariable[var] = 5;
+      bitsPerVariable.add(5);
     }
   }
-  
+
   @Override
-  protected int getBitsPerVariable(int index) {
-  	if ((index <0) || (index >= this.getNumberOfVariables())) {
-  		throw new JMetalException("Index value is incorrect: " + index) ;
-  	}
-  	return bitsPerVariable[index] ;
+  public List<Integer> getBitsPerVariable() {
+    return bitsPerVariable ;
+  }
+
+  @Override
+  public int getBitsFromVariable(int index) {
+    checker.isValueInRange(index, 0, this.getNumberOfVariables()) ;
+
+  	return bitsPerVariable.get(index) ;
   }
 
   /** Evaluate() method */

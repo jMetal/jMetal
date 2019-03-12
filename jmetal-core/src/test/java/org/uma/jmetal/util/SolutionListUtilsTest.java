@@ -5,11 +5,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Matchers;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -446,8 +446,7 @@ public class SolutionListUtilsTest {
       setNumberOfObjectives(2);
       setNumberOfConstraints(0);
 
-      setLowerLimit(Arrays.asList(0.0, 0.0));
-      setUpperLimit(Arrays.asList(1.0, 1.0));
+      setVariableBounds(Arrays.asList(0.0, 0.0), Arrays.asList(1.0, 1.0));
     }
 
     @Override
