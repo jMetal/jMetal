@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.auto.observable.Observable;
+import org.uma.jmetal.auto.util.observable.Observable;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
