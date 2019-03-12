@@ -3,7 +3,7 @@ package org.uma.jmetal.problem.doubleproblem.impl;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractGenericProblem;
+import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.checking.Checker;

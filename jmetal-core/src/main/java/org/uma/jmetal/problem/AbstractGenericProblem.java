@@ -1,4 +1,4 @@
-package org.uma.jmetal.problem.impl;
+package org.uma.jmetal.problem;
 
 import org.uma.jmetal.problem.Problem;
 
