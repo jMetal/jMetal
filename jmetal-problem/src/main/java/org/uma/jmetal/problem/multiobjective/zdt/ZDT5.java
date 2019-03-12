@@ -60,7 +60,7 @@ public class ZDT5 extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> getBitsPerVariable() {
+  public List<Integer> getListOfBitsPerVariable() {
     return bitsPerVariable ;
   }
 

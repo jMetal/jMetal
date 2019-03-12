@@ -31,7 +31,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
   }
 
   @Override
-  public List<Integer> getBitsPerVariable() {
+  public List<Integer> getListOfBitsPerVariable() {
     return Arrays.asList(bits);
   }
 
@@ -45,7 +45,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(getBitsPerVariable(), getNumberOfObjectives()) ;
+    return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives()) ;
   }
 
   /** Evaluate() method */

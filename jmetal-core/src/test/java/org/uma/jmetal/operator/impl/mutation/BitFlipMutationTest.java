@@ -163,13 +163,13 @@ public class BitFlipMutationTest {
     }
 
     @Override
-    public List<Integer> getBitsPerVariable() {
+    public List<Integer> getListOfBitsPerVariable() {
       return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
     }
 
     @Override
     public BinarySolution createSolution() {
-      return new DefaultBinarySolution(getBitsPerVariable(), getNumberOfObjectives()) ;
+      return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives()) ;
     }
 
     /** Evaluate() method */

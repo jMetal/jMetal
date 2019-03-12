@@ -11,7 +11,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface BinaryProblem extends Problem<BinarySolution> {
-  List<Integer> getBitsPerVariable() ;
+  List<Integer> getListOfBitsPerVariable() ;
   int getBitsFromVariable(int index) ;
   int getTotalNumberOfBits() ;
 }
