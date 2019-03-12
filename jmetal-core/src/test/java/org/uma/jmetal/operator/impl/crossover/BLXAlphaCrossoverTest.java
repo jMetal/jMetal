@@ -1,5 +1,7 @@
 package org.uma.jmetal.operator.impl.crossover;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -8,6 +10,7 @@ import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -259,18 +262,12 @@ public class BLXAlphaCrossoverTest {
 		double crossoverProbability = 0.1;
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
-		@SuppressWarnings("serial")
-		DoubleProblem problem = new AbstractDoubleProblem() {
 
-			@Override
-			public void evaluate(DoubleSolution solution) {
-				// Do nothing
-			}
+    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
 
-		};
 		List<DoubleSolution> solutions = new LinkedList<>();
-		solutions.add(problem.createSolution());
-		solutions.add(problem.createSolution());
+		solutions.add(new DefaultDoubleSolution(bounds, 2));
+		solutions.add(new DefaultDoubleSolution(bounds, 2));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

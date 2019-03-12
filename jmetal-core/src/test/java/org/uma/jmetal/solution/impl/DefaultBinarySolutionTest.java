@@ -32,8 +32,8 @@ public class DefaultBinarySolutionTest {
   }
 
   @Test public void shouldTheHashCodeOfTwoIdenticalSolutionsBeTheSame() {
-    BinarySolution solutionA = new DefaultBinarySolution(Arrays.asList(2, 3, 4), 2);
-    BinarySolution solutionB = new DefaultBinarySolution(Arrays.asList(2, 3, 4),2);
+    BinarySolution solutionA = new DefaultBinarySolution(Arrays.asList(5), 2);
+    BinarySolution solutionB = new DefaultBinarySolution(Arrays.asList(5),2);
 
     solutionA.getVariableValue(0).set(0) ;
     solutionA.getVariableValue(0).clear(1) ;
@@ -51,9 +51,9 @@ public class DefaultBinarySolutionTest {
   }
 
 
-  @Test public void shouldGetVariableValueStringReturnARightStringRepresentation() throws Exception {
+  @Test public void shouldGetVariableValueStringReturnARightStringRepresentation() {
     BinarySolution solution = new DefaultBinarySolution(Arrays.asList(5), 2);
-    solution.getVariableValue(0).set(0, 2) ;
+    solution.getVariableValue(0).set(0, 5) ;
 
     assertEquals("11111", solution.getVariableValueString(0)) ;
 

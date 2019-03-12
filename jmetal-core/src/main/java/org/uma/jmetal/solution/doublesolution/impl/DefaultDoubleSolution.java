@@ -32,6 +32,8 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
       DoubleVariableGenerator generator) {
     super(bounds.size(), numberOfObjectives) ;
 
+    this.bounds = bounds ;
+
     generator.configure(bounds);
 
     List<Double> vars = generator.generate() ;

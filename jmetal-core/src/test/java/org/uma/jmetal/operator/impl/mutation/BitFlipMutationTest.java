@@ -184,31 +184,8 @@ public class BitFlipMutationTest {
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
 		double mutationProbability = 0.1;
-		@SuppressWarnings("serial")
-		BinaryProblem problem = new AbstractBinaryProblem() {
 
-			@Override
-			public void evaluate(BinarySolution solution) {
-				// Do nothing
-			}
-
-			@Override
-			public int getBitsFromVariable(int index) {
-				return 5;
-			}
-
-			@Override
-      public List<Integer> getBitsPerVariable() {
-			  return null ;
-      }
-
-			@Override
-			public int getNumberOfVariables() {
-				return 10;
-			}
-
-		};
-		BinarySolution solution = problem.createSolution();
+		BinarySolution solution = new DefaultBinarySolution(Arrays.asList(2), 2) ;
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

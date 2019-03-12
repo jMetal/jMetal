@@ -1,13 +1,17 @@
 package org.uma.jmetal.operator.impl.crossover;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -20,17 +24,12 @@ public class IntegerSBXCrossoverTest {
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
 		@SuppressWarnings("serial")
-		IntegerProblem problem = new AbstractIntegerProblem() {
-
-			@Override
-			public void evaluate(IntegerSolution solution) {
-				// Do nothing
-			}
-
-		};
 		List<IntegerSolution> parents = new LinkedList<>();
-		parents.add(problem.createSolution());
-		parents.add(problem.createSolution());
+
+		List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 1)) ;
+
+		parents.add(new DefaultIntegerSolution(bounds, 2));
+		parents.add(new DefaultIntegerSolution(bounds, 2));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };
