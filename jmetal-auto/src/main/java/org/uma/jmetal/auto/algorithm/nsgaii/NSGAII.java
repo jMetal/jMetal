@@ -28,7 +28,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
-import org.uma.jmetal.util.DefaultAlgorithmOutputData;
+import org.uma.jmetal.util.AlgorithmDefaultOutputData;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
@@ -98,7 +98,7 @@ public class NSGAII {
 
     algorithm.run();
 
-    DefaultAlgorithmOutputData.generateMultiObjectiveAlgorithmOutputData(
+    AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
         algorithm.getResult(), algorithm.getTotalComputingTime());
 
     System.exit(0);

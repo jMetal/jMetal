@@ -116,10 +116,14 @@ public class ComposableDoubleProblem implements DoubleProblem {
     return bounds.get(index).getRight();
   }
 
-
   @Override
   public DoubleSolution createSolution() {
     return new DefaultDoubleSolution(bounds, getNumberOfObjectives())  ;
+  }
+
+  @Override
+  public List<Pair<Double, Double>> getBounds() {
+    return bounds ;
   }
 
   @Override

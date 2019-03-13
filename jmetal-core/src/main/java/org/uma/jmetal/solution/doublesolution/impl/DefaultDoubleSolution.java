@@ -3,8 +3,7 @@ package org.uma.jmetal.solution.doublesolution.impl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.util.DoubleVariableGenerator;
-import org.uma.jmetal.solution.doublesolution.impl.util.impl.RandomDoubleVariableGenerator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,23 +21,12 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
   public DefaultDoubleSolution(
       List<Pair<Double, Double>> bounds,
       int numberOfObjectives) {
-    this(bounds, numberOfObjectives, new RandomDoubleVariableGenerator()) ;
-  }
-
-  /** Constructor */
-  public DefaultDoubleSolution(
-      List<Pair<Double, Double>> bounds,
-      int numberOfObjectives,
-      DoubleVariableGenerator generator) {
     super(bounds.size(), numberOfObjectives) ;
 
     this.bounds = bounds ;
 
-    generator.configure(bounds);
-
-    List<Double> vars = generator.generate() ;
     for (int i = 0 ; i < bounds.size(); i++) {
-      setVariableValue(i, vars.get(i)); ;
+      setVariableValue(i, JMetalRandom.getInstance().nextDouble(bounds.get(i).getLeft(), bounds.get(i).getRight())); ;
     }
   }
 
@@ -55,7 +43,6 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
     }
 
     bounds = solution.bounds ;
-
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 

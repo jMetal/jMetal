@@ -67,7 +67,7 @@ public class NSGAIICommandLineParsingRunner {
     System.out.println(obtainedFrontHV);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
-    // DefaultAlgorithmOutputData.generateMultiObjectiveAlgorithmOutputData(
+    // AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
     //    autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
   }
 }

@@ -33,6 +33,8 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     for (int i = 0 ; i < numberOfObjectives; i++) {
       objectives[i] = 0.0 ;
     }
+
+    attributes = new HashMap<Object, Object>() ;
   }
 
   @Override
