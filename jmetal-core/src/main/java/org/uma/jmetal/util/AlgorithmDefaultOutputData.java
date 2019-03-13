@@ -8,7 +8,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultAlgorithmOutputData {
+public class AlgorithmDefaultOutputData {
 
   public static <S extends Solution<?>> void generateSingleObjectiveAlgorithmOutputData(S solution, long computingTime) {
     List<S> population = new ArrayList<>(1) ;
