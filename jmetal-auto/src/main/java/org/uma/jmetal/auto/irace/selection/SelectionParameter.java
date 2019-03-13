@@ -11,7 +11,7 @@ public class SelectionParameter extends Parameter {
     super("selection",
         "--selection",
         ParameterType.c,
-        "(naryTournament)",
+        "(Tournament)",
         "",
         Arrays.asList(new NarityTournamentSelectionParameter())
     ) ;

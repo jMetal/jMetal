@@ -9,12 +9,10 @@ import org.uma.jmetal.util.SolutionListUtils;
 import java.util.List;
 
 public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingPoolSelection<S> {
-  private RandomSelection<S> selectionOperator;
   private int matingPoolSize;
   private Checker check = new Checker();
 
   public RandomMatingPoolSelection(int matingPoolSize) {
-    selectionOperator = new RandomSelection<>();
     this.matingPoolSize = matingPoolSize;
   }
 

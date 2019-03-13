@@ -2,7 +2,9 @@ package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
+import org.uma.jmetal.auto.component.createinitialsolutions.impl.LatinHypercubeSamplingSolutionsCreation;
 import org.uma.jmetal.auto.component.createinitialsolutions.impl.RandomSolutionsCreation;
+import org.uma.jmetal.auto.component.createinitialsolutions.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
@@ -34,7 +36,7 @@ import picocli.CommandLine.Option;
 
 import java.util.Arrays;
 
-enum CreateInitialSolutionsStrategyList {
+enum CreateInitialSolutionsStrategyType {
   random, scatterSearch, latinHypercubeSampling
 }
 
@@ -56,10 +58,6 @@ enum CrossoverType {
   sbx,
   blx_alpha
 }
-
-@CommandLine.Command(name = "autonsgaII", subcommands = {
-        NaryTournamentMatingPoolSelection.class,
-})
 
 public class AutoNSGAII {
   /* Fixed parameters */
@@ -143,8 +141,8 @@ public class AutoNSGAII {
       names = {"--createInitialSolutions"},
       required = true,
       description = "Create initial solutions: ${COMPLETION-CANDIDATES}")
-  private CreateInitialSolutionsStrategyList createInitialSolutionsType =
-      CreateInitialSolutionsStrategyList.random;
+  private CreateInitialSolutionsStrategyType createInitialSolutionsType =
+      CreateInitialSolutionsStrategyType.random;
 
   CreateInitialSolutions<DoubleSolution> createInitialSolutions ;
 
@@ -162,13 +160,12 @@ public class AutoNSGAII {
           required = true,
           description = "Selection: ${COMPLETION-CANDIDATES}")
   private SelectionType selectionType;
+  MatingPoolSelection<DoubleSolution> selection ;
 
   @Option(
           names = {"--selectionTournamentSize"},
           description = "Selection: number of selected solutions")
   private int selectionTournamentSize = 2;
-
-  MatingPoolSelection<DoubleSolution> selection ;
 
   EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {
     crossover = getCrossover();
@@ -238,6 +235,10 @@ public class AutoNSGAII {
     switch (createInitialSolutionsType) {
       case random:
         return new RandomSolutionsCreation(getProblem(), populationSize);
+      case scatterSearch:
+        return new ScatterSearchSolutionsCreation(getProblem(), populationSize, 4) ;
+      case latinHypercubeSampling:
+        return new LatinHypercubeSamplingSolutionsCreation(getProblem(), populationSize) ;
       default:
         throw new RuntimeException(
             createInitialSolutions + " is not a valid initialization strategy");
@@ -250,5 +251,4 @@ public class AutoNSGAII {
   String getReferenceParetoFront(){
     return "pareto_fronts/"+referenceParetoFront;
   }
-
 }

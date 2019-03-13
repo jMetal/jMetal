@@ -105,7 +105,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   @Override public boolean equals(Object o) {
     if (o == null) {
-      new JMetalException("The solution to compare is null") ;
+      throw new JMetalException("The solution to compare is null") ;
     }
 
     Solution<T> solution = (Solution<T>) o ;

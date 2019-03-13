@@ -11,7 +11,7 @@ public class NarityTournamentSelectionParameter extends Parameter {
         "--selection-tournament-arity",
         ParameterType.i,
         "(2, 10)",
-        "| selection %in% c(\"N-aryTournament\")",
+        "| selection %in% c(\"Tournament\")",
         Collections.emptyList()
         ) ;
   }
