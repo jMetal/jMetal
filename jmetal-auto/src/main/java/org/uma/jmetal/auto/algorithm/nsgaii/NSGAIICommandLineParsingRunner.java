@@ -45,6 +45,10 @@ public class NSGAIICommandLineParsingRunner {
       "0.001",
       "--variation",
       "rankingAndCrowding",
+      "--mutationRepairStrategy",
+      "random",
+      "--crossoverRepairStrategy",
+      "random"
     };
 
     AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), arguments);
