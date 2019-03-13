@@ -2,17 +2,11 @@ package org.uma.jmetal.solution.integersolution.impl;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.AbstractSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.util.impl.RandomDoubleVariableGenerator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.solution.integersolution.impl.util.IntegerVariableGenerator;
-import org.uma.jmetal.solution.integersolution.impl.util.impl.RandomIntegerVariableGenerator;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Defines an implementation of an integer solution
@@ -29,21 +23,10 @@ public class DefaultIntegerSolution
   public DefaultIntegerSolution(
       List<Pair<Integer, Integer>> bounds,
       int numberOfObjectives) {
-    this(bounds, numberOfObjectives, new RandomIntegerVariableGenerator()) ;
-  }
-
-  /** Constructor */
-  public DefaultIntegerSolution(
-      List<Pair<Integer, Integer>> bounds,
-      int numberOfObjectives,
-      IntegerVariableGenerator generator) {
     super(bounds.size(), numberOfObjectives) ;
 
-    generator.configure(bounds);
-
-    List<Integer> vars = generator.generate() ;
     for (int i = 0 ; i < bounds.size(); i++) {
-      setVariableValue(i, vars.get(i)); ;
+      setVariableValue(i, JMetalRandom.getInstance().nextInt(bounds.get(i).getLeft(), bounds.get(i).getRight()));
     }
   }
 

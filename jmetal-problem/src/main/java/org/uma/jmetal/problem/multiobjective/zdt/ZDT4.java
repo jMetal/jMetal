@@ -45,12 +45,12 @@ public class ZDT4 extends ZDT1 {
   public ZDT4(Integer numberOfVariables) {
     super(numberOfVariables) ;
     setName("ZDT4");
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 1; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-5.0);
       upperLimit.add(5.0);
     }

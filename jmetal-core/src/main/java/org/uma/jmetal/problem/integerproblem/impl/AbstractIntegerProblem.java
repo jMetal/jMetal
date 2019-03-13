@@ -51,4 +51,9 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
   public IntegerSolution createSolution() {
     return new DefaultIntegerSolution(getVariableBounds(), getNumberOfObjectives());
   }
+
+  @Override
+  public List<Pair<Integer, Integer>> getBounds() {
+    return bounds ;
+  }
 }

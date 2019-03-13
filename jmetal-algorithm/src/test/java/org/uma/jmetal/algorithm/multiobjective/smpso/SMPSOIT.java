@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ConstrEx;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
@@ -15,6 +16,7 @@ import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class SMPSOIT {
     DoubleProblem problem = new ZDT4() ;
 
     algorithm = new SMPSOBuilder(problem, new CrowdingDistanceArchive<DoubleSolution>(100)).build() ;
+
+    JMetalRandom.getInstance().setSeed(1);
 
     algorithm.run();
 
