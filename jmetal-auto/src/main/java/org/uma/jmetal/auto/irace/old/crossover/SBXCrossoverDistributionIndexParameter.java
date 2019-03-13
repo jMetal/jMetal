@@ -1,7 +1,7 @@
-package org.uma.jmetal.auto.irace.crossover;
+package org.uma.jmetal.auto.irace.old.crossover;
 
-import org.uma.jmetal.auto.irace.Parameter;
-import org.uma.jmetal.auto.irace.ParameterType;
+import org.uma.jmetal.auto.irace.old.Parameter;
+import org.uma.jmetal.auto.irace.old.ParameterTypes;
 
 import java.util.Collections;
 
@@ -10,7 +10,7 @@ public class SBXCrossoverDistributionIndexParameter extends Parameter {
     super(
      "sbxCrossoverDistributionIndex",
      "--crossoverSBXDistributionIndex",
-        ParameterType.r,
+        ParameterTypes.r,
         "(5.0, 400.0)",
         "| crossover %in% c(\"SBX\"\")",
         Collections.emptyList()

@@ -10,20 +10,19 @@ import java.util.List;
 
 public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingPoolSelection<S> {
   private int matingPoolSize;
-  private Checker check = new Checker();
 
   public RandomMatingPoolSelection(int matingPoolSize) {
     this.matingPoolSize = matingPoolSize;
   }
 
   public List<S> select(List<S> solutionList) {
-    check
-        .isNotNull(solutionList)
-        .isTrue(
-            solutionList.size() >= matingPoolSize,
-            "The solution list size is lower than the mating pool size");
+    Checker.isNotNull(solutionList);
+    Checker.isTrue(
+        solutionList.size() >= matingPoolSize,
+        "The solution list size is lower than the mating pool size");
 
-    List<S> matingPool = SolutionListUtils.selectNRandomDifferentSolutions(matingPoolSize, solutionList);
+    List<S> matingPool =
+        SolutionListUtils.selectNRandomDifferentSolutions(matingPoolSize, solutionList);
 
     return matingPool;
   }

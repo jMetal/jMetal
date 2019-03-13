@@ -1,8 +1,7 @@
-package org.uma.jmetal.auto.irace.mutation;
+package org.uma.jmetal.auto.irace.old.mutation;
 
-import org.uma.jmetal.auto.irace.Parameter;
-import org.uma.jmetal.auto.irace.ParameterType;
-import picocli.CommandLine;
+import org.uma.jmetal.auto.irace.old.Parameter;
+import org.uma.jmetal.auto.irace.old.ParameterTypes;
 
 import java.util.Arrays;
 
@@ -11,7 +10,7 @@ public class MutationParameter extends Parameter {
   public MutationParameter() {
     super("mutation",
         "--mutation",
-        ParameterType.c,
+        ParameterTypes.c,
         "(Polynomial, Uniform)",
         "",
         Arrays.asList(

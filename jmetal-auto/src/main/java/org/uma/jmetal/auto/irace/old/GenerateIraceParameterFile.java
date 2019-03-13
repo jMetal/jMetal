@@ -1,8 +1,4 @@
-package org.uma.jmetal.auto.irace;
-
-import org.uma.jmetal.auto.irace.crossover.CrossoverParameter;
-import org.uma.jmetal.auto.irace.mutation.MutationParameter;
-import org.uma.jmetal.auto.irace.selection.SelectionParameter;
+package org.uma.jmetal.auto.irace.old;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +6,7 @@ import java.util.List;
 
 public class GenerateIraceParameterFile {
   public static void main(String[] args) {
+    /*
     List<Parameter> parameterList = new ArrayList<>();
     parameterList.add(new CrossoverParameter());
     parameterList.add(new MutationParameter());
@@ -18,7 +15,7 @@ public class GenerateIraceParameterFile {
         new Parameter(
             "offspringPopulationSize",
             "--offspringPopulationSize",
-            ParameterType.i,
+            ParameterTypes.i,
             "(1, 400)",
             "",
             Collections.emptyList()));
@@ -43,5 +40,6 @@ public class GenerateIraceParameterFile {
             relatedParameter.getConditionalParameters());
       }
     }
+    */
   }
 }

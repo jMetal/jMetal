@@ -1,7 +1,7 @@
-package org.uma.jmetal.auto.irace.mutation;
+package org.uma.jmetal.auto.irace.old.mutation;
 
-import org.uma.jmetal.auto.irace.Parameter;
-import org.uma.jmetal.auto.irace.ParameterType;
+import org.uma.jmetal.auto.irace.old.Parameter;
+import org.uma.jmetal.auto.irace.old.ParameterTypes;
 
 import java.util.Collections;
 
@@ -10,7 +10,7 @@ public class PolynomialMutationDistributionIndexParameter extends Parameter {
     super(
      "polynomialMutationDistributionIndex",
      "--polynomialMultationDistributionIndex",
-        ParameterType.r,
+        ParameterTypes.r,
         "(5.0, 400.0)",
         "| mutation %in% c(\"Polynomial\"\")",
         Collections.emptyList()

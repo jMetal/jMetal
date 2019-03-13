@@ -42,6 +42,15 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
     this.solutionRepair = solutionRepair;
   }
 
+  /** Constructor */
+  public UniformMutation(
+      double mutationProbability,
+      double perturbation,
+      RepairDoubleSolution solutionRepair) {
+    this(mutationProbability, perturbation, solutionRepair, () -> JMetalRandom.getInstance().nextDouble()) ;
+  }
+
+
   /* Getters */
   public double getPerturbation() {
     return perturbation;

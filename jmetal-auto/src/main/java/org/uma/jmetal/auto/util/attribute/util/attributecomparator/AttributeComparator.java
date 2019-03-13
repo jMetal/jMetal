@@ -20,7 +20,6 @@ public abstract class AttributeComparator<S extends Solution<?>> implements Comp
   };
 
   protected final String attributeName;
-  protected Checker checker = new Checker();
   protected Ordering ordering;
 
   public AttributeComparator(String name, Ordering ordering) {

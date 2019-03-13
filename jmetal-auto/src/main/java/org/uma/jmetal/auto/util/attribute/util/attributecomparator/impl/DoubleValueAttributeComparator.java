@@ -1,6 +1,7 @@
 package org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl;
 
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.AttributeComparator;
+import org.uma.jmetal.auto.util.checking.Checker;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -29,9 +30,8 @@ public class DoubleValueAttributeComparator<S extends Solution<?>> extends Attri
    */
   @Override
   public int compare(S solution1, S solution2) {
-    checker
-            .isNotNull(solution1)
-            .isNotNull(solution2);
+    Checker.isNotNull(solution1);
+    Checker.isNotNull(solution2);
 
     int result ;
 

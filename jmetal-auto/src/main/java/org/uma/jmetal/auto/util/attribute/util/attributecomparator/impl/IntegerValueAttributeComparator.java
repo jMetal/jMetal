@@ -1,6 +1,7 @@
 package org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl;
 
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.AttributeComparator;
+import org.uma.jmetal.auto.util.checking.Checker;
 import org.uma.jmetal.solution.Solution;
 
 /**
@@ -13,7 +14,7 @@ import org.uma.jmetal.solution.Solution;
 public class IntegerValueAttributeComparator<S extends Solution<?>> extends AttributeComparator<S> {
 
   public IntegerValueAttributeComparator(String name, Ordering ordering) {
-    super(name, ordering) ;
+    super(name, ordering);
   }
 
   public IntegerValueAttributeComparator(String name) {
@@ -30,11 +31,10 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
    */
   @Override
   public int compare(S solution1, S solution2) {
-    checker
-            .isNotNull(solution1)
-            .isNotNull(solution2);
+    Checker.isNotNull(solution1);
+    Checker.isNotNull(solution2);
 
-    int result ;
+    int result;
 
     if (ordering.equals(Ordering.DESCENDING)) {
       int value1 = Integer.MIN_VALUE;
@@ -62,6 +62,6 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
       result = Integer.compare(value1, value2);
     }
 
-    return result ;
+    return result;
   }
 }

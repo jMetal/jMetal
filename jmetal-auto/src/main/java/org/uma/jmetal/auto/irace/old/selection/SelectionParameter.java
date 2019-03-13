@@ -1,8 +1,7 @@
-package org.uma.jmetal.auto.irace.selection;
+package org.uma.jmetal.auto.irace.old.selection;
 
-import org.uma.jmetal.auto.irace.Parameter;
-import org.uma.jmetal.auto.irace.ParameterType;
-import picocli.CommandLine;
+import org.uma.jmetal.auto.irace.old.Parameter;
+import org.uma.jmetal.auto.irace.old.ParameterTypes;
 
 import java.util.Arrays;
 
@@ -10,7 +9,7 @@ public class SelectionParameter extends Parameter {
   public SelectionParameter() {
     super("selection",
         "--selection",
-        ParameterType.c,
+        ParameterTypes.c,
         "(Tournament)",
         "",
         Arrays.asList(new NarityTournamentSelectionParameter())

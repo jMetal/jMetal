@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.irace;
+package org.uma.jmetal.auto.irace.old;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,24 @@ import java.util.List;
 public class Parameter {
   private final String name ;
   private final String switchName ;
-  private final ParameterType type ;
+  private final ParameterTypes type ;
   private final String validValues ;
   private final String conditionalParameters ;
   private final List<Parameter> associatedParameters ;
 
+  /**
+   * Constructor
+   * @param name
+   * @param switchName
+   * @param type
+   * @param validValues
+   * @param conditionalParameters
+   * @param associatedParameters
+   */
   public Parameter(
       String name,
       String switchName,
-      ParameterType type,
+      ParameterTypes type,
       String validValues,
       String conditionalParameters,
       List<Parameter> associatedParameters) {
@@ -26,10 +35,18 @@ public class Parameter {
     this.associatedParameters = associatedParameters ;
   }
 
+  /**
+   * Constructor
+   * @param name
+   * @param switchName
+   * @param type
+   * @param validValues
+   * @param conditionalParameters
+   */
   public Parameter(
       String name,
       String switchName,
-      ParameterType type,
+      ParameterTypes type,
       String validValues,
       String conditionalParameters) {
     this(name, switchName, type, validValues, conditionalParameters, new ArrayList<>()) ;
@@ -43,7 +60,7 @@ public class Parameter {
     return "\"" + switchName + "\"";
   }
 
-  public ParameterType getType() {
+  public ParameterTypes getType() {
     return type;
   }
 
