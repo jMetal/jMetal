@@ -27,10 +27,13 @@ public class ScatterSearchDoubleVariableGenerator extends DoubleVariableGenerato
   public void configure(List<Pair<Double, Double>> bounds) {
     super.configure(bounds);
 
-    sumOfFrequencyValues = new int[bounds.size()];
-    sumOfReverseFrequencyValues = new int[bounds.size()];
-    frequency = new int[numberOfSubRanges][bounds.size()];
-    reverseFrequency = new int[numberOfSubRanges][bounds.size()];
+    if (!configured) {
+      sumOfFrequencyValues = new int[bounds.size()];
+      sumOfReverseFrequencyValues = new int[bounds.size()];
+      frequency = new int[numberOfSubRanges][bounds.size()];
+      reverseFrequency = new int[numberOfSubRanges][bounds.size()];
+      configured = true ;
+    }
   }
 
   @Override

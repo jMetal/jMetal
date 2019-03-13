@@ -26,6 +26,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.DefaultAlgorithmOutputData;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -41,15 +43,17 @@ public class NSGAII {
     int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 25000;
 
+    RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
     CrossoverOperator<DoubleSolution> crossover =
-        new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+        new SBXCrossover(crossoverProbability, crossoverDistributionIndex, crossoverSolutionRepair);
 
+    RepairDoubleSolution muutationSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+        new PolynomialMutation(mutationProbability, mutationDistributionIndex, muutationSolutionRepair);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 

@@ -14,6 +14,5 @@ public abstract class DoubleVariableGenerator implements VariableGenerator<Doubl
 
   public void configure(List<Pair<Double, Double>> bounds) {
     this.bounds = bounds ;
-    this.configured = true ;
   }
 }
