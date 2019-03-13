@@ -40,4 +40,9 @@ public class NullCrossover<S extends Solution<?>>
   public int getNumberOfGeneratedChildren() {
     return 2;
   }
+
+  @Override
+  public double getCrossoverProbability() {
+    return 1.0;
+  }
 }

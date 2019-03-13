@@ -21,8 +21,9 @@ public class TwoPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     return operator.execute(solutions);
   }
 
+  @Override
   public double getCrossoverProbability() {
-    return operator.getCrossoverProbability();
+    return operator.getCrossoverProbability() ;
   }
 
   @Override

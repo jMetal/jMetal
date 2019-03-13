@@ -43,6 +43,7 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
   }
 
   /* Getters */
+  @Override
   public double getCrossoverProbability() {
     return crossoverProbability;
   }

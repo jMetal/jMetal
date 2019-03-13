@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Checker;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -57,6 +58,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   }
 
   /* Getters */
+  @Override
   public double getCrossoverProbability() {
     return crossoverProbability;
   }

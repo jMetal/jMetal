@@ -64,6 +64,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   }
 
   /* Getters */
+  @Override
   public double getCrossoverProbability() {
     return crossoverProbability;
   }

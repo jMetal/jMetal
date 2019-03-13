@@ -43,6 +43,7 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
   }
 
   /* Getter */
+  @Override
   public double getCrossoverProbability() {
     return crossoverProbability;
   }

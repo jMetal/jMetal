@@ -50,6 +50,7 @@ public class PMXCrossover implements
   }
 
   /* Getters */
+  @Override
   public double getCrossoverProbability() {
     return crossoverProbability;
   }

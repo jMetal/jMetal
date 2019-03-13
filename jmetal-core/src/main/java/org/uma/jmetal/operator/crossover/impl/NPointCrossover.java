@@ -30,6 +30,7 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     this.probability = 1.0;
   }
 
+  @Override
   public double getCrossoverProbability() {
     return probability;
   }

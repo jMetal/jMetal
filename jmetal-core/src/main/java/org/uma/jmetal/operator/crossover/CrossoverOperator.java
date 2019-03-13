@@ -13,6 +13,8 @@ import java.util.List;
  * @param <Source> The class of the solutions
  */
 public interface CrossoverOperator<Source> extends Operator<List<Source>,List<Source>> {
+  double getCrossoverProbability() ;
+
   int getNumberOfRequiredParents() ;
   int getNumberOfGeneratedChildren() ;
 }

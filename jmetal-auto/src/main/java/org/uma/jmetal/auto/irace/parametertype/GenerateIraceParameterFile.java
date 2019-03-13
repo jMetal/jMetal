@@ -8,7 +8,7 @@ import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateIraceParameterFileV2 {
+public class GenerateIraceParameterFile {
   public static void main(String[] args) {
     List<ParameterType> parameters = new ArrayList<>();
 

@@ -40,8 +40,9 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
   }
 
   /* Getter */
+  @Override
   public double getCrossoverProbability() {
-    return this.crossoverProbability;
+    return crossoverProbability;
   }
 
   /* Setter */
