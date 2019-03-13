@@ -35,7 +35,7 @@ import picocli.CommandLine.Option;
 import java.util.Arrays;
 
 enum CreateInitialSolutionsStrategyList {
-  random
+  random, scatterSearch, latinHypercubeSampling
 }
 
 enum MutationType {
