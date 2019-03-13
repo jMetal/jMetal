@@ -4,6 +4,7 @@ import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutio
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -91,7 +92,7 @@ public class ScatterSearchSolutionsCreation implements CreateInitialSolutions<Do
   }
 
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT1(2);
+    DoubleProblem problem = new ZDT4(2);
     int numberOfSolutionsToCreate = 100;
     int numberOfSubRanges = 4 ;
     List<DoubleSolution> solutions =

@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.component.createinitialsolutions.impl;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -32,7 +33,7 @@ public class RandomSolutionsCreation<S extends Solution<?>> implements CreateIni
   }
 
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT1(2);
+    DoubleProblem problem = new ZDT4(2);
     int numberOfSolutionsToCreate = 100;
 
     List<DoubleSolution> solutions =
