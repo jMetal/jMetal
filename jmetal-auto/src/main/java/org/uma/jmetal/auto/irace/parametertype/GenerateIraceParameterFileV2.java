@@ -39,7 +39,7 @@ public class GenerateIraceParameterFileV2 {
     /* Mutation */
     RealParameterType mutationProbability = new RealParameterType("mutationProbability", 0, 1) ;
 
-    RealParameterType polynomialMutationDistributionIndex = new RealParameterType("polMutationDistributionIndex", 5.0, 400.0) ;
+    RealParameterType polynomialMutationDistributionIndex = new RealParameterType("polynomialMutationDistributionIndex", 5.0, 400.0) ;
     polynomialMutationDistributionIndex.setParentTag("polynomial");
 
     RealParameterType uniformMutationPerturbation = new RealParameterType("uniformMutationPerturbation", 0.0, 1.0) ;
@@ -60,7 +60,7 @@ public class GenerateIraceParameterFileV2 {
     parameters.add(mutation) ;
 
     /* Selection */
-    IntegerParameterType nArityTournament = new IntegerParameterType("nArityTournament", 1, 10) ;
+    IntegerParameterType nArityTournament = new IntegerParameterType("selectionTournamentSize", 1, 10) ;
     nArityTournament.setParentTag("tournament");
 
     CategoricalParameterType selection = new CategoricalParameterType("selection") ;

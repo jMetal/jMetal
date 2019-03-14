@@ -19,7 +19,11 @@ public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingP
     Checker.isNotNull(solutionList);
     Checker.isTrue(
         solutionList.size() >= matingPoolSize,
-        "The solution list size is lower than the mating pool size");
+        "The solution list size ("
+            + solutionList.size()
+            + ") is lower than the mating pool size ("
+            + matingPoolSize
+            + ")");
 
     List<S> matingPool =
         SolutionListUtils.selectNRandomDifferentSolutions(matingPoolSize, solutionList);

@@ -5,6 +5,7 @@ import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutio
 import org.uma.jmetal.auto.component.createinitialsolutions.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.auto.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.auto.component.replacement.Replacement;
@@ -40,7 +41,7 @@ public class NSGAII {
     String referenceParetoFront = "pareto_fronts/ZDT1.pf" ;
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = 1;
     int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
@@ -49,11 +50,11 @@ public class NSGAII {
     CrossoverOperator<DoubleSolution> crossover =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex, crossoverSolutionRepair);
 
-    RepairDoubleSolution muutationSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
+    RepairDoubleSolution mutationSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(mutationProbability, mutationDistributionIndex, muutationSolutionRepair);
+        new PolynomialMutation(mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
@@ -73,9 +74,13 @@ public class NSGAII {
                 ranking.getSolutionComparator(),
                 densityEstimator.getSolutionComparator()));
 
+    /*
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             2, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            */
+    MatingPoolSelection<DoubleSolution> selection =
+            new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
 
     Replacement<DoubleSolution> replacement = new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator) ;
 
