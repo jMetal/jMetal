@@ -1,8 +1,8 @@
-crossover                                "--crossover "                           c       (SBX,BLX-ALPHA)
-crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX-ALPHA")
-crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX-ALPHA")
+crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA")
 sbxCrossoverDistributionIndex            "--sbxCrossoverDistributionIndex "       r       (5.0, 400.0)                   | crossover %in% c("SBX")
-blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX-ALPHA")
+blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
 #
 mutation                                 "--mutation "                            c       (uniform,polynomial)
 mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("polynomial","uniform")
