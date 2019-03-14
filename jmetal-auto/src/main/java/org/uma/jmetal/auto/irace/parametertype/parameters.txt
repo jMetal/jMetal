@@ -1,0 +1,16 @@
+crossover                                "--crossover "                           c       (SBX,BLX-alpha)
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     crossover %in% c("SBX","BLX-alpha")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          crossover %in% c("SBX","BLX-alpha")
+sbxDistributionIndex                     "--sbxDistributionIndex "                r       (5.0, 400.0)                   crossover %in% c("SBX")
+blxAlphaValue                            "--blxAlphaValue "                       r       (0.0, 1.0)                     crossover %in% c("BLX-alpha")
+#
+mutation                                 "--mutation "                            c       (uniform,polynomial)
+mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     mutation %in% c("polynomial","uniform")
+mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random,round,bounds)          mutation %in% c("polynomial","uniform")
+polMutationDistributionIndex             "--polMutationDistributionIndex "        r       (5.0, 400.0)                   mutation %in% c("polynomial")
+uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     mutation %in% c("uniform")
+#
+selection                                "--selection "                           c       (random,tournament)
+nArityTournament                         "--nArityTournament "                    i       (1, 10)                        selection %in% c("tournament")
+#
+offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)

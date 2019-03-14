@@ -21,7 +21,7 @@ import java.util.List;
 public class NSGAIICommandLineParsingRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
-
+    /*
     String[] arguments = {
       "--problemName",
       "org.uma.jmetal.problem.multiobjective.zdt.ZDT1",
@@ -50,8 +50,8 @@ public class NSGAIICommandLineParsingRunner {
       "--crossoverRepairStrategy",
       "random"
     };
-
-    AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), arguments);
+    */
+    AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), args);
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
@@ -68,7 +68,7 @@ public class NSGAIICommandLineParsingRunner {
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-    System.out.println(obtainedFrontHV);
+    //System.out.println(obtainedFrontHV);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
     // AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
