@@ -35,9 +35,7 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import picocli.CommandLine;
 import picocli.CommandLine.Option;
-import weka.Run;
 
 import java.util.Arrays;
 
@@ -62,8 +60,8 @@ enum VariationType {
 }
 
 enum CrossoverType {
-  sbx,
-  blx_alpha
+  SBX,
+  BLX_ALPHA
 }
 
 enum RepairStrategyType {
@@ -80,13 +78,13 @@ public class AutoNSGAII {
       names = {"-p", "--problemName"},
       required = true,
       description = "problem name})")
-  private String problemName;
+  private String problemName ;
 
   @Option(
       names = {"-rf", "--referenceFront"},
       required = true,
       description = "reference front")
-  private String referenceParetoFront;
+  private String referenceParetoFront ;
 
   /* Fixed components */
   Termination termination = new TerminationByEvaluations(25000);
@@ -197,12 +195,13 @@ public class AutoNSGAII {
   private int selectionTournamentSize = 2;
 
   EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {
+    DoubleProblem problem = getProblem() ;
     crossover = getCrossover();
     mutation = getMutation();
     createInitialSolutions = getCreateInitialSolutionStrategy();
     variation = getVariation();
     selection = getSelection();
-    evaluation = new SequentialEvaluation<>(getProblem());
+    evaluation = new SequentialEvaluation<>(problem);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(
@@ -240,12 +239,12 @@ public class AutoNSGAII {
 
   CrossoverOperator<DoubleSolution> getCrossover() {
     switch (crossoverType) {
-      case sbx:
+      case SBX:
         return new SBXCrossover(
             crossoverProbability,
             sbxCrossoverDistributionIndex,
             getRepairDoubleSolutionStrategy(crossoverRepairStrategy));
-      case blx_alpha:
+      case BLX_ALPHA:
         return new BLXAlphaCrossover(
             crossoverProbability,
             blxAlphaCrossoverAlphaValue,
@@ -305,6 +304,7 @@ public class AutoNSGAII {
   }
 
   String getReferenceParetoFront() {
+    System.out.println("pareto_fronts/" + referenceParetoFront);
     return "pareto_fronts/" + referenceParetoFront;
   }
 }

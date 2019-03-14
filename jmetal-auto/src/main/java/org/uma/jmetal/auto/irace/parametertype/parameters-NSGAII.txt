@@ -1,0 +1,22 @@
+crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA")
+sbxCrossoverDistributionIndex            "--sbxCrossoverDistributionIndex "       r       (5.0, 400.0)                   | crossover %in% c("SBX")
+blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
+#
+mutation                                 "--mutation "                            c       (uniform,polynomial)
+mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("polynomial","uniform")
+mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random,round,bounds)          | mutation %in% c("polynomial","uniform")
+polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
+uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
+#
+selection                                "--selection "                           c       (random,tournament)
+selectionTournamentSize                  "--selectionTournamentSize "             i       (1, 10)                        | selection %in% c("tournament")
+#
+offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)
+#
+variation                                "--variation "                           c       (rankingAndCrowding)
+#
+createInitialSolutions                   "--createInitialSolutions "              c       (random)
+#
+

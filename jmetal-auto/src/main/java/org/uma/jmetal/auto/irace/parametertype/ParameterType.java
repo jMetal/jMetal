@@ -40,7 +40,7 @@ public abstract class ParameterType {
   public String getConditions() {
     String condition = "";
     if (null != getParent()) {
-      String a = getParent().getRange() ;
+      condition = "| " ;
       if (isGlobalParameter) {
         condition += getParent().getName() + " %in% c(" + getParentTags(getParent()) + ")";
       } else {

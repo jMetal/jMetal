@@ -36,7 +36,7 @@ public class NSGAIICommandLineParsingRunner {
       "--selectionTournamentSize",
       "2",
       "--crossover",
-      "sbx",
+      "SBX",
       "--crossoverProbability",
       "1.0",
       "--mutation",
