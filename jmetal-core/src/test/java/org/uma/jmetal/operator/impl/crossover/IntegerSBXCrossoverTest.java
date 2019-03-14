@@ -2,6 +2,7 @@ package org.uma.jmetal.operator.impl.crossover;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 public class IntegerSBXCrossoverTest {
 
+	@Ignore
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration

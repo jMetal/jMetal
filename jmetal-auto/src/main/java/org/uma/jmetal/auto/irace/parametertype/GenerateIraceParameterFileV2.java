@@ -115,7 +115,6 @@ public class GenerateIraceParameterFileV2 {
             relatedParameter.getRange(),
             relatedParameter.getConditions()));
       }
-      stringBuilder.append("#") ;
     }
     stringBuilder.append("\n") ;
     System.out.println(stringBuilder.toString()) ;
