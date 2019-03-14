@@ -246,7 +246,7 @@ public class IntegerPolynomialMutationTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 1)) ;
+    List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 2), new ImmutablePair<>(0, 2)) ;
 
     IntegerSolution solution = new DefaultIntegerSolution(bounds, 2);
 

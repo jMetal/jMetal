@@ -13,6 +13,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -53,8 +54,8 @@ public class BLXAlphaCrossoverTest {
 
   @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
-    double crossoverProbability = -0.1 ;
-    new BLXAlphaCrossover(crossoverProbability, 2.0) ;
+    double crossoverProbability = -1.1 ;
+    new BLXAlphaCrossover(crossoverProbability, 1.0) ;
   }
 
   @Test (expected = JMetalException.class)

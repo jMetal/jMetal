@@ -1,6 +1,5 @@
 package org.uma.jmetal.auto.irace.parametertype;
 
-import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateIraceParameterFile {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
     /* Crossover */

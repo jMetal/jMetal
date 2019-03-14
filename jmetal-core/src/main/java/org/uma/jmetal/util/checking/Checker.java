@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.checking;
 
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.checking.exception.ValueOutOfRangeException;
@@ -29,9 +30,9 @@ public class Checker {
     }
   }
 
-  public static void  isTrue(boolean expression, String message) {
+  public static void isTrue(boolean expression, String message) {
     if (!expression) {
-      throw new RuntimeException(message) ;
+      throw new JMetalException(message) ;
     }
   }
 }

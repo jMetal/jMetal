@@ -45,8 +45,11 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
   /** Constructor */
   public BLXAlphaCrossover(double crossoverProbability, double alpha, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
-    Checker.isValidProbability(crossoverProbability);
-    Checker.isTrue(alpha >= 0, "Alpha is negative: " + alpha);
+    if (crossoverProbability < 0) {
+      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
+    } else if (alpha < 0) {
+      throw new JMetalException("Alpha is negative: " + alpha);
+    }
 
     this.crossoverProbability = crossoverProbability ;
     this.alpha = alpha ;
