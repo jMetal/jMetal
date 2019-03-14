@@ -33,8 +33,11 @@ public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingP
             SolutionListUtils.selectNRandomDifferentSolutions(matingPoolSize, solutionList);
     */
     List<S> matingPool = new ArrayList<>();
-    IntStream.range(1, matingPoolSize)
-        .forEach(i -> solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size())));
+    IntStream.range(0, matingPoolSize)
+        .forEach(
+            i ->
+                matingPool.add(
+                    solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size()-1))));
 
     return matingPool;
   }

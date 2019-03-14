@@ -21,36 +21,37 @@ import java.util.List;
 public class NSGAIICommandLineParsingRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
-    /*
+/*
     String[] arguments = {
       "--problemName",
-      "org.uma.jmetal.problem.multiobjective.zdt.ZDT1",
+      "org.uma.jmetal.problem.multiobjective.wfg.WFG1",
       "--referenceFront",
-      "ZDT1.pf",
+      "WFG1.2D.pf",
       "--createInitialSolutions",
       "random",
       "--offspringPopulationSize",
-      "100",
+      "4",
       "--selection",
-      "tournament",
+      "random",
       "--selectionTournamentSize",
       "2",
       "--crossover",
-      "SBX",
+      "BLX_ALPHA",
       "--crossoverProbability",
-      "1.0",
+      "0.6825",
       "--mutation",
-      "polynomial",
+      "uniform",
       "--mutationProbability",
-      "0.001",
+      "0.4079",
       "--variation",
       "rankingAndCrowding",
       "--mutationRepairStrategy",
-      "random",
+      "bounds",
       "--crossoverRepairStrategy",
-      "random"
+      "bounds",
+        "--blxAlphaCrossoverAlphaValue", "0.8082", "--uniformMutationPerturbation", "0.7294"
     };
-    */
+*/
     AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), args);
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
