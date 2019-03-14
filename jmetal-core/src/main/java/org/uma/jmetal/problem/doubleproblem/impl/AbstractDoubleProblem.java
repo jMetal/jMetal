@@ -17,7 +17,6 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
     implements DoubleProblem {
 
   protected List<Pair<Double, Double>> bounds;
-  private Checker checker = new Checker();
 
   public List<Pair<Double, Double>> getVariableBounds() {
     return bounds;
@@ -34,12 +33,11 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
   }
 
   public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
-    checker
-        .isNotNull(lowerBounds)
-        .isNotNull(upperBounds)
-        .isTrue(
-            lowerBounds.size() == upperBounds.size(),
-            "The size of the lower bound list is not equal to the size of the upper bound list");
+    Checker.isNotNull(lowerBounds);
+    Checker.isNotNull(upperBounds);
+    Checker.isTrue(
+        lowerBounds.size() == upperBounds.size(),
+        "The size of the lower bound list is not equal to the size of the upper bound list");
 
     bounds =
         IntStream.range(0, lowerBounds.size())
@@ -54,6 +52,6 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
 
   @Override
   public List<Pair<Double, Double>> getBounds() {
-    return bounds ;
+    return bounds;
   }
 }

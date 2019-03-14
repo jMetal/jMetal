@@ -17,7 +17,6 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
   implements IntegerProblem {
 
   protected List<Pair<Integer, Integer>> bounds;
-  private Checker checker = new Checker();
 
   public List<Pair<Integer, Integer>> getVariableBounds() {
     return bounds;
@@ -34,10 +33,9 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
   }
 
   public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
-    checker
-        .isNotNull(lowerBounds)
-        .isNotNull(upperBounds)
-        .isTrue(
+    Checker.isNotNull(lowerBounds);
+    Checker.isNotNull(upperBounds);
+    Checker.isTrue(
             lowerBounds.size() == upperBounds.size(),
             "The size of the lower bound list is not equal to the size of the upper bound list");
 
