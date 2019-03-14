@@ -20,7 +20,7 @@ public class GenerateIraceParameterFileV2 {
     sbxDistributionIndex.setParentTag("SBX");
 
     RealParameterType blxAlphaCrossoverAlphaValue = new RealParameterType("blxAlphaValue", 0.0, 1.0) ;
-    blxAlphaCrossoverAlphaValue.setParentTag("BLX-alpha");
+    blxAlphaCrossoverAlphaValue.setParentTag("BLX-ALPHA");
 
     CategoricalParameterType crossoverRepairStrategy = new CategoricalParameterType("crossoverRepairStrategy") ;
     crossoverRepairStrategy.addValue("random");

@@ -35,9 +35,7 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import picocli.CommandLine;
 import picocli.CommandLine.Option;
-import weka.Run;
 
 import java.util.Arrays;
 
@@ -62,8 +60,8 @@ enum VariationType {
 }
 
 enum CrossoverType {
-  sbx,
-  blx_alpha
+  SBX,
+  BLX_ALPHA
 }
 
 enum RepairStrategyType {
@@ -240,12 +238,12 @@ public class AutoNSGAII {
 
   CrossoverOperator<DoubleSolution> getCrossover() {
     switch (crossoverType) {
-      case sbx:
+      case SBX:
         return new SBXCrossover(
             crossoverProbability,
             sbxCrossoverDistributionIndex,
             getRepairDoubleSolutionStrategy(crossoverRepairStrategy));
-      case blx_alpha:
+      case BLX_ALPHA:
         return new BLXAlphaCrossover(
             crossoverProbability,
             blxAlphaCrossoverAlphaValue,
