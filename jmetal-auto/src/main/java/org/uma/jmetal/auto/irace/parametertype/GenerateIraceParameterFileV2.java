@@ -65,7 +65,7 @@ public class GenerateIraceParameterFileV2 {
 
     CategoricalParameterType selection = new CategoricalParameterType("selection") ;
     selection.addAssociatedParameter(nArityTournament);
-    selection.addValue("random");
+    //selection.addValue("random");
 
     parameters.add(selection) ;
 
