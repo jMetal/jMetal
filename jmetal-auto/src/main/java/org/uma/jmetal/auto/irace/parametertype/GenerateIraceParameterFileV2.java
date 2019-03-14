@@ -72,7 +72,15 @@ public class GenerateIraceParameterFileV2 {
     /* Other */
     IntegerParameterType offspringPopulationSize = new IntegerParameterType("offspringPopulationSize", 1, 400) ;
 
+    CategoricalParameterType variation = new CategoricalParameterType("variation") ;
+    variation.addValue("rankingAndCrowding");
+
+    CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
+    createInitialSolutions.addValue("random");
+
     parameters.add(offspringPopulationSize) ;
+    parameters.add(variation) ;
+    parameters.add(createInitialSolutions) ;
 
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
@@ -105,5 +113,6 @@ public class GenerateIraceParameterFileV2 {
       }
       System.out.println("#") ;
     }
+    System.out.println() ;
   }
 }
