@@ -304,7 +304,6 @@ public class AutoNSGAII {
   }
 
   String getReferenceParetoFront() {
-    System.out.println("pareto_fronts/" + referenceParetoFront);
-    return "pareto_fronts/" + referenceParetoFront;
+    return "/pareto_fronts/" + referenceParetoFront;
   }
 }

@@ -20,7 +20,6 @@ import java.util.Random;
 import static org.junit.Assert.assertTrue;
 
 public class IntegerSBXCrossoverTest {
-
 	@Ignore
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
