@@ -5,11 +5,14 @@ import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateIraceParameterFileV2 {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
     /* Crossover */
@@ -65,7 +68,7 @@ public class GenerateIraceParameterFileV2 {
 
     CategoricalParameterType selection = new CategoricalParameterType("selection") ;
     selection.addAssociatedParameter(nArityTournament);
-    //selection.addValue("random");
+    selection.addValue("random");
 
     parameters.add(selection) ;
 
@@ -84,35 +87,38 @@ public class GenerateIraceParameterFileV2 {
 
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
+    StringBuilder stringBuilder = new StringBuilder() ;
     for (ParameterType parameter : parameters) {
-      System.out.format(
+      stringBuilder.append(String.format(
           formatString,
           parameter.getName(),
           parameter.getLabel(),
           parameter.getParameterType(),
           parameter.getRange(),
-          parameter.getConditions());
+          parameter.getConditions()));
 
       for (ParameterType relatedParameter : parameter.getGlobalParameters()) {
-        System.out.format(
+        stringBuilder.append(String.format(
             formatString,
             relatedParameter.getName(),
             relatedParameter.getLabel(),
             relatedParameter.getParameterType(),
             relatedParameter.getRange(),
-            relatedParameter.getConditions());
+            relatedParameter.getConditions()));
       }
       for (ParameterType relatedParameter : parameter.getAssociatedParameters()) {
-        System.out.format(
+        stringBuilder.append(String.format(
             formatString,
             relatedParameter.getName(),
             relatedParameter.getLabel(),
             relatedParameter.getParameterType(),
             relatedParameter.getRange(),
-            relatedParameter.getConditions());
+            relatedParameter.getConditions()));
       }
-      System.out.println("#") ;
+      stringBuilder.append("#") ;
     }
-    System.out.println() ;
+    stringBuilder.append("\n") ;
+    System.out.println(stringBuilder.toString()) ;
+    Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
   }
 }
