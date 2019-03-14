@@ -16,10 +16,10 @@ public class GenerateIraceParameterFileV2 {
     RealParameterType crossoverProbability =
         new RealParameterType("crossoverProbability", "--crossoverProbability", 0, 1);
 
-    RealParameterType sbxDistributionIndex = new RealParameterType("sbxDistributionIndex", 5.0, 400.0) ;
+    RealParameterType sbxDistributionIndex = new RealParameterType("sbxCrossoverDistributionIndex", 5.0, 400.0) ;
     sbxDistributionIndex.setParentTag("SBX");
 
-    RealParameterType blxAlphaCrossoverAlphaValue = new RealParameterType("blxAlphaValue", 0.0, 1.0) ;
+    RealParameterType blxAlphaCrossoverAlphaValue = new RealParameterType("blxAlphaCrossoverAlphaValue", 0.0, 1.0) ;
     blxAlphaCrossoverAlphaValue.setParentTag("BLX-ALPHA");
 
     CategoricalParameterType crossoverRepairStrategy = new CategoricalParameterType("crossoverRepairStrategy") ;
