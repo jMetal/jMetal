@@ -38,15 +38,10 @@ import java.util.Arrays;
 public class NSGAII {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
-
-    String pname = problem.getClass().toString() ;
-    System.out.println(pname);
-
-    System.exit(0) ;
-    String referenceParetoFront = "pareto_fronts/ZDT1.pf" ;
+    String referenceParetoFront = "/pareto_fronts/ZDT1.pf" ;
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue() ;
@@ -79,14 +74,15 @@ public class NSGAII {
                 ranking.getSolutionComparator(),
                 densityEstimator.getSolutionComparator()));
 
-    /*
+
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             2, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
-            */
+
+    /*
     MatingPoolSelection<DoubleSolution> selection =
             new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
-
+*/
     Replacement<DoubleSolution> replacement = new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator) ;
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm =
@@ -105,6 +101,7 @@ public class NSGAII {
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
+    //evaluation.getObservable().register(new RunTimeChartObserver<>("EVALS", 80, referenceParetoFront));
 
     algorithm.run();
 

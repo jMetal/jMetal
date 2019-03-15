@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.auto.util.observable.Observable;
+import org.uma.jmetal.auto.util.observable.ObservableEntity;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public abstract class Metaheuristic<S extends Solution<?>> implements Algorithm<List<S>> {
+public abstract class Metaheuristic<S extends Solution<?>> implements Algorithm<List<S>>, ObservableEntity {
   protected List<S> solutions ;
   protected Problem<S> problem ;
   protected Observable<Map<String, Object>> observable ;
@@ -41,6 +42,7 @@ public abstract class Metaheuristic<S extends Solution<?>> implements Algorithm<
     return solutions ;
   }
 
+  @Override
   public Observable<Map<String, Object>> getObservable() {
     return observable ;
   }

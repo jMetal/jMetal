@@ -1,21 +1,38 @@
 package org.uma.jmetal.auto.component.evaluation.impl;
 
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
+import org.uma.jmetal.auto.util.observable.Observable;
+import org.uma.jmetal.auto.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S> {
-  private Problem<S> problem ;
+  private Problem<S> problem;
+  protected Observable<Map<String, Object>> observable;
 
   public SequentialEvaluation(Problem<S> problem) {
-    this.problem = problem ;
+    this.problem = problem;
+    this.observable = new DefaultObservable<>("SequentialEvaluation") ;
   }
 
- public List<S> evaluate(List<S> solutionList) {
-   solutionList.forEach(solution ->problem.evaluate(solution));
+  public List<S> evaluate(List<S> solutionList) {
+    solutionList.forEach(solution -> problem.evaluate(solution));
 
-   return solutionList ;
-   }
+    Map<String, Object>attributes = new HashMap<>() ;
+    attributes.put("POPULATION", solutionList);
+    attributes.put("EVALUATIONS", 1);
+    observable.setChanged();
+    observable.notifyObservers(attributes);
+
+    return solutionList;
+  }
+
+  @Override
+  public Observable<Map<String, Object>> getObservable() {
+    return observable;
+  }
 }

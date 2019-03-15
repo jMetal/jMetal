@@ -69,8 +69,4 @@ public class DefaultObservable<D> implements Observable<D> {
 	public synchronized String getDescription() {
 		return name;
 	}
-
-	@Override
-	public synchronized void run() {
-	}
 }
