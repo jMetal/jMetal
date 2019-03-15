@@ -1,5 +1,6 @@
-package org.uma.jmetal.auto.irace.parametertype;
+package org.uma.jmetal.auto.irace.parametertype.pruebas;
 
+import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
@@ -15,26 +16,9 @@ public class GenerateIraceParameterFile {
     List<ParameterType> parameters = new ArrayList<>();
 
     /* Crossover */
-    RealParameterType crossoverProbability =
-        new RealParameterType("crossoverProbability", "--crossoverProbability", 0, 1);
-
-    RealParameterType sbxDistributionIndex = new RealParameterType("sbxCrossoverDistributionIndex", 5.0, 400.0) ;
-    sbxDistributionIndex.setParentTag("SBX");
-
-    RealParameterType blxAlphaCrossoverAlphaValue = new RealParameterType("blxAlphaCrossoverAlphaValue", 0.0, 1.0) ;
-    blxAlphaCrossoverAlphaValue.setParentTag("BLX_ALPHA");
-
-    CategoricalParameterType crossoverRepairStrategy = new CategoricalParameterType("crossoverRepairStrategy") ;
-    crossoverRepairStrategy.addValue("random");
-    crossoverRepairStrategy.addValue("bounds");
-    crossoverRepairStrategy.addValue("round");
-
-    CategoricalParameterType crossover = new CategoricalParameterType("crossover", "--crossover");
-
-    crossover.addGlobalParameter(crossoverProbability);
-    crossover.addGlobalParameter(crossoverRepairStrategy);
-    crossover.addAssociatedParameter(sbxDistributionIndex);
-    crossover.addAssociatedParameter(blxAlphaCrossoverAlphaValue);
+    CategoricalParameterType crossover = new Cross().getParameter() ;
+    crossover.addAssociatedParameter(new SBX().getParameter());
+    crossover.addAssociatedParameter(new BLX().getParameter());
 
     parameters.add(crossover);
 
