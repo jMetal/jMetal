@@ -64,7 +64,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
           String referenceFrontDirectory = experiment.getReferenceFrontDirectory();
 
-          String referenceFrontName = referenceFrontDirectory + "/" + algorithm.getReferenceParetoFront();
+          String referenceFrontName = referenceFrontDirectory + "/" + problem.getReferenceFront();
 
           JMetalLogger.logger.info("RF: " + referenceFrontName);
 

@@ -74,16 +74,5 @@
             <artifactId>xchart</artifactId>
             <version>3.2.2</version>
         </dependency>
-        <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>3.9.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.uma.jmetal</groupId>
-            <artifactId>jmetal-auto</artifactId>
-            <version>5.8-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
