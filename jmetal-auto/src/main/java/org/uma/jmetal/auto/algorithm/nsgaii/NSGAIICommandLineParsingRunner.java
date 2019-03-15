@@ -52,7 +52,7 @@ public class NSGAIICommandLineParsingRunner {
         "--blxAlphaCrossoverAlphaValue", "0.8082", "--uniformMutationPerturbation", "0.7294"
     };
 */
-    AutoNSGAII configurator = CommandLine.populateCommand(new AutoNSGAII(), args);
+    AutoNSGAIIConfigurator configurator = CommandLine.populateCommand(new AutoNSGAIIConfigurator(), args);
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();

@@ -38,6 +38,11 @@ import java.util.Arrays;
 public class NSGAII {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
+
+    String pname = problem.getClass().toString() ;
+    System.out.println(pname);
+
+    System.exit(0) ;
     String referenceParetoFront = "pareto_fronts/ZDT1.pf" ;
 
     int populationSize = 100;
