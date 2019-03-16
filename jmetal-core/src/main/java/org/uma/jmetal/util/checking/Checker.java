@@ -4,6 +4,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.checking.exception.ValueOutOfRangeException;
+import weka.Run;
 
 public class Checker {
   public static void isNotNull(Object object) {
@@ -32,7 +33,7 @@ public class Checker {
 
   public static void isTrue(boolean expression, String message) {
     if (!expression) {
-      throw new JMetalException(message) ;
+      throw new RuntimeException(message) ;
     }
   }
 }

@@ -238,7 +238,8 @@ public class IntegerPolynomialMutationTest {
       solution.setObjective(1, 2);
     }
   }
-  
+
+  @Ignore
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
