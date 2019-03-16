@@ -14,7 +14,7 @@ public class Checker {
   }
 
   public static void isValidProbability(double value) {
-    if ((value < 0.0) && (value > 1.0)) {
+    if ((value < 0.0) || (value > 1.0)) {
       throw new InvalidProbabilityValueException(value) ;
     }
   }
