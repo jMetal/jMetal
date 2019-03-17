@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.checking;
 
 import org.junit.Test;
-import org.uma.jmetal.util.checking.exception.ExpressionIsNotValidException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 
 import org.uma.jmetal.util.checking.exception.NullParameterException;
@@ -34,7 +34,7 @@ public class CheckerTest {
     Checker.valueIsInRange(6.2, 3.1, 5.5);
   }
 
-  @Test (expected = ExpressionIsNotValidException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldThatRaiseAnExceptionIfTheExpressionIsFalse() {
     Checker.that(false, "");
   }

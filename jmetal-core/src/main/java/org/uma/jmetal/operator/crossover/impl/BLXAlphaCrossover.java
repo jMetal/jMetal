@@ -79,11 +79,8 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
-    if (null == solutions) {
-      throw new JMetalException("Null parameter") ;
-    } else if (solutions.size() != 2) {
-      throw new JMetalException("There must be two parents instead of " + solutions.size()) ;
-    }
+    Checker.isNotNull(solutions);
+    Checker.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;
   }
