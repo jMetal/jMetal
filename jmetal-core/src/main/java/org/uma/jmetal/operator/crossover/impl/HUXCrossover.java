@@ -51,7 +51,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
   /** Execute() method */
   public List<BinarySolution> execute(List<BinarySolution> parents) {
-    Checker.isTrue(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
+    Checker.that(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
 
     return doCrossover(crossoverProbability, parents.get(0), parents.get(1));
   }

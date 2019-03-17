@@ -1,10 +1,8 @@
 package org.uma.jmetal.util.checking;
 
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.checking.exception.ValueOutOfRangeException;
-import weka.Run;
 
 public class Checker {
   public static void isNotNull(Object object) {
@@ -20,18 +18,18 @@ public class Checker {
   }
 
   public static void isValueInRange(double value, double lowestValue, double highestValue) {
-    if ((value < lowestValue) && (value > highestValue)) {
+    if ((value < lowestValue) || (value > highestValue)) {
       throw new ValueOutOfRangeException(value, lowestValue, highestValue) ;
     }
   }
 
   public static void  isValueInRange(int value, int lowestValue, int highestValue) {
-    if ((value < lowestValue) && (value > highestValue)) {
+    if ((value < lowestValue) || (value > highestValue)) {
       throw new ValueOutOfRangeException(value, lowestValue, highestValue) ;
     }
   }
 
-  public static void isTrue(boolean expression, String message) {
+  public static void that(boolean expression, String message) {
     if (!expression) {
       throw new RuntimeException(message) ;
     }

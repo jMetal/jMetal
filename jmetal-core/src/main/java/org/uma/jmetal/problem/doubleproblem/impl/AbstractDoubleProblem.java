@@ -35,7 +35,7 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
   public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
     Checker.isNotNull(lowerBounds);
     Checker.isNotNull(upperBounds);
-    Checker.isTrue(
+    Checker.that(
         lowerBounds.size() == upperBounds.size(),
         "The size of the lower bound list is not equal to the size of the upper bound list");
 
