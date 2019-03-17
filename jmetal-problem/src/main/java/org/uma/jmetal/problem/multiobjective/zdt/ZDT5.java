@@ -66,7 +66,7 @@ public class ZDT5 extends AbstractBinaryProblem {
 
   @Override
   public int getBitsFromVariable(int index) {
-    checker.isValueInRange(index, 0, this.getNumberOfVariables()) ;
+    checker.valueIsInRange(index, 0, this.getNumberOfVariables()) ;
 
   	return bitsPerVariable.get(index) ;
   }
