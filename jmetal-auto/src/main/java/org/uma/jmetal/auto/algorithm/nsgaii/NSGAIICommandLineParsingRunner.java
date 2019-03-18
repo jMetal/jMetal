@@ -1,6 +1,8 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.auto.util.observer.Observer;
+import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;
@@ -11,6 +13,7 @@ import org.uma.jmetal.util.point.PointSolution;
 import picocli.CommandLine;
 
 import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -56,6 +59,12 @@ public class NSGAIICommandLineParsingRunner {
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
+
+    if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
+      Collection<Observer<DoubleSolution>> observers = autoNSGAII.getEvaluation().getObservable().getObservers() ;
+      ExternalArchiveObserver<DoubleSolution> externalArchiveObserver = (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
+      autoNSGAII.setSolutions(externalArchiveObserver.getArchive().getSolutionList());
+    }
 
     Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);

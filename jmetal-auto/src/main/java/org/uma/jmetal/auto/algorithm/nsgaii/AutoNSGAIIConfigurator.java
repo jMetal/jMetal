@@ -16,6 +16,7 @@ import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.auto.component.variation.Variation;
@@ -33,6 +34,7 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithOppositeBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import picocli.CommandLine.Option;
@@ -77,8 +79,6 @@ enum RepairStrategyType {
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */
   int sizeOfTheFinalPopulation = 100 ;
-  /*
-  int sizeOfTheFinalPopulation = 100 ;
 
   @Option(
       names = {"--algorithmResult"},
@@ -92,9 +92,10 @@ public class AutoNSGAIIConfigurator {
   private int populationSize = 100;
 
 
-   */
-
-  int populationSize = 100;
+  @Option(
+      names = {"--populationSizeWithArchive"},
+      description = "Population Size when an archive is used (default: ${DEFAULT-VALUE})")
+  private int populationSizeWithArchive = 40;
 
   @Option(
       names = {"-p", "--problemName"},
@@ -218,6 +219,8 @@ public class AutoNSGAIIConfigurator {
 
   public EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {
 
+    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver;
+
     DoubleProblem problem = getProblem() ;
     crossover = getCrossover();
     mutation = getMutation();
@@ -225,6 +228,14 @@ public class AutoNSGAIIConfigurator {
     variation = getVariation();
     selection = getSelection();
     evaluation = new SequentialEvaluation<>(problem);
+
+    if (algorithmResult.equals(AlgorithmResult.externalArchive)) {
+      boundedArchiveObserver  =  new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation));
+      evaluation.getObservable().register(boundedArchiveObserver);
+      populationSize = populationSizeWithArchive ;
+    }
+
+    System.out.println("Population size: " + populationSize) ;
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(

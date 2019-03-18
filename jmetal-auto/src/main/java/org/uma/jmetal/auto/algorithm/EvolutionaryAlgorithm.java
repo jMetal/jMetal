@@ -124,4 +124,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<
   public String getDescription() {
     return "Evolutionary algorithm";
   }
+
+  public Evaluation<S> getEvaluation() {
+    return evaluation ;
+  }
 }

@@ -4,6 +4,7 @@ import org.uma.jmetal.auto.util.observer.Observer;
 import org.uma.jmetal.auto.util.observable.Observable;
 import org.uma.jmetal.util.JMetalLogger;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -68,5 +69,10 @@ public class DefaultObservable<D> implements Observable<D> {
 	@Override
 	public synchronized String getDescription() {
 		return name;
+	}
+
+	@Override
+	public Collection<Observer<D>> getObservers() {
+		return observers ;
 	}
 }

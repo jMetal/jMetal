@@ -1,3 +1,7 @@
+algorithmResult                          "--algorithmResult "                     c       (externalArchive,population)                       
+populationSize                           "--populationSize "                      c       (100)                          | algorithmResult %in% c("population")
+populationSizeWithArchive                "--populationSize "                      o       (10,20,50,100,200,400)         | algorithmResult %in% c("externalArchive")
+#
 crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)                                    
 crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
 crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA")
@@ -19,3 +23,4 @@ variation                                "--variation "                         
 #
 createInitialSolutions                   "--createInitialSolutions "              c       (random)                                           
 #
+

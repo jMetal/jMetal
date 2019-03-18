@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.irace.parametertype;
 
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
+import org.uma.jmetal.auto.irace.parametertype.impl.OrdinalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
 
 import java.io.IOException;
@@ -13,6 +14,29 @@ import java.util.List;
 public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
+
+    /* Result of the algorithm */
+
+    CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult") ;
+    algorithmResult.addValue("population");
+    algorithmResult.addValue("externalArchive");
+
+    CategoricalParameterType populationSize = new CategoricalParameterType("populationSize") ;
+    populationSize.addValue("100");
+    populationSize.setParentTag("population");
+
+    OrdinalParameterType populationSizeWithArchive = new OrdinalParameterType("populationSizeWithArchive") ;
+    populationSizeWithArchive.addValue("10");
+    populationSizeWithArchive.addValue("20");
+    populationSizeWithArchive.addValue("50");
+    populationSizeWithArchive.addValue("100");
+    populationSizeWithArchive.addValue("200");
+    populationSizeWithArchive.addValue("400");
+    populationSizeWithArchive.setParentTag("externalArchive");
+
+    algorithmResult.addAssociatedParameter(populationSize);
+    algorithmResult.addAssociatedParameter(populationSizeWithArchive);
+    parameters.add(algorithmResult) ;
 
     /* Crossover */
     RealParameterType crossoverProbability =
