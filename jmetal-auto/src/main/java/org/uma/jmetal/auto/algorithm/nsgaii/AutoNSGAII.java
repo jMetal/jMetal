@@ -25,9 +25,9 @@ public class AutoNSGAII {
 
     String[] arguments = {
       "--problemName",
-      "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2",
+      "org.uma.jmetal.problem.multiobjective.zdt.ZDT4",
       "--referenceFront",
-      "DTLZ2.2D.pf",
+      "ZDT4.pf",
       "--crossover",
       "BLX_ALPHA",
       "--crossoverProbability",

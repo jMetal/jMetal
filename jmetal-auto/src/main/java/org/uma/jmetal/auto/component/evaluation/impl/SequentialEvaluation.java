@@ -12,11 +12,14 @@ import java.util.Map;
 
 public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S> {
   private Problem<S> problem;
-  protected Observable<Map<String, Object>> observable;
+  private Observable<Map<String, Object>> observable;
+  private int numberOfEvaluationIterations ;
+
 
   public SequentialEvaluation(Problem<S> problem) {
     this.problem = problem;
     this.observable = new DefaultObservable<>("SequentialEvaluation") ;
+    this.numberOfEvaluationIterations = 0 ;
   }
 
   public List<S> evaluate(List<S> solutionList) {
@@ -24,7 +27,7 @@ public class SequentialEvaluation<S extends Solution<?>> implements Evaluation<S
 
     Map<String, Object>attributes = new HashMap<>() ;
     attributes.put("POPULATION", solutionList);
-    attributes.put("EVALUATIONS", 1);
+    attributes.put("EVALUATIONS", ++numberOfEvaluationIterations);
     observable.setChanged();
     observable.notifyObservers(attributes);
 

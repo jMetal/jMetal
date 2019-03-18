@@ -39,6 +39,10 @@ import picocli.CommandLine.Option;
 
 import java.util.Arrays;
 
+enum AlgorithmResult {
+  population, externalArchive
+}
+
 enum CreateInitialSolutionsStrategyType {
   random,
   scatterSearch,
@@ -72,6 +76,24 @@ enum RepairStrategyType {
 
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */
+  int sizeOfTheFinalPopulation = 100 ;
+  /*
+  int sizeOfTheFinalPopulation = 100 ;
+
+  @Option(
+      names = {"--algorithmResult"},
+      description = "Algorithm result - population vs archive (default: ${DEFAULT-VALUE})")
+  private AlgorithmResult algorithmResult = AlgorithmResult.population;
+
+
+  @Option(
+      names = {"--populationSize"},
+      description = "Population Size (default: ${DEFAULT-VALUE})")
+  private int populationSize = 100;
+
+
+   */
+
   int populationSize = 100;
 
   @Option(

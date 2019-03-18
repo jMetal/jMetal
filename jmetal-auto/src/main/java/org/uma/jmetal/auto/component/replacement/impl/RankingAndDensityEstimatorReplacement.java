@@ -18,13 +18,13 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>> implem
     this.densityEstimator = densityEstimator ;
   }
 
-  public List<S> replace(List<S> currentList, List<S> offspringList) {
+  public List<S> replace(List<S> solutionList, List<S> offspringList) {
     List<S> jointPopulation = new ArrayList<>();
-    jointPopulation.addAll(currentList);
+    jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
     RankingAndDensityEstimatorMatingPoolSelection<S> selection ;
-    selection = new RankingAndDensityEstimatorMatingPoolSelection<S>(currentList.size(), ranking, densityEstimator);
+    selection = new RankingAndDensityEstimatorMatingPoolSelection<S>(solutionList.size(), ranking, densityEstimator);
 
     return selection.select(jointPopulation) ;
   }

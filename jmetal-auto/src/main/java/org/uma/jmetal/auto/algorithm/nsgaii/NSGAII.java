@@ -5,7 +5,7 @@ import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutio
 import org.uma.jmetal.auto.component.createinitialsolutions.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.auto.util.observer.Observer;
 import org.uma.jmetal.auto.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.observer.impl.RunTimeChartObserver;
@@ -26,7 +26,6 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
@@ -35,8 +34,6 @@ import org.uma.jmetal.util.AlgorithmDefaultOutputData;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.Arrays;
 
@@ -47,6 +44,7 @@ public class NSGAII {
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
+    int archiveMaximumSize = 100 ;
     int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
@@ -102,14 +100,14 @@ public class NSGAII {
             replacement);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    //    new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
-        new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(populationSize));
+        new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
     //algorithm.getObservable().register(runTimeChartObserver);
-    // evaluation.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
+    //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
     evaluation.getObservable().register(boundedArchiveObserver);
 
