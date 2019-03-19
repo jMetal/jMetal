@@ -9,6 +9,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,8 +31,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(4) ;
     selection.execute(null) ;
@@ -38,8 +39,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     TournamentSelection<DoubleSolution> selection = new TournamentSelection<DoubleSolution>(4) ;
     List<DoubleSolution> list = new ArrayList<>() ;
