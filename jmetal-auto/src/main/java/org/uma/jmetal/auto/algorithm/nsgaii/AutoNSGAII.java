@@ -27,13 +27,13 @@ public class AutoNSGAII {
   public static void main(String[] args) throws FileNotFoundException {
 
     String[] arguments = {
+        "--problemName",
+        "org.uma.jmetal.problem.multiobjective.zdt.ZDT4",
+        "--referenceFront",
+        "ZDT4.pf",
         "--algorithmResult", "externalArchive",
         "--populationSizeWithArchive", "20",
         //"--algorithmResult", "population",
-      "--problemName",
-      "org.uma.jmetal.problem.multiobjective.zdt.ZDT4",
-      "--referenceFront",
-      "ZDT4.pf",
       "--crossover",
       "BLX_ALPHA",
       "--crossoverProbability",

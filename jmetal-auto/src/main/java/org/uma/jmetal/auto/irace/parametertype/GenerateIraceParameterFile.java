@@ -96,7 +96,15 @@ public class GenerateIraceParameterFile {
     parameters.add(selection) ;
 
     /* Others */
-    IntegerParameterType offspringPopulationSize = new IntegerParameterType("offspringPopulationSize", 1, 400) ;
+    OrdinalParameterType offspringPopulationSize = new OrdinalParameterType("offspringPopulationSize") ;
+    offspringPopulationSize.addValue("1");
+    offspringPopulationSize.addValue("5");
+    offspringPopulationSize.addValue("10");
+    offspringPopulationSize.addValue("20");
+    offspringPopulationSize.addValue("50");
+    offspringPopulationSize.addValue("100");
+    offspringPopulationSize.addValue("200");
+    offspringPopulationSize.addValue("400");
 
     CategoricalParameterType variation = new CategoricalParameterType("variation") ;
     variation.addValue("rankingAndCrowding");
