@@ -11,7 +11,7 @@ public class CrossoverParameter extends Parameter {
     super("crossover",
         "--crossover",
         ParameterTypes.c,
-        "(SBX, BLX-alpha)",
+        "(SBXCrossoverParameter, BLXCrossoverParameter-alpha)",
         "",
         Arrays.asList(
             new CrossoverProbabilityParameter(),

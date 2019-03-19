@@ -11,7 +11,7 @@ public class BlxAlphaCrossoverAlphaParameter extends Parameter {
         "--crossoverBlxAlpha",
         ParameterTypes.r,
         "(0.1, 1.0)",
-        "| crossover %in% c(\"BLX-alpha\"\")",
+        "| crossover %in% c(\"BLXCrossoverParameter-alpha\"\")",
         Collections.emptyList()
     );
   }

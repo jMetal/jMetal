@@ -12,7 +12,7 @@ public class SBXCrossoverDistributionIndexParameter extends Parameter {
      "--crossoverSBXDistributionIndex",
         ParameterTypes.r,
         "(5.0, 400.0)",
-        "| crossover %in% c(\"SBX\"\")",
+        "| crossover %in% c(\"SBXCrossoverParameter\"\")",
         Collections.emptyList()
     ) ;
   }

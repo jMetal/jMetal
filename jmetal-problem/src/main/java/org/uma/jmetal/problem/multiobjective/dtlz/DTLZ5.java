@@ -16,7 +16,7 @@ public class DTLZ5 extends AbstractDoubleProblem {
    * Creates a default DTLZ5 problem (12 variables and 3 objectives)
    */
   public DTLZ5() {
-    this(12, 3);
+    this(12, 2);
   }
 
   /**

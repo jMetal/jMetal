@@ -11,7 +11,7 @@ public class CrossoverProbabilityParameter extends Parameter {
         "--crossoverProbability",
         ParameterTypes.r,
         "(0.0, 1.0)",
-        "| crossover %in% c(\"SBX\", \"BLX-alpha\")",
+        "| crossover %in% c(\"SBXCrossoverParameter\", \"BLXCrossoverParameter-alpha\")",
         Collections.emptyList()
         ) ;
   }

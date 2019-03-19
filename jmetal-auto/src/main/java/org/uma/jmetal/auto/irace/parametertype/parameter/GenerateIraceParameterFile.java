@@ -1,13 +1,14 @@
-package org.uma.jmetal.auto.irace.parametertype.pruebas;
+package org.uma.jmetal.auto.irace.parametertype.parameter;
 
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.BLXCrossoverParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.CrossoverParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.SBXCrossoverParameter;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class GenerateIraceParameterFile {
     List<ParameterType> parameters = new ArrayList<>();
 
     /* Crossover */
-    CategoricalParameterType crossover = new Cross().getParameter() ;
-    crossover.addAssociatedParameter(new SBX().getParameter());
-    crossover.addAssociatedParameter(new BLX().getParameter());
+    CrossoverParameter crossover = new CrossoverParameter() ;
+    //crossover.addAssociatedParameter(new RealParameterType("5.0, 400.0));
+    crossover.addAssociatedParameter(new BLXCrossoverParameter());
 
     parameters.add(crossover);
 
@@ -102,6 +103,6 @@ public class GenerateIraceParameterFile {
     }
     stringBuilder.append("\n") ;
     System.out.println(stringBuilder.toString()) ;
-    Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
+    //Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
   }
 }
