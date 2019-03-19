@@ -15,8 +15,6 @@ public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
-    /* Result of the algorithm */
-
     CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult") ;
     algorithmResult.addValue("population");
     algorithmResult.addValue("externalArchive");
@@ -37,6 +35,26 @@ public class GenerateIraceParameterFile {
     algorithmResult.addAssociatedParameter(populationSize);
     algorithmResult.addAssociatedParameter(populationSizeWithArchive);
     parameters.add(algorithmResult) ;
+
+    OrdinalParameterType offspringPopulationSize = new OrdinalParameterType("offspringPopulationSize") ;
+    offspringPopulationSize.addValue("1");
+    offspringPopulationSize.addValue("5");
+    offspringPopulationSize.addValue("10");
+    offspringPopulationSize.addValue("20");
+    offspringPopulationSize.addValue("50");
+    offspringPopulationSize.addValue("100");
+    offspringPopulationSize.addValue("200");
+    offspringPopulationSize.addValue("400");
+
+    CategoricalParameterType variation = new CategoricalParameterType("variation") ;
+    variation.addValue("rankingAndCrowding");
+
+    CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
+    createInitialSolutions.addValue("random");
+
+    parameters.add(offspringPopulationSize) ;
+    parameters.add(variation) ;
+    parameters.add(createInitialSolutions) ;
 
     /* Crossover */
     RealParameterType crossoverProbability =
@@ -94,27 +112,6 @@ public class GenerateIraceParameterFile {
     selection.addValue("random");
 
     parameters.add(selection) ;
-
-    /* Others */
-    OrdinalParameterType offspringPopulationSize = new OrdinalParameterType("offspringPopulationSize") ;
-    offspringPopulationSize.addValue("1");
-    offspringPopulationSize.addValue("5");
-    offspringPopulationSize.addValue("10");
-    offspringPopulationSize.addValue("20");
-    offspringPopulationSize.addValue("50");
-    offspringPopulationSize.addValue("100");
-    offspringPopulationSize.addValue("200");
-    offspringPopulationSize.addValue("400");
-
-    CategoricalParameterType variation = new CategoricalParameterType("variation") ;
-    variation.addValue("rankingAndCrowding");
-
-    CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
-    createInitialSolutions.addValue("random");
-
-    parameters.add(offspringPopulationSize) ;
-    parameters.add(variation) ;
-    parameters.add(createInitialSolutions) ;
 
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -24,7 +25,7 @@ public class RepairDoubleSolutionWithRandomValueTest {
     repair = new RepairDoubleSolutionWithRandomValue();
   }
 
-  @Test(expected = JMetalException.class)
+  @Test(expected = InvalidConditionException.class)
   public void shouldRRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
     repair.repairSolutionVariableValue(0.0, 1.0, -1.0);
   }

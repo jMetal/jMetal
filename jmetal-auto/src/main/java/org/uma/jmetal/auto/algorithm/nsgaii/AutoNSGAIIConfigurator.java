@@ -136,12 +136,12 @@ public class AutoNSGAIIConfigurator {
 
   @Option(
       names = {"--sbxCrossoverDistributionIndex"},
-      description = "SBXCrossoverParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
+      description = "SBXCrossoverDistributionIndexParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
   private double sbxCrossoverDistributionIndex = 0.20;
 
   @Option(
       names = {"--blxAlphaCrossoverAlphaValue"},
-      description = "BLXCrossoverParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
+      description = "BLXAlphaCrossoverAlphaValueParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
   private double blxAlphaCrossoverAlphaValue = 0.5;
 
   @Option(
