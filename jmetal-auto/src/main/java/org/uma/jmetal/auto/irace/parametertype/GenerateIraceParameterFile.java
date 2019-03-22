@@ -86,7 +86,7 @@ public class GenerateIraceParameterFile {
     parameters.add(mutation) ;
 
     /* Selection */
-    IntegerParameterType nArityTournament = new IntegerParameterType("selectionTournamentSize", 1, 10) ;
+    IntegerParameterType nArityTournament = new IntegerParameterType("selectionTournamentSize", 2, 10) ;
     nArityTournament.setParentTag("tournament");
 
     CategoricalParameterType selection = new CategoricalParameterType("selection") ;

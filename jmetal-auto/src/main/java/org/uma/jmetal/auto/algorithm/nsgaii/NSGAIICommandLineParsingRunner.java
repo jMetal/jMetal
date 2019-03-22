@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.algorithm.nsgaii;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.util.observer.Observer;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;
@@ -27,9 +28,13 @@ public class NSGAIICommandLineParsingRunner {
 /*
     String[] arguments = {
       "--problemName",
-      "org.uma.jmetal.problem.multiobjective.wfg.WFG1",
+      "org.uma.jmetal.problem.multiobjective.zdt.ZDT1",
       "--referenceFront",
-      "WFG1.2D.pf",
+      "ZDT1.pf",
+      "--algorithmResult",
+      "population",
+      "--populationSize",
+      "100",
       "--createInitialSolutions",
       "random",
       "--offspringPopulationSize",
@@ -52,17 +57,23 @@ public class NSGAIICommandLineParsingRunner {
       "bounds",
       "--crossoverRepairStrategy",
       "bounds",
-        "--blxAlphaCrossoverAlphaValue", "0.8082", "--uniformMutationPerturbation", "0.7294"
+      "--blxAlphaCrossoverAlphaValue",
+      "0.8082",
+      "--uniformMutationPerturbation",
+      "0.7294"
     };
 */
-    AutoNSGAIIConfigurator configurator = CommandLine.populateCommand(new AutoNSGAIIConfigurator(), args);
+    AutoNSGAIIConfigurator configurator =
+        CommandLine.populateCommand(new AutoNSGAIIConfigurator(), args);
 
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
 
     if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
-      Collection<Observer<DoubleSolution>> observers = autoNSGAII.getEvaluation().getObservable().getObservers() ;
-      ExternalArchiveObserver<DoubleSolution> externalArchiveObserver = (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
+      Collection<Observer<DoubleSolution>> observers =
+          autoNSGAII.getEvaluation().getObservable().getObservers();
+      ExternalArchiveObserver<DoubleSolution> externalArchiveObserver =
+          (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
       autoNSGAII.setSolutions(externalArchiveObserver.getArchive().getSolutionList());
     }
 
@@ -78,7 +89,12 @@ public class NSGAIICommandLineParsingRunner {
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-    //System.out.println(obtainedFrontHV);
+
+    double idg =
+        new InvertedGenerationalDistancePlus<PointSolution>()
+            .invertedGenerationalDistancePlus(normalizedFront, normalizedReferenceFront);
+
+    //System.out.println(idg);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
     // AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(

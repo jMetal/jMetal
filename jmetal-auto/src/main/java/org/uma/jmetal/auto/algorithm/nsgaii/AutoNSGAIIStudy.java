@@ -47,7 +47,8 @@ public class AutoNSGAIIStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-/*
+
+    /*
     problemList.add(new ExperimentProblem<>(new ZDT1()));
     problemList.add(new ExperimentProblem<>(new ZDT2()));
     problemList.add(new ExperimentProblem<>(new ZDT3()));
@@ -63,7 +64,7 @@ public class AutoNSGAIIStudy {
     problemList.add(new ExperimentProblem<>(new WFG7()).changeReferenceFrontTo("WFG7.2D.pf"));
     problemList.add(new ExperimentProblem<>(new WFG8()).changeReferenceFrontTo("WFG8.2D.pf"));
     problemList.add(new ExperimentProblem<>(new WFG9()).changeReferenceFrontTo("WFG9.2D.pf"));
-/*
+
     problemList.add(new ExperimentProblem<>(new DTLZ1()).changeReferenceFrontTo("DTLZ1.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ2()).changeReferenceFrontTo("DTLZ2.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ3()).changeReferenceFrontTo("DTLZ3.2D.pf"));
@@ -71,12 +72,12 @@ public class AutoNSGAIIStudy {
     problemList.add(new ExperimentProblem<>(new DTLZ5()).changeReferenceFrontTo("DTLZ5.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ6()).changeReferenceFrontTo("DTLZ6.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ7()).changeReferenceFrontTo("DTLZ7.2D.pf"));
-*/
+
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("AutoNSGAIIStudy")
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("AutoNSGAIIStudy2")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)
@@ -96,6 +97,7 @@ public class AutoNSGAIIStudy {
             .build();
 
     //new ExecuteAlgorithms<>(experiment).run();
+
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
@@ -114,6 +116,7 @@ public class AutoNSGAIIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
@@ -124,7 +127,7 @@ public class AutoNSGAIIStudy {
                     100)
                 .setMaxEvaluations(25000)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
@@ -145,41 +148,57 @@ public class AutoNSGAIIStudy {
       for (int i = 0; i < problemList.size(); i++) {
         String problemName = problemList.get(i).getProblem().getClass().toString();
         problemName = problemName.substring(6);
-        System.out.println(
-            "Problem: " + problemName + ". Front: " + problemList.get(i).getReferenceFront());
-        String[] arguments = {
-          "--problemName",
-          problemName,
-          "--referenceFront",
-          problemList.get(i).getReferenceFront(),
-          "--crossover",
-          "BLX_ALPHA",
-          "--crossoverProbability",
-          "0.9983",
-          "--crossoverRepairStrategy",
-          "round",
-          "--blxAlphaCrossoverAlphaValue",
-          "0.7648",
-          "--mutation",
-          "polynomial",
-          "--mutationProbability",
-          "0.0078",
-          "--mutationRepairStrategy",
-          "round",
-          "--uniformMutationPerturbation",
-          "0.7294",
-          "--selection",
-          "tournament",
-          "--selectionTournamentSize",
-          "9",
-          "--offspringPopulationSize",
-          "1",
-          "--variation",
-          "rankingAndCrowding",
-          "--createInitialSolutions",
-          "random"
-        };
+        /*
+                System.out.println(
+                    "Problem: " + problemName + ". Front: " + problemList.get(i).getReferenceFront());
+                String[] arguments = {
+                  "--problemName",
+                  problemName,
+                  "--referenceFront",
+                  problemList.get(i).getReferenceFront(),
+                  "--crossover",
+                  "BLX_ALPHA",
+                  "--crossoverProbability",
+                  "0.9983",
+                  "--crossoverRepairStrategy",
+                  "round",
+                  "--blxAlphaCrossoverAlphaValue",
+                  "0.7648",
+                  "--mutation",
+                  "polynomial",
+                  "--mutationProbability",
+                  "0.0078",
+                  "--mutationRepairStrategy",
+                  "round",
+                  "--uniformMutationPerturbation",
+                  "0.7294",
+                  "--selection",
+                  "tournament",
+                  "--selectionTournamentSize",
+                  "9",
+                  "--offspringPopulationSize",
+                  "1",
+                  "--variation",
+                  "rankingAndCrowding",
+                  "--createInitialSolutions",
+                  "random"
+                };
+        */
+        String argumentString =  "--problemName " + problemName +
+                " --referenceFront " +  problemList.get(i).getReferenceFront() +
+                " --algorithmResult population --populationSize 100 " +
+                "--crossover BLX_ALPHA --crossoverProbability 0.964 " +
+                "--crossoverRepairStrategy bounds " +
+                "--blxAlphaCrossoverAlphaValue 0.7965 " +
+                "--mutation polynomial --mutationProbability 0.017 " +
+                "--mutationRepairStrategy random " +
+                "--polynomialMutationDistributionIndex 6.2659 " +
+                "--selection tournament --selectionTournamentSize 10 " +
+                "--offspringPopulationSize 1 " +
+                "--variation rankingAndCrowding " +
+                "--createInitialSolutions random  ";
 
+        String[] arguments = argumentString.split(" ") ;
         AutoNSGAIIConfigurator configurator =
             CommandLine.populateCommand(new AutoNSGAIIConfigurator(), arguments);
 
