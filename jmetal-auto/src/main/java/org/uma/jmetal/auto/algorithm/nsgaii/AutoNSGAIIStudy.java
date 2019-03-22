@@ -116,7 +116,7 @@ public class AutoNSGAIIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-
+/*
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
@@ -144,7 +144,7 @@ public class AutoNSGAIIStudy {
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
-
+*/
       for (int i = 0; i < problemList.size(); i++) {
         String problemName = problemList.get(i).getProblem().getClass().toString();
         problemName = problemName.substring(6);

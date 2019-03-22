@@ -28,7 +28,7 @@ public class NSGAIICommandLineParsingRunner {
 /*
     String[] arguments = {
       "--problemName",
-      "org.uma.jmetal.problem.multiobjective.zdt.ZDT1",
+      "org.uma.jmetal.problem.multiobjective.dtl.ZDT1",
       "--referenceFront",
       "ZDT1.pf",
       "--algorithmResult",
@@ -94,8 +94,8 @@ public class NSGAIICommandLineParsingRunner {
         new InvertedGenerationalDistancePlus<PointSolution>()
             .invertedGenerationalDistancePlus(normalizedFront, normalizedReferenceFront);
 
-    //System.out.println(idg);
-    System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
+    System.out.println(idg);
+    //System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
     // AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
     //    autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
