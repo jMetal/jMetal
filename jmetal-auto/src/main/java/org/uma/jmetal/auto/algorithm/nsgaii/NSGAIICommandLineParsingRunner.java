@@ -84,15 +84,15 @@ public class NSGAIICommandLineParsingRunner {
     List<PointSolution> normalizedPopulation =
         FrontUtils.convertFrontToSolutionList(normalizedFront);
 
+    /*
     double referenceFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront)
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-
+*/
     double idg =
-        new InvertedGenerationalDistancePlus<PointSolution>()
-            .invertedGenerationalDistancePlus(normalizedFront, normalizedReferenceFront);
+        new InvertedGenerationalDistancePlus<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) ;
 
     System.out.println(idg);
     //System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
