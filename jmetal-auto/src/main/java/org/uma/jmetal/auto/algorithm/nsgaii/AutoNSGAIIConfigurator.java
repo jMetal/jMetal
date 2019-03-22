@@ -235,8 +235,6 @@ public class AutoNSGAIIConfigurator {
       populationSize = populationSizeWithArchive ;
     }
 
-    System.out.println("Population size: " + populationSize) ;
-
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm<>(
             "NSGAII",
