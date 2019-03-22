@@ -28,9 +28,9 @@ public class AutoNSGAII {
 
     String[] arguments = {
         "--problemName",
-        "org.uma.jmetal.problem.multiobjective.zdt.ZDT4",
+        "org.uma.jmetal.problem.multiobjective.wfg.WFG6",
         "--referenceFront",
-        "ZDT4.pf",
+        "WFG6.2D.pf",
         "--algorithmResult", "externalArchive",
         "--populationSizeWithArchive", "20",
         //"--algorithmResult", "population",
@@ -68,6 +68,8 @@ public class AutoNSGAII {
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
 
+    System.out.println("Evals: " + autoNSGAII.getEvaluations()) ;
+
     if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
       Collection<Observer<DoubleSolution>> observers = autoNSGAII.getEvaluation().getObservable().getObservers() ;
       ExternalArchiveObserver<DoubleSolution> externalArchiveObserver = (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
@@ -84,6 +86,7 @@ public class AutoNSGAII {
     double referenceFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront)
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
+    System.out.println("Front size: " + normalizedPopulation.size()) ;
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
     // System.out.println(obtainedFrontHV);
