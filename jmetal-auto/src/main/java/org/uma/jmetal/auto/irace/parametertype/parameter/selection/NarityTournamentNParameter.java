@@ -6,6 +6,6 @@ public class NarityTournamentNParameter extends RealParameterType {
   public NarityTournamentNParameter(double lowerBound, double upperBound) {
     super("selectionTournamentSize", lowerBound, upperBound) ;
 
-    setParentTag("tournament");
+    setParentTag(SelectionType.tournament.toString());
   }
 }

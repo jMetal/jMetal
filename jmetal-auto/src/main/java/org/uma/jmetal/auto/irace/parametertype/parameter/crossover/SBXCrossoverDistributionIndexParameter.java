@@ -6,6 +6,6 @@ public class SBXCrossoverDistributionIndexParameter extends RealParameterType {
   public SBXCrossoverDistributionIndexParameter(double lowerBound, double upperBound) {
     super("sbxCrossoverDistributionIndex", lowerBound, upperBound) ;
 
-    setParentTag("SBX");
+    setParentTag(CrossoverType.SBX.toString());
   }
 }

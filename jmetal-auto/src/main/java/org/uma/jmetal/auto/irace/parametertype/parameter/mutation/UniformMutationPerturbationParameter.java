@@ -6,6 +6,6 @@ public class UniformMutationPerturbationParameter extends RealParameterType {
   public UniformMutationPerturbationParameter(double lowerBound, double upperBound) {
     super("uniformMutationPerturbation", lowerBound, upperBound) ;
 
-    setParentTag("uniform");
+    setParentTag(MutationType.uniform.toString());
   }
 }
