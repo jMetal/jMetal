@@ -5,7 +5,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -100,10 +99,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
    * This method remove duplicated algorithms and leave only an instance of each one.
    */
   public void removeDuplicatedAlgorithms() {
-    List<ExperimentAlgorithm<S, Result>> algorithmList = new ArrayList<>() ;
     HashSet<String> algorithmTagList = new HashSet<>() ;
-
-
     getAlgorithmList().removeIf(alg -> !algorithmTagList.add(alg.getAlgorithmTag())) ;
   }
 }
