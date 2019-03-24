@@ -24,6 +24,7 @@ import java.util.Comparator;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class SpatialSpreadDeviationComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final SpatialSpreadDeviation<S> NewcrowdingDistance = new SpatialSpreadDeviation<S>() ;
 

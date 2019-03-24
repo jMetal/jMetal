@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class SpatialSpreadDeviationSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>, S> {
   private Comparator<S> comparator;
