@@ -15,6 +15,8 @@ import org.uma.jmetal.auto.irace.parametertype.parameter.selection.NarityTournam
 import org.uma.jmetal.auto.irace.parametertype.parameter.selection.SelectionParameter;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +24,16 @@ public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
-    CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult") ;
+    CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
     algorithmResult.addValue("population");
     algorithmResult.addValue("externalArchive");
 
-    CategoricalParameterType populationSize = new CategoricalParameterType("populationSize") ;
+    CategoricalParameterType populationSize = new CategoricalParameterType("populationSize");
     populationSize.addValue("100");
     populationSize.setParentTag("population");
 
-    OrdinalParameterType populationSizeWithArchive = new OrdinalParameterType("populationSizeWithArchive") ;
+    OrdinalParameterType populationSizeWithArchive =
+        new OrdinalParameterType("populationSizeWithArchive");
     populationSizeWithArchive.addValue("10");
     populationSizeWithArchive.addValue("20");
     populationSizeWithArchive.addValue("50");
@@ -41,9 +44,10 @@ public class GenerateIraceParameterFile {
 
     algorithmResult.addAssociatedParameter(populationSize);
     algorithmResult.addAssociatedParameter(populationSizeWithArchive);
-    parameters.add(algorithmResult) ;
+    parameters.add(algorithmResult);
 
-    OrdinalParameterType offspringPopulationSize = new OrdinalParameterType("offspringPopulationSize") ;
+    OrdinalParameterType offspringPopulationSize =
+        new OrdinalParameterType("offspringPopulationSize");
     offspringPopulationSize.addValue("1");
     offspringPopulationSize.addValue("5");
     offspringPopulationSize.addValue("10");
@@ -53,72 +57,76 @@ public class GenerateIraceParameterFile {
     offspringPopulationSize.addValue("200");
     offspringPopulationSize.addValue("400");
 
-    CategoricalParameterType variation = new CategoricalParameterType("variation") ;
+    CategoricalParameterType variation = new CategoricalParameterType("variation");
     variation.addValue("rankingAndCrowding");
 
-      CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
-      createInitialSolutions.addValue("random");
-      createInitialSolutions.addValue("scatterSearch");
-      createInitialSolutions.addValue("latinHypercubeSampling");
+    CategoricalParameterType createInitialSolutions =
+        new CategoricalParameterType("createInitialSolutions");
+    createInitialSolutions.addValue("random");
+    createInitialSolutions.addValue("scatterSearch");
+    createInitialSolutions.addValue("latinHypercubeSampling");
 
-    parameters.add(offspringPopulationSize) ;
-    parameters.add(variation) ;
-    parameters.add(createInitialSolutions) ;
+    parameters.add(offspringPopulationSize);
+    parameters.add(variation);
+    parameters.add(createInitialSolutions);
 
     /* Crossover */
-    CrossoverParameter crossover = new CrossoverParameter() ;
-    crossover.addAssociatedParameter(new SBXCrossoverDistributionIndexParameter(5.0, 400.0)) ;
+    CrossoverParameter crossover = new CrossoverParameter();
+    crossover.addAssociatedParameter(new SBXCrossoverDistributionIndexParameter(5.0, 400.0));
     crossover.addAssociatedParameter(new BLXAlphaCrossoverAlphaValueParameter());
 
     parameters.add(crossover);
 
     /* Mutation */
-    MutationParameter mutation = new MutationParameter() ;
+    MutationParameter mutation = new MutationParameter();
     mutation.addAssociatedParameter(new PolynomialMutationDistributionIndexParameter(5.0, 200.0));
     mutation.addAssociatedParameter(new UniformMutationPerturbationParameter(0, 1));
 
-    parameters.add(mutation) ;
+    parameters.add(mutation);
 
     /* Selection */
-    SelectionParameter selection = new SelectionParameter() ;
+    SelectionParameter selection = new SelectionParameter();
     selection.addAssociatedParameter(new NarityTournamentNParameter(2, 10));
     selection.addValue("random");
 
-    parameters.add(selection) ;
+    parameters.add(selection);
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
-    StringBuilder stringBuilder = new StringBuilder() ;
+    StringBuilder stringBuilder = new StringBuilder();
     for (ParameterType parameter : parameters) {
-      stringBuilder.append(String.format(
-          formatString,
-          parameter.getName(),
-          parameter.getLabel(),
-          parameter.getParameterType(),
-          parameter.getRange(),
-          parameter.getConditions()));
+      stringBuilder.append(
+          String.format(
+              formatString,
+              parameter.getName(),
+              parameter.getLabel(),
+              parameter.getParameterType(),
+              parameter.getRange(),
+              parameter.getConditions()));
 
       for (ParameterType relatedParameter : parameter.getGlobalParameters()) {
-        stringBuilder.append(String.format(
-            formatString,
-            relatedParameter.getName(),
-            relatedParameter.getLabel(),
-            relatedParameter.getParameterType(),
-            relatedParameter.getRange(),
-            relatedParameter.getConditions()));
+        stringBuilder.append(
+            String.format(
+                formatString,
+                relatedParameter.getName(),
+                relatedParameter.getLabel(),
+                relatedParameter.getParameterType(),
+                relatedParameter.getRange(),
+                relatedParameter.getConditions()));
       }
       for (ParameterType relatedParameter : parameter.getAssociatedParameters()) {
-        stringBuilder.append(String.format(
-            formatString,
-            relatedParameter.getName(),
-            relatedParameter.getLabel(),
-            relatedParameter.getParameterType(),
-            relatedParameter.getRange(),
-            relatedParameter.getConditions()));
+        stringBuilder.append(
+            String.format(
+                formatString,
+                relatedParameter.getName(),
+                relatedParameter.getLabel(),
+                relatedParameter.getParameterType(),
+                relatedParameter.getRange(),
+                relatedParameter.getConditions()));
       }
-      stringBuilder.append("#\n") ;
+      stringBuilder.append("#\n");
     }
-    stringBuilder.append("\n") ;
-    System.out.println(stringBuilder.toString()) ;
-    //Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
+    stringBuilder.append("\n");
+    System.out.println(stringBuilder.toString());
+    Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
   }
 }
