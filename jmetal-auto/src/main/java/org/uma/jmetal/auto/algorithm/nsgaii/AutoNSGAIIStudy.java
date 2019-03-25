@@ -96,13 +96,14 @@ public class AutoNSGAIIStudy {
             .setNumberOfCores(8)
             .build();
 
- //   new ExecuteAlgorithms<>(experiment).run();
+//    new ExecuteAlgorithms<>(experiment).run();
 
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(5).setColumns(5).run();
+
   }
 
   /**
@@ -186,13 +187,13 @@ public class AutoNSGAIIStudy {
         */
         String argumentString =  "--problemName " + problemName +
                 " --referenceFront " +  problemList.get(i).getReferenceFront() +
-                " --algorithmResult population --populationSizeWithArchive 20 " +
-                "--crossover BLX_ALPHA --crossoverProbability 0.915 --crossoverRepairStrategy bounds " +
-                "--blxAlphaCrossoverAlphaValue 0.6778 " +
-                "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
-                "--polynomialMutationDistributionIndex 351.2327 " +
-                "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
-                "--variation rankingAndCrowding --createInitialSolutions random " ;
+                " --algorithmResult externalArchive --populationSizeWithArchive 20 --offspringPopulationSize 200 " +
+                "--variation rankingAndCrowding --createInitialSolutions scatterSearch " +
+                "--crossover BLX_ALPHA --crossoverProbability 0.9874 " +
+                "--crossoverRepairStrategy bounds --blxAlphaCrossoverAlphaValue 0.5906 " +
+                "--mutation polynomial --mutationProbability 0.0015 " +
+                "--mutationRepairStrategy random --polynomialMutationDistributionIndex 158.0489 " +
+                "--selection tournament --selectionTournamentSize 9  " ;
                 /*
                 " --algorithmResult population --populationSize 100 " +
                 "--crossover BLX_ALPHA --crossoverProbability 0.964 " +

@@ -7,8 +7,12 @@ import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.variation.Variation;
+import org.uma.jmetal.auto.util.observer.Observer;
+import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -112,6 +116,12 @@ public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<
 
   @Override
   public List<S> getResult() {
+    if (getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
+      Collection<Observer<S>> observers = getEvaluation().getObservable().getObservers() ;
+      ExternalArchiveObserver<S> externalArchiveObserver = (ExternalArchiveObserver<S>) observers.toArray()[0];
+      setSolutions(externalArchiveObserver.getArchive().getSolutionList());
+    }
+
     return solutions;
   }
 
