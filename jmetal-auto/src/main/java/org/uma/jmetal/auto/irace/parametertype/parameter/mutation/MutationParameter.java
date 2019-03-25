@@ -8,16 +8,16 @@ public class MutationParameter extends CategoricalParameterType {
   public MutationParameter() {
     super("mutation") ;
 
-    CategoricalParameterType crossoverRepairStrategy = new CategoricalParameterType("crossoverRepairStrategy") ;
-    crossoverRepairStrategy.addValue("random");
-    crossoverRepairStrategy.addValue("bounds");
-    crossoverRepairStrategy.addValue("round");
+    CategoricalParameterType mutationRepairStrategy = new CategoricalParameterType("mutationRepairStrategy") ;
+    mutationRepairStrategy.addValue("random");
+    mutationRepairStrategy.addValue("bounds");
+    mutationRepairStrategy.addValue("round");
 
-    RealParameterType crossoverProbability =
+    RealParameterType mutationProbability =
             new RealParameterType("mutationProbability", 0, 1);
 
-    addGlobalParameter(crossoverProbability);
-    addGlobalParameter(crossoverRepairStrategy);
+    addGlobalParameter(mutationProbability);
+    addGlobalParameter(mutationRepairStrategy);
   }
 }
 

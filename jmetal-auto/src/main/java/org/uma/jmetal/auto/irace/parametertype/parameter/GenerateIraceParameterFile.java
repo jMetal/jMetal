@@ -79,7 +79,7 @@ public class GenerateIraceParameterFile {
 
     /* Mutation */
     MutationParameter mutation = new MutationParameter();
-    mutation.addAssociatedParameter(new PolynomialMutationDistributionIndexParameter(5.0, 200.0));
+    mutation.addAssociatedParameter(new PolynomialMutationDistributionIndexParameter(5.0, 400.0));
     mutation.addAssociatedParameter(new UniformMutationPerturbationParameter(0, 1));
 
     parameters.add(mutation);

@@ -16,8 +16,8 @@ blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "       
 #
 mutation                                 "--mutation "                            c       (uniform,polynomial)                               
 mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("polynomial","uniform")
-crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | mutation %in% c("polynomial","uniform")
-polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 200.0)                   | mutation %in% c("polynomial")
+mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random,round,bounds)          | mutation %in% c("polynomial","uniform")
+polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 #
 selection                                "--selection "                           c       (random,tournament)                                
