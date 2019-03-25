@@ -14,6 +14,9 @@ import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSele
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.CrossoverType;
+import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.MutationType;
+import org.uma.jmetal.auto.irace.parametertype.parameter.selection.SelectionType;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
@@ -51,23 +54,8 @@ enum CreateInitialSolutionsStrategyType {
   latinHypercubeSampling
 }
 
-enum MutationType {
-  polynomial,
-  uniform
-}
-
-enum SelectionType {
-  random,
-  tournament
-}
-
 enum VariationType {
   rankingAndCrowding
-}
-
-enum CrossoverType {
-  SBX,
-  BLX_ALPHA
 }
 
 enum RepairStrategyType {
@@ -136,12 +124,12 @@ public class AutoNSGAIIConfigurator {
 
   @Option(
       names = {"--sbxCrossoverDistributionIndex"},
-      description = "SBXCrossoverParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
+      description = "SBXCrossoverDistributionIndexParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
   private double sbxCrossoverDistributionIndex = 0.20;
 
   @Option(
       names = {"--blxAlphaCrossoverAlphaValue"},
-      description = "BLXCrossoverParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
+      description = "BLXAlphaCrossoverAlphaValueParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
   private double blxAlphaCrossoverAlphaValue = 0.5;
 
   @Option(

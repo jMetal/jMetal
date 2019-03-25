@@ -35,7 +35,7 @@ public class NSGAIICommandLineParsingRunner {
             "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
             "--polynomialMutationDistributionIndex 351.2327 " +
             "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
-            "--variation rankingAndCrowding --createInitialSolutions random " ;
+            "--variation rankingAndCrowding --createInitialSolutions latinHypercubeSampling " ;
 
     String[] arguments = argumentString.split("\\s+") ;
 */
@@ -70,8 +70,9 @@ public class NSGAIICommandLineParsingRunner {
 */
 //    System.out.println(idg);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
-
+/*
      AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
         autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
+        */
   }
 }

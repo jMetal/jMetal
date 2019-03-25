@@ -2,6 +2,12 @@ algorithmResult                          "--algorithmResult "                   
 populationSize                           "--populationSize "                      c       (100)                          | algorithmResult %in% c("population")
 populationSizeWithArchive                "--populationSizeWithArchive "           o       (10,20,50,100,200,400)         | algorithmResult %in% c("externalArchive")
 #
+offspringPopulationSize                  "--offspringPopulationSize "             o       (1,5,10,20,50,100,200,400)                         
+#
+variation                                "--variation "                           c       (rankingAndCrowding)                               
+#
+createInitialSolutions                   "--createInitialSolutions "              c       (random)                                           
+#
 crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)                                    
 crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
 crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA")
@@ -16,11 +22,5 @@ uniformMutationPerturbation              "--uniformMutationPerturbation "       
 #
 selection                                "--selection "                           c       (random,tournament)                                
 selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
-#
-offspringPopulationSize                  "--offspringPopulationSize "             o       (1,5,10,20,50,100,200,400)                         
-#
-variation                                "--variation "                           c       (rankingAndCrowding)                               
-#
-createInitialSolutions                   "--createInitialSolutions "              c       (random)                                           
 #
 

@@ -3,10 +3,16 @@ package org.uma.jmetal.auto.irace.parametertype.parameter;
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
+import org.uma.jmetal.auto.irace.parametertype.impl.OrdinalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
-import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.BLXCrossoverParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.BLXAlphaCrossoverAlphaValueParameter;
 import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.CrossoverParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.SBXCrossoverParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.SBXCrossoverDistributionIndexParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.MutationParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.PolynomialMutationDistributionIndexParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.UniformMutationPerturbationParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.selection.NarityTournamentNParameter;
+import org.uma.jmetal.auto.irace.parametertype.parameter.selection.SelectionParameter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,60 +22,69 @@ public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
-    /* Crossover */
-    CrossoverParameter crossover = new CrossoverParameter() ;
-    crossover.addAssociatedParameter(new BLXCrossoverParameter());
+    CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult") ;
+    algorithmResult.addValue("population");
+    algorithmResult.addValue("externalArchive");
 
-    parameters.add(crossover);
+    CategoricalParameterType populationSize = new CategoricalParameterType("populationSize") ;
+    populationSize.addValue("100");
+    populationSize.setParentTag("population");
 
-    /* Mutation */
-    RealParameterType mutationProbability = new RealParameterType("mutationProbability", 0, 1) ;
+    OrdinalParameterType populationSizeWithArchive = new OrdinalParameterType("populationSizeWithArchive") ;
+    populationSizeWithArchive.addValue("10");
+    populationSizeWithArchive.addValue("20");
+    populationSizeWithArchive.addValue("50");
+    populationSizeWithArchive.addValue("100");
+    populationSizeWithArchive.addValue("200");
+    populationSizeWithArchive.addValue("400");
+    populationSizeWithArchive.setParentTag("externalArchive");
 
-    RealParameterType polynomialMutationDistributionIndex = new RealParameterType("polynomialMutationDistributionIndex", 5.0, 400.0) ;
-    polynomialMutationDistributionIndex.setParentTag("polynomial");
+    algorithmResult.addAssociatedParameter(populationSize);
+    algorithmResult.addAssociatedParameter(populationSizeWithArchive);
+    parameters.add(algorithmResult) ;
 
-    RealParameterType uniformMutationPerturbation = new RealParameterType("uniformMutationPerturbation", 0.0, 1.0) ;
-    uniformMutationPerturbation.setParentTag("uniform");
-
-    CategoricalParameterType mutationRepairStrategy = new CategoricalParameterType("mutationRepairStrategy") ;
-    mutationRepairStrategy.addValue("random");
-    mutationRepairStrategy.addValue("bounds");
-    mutationRepairStrategy.addValue("round");
-
-    CategoricalParameterType mutation = new CategoricalParameterType("mutation") ;
-
-    mutation.addGlobalParameter(mutationProbability);
-    mutation.addGlobalParameter(mutationRepairStrategy);
-    mutation.addAssociatedParameter(polynomialMutationDistributionIndex);
-    mutation.addAssociatedParameter(uniformMutationPerturbation);
-
-    parameters.add(mutation) ;
-
-    /* Selection */
-    IntegerParameterType nArityTournament = new IntegerParameterType("selectionTournamentSize", 1, 10) ;
-    nArityTournament.setParentTag("tournament");
-
-    CategoricalParameterType selection = new CategoricalParameterType("selection") ;
-    selection.addAssociatedParameter(nArityTournament);
-    selection.addValue("random");
-
-    parameters.add(selection) ;
-
-    /* Others */
-    IntegerParameterType offspringPopulationSize = new IntegerParameterType("offspringPopulationSize", 1, 400) ;
+    OrdinalParameterType offspringPopulationSize = new OrdinalParameterType("offspringPopulationSize") ;
+    offspringPopulationSize.addValue("1");
+    offspringPopulationSize.addValue("5");
+    offspringPopulationSize.addValue("10");
+    offspringPopulationSize.addValue("20");
+    offspringPopulationSize.addValue("50");
+    offspringPopulationSize.addValue("100");
+    offspringPopulationSize.addValue("200");
+    offspringPopulationSize.addValue("400");
 
     CategoricalParameterType variation = new CategoricalParameterType("variation") ;
     variation.addValue("rankingAndCrowding");
 
-    CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
-    createInitialSolutions.addValue("random");
-    createInitialSolutions.addValue("scatterSearch");
-    createInitialSolutions.addValue("latinHypercubeSampling");
+      CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
+      createInitialSolutions.addValue("random");
+      createInitialSolutions.addValue("scatterSearch");
+      createInitialSolutions.addValue("latinHypercubeSampling");
 
     parameters.add(offspringPopulationSize) ;
     parameters.add(variation) ;
     parameters.add(createInitialSolutions) ;
 
+    /* Crossover */
+    CrossoverParameter crossover = new CrossoverParameter() ;
+    crossover.addAssociatedParameter(new SBXCrossoverDistributionIndexParameter(5.0, 400.0)) ;
+    crossover.addAssociatedParameter(new BLXAlphaCrossoverAlphaValueParameter());
+
+    parameters.add(crossover);
+
+    /* Mutation */
+    MutationParameter mutation = new MutationParameter() ;
+    mutation.addAssociatedParameter(new PolynomialMutationDistributionIndexParameter(5.0, 200.0));
+    mutation.addAssociatedParameter(new UniformMutationPerturbationParameter(0, 1));
+
+    parameters.add(mutation) ;
+
+    /* Selection */
+    SelectionParameter selection = new SelectionParameter() ;
+    selection.addAssociatedParameter(new NarityTournamentNParameter(2, 10));
+    selection.addValue("random");
+
+    parameters.add(selection) ;
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
     StringBuilder stringBuilder = new StringBuilder() ;

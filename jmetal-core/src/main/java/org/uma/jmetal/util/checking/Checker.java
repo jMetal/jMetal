@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.checking;
 
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
-import org.uma.jmetal.util.checking.exception.ValueOutOfRangeException;
+import org.uma.jmetal.util.checking.exception.*;
+
+import java.util.Collection;
 
 public class Checker {
   public static void isNotNull(Object object) {
@@ -27,6 +26,12 @@ public class Checker {
   public static void valueIsInRange(int value, int lowestValue, int highestValue) {
     if ((value < lowestValue) || (value > highestValue)) {
       throw new ValueOutOfRangeException(value, lowestValue, highestValue) ;
+    }
+  }
+
+  public static void collectionIsNotEmpty(Collection<?> collection) {
+    if (collection.isEmpty()) {
+      throw new EmptyCollectionException() ;
     }
   }
 
