@@ -96,7 +96,7 @@ public class AutoNSGAIIStudy {
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
+ //   new ExecuteAlgorithms<>(experiment).run();
 
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
@@ -116,7 +116,7 @@ public class AutoNSGAIIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-/*
+
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm =
             new NSGAIIBuilder<>(
@@ -144,7 +144,7 @@ public class AutoNSGAIIStudy {
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
-*/
+
       for (int i = 0; i < problemList.size(); i++) {
         String problemName = problemList.get(i).getProblem().getClass().toString();
         problemName = problemName.substring(6);
@@ -186,6 +186,14 @@ public class AutoNSGAIIStudy {
         */
         String argumentString =  "--problemName " + problemName +
                 " --referenceFront " +  problemList.get(i).getReferenceFront() +
+                " --algorithmResult population --populationSizeWithArchive 20 " +
+                "--crossover BLX_ALPHA --crossoverProbability 0.915 --crossoverRepairStrategy bounds " +
+                "--blxAlphaCrossoverAlphaValue 0.6778 " +
+                "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
+                "--polynomialMutationDistributionIndex 351.2327 " +
+                "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
+                "--variation rankingAndCrowding --createInitialSolutions random " ;
+                /*
                 " --algorithmResult population --populationSize 100 " +
                 "--crossover BLX_ALPHA --crossoverProbability 0.964 " +
                 "--crossoverRepairStrategy bounds " +
@@ -196,7 +204,7 @@ public class AutoNSGAIIStudy {
                 "--selection tournament --selectionTournamentSize 10 " +
                 "--offspringPopulationSize 1 " +
                 "--variation rankingAndCrowding " +
-                "--createInitialSolutions random  ";
+                "--createInitialSolutions random  ";*/
 
         String[] arguments = argumentString.split(" ") ;
         AutoNSGAIIConfigurator configurator =

@@ -6,6 +6,7 @@ import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.AlgorithmDefaultOutputData;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -26,42 +27,17 @@ public class NSGAIICommandLineParsingRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 /*
-    String[] arguments = {
-      "--problemName",
-      "org.uma.jmetal.problem.multiobjective.dtl.ZDT1",
-      "--referenceFront",
-      "ZDT1.pf",
-      "--algorithmResult",
-      "population",
-      "--populationSize",
-      "100",
-      "--createInitialSolutions",
-      "random",
-      "--offspringPopulationSize",
-      "4",
-      "--selection",
-      "random",
-      "--selectionTournamentSize",
-      "2",
-      "--crossover",
-      "BLX_ALPHA",
-      "--crossoverProbability",
-      "0.6825",
-      "--mutation",
-      "uniform",
-      "--mutationProbability",
-      "0.4079",
-      "--variation",
-      "rankingAndCrowding",
-      "--mutationRepairStrategy",
-      "bounds",
-      "--crossoverRepairStrategy",
-      "bounds",
-      "--blxAlphaCrossoverAlphaValue",
-      "0.8082",
-      "--uniformMutationPerturbation",
-      "0.7294"
-    };
+    String argumentString =  "--problemName " + "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3 " +
+            "--referenceFront " +  "DTLZ3.2D.pf   " +
+            " --algorithmResult externalArchive --populationSizeWithArchive 20 " +
+            "--crossover BLX_ALPHA --crossoverProbability 0.915 --crossoverRepairStrategy bounds " +
+            "--blxAlphaCrossoverAlphaValue 0.6778 " +
+            "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
+            "--polynomialMutationDistributionIndex 351.2327 " +
+            "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
+            "--variation rankingAndCrowding --createInitialSolutions random " ;
+
+    String[] arguments = argumentString.split("\\s+") ;
 */
     AutoNSGAIIConfigurator configurator =
         CommandLine.populateCommand(new AutoNSGAIIConfigurator(), args);
@@ -84,20 +60,18 @@ public class NSGAIICommandLineParsingRunner {
     List<PointSolution> normalizedPopulation =
         FrontUtils.convertFrontToSolutionList(normalizedFront);
 
-    /*
     double referenceFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront)
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-*/
-    double idg =
+  /*  double idg =
         new InvertedGenerationalDistancePlus<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) ;
+*/
+//    System.out.println(idg);
+    System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
-    System.out.println(idg);
-    //System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
-
-    // AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
-    //    autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
+     AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
+        autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
   }
 }

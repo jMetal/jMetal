@@ -18,7 +18,6 @@ public class GenerateIraceParameterFile {
 
     /* Crossover */
     CrossoverParameter crossover = new CrossoverParameter() ;
-    //crossover.addAssociatedParameter(new RealParameterType("5.0, 400.0));
     crossover.addAssociatedParameter(new BLXCrossoverParameter());
 
     parameters.add(crossover);
@@ -64,6 +63,8 @@ public class GenerateIraceParameterFile {
 
     CategoricalParameterType createInitialSolutions = new CategoricalParameterType("createInitialSolutions") ;
     createInitialSolutions.addValue("random");
+    createInitialSolutions.addValue("scatterSearch");
+    createInitialSolutions.addValue("latinHypercubeSampling");
 
     parameters.add(offspringPopulationSize) ;
     parameters.add(variation) ;
