@@ -16,6 +16,7 @@ import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.irace.parameter.crossover.CrossoverType;
 import org.uma.jmetal.auto.irace.parameter.mutation.MutationType;
+import org.uma.jmetal.auto.irace.parameter.repairstrategy.RepairStrategyType;
 import org.uma.jmetal.auto.irace.parameter.selection.SelectionType;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -59,12 +60,6 @@ enum CreateInitialSolutionsStrategyType {
 
 enum VariationType {
   rankingAndCrowding
-}
-
-enum RepairStrategyType {
-  random,
-  bounds,
-  round
 }
 
 public class AutoNSGAIIConfigurator {
