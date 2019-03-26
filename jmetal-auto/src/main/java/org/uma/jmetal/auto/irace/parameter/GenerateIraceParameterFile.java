@@ -1,18 +1,16 @@
-package org.uma.jmetal.auto.irace.parametertype.parameter;
+package org.uma.jmetal.auto.irace.parameter;
 
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
-import org.uma.jmetal.auto.irace.parametertype.impl.IntegerParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.OrdinalParameterType;
-import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
-import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.BLXAlphaCrossoverAlphaValueParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.CrossoverParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.crossover.SBXCrossoverDistributionIndexParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.MutationParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.PolynomialMutationDistributionIndexParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.mutation.UniformMutationPerturbationParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.selection.NarityTournamentNParameter;
-import org.uma.jmetal.auto.irace.parametertype.parameter.selection.SelectionParameter;
+import org.uma.jmetal.auto.irace.parameter.crossover.BLXAlphaCrossoverAlphaValueParameter;
+import org.uma.jmetal.auto.irace.parameter.crossover.CrossoverParameter;
+import org.uma.jmetal.auto.irace.parameter.crossover.SBXCrossoverDistributionIndexParameter;
+import org.uma.jmetal.auto.irace.parameter.mutation.MutationParameter;
+import org.uma.jmetal.auto.irace.parameter.mutation.PolynomialMutationDistributionIndexParameter;
+import org.uma.jmetal.auto.irace.parameter.mutation.UniformMutationPerturbationParameter;
+import org.uma.jmetal.auto.irace.parameter.selection.NarityTournamentNParameter;
+import org.uma.jmetal.auto.irace.parameter.selection.SelectionParameter;
 
 import java.io.IOException;
 import java.nio.file.Files;

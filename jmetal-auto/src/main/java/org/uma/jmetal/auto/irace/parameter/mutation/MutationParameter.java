@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.irace.parametertype.parameter.mutation;
+package org.uma.jmetal.auto.irace.parameter.mutation;
 
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;

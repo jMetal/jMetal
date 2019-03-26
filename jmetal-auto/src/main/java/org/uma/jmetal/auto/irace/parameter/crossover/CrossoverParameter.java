@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.irace.parametertype.parameter.crossover;
+package org.uma.jmetal.auto.irace.parameter.crossover;
 
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
