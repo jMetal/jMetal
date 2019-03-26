@@ -21,6 +21,6 @@ polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex 
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 #
 selection                                "--selection "                           c       (random,tournament)                                
-selectionTournamentSize                  "--selectionTournamentSize "             r       (2.0, 10.0)                    | selection %in% c("tournament")
+selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
 #
 
