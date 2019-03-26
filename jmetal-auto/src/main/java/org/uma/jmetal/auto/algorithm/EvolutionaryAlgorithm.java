@@ -116,12 +116,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<
 
   @Override
   public List<S> getResult() {
-    if (getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
-      Collection<Observer<S>> observers = getEvaluation().getObservable().getObservers() ;
-      ExternalArchiveObserver<S> externalArchiveObserver = (ExternalArchiveObserver<S>) observers.toArray()[0];
-      setSolutions(externalArchiveObserver.getArchive().getSolutionList());
-    }
-
     return solutions;
   }
 

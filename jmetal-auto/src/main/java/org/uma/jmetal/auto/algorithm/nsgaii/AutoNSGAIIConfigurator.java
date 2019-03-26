@@ -37,15 +37,18 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithOppositeBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;
+import java.util.List;
 
 enum AlgorithmResult {
-  population, externalArchive
+  population,
+  externalArchive
 }
 
 enum CreateInitialSolutionsStrategyType {
@@ -66,19 +69,17 @@ enum RepairStrategyType {
 
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */
-  int sizeOfTheFinalPopulation = 100 ;
+  int sizeOfTheFinalPopulation = 100;
 
   @Option(
       names = {"--algorithmResult"},
       description = "Algorithm result - population vs archive (default: ${DEFAULT-VALUE})")
   private AlgorithmResult algorithmResult = AlgorithmResult.population;
 
-
   @Option(
       names = {"--populationSize"},
       description = "Population Size (default: ${DEFAULT-VALUE})")
   private int populationSize = 100;
-
 
   @Option(
       names = {"--populationSizeWithArchive"},
@@ -89,13 +90,13 @@ public class AutoNSGAIIConfigurator {
       names = {"-p", "--problemName"},
       required = true,
       description = "problem name})")
-  private String problemName ;
+  private String problemName;
 
   @Option(
       names = {"-rf", "--referenceFront"},
       required = true,
       description = "reference front")
-  private String referenceParetoFront ;
+  private String referenceParetoFront;
 
   /* Fixed components */
   Termination termination = new TerminationByEvaluations(25000);
@@ -124,12 +125,14 @@ public class AutoNSGAIIConfigurator {
 
   @Option(
       names = {"--sbxCrossoverDistributionIndex"},
-      description = "SBXCrossoverDistributionIndexParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
+      description =
+          "SBXCrossoverDistributionIndexParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
   private double sbxCrossoverDistributionIndex = 0.20;
 
   @Option(
       names = {"--blxAlphaCrossoverAlphaValue"},
-      description = "BLXAlphaCrossoverAlphaValueParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
+      description =
+          "BLXAlphaCrossoverAlphaValueParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
   private double blxAlphaCrossoverAlphaValue = 0.5;
 
   @Option(
@@ -207,9 +210,9 @@ public class AutoNSGAIIConfigurator {
 
   public EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {
 
-    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver;
+    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver = null;
 
-    DoubleProblem problem = getProblem() ;
+    DoubleProblem problem = getProblem();
     crossover = getCrossover();
     mutation = getMutation();
     createInitialSolutions = getCreateInitialSolutionStrategy();
@@ -218,20 +221,55 @@ public class AutoNSGAIIConfigurator {
     evaluation = new SequentialEvaluation<>(problem);
 
     if (algorithmResult.equals(AlgorithmResult.externalArchive)) {
-      boundedArchiveObserver  =  new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation));
+      boundedArchiveObserver =
+          new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation));
       evaluation.getObservable().register(boundedArchiveObserver);
-      populationSize = populationSizeWithArchive ;
+      populationSize = populationSizeWithArchive;
     }
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii =
-        new EvolutionaryAlgorithm<>(
+    class NSGAII extends EvolutionaryAlgorithm<DoubleSolution> {
+      private ExternalArchiveObserver<DoubleSolution> archiveObserver;
+
+      public NSGAII(
+          String name,
+          Evaluation<DoubleSolution> evaluation,
+          CreateInitialSolutions<DoubleSolution> createInitialSolutionList,
+          Termination termination,
+          MatingPoolSelection<DoubleSolution> selection,
+          Variation<DoubleSolution> variation,
+          Replacement<DoubleSolution> replacement,
+          ExternalArchiveObserver<DoubleSolution> archiveObserver) {
+        super(
+            name,
+            evaluation,
+            createInitialSolutionList,
+            termination,
+            selection,
+            variation,
+            replacement);
+        this.archiveObserver = archiveObserver;
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        if (archiveObserver != null) {
+          return archiveObserver.getArchive().getSolutionList();
+        } else {
+          return solutions;
+        }
+      }
+    }
+
+    NSGAII nsgaii =
+        new NSGAII(
             "NSGAII",
             evaluation,
             createInitialSolutions,
             termination,
             selection,
             variation,
-            replacement);
+            replacement,
+            boundedArchiveObserver);
 
     return nsgaii;
   }
@@ -283,7 +321,7 @@ public class AutoNSGAIIConfigurator {
             getRepairDoubleSolutionStrategy(mutationRepairStrategy));
       case uniform:
         return new UniformMutation(
-            crossoverProbability,
+            mutationProbability,
             uniformMutationPerturbation,
             getRepairDoubleSolutionStrategy(mutationRepairStrategy));
       default:
