@@ -29,6 +29,7 @@ import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.mutation.impl.SimpleRandomMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -283,9 +284,11 @@ public class AutoNSGAIIConfigurator {
             getRepairDoubleSolutionStrategy(mutationRepairStrategy));
       case uniform:
         return new UniformMutation(
-            crossoverProbability,
+            mutationProbability,
             uniformMutationPerturbation,
             getRepairDoubleSolutionStrategy(mutationRepairStrategy));
+      case random:
+        return new SimpleRandomMutation(mutationProbability) ;
       default:
         throw new RuntimeException(mutationType + " is not a valid mutation operator");
     }
