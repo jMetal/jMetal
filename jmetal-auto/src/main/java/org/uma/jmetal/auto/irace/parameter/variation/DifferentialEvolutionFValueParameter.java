@@ -6,6 +6,6 @@ import org.uma.jmetal.auto.irace.parametertype.impl.RealParameterType;
 public class DifferentialEvolutionFValueParameter extends RealParameterType {
   public DifferentialEvolutionFValueParameter() {
     super("differentialEvolutionFValue", 0.0, 1.0) ;
-    setParentTag(VariationType.differentialEvolutionVariation.toString());
+    setParentTag(VariationType.DE.toString());
   }
 }

@@ -6,15 +6,15 @@ offspringPopulationSize                  "--offspringPopulationSize "           
 #
 createInitialSolutions                   "--createInitialSolutions "              c       (random,latinHypercubeSampling,scatterSearch)                     
 #
-variation                                "--variation "                           c       (differentialEvolutionVariation,crossoverAndMutationVariation)                     
-differentialEvolutionCRValue             "--differentialEvolutionCRValue "        r       (0.0, 1.0)                     | variation %in% c("differentialEvolutionVariation")
-differentialEvolutionFValue              "--differentialEvolutionFValue "         r       (0.0, 1.0)                     | variation %in% c("differentialEvolutionVariation")
+variation                                "--variation "                           c       (DE,crossoverAndMutationVariation)                     
 #
-crossover                                "--crossover "                           c       (SBX,BLX_ALPHA,differentialEvolutionCrossover)                     
-crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
-crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA")
+crossover                                "--crossover "                           c       (DE,SBX,BLX_ALPHA)                                 
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA","DE","DE")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random,round,bounds)          | crossover %in% c("SBX","BLX_ALPHA","DE","DE")
 sbxCrossoverDistributionIndex            "--sbxCrossoverDistributionIndex "       r       (5.0, 400.0)                   | crossover %in% c("SBX")
 blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
+differentialEvolutionCRValue             "--differentialEvolutionCRValue "        r       (0.0, 1.0)                     | crossover %in% c("DE")
+differentialEvolutionFValue              "--differentialEvolutionFValue "         r       (0.0, 1.0)                     | crossover %in% c("DE")
 #
 mutation                                 "--mutation "                            c       (uniform,polynomial)                               
 mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("polynomial","uniform")
@@ -22,7 +22,7 @@ mutationRepairStrategy                   "--mutationRepairStrategy "            
 polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 #
-selection                                "--selection "                           c       (random,differentialEvolutionSelection,tournament)                     
+selection                                "--selection "                           c       (random,DE,tournament)                             
 selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
 #
 

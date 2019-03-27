@@ -1,8 +1,10 @@
 package org.uma.jmetal.auto.irace.parameter;
 
 import org.uma.jmetal.auto.irace.parameter.crossover.*;
+import org.uma.jmetal.auto.irace.parameter.selection.SelectionType;
 import org.uma.jmetal.auto.irace.parameter.variation.DifferentialEvolutionCRValueParameter;
 import org.uma.jmetal.auto.irace.parameter.variation.DifferentialEvolutionFValueParameter;
+import org.uma.jmetal.auto.irace.parameter.variation.VariationType;
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.irace.parametertype.impl.OrdinalParameterType;
@@ -56,8 +58,8 @@ public class GenerateIraceParameterFile {
     offspringPopulationSize.addValue("400");
 
     CategoricalParameterType variation = new CategoricalParameterType("variation");
-    variation.addValue("crossoverAndMutationVariation");
-    variation.addValue("differentialEvolutionVariation");
+    variation.addValue(VariationType.crossoverAndMutationVariation.toString());
+    variation.addValue(VariationType.DE.toString());
 
     CategoricalParameterType createInitialSolutions =
         new CategoricalParameterType("createInitialSolutions");
@@ -69,15 +71,17 @@ public class GenerateIraceParameterFile {
     parameters.add(createInitialSolutions);
 
     /* Variation */
-    variation.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
-    variation.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
+    //variation.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
+    //variation.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
     parameters.add(variation) ;
 
     /* Crossover */
     CrossoverParameter crossover = new CrossoverParameter();
     crossover.addAssociatedParameter(new SBXCrossoverDistributionIndexParameter(5.0, 400.0));
     crossover.addAssociatedParameter(new BLXAlphaCrossoverAlphaValueParameter());
-    crossover.addValue("differentialEvolutionCrossover");
+    crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
+    crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
+    //crossover.addValue(CrossoverType.DE.toString());
 
     parameters.add(crossover);
 
@@ -92,7 +96,7 @@ public class GenerateIraceParameterFile {
     SelectionParameter selection = new SelectionParameter();
     selection.addAssociatedParameter(new NarityTournamentNParameter(2, 10));
     selection.addValue("random");
-    selection.addValue("differentialEvolutionSelection");
+    selection.addValue(SelectionType.DE.toString());
 
     parameters.add(selection);
 
