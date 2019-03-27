@@ -5,10 +5,7 @@ import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutio
 import org.uma.jmetal.auto.component.createinitialsolutions.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.auto.util.observer.Observer;
 import org.uma.jmetal.auto.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
-import org.uma.jmetal.auto.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
@@ -26,20 +23,20 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
-import org.uma.jmetal.util.AlgorithmDefaultOutputData;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.Arrays;
 
 public class NSGAII {
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT4();
+    DoubleProblem problem = new ZDT1();
     String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
     int populationSize = 100;
@@ -102,28 +99,28 @@ public class NSGAII {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
     //    new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
-    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
-        new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
+    //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
+    //    new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
     //algorithm.getObservable().register(runTimeChartObserver);
     //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
-    evaluation.getObservable().register(boundedArchiveObserver);
+    //evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();
 
-    algorithm.setSolutions(boundedArchiveObserver.getArchive().getSolutionList());
+    /*
+    algorithm.updatePopulation(boundedArchiveObserver.getArchive().getSolutionList());
     AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
         algorithm.getResult(), algorithm.getTotalComputingTime());
-
-    /*
-    new SolutionListOutput(boundedArchiveObserver.getArchive().getSolutionList())
+    */
+    new SolutionListOutput(algorithm.getResult())
         .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("Arch" + "_VAR.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("Arch" + "_FUN.tsv"))
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
         .print();
-*/
+
     System.exit(0);
   }
 }

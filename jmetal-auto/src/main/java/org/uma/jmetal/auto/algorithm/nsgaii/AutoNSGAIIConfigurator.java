@@ -250,7 +250,7 @@ public class AutoNSGAIIConfigurator {
         if (archiveObserver != null) {
           return archiveObserver.getArchive().getSolutionList();
         } else {
-          return solutions;
+          return population;
         }
       }
     }

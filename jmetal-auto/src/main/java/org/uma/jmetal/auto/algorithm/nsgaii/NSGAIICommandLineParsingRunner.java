@@ -50,7 +50,7 @@ public class NSGAIICommandLineParsingRunner {
           autoNSGAII.getEvaluation().getObservable().getObservers();
       ExternalArchiveObserver<DoubleSolution> externalArchiveObserver =
           (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
-      autoNSGAII.setSolutions(externalArchiveObserver.getArchive().getSolutionList());
+      autoNSGAII.updatePopulation(externalArchiveObserver.getArchive().getSolutionList());
     }
 
     Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());

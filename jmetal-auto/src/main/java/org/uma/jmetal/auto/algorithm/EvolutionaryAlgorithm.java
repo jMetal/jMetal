@@ -1,112 +1,99 @@
 package org.uma.jmetal.auto.algorithm;
 
+import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
-import org.uma.jmetal.auto.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.util.observer.Observer;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
+import org.uma.jmetal.auto.util.observable.Observable;
+import org.uma.jmetal.auto.util.observable.ObservableEntity;
+import org.uma.jmetal.auto.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<S> {
+public class EvolutionaryAlgorithm<S extends Solution<?>>
+    implements Algorithm<List<S>>, ObservableEntity {
+  protected List<S> population;
+
   private Evaluation<S> evaluation;
-  private CreateInitialSolutions<S> createInitialSolutionList;
+  private CreateInitialSolutions<S> createInitialPopulation;
   private Termination termination;
   private MatingPoolSelection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
 
+  protected Map<String, Object> attributes;
+
   protected long initTime;
   protected long totalComputingTime;
   protected int evaluations;
+  protected Observable<Map<String, Object>> observable;
 
-  private final String name ;
+  private final String name;
 
   public EvolutionaryAlgorithm(
-          String name,
+      String name,
       Evaluation<S> evaluation,
-      CreateInitialSolutions<S> createInitialSolutionList,
+      CreateInitialSolutions<S> createInitialPopulation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
       Replacement<S> replacement) {
-    this.name = name ;
+    this.name = name;
     this.evaluation = evaluation;
-    this.createInitialSolutionList = createInitialSolutionList;
+    this.createInitialPopulation = createInitialPopulation;
     this.termination = termination;
     this.selection = selection;
     this.variation = variation;
     this.replacement = replacement;
 
-    this.observable = new DefaultObservable<>("Evolutionary Algorithm") ;
+    this.observable = new DefaultObservable<>("Evolutionary Algorithm");
+    this.attributes = new HashMap<>();
   }
 
-  @Override
-  protected List<S> createInitialSolutionSet() {
-    return createInitialSolutionList.create();
+  public void run() {
+    population = createInitialPopulation.create();
+    population = evaluation.evaluate(population);
+    initProgress();
+    while (!termination.isMet(attributes)) {
+      List<S> matingSolutions = selection.select(population);
+      List<S> offspringPopulation = variation.variate(population, matingSolutions);
+      offspringPopulation = evaluation.evaluate(offspringPopulation);
+
+      population = replacement.replace(population, offspringPopulation);
+      updateProgress();
+    }
   }
 
-  @Override
-  protected List<S> evaluateSolutions(List<S> solutions) {
-    return evaluation.evaluate(solutions);
-  }
-
-  @Override
   protected void initProgress() {
-    evaluations = solutions.size() ;
+    evaluations = population.size();
 
-    attributes = new HashMap<>() ;
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", solutions);
+    attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
 
-  @Override
   protected void updateProgress() {
-    evaluations += variation.getOffspringPopulationSize() ;
+    evaluations += variation.getOffspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", solutions);
+    attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
   }
 
-  @Override
-  protected boolean stoppingConditionIsMet() {
-    return termination.isMet(attributes);
-  }
-
-  @Override
-  protected void step() {
-    List<S> matingSolutions = selection.select(solutions) ;
-    List<S> offspringPopulation = variation.variate(solutions, matingSolutions) ;
-    offspringPopulation = evaluateSolutions(offspringPopulation) ;
-
-    solutions = replacement.replace(solutions, offspringPopulation) ;
-  }
-
-  @Override
-  public void run() {
-    initTime = System.currentTimeMillis();
-    super.run();
-    totalComputingTime = getCurrentComputingTime();
-  }
-
   public long getCurrentComputingTime() {
     return System.currentTimeMillis() - initTime;
   }
 
-  public int getEvaluations() {
+  public int getNumberOfEvaluations() {
     return evaluations;
   }
 
@@ -116,7 +103,11 @@ public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<
 
   @Override
   public List<S> getResult() {
-    return solutions;
+    return population;
+  }
+
+  public void updatePopulation(List<S> newPopulation) {
+    this.population = newPopulation ;
   }
 
   @Override
@@ -130,6 +121,11 @@ public class EvolutionaryAlgorithm<S extends Solution<?>> extends Metaheuristic<
   }
 
   public Evaluation<S> getEvaluation() {
-    return evaluation ;
+    return evaluation;
+  }
+
+  @Override
+  public Observable<Map<String, Object>> getObservable() {
+    return observable;
   }
 }

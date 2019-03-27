@@ -68,12 +68,12 @@ public class AutoNSGAII {
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
 
-    System.out.println("Evals: " + autoNSGAII.getEvaluations()) ;
+    System.out.println("Evals: " + autoNSGAII.getNumberOfEvaluations()) ;
 
     if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
       Collection<Observer<DoubleSolution>> observers = autoNSGAII.getEvaluation().getObservable().getObservers() ;
       ExternalArchiveObserver<DoubleSolution> externalArchiveObserver = (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
-      autoNSGAII.setSolutions(externalArchiveObserver.getArchive().getSolutionList());
+      autoNSGAII.updatePopulation(externalArchiveObserver.getArchive().getSolutionList());
     }
 
     Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());
@@ -89,7 +89,7 @@ public class AutoNSGAII {
     System.out.println("Front size: " + normalizedPopulation.size()) ;
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-    // System.out.println(obtainedFrontHV);
+    System.out.println(obtainedFrontHV);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
 
     AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
