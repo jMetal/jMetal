@@ -6,6 +6,6 @@ public class PolynomialMutationDistributionIndexParameter extends RealParameterT
   public PolynomialMutationDistributionIndexParameter(double lowerBound, double upperBound) {
     super("polynomialMutationDistributionIndex", lowerBound, upperBound) ;
 
-    setParentTag(MutationType.polynomial.toString());
+    setParentTag(MutationType.polynomial.name());
   }
 }

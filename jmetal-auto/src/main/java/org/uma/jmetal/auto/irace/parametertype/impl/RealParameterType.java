@@ -34,7 +34,7 @@ public class RealParameterType extends ParameterType {
   }
 
   @Override
-  public void addAssociatedParameter(ParameterType parameter) {
-    associatedParameters.add(parameter) ;
+  public void addSpecificParameter(ParameterType parameter) {
+    specificParameters.add(parameter) ;
   }
 }
