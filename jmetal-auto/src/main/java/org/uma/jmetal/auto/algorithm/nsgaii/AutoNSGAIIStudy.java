@@ -180,7 +180,7 @@ public class AutoNSGAIIStudy {
                   "--offspringPopulationSize",
                   "1",
                   "--variation",
-                  "rankingAndCrowding",
+                  "crossoverAndMutationVariation",
                   "--createInitialSolutions",
                   "random"
                 };
@@ -188,7 +188,7 @@ public class AutoNSGAIIStudy {
         String argumentString =  "--problemName " + problemName +
                 " --referenceFront " +  problemList.get(i).getReferenceFront() +
                 " --algorithmResult externalArchive --populationSizeWithArchive 20 --offspringPopulationSize 200 " +
-                "--variation rankingAndCrowding --createInitialSolutions scatterSearch " +
+                "--variation crossoverAndMutationVariation --createInitialSolutions scatterSearch " +
                 "--crossover BLX_ALPHA --crossoverProbability 0.9874 " +
                 "--crossoverRepairStrategy bounds --blxAlphaCrossoverAlphaValue 0.5906 " +
                 "--mutation polynomial --mutationProbability 0.0015 " +
@@ -204,7 +204,7 @@ public class AutoNSGAIIStudy {
                 "--polynomialMutationDistributionIndex 6.2659 " +
                 "--selection tournament --selectionTournamentSize 10 " +
                 "--offspringPopulationSize 1 " +
-                "--variation rankingAndCrowding " +
+                "--variation crossoverAndMutationVariation " +
                 "--createInitialSolutions random  ";*/
 
         String[] arguments = argumentString.split(" ") ;

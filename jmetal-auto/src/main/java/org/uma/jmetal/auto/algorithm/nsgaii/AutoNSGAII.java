@@ -57,7 +57,7 @@ public class AutoNSGAII {
       "--offspringPopulationSize",
       "1",
       "--variation",
-      "rankingAndCrowding",
+      "crossoverAndMutationVariation",
       "--createInitialSolutions",
       "random"
     };

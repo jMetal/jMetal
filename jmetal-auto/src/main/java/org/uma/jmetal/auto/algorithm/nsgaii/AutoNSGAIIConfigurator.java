@@ -10,14 +10,17 @@ import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
+import org.uma.jmetal.auto.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.auto.irace.parameter.crossover.CrossoverType;
 import org.uma.jmetal.auto.irace.parameter.mutation.MutationType;
 import org.uma.jmetal.auto.irace.parameter.repairstrategy.RepairStrategyType;
 import org.uma.jmetal.auto.irace.parameter.selection.SelectionType;
+import org.uma.jmetal.auto.irace.parameter.variation.VariationType;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
@@ -27,6 +30,7 @@ import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -56,10 +60,6 @@ enum CreateInitialSolutionsStrategyType {
   random,
   scatterSearch,
   latinHypercubeSampling
-}
-
-enum VariationType {
-  rankingAndCrowding
 }
 
 public class AutoNSGAIIConfigurator {
@@ -121,13 +121,13 @@ public class AutoNSGAIIConfigurator {
   @Option(
       names = {"--sbxCrossoverDistributionIndex"},
       description =
-          "SBXCrossoverDistributionIndexParameter Crossover Distribution Index (default: ${DEFAULT-VALUE})")
+          "SBXC crossover Distribution Index (default: ${DEFAULT-VALUE})")
   private double sbxCrossoverDistributionIndex = 0.20;
 
   @Option(
       names = {"--blxAlphaCrossoverAlphaValue"},
       description =
-          "BLXAlphaCrossoverAlphaValueParameter-alpha Crossover Alpha value (default: ${DEFAULT-VALUE})")
+          "BLX-alpha crossover Alpha value (default: ${DEFAULT-VALUE})")
   private double blxAlphaCrossoverAlphaValue = 0.5;
 
   @Option(
@@ -186,6 +186,18 @@ public class AutoNSGAIIConfigurator {
       required = true,
       description = "Variation: ${COMPLETION-CANDIDATES}")
   private VariationType variationType;
+
+  @Option(
+          names = {"--differentialEvolutionFValue"},
+          description =
+                  "Differential evolution F  value (default: ${DEFAULT-VALUE})")
+  private double f = 0.5;
+
+  @Option(
+          names = {"--differentialEvolutionCRValue"},
+          description =
+                  "Differential evolution CR  value (default: ${DEFAULT-VALUE})")
+  private double cr = 0.5;
 
   Variation<DoubleSolution> variation;
 
@@ -271,8 +283,10 @@ public class AutoNSGAIIConfigurator {
 
   Variation<DoubleSolution> getVariation() {
     switch (variationType) {
-      case rankingAndCrowding:
+      case crossoverAndMutationVariation:
         return new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
+      case differentialEvolutionVariation:
+        return new DifferentialCrossoverVariation(offspringPopulationSize, new DifferentialEvolutionCrossover(cr, f, "rand/1/bin"), mutation);
       default:
         throw new RuntimeException(variationType + " is not a valid variation component");
     }
@@ -285,6 +299,8 @@ public class AutoNSGAIIConfigurator {
       case tournament:
         return new NaryTournamentMatingPoolSelection<>(
             selectionTournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+      case differentialEvolutionSelection:
+        return new DifferentialEvolutionMatingPoolSelection(variation.getMatingPoolSize()) ;
       default:
         throw new RuntimeException(selectionType + " is not a valid selection operator");
     }

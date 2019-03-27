@@ -35,7 +35,7 @@ public class NSGAIICommandLineParsingRunner {
             "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
             "--polynomialMutationDistributionIndex 351.2327 " +
             "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
-            "--variation rankingAndCrowding --createInitialSolutions latinHypercubeSampling " ;
+            "--variation crossoverAndMutationVariation --createInitialSolutions latinHypercubeSampling " ;
 
     String[] arguments = argumentString.split("\\s+") ;
 */
