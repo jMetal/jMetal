@@ -11,12 +11,12 @@ import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import java.util.*;
 
 /**
- * This class implements some facilities for ranking set of solutions.
- * Given a collection of solutions, they are ranked
+ * This class implements some facilities for ranking set of population.
+ * Given a collection of population, they are ranked
  * according to scheme proposed in NSGA-II; as an output, a set of subsets
  * are obtained. The subsets are numbered starting from 0 (in NSGA-II, the
  * numbering starts from 1); thus, subset 0 contains the non-dominated
- * solutions, subset 1 contains the non-dominated solutions after removing those
+ * population, subset 1 contains the non-dominated population after removing those
  * belonging to subset 0, and so on.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -52,10 +52,10 @@ public class DominanceRanking<S extends Solution<?>> implements Ranking<S> {
   public Ranking<S> computeRanking(List<S> solutionSet) {
     List<S> population = solutionSet;
 
-    // dominateMe[i] contains the number of solutions dominating i
+    // dominateMe[i] contains the number of population dominating i
     int[] dominateMe = new int[population.size()];
 
-    // iDominate[k] contains the list of solutions dominated by k
+    // iDominate[k] contains the list of population dominated by k
     List<List<Integer>> iDominate = new ArrayList<>(population.size());
 
     // front[i] contains the list of individuals belonging to the front i

@@ -26,7 +26,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
     solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
   }
   /**
-   * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
+   * Assigns crowding distances to all population in a <code>SolutionSet</code>.
    *
    * @param solutionList The <code>SolutionSet</code>.
    */

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Compares two solutions according to an attribute value, which must be a double number. The higher
+ * Compares two population according to an attribute value, which must be a double number. The higher
  * the value the better.
  *
  * @author Antonio J. Nebro

@@ -41,7 +41,7 @@ public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S
         // child dominates
         temporaryPopulation.add(child);
       } else {
-        // the two solutions are non-dominated
+        // the two population are non-dominated
         temporaryPopulation.add(child);
         temporaryPopulation.add(population.get(i));
       }

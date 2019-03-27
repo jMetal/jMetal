@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * This class implements some facilities for ranking set of solutions. Given a collection of
- * solutions, they are ranked according to scheme proposed in NSGA-II; as an output, a set of
+ * This class implements some facilities for ranking set of population. Given a collection of
+ * population, they are ranked according to scheme proposed in NSGA-II; as an output, a set of
  * subsets are obtained. The subsets are numbered starting from 0 (in NSGA-II, the numbering starts
- * from 1); thus, subset 0 contains the non-dominated solutions, subset 1 contains the non-dominated
- * solutions after removing those belonging to subset 0, and so on.
+ * from 1); thus, subset 0 contains the non-dominated population, subset 1 contains the non-dominated
+ * population after removing those belonging to subset 0, and so on.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

@@ -5,7 +5,7 @@ import org.uma.jmetal.auto.util.checking.Checker;
 import org.uma.jmetal.solution.Solution;
 
 /**
- * Compares two solutions according to an attribute value, which must be a double number. The higher
+ * Compares two population according to an attribute value, which must be a double number. The higher
  * the value the better.
  *
  * @author Antonio J. Nebro
@@ -22,7 +22,7 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
   }
 
   /**
-   * Compare two solutions.
+   * Compare two population.
    *
    * @param solution1 Object representing the first <code>Solution</code>.
    * @param solution2 Object representing the second <code>Solution</code>.

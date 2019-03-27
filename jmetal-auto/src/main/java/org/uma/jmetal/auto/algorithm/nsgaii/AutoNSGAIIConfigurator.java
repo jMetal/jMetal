@@ -174,7 +174,7 @@ public class AutoNSGAIIConfigurator {
   @Option(
       names = {"--createInitialSolutions"},
       required = true,
-      description = "Create initial solutions: ${COMPLETION-CANDIDATES}")
+      description = "Create initial population: ${COMPLETION-CANDIDATES}")
   private CreateInitialSolutionsStrategyType createInitialSolutionsType =
       CreateInitialSolutionsStrategyType.random;
 
@@ -200,7 +200,7 @@ public class AutoNSGAIIConfigurator {
 
   @Option(
       names = {"--selectionTournamentSize"},
-      description = "Selection: number of selected solutions")
+      description = "Selection: number of selected population")
   private int selectionTournamentSize = 2;
 
   public EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {

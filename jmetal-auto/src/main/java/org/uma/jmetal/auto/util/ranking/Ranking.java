@@ -5,7 +5,7 @@ import org.uma.jmetal.auto.util.attribute.Attribute;
 import java.util.List;
 
 /**
- * Ranks a list of solutions according to the dominance relationship
+ * Ranks a list of population according to the dominance relationship
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

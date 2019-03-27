@@ -64,7 +64,7 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
 
   /**
    * A crossover operator is applied to a number of parents, and it assumed that the population contains
-   * a valid number of solutions. This method checks that.
+   * a valid number of population. This method checks that.
    *
    * @param population
    * @param numberOfParentsForCrossover
