@@ -1,10 +1,10 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
-import org.uma.jmetal.auto.component.createinitialsolutions.impl.LatinHypercubeSamplingSolutionsCreation;
-import org.uma.jmetal.auto.component.createinitialsolutions.impl.RandomSolutionsCreation;
-import org.uma.jmetal.auto.component.createinitialsolutions.impl.ScatterSearchSolutionsCreation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
@@ -178,7 +178,7 @@ public class AutoNSGAIIConfigurator {
   private CreateInitialSolutionsStrategyType createInitialSolutionsType =
       CreateInitialSolutionsStrategyType.random;
 
-  CreateInitialSolutions<DoubleSolution> createInitialSolutions;
+  InitialSolutionsCreation<DoubleSolution> createInitialSolutions;
 
   /* Variation */
   @Option(
@@ -228,7 +228,7 @@ public class AutoNSGAIIConfigurator {
       public NSGAII(
           String name,
           Evaluation<DoubleSolution> evaluation,
-          CreateInitialSolutions<DoubleSolution> createInitialSolutionList,
+          InitialSolutionsCreation<DoubleSolution> createInitialSolutionList,
           Termination termination,
           MatingPoolSelection<DoubleSolution> selection,
           Variation<DoubleSolution> variation,
@@ -340,7 +340,7 @@ public class AutoNSGAIIConfigurator {
     }
   }
 
-  CreateInitialSolutions<DoubleSolution> getCreateInitialSolutionStrategy() {
+  InitialSolutionsCreation<DoubleSolution> getCreateInitialSolutionStrategy() {
     switch (createInitialSolutionsType) {
       case random:
         return new RandomSolutionsCreation(getProblem(), populationSize);

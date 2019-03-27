@@ -1,20 +1,18 @@
-package org.uma.jmetal.auto.component.createinitialsolutions.impl;
+package org.uma.jmetal.auto.component.initialsolutionscreation.impl;
 
-import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.AlgorithmDefaultOutputData;
 import org.uma.jmetal.util.NormalizeUtils;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LatinHypercubeSamplingSolutionsCreation
-    implements CreateInitialSolutions<DoubleSolution> {
+    implements InitialSolutionsCreation<DoubleSolution> {
   private final int numberOfSolutionsToCreate;
   private final DoubleProblem problem;
 

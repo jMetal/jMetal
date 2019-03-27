@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
@@ -21,7 +21,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   protected List<S> population;
 
   private Evaluation<S> evaluation;
-  private CreateInitialSolutions<S> createInitialPopulation;
+  private InitialSolutionsCreation<S> createInitialPopulation;
   private Termination termination;
   private MatingPoolSelection<S> selection;
   private Variation<S> variation;
@@ -39,14 +39,14 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   public EvolutionaryAlgorithm(
       String name,
       Evaluation<S> evaluation,
-      CreateInitialSolutions<S> createInitialPopulation,
+      InitialSolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
       Replacement<S> replacement) {
     this.name = name;
     this.evaluation = evaluation;
-    this.createInitialPopulation = createInitialPopulation;
+    this.createInitialPopulation = initialPopulationCreation;
     this.termination = termination;
     this.selection = selection;
     this.variation = variation;

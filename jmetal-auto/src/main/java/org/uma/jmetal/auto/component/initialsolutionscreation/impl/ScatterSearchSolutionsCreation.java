@@ -1,11 +1,8 @@
-package org.uma.jmetal.auto.component.createinitialsolutions.impl;
+package org.uma.jmetal.auto.component.initialsolutionscreation.impl;
 
-import org.uma.jmetal.auto.component.createinitialsolutions.CreateInitialSolutions;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.AlgorithmDefaultOutputData;
@@ -13,9 +10,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public class ScatterSearchSolutionsCreation implements CreateInitialSolutions<DoubleSolution> {
+public class ScatterSearchSolutionsCreation implements InitialSolutionsCreation<DoubleSolution> {
   private final int numberOfSolutionsToCreate;
   private final DoubleProblem problem;
   private final int numberOfSubRanges;
