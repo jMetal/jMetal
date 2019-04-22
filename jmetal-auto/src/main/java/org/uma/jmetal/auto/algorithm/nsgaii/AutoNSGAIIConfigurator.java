@@ -121,7 +121,7 @@ public class AutoNSGAIIConfigurator {
   @Option(
       names = {"--sbxCrossoverDistributionIndex"},
       description =
-          "SBXC crossover Distribution Index (default: ${DEFAULT-VALUE})")
+          "SBX crossover distribution index (default: ${DEFAULT-VALUE})")
   private double sbxCrossoverDistributionIndex = 0.20;
 
   @Option(
