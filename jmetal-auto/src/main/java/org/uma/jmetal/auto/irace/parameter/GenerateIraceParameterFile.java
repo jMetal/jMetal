@@ -59,7 +59,7 @@ public class GenerateIraceParameterFile {
 
     CategoricalParameterType variation = new CategoricalParameterType("variation");
     variation.addValue(VariationType.crossoverAndMutationVariation.toString());
-    variation.addValue(VariationType.DE.toString());
+    //variation.addValue(VariationType.DE.toString());
 
     CategoricalParameterType createInitialSolutions =
         new CategoricalParameterType("createInitialSolutions");
@@ -79,8 +79,8 @@ public class GenerateIraceParameterFile {
     CrossoverParameter crossover = new CrossoverParameter();
     crossover.addAssociatedParameter(new SBXCrossoverDistributionIndexParameter(5.0, 400.0));
     crossover.addAssociatedParameter(new BLXAlphaCrossoverAlphaValueParameter());
-    crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
-    crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
+    //crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
+    //crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
     //crossover.addValue(CrossoverType.DE.toString());
 
     parameters.add(crossover);
