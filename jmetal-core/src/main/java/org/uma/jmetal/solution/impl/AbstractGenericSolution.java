@@ -35,6 +35,16 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   }
 
   @Override
+  public double[] getObjectives() {
+    return objectives ;
+  }
+
+  @Override
+  public List<T> getVariables() {
+    return variables ;
+  }
+
+  @Override
   public void setAttribute(Object id, Object value) {
     attributes.put(id, value) ;
   }
@@ -146,7 +156,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
 
           boolean areAttributeValuesEqual;
           if (value instanceof AbstractGenericSolution) {
-            areAttributeValuesEqual = ((AbstractGenericSolution) value).equalsIgnoringAttributes(valueThat);
+            areAttributeValuesEqual = ((AbstractGenericSolution<?, ?>) value).equalsIgnoringAttributes(valueThat);
           } else {
             areAttributeValuesEqual = !value.equals(valueThat);
           }

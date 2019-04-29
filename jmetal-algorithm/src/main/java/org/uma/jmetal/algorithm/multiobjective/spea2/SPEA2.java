@@ -24,18 +24,21 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected List<S> archive;
   protected final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
   protected final EnvironmentalSelection<S> environmentalSelection;
+  protected final int k ;
 
   public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,
+               int k) {
     super(problem);
     this.maxIterations = maxIterations;
     this.setMaxPopulationSize(populationSize);
 
+    this.k = k ;
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.environmentalSelection = new EnvironmentalSelection<S>(populationSize);
+    this.environmentalSelection = new EnvironmentalSelection<S>(populationSize, k);
 
     this.archive = new ArrayList<>(populationSize);
 

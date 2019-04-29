@@ -15,7 +15,6 @@
  */
 package org.uma.jmetal.problem.multiobjective.ebes;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
@@ -34,7 +33,7 @@ import java.util.logging.Logger;
  * Spatial Bars Structure (Estructuras de Barras Espaciales)
  */
 @SuppressWarnings("serial")
-public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class Ebes extends AbstractDoubleProblem {
   /**
    * Constructor.
    * Creates a default instance of the Ebes problem.
@@ -1045,6 +1044,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
 */
     // END NOT USED ------------------------------------------------------------------------------
 
+    this.evaluateConstraints(solution);
   } // evaluate
 
   /**
@@ -1052,8 +1052,7 @@ public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<Do
    * @param solution The solution
    * @throws JMetalException
    */
-  @Override
-  public void evaluateConstraints(DoubleSolution solution) {
+  private void evaluateConstraints(DoubleSolution solution) {
     double [] constraint = new double[this.getNumberOfConstraints()];
     double[] x = new double[getNumberOfVariables()] ;
 

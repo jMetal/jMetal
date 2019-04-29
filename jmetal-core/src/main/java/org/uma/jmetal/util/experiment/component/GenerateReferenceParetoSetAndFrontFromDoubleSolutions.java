@@ -52,6 +52,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   public  GenerateReferenceParetoSetAndFrontFromDoubleSolutions(Experiment<?, ?> experimentConfiguration) {
     this.experiment = experimentConfiguration ;
+    experiment.removeDuplicatedAlgorithms();
   }
 
   /**
@@ -227,6 +228,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     }
 
     @Override public void evaluate(DoubleSolution solution) {
+    	//This method is an intentionally-blank override.
     }
   }
 }

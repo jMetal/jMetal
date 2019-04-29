@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Class representing problem MaF03, convex DTLZ3
  */
+@SuppressWarnings("serial")
 public class MaF03 extends AbstractDoubleProblem {
 
   /**

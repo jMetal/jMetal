@@ -4,7 +4,6 @@ import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.DoubleSolution;
@@ -419,10 +418,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     List<DoubleSolution> resultList = new ArrayList<>() ;
     for (List<DoubleSolution> pair : solutionList) {
       List<DoubleSolution> offspring = (List<DoubleSolution>) crossover.execute(pair);
-      if (problem instanceof ConstrainedProblem) {
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(0));
-        ((ConstrainedProblem<DoubleSolution>) problem).evaluateConstraints(offspring.get(1));
-      }
 
       problem.evaluate(offspring.get(0));
       problem.evaluate(offspring.get(1));
@@ -479,9 +474,6 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
   private void fillPopulationWithRandomSolutions() {
     while (getPopulation().size() < getPopulationSize()) {
       DoubleSolution solution = diversificationGeneration();
-      if (problem instanceof ConstrainedProblem){
-        ((ConstrainedProblem<DoubleSolution>)problem).evaluateConstraints(solution);
-      }
 
       problem.evaluate(solution);
       evaluations++;

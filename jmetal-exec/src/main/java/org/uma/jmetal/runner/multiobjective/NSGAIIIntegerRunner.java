@@ -66,10 +66,10 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<IntegerSolution>() ;
 
-    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setPopulationSize(100)
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

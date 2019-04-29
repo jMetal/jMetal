@@ -12,7 +12,6 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -87,15 +86,6 @@ public class NaryTournamentSelectionTest {
     List<DoubleSolution> population = new ArrayList<>(1) ;
     population.add(solution) ;
     assertSame(solution, selection.execute(population));
-  }
-
-  @Test
-  public void shouldExecuteReturnTwoSolutionsIfTheListContainsTwoSolutions() {
-    IntegerSolution solution1 = mock(IntegerSolution.class) ;
-    IntegerSolution solution2 = mock(IntegerSolution.class) ;
-
-    List<IntegerSolution> population = Arrays.asList(solution1, solution2) ;
-    assertEquals(2, population.size());
   }
 
   @Test

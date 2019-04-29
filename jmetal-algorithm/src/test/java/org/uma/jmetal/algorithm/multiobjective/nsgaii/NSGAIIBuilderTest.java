@@ -45,7 +45,8 @@ public class NSGAIIBuilderTest {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation);
+    int populationSize  = 100 ;
+    builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize);
   }
 
   @After public void cleanup() {
@@ -76,14 +77,10 @@ public class NSGAIIBuilderTest {
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);
   }
 
-  @Test public void setValidPopulationSize() {
-    builder.setPopulationSize(150);
-    assertEquals(150, builder.getPopulationSize());
-  }
-
-  @Test(expected = JMetalException.class) public void setNegativePopulationSize() {
-    builder.setPopulationSize(-1);
-  }
+  //@Test(expected = JMetalException.class)
+  //public void setNegativePopulationSize() {
+  //  builder.setPopulationSize(-1);
+  //}
 
   @Test public void setPositiveMaxNumberOfIterations() {
     builder.setMaxEvaluations(20000);

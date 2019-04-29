@@ -30,6 +30,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro
  */
+@SuppressWarnings("serial")
 public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
   private Hypervolume<S> hypervolume ;
 

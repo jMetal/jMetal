@@ -4,6 +4,7 @@ import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Defines an implementation of a double solution
@@ -64,4 +65,9 @@ public class DefaultDoubleSolution
       setVariableValue(i, value) ;
     }
   }
+  
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }

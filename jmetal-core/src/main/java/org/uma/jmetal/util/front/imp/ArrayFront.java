@@ -2,11 +2,15 @@ package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -43,7 +47,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, solutionList.get(i).getObjective(j));
+        point.setValue(j, solutionList.get(i).getObjective(j));
       }
       points[i] = point;
     }
@@ -57,7 +61,7 @@ public class ArrayFront implements Front {
       throw new JMetalException("The front is empty") ;
     }
     numberOfPoints = front.getNumberOfPoints();
-    pointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    pointDimensions = front.getPoint(0).getDimension() ;
     points = new Point[numberOfPoints] ;
 
     points = new Point[numberOfPoints];
@@ -75,7 +79,7 @@ public class ArrayFront implements Front {
     for (int i = 0; i < this.numberOfPoints; i++) {
       Point point = new ArrayPoint(pointDimensions) ;
       for (int j = 0; j < pointDimensions; j++) {
-        point.setDimensionValue(j, 0.0) ;
+        point.setValue(j, 0.0) ;
       }
       points[i] = point ;
     }
@@ -88,8 +92,18 @@ public class ArrayFront implements Front {
    */
   public ArrayFront(String fileName) throws FileNotFoundException {
     this() ;
-    // TODO: investigate why no exception is raised if fileName == ""
-    InputStream inputStream = createInputStream(fileName) ;
+    InputStream inputStream = null;
+    try {
+      URL url = VectorFileUtils.class.getClassLoader().getResource(fileName) ;
+      if (url != null) {
+        String uri = Paths.get(url.toURI()).toString();
+        inputStream = createInputStream(uri) ;
+      } else {
+        inputStream = createInputStream(fileName) ;
+      }
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
 
     InputStreamReader isr = new InputStreamReader(inputStream);
     BufferedReader br = new BufferedReader(isr);
@@ -113,7 +127,7 @@ public class ArrayFront implements Front {
         Point point = new ArrayPoint(numberOfObjectives) ;
         while (tokenizer.hasMoreTokens()) {
           double value = new Double(tokenizer.nextToken());
-          point.setDimensionValue(i, value);
+          point.setValue(i, value);
           i++;
         }
         list.add(point);
@@ -132,7 +146,7 @@ public class ArrayFront implements Front {
     if (numberOfPoints == 0) {
       pointDimensions = 0 ;
     } else {
-      pointDimensions = points[0].getNumberOfDimensions() ;
+      pointDimensions = points[0].getDimension() ;
     }
     for (int i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);

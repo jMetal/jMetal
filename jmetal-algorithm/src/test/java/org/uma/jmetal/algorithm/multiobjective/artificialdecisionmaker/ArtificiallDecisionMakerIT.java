@@ -19,8 +19,8 @@ import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificialDecisionMakerD
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificiallDecisionMakerBuilder;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.referencePoint.impl.IdealPoint;
-import org.uma.jmetal.util.referencePoint.impl.NadirPoint;
+import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.point.impl.NadirPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,15 +58,14 @@ public class ArtificiallDecisionMakerIT {
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     IdealPoint idealPoint = new IdealPoint(problem.getNumberOfObjectives());
-    idealPoint.update(problem.createSolution());
+    idealPoint.update(problem.createSolution().getObjectives());
     NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
-    nadirPoint.update(problem.createSolution());
+    nadirPoint.update(problem.createSolution().getObjectives());
     double considerationProbability = 0.1;
     List<Double> rankingCoeficient = new ArrayList<>();
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       rankingCoeficient.add(1.0 / problem.getNumberOfObjectives());
     }
-    double tolerance = 0.5;
 
     for (int cont = 0; cont < numberIterations; cont++) {
       List<Double> referencePoint = new ArrayList<>();
@@ -87,8 +86,7 @@ public class ArtificiallDecisionMakerIT {
           .setTolerance(0.001)
           .setAsp(asp)
           .build();
-      AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-          .execute();
+      new AlgorithmRunner.Executor(algorithm).execute();
       List<Double> referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
           .getReferencePoints();
 

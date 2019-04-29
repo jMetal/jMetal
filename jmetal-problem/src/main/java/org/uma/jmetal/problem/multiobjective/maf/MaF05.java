@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Class representing problem MaF05
  */
+@SuppressWarnings("serial")
 public class MaF05 extends AbstractDoubleProblem {
 
   public static double const5[];

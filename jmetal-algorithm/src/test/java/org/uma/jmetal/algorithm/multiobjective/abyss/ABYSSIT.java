@@ -10,6 +10,7 @@ import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
 import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
@@ -35,7 +36,7 @@ public class ABYSSIT {
 
   @Before
   public void setup() {
-    problem = new ZDT4() ;
+    problem = new ZDT1() ;
 
     double crossoverProbability = 1.0 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -61,13 +62,13 @@ public class ABYSSIT {
 
     /*
     Rationale: the default problem is ZDT4, and AbYSS, configured with standard settings, should
-    return 100 solutions
+    return at least solutions
     */
     assertTrue(population.size() >= 98) ;
   }
 
   @Test
-  public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
+  public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
     algorithm = new ABYSSBuilder(problem, archive)
         .build();
 
@@ -78,10 +79,12 @@ public class ABYSSIT {
     QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT1.pf") ;
 
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.64
+    // return find a front with a hypervolume value higher than 0.65
 
-    double hv = (Double)hypervolume.evaluate(population) ;
+    double hv = hypervolume.evaluate(population) ;
 
-    assertTrue(hv > 0.64) ;
+    System.out.println(hv) ;
+
+    assertTrue(hv > 0.65) ;
   }
 }

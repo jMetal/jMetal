@@ -20,7 +20,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NSGAII<S>> {
-  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45}
+  public enum NSGAIIVariant {NSGAII, SteadyStateNSGAII, Measures, NSGAII45, DNSGAII}
 
   /**
    * NSGAIIBuilder class
@@ -28,6 +28,9 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
   private final Problem<S> problem;
   private int maxEvaluations;
   private int populationSize;
+  protected int matingPoolSize;
+  protected int offspringPopulationSize ;
+
   private CrossoverOperator<S>  crossoverOperator;
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
@@ -40,10 +43,12 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
    * NSGAIIBuilder constructor
    */
   public NSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator) {
+      MutationOperator<S> mutationOperator, int populationSize) {
     this.problem = problem;
     maxEvaluations = 25000;
-    populationSize = 100;
+    this.populationSize = populationSize;
+    matingPoolSize = populationSize;
+    offspringPopulationSize = populationSize ;
     this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
@@ -62,12 +67,21 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     return this;
   }
 
-  public NSGAIIBuilder<S> setPopulationSize(int populationSize) {
-    if (populationSize < 0) {
-      throw new JMetalException("Population size is negative: " + populationSize);
+  public NSGAIIBuilder<S> setMatingPoolSize(int matingPoolSize) {
+    if (matingPoolSize < 0) {
+      throw new JMetalException("The mating pool size is negative: " + populationSize);
     }
 
-    this.populationSize = populationSize;
+    this.matingPoolSize = matingPoolSize;
+
+    return this;
+  }
+  public NSGAIIBuilder<S> setOffspringPopulationSize(int offspringPopulationSize) {
+    if (offspringPopulationSize < 0) {
+      throw new JMetalException("Offspring population size is negative: " + populationSize);
+    }
+
+    this.offspringPopulationSize = offspringPopulationSize;
 
     return this;
   }
@@ -109,14 +123,18 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
   public NSGAII<S> build() {
     NSGAII<S> algorithm = null ;
     if (variant.equals(NSGAIIVariant.NSGAII)) {
-      algorithm = new NSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
+      algorithm = new NSGAII<S>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+              crossoverOperator,
           mutationOperator, selectionOperator, dominanceComparator, evaluator);
     } else if (variant.equals(NSGAIIVariant.SteadyStateNSGAII)) {
       algorithm = new SteadyStateNSGAII<S>(problem, maxEvaluations, populationSize, crossoverOperator,
           mutationOperator, selectionOperator, dominanceComparator, evaluator);
     } else if (variant.equals(NSGAIIVariant.Measures)) {
-      algorithm = new NSGAIIMeasures<S>(problem, maxEvaluations, populationSize, crossoverOperator,
-          mutationOperator, selectionOperator, dominanceComparator, evaluator);
+      algorithm = new NSGAIIMeasures<S>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+              crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator);
+    }else if(variant.equals(NSGAIIVariant.DNSGAII)){
+      algorithm = new DNSGAII<>(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
+              crossoverOperator, mutationOperator, selectionOperator, dominanceComparator, evaluator) ;
     }
 
     return algorithm ;

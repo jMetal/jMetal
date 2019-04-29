@@ -12,8 +12,8 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -62,9 +62,9 @@ public class ErrorRatioTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 10.0);
-    point1.setDimensionValue(1, 12.0);
-    point1.setDimensionValue(2, -1.0);
+    point1.setValue(0, 10.0);
+    point1.setValue(1, 12.0);
+    point1.setValue(2, -1.0);
 
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point1);
@@ -83,14 +83,14 @@ public class ErrorRatioTest {
     Front referenceFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 10.0);
-    point1.setDimensionValue(1, 12.0);
-    point1.setDimensionValue(2, -1.0);
+    point1.setValue(0, 10.0);
+    point1.setValue(1, 12.0);
+    point1.setValue(2, -1.0);
 
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 3.0);
-    point2.setDimensionValue(1, 5.0);
-    point2.setDimensionValue(2, -2.0);
+    point2.setValue(0, 3.0);
+    point2.setValue(1, 5.0);
+    point2.setValue(2, -2.0);
 
     frontApproximation.setPoint(0, point1);
     referenceFront.setPoint(0, point2);
@@ -113,28 +113,28 @@ public class ErrorRatioTest {
     Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 1.5);
-    point1.setDimensionValue(1, 4.0);
+    point1.setValue(0, 1.5);
+    point1.setValue(1, 4.0);
     Point point2 = new ArrayPoint(numberOfDimensions) ;
-    point2.setDimensionValue(0, 1.5);
-    point2.setDimensionValue(1, 2.0);
+    point2.setValue(0, 1.5);
+    point2.setValue(1, 2.0);
     Point point3 = new ArrayPoint(numberOfDimensions) ;
-    point3.setDimensionValue(0, 2.0);
-    point3.setDimensionValue(1, 1.5);
+    point3.setValue(0, 2.0);
+    point3.setValue(1, 1.5);
 
     frontApproximation.setPoint(0, point1);
     frontApproximation.setPoint(1, point2);
     frontApproximation.setPoint(2, point3);
 
     Point point4 = new ArrayPoint(numberOfDimensions) ;
-    point4.setDimensionValue(0, 1.0);
-    point4.setDimensionValue(1, 3.0);
+    point4.setValue(0, 1.0);
+    point4.setValue(1, 3.0);
     Point point5 = new ArrayPoint(numberOfDimensions) ;
-    point5.setDimensionValue(0, 1.5);
-    point5.setDimensionValue(1, 2.0);
+    point5.setValue(0, 1.5);
+    point5.setValue(1, 2.0);
     Point point6 = new ArrayPoint(numberOfDimensions) ;
-    point6.setDimensionValue(0, 2.0);
-    point6.setDimensionValue(1, 1.5);
+    point6.setValue(0, 2.0);
+    point6.setValue(1, 1.5);
 
     paretoFront.setPoint(0, point4);
     paretoFront.setPoint(1, point5);

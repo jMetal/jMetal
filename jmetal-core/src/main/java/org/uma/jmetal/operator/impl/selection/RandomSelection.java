@@ -7,8 +7,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import java.util.List;
 
 /**
- * This class implements a random selection operator used for selecting a N number of solutions from
- * a list
+ * This class implements a random selection operator used for selecting randomly a solution from a list
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

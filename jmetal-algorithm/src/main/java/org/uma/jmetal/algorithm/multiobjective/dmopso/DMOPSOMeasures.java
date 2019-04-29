@@ -1,17 +1,17 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
-import org.uma.jmetal.measure.Measurable;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
-import org.uma.jmetal.measure.impl.DurationMeasure;
-import org.uma.jmetal.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.measure.Measurable;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
+import org.uma.jmetal.util.measure.impl.DurationMeasure;
+import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 
 import java.util.List;
 

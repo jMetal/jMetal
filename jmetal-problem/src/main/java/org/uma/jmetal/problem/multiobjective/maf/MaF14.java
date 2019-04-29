@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Class representing problem MaF14
  */
+@SuppressWarnings("serial")
 public class MaF14 extends AbstractDoubleProblem {
   public static int nk14;
   public static int sublen14[], len14[];

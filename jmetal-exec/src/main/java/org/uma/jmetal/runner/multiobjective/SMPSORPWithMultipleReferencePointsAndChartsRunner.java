@@ -3,10 +3,6 @@ package org.uma.jmetal.runner.multiobjective;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -21,7 +17,10 @@ import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +30,11 @@ import java.util.List;
 public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
   /**
    * Program to run the SMPSORP algorithm with three reference points and plotting a graph during the algorithm
-   * execution. SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With
-   * Reference Point Based Preference Articulation". Accepted in PPSN 2018.
+   * execution. SMPSORP is described in "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
+   * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
+   * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
+   * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
+   * pp. 298-310. 2018".
    *
    * @author Antonio J. Nebro
    */
@@ -41,8 +43,6 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
     String referenceParetoFront = "" ;
-
-    JMetalRandom.getInstance().setSeed(3);
 
     String problemName ;
     if (args.length == 1) {
@@ -59,8 +59,8 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    referencePoints.add(Arrays.asList(0.1, 1.0)) ;
-    referencePoints.add(Arrays.asList(0.3, 0.3)) ;
+    //referencePoints.add(Arrays.asList(0.6, 0.1)) ;
+    referencePoints.add(Arrays.asList(0.2, 0.3)) ;
     referencePoints.add(Arrays.asList(0.8, 0.2)) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
@@ -112,7 +112,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;
 
-    chart.saveChart("RSMPSO", BitmapEncoder.BitmapFormat.PNG);
+    chart.saveChart("SMPSORP", BitmapEncoder.BitmapFormat.PNG);
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 

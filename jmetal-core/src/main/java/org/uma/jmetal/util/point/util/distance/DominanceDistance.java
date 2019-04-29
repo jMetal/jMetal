@@ -17,15 +17,15 @@ public class DominanceDistance implements PointDistance {
       throw new JMetalException("The first point is null") ;
     } else if (b == null) {
       throw new JMetalException("The second point is null") ;
-    } else if (a.getNumberOfDimensions() != b.getNumberOfDimensions()) {
+    } else if (a.getDimension() != b.getDimension()) {
       throw new JMetalException("The dimensions of the points are different: "
-          + a.getNumberOfDimensions() + ", " + b.getNumberOfDimensions()) ;
+          + a.getDimension() + ", " + b.getDimension()) ;
     }
 
     double distance = 0.0;
 
-    for (int i = 0; i < a.getNumberOfDimensions(); i++) {
-      double max = Math.max(b.getDimensionValue(i) - a.getDimensionValue(i), 0.0) ;
+    for (int i = 0; i < a.getDimension(); i++) {
+      double max = Math.max(b.getValue(i) - a.getValue(i), 0.0) ;
       distance += Math.pow(max, 2);
     }
     return Math.sqrt(distance);

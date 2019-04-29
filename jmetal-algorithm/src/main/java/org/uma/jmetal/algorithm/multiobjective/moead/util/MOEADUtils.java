@@ -4,8 +4,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
+import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.referencePoint.impl.IdealPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,11 +143,7 @@ public class MOEADUtils {
     }
 
     IdealPoint idealPoint = new IdealPoint(2) ;
-    solutionList.stream().forEach(solution -> idealPoint.update(solution));
-
-    for (int v = 0 ; v < idealPoint.getNumberOfObjectives(); v++) {
-      System.out.println(idealPoint.getObjective(v)) ;
-    }
+    solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
 
     // Select the best solution for each weight vector
     for (int i = 0; i < newSolutionListSize; i++) {
@@ -160,7 +156,9 @@ public class MOEADUtils {
           currentBest = solutionList.get(j);
         }
       }
-      resultSolutionList.add((S) currentBest.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) currentBest.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 
@@ -170,7 +168,7 @@ public class MOEADUtils {
           int newSolutionListSize) {
 
     Distance<S, List<S>> distance =
-            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace() ;
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>() ;
 
     int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1) ;
 
@@ -200,7 +198,9 @@ public class MOEADUtils {
 
       // add the selected to res and remove from candidate list
       S removedSolution = candidate.remove(index) ;
-      resultSolutionList.add((S)removedSolution.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) removedSolution.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 
@@ -211,8 +211,8 @@ public class MOEADUtils {
 
     double maxFun = -1.0e+30;
 
-    for (int n = 0; n < idealPoint.getNumberOfObjectives(); n++) {
-      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getObjective(n));
+    for (int n = 0; n < idealPoint.getDimension(); n++) {
+      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getValue(n));
 
       double functionValue;
       if (lambda[n] == 0) {

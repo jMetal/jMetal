@@ -18,7 +18,7 @@ public class WeightVectorNeighborhoodTest {
 	
 	@Test
 	public void shouldDefaultConstructorBeCorrectlyInitialized() {
-		WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(100, 20);
+		WeightVectorNeighborhood<?> weightVectorNeighborhood = new WeightVectorNeighborhood<>(100, 20);
 		
 		assertEquals(100, weightVectorNeighborhood.getNumberOfWeightVectors());
 		assertEquals(20, weightVectorNeighborhood.getNeighborSize());
@@ -40,7 +40,7 @@ public class WeightVectorNeighborhoodTest {
 		final int neighborSize = 20;
 		final int weightVectorSize = 2 ;
 		try {
-			WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(
+			new WeightVectorNeighborhood<>(
 							populationSize,
 							weightVectorSize,
 							neighborSize,
@@ -55,7 +55,7 @@ public class WeightVectorNeighborhoodTest {
 	public void shouldGetNeighborsWorksProperlyWithTwoObjectives() {
 		final int populationSize = 100;
 		final int neighborSize = 20;
-		WeightVectorNeighborhood weightVectorNeighborhood = new WeightVectorNeighborhood(populationSize, neighborSize);
+		WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize);
 		
 		List<DoubleSolution> solutionList = new ArrayList<>(populationSize);
 		DoubleProblem problem = new MockedDoubleProblem(2, 2);
@@ -77,6 +77,7 @@ public class WeightVectorNeighborhoodTest {
 		assertSame(solutionList.get(79), neighbors.get(19)) ;
 	}
 	
+	@SuppressWarnings("serial")
 	private static class MockedDoubleProblem extends AbstractDoubleProblem {
 		public MockedDoubleProblem(int numberOfVariables, int numberOfObjectives) {
 			setNumberOfVariables(numberOfVariables);

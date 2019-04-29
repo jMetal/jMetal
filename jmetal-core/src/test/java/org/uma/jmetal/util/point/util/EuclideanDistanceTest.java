@@ -52,8 +52,8 @@ public class EuclideanDistanceTest {
     Point point1 = new ArrayPoint(1) ;
     Point point2 = new ArrayPoint(1) ;
 
-    point1.setDimensionValue(0, -2.0);
-    point2.setDimensionValue(0, +2.0);
+    point1.setValue(0, -2.0);
+    point2.setValue(0, +2.0);
 
     assertEquals(4.0, distance.compute(point1, point2), EPSILON) ;
   }
@@ -62,10 +62,10 @@ public class EuclideanDistanceTest {
     Point point1 = new ArrayPoint(2) ;
     Point point2 = new ArrayPoint(2) ;
 
-    point1.setDimensionValue(0, 0.3);
-    point1.setDimensionValue(1, 0.4);
-    point2.setDimensionValue(0, 0.2);
-    point2.setDimensionValue(1, 0.3);
+    point1.setValue(0, 0.3);
+    point1.setValue(1, 0.4);
+    point2.setValue(0, 0.2);
+    point2.setValue(1, 0.3);
 
     assertEquals(Math.sqrt(0.02), distance.compute(point1, point2), EPSILON) ;
   }
@@ -74,10 +74,10 @@ public class EuclideanDistanceTest {
     Point point1 = new ArrayPoint(2) ;
     Point point2 = new ArrayPoint(2) ;
 
-    point1.setDimensionValue(0, 0.0);
-    point1.setDimensionValue(1, 0.0);
-    point2.setDimensionValue(0, +2.0);
-    point2.setDimensionValue(1, +2.0);
+    point1.setValue(0, 0.0);
+    point1.setValue(1, 0.0);
+    point2.setValue(0, +2.0);
+    point2.setValue(1, +2.0);
 
     assertEquals(Math.sqrt(8.0), distance.compute(point1, point2), EPSILON) ;
   }

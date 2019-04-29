@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by FlapKap on 23-03-2017.
  */
+@SuppressWarnings("serial")
 public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
   private final JMetalRandom randomNumberGenerator = JMetalRandom.getInstance();
   private final double probability;
@@ -52,7 +53,7 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
     if (mom.getNumberOfVariables() != dad.getNumberOfVariables()) {
       throw new JMetalException("The 2 parents doesn't have the same number of variables");
     }
-    if (mom.getNumberOfVariables() > crossovers) {
+    if (mom.getNumberOfVariables() < crossovers) {
       throw new JMetalException("The number of crossovers is higher than the number of variables");
     }
 

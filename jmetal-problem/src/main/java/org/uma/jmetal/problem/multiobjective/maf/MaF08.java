@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Class representing problem MaF08
  */
+@SuppressWarnings("serial")
 public class MaF08 extends AbstractDoubleProblem {
 
   public static double const8[][];

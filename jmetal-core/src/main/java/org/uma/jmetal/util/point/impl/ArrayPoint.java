@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.point.impl;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
@@ -21,7 +20,6 @@ import java.util.StringTokenizer;
 public class ArrayPoint implements Point {
   protected double[] point;
 
-
   /**
    * Default constructor
    */
@@ -32,12 +30,12 @@ public class ArrayPoint implements Point {
   /**
    * Constructor
    *
-   * @param dimensions Dimensions of the point
+   * @param dimension Dimension of the point
    */
-  public ArrayPoint(int dimensions) {
-    point = new double[dimensions];
+  public ArrayPoint(int dimension) {
+    point = new double[dimension];
 
-    for (int i = 0; i < dimensions; i++) {
+    for (int i = 0; i < dimension; i++) {
       point[i] = 0.0;
     }
   }
@@ -52,28 +50,10 @@ public class ArrayPoint implements Point {
       throw new JMetalException("The point is null") ;
     }
 
-    this.point = new double[point.getNumberOfDimensions()];
+    this.point = new double[point.getDimension()];
 
-    for (int i = 0; i < point.getNumberOfDimensions(); i++) {
-      this.point[i] = point.getDimensionValue(i);
-    }
-  }
-
-  /**
-   * Constructor from a solution
-   *
-   * @param solution
-   */
-  public ArrayPoint(Solution<?> solution) {
-    if (solution == null) {
-      throw new JMetalException("The solution is null") ;
-    }
-
-    int dimensions = solution.getNumberOfObjectives();
-    point = new double[dimensions];
-
-    for (int i = 0; i < dimensions; i++) {
-      point[i] = solution.getObjective(i);
+    for (int i = 0; i < point.getDimension(); i++) {
+      this.point[i] = point.getValue(i);
     }
   }
 
@@ -96,9 +76,9 @@ public class ArrayPoint implements Point {
    * @param fileName
    */
   public ArrayPoint(String fileName) throws IOException {
-    FileInputStream fis = new FileInputStream(fileName);
-    InputStreamReader isr = new InputStreamReader(fis);
-    BufferedReader br = new BufferedReader(isr);
+   FileInputStream fis = new FileInputStream(fileName);
+   InputStreamReader isr = new InputStreamReader(fis);
+   try(BufferedReader br = new BufferedReader(isr)){
 
     List<Double> auxiliarPoint = new ArrayList<Double>();
     String aux = br.readLine();
@@ -117,11 +97,11 @@ public class ArrayPoint implements Point {
       point[i] = auxiliarPoint.get(i) ;
     }
 
-    br.close();
+   }
   }
 
   @Override
-  public int getNumberOfDimensions() {
+  public int getDimension() {
     return point.length;
   }
 
@@ -131,7 +111,7 @@ public class ArrayPoint implements Point {
   }
 
   @Override
-  public double getDimensionValue(int index) {
+  public double getValue(int index) {
     if ((index < 0) || (index >= point.length)) {
       throw new JMetalException("Index value invalid: " + index +
           ". The point length is: " + point.length) ;
@@ -140,12 +120,24 @@ public class ArrayPoint implements Point {
   }
 
   @Override
-  public void setDimensionValue(int index, double value) {
+  public void setValue(int index, double value) {
     if ((index < 0) || (index >= point.length)) {
       throw new JMetalException("Index value invalid: " + index +
           ". The point length is: " + point.length) ;
     }
     point[index] = value ;
+  }
+
+  @Override
+  public void update(double[] point) {
+    if (point.length != this.point.length) {
+      throw new JMetalException("The point to be update have a dimension of " + point.length + " "
+          + "while the parameter point has a dimension of " + point.length) ;
+    }
+
+    for (int i = 0; i < point.length; i++) {
+      this.point[i] = point[i] ;
+    }
   }
 
   @Override

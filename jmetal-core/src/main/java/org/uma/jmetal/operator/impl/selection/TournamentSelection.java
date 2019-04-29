@@ -20,16 +20,16 @@ import java.util.List;
 public class TournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>,S> {
   private Comparator<S> comparator;
 
-  private final int numberOfTournaments;
+  private final int n_arity;
 
   /** Constructor */
-  public TournamentSelection(int numberOfTournaments) {
-    this(new DominanceComparator<S>(), numberOfTournaments) ;
+  public TournamentSelection(int n_arity) {
+    this(new DominanceComparator<S>(), n_arity) ;
   }
 
   /** Constructor */
-  public TournamentSelection(Comparator<S> comparator, int numberOfTournaments) {
-    this.numberOfTournaments = numberOfTournaments;
+  public TournamentSelection(Comparator<S> comparator, int n_arity) {
+    this.n_arity = n_arity;
     this.comparator = comparator ;
   }
 
@@ -51,7 +51,7 @@ public class TournamentSelection<S extends Solution<?>> implements SelectionOper
       do {
         S candidate = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList).get(0);
         result = SolutionUtils.getBestSolution(result, candidate, comparator) ;
-      } while (++count < this.numberOfTournaments);
+      } while (++count < this.n_arity);
     }
 
     return result;

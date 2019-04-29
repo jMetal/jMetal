@@ -6,6 +6,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * Created by Antonio J. Nebro on 17/07/14.
  */
-public class Experiment<S extends Solution<?>, Result> {
+public class Experiment<S extends Solution<?>, Result extends List<S>> {
 	private String experimentName;
 	private List<ExperimentAlgorithm<S, Result>> algorithmList;
 	private List<ExperimentProblem<S>> problemList;
@@ -100,15 +101,9 @@ public class Experiment<S extends Solution<?>, Result> {
    */
   public void removeDuplicatedAlgorithms() {
     List<ExperimentAlgorithm<S, Result>> algorithmList = new ArrayList<>() ;
-    List<String> algorithmTagList = new ArrayList<>() ;
+    HashSet<String> algorithmTagList = new HashSet<>() ;
 
-    for (ExperimentAlgorithm<S, Result> algorithm : getAlgorithmList()) {
-      if (!algorithmTagList.contains(algorithm.getAlgorithmTag())) {
-        algorithmList.add(algorithm) ;
-        algorithmTagList.add(algorithm.getAlgorithmTag()) ;
-      }
-    }
 
-    setAlgorithmList(algorithmList);
+    getAlgorithmList().removeIf(alg -> !algorithmTagList.add(alg.getAlgorithmTag())) ;
   }
 }

@@ -9,6 +9,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class generates a R script that generates an eps file containing boxplots
@@ -22,7 +23,7 @@ import java.io.IOException;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
+public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private static final String DEFAULT_R_DIRECTORY = "R";
 
   private final Experiment<?, Result> experiment;
@@ -68,9 +69,9 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       System.out.println("Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
-      String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
+     String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
-      FileWriter os = new FileWriter(rFileName, false);
+     try(FileWriter os = new FileWriter(rFileName, false)){
       os.write("postscript(\"" +
                indicator.getName() +
               ".Boxplot.eps\", horizontal=FALSE, onefile=FALSE, height=8, width=12, pointsize=10)" +
@@ -116,8 +117,7 @@ public class GenerateBoxplotsWithR<Result> implements ExperimentComponent {
       for (ExperimentProblem<?> problem : experiment.getProblemList()) {
         os.write("qIndicator(indicator, \"" + problem.getTag() + "\")" + "\n");
       }
-
-      os.close();
+     }
     }
   }
 }

@@ -32,7 +32,7 @@ public class GLT6 extends AbstractDoubleProblem {
   public GLT6(int numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(3);
-    setName("GLT5");
+    setName("GLT6");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;

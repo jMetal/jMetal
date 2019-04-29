@@ -114,7 +114,6 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
         valueX2 = parent2.getVariableValue(i);
         if (randomGenerator.getRandomValue() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
-
             if (valueX1 < valueX2) {
               y1 = valueX1;
               y2 = valueX2;
@@ -164,8 +163,8 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
             offspring.get(1).setVariableValue(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariableValue(i, valueX1);
-          offspring.get(1).setVariableValue(i, valueX2);
+          offspring.get(0).setVariableValue(i, valueX2);
+          offspring.get(1).setVariableValue(i, valueX1);
         }
       }
     }

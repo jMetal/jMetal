@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Class representing problem MaF13
  */
+@SuppressWarnings("serial")
 public class MaF13 extends AbstractDoubleProblem {
 
   /**

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Class representing problem MaF04
  */
+@SuppressWarnings("serial")
 public class MaF04 extends AbstractDoubleProblem {
   public static double const4[];
 

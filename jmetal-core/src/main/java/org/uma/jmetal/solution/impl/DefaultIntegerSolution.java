@@ -4,6 +4,7 @@ import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Defines an implementation of an integer solution
@@ -64,4 +65,10 @@ public class DefaultIntegerSolution
       setVariableValue(i, value) ;
     }
   }
+  
+  
+	@Override
+	public Map<Object, Object> getAttributes() {
+		return attributes;
+	}
 }

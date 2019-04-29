@@ -103,8 +103,8 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
   /** Perform the mutation operation */
   private void doMutation(double probability, DoubleSolution solution) {
-    double rnd, delta1, delta2, mutPow, deltaq, tempDelta;
-    double y, yl, yu, val, xy;
+    double rnd, deltaq, tempDelta;
+    double y, yl, yu;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.nextDouble() <= probability) {

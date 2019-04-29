@@ -15,6 +15,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**
    * Constructor
@@ -22,7 +23,7 @@ public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   public SteadyStateNSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
                            CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
                            SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, SolutionListEvaluator<S> evaluator) {
-    super(problem, maxEvaluations, populationSize, crossoverOperator, mutationOperator,
+    super(problem, maxEvaluations, populationSize,100, 100, crossoverOperator, mutationOperator,
         selectionOperator, dominanceComparator, evaluator);
   }
 

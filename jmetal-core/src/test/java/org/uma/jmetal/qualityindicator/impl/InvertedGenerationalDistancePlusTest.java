@@ -9,8 +9,8 @@ import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.PointSolution;
 
 import java.io.FileNotFoundException;
 
@@ -62,8 +62,8 @@ public class InvertedGenerationalDistancePlusTest {
     Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setDimensionValue(0, 4.0);
-    point1.setDimensionValue(1, 10.0);
+    point1.setValue(0, 4.0);
+    point1.setValue(1, 10.0);
 
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
@@ -90,12 +90,12 @@ public class InvertedGenerationalDistancePlusTest {
       points[i] = new ArrayPoint(numberOfDimensions) ;
     }
 
-    points[0].setDimensionValue(0, 0.1);
-    points[0].setDimensionValue(1, 0.7);
-    points[1].setDimensionValue(0, 0.2);
-    points[1].setDimensionValue(1, 0.3);
-    points[2].setDimensionValue(0, 0.6);
-    points[2].setDimensionValue(1, 0.2);
+    points[0].setValue(0, 0.1);
+    points[0].setValue(1, 0.7);
+    points[1].setValue(0, 0.2);
+    points[1].setValue(1, 0.3);
+    points[2].setValue(0, 0.6);
+    points[2].setValue(1, 0.2);
 
     paretoFront.setPoint(0, points[0]);
     paretoFront.setPoint(1, points[1]);
@@ -106,12 +106,12 @@ public class InvertedGenerationalDistancePlusTest {
       points[i] = new ArrayPoint(numberOfDimensions) ;
     }
 
-    points[0].setDimensionValue(0, 0.2);
-    points[0].setDimensionValue(1, 0.5);
-    points[1].setDimensionValue(0, 0.3);
-    points[1].setDimensionValue(1, 0.4);
-    points[2].setDimensionValue(0, 0.4);
-    points[2].setDimensionValue(1, 0.3);
+    points[0].setValue(0, 0.2);
+    points[0].setValue(1, 0.5);
+    points[1].setValue(0, 0.3);
+    points[1].setValue(1, 0.4);
+    points[2].setValue(0, 0.4);
+    points[2].setValue(1, 0.3);
 
     frontApproximation.setPoint(0, points[0]);
     frontApproximation.setPoint(1, points[1]);
@@ -140,12 +140,12 @@ public class InvertedGenerationalDistancePlusTest {
       points[i] = new ArrayPoint(numberOfDimensions) ;
     }
 
-    points[0].setDimensionValue(0, 0.1);
-    points[0].setDimensionValue(1, 0.7);
-    points[1].setDimensionValue(0, 0.2);
-    points[1].setDimensionValue(1, 0.3);
-    points[2].setDimensionValue(0, 0.6);
-    points[2].setDimensionValue(1, 0.2);
+    points[0].setValue(0, 0.1);
+    points[0].setValue(1, 0.7);
+    points[1].setValue(0, 0.2);
+    points[1].setValue(1, 0.3);
+    points[2].setValue(0, 0.6);
+    points[2].setValue(1, 0.2);
 
     paretoFront.setPoint(0, points[0]);
     paretoFront.setPoint(1, points[1]);
@@ -156,12 +156,12 @@ public class InvertedGenerationalDistancePlusTest {
       points[i] = new ArrayPoint(numberOfDimensions) ;
     }
 
-    points[0].setDimensionValue(0, 0.3);
-    points[0].setDimensionValue(1, 0.7);
-    points[1].setDimensionValue(0, 0.5);
-    points[1].setDimensionValue(1, 0.6);
-    points[2].setDimensionValue(0, 0.7);
-    points[2].setDimensionValue(1, 0.4);
+    points[0].setValue(0, 0.3);
+    points[0].setValue(1, 0.7);
+    points[1].setValue(0, 0.5);
+    points[1].setValue(1, 0.6);
+    points[2].setValue(0, 0.7);
+    points[2].setValue(1, 0.4);
 
     frontApproximation.setPoint(0, points[0]);
     frontApproximation.setPoint(1, points[1]);

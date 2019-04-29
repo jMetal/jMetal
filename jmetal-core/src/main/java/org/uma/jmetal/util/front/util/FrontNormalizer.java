@@ -91,14 +91,14 @@ public class FrontNormalizer {
   private Front getNormalizedFront(Front front, double[] maximumValues, double[] minimumValues) {
    if (front.getNumberOfPoints() == 0) {
       throw new JMetalException("The front is empty") ;
-    } else if (front.getPoint(0).getNumberOfDimensions() != maximumValues.length) {
+    } else if (front.getPoint(0).getDimension() != maximumValues.length) {
       throw new JMetalException("The length of the point dimensions ("
-          + front.getPoint(0).getNumberOfDimensions() + ") "
+          + front.getPoint(0).getDimension() + ") "
           + "is different from the length of the maximum array (" + maximumValues.length+")") ;
     }
 
     Front normalizedFront = new ArrayFront(front) ;
-    int numberOfPointDimensions = front.getPoint(0).getNumberOfDimensions() ;
+    int numberOfPointDimensions = front.getPoint(0).getDimension() ;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfPointDimensions; j++) {
@@ -107,7 +107,7 @@ public class FrontNormalizer {
               + "are the same: " + maximumValues[j]);
         }
 
-        normalizedFront.getPoint(i).setDimensionValue(j, (front.getPoint(i).getDimensionValue(j)
+        normalizedFront.getPoint(i).setValue(j, (front.getPoint(i).getValue(j)
             - minimumValues[j]) / (maximumValues[j] - minimumValues[j]));
       }
     }

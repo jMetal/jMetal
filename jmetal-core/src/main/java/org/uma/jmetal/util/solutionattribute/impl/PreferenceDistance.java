@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S> {
     private  List<Double> interestPoint;
 
@@ -99,7 +100,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
     public List<S> epsilonClean(List<S> solutionList){
         List<S> preference = new ArrayList<>();
-        List<S> temporalList = new LinkedList();
+        List<S> temporalList = new LinkedList<>();
         temporalList.addAll(solutionList);
         int numerOfObjectives = solutionList.get(0).getNumberOfObjectives();
 

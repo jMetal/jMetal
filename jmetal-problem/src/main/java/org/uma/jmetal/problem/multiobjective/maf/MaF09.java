@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Class representing problem MaF05
  */
+@SuppressWarnings("serial")
 public class MaF09 extends AbstractDoubleProblem {
 
   public static int maxinter9;

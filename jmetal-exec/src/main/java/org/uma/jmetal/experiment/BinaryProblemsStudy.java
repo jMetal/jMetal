@@ -117,9 +117,9 @@ public class BinaryProblemsStudy {
             problemList.get(i).getProblem(),
             new SinglePointCrossover(1.0),
             new BitFlipMutation(
-                1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)))
+                1.0 / ((BinaryProblem) problemList.get(i).getProblem()).getNumberOfBits(0)),
+                100)
             .setMaxEvaluations(25000)
-            .setPopulationSize(100)
             .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
