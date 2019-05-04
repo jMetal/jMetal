@@ -23,6 +23,7 @@ public class DefaultDoubleBinarySolution
     extends AbstractGenericSolution<Object, DoubleBinaryProblem<?>>
     implements DoubleBinarySolution {
   private int numberOfDoubleVariables ;
+  private final int numberOfBits;
   private final IndexBounder<Number> bounder;
 
   /** Constructor */
@@ -30,12 +31,14 @@ public class DefaultDoubleBinarySolution
     super(problem, variableInitializer(problem, JMetalRandom.getInstance())) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
+    this.numberOfBits = problem.getNumberOfBits();
     this.bounder = problem;
   }
 
   /** Copy constructor */
   public DefaultDoubleBinarySolution(DefaultDoubleBinarySolution solution) {
     super(solution.problem, solution) ;
+    this.numberOfBits = solution.numberOfBits;
     this.bounder = solution.bounder;
   }
   
@@ -64,7 +67,7 @@ public class DefaultDoubleBinarySolution
 
   @Override
   public int getNumberOfBits() {
-    return problem.getNumberOfBits();
+    return numberOfBits;
   }
 
   @Override

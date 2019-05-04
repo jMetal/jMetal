@@ -22,7 +22,7 @@ public class DefaultDoubleSolution
     super(problem) ;
     this.bounder = problem;
 
-    initializeDoubleVariables(JMetalRandom.getInstance());
+    initializeDoubleVariables(problem.getNumberOfVariables(), JMetalRandom.getInstance());
   }
 
   /** Copy constructor */
@@ -51,8 +51,8 @@ public class DefaultDoubleSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeDoubleVariables(JMetalRandom randomGenerator) {
-    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
+  private void initializeDoubleVariables(int numberOfVariables, JMetalRandom randomGenerator) {
+    for (int i = 0 ; i < numberOfVariables; i++) {
       Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
       setVariableValue(i, value) ;
     }

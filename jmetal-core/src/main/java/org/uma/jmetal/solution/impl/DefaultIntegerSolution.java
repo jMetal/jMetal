@@ -22,7 +22,7 @@ public class DefaultIntegerSolution
     super(problem) ;
     this.bounder = problem;
 
-    initializeIntegerVariables(JMetalRandom.getInstance());
+    initializeIntegerVariables(problem.getNumberOfVariables(), JMetalRandom.getInstance());
   }
 
   /** Copy constructor */
@@ -51,8 +51,8 @@ public class DefaultIntegerSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeIntegerVariables(JMetalRandom randomGenerator) {
-    for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
+  private void initializeIntegerVariables(int numberOfVariables, JMetalRandom randomGenerator) {
+    for (int i = 0 ; i < numberOfVariables; i++) {
       Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
       setVariableValue(i, value) ;
     }
