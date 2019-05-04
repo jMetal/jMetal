@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.IntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
+import org.uma.jmetal.util.IndexBounder;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.function.Function;
@@ -18,6 +19,7 @@ public class DefaultIntegerDoubleSolution
 
   private int numberOfIntegerVariables ;
   private int numberOfDoubleVariables ;
+  private final IndexBounder<Number> bounder;
 
   /** Constructor */
   public DefaultIntegerDoubleSolution(IntegerDoubleProblem<?> problem) {
@@ -25,16 +27,18 @@ public class DefaultIntegerDoubleSolution
 
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
+    this.bounder = problem;
   }
 
   /** Copy constructor */
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
     super(solution.problem, solution) ;
+    this.bounder = solution.bounder;
   }
 
   @Override
   public Number getUpperBound(int index) {
-    return problem.getUpperBound(index);
+    return bounder.getUpperBound(index);
   }
 
   @Override
@@ -49,7 +53,7 @@ public class DefaultIntegerDoubleSolution
 
   @Override
   public Number getLowerBound(int index) {
-    return problem.getLowerBound(index) ;
+    return bounder.getLowerBound(index) ;
   }
 
   @Override

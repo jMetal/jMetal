@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.IndexBounder;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -14,9 +15,12 @@ public class DefaultIntegerSolution
     extends AbstractGenericSolution<Integer, IntegerProblem>
     implements IntegerSolution {
 
+  private final IndexBounder<Integer> bounder;
+
   /** Constructor */
   public DefaultIntegerSolution(IntegerProblem problem) {
     super(problem) ;
+    this.bounder = problem;
 
     initializeIntegerVariables(JMetalRandom.getInstance());
   }
@@ -24,16 +28,17 @@ public class DefaultIntegerSolution
   /** Copy constructor */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
     super(solution.problem, solution) ;
+    this.bounder = solution.bounder;
   }
 
   @Override
   public Integer getUpperBound(int index) {
-    return problem.getUpperBound(index);
+    return bounder.getUpperBound(index);
   }
 
   @Override
   public Integer getLowerBound(int index) {
-    return problem.getLowerBound(index) ;
+    return bounder.getLowerBound(index) ;
   }
 
   @Override

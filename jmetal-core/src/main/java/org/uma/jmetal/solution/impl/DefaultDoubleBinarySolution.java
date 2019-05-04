@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.DoubleBinaryProblem;
 import org.uma.jmetal.solution.DoubleBinarySolution;
+import org.uma.jmetal.util.IndexBounder;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.BitSet;
@@ -22,17 +23,20 @@ public class DefaultDoubleBinarySolution
     extends AbstractGenericSolution<Object, DoubleBinaryProblem<?>>
     implements DoubleBinarySolution {
   private int numberOfDoubleVariables ;
+  private final IndexBounder<Number> bounder;
 
   /** Constructor */
   public DefaultDoubleBinarySolution(DoubleBinaryProblem<?> problem) {
     super(problem, variableInitializer(problem, JMetalRandom.getInstance())) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
+    this.bounder = problem;
   }
 
   /** Copy constructor */
   public DefaultDoubleBinarySolution(DefaultDoubleBinarySolution solution) {
     super(solution.problem, solution) ;
+    this.bounder = solution.bounder;
   }
   
   private static Function<Integer, Object> variableInitializer(DoubleBinaryProblem<?> problem,
@@ -55,7 +59,7 @@ public class DefaultDoubleBinarySolution
 
   @Override
   public Double getUpperBound(int index) {
-    return (Double)problem.getUpperBound(index);
+    return (Double)bounder.getUpperBound(index);
   }
 
   @Override
@@ -65,7 +69,7 @@ public class DefaultDoubleBinarySolution
 
   @Override
   public Double getLowerBound(int index) {
-    return (Double)problem.getLowerBound(index) ;
+    return (Double)bounder.getLowerBound(index) ;
   }
 
   @Override
