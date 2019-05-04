@@ -1,5 +1,7 @@
 package org.uma.jmetal.problem;
 
+import org.uma.jmetal.util.IndexBounder;
+
 /**
  * A {@link BoundedProblem} is a {@link Problem} for which solution boundaries
  * exist. Boundaries restrict each variable to be within an interval. This
@@ -12,12 +14,13 @@ package org.uma.jmetal.problem;
  * @param <S>
  *          Type of {@link Problem} solutions
  */
-public interface BoundedProblem<T extends Number, S> extends Problem<S> {
+public interface BoundedProblem<T extends Number, S> extends Problem<S>, IndexBounder<T> {
   /**
    * @param index
    *          index of the variable
    * @return lower bound of the variable
    */
+  @Override
   public T getLowerBound(int index);
 
   /**
@@ -25,5 +28,6 @@ public interface BoundedProblem<T extends Number, S> extends Problem<S> {
    *          index of the variable
    * @return upper bound of the variable
    */
+  @Override
   public T getUpperBound(int index);
 }
