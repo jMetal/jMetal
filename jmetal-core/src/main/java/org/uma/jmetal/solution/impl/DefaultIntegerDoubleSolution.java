@@ -4,8 +4,6 @@ import org.uma.jmetal.problem.IntegerDoubleProblem;
 import org.uma.jmetal.solution.IntegerDoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -76,9 +74,4 @@ public class DefaultIntegerDoubleSolution
       }
     };
   }
-  
-	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
 }

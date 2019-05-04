@@ -102,6 +102,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   public Object getAttribute(Object id) {
     return attributes.get(id) ;
   }
+  
+  @Override
+  public Map<Object, Object> getAttributes() {
+    return attributes;
+  }
 
   @Override
   public void setObjective(int index, double value) {

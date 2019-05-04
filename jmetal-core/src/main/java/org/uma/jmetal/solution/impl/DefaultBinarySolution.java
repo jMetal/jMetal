@@ -6,7 +6,6 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Defines an implementation of a binary solution
@@ -84,9 +83,4 @@ public class DefaultBinarySolution
       setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i), randomGenerator));
     }
   }
-
-	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
 }

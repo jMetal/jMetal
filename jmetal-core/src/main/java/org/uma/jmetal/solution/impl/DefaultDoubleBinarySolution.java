@@ -5,7 +5,6 @@ import org.uma.jmetal.solution.DoubleBinarySolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.BitSet;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -91,9 +90,4 @@ public class DefaultDoubleBinarySolution
     }
     return bitSet ;
   }
-  
-  	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
 }

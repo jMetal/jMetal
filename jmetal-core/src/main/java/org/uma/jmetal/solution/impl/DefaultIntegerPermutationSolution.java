@@ -5,7 +5,6 @@ import org.uma.jmetal.solution.PermutationSolution;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -48,9 +47,4 @@ public class DefaultIntegerPermutationSolution
   public DefaultIntegerPermutationSolution copy() {
     return new DefaultIntegerPermutationSolution(this);
   }
-  
-	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
 }
