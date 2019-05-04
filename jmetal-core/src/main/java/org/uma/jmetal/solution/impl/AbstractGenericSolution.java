@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * Abstract class representing a generic solution
@@ -24,9 +25,19 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   protected final JMetalRandom randomGenerator ;
 
   /**
-   * Constructor
+   * Create a new {@link AbstractGenericSolution} with the given data.
+   * 
+   * @param problem
+   *          {@link Problem} to rely on
+   * @param variableProvider
+   *          variable values
+   * @param objectiveProvider
+   *          objective values
+   * @param attributes
+   *          attributes
    */
-  protected AbstractGenericSolution(P problem) {
+  public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider, Function<Integer, Double> objectiveProvider, Map<Object, Object> attributes
+      ) {
     this.problem = problem ;
     attributes = new HashMap<>() ;
     randomGenerator = JMetalRandom.getInstance() ;
@@ -34,10 +45,45 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     objectives = new double[problem.getNumberOfObjectives()] ;
     variables = new ArrayList<>(problem.getNumberOfVariables()) ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      variables.add(i, null) ;
+      variables.add(i, variableProvider.apply(i)) ;
     }
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      objectives[i] = objectiveProvider.apply(i) ;
+    }
+    this.attributes = attributes;
   }
 
+  /**
+   * Create a new {@link AbstractGenericSolution} with zero objectives and no
+   * attribute.
+   * 
+   * @param problem
+   *          {@link Problem} to rely on
+   * @param variableProvider
+   *          variable values
+   */
+  public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider) {
+    this(problem, variableProvider, i -> 0.0, Collections.emptyMap());
+  }
+
+  /**
+   * Create a new {@link AbstractGenericSolution} with <code>null</code>
+   * variables, zero objectives and no attribute.
+   * 
+   * @param problem
+   *          {@link Problem} to rely on
+   */
+  public AbstractGenericSolution(P problem) {
+    this(problem, i -> null) ;
+  }
+
+  /**
+   * Copy constructor
+   */
+  public AbstractGenericSolution(P problem, Solution<T> solution) {
+    this(problem, solution::getVariableValue, solution::getObjective, new HashMap<>(solution.getAttributes()));
+  }
+  
   @Override
   public double[] getObjectives() {
     return objectives ;
@@ -88,6 +134,16 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
     return objectives.length;
   }
 
+  /**
+   * @deprecated This method is automatically called by
+   *             {@link #AbstractGenericSolution(Problem)} and
+   *             {@link #AbstractGenericSolution(Problem, Function)}. If you don't
+   *             need it, it means you aim for non-zero objectives, in which case
+   *             you should rely on
+   *             {@link #AbstractGenericSolution(Problem, Function, Function)} or
+   *             {@link #AbstractGenericSolution(Problem, Solution)} instead.
+   */
+  @Deprecated
   protected void initializeObjectiveValues() {
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       objectives[i] = 0.0 ;

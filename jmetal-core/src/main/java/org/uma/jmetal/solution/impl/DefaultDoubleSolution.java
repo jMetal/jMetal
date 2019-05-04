@@ -22,22 +22,11 @@ public class DefaultDoubleSolution
     super(problem) ;
 
     initializeDoubleVariables(JMetalRandom.getInstance());
-    initializeObjectiveValues();
   }
 
   /** Copy constructor */
   public DefaultDoubleSolution(DefaultDoubleSolution solution) {
-    super(solution.problem) ;
-
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, solution.getVariableValue(i));
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
-    }
-
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
+    super(solution.problem, solution) ;
   }
 
   @Override

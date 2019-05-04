@@ -5,8 +5,8 @@ import org.uma.jmetal.solution.DoubleBinarySolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.BitSet;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Description:
@@ -26,50 +26,27 @@ public class DefaultDoubleBinarySolution
 
   /** Constructor */
   public DefaultDoubleBinarySolution(DoubleBinaryProblem<?> problem) {
-    super(problem) ;
+    super(problem, variableInitializer(problem, JMetalRandom.getInstance())) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
-
-    initializeDoubleVariables(JMetalRandom.getInstance());
-    initializeBitSet(JMetalRandom.getInstance()) ;
-    initializeObjectiveValues();
   }
 
   /** Copy constructor */
   public DefaultDoubleBinarySolution(DefaultDoubleBinarySolution solution) {
-    super(solution.problem) ;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
-    }
-
-    copyDoubleVariables(solution);
-    copyBitSet(solution);
-
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
+    super(solution.problem, solution) ;
   }
-
-  private void initializeDoubleVariables(JMetalRandom randomGenerator) {
-    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
-      Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
-      //variables.add(value) ;
-      setVariableValue(i, value);
-    }
-  }
-
-  private void initializeBitSet(JMetalRandom randomGenerator) {
-    BitSet bitset = createNewBitSet(problem.getNumberOfBits(), randomGenerator) ;
-    setVariableValue(numberOfDoubleVariables, bitset);
-  }
-
-  private void copyDoubleVariables(DefaultDoubleBinarySolution solution) {
-    for (int i = 0 ; i < numberOfDoubleVariables; i++) {
-      setVariableValue(i, solution.getVariableValue(i));
-    }
-  }
-
-  private void copyBitSet(DefaultDoubleBinarySolution solution) {
-    BitSet bitset = (BitSet)solution.getVariableValue(solution.getNumberOfVariables()-1) ;
-    setVariableValue(numberOfDoubleVariables, bitset);
+  
+  private static Function<Integer, Object> variableInitializer(DoubleBinaryProblem<?> problem,
+      JMetalRandom randomGenerator) {
+    return i -> {
+      if (i < problem.getNumberOfDoubleVariables()) {
+        Double lowerBound = (Double) problem.getLowerBound(i);
+        Double upperBound = (Double) problem.getUpperBound(i);
+        return randomGenerator.nextDouble(lowerBound, upperBound);
+      } else {
+        return createNewBitSet(problem.getNumberOfBits(), randomGenerator);
+      }
+    };
   }
 
   @Override
@@ -102,7 +79,7 @@ public class DefaultDoubleBinarySolution
     return getVariableValue(index).toString() ;
   }
 
-  private BitSet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
+  private static BitSet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
     BitSet bitSet = new BitSet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {

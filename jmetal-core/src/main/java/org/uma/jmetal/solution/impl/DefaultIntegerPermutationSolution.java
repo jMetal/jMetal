@@ -4,9 +4,9 @@ import org.uma.jmetal.problem.PermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Defines an implementation of solution composed of a permuation of integers
@@ -20,8 +20,10 @@ public class DefaultIntegerPermutationSolution
 
   /** Constructor */
   public DefaultIntegerPermutationSolution(PermutationProblem<?> problem) {
-    super(problem) ;
+    super(problem, variableInitializer(problem)) ;
+  }
 
+  private static Function<Integer, Integer> variableInitializer(PermutationProblem<?> problem) {
     List<Integer> randomSequence = new ArrayList<>(problem.getPermutationLength());
 
     for (int j = 0; j < problem.getPermutationLength(); j++) {
@@ -30,23 +32,12 @@ public class DefaultIntegerPermutationSolution
 
     java.util.Collections.shuffle(randomSequence);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, randomSequence.get(i)) ;
-    }
+    return randomSequence::get ;
   }
 
   /** Copy Constructor */
   public DefaultIntegerPermutationSolution(DefaultIntegerPermutationSolution solution) {
-    super(solution.problem) ;
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
-    }
-
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, solution.getVariableValue(i));
-    }
-    
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
+    super(solution.problem, solution) ;
   }
 
   @Override public String getVariableValueString(int index) {

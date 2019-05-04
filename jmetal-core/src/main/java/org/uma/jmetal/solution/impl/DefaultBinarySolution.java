@@ -23,22 +23,12 @@ public class DefaultBinarySolution
     super(problem) ;
 
     initializeBinaryVariables(JMetalRandom.getInstance());
-    initializeObjectiveValues();
   }
 
   /** Copy constructor */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.problem);
-
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, (BinarySet) solution.getVariableValue(i).clone());
-    }
-
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
-    }
-
-    attributes = new HashMap<Object, Object>(solution.attributes) ;
+    super(solution.problem, i -> (BinarySet) solution.getVariableValue(i).clone(), solution::getObjective,
+        new HashMap<>(solution.getAttributes()));
   }
 
   private static BinarySet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
