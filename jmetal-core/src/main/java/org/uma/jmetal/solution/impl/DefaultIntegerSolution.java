@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class DefaultIntegerSolution
   public DefaultIntegerSolution(IntegerProblem problem) {
     super(problem) ;
 
-    initializeIntegerVariables();
+    initializeIntegerVariables(JMetalRandom.getInstance());
     initializeObjectiveValues();
   }
 
@@ -59,7 +60,7 @@ public class DefaultIntegerSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeIntegerVariables() {
+  private void initializeIntegerVariables(JMetalRandom randomGenerator) {
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
       setVariableValue(i, value) ;

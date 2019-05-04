@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.DoubleBinaryProblem;
 import org.uma.jmetal.solution.DoubleBinarySolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.BitSet;
 import java.util.HashMap;
@@ -29,8 +30,8 @@ public class DefaultDoubleBinarySolution
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
 
-    initializeDoubleVariables();
-    initializeBitSet() ;
+    initializeDoubleVariables(JMetalRandom.getInstance());
+    initializeBitSet(JMetalRandom.getInstance()) ;
     initializeObjectiveValues();
   }
 
@@ -47,7 +48,7 @@ public class DefaultDoubleBinarySolution
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
-  private void initializeDoubleVariables() {
+  private void initializeDoubleVariables(JMetalRandom randomGenerator) {
     for (int i = 0 ; i < numberOfDoubleVariables; i++) {
       Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
       //variables.add(value) ;
@@ -55,8 +56,8 @@ public class DefaultDoubleBinarySolution
     }
   }
 
-  private void initializeBitSet() {
-    BitSet bitset = createNewBitSet(problem.getNumberOfBits()) ;
+  private void initializeBitSet(JMetalRandom randomGenerator) {
+    BitSet bitset = createNewBitSet(problem.getNumberOfBits(), randomGenerator) ;
     setVariableValue(numberOfDoubleVariables, bitset);
   }
 
@@ -101,7 +102,7 @@ public class DefaultDoubleBinarySolution
     return getVariableValue(index).toString() ;
   }
 
-  private BitSet createNewBitSet(int numberOfBits) {
+  private BitSet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
     BitSet bitSet = new BitSet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
