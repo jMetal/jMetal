@@ -63,7 +63,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
    *          variable values
    */
   public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider) {
-    this(problem, variableProvider, i -> 0.0, Collections.emptyMap());
+    this(problem, variableProvider, i -> 0.0, new HashMap<>());
   }
 
   /**
