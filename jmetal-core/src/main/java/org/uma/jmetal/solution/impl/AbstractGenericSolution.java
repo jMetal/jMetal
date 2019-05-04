@@ -17,6 +17,11 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   private double[] objectives;
   private List<T> variables;
   protected P problem ;
+  /**
+   * @deprecated Call {@link #getAttributes()} instead.
+   */
+  @Deprecated
+  // Deprecation should lead to make this field private.
   protected Map<Object, Object> attributes ;
   /**
    * @deprecated Call {@link JMetalRandom#getInstance()} if you need one.
