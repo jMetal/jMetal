@@ -39,7 +39,6 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider, Function<Integer, Double> objectiveProvider, Map<Object, Object> attributes
       ) {
     this.problem = problem ;
-    attributes = new HashMap<>() ;
     randomGenerator = JMetalRandom.getInstance() ;
 
     objectives = new double[problem.getNumberOfObjectives()] ;
