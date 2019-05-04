@@ -1,5 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.IndexBounder;
@@ -19,15 +22,13 @@ public class DefaultIntegerSolution
 
   /** Constructor */
   public DefaultIntegerSolution(IntegerProblem problem) {
-    super(problem) ;
+    super(variablesInitializer(problem, JMetalRandom.getInstance()), problem.getNumberOfObjectives()) ;
     this.bounder = problem;
-
-    initializeIntegerVariables(problem.getNumberOfVariables(), JMetalRandom.getInstance());
   }
 
   /** Copy constructor */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
-    super(solution.problem, solution) ;
+    super(solution) ;
     this.bounder = solution.bounder;
   }
 
@@ -51,10 +52,12 @@ public class DefaultIntegerSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeIntegerVariables(int numberOfVariables, JMetalRandom randomGenerator) {
+  private static List<Integer> variablesInitializer(IntegerProblem problem, JMetalRandom randomGenerator) {
+    int numberOfVariables = problem.getNumberOfVariables();
+    List<Integer> variables = new ArrayList<>(numberOfVariables);
     for (int i = 0 ; i < numberOfVariables; i++) {
-      Integer value = randomGenerator.nextInt(getLowerBound(i), getUpperBound(i));
-      setVariableValue(i, value) ;
+      variables.add(randomGenerator.nextInt(problem.getLowerBound(i), problem.getUpperBound(i))) ;
     }
+    return variables;
   }
 }

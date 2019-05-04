@@ -1,5 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.IndexBounder;
@@ -19,15 +22,13 @@ public class DefaultDoubleSolution
 
   /** Constructor */
   public DefaultDoubleSolution(DoubleProblem problem) {
-    super(problem) ;
+    super(variablesInitializer(problem, JMetalRandom.getInstance()), problem.getNumberOfObjectives()) ;
     this.bounder = problem;
-
-    initializeDoubleVariables(problem.getNumberOfVariables(), JMetalRandom.getInstance());
   }
 
   /** Copy constructor */
   public DefaultDoubleSolution(DefaultDoubleSolution solution) {
-    super(solution.problem, solution) ;
+    super(solution) ;
     this.bounder = solution.bounder;
   }
 
@@ -51,10 +52,12 @@ public class DefaultDoubleSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeDoubleVariables(int numberOfVariables, JMetalRandom randomGenerator) {
-    for (int i = 0 ; i < numberOfVariables; i++) {
-      Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
-      setVariableValue(i, value) ;
+  private static List<Double> variablesInitializer(DoubleProblem problem, JMetalRandom randomGenerator) {
+    int numberOfVariables = problem.getNumberOfVariables();
+    List<Double> variables = new ArrayList<>(numberOfVariables);
+    for (int i = 0; i < numberOfVariables; i++) {
+      variables.add(randomGenerator.nextDouble(problem.getLowerBound(i), problem.getUpperBound(i)));
     }
+    return variables;
   }
 }

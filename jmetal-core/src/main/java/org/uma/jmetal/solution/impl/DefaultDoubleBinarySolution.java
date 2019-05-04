@@ -5,8 +5,9 @@ import org.uma.jmetal.solution.DoubleBinarySolution;
 import org.uma.jmetal.util.IndexBounder;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.function.Function;
+import java.util.List;
 
 /**
  * Description:
@@ -28,7 +29,7 @@ public class DefaultDoubleBinarySolution
 
   /** Constructor */
   public DefaultDoubleBinarySolution(DoubleBinaryProblem<?> problem) {
-    super(problem, variableInitializer(problem, JMetalRandom.getInstance())) ;
+    super(variablesInitializer(problem, JMetalRandom.getInstance()), problem.getNumberOfObjectives()) ;
 
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
     this.numberOfBits = problem.getNumberOfBits();
@@ -37,22 +38,21 @@ public class DefaultDoubleBinarySolution
 
   /** Copy constructor */
   public DefaultDoubleBinarySolution(DefaultDoubleBinarySolution solution) {
-    super(solution.problem, solution) ;
+    super(solution) ;
     this.numberOfBits = solution.numberOfBits;
     this.bounder = solution.bounder;
   }
   
-  private static Function<Integer, Object> variableInitializer(DoubleBinaryProblem<?> problem,
+  private static List<Object> variablesInitializer(DoubleBinaryProblem<?> problem,
       JMetalRandom randomGenerator) {
-    return i -> {
-      if (i < problem.getNumberOfDoubleVariables()) {
-        Double lowerBound = (Double) problem.getLowerBound(i);
-        Double upperBound = (Double) problem.getUpperBound(i);
-        return randomGenerator.nextDouble(lowerBound, upperBound);
-      } else {
-        return createNewBitSet(problem.getNumberOfBits(), randomGenerator);
-      }
-    };
+    List<Object> variables = new ArrayList<>(problem.getNumberOfVariables());
+    for (int i = 0; i < problem.getNumberOfDoubleVariables(); i++) {
+      Double lowerBound = (Double) problem.getLowerBound(i);
+      Double upperBound = (Double) problem.getUpperBound(i);
+      variables.add(randomGenerator.nextDouble(lowerBound, upperBound));
+    }
+    variables.add(createNewBitSet(problem.getNumberOfBits(), randomGenerator));
+    return variables;
   }
 
   @Override

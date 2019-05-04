@@ -5,7 +5,8 @@ import org.uma.jmetal.solution.IntegerDoubleSolution;
 import org.uma.jmetal.util.IndexBounder;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Defines an implementation of a class for solutions having integers and doubles
@@ -23,7 +24,7 @@ public class DefaultIntegerDoubleSolution
 
   /** Constructor */
   public DefaultIntegerDoubleSolution(IntegerDoubleProblem<?> problem) {
-    super(problem, variableInitializer(problem)) ;
+    super(variablesInitializer(problem, JMetalRandom.getInstance()), problem.getNumberOfObjectives()) ;
 
     numberOfIntegerVariables = problem.getNumberOfIntegerVariables() ;
     numberOfDoubleVariables = problem.getNumberOfDoubleVariables() ;
@@ -32,7 +33,7 @@ public class DefaultIntegerDoubleSolution
 
   /** Copy constructor */
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
-    super(solution.problem, solution) ;
+    super(solution) ;
     this.bounder = solution.bounder;
   }
 
@@ -66,16 +67,16 @@ public class DefaultIntegerDoubleSolution
     return getVariableValue(index).toString() ;
   }
   
-  private static Function<Integer, Number> variableInitializer(IntegerDoubleProblem<?> problem) {
-    return i -> {
-      Number lowerBound = problem.getLowerBound(i);
-      Number upperBound = problem.getUpperBound(i);
-      JMetalRandom randomGenerator = JMetalRandom.getInstance();
-      if (i < problem.getNumberOfIntegerVariables()) {
-        return randomGenerator.nextInt((Integer) lowerBound, (Integer) upperBound);
-      } else {
-        return randomGenerator.nextDouble((Double) lowerBound, (Double) upperBound);
-      }
-    };
+  private static List<Number> variablesInitializer(IntegerDoubleProblem<?> problem, JMetalRandom randomGenerator) {
+    int numberOfIntegerVariables = problem.getNumberOfIntegerVariables();
+    int numberOfDoubleVariables = problem.getNumberOfDoubleVariables();
+    List<Number> variables = new ArrayList<>(numberOfIntegerVariables+numberOfDoubleVariables);
+    for (int i = 0; i < numberOfIntegerVariables; i++) {
+      variables.add(randomGenerator.nextInt((Integer) problem.getLowerBound(i), (Integer) problem.getUpperBound(i)));
+    }
+    for (int i = 0; i < numberOfDoubleVariables; i++) {
+      variables.add(randomGenerator.nextDouble((Double) problem.getLowerBound(i), (Double) problem.getUpperBound(i)));
+    }
+    return variables;
   }
 }

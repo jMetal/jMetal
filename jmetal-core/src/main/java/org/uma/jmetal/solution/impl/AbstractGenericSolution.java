@@ -6,6 +6,8 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Abstract class representing a generic solution
@@ -16,6 +18,10 @@ import java.util.function.Function;
 public abstract class AbstractGenericSolution<T, P extends Problem<?>> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
+  /**
+   * @deprecated Store your own if you need one.
+   */
+  @Deprecated
   protected P problem ;
   /**
    * @deprecated Call {@link #getAttributes()} instead.
@@ -32,6 +38,52 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
   /**
    * Create a new {@link AbstractGenericSolution} with the given data.
    * 
+   * @param variables variables of the new {@link Solution}
+   * @param objectives objectives of the new {@link Solution}
+   * @param attributes attributes of the new {@link Solution}
+   */
+  public AbstractGenericSolution(List<T> variables, double[] objectives, Map<Object, Object> attributes
+      ) {
+    this.randomGenerator = JMetalRandom.getInstance() ;
+    this.objectives = objectives ;
+    this.variables = variables ;
+    this.attributes = attributes;
+  }
+
+  /**
+   * Create a new {@link AbstractGenericSolution} with zeros objectives and no
+   * attribute.
+   * 
+   * @param variables variables of the new {@link Solution}
+   * @param numberOfObjectives number of objectives of the new {@link Solution}
+   */
+  public AbstractGenericSolution(List<T> variables, int numberOfObjectives) {
+    this(variables, new double[numberOfObjectives], new HashMap<>());
+  }
+
+  /**
+   * Create a new {@link AbstractGenericSolution} with <code>null</code>
+   * variables, zeros objectives and no attribute.
+   * 
+   * @param numberOfVariables number of variables of the new {@link Solution}
+   * @param numberOfObjectives number of objectives of the new {@link Solution}
+   */
+  public AbstractGenericSolution(int numberOfVariables, int numberOfObjectives) {
+    this(new Vector<T>() {{setSize(numberOfVariables);}}, numberOfObjectives) ;
+  }
+
+  /**
+   * Copy constructor
+   */
+  public AbstractGenericSolution(Solution<T> solution) {
+    this(new ArrayList<>(solution.getVariables()),
+        Arrays.copyOf(solution.getObjectives(), solution.getObjectives().length),
+        new HashMap<>(solution.getAttributes()));
+  }
+  
+  /**
+   * Create a new {@link AbstractGenericSolution} with the given data.
+   * 
    * @param problem
    *          {@link Problem} to rely on
    * @param variableProvider
@@ -40,21 +92,17 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
    *          objective values
    * @param attributes
    *          attributes
+   * @deprecated Call {@link #AbstractGenericSolution(List, double[], Map)}
+   *             instead
    */
+  @Deprecated
   public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider, Function<Integer, Double> objectiveProvider, Map<Object, Object> attributes
       ) {
+    this(
+        IntStream.range(0, problem.getNumberOfVariables()).mapToObj(variableProvider::apply).collect(Collectors.toList()),
+        IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(objectiveProvider::apply).toArray(),
+        attributes);
     this.problem = problem ;
-    randomGenerator = JMetalRandom.getInstance() ;
-
-    objectives = new double[problem.getNumberOfObjectives()] ;
-    variables = new ArrayList<>(problem.getNumberOfVariables()) ;
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      variables.add(i, variableProvider.apply(i)) ;
-    }
-    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      objectives[i] = objectiveProvider.apply(i) ;
-    }
-    this.attributes = attributes;
   }
 
   /**
@@ -65,7 +113,9 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
    *          {@link Problem} to rely on
    * @param variableProvider
    *          variable values
+   * @deprecated Call {@link #AbstractGenericSolution(List, int)} instead
    */
+  @Deprecated
   public AbstractGenericSolution(P problem, Function<Integer, T> variableProvider) {
     this(problem, variableProvider, i -> 0.0, new HashMap<>());
   }
@@ -76,14 +126,19 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
    * 
    * @param problem
    *          {@link Problem} to rely on
+   * @deprecated Call {@link #AbstractGenericSolution(int, int)} instead
    */
+  @Deprecated
   public AbstractGenericSolution(P problem) {
     this(problem, i -> null) ;
   }
 
   /**
    * Copy constructor
+   * 
+   * @deprecated Call {@link #AbstractGenericSolution(Solution)} instead
    */
+  @Deprecated
   public AbstractGenericSolution(P problem, Solution<T> solution) {
     this(problem, solution::getVariableValue, solution::getObjective, new HashMap<>(solution.getAttributes()));
   }

@@ -5,7 +5,11 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Defines an implementation of a binary solution
@@ -19,14 +23,13 @@ public class DefaultBinarySolution
 
   /** Constructor */
   public DefaultBinarySolution(BinaryProblem problem) {
-    super(problem) ;
-
-    initializeBinaryVariables(JMetalRandom.getInstance());
+    super(variablesInitializer(problem, JMetalRandom.getInstance()), problem.getNumberOfObjectives()) ;
   }
 
   /** Copy constructor */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.problem, i -> (BinarySet) solution.getVariableValue(i).clone(), solution::getObjective,
+    super(solution.getVariables().stream().map(s -> (BinarySet) s.clone()).collect(Collectors.toList()),
+        Arrays.copyOf(solution.getObjectives(), solution.getObjectives().length),
         new HashMap<>(solution.getAttributes()));
   }
 
@@ -78,9 +81,12 @@ public class DefaultBinarySolution
     return result ;
   }
   
-  private void initializeBinaryVariables(JMetalRandom randomGenerator) {
-    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      setVariableValue(i, createNewBitSet(problem.getNumberOfBits(i), randomGenerator));
+  private static List<BinarySet> variablesInitializer(BinaryProblem problem, JMetalRandom randomGenerator) {
+    int numberOfVariables = problem.getNumberOfVariables();
+    List<BinarySet> variables = new ArrayList<>(numberOfVariables);
+    for (int i = 0; i < numberOfVariables; i++) {
+      variables.add(createNewBitSet(problem.getNumberOfBits(i), randomGenerator));
     }
+    return variables;
   }
 }
