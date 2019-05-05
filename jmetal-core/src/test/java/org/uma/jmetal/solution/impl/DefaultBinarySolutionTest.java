@@ -6,12 +6,24 @@ import org.junit.Test;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.SolutionTest;
+import org.uma.jmetal.util.binarySet.BinarySet;
 
 import static org.junit.Assert.assertEquals;
 
-public class DefaultBinarySolutionTest {
+public class DefaultBinarySolutionTest extends SolutionTest<BinarySet, DefaultBinarySolution> {
   private static final int NUMBER_OF_BITS_OF_MOCKED_BINARY_PROBLEM = 5 ;
   BinaryProblem problem ;
+  
+  @Override
+  public BinarySet createVariable() {
+    return ((DefaultBinarySolution) problem.createSolution()).getVariableValue(0);
+  }
+  
+  @Override
+  public DefaultBinarySolution createSolution() {
+    return (DefaultBinarySolution) problem.createSolution();
+  }
 
   @Before public void setUp(){
     problem = new MockBinaryProblem();

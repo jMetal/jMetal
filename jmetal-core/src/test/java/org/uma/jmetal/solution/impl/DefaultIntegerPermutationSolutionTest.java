@@ -3,6 +3,8 @@ package org.uma.jmetal.solution.impl;
 import org.junit.Test;
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.solution.SolutionTest;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +15,17 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DefaultIntegerPermutationSolutionTest {
+public class DefaultIntegerPermutationSolutionTest extends SolutionTest<Integer, PermutationSolution<Integer>> {
+  
+  @Override
+  public PermutationSolution<Integer> createSolution() {
+    return new MockIntegerPermutationProblem(20).createSolution();
+  }
+  
+  @Override
+  public Integer createVariable() {
+    return JMetalRandom.getInstance().nextInt(0, 100);
+  }
 
   @Test
   public void shouldConstructorCreateAValidSolution() {

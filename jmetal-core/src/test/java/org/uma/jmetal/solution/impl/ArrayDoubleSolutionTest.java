@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.SolutionTest;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,18 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ArrayDoubleSolutionTest {
+public class ArrayDoubleSolutionTest extends SolutionTest<Double, DoubleSolution> {
   private DoubleProblem problem ;
+  
+  @Override
+  public Double createVariable() {
+    return JMetalRandom.getInstance().nextDouble();
+  }
+  
+  @Override
+  public DoubleSolution createSolution() {
+    return problem.createSolution();
+  }
 
   @Before
   public void setup() {
