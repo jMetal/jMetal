@@ -39,7 +39,7 @@ public interface Solution<T> extends Serializable {
     }
     Iterator<T> iterator = variables.iterator();
     for (int index = 0; index < numberOfVariables; index++) {
-      setVariableValue(index++, iterator.next());
+      setVariableValue(index, iterator.next());
     }
   }
   void setVariableValue(int index, T value) ;
