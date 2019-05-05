@@ -16,6 +16,17 @@ public interface Solution<T> extends Serializable {
   void setObjective(int index, double value) ;
   double getObjective(int index) ;
   double[] getObjectives() ;
+  default void setObjectives(double[] objectives) {
+    Objects.requireNonNull(objectives, "no objectives provided");
+    int numberOfObjectives = getNumberOfObjectives();
+    if (objectives.length != numberOfObjectives) {
+      throw new IllegalArgumentException(
+          String.format("%d objectives expected, but %d received", numberOfObjectives, objectives.length));
+    }
+    for (int index = 0; index < numberOfObjectives; index++) {
+      setObjective(index, objectives[index]);
+    }
+  }
 
   T getVariableValue(int index) ;
   List<T> getVariables() ;
