@@ -318,8 +318,6 @@ public class AutoNSGAIIConfigurator {
             crossoverProbability,
             blxAlphaCrossoverAlphaValue,
             getRepairDoubleSolutionStrategy(crossoverRepairStrategy));
-      case DE:
-        return new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
       default:
         throw new RuntimeException(crossoverType + " is not a valid crossover operator");
     }

@@ -76,9 +76,10 @@ public class NSGAII {
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
+    int tournamentSize = 2 ;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
-            2, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            tournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
     /*
         MatingPoolSelection<DoubleSolution> selection =
