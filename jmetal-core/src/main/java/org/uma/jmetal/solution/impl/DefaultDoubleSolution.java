@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.impl;
 
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class DefaultDoubleSolution
   public DefaultDoubleSolution(DoubleProblem problem) {
     super(problem) ;
 
-    initializeDoubleVariables();
+    initializeDoubleVariables(JMetalRandom.getInstance());
     initializeObjectiveValues();
   }
 
@@ -59,7 +60,7 @@ public class DefaultDoubleSolution
     return getVariableValue(index).toString() ;
   }
   
-  private void initializeDoubleVariables() {
+  private void initializeDoubleVariables(JMetalRandom randomGenerator) {
     for (int i = 0 ; i < problem.getNumberOfVariables(); i++) {
       Double value = randomGenerator.nextDouble(getLowerBound(i), getUpperBound(i)) ;
       setVariableValue(i, value) ;
