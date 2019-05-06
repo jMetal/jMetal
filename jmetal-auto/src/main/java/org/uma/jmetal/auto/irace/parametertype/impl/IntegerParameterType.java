@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.irace.parametertype.impl;
 
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
-import org.uma.jmetal.auto.util.checking.Checker;
+import org.uma.jmetal.util.checking.Checker;
 
 /**
  * Irace parameter types
