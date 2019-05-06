@@ -82,6 +82,9 @@ public class GenerateIraceParameterFile {
     crossover.addSpecificParameter(new BLXAlphaCrossoverAlphaValueParameter());
     crossover.setParent(variation);
     crossover.setParentTag(VariationType.crossoverAndMutationVariation.name());
+    //crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
+    //crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
+    //crossover.addValue(CrossoverType.DE.toString());
 
     parameters.add(crossover);
 
