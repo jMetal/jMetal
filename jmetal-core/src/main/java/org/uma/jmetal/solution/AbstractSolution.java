@@ -87,6 +87,12 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     return objectives.length;
   }
 
+  protected void initializeObjectiveValues() {
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
+      objectives[i] = 0.0 ;
+    }
+  }
+
   @Override
   public String toString() {
     String result = "Variables: " ;

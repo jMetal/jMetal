@@ -26,7 +26,8 @@ public class DefaultBinarySolution
     super(bitsPerVariable.size(), numberOfObjectives) ;
     this.bitsPerVariable = bitsPerVariable ;
 
-    initializeBinaryVariables();
+    initializeBinaryVariables(JMetalRandom.getInstance());
+    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -46,11 +47,11 @@ public class DefaultBinarySolution
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
-  private BinarySet createNewBitSet(int numberOfBits) {
+  private static BinarySet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
     BinarySet bitSet = new BinarySet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
-      double rnd = JMetalRandom.getInstance().nextDouble() ;
+      double rnd = randomGenerator.nextDouble() ;
       if (rnd < 0.5) {
         bitSet.set(i);
       } else {
@@ -94,9 +95,9 @@ public class DefaultBinarySolution
     return result ;
   }
   
-  private void initializeBinaryVariables() {
+  private void initializeBinaryVariables(JMetalRandom randomGenerator) {
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, createNewBitSet(bitsPerVariable.get(i)));
+      setVariableValue(i, createNewBitSet(bitsPerVariable.get(i), randomGenerator));
     }
   }
 

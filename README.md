@@ -30,6 +30,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Algorithms
 ### Features
 ### Bugs
+* Fixed a bug in class `ComputeQualityIndicators`
 
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
