@@ -140,7 +140,7 @@ public abstract class AbstractGenericSolution<T, P extends Problem<?>> implement
    *             {@link #AbstractGenericSolution(Problem, Function)}. If you don't
    *             need it, it means you aim for non-zero objectives, in which case
    *             you should rely on
-   *             {@link #AbstractGenericSolution(Problem, Function, Function)} or
+   *             {@link #AbstractGenericSolution(Problem, Function, Function, Map)} or
    *             {@link #AbstractGenericSolution(Problem, Solution)} instead.
    */
   @Deprecated
