@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
@@ -14,7 +15,20 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractLocalSearch<S extends Solution<?>>  implements Algorithm<S>{
-  protected Problem<S> problem ;
+  private Problem<S> problem ;
+  public Problem<S> getProblem() {
+    return problem ;
+  }
+
+  private MutationOperator<S> mutationOperator ;
+
+  public MutationOperator<S> getMutationOperator() {
+    return mutationOperator;
+  }
+
+  public AbstractLocalSearch(Problem<S> problem) {
+    this.problem = problem ;
+  }
 
   protected S bestSolution ;
 

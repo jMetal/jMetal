@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.singleobjective.localsearch;
 
 import org.uma.jmetal.algorithm.impl.AbstractLocalSearch;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -11,6 +12,10 @@ public abstract class AbstractSingleObjectiveLocalSearch<S extends Solution<?>> 
   protected long initTime ;
   protected long currentComputingTime ;
   protected Comparator<S> comparator ;
+
+  public AbstractSingleObjectiveLocalSearch(Problem<S> problem) {
+    super(problem) ;
+  }
 
   @Override
   protected void initProgress() {
@@ -27,7 +32,7 @@ public abstract class AbstractSingleObjectiveLocalSearch<S extends Solution<?>> 
   @Override
   protected S improve(S solution) {
     S  mutatedSolution = (S) bestSolution.copy();
-    problem.evaluate(mutatedSolution);
+    getProblem().evaluate(mutatedSolution);
 
     int result = comparator.compare(bestSolution, mutatedSolution) ;
     if (result > 0) {
@@ -37,6 +42,7 @@ public abstract class AbstractSingleObjectiveLocalSearch<S extends Solution<?>> 
         bestSolution = mutatedSolution ;
       }
     }
+
     return bestSolution;
   }
 
