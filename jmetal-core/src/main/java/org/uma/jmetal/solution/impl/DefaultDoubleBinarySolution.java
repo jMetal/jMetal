@@ -18,7 +18,10 @@ import java.util.List;
  *  - the bitset is the last variable
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @deprecated Not used. For examples of multiple encodings, consider
+ *             {@link DefaultIntegerDoubleSolution} instead.
  */
+@Deprecated
 @SuppressWarnings("serial")
 public class DefaultDoubleBinarySolution
     extends AbstractGenericSolution<Object, DoubleBinaryProblem<?>>
