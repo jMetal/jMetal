@@ -1,7 +1,11 @@
 package org.uma.jmetal.auto.algorithm.nsgaiib;
 
+import static org.uma.jmetal.auto.algorithm.nsgaiib.NSGAII.Step.*;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -76,21 +80,81 @@ public class NSGAII<S extends Solution<?>> implements Algorithm<List<S>> {
 		return "Nondominated Sorting Genetic Algorithm version II";
 	}
 
+	/* XXX - Elements to make algorithm events observable */
+
+	public static enum Step {
+		INIT, SELECT, MATE, EVALUATE, REPLACE, DONE
+	}
+
+	public static interface Observer<S extends Solution<?>> {
+		default void updatePopulation(List<S> population) {
+		}
+
+		default void updateNumberOfEvaluations(int evaluations) {
+		}
+
+		default void createSolution(S solution) {
+		}
+
+		default void updateStep(Step step) {
+		}
+	}
+
+	private final Collection<Observer<S>> observers = new LinkedList<>();
+
+	public void registerObserver(Observer<S> observer) {
+		observers.add(observer);
+	}
+
+	public void unregisterObserver(Observer<S> observer) {
+		observers.remove(observer);
+	}
+
+	private void notifyPopulation(List<S> population) {
+		observers.forEach(observer -> observer.updatePopulation(population));
+	}
+
+	private void notifyEvaluations(int evaluations) {
+		observers.forEach(observer -> observer.updateNumberOfEvaluations(evaluations));
+	}
+
+	private void notifySolution(S solution) {
+		observers.forEach(observer -> observer.createSolution(solution));
+	}
+
+	private void notifyStep(Step step) {
+		observers.forEach(observer -> observer.updateStep(step));
+	}
+
+	/* XXX - Observable run() */
+
 	@Override
 	public void run() {
 		List<S> offspringPopulation;
 		List<S> matingPopulation;
 
+		notifyStep(INIT);
 		population = createInitialPopulation();
 		population = evaluatePopulation(population);
+		notifyPopulation(population);
+		population.forEach(solution -> notifySolution(solution));
 		evaluations = populationSize;
+		notifyEvaluations(evaluations);
 		while (evaluations < maxEvaluations) {
+			notifyStep(SELECT);
 			matingPopulation = selection(population);
+			notifyStep(MATE);
 			offspringPopulation = reproduction(matingPopulation);
+			notifyStep(EVALUATE);
 			offspringPopulation = evaluatePopulation(offspringPopulation);
+			offspringPopulation.forEach(solution -> notifySolution(solution));
+			notifyStep(REPLACE);
 			population = replacement(population, offspringPopulation);
+			notifyPopulation(population);
 			evaluations += offspringPopulationSize;
+			notifyEvaluations(evaluations);
 		}
+		notifyStep(DONE);
 	}
 
 	@Override
