@@ -4,17 +4,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
-import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class ABYSSTest {
     problem = new MockProblem();
     archive = new CrowdingDistanceArchive<>(10) ;
     mutation = new PolynomialMutation(1.0, 20.0) ;
-    localSearch = new ArchiveMutationLocalSearch<>(2, mutation, archive, problem) ;
+    localSearch = new BasicLocalSearch<>(2, mutation, new DominanceComparator<>(), problem) ;
   }
 
   @Test

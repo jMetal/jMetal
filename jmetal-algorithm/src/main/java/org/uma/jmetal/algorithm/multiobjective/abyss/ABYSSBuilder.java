@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -11,6 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmBuilder;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 
 /**
  *  @author Cristobal Barba
@@ -44,7 +45,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     this.mutationOperator = new PolynomialMutation(mutationProbability,distributionIndex);
     int improvementRounds= 1;
     this.archive =(CrowdingDistanceArchive<DoubleSolution>)archive;
-    this.improvementOperator = new ArchiveMutationLocalSearch<>(improvementRounds,mutationOperator,this.archive,problem);
+    this.improvementOperator = new BasicLocalSearch<>(improvementRounds,mutationOperator,new DominanceComparator<>(),problem);
   }
 
   public CrossoverOperator<DoubleSolution> getCrossoverOperator() {
@@ -60,7 +61,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     return improvementOperator;
   }
 
-  public ABYSSBuilder setImprovementOperator(ArchiveMutationLocalSearch<DoubleSolution> improvementOperator) {
+  public ABYSSBuilder setImprovementOperator(LocalSearchOperator<DoubleSolution> improvementOperator) {
     this.improvementOperator = improvementOperator;
     return  this;
   }

@@ -1,6 +1,6 @@
-package org.uma.jmetal.operator.impl.localsearch;
+package org.uma.jmetal.operator.localsearch.impl;
 
-import org.uma.jmetal.operator.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -28,8 +28,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
   private int numberOfImprovements;
 
   private RandomGenerator<Double> randomGenerator;
-
-  private int numberOfNonComparableSolutions;
 
   /**
    * Constructor. Creates a new local search object.
@@ -77,7 +75,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
   public S execute(S solution) {
     int best;
     evaluations = 0;
-    numberOfNonComparableSolutions = 0;
 
     int rounds = improvementRounds;
 
@@ -102,7 +99,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
       } else if (best == 1) {
         // Current solution is best
       } else {
-        numberOfNonComparableSolutions++;
 
         if (randomGenerator.getRandomValue() < 0.5) {
           solution = mutatedSolution;
@@ -116,7 +112,8 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
   /**
    * Returns the number of evaluations
    */
-  public int getEvaluations() {
+  @Override
+  public int getNumberOfEvaluations() {
     return evaluations;
   }
 
@@ -125,8 +122,4 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     return numberOfImprovements;
   }
 
-  @Override
-  public int getNumberOfNonComparableSolutions() {
-    return numberOfNonComparableSolutions;
-  }
 }

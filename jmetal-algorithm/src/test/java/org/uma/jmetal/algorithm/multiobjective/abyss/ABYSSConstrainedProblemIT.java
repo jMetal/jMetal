@@ -3,10 +3,10 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -17,6 +17,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class ABYSSConstrainedProblemIT {
 
     archive = new CrowdingDistanceArchive<>(100) ;
 
-    localSearchOperator = new ArchiveMutationLocalSearch<>(1, mutation, archive, problem) ;
+    localSearchOperator = new BasicLocalSearch<>(1, mutation, new DominanceComparator<>(), problem) ;
   }
 
   @Test
