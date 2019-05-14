@@ -2,8 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 
 import org.uma.jmetal.algorithm.impl.AbstractScatterSearch;
 import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
-import org.uma.jmetal.operator.LocalSearchOperator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -116,7 +116,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
   @Override public DoubleSolution improvement(DoubleSolution solution) {
     DoubleSolution improvedSolution = localSearch.execute(solution) ;
-    evaluations += localSearch.getEvaluations() ;
+    evaluations += localSearch.getNumberOfEvaluations() ;
 
     return improvedSolution ;
   }

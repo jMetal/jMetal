@@ -1,12 +1,17 @@
 package org.uma.jmetal.algorithm.impl;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -18,75 +23,57 @@ import java.util.List;
 @SuppressWarnings("serial")
 public abstract class DefaultLocalSearch<S extends Solution<?>> implements Algorithm<S> {
   private Problem<S> problem;
+  private int maxEvaluations;
+
   public Problem<S> getProblem() {
     return problem;
   }
 
   private MutationOperator<S> mutationOperator;
+
   public MutationOperator<S> getMutationOperator() {
     return mutationOperator;
   }
 
   private Comparator<S> comparator;
+
   public Comparator<S> getComparator() {
     return comparator;
   }
 
-  private int evaluations ;
+  private int evaluations;
+
   public int getEvaluations() {
-    return evaluations ;
+    return evaluations;
   }
 
   private S bestSolution;
 
-  private long startComputingTime ;
-  private long currentComputingTime ;
-
   public DefaultLocalSearch(
-      Problem<S> problem, S solutionToImprove, MutationOperator<S> mutationOperator, Comparator<S> comparator) {
+      int maxEvaluations,
+      Problem<S> problem,
+      MutationOperator<S> mutationOperator,
+      Comparator<S> comparator) {
     this.problem = problem;
     this.mutationOperator = mutationOperator;
-    this.comparator = comparator ;
-    this.bestSolution = solutionToImprove ;
+    this.comparator = comparator;
+    this.maxEvaluations = maxEvaluations;
   }
-
-
-  protected void initProgress() {
-    startComputingTime = System.currentTimeMillis() ;
-    evaluations = 0 ;
-  }
-
-  protected void updateProgress() {
-    evaluations ++ ;
-    currentComputingTime = System.currentTimeMillis() - startComputingTime ;
-  }
-
-  public long getCurrentComputingTime() {
-    return currentComputingTime ;
-  }
-
-  protected abstract boolean isStoppingConditionReached();
 
   @Override
   public S getResult() {
-    return bestSolution ;
+    return bestSolution;
   }
 
   @Override
   public void run() {
-    initProgress();
-    while (!isStoppingConditionReached()) {
-      S mutatedSolution = mutationOperator.execute((S)bestSolution.copy());
-      problem.evaluate(mutatedSolution);
-      int result = comparator.compare(bestSolution, mutatedSolution) ;
-      if (result == 1) {
-        bestSolution = mutatedSolution ;
-      } else if (result == 0) {
-          if (JMetalRandom.getInstance().nextDouble() < 0.5) {
-            bestSolution = mutatedSolution ;
-        }
-      }
-      updateProgress();
-    }
+    bestSolution = problem.createSolution();
+    problem.evaluate(bestSolution);
+
+    LocalSearchOperator<S> localSearch =
+        new BasicLocalSearch<S>(
+            maxEvaluations, mutationOperator, new DominanceComparator<S>(), problem);
+
+    bestSolution = localSearch.execute(bestSolution);
   }
 }
