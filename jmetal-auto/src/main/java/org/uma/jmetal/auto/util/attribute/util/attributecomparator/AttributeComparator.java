@@ -1,6 +1,5 @@
 package org.uma.jmetal.auto.util.attribute.util.attributecomparator;
 
-import org.uma.jmetal.auto.util.checking.Checker;
 import org.uma.jmetal.solution.Solution;
 
 import java.io.Serializable;

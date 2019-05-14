@@ -2,7 +2,6 @@ package org.uma.jmetal.auto.irace.parametertype.impl;
 
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,13 +48,13 @@ public class OrdinalParameterType extends ParameterType {
     return range.toString();
   }
 
-  public List<ParameterType> getAssociatedParameters(){
-    return associatedParameters ;
+  public List<ParameterType> getSpecificParameters(){
+    return specificParameters;
   }
 
-  public void addAssociatedParameter(ParameterType parameter) {
+  public void addSpecificParameter(ParameterType parameter) {
     parameter.setParent(this);
-    associatedParameters.add(parameter) ;
+    specificParameters.add(parameter) ;
     addValue(parameter.getParentTag());
   }
 }

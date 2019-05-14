@@ -285,8 +285,8 @@ public class AutoNSGAIIConfigurator {
     switch (variationType) {
       case crossoverAndMutationVariation:
         return new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
-      case DE:
-        return new DifferentialCrossoverVariation(offspringPopulationSize, (DifferentialEvolutionCrossover)crossover, mutation);
+      case differentialEvolutionVariation:
+        return new DifferentialCrossoverVariation(offspringPopulationSize, new DifferentialEvolutionCrossover(cr, f, "rand/1/bin"), mutation);
       default:
         throw new RuntimeException(variationType + " is not a valid variation component");
     }
@@ -299,7 +299,7 @@ public class AutoNSGAIIConfigurator {
       case tournament:
         return new NaryTournamentMatingPoolSelection<>(
             selectionTournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
-      case DE:
+      case differentialEvolution:
         return new DifferentialEvolutionMatingPoolSelection(variation.getMatingPoolSize()) ;
       default:
         throw new RuntimeException(selectionType + " is not a valid selection operator");
@@ -318,8 +318,6 @@ public class AutoNSGAIIConfigurator {
             crossoverProbability,
             blxAlphaCrossoverAlphaValue,
             getRepairDoubleSolutionStrategy(crossoverRepairStrategy));
-      case DE:
-        return new DifferentialEvolutionCrossover(cr, f, "rand/1/bin") ;
       default:
         throw new RuntimeException(crossoverType + " is not a valid crossover operator");
     }

@@ -18,6 +18,7 @@ import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariati
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
@@ -28,10 +29,13 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
+import org.uma.jmetal.problem.multiobjective.lz09.LZ09F3;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
+import org.uma.jmetal.util.AlgorithmDefaultOutputData;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -41,13 +45,13 @@ import java.util.Arrays;
 
 public class NSGAIIWithDE {
   public static void main(String[] args) {
-    DoubleProblem problem = new LZ09F2();
-    String referenceParetoFront = "/pareto_fronts/LZ09_F2.pf";
+    DoubleProblem problem = new LZ09F3();
+    String referenceParetoFront = "/pareto_fronts/LZ09_F3.pf";
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
     int archiveMaximumSize = 100 ;
-    int maxNumberOfEvaluations = 150000;
+    int maxNumberOfEvaluations = 175000;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
@@ -58,7 +62,7 @@ public class NSGAIIWithDE {
 
     Variation<DoubleSolution> variation =
         new DifferentialCrossoverVariation(offspringPopulationSize, new DifferentialEvolutionCrossover(1.0, 0.5, "rand/1/bin"),
-                new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0)) ;
+                new PolynomialMutation(1.0/problem.getNumberOfVariables(), 200.0)) ;
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
@@ -80,24 +84,23 @@ public class NSGAIIWithDE {
             replacement);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(5000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
-    //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
-    //    new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
+    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    //    new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
+        new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
+    //algorithm.getObservable().register(runTimeChartObserver);
     //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
-    //evaluation.getObservable().register(boundedArchiveObserver);
+    evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();
 
-    /*
     algorithm.updatePopulation(boundedArchiveObserver.getArchive().getSolutionList());
     AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
         algorithm.getResult(), algorithm.getTotalComputingTime());
-    */
+
     new SolutionListOutput(algorithm.getResult())
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))

@@ -10,7 +10,6 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.*;
 import org.uma.jmetal.problem.multiobjective.wfg.*;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.Spread;
@@ -21,7 +20,10 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
+import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import picocli.CommandLine;
@@ -37,7 +39,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class AutoNSGAIIStudy {
+public class AutoNSGAIIStudy3Problems {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
@@ -73,6 +75,7 @@ public class AutoNSGAIIStudy {
     problemList.add(new ExperimentProblem<>(new DTLZ6()).changeReferenceFrontTo("DTLZ6.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ7()).changeReferenceFrontTo("DTLZ7.2D.pf"));
 */
+
     problemList.add(new ExperimentProblem<>(new DTLZ1()).changeReferenceFrontTo("DTLZ1.2D.pf"));
     problemList.add(new ExperimentProblem<>(new DTLZ3()).changeReferenceFrontTo("DTLZ3.2D.pf"));
     problemList.add(new ExperimentProblem<>(new WFG8()).changeReferenceFrontTo("WFG8.2D.pf"));
@@ -105,8 +108,9 @@ public class AutoNSGAIIStudy {
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(5).setColumns(5).run();
+    //new GenerateFriedmanTestTables<>(experiment).run();
+    //new GenerateBoxplotsWithR<>(experiment).setRows(4).setColumns(4).run();
+
   }
 
   /**
@@ -150,6 +154,19 @@ public class AutoNSGAIIStudy {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
+        Algorithm<List<DoubleSolution>> algorithm =
+            new NSGAIIBuilder<>(
+                problemList.get(i).getProblem(),
+                new SBXCrossover(1.0, 5),
+                new PolynomialMutation(
+                    1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0),
+                100)
+                .setMaxEvaluations(25000)
+                .build();
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "AutoNSGAII", problemList.get(i), run));
+      }
+
+      for (int i = 0; i < problemList.size(); i++) {
         String problemName = problemList.get(i).getProblem().getClass().toString();
         problemName = problemName.substring(6);
         /*
@@ -190,7 +207,7 @@ public class AutoNSGAIIStudy {
         */
         String argumentString =  "--problemName " + problemName +
                 " --referenceFront " +  problemList.get(i).getReferenceFront() +
-                /*
+            /*
                 " --algorithmResult externalArchive --populationSizeWithArchive 20 --offspringPopulationSize 200 " +
                 "--variation crossoverAndMutationVariation --createInitialSolutions scatterSearch " +
                 "--crossover BLX_ALPHA --crossoverProbability 0.9874 " +
@@ -199,13 +216,13 @@ public class AutoNSGAIIStudy {
                 "--mutationRepairStrategy random --polynomialMutationDistributionIndex 158.0489 " +
                 "--selection tournament --selectionTournamentSize 9  " ;
                 */
-                " --algorithmResult externalArchive --populationSizeWithArchive 20 --offspringPopulationSize 5 " +
-                "--variation crossoverAndMutationVariation --createInitialSolutions latinHypercubeSampling " +
-                "--crossover SBX --crossoverProbability 0.9791 " +
-                "--crossoverRepairStrategy round --sbxCrossoverDistributionIndex 5.0587 " +
-                "--mutation uniform --mutationProbability 0.0463 " +
-                "--mutationRepairStrategy random --uniformMutationPerturbation 0.2307 " +
-                "--selection tournament --selectionTournamentSize 4  " ;
+            " --algorithmResult externalArchive --populationSizeWithArchive 20 --offspringPopulationSize 5 " +
+            "--variation crossoverAndMutationVariation --createInitialSolutions latinHypercubeSampling " +
+            "--crossover SBX --crossoverProbability 0.9791 " +
+            "--crossoverRepairStrategy round --sbxCrossoverDistributionIndex 5.0587 " +
+            "--mutation uniform --mutationProbability 0.0463 " +
+            "--mutationRepairStrategy random --uniformMutationPerturbation 0.2307 " +
+            "--selection tournament --selectionTournamentSize 4  " ;
                 /*
                 " --algorithmResult population --populationSize 100 " +
                 "--crossover BLX_ALPHA --crossoverProbability 0.964 " +

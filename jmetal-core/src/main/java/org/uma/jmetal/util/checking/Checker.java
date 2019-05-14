@@ -35,6 +35,12 @@ public class Checker {
     }
   }
 
+  public static void isTrue(boolean expression, String message) {
+    if (!expression) {
+      throw new RuntimeException(message);
+    }
+  }
+
   public static void that(boolean expression, String message) {
     if (!expression) {
         throw new InvalidConditionException(message) ;

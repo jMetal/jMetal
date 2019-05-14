@@ -16,7 +16,7 @@ public abstract class ParameterType {
   protected Boolean isGlobalParameter ;
 
   protected List<ParameterType> globalParameters = new ArrayList<>();
-  protected List<ParameterType> associatedParameters = new ArrayList<>();
+  protected List<ParameterType> specificParameters = new ArrayList<>();
 
   public ParameterType(String name, String label) {
     this.name = name;
@@ -54,7 +54,7 @@ public abstract class ParameterType {
   private String getParentTags(ParameterType parameter) {
     String result = "" ;
 
-    for (ParameterType param : parameter.getAssociatedParameters()) {
+    for (ParameterType param : parameter.getSpecificParameters()) {
       result += "\"" + param.getParentTag() + "\"" + "," ;
     }
 
@@ -90,9 +90,9 @@ public abstract class ParameterType {
     globalParameters.add(parameter);
   }
 
-  public List<ParameterType> getAssociatedParameters() {
-    return associatedParameters;
+  public List<ParameterType> getSpecificParameters() {
+    return specificParameters;
   }
 
-  public abstract void addAssociatedParameter(ParameterType parameter);
+  public abstract void addSpecificParameter(ParameterType parameter);
 }
