@@ -18,44 +18,66 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceComparatorV2;
+import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ajnebro on 11/6/15.
- */
+/** Created by ajnebro on 11/6/15. */
 public class ABYSSConstrainedProblemIT {
   Algorithm<List<DoubleSolution>> algorithm;
-  DoubleProblem problem ;
+  DoubleProblem problem;
   CrossoverOperator<DoubleSolution> crossover;
   MutationOperator<DoubleSolution> mutation;
-  LocalSearchOperator<DoubleSolution> localSearchOperator ;
-  Archive<DoubleSolution> archive ;
+  LocalSearchOperator<DoubleSolution> localSearchOperator;
+  Archive<DoubleSolution> archive;
 
   @Before
   public void setup() {
-    problem = new Tanaka() ;
+    problem = new Tanaka();
 
-    double crossoverProbability = 1.0 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    double crossoverProbability = 1.0;
+    double crossoverDistributionIndex = 20.0;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    archive = new CrowdingDistanceArchive<>(100) ;
+    archive = new CrowdingDistanceArchive<>(100);
 
-    localSearchOperator = new BasicLocalSearch<>(1, mutation, new DominanceComparator<>(), problem) ;
+    Comparator<DoubleSolution> comparator =
+        new MultiComparator<>(
+            Arrays.asList(
+                new OverallConstraintViolationComparator<>(), new DominanceComparatorV2<>()));
+
+    localSearchOperator = new BasicLocalSearch<>(1, mutation, comparator, problem);
   }
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingAConstrainedProblem() {
-    problem = new Tanaka() ;
-    algorithm = new ABYSSBuilder(problem, archive)
-        .build();
+    int populationSize = 10;
+    int numberOfSubRanges = 4;
+    int referenceSet1Size = 4;
+    int referenceSet2Size = 4;
+
+    algorithm =
+        new ABYSS(
+            problem,
+            25000,
+            populationSize,
+            referenceSet1Size,
+            referenceSet2Size,
+            100,
+            archive,
+            localSearchOperator,
+            crossover,
+            numberOfSubRanges);
 
     new AlgorithmRunner.Executor(algorithm).execute();
 
@@ -65,25 +87,42 @@ public class ABYSSConstrainedProblemIT {
     Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings, should
     return more than 98 solutions
     */
-    assertTrue(population.size() >= 98) ;
+    assertTrue(population.size() >= 98);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMinimumValue() throws Exception {
-    algorithm = new ABYSSBuilder(problem, archive)
-        .build();
+    int populationSize = 10;
+    int numberOfSubRanges = 4;
+    int referenceSet1Size = 4;
+    int referenceSet2Size = 4;
+
+    algorithm =
+        new ABYSS(
+            problem,
+            25000,
+            populationSize,
+            referenceSet1Size,
+            referenceSet2Size,
+            100,
+            archive,
+            localSearchOperator,
+            crossover,
+            numberOfSubRanges);
 
     new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT1.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
+        new PISAHypervolume<>("/referenceFronts/ZDT1.pf");
 
-    // Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings, should
+    // Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings,
+    // should
     // return find a front with a hypervolume value higher than 0.22
 
-    double hv = hypervolume.evaluate(population) ;
+    double hv = hypervolume.evaluate(population);
 
-    assertTrue(hv > 0.22) ;
+    assertTrue(hv > 0.22);
   }
 }
