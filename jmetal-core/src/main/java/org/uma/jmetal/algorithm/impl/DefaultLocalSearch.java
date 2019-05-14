@@ -21,7 +21,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public abstract class DefaultLocalSearch<S extends Solution<?>> implements Algorithm<S> {
+public class DefaultLocalSearch<S extends Solution<?>> implements Algorithm<S> {
   private Problem<S> problem;
   private int maxEvaluations;
 
@@ -39,12 +39,6 @@ public abstract class DefaultLocalSearch<S extends Solution<?>> implements Algor
 
   public Comparator<S> getComparator() {
     return comparator;
-  }
-
-  private int evaluations;
-
-  public int getEvaluations() {
-    return evaluations;
   }
 
   private S bestSolution;
@@ -75,5 +69,15 @@ public abstract class DefaultLocalSearch<S extends Solution<?>> implements Algor
             maxEvaluations, mutationOperator, new DominanceComparator<S>(), problem);
 
     bestSolution = localSearch.execute(bestSolution);
+  }
+
+  @Override
+  public String getName() {
+    return "Default local search";
+  }
+
+  @Override
+  public String getDescription() {
+    return "Default local search";
   }
 }

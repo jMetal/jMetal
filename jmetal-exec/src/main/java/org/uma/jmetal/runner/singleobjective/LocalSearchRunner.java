@@ -1,7 +1,6 @@
 package org.uma.jmetal.runner.singleobjective;
 
-import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.operator.localsearch.BasicLocalSearch;
+import org.uma.jmetal.algorithm.impl.DefaultLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
@@ -31,15 +30,15 @@ public class LocalSearchRunner {
 
     Comparator<BinarySolution> comparator = new DominanceComparator<>(0) ;
 
-    LocalSearchOperator<BinarySolution> localSearch = new BasicLocalSearch<>(
+    DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<BinarySolution>(
             improvementRounds,
+            problem,
             mutationOperator,
-            comparator,
-            problem) ;
+            comparator) ;
 
-    BinarySolution solution = problem.createSolution() ;
+    localSearch.run();
 
-    BinarySolution newSolution = localSearch.execute(solution) ;
+    BinarySolution newSolution = localSearch.getResult() ;
 
     JMetalLogger.logger.info("Fitness: " + newSolution.getObjective(0)) ;
     JMetalLogger.logger.info("Solution: " + newSolution.getVariableValueString(0)) ;
