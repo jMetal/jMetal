@@ -3,7 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
@@ -166,13 +165,12 @@ public class ABYSSTest {
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
 
-    MarkAttribute marked = new MarkAttribute();
     for (DoubleSolution solution: abyss.referenceSet1) {
-      marked.setAttribute(solution, true);
+      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
     }
 
     for (DoubleSolution solution: abyss.referenceSet2) {
-      marked.setAttribute(solution, true);
+      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
     }
     List<List<DoubleSolution>> list = abyss.subsetGeneration();
 
