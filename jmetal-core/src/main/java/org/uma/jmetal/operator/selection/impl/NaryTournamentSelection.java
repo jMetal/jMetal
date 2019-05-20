@@ -2,9 +2,8 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
@@ -36,9 +35,9 @@ public class NaryTournamentSelection<S extends Solution<?>>
   @Override
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    Checker.isNotNull(solutionList);
-    Checker.collectionIsNotEmpty(solutionList);
-    Checker.that(
+    Check.isNotNull(solutionList);
+    Check.collectionIsNotEmpty(solutionList);
+    Check.that(
         solutionList.size() >= numberOfSolutionsToBeReturned,
         "The solution list size ("
             + solutionList.size()

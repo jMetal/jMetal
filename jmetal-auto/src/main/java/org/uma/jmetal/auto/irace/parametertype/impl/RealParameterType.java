@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.irace.parametertype.impl;
 
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 
 /**
  * Irace parameter types
@@ -19,7 +19,7 @@ public class RealParameterType extends ParameterType {
   public RealParameterType(String name, String label, double lowerBound, double upperBound) {
     super(name, label) ;
 
-    Checker.isTrue(lowerBound < upperBound, "The range is invalid");
+    Check.isTrue(lowerBound < upperBound, "The range is invalid");
     this.range = "(" + lowerBound + ", " + upperBound +")";
   }
 

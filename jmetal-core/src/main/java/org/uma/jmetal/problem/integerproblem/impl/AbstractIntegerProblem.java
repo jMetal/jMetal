@@ -6,7 +6,7 @@ import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,9 +33,9 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
   }
 
   public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
-    Checker.isNotNull(lowerBounds);
-    Checker.isNotNull(upperBounds);
-    Checker.that(
+    Check.isNotNull(lowerBounds);
+    Check.isNotNull(upperBounds);
+    Check.that(
             lowerBounds.size() == upperBounds.size(),
             "The size of the lower bound list is not equal to the size of the upper bound list");
 

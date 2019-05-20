@@ -5,7 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -51,7 +51,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
   /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
-    Checker.isValidProbability(crossoverProbability);
+    Check.isValidProbability(crossoverProbability);
     if (distributionIndex < 0) {
       throw new JMetalException("Distribution index is negative: " + distributionIndex);
     }

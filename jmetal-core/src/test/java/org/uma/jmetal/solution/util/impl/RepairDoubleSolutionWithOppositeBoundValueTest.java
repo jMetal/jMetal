@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,7 +17,7 @@ public class RepairDoubleSolutionWithOppositeBoundValueTest {
     repair = new RepairDoubleSolutionWithOppositeBoundValue() ;
   }
 
-  @Test(expected = JMetalException.class)
+  @Test(expected = InvalidConditionException.class)
   public void shouldRepairRaiseAnExceptionIfTheBoundsAreIncorrect() {
     repair.repairSolutionVariableValue(0.0, 1.0, -1.0) ;
   }

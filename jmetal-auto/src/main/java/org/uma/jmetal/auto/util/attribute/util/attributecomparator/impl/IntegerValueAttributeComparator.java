@@ -2,7 +2,7 @@ package org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl;
 
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 
 /**
  * Compares two population according to an attribute value, which must be a double number. The higher
@@ -31,8 +31,8 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Checker.isNotNull(solution1);
-    Checker.isNotNull(solution2);
+    Check.isNotNull(solution1);
+    Check.isNotNull(solution2);
 
     int result;
 

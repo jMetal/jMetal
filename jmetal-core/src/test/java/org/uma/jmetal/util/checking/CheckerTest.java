@@ -11,31 +11,31 @@ public class CheckerTest {
 
   @Test (expected = NullParameterException.class)
   public void shouldIsNotNullRaiseAnExceptionIfTheObjectIsNull() {
-    Checker.isNotNull(null);
+    Check.isNotNull(null);
   }
 
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsNegative() {
-    Checker.isValidProbability(-1.0);
+    Check.isValidProbability(-1.0);
   }
 
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsHigherThanOne() {
-    Checker.isValidProbability(1.1);
+    Check.isValidProbability(1.1);
   }
 
   @Test (expected = ValueOutOfRangeException.class)
   public void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsLowerThanTheLowerBound() {
-    Checker.valueIsInRange(2, 3, 5);
+    Check.valueIsInRange(2, 3, 5);
   }
 
   @Test (expected = ValueOutOfRangeException.class)
   public void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsHigherThanTheUpperBound() {
-    Checker.valueIsInRange(6.2, 3.1, 5.5);
+    Check.valueIsInRange(6.2, 3.1, 5.5);
   }
 
   @Test (expected = InvalidConditionException.class)
   public void shouldThatRaiseAnExceptionIfTheExpressionIsFalse() {
-    Checker.that(false, "");
+    Check.that(false, "");
   }
 }

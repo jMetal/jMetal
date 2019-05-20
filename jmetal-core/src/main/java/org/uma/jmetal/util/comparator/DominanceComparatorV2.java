@@ -1,10 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.VectorUtil;
-import org.uma.jmetal.util.checking.Checker;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.checking.Check;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -27,9 +25,9 @@ public class DominanceComparatorV2<S extends Solution<?>> implements Comparator<
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Checker.isNotNull(solution1);
-    Checker.isNotNull(solution2);
-    Checker.isTrue(
+    Check.isNotNull(solution1);
+    Check.isNotNull(solution2);
+    Check.isTrue(
         solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
         "Cannot compare because solution1 has "
             + solution1.getNumberOfObjectives()

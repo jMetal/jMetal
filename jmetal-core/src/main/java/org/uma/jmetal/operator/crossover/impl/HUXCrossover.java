@@ -4,7 +4,7 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.binarySet.BinarySet;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -32,7 +32,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
   /** Constructor */
   public HUXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
-    Checker.isValidProbability(crossoverProbability) ;
+    Check.isValidProbability(crossoverProbability) ;
 
     this.crossoverProbability = crossoverProbability;
     this.randomGenerator = randomGenerator;
@@ -51,7 +51,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
   /** Execute() method */
   public List<BinarySolution> execute(List<BinarySolution> parents) {
-    Checker.that(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
+    Check.that(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
 
     return doCrossover(crossoverProbability, parents.get(0), parents.get(1));
   }

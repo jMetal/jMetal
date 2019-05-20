@@ -249,18 +249,6 @@ public class ABYSSTest {
       setVariableBounds(lowerLimit, upperLimit);
     }
 
-    @Override public int getNumberOfVariables() {
-      return 3;
-    }
-
-    @Override public int getNumberOfObjectives() {
-      return 2;
-    }
-
-    @Override public int getNumberOfConstraints() {
-      return 0;
-    }
-
     @Override public String getName() {
       return null;
     }
