@@ -2,7 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
 
 /**
  * This class implements a simple random search algorithm.

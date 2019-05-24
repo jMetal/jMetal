@@ -8,7 +8,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
 
 import java.util.List;
 

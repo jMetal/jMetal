@@ -7,7 +7,6 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class GDE3TestIT {
             .setPopulationSize(100)
             .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -50,7 +49,7 @@ public class GDE3TestIT {
             .setPopulationSize(100)
             .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 

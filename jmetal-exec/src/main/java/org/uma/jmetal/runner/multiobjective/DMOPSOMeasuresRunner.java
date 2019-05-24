@@ -6,7 +6,7 @@ import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;

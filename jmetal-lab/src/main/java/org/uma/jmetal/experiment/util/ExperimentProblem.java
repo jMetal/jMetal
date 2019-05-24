@@ -17,7 +17,6 @@ public class ExperimentProblem<S extends Solution<?>> {
     this.problem = problem;
     this.tag = tag;
     this.referenceFront = this.problem.getName() + ".pf";
-
   }
 
   public ExperimentProblem(Problem<S> problem) {

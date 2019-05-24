@@ -1,4 +1,4 @@
-package org.uma.jmetal.util;
+package org.uma.jmetal.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
 
@@ -8,5 +8,5 @@ import org.uma.jmetal.algorithm.Algorithm;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface AlgorithmBuilder<A extends Algorithm<?>> {
-  public A build() ;
+  A build() ;
 }

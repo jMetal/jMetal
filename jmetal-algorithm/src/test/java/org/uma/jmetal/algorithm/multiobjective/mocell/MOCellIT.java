@@ -12,7 +12,6 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class MOCellIT {
         .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -61,7 +60,7 @@ public class MOCellIT {
         .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 

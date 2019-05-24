@@ -45,8 +45,7 @@ public class ConstraintMOEADIT {
         .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory(
-            "/Users/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/MOEAD_Weights")
+        .setDataDirectory("MOEAD_Weights")
         .build();
 
     algorithm.run() ;

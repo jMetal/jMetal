@@ -9,10 +9,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -43,7 +41,7 @@ public class NSGAIIIT {
     int populationSize = 100 ;
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute() ;
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
@@ -71,7 +69,7 @@ public class NSGAIIIT {
     int populationSize  = 100 ;
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute() ;
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult() ;
 

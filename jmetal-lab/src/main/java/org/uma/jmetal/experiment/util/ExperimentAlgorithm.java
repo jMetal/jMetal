@@ -19,7 +19,6 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
   private Algorithm<Result> algorithm;
   private String algorithmTag;
   private String problemTag;
-  private String referenceParetoFront;
   private int runId ;
 
   /**
@@ -33,7 +32,6 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
     this.algorithm = algorithm;
     this.algorithmTag = algorithmTag;
     this.problemTag = problem.getTag();
-    this.referenceParetoFront = problem.getReferenceFront();
     this.runId = runId ;
   }
 
@@ -93,8 +91,6 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
   public String getProblemTag() {
     return problemTag;
   }
-
-  public String getReferenceParetoFront() { return referenceParetoFront; }
 
   public int getRunId() { return this.runId;}
 }

@@ -1,6 +1,7 @@
-package org.uma.jmetal.util;
+package org.uma.jmetal.runner;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.util.JMetalException;
 
 /**
  * Class for running algorithms in a concurrent thread

@@ -9,6 +9,7 @@ import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
+import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;

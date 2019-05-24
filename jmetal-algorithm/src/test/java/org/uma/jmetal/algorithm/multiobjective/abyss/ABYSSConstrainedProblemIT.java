@@ -14,7 +14,6 @@ import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -57,7 +56,7 @@ public class ABYSSConstrainedProblemIT {
     algorithm = new ABYSSBuilder(problem, archive)
         .build();
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -73,7 +72,7 @@ public class ABYSSConstrainedProblemIT {
     algorithm = new ABYSSBuilder(problem, archive)
         .build();
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 

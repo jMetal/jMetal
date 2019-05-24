@@ -11,7 +11,6 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.AlgorithmRunner;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class GenerationalGeneticAlgorithmTestIT {
             .setSelectionOperator(selectionOperator)
             .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute() ;
+    algorithm.run();
 
     BinarySolution solution = algorithm.getResult() ;
     assertEquals(NUMBER_OF_BITS, -1 * (int)solution.getObjective(0)) ;
