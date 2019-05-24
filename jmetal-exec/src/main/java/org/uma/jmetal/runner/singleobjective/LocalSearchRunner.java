@@ -1,7 +1,7 @@
 package org.uma.jmetal.runner.singleobjective;
 
-import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.operator.localsearch.BasicLocalSearch;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;

@@ -4,13 +4,17 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.GenerateWilcoxonTestTablesWithR;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.*;
 import org.uma.jmetal.problem.multiobjective.wfg.*;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.Spread;
@@ -19,11 +23,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+
 import picocli.CommandLine;
 
 import java.io.IOException;
@@ -96,13 +96,13 @@ public class AutoNSGAIIStudy {
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(org.uma.jmetal.experiment).run();
 
-    //new ComputeQualityIndicators<>(experiment).run();
-    //new GenerateLatexTablesWithStatistics(experiment).run();
+    //new ComputeQualityIndicators<>(org.uma.jmetal.experiment).run();
+    //new GenerateLatexTablesWithStatistics(org.uma.jmetal.experiment).run();
       new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    //new GenerateFriedmanTestTables<>(experiment).run();
-    //new GenerateBoxplotsWithR<>(experiment).setRows(4).setColumns(4).run();
+    //new GenerateFriedmanTestTables<>(org.uma.jmetal.experiment).run();
+    //new GenerateBoxplotsWithR<>(org.uma.jmetal.experiment).setRows(4).setColumns(4).run();
 
   }
 

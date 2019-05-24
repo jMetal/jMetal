@@ -21,11 +21,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.*;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,15 +35,15 @@ import java.util.List;
 /**
  * Example of experimental study based on solving the unconstrained problems included in jMetal.
  * <p>
- * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that, given a problem named
  * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
  * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
  * indicate the name of those files.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
- * The steps to carry out the experiment are:
- * 1. Configure the experiment
+ * The steps to carry out the org.uma.jmetal.experiment are:
+ * 1. Configure the org.uma.jmetal.experiment
  * 2. Execute the algorithms
  * 3. Generate the reference Pareto fronts
  * 4. Compute the quality indicators

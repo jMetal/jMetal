@@ -59,6 +59,10 @@
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-lab</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-algorithm</artifactId>
         </dependency>
         <dependency>

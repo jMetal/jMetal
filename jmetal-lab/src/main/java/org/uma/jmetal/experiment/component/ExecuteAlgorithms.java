@@ -1,10 +1,10 @@
-package org.uma.jmetal.util.experiment.component;
+package org.uma.jmetal.experiment.component;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentComponent;
 
 import java.io.File;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * This class executes the algorithms the have been configured with a instance of class
  * {@link Experiment}. Java 8 parallel streams are used to run the algorithms in parallel.
  * <p>
- * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per experiment,
+ * The result of the execution is a pair of files FUNrunId.tsv and VARrunID.tsv per org.uma.jmetal.experiment,
  * which are stored in the directory
  * {@link Experiment #getExperimentBaseDirectory()}/algorithmName/problemName.
  *
@@ -74,7 +74,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>> im
     boolean result;
     result = new File(experiment.getExperimentBaseDirectory()).mkdirs();
     if (!result) {
-      throw new JMetalException("Error creating experiment directory: " +
+      throw new JMetalException("Error creating org.uma.jmetal.experiment directory: " +
               experiment.getExperimentBaseDirectory());
     }
   }

@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.experiment.component;
+package org.uma.jmetal.experiment.component;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -7,10 +7,10 @@ import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentComponent;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -32,8 +32,8 @@ import java.util.List;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
- * This class computes the {@link QualityIndicator}s of an experiment. Once the algorithms of an
- * experiment have been executed through running an instance of class {@link ExecuteAlgorithms},
+ * This class computes the {@link QualityIndicator}s of an org.uma.jmetal.experiment. Once the algorithms of an
+ * org.uma.jmetal.experiment have been executed through running an instance of class {@link ExecuteAlgorithms},
  * the list of indicators in obtained from the {@link ExperimentComponent #getIndicatorsList()} method.
  * Then, for every combination algorithm + problem, the indicators are applied to all the FUN files and
  * the resulting values are store in a file called as {@link QualityIndicator #getName()}, which is located
@@ -232,7 +232,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
   }
 
   private void writeSummaryFile(Experiment<S, Result> experiment) {
-    JMetalLogger.logger.info("Writing experiment summary file");
+    JMetalLogger.logger.info("Writing org.uma.jmetal.experiment summary file");
     String headerOfCSVFile = "Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue";
     String csvFileName = this.experiment.getExperimentBaseDirectory() + "/QualityIndicatorSummary.csv";
     resetFile(csvFileName);

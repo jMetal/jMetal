@@ -137,8 +137,9 @@ jmetal.iml
 jmetal-core/jmetal-core.iml
 jmetal-algorithm/*.iml
 jmetal-problem/*.iml
-jmetal-auto/*.iml
 jmetal-exec/*.iml
+jmetal-lab/*.iml
+jmetal-auto/*.iml
 FUN.*
 VAR.*
 coverage

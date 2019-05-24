@@ -1,10 +1,10 @@
-package org.uma.jmetal.util.experiment.component;
+package org.uma.jmetal.experiment.component;
 
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentComponent;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.File;
 import java.io.FileWriter;

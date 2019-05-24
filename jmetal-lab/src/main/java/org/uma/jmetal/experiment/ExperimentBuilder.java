@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.experiment;
+package org.uma.jmetal.experiment;
 
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.util.ArrayList;
 import java.util.List;

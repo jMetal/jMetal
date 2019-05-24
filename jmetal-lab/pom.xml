@@ -7,11 +7,11 @@
         <artifactId>jmetal</artifactId>
         <version>5.8-SNAPSHOT</version>
     </parent>
-    <artifactId>jmetal-auto</artifactId>
+    <artifactId>jmetal-lab</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>jMetal algorithms (single- and multi-objective)</description>
+    <description>Runners classes</description>
     <url>http://jmetal.sourceforge.net</url>
 
     <build>
@@ -34,12 +34,6 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>org.uma.jmetal.auto.algorithm.nsgaii.NSGAIICommandLineParsingRunner</mainClass>
-                        </manifest>
-                    </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -55,6 +49,7 @@
                 </executions>
             </plugin>
         </plugins>
+
     </build>
 
     <dependencies>
@@ -63,32 +58,18 @@
             <artifactId>jmetal-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.uma.jmetal</groupId>
-            <artifactId>jmetal-lab</artifactId>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-core</artifactId>
+            <version>0.32.2</version>
         </dependency>
         <dependency>
-            <groupId>org.uma.jmetal</groupId>
-            <artifactId>jmetal-problem</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.uma.jmetal</groupId>
-            <artifactId>jmetal-algorithm</artifactId>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-jsplot</artifactId>
+            <version>0.32.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.10.8</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>3.9.5</version>
         </dependency>
     </dependencies>
 </project>

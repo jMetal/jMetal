@@ -15,11 +15,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.*;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,12 +31,12 @@ import java.util.List;
  * of variables. This can be interesting to study the behaviour of the algorithms when solving an
  * scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and SMPSO.
  * <p>
- * This experiment assumes that the reference Pareto front is of problem ZDT1 is known and that
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front is of problem ZDT1 is known and that
  * there is a file called ZDT1.pf containing it.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
- * The steps to carry out the experiment are: 1. Configure the experiment 2. Execute the algorithms
+ * The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the org.uma.jmetal.experiment 2. Execute the algorithms
  * 3. Generate the reference Pareto fronts 4. Compute the quality indicators 5. Generate Latex
  * tables reporting means and medians 6. Generate Latex tables with the result of applying the
  * Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by applying the

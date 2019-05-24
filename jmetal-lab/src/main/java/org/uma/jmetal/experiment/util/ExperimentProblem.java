@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.experiment.util;
+package org.uma.jmetal.experiment.util;
 
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;

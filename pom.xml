@@ -49,6 +49,7 @@
   <modules>
     <module>jmetal-core</module>
     <module>jmetal-algorithm</module>
+    <module>jmetal-lab</module>
     <module>jmetal-exec</module>
     <module>jmetal-problem</module>
     <module>jmetal-auto</module>
@@ -263,6 +264,11 @@
       <dependency>
         <groupId>org.uma.jmetal</groupId>
         <artifactId>jmetal-algorithm</artifactId>
+        <version>5.8-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.uma.jmetal</groupId>
+        <artifactId>jmetal-lab</artifactId>
         <version>5.8-SNAPSHOT</version>
       </dependency>
       <dependency>

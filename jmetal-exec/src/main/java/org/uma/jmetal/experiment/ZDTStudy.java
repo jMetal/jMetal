@@ -17,11 +17,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,14 +32,14 @@ import java.util.List;
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
  * MOEA/D, and SMPSO
  * <p>
- * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that, given a problem named
  * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
  * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
  * indicate the name of those files.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
- * The steps to carry out the experiment are: 1. Configure the experiment 2. Execute the algorithms
+ * The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the org.uma.jmetal.experiment 2. Execute the algorithms
  * 3. Compute que quality indicators 4. Generate Latex tables reporting means and medians 5.
  * Generate R scripts to produce latex tables with the result of applying the Wilcoxon Rank Sum Test
  * 6. Generate Latex tables with the ranking obtained by applying the Friedman test 7. Generate R
@@ -87,13 +87,13 @@ public class ZDTStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(org.uma.jmetal.experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     /*
-    new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+    new GenerateLatexTablesWithStatistics(org.uma.jmetal.experiment).run();
+    new GenerateWilcoxonTestTablesWithR<>(org.uma.jmetal.experiment).run();
+    new GenerateFriedmanTestTables<>(org.uma.jmetal.experiment).run();
+    new GenerateBoxplotsWithR<>(org.uma.jmetal.experiment).setRows(2).setColumns(3).run();
     */
   }
 

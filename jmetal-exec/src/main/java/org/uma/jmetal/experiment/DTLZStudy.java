@@ -15,11 +15,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.*;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
  * Example of experimental study based on solving the problems (configured with 3 objectives) with the algorithms
  * NSGAII, SPEA2, and SMPSO
  * <p>
- * This experiment assumes that the reference Pareto front are known and stored in files whose names are different
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and stored in files whose names are different
  * from the default name expected for every problem. While the default would be "problem_name.pf" (e.g. DTLZ1.pf),
  * the references are stored in files following the nomenclature "problem_name.3D.pf" (e.g. DTLZ1.3D.pf). This is
  * indicated when creating the ExperimentProblem instance of each of the evaluated poblems by using the method
@@ -38,7 +38,7 @@ import java.util.List;
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
- * The steps to carry out the experiment are: 1. Configure the experiment 2. Execute the algorithms
+ * The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the org.uma.jmetal.experiment 2. Execute the algorithms
  * 3. Compute que quality indicators 4. Generate Latex tables reporting means and medians 5.
  * Generate R scripts to produce latex tables with the result of applying the Wilcoxon Rank Sum Test
  * 6. Generate Latex tables with the ranking obtained by applying the Friedman test 7. Generate R

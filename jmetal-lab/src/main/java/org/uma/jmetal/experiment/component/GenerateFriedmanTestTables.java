@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.experiment.component;
+package org.uma.jmetal.experiment.component;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
@@ -6,8 +6,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentComponent;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentComponent;
 
 import java.io.*;
 import java.util.*;

@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.experiment;
+package org.uma.jmetal.experiment;
 
 import java.io.IOException;
 
 /**
- * An experiment is composed of instances of this interface.
+ * An org.uma.jmetal.experiment is composed of instances of this interface.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
