@@ -1,8 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -14,13 +11,16 @@ import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by ajnebro on 11/6/15.

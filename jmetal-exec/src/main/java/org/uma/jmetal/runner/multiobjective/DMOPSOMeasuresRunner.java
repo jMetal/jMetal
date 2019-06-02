@@ -3,10 +3,6 @@ package org.uma.jmetal.runner.multiobjective;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSOMeasures;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -15,6 +11,10 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
 
 import java.util.List;
 

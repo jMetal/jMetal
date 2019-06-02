@@ -1,15 +1,15 @@
 package org.uma.jmetal.util.point.impl;
 
-import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.List;
 
 /**d
  * Class representing an ideal point (minimization is assumed)
  *
  * @author Antonio J.Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class IdealPoint extends ArrayPoint {
 
   public IdealPoint(int dimension) {

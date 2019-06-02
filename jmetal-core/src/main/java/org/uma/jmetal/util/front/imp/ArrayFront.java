@@ -2,11 +2,15 @@ package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -88,8 +92,18 @@ public class ArrayFront implements Front {
    */
   public ArrayFront(String fileName) throws FileNotFoundException {
     this() ;
-    // TODO: investigate why no exception is raised if fileName == ""
-    InputStream inputStream = createInputStream(fileName) ;
+    InputStream inputStream = null;
+    try {
+      URL url = VectorFileUtils.class.getClassLoader().getResource(fileName) ;
+      if (url != null) {
+        String uri = Paths.get(url.toURI()).toString();
+        inputStream = createInputStream(uri) ;
+      } else {
+        inputStream = createInputStream(fileName) ;
+      }
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
 
     InputStreamReader isr = new InputStreamReader(inputStream);
     BufferedReader br = new BufferedReader(isr);

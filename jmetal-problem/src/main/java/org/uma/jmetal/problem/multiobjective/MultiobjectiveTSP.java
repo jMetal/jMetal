@@ -9,14 +9,13 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.problem.impl.DynamicDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+
+import java.io.*;
 
 /**
  * Class representing a bi-objective TSP (Traveling Salesman Problem) problem.

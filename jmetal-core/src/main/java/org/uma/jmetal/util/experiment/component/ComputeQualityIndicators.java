@@ -41,7 +41,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ComputeQualityIndicators<S extends Solution<?>, Result> implements ExperimentComponent {
+public class ComputeQualityIndicators<S extends Solution<?>, Result extends List<S>> implements ExperimentComponent {
   private final Experiment<S, Result> experiment;
 
   public ComputeQualityIndicators(Experiment<S, Result> experiment) {
@@ -50,83 +50,57 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
 
   @Override
   public void run() throws IOException {
-
+    experiment.removeDuplicatedAlgorithms() ;
+    resetIndicatorFiles() ;
 
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
 
-      for (ExperimentAlgorithm<?,Result> algorithm : experiment.getAlgorithmList()) {
-        String algorithmDirectory ;
-        algorithmDirectory        = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag() ;
-        String problemDirectory   = algorithmDirectory + "/" + algorithm.getProblemTag() ;
+      for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
+        String algorithmDirectory;
+        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
+        for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+          String problemDirectory = algorithmDirectory + "/" + problem.getTag();
 
-        String referenceFrontDirectory = experiment.getReferenceFrontDirectory() ;
+          String referenceFrontDirectory = experiment.getReferenceFrontDirectory();
 
+          String referenceFrontName = referenceFrontDirectory + "/" + problem.getReferenceFront();
 
+          JMetalLogger.logger.info("RF: " + referenceFrontName);
 
+          Front referenceFront = new ArrayFront(referenceFrontName);
 
-        String referenceFrontName = referenceFrontDirectory + "/" + algorithm.getReferenceParetoFront();
+          FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+          Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
 
-        JMetalLogger.logger.info("RF: " + referenceFrontName); ;
-        Front referenceFront = new ArrayFront(referenceFrontName) ;
+          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
 
-        FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
-        Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
+          indicator.setReferenceParetoFront(normalizedReferenceFront);
+          for (int run = 0; run < experiment.getIndependentRuns(); run++) {
+            String frontFileName = problemDirectory + "/" +
+                experiment.getOutputParetoFrontFileName() + run + ".tsv";
 
-        String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+            Front front = new ArrayFront(frontFileName);
+            Front normalizedFront = frontNormalizer.normalize(front);
+            List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
+            Double indicatorValue = (Double) indicator.evaluate((List<S>) normalizedPopulation);
+            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
 
-
-        indicator.setReferenceParetoFront(normalizedReferenceFront);
-        String frontFileName = problemDirectory + "/" +
-        experiment.getOutputParetoFrontFileName() + algorithm.getRunId() + ".tsv";
-
-        Front front = new ArrayFront(frontFileName) ;
-        Front normalizedFront = frontNormalizer.normalize(front) ;
-        List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront) ;
-        Double indicatorValue = (Double)indicator.evaluate((List<S>) normalizedPopulation) ;
-        JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue) ;
-
-        writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile) ;
+            writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
+          }
+        }
       }
     }
     findBestIndicatorFronts(experiment) ;
+    writeSummaryFile(experiment);
   }
 
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {
-     
-    try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) { 
+
+    try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) {
       os.write("" + indicatorValue + "\n");
     } catch (IOException ex) {
       throw new JMetalException("Error writing indicator file" + ex) ;
-    }
-  }
-
-  /**
-   * Deletes a file or directory if it does exist
-   * @param file
-   */
-  private void resetFile(String file) {
-    File f = new File(file);
-    if (f.exists()) {
-      JMetalLogger.logger.info("Already existing file " + file);
-
-      if (f.isDirectory()) {
-        JMetalLogger.logger.info("Deleting directory " + file);
-        if (f.delete()) {
-          JMetalLogger.logger.info("Directory successfully deleted.");
-        } else {
-          JMetalLogger.logger.info("Error deleting directory.");
-        }
-      } else {
-        JMetalLogger.logger.info("Deleting file " + file);
-        if (f.delete()) {
-          JMetalLogger.logger.info("File successfully deleted.");
-        } else {
-          JMetalLogger.logger.info("Error deleting file.");
-        }
-      }
-    } else {
-      JMetalLogger.logger.info("File " + file + " does NOT exist.");
     }
   }
 
@@ -149,7 +123,6 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
           fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
 
           List<Pair<Double, Integer>> list = new ArrayList<>() ;
-
 
           for (int i = 0; i < fileArray.size(); i++) {
             Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i) ;
@@ -207,6 +180,96 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result> implements 
           Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING) ;
         }
       }
+    }
+  }
+
+  /**
+   * Deletes the files containing the indicator values if the exist.
+   */
+  private void resetIndicatorFiles() {
+    for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
+      for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
+        for (ExperimentProblem<?> problem: experiment.getProblemList()) {
+          String algorithmDirectory;
+          algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
+          String problemDirectory = algorithmDirectory + "/" + problem.getTag();
+          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+
+          resetFile(qualityIndicatorFile);
+        }
+      }
+    }
+  }
+
+  /**
+   * Deletes a file or directory if it does exist
+   *
+   * @param file
+   */
+  private void resetFile(String file) {
+    File f = new File(file);
+    if (f.exists()) {
+      JMetalLogger.logger.info("Already existing file " + file);
+
+      if (f.isDirectory()) {
+        JMetalLogger.logger.info("Deleting directory " + file);
+        if (f.delete()) {
+          JMetalLogger.logger.info("Directory successfully deleted.");
+        } else {
+          JMetalLogger.logger.info("Error deleting directory.");
+        }
+      } else {
+        JMetalLogger.logger.info("Deleting file " + file);
+        if (f.delete()) {
+          JMetalLogger.logger.info("File successfully deleted.");
+        } else {
+          JMetalLogger.logger.info("Error deleting file.");
+        }
+      }
+    } else {
+      JMetalLogger.logger.info("File " + file + " does NOT exist.");
+    }
+  }
+
+  private void writeSummaryFile(Experiment<S, Result> experiment) {
+    JMetalLogger.logger.info("Writing experiment summary file");
+    String headerOfCSVFile = "Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue";
+    String csvFileName = this.experiment.getExperimentBaseDirectory() + "/QualityIndicatorSummary.csv";
+    resetFile(csvFileName);
+
+    try (FileWriter os = new FileWriter(csvFileName, true)) {
+      os.write("" + headerOfCSVFile + "\n");
+
+      for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
+        for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
+          String algorithmDirectory;
+          algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
+              algorithm.getAlgorithmTag();
+
+          for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+            String indicatorFileName =
+                algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
+            Path indicatorFile = Paths.get(indicatorFileName);
+            if (indicatorFile == null) {
+              throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist");
+            }
+            System.out.println("-----");
+            System.out.println(indicatorFileName) ;
+
+            List<String> fileArray;
+            fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
+            System.out.println(fileArray) ;
+            System.out.println("++++++");
+
+            for (int i = 0; i < fileArray.size(); i++) {
+              String row = algorithm.getAlgorithmTag() + "," + problem.getTag() + "," + indicator.getName() + "," + i + "," + fileArray.get(i);
+              os.write("" + row + "\n");
+            }
+          }
+        }
+      }
+    } catch (IOException ex) {
+      throw new JMetalException("Error writing indicator file" + ex);
     }
   }
 }

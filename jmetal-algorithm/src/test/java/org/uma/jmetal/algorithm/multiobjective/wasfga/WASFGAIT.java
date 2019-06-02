@@ -29,7 +29,6 @@ public class WASFGAIT {
 	public void shouldTheAlgorithmReturnAnExceptionIfIndicatingANonExistingWeightVectorFile()  {
 		DoubleProblem problem = new ZDT1() ;
 		
-		Algorithm<List<DoubleSolution>> algorithm;
 		CrossoverOperator<DoubleSolution> crossover;
 		MutationOperator<DoubleSolution> mutation;
 		SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
@@ -50,7 +49,7 @@ public class WASFGAIT {
 		selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
 		double epsilon = 0.01 ;
-		algorithm = new WASFGA<DoubleSolution>(
+		new WASFGA<DoubleSolution>(
 						problem,
 						100,
 						250,

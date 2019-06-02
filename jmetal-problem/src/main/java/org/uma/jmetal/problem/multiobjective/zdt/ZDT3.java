@@ -21,11 +21,6 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-
 /**
  * Class representing problem ZDT3
  */

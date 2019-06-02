@@ -4,8 +4,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.point.impl.IdealPoint;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +156,9 @@ public class MOEADUtils {
           currentBest = solutionList.get(j);
         }
       }
-      resultSolutionList.add((S) currentBest.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) currentBest.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 
@@ -166,7 +168,7 @@ public class MOEADUtils {
           int newSolutionListSize) {
 
     Distance<S, List<S>> distance =
-            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace() ;
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>() ;
 
     int randomIndex = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1) ;
 
@@ -196,7 +198,9 @@ public class MOEADUtils {
 
       // add the selected to res and remove from candidate list
       S removedSolution = candidate.remove(index) ;
-      resultSolutionList.add((S)removedSolution.copy());
+      @SuppressWarnings("unchecked")
+      S copy = (S) removedSolution.copy() ;
+      resultSolutionList.add(copy);
     }
   }
 

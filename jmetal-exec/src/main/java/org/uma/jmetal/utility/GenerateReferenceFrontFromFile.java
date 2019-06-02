@@ -1,14 +1,9 @@
 package org.uma.jmetal.utility;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.fileoutput.FileOutputContext;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.IOException;
@@ -75,6 +70,9 @@ public class GenerateReferenceFrontFromFile {
       throw new JMetalException(e) ;
     }
 
-    return lines.findFirst().get().split(" ").length;
+    int numberOfObjectives = lines.findFirst().get().split(" ").length ;
+    lines.close();
+    
+    return numberOfObjectives;
   }
 }

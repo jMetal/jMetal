@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem MaF13
  */
+@SuppressWarnings("serial")
 public class MaF13 extends AbstractDoubleProblem {
 
   /**

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class RankingAndPreferenceSelection<S extends Solution<?>>
         implements SelectionOperator<List<S>, List<S>> {
   private final int solutionsToSelect;

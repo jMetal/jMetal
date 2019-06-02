@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ExperimentBuilder<S extends Solution<?>, Result> {
+public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
   private final String experimentName ;
   private List<ExperimentAlgorithm<S, Result>> algorithmList;
   private List<ExperimentProblem<S>> problemList;

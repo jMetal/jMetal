@@ -12,7 +12,6 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -56,6 +55,8 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
       referenceParetoFront = "" ;
     }
+    System.out.println("Warning: the problem name is not used anymore and may be removed later.") ;
+    System.out.println("Warning: current problem name: " + problemName) ;
 
     problem = new LZ09F2() ;
 

@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#"
+     xml:base="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam"
+     xmlns:khaosteam="http://www.khaos.uma.es/perception/traffic/khaosteam#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:bigowl="http://www.khaos.uma.es/perception/bigowl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam">
+        <owl:imports rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryClient -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryClient">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Node"/>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">52</khaosteam:hasID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryPosition -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryPosition">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
+        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryClient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#DeliveryRoute -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#DeliveryRoute">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Route"/>
+        <khaosteam:hasPreference rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#FirstClientPreference"/>
+        <khaosteam:hasPreference rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClientPreference"/>
+        <khaosteam:hasPreference rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPreference"/>
+        <khaosteam:hasPreference rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SubRoutePreference"/>
+        <khaosteam:numberOfNodes rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</khaosteam:numberOfNodes>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#FirstClientPreference -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#FirstClientPreference">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Preference"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PriorityClient"/>
+        <khaosteam:hasPosition rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PreferencePosition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClient -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClient">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Node"/>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">34</khaosteam:hasID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClientPreference -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClientPreference">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Preference"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClient"/>
+        <khaosteam:hasPosition rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayPosition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayPosition -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayPosition">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
+        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClient"/>
+        <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</bigowl:hasDataValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Node"/>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">86</khaosteam:hasID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPosition -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPosition">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
+        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient"/>
+        <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</bigowl:hasDataValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPreference -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPreference">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Preference"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient"/>
+        <khaosteam:hasPosition rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPosition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PreferencePosition -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PreferencePosition">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
+        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PriorityClient"/>
+        <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</bigowl:hasDataValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PriorityClient -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PriorityClient">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Node"/>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">78</khaosteam:hasID>
+        <khaosteam:isPriority rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</khaosteam:isPriority>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantClient -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantClient">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Node"/>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</khaosteam:hasID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantPosition -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantPosition">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
+        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantClient"/>
+        <khaosteam:successor rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryPosition"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SubRoutePreference -->
+
+    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SubRoutePreference">
+        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Preference"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryClient"/>
+        <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantClient"/>
+        <khaosteam:hasPosition rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryPosition"/>
+        <khaosteam:hasPosition rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantPosition"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+

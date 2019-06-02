@@ -3,7 +3,6 @@ package org.uma.jmetal.util.point.impl;
 import org.junit.Test;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.util.point.impl.IdealPoint;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

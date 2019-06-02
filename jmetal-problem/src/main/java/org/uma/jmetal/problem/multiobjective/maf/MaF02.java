@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem MaF02, DTLZ2BZ
  */
+@SuppressWarnings("serial")
 public class MaF02 extends AbstractDoubleProblem {
 
   public static int const2;
@@ -85,7 +87,7 @@ public class MaF02 extends AbstractDoubleProblem {
     }
     // evaluate fm,fm-1,...,2,f1
     f[numberOfObjectives - 1] = Math.sin(thet[0]) * (1 + g[numberOfObjectives - 1]);
-    double subf1 = 1, subf2, subf3;
+    double subf1 = 1;
     // fi=cos(thet1)cos(thet2)...cos(thet[m-i])*sin(thet(m-i+1))*(1+g[i]),fi=subf1*subf2*subf3
     for (int i = numberOfObjectives - 2; i > 0; i--) {
       subf1 *= Math.cos(thet[numberOfObjectives - i - 2]);

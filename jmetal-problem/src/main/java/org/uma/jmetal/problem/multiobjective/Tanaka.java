@@ -1,11 +1,12 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem Tanaka

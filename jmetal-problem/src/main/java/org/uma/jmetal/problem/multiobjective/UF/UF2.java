@@ -1,9 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.UF;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem CEC2009_UF2
@@ -27,7 +28,7 @@ public class UF2 extends AbstractDoubleProblem {
     setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;
-    setName("UF") ;
+    setName("UF2") ;
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;

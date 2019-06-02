@@ -1,9 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.glt;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Problem GLT6. Defined in
@@ -31,7 +32,7 @@ public class GLT6 extends AbstractDoubleProblem {
   public GLT6(int numberOfVariables) {
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(3);
-    setName("GLT5");
+    setName("GLT6");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;

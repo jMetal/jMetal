@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.uma.jmetal</groupId>
         <artifactId>jmetal</artifactId>
-        <version>5.7-SNAPSHOT</version>
+        <version>5.8-SNAPSHOT</version>
     </parent>
     <artifactId>jmetal-core</artifactId>
     <packaging>jar</packaging>
@@ -66,6 +66,12 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
@@ -100,5 +106,13 @@
             <artifactId>weka-stable</artifactId>
             <version>3.8.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-distribution -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>5.1.10</version>
+        </dependency>
+
+
     </dependencies>
 </project>

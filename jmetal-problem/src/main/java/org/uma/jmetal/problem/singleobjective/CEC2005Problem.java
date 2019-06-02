@@ -1,12 +1,13 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.TestFunc;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing for solving the CEC2005 competition problems.

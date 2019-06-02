@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentComponent;
@@ -28,7 +29,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
-public class GenerateFriedmanTestTables<Result> implements ExperimentComponent {
+public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
 
   private final Experiment<?, Result> experiment;

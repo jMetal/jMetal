@@ -77,11 +77,11 @@ public class NSGAIIStudy2 {
                     .setNumberOfCores(8)
                     .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
-    //new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
-    //new ComputeQualityIndicators<>(experiment).run();
-    //new GenerateLatexTablesWithStatistics(experiment).run();
-    //new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
+    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run();
+    new GenerateLatexTablesWithStatistics(experiment).run();
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }

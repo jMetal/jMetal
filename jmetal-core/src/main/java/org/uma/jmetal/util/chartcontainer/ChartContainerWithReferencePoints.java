@@ -10,8 +10,10 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,13 +32,7 @@ public class ChartContainerWithReferencePoints {
   private int delay;
   private int objective1;
   private int objective2;
-  private int variable1;
-  private int variable2;
-  private Map<String, List<Integer>> iterations;
-  private Map<String, List<Double>> indicatorValues;
   private List<String> referencePointName ;
-
-  private int updateCounter = 1 ;
 
   public ChartContainerWithReferencePoints(String name) {
     this(name, 0);
@@ -46,8 +42,6 @@ public class ChartContainerWithReferencePoints {
     this.name = name;
     this.delay = delay;
     this.charts = new LinkedHashMap<String, XYChart>();
-    this.iterations = new HashMap<String, List<Integer>>();
-    this.indicatorValues = new HashMap<String, List<Double>>();
     this.referencePointName = new ArrayList<>() ;
   }
 
@@ -174,14 +168,6 @@ public class ChartContainerWithReferencePoints {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
       result[i] = solutionList.get(i).getObjective(objective);
-    }
-    return result;
-  }
-
-  private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-    double[] result = new double[solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getVariableValue(variable);
     }
     return result;
   }

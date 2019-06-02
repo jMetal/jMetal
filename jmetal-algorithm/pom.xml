@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.uma.jmetal</groupId>
         <artifactId>jmetal</artifactId>
-        <version>5.7-SNAPSHOT</version>
+        <version>5.8-SNAPSHOT</version>
     </parent>
     <artifactId>jmetal-algorithm</artifactId>
     <packaging>jar</packaging>
@@ -74,6 +74,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fuzzylite</groupId>
+            <artifactId>jfuzzylite</artifactId>
+            <version>5.0</version>
         </dependency>
     </dependencies>
 </project>

@@ -24,6 +24,9 @@ import static org.mockito.Mockito.*;
   * @version 1.0
  */
 public class SolutionListUtilsTest {
+	
+	private static final double EPSILON = 0.0000000001 ;
+	
   @Rule
   public ExpectedException exception = ExpectedException.none();
 
@@ -400,6 +403,33 @@ public class SolutionListUtilsTest {
 
     assertEquals(maxListSize, solutions.size()) ;
   }
+  
+  @SuppressWarnings("unchecked")
+	@Test
+	public void shouldNormalizeReturnsCorrectNormalizedNumber() {
+
+	  	MockedDoubleProblem problem = new MockedDoubleProblem();
+		DoubleSolution s1 = problem.createSolution();
+		DoubleSolution s2 = problem.createSolution();
+
+		s1.setObjective(0, 20);
+		s1.setObjective(1, 10);
+		s2.setObjective(0, 10);
+		s2.setObjective(1, 20);
+		
+		List<DoubleSolution> solutions = Arrays.asList(s1, s2);
+
+		double[] minValue = new double[] { 10, 10 };
+		double[] maxValue = new double[] { 20, 20 };
+
+		List<DoubleSolution> normalizedSolutions = (List<DoubleSolution>) SolutionListUtils.normalize(solutions, minValue, maxValue);
+		
+		assertNotSame(normalizedSolutions, solutions);
+		assertEquals(1.0, normalizedSolutions.get(0).getObjective(0), EPSILON);
+		assertEquals(0.0, normalizedSolutions.get(0).getObjective(1), EPSILON);
+		assertEquals(0.0, normalizedSolutions.get(1).getObjective(0), EPSILON);
+		assertEquals(1.0, normalizedSolutions.get(1).getObjective(1), EPSILON);
+	}
 
   /**
    * TODO

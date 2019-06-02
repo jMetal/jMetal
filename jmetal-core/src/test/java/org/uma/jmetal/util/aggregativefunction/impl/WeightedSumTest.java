@@ -1,14 +1,10 @@
 package org.uma.jmetal.util.aggregativefunction.impl;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+
+import static org.junit.Assert.assertEquals;
 
 public class WeightedSumTest {
 

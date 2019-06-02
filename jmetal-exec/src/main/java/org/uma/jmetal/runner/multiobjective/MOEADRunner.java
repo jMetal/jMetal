@@ -66,7 +66,6 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-            .setDataDirectory("/Users/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/MOEAD_Weights")
             .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

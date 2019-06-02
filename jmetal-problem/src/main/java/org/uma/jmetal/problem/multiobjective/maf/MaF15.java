@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem MaF15
  */
+@SuppressWarnings("serial")
 public class MaF15 extends AbstractDoubleProblem {
   public static int nk15;
   public static int sublen15[], len15[];

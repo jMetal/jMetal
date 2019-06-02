@@ -107,7 +107,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
           populationSize + ".dat";
 
       try {
-        InputStream in = getClass().getResourceAsStream("/" + dataDirectory + "/" + dataFileName);
+
+        //       String path =
+        // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
+        // ();
+        InputStream in =
+            getClass()
+                .getClassLoader()
+                .getResourceAsStream(dataDirectory + "/" + dataFileName);
         InputStreamReader isr = new InputStreamReader(in);
         BufferedReader br = new BufferedReader(isr);
 

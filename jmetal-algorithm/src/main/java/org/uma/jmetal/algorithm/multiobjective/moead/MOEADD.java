@@ -13,9 +13,10 @@ import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
-  protected Ranking ranking;
+  protected Ranking<S> ranking;
   protected int[][] rankIdx;      // index matrix for the non-domination levels
   protected int[][] subregionIdx;    // index matrix for subregion record
   protected double[][] subregionDist;  // distance matrix for perpendicular distance
@@ -39,7 +40,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
   public void run() {
 
     evaluations = 0;
-    population = new ArrayList(populationSize);
+    population = new ArrayList<>(populationSize);
 
     neighborhood = new int[populationSize][neighborSize];
     lambda = new double[populationSize][problem.getNumberOfObjectives()];

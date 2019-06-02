@@ -1,15 +1,17 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class representing problem MaF05
  */
+@SuppressWarnings("serial")
 public class MaF09 extends AbstractDoubleProblem {
 
   public static int maxinter9;

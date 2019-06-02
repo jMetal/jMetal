@@ -9,8 +9,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.util.ArrayList;
 import java.util.Collections;

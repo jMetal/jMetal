@@ -1,13 +1,15 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing problem MaF12
  */
+@SuppressWarnings("serial")
 public class MaF12 extends AbstractDoubleProblem {
 
   public static int K12, L12;
@@ -96,7 +98,7 @@ public class MaF12 extends AbstractDoubleProblem {
           122 * Math.PI * (0.5 - Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35)))
           + 380 * Math.pow(Math.abs(t1[i] - 0.35) * 0.5 / (Math.floor(0.35 - t1[i]) + 0.35), 2));
     }
-    int p = 0, q = 0, h = 0;
+    int p = 0, h = 0;
     double sub3 = 0, sub4 = 0;
     sub1 =
         Math.ceil(0.5 * K12 / (numberOfObjectives_ - 1)) * (1 + 2 * K12 / (numberOfObjectives_ - 1)

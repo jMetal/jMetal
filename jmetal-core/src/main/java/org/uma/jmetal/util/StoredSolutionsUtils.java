@@ -47,6 +47,8 @@ public class StoredSolutionsUtils {
         return solution;
       })
       .collect(toList());
+    
+    lines.close();
 
     return solutions;
   }
@@ -71,6 +73,7 @@ public class StoredSolutionsUtils {
   }
 
 
+  @SuppressWarnings("serial")
   private static class DummyProblem extends AbstractDoubleProblem {
 
     public DummyProblem(int numberOfObjectives) {

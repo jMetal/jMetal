@@ -1,10 +1,11 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import java.util.BitSet;
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
+
+import java.util.BitSet;
 
 /**
  * Class representing problem OneMax. The problem consist of maximizing the

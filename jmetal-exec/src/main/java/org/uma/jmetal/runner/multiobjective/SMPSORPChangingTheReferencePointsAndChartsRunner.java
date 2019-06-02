@@ -3,10 +3,6 @@ package org.uma.jmetal.runner.multiobjective;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
-import org.uma.jmetal.measure.MeasureListener;
-import org.uma.jmetal.measure.MeasureManager;
-import org.uma.jmetal.measure.impl.BasicMeasure;
-import org.uma.jmetal.measure.impl.CountingMeasure;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.DoubleProblem;
@@ -19,6 +15,10 @@ import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -174,7 +174,6 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
   private static class ChangeReferencePoint implements Runnable {
     ChartContainerWithReferencePoints chart ;
     List<List<Double>> referencePoints;
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints;
     SMPSORP algorithm ;
 
     public ChangeReferencePoint(
@@ -184,40 +183,41 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
             ChartContainerWithReferencePoints chart)
         throws InterruptedException {
       this.referencePoints = referencePoints;
-      this.archivesWithReferencePoints = archivesWithReferencePoints;
       this.chart = chart ;
       this.algorithm = (SMPSORP) algorithm ;
     }
 
     @Override
     public void run() {
-      Scanner scanner = new Scanner(System.in);
-
-      double v1 ;
-      double v2 ;
-
-      while (true) {
-        System.out.println("Introduce the new reference point (between commas):");
-        String s = scanner.nextLine() ;
-        Scanner sl= new Scanner(s);
-        sl.useDelimiter(",");
-
-        for (int i = 0; i < referencePoints.size(); i++) {
-          try {
-            v1 = Double.parseDouble(sl.next());
-            v2 = Double.parseDouble(sl.next());
-          } catch (Exception e) {//any problem
-            v1 = 0;
-            v2 = 0;
+      try (Scanner scanner = new Scanner(System.in)) {
+        double v1 ;
+        double v2 ;
+        
+        while (true) {
+          System.out.println("Introduce the new reference point (between commas):");
+          String s = scanner.nextLine() ;
+          
+          try (Scanner sl = new Scanner(s)) {
+            sl.useDelimiter(",");
+            
+            for (int i = 0; i < referencePoints.size(); i++) {
+              try {
+                v1 = Double.parseDouble(sl.next());
+                v2 = Double.parseDouble(sl.next());
+              } catch (Exception e) {//any problem
+                v1 = 0;
+                v2 = 0;
+              }
+              
+              referencePoints.get(i).set(0, v1);
+              referencePoints.get(i).set(1, v2);
+            }
           }
-
-          referencePoints.get(i).set(0, v1);
-          referencePoints.get(i).set(1, v2);
+          
+          chart.updateReferencePoint(referencePoints);
+          
+          algorithm.changeReferencePoints(referencePoints);
         }
-
-        chart.updateReferencePoint(referencePoints);
-
-        algorithm.changeReferencePoints(referencePoints);
       }
     }
   }

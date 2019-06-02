@@ -46,7 +46,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //System.out.println(attr1.isNominal());
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List)null);
+      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
       //System.out.println(attr2.isString());
 
       //2.create dataset
@@ -57,7 +57,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Instances dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
-      int j=0;
       for (S solution : solutionList) {
         //instaces
         for (int i = 0; i <numberOfObjectives ; i++) {
@@ -67,7 +66,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
           dataset.add(new DenseInstance(1.0, attValues));
         }
-        j++;
       }
 
 
@@ -86,9 +84,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
       //split to 70:30 learn and test set
-      double percent = 70.0;
-      int trainSize = (int) Math.round(dataset.numInstances() * percent / 100);
-      int testSize = dataset.numInstances() - trainSize;
 
       //Preprocess strings (almost no classifier supports them)
       StringToWordVector filter = new StringToWordVector();
@@ -102,8 +97,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       classifier.buildClassifier(dataset);
       //resample if needed
       //dataset = dataset.resample(new Random(42));
-     // Instances train = new Instances(dataset, 0, trainSize);
-     // Instances test = new Instances(dataset, trainSize, testSize);
       dataset.setClassIndex(1);
       datasetTest.setClassIndex(1);
       //do eval
@@ -134,7 +127,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
 
       //string
-      Attribute attr2 = new Attribute(MY_STRING, (List)null);
+      Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);
 
       //2.create dataset
       ArrayList<Attribute> attrs = new ArrayList<>();
@@ -144,7 +137,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Instances dataset = new Instances("my_dataset", attrs, 0);
 
       //Add instances
-      int j=0;
       for (S solution : solutionList) {
         //instaces
         for (int i = 0; i <numberOfVariables ; i++) {
@@ -154,7 +146,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
           dataset.add(new DenseInstance(1.0, attValues));
         }
-        j++;
       }
 
 
@@ -173,9 +164,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
 
 
       //split to 70:30 learn and test set
-      double percent = 70.0;
-      int trainSize = (int) Math.round(dataset.numInstances() * percent / 100);
-      int testSize = dataset.numInstances() - trainSize;
 
       //Preprocess strings (almost no classifier supports them)
       StringToWordVector filter = new StringToWordVector();
@@ -189,8 +177,6 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       classifier.buildClassifier(dataset);
       //resample if needed
       //dataset = dataset.resample(new Random(42));
-      // Instances train = new Instances(dataset, 0, trainSize);
-      // Instances test = new Instances(dataset, trainSize, testSize);
       dataset.setClassIndex(1);
       datasetTest.setClassIndex(1);
       //do eval

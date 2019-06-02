@@ -82,7 +82,7 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
     // No constraints
     int populationSize = 100;
-    int maxEvaluations = 1000000;
+    int maxEvaluations = 55000;
 
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
         mutation, populationSize)

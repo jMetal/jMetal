@@ -45,6 +45,7 @@ public class PISAHypervolumeTest {
     assertEquals(0.6661, result, 0.0001) ;
   }
 
+  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
     /** Constructor */

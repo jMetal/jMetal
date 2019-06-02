@@ -24,7 +24,7 @@ public class PreferenceNSGAII<S extends Solution<?>>  {
 
     public Double evaluate(S solution) {
 
-        List<Double> objectiveValues = new ArrayList(solution.getNumberOfObjectives());
+        List<Double> objectiveValues = new ArrayList<>(solution.getNumberOfObjectives());
 
         for(int i = 0; i < solution.getNumberOfObjectives(); ++i) {
             objectiveValues.add(solution.getObjective(i));
