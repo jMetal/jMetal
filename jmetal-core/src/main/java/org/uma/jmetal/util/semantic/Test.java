@@ -101,7 +101,7 @@ public class Test {
                   List<OWLNamedIndividual> datatypes =
                       getIndividualsByObjectProperty(reasoner, indPos, hasDataType);
                   for (OWLNamedIndividual dt : datatypes) {
-                    //System.out.println("DataTypes " + dt.toString().contains("Integer"));
+                    System.out.println("DataTypes " + dt.toString().contains("Integer"));
 
                   }
 
