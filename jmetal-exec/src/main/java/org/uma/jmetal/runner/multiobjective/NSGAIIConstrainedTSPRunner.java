@@ -69,7 +69,8 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
     Function<PermutationSolution<Integer>, Double> constraint3;
     Function<PermutationSolution<Integer>, Double> constraint4;
     constraint1 = solution -> solution.getVariableValue(0) == 78 ? 0.0 : -1.0 * solution.getVariables().indexOf(78);
-    constraint2 = solution -> solution.getVariables().indexOf(52) == (solution.getVariables().indexOf(9) - 1) ? 0.0 : -1.0 * Math.abs(solution.getVariables().indexOf(52) - solution.getVariables().indexOf(9));
+    constraint2 = solution -> solution.getVariables().indexOf(52) == (solution.getVariables().indexOf(9) - 1) ? 0.0 :
+            -1.0 * Math.abs(solution.getVariables().indexOf(52) - solution.getVariables().indexOf(9));
     //constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() - 1) == 71 ? 0.0 : -1.0 * (solution.getNumberOfVariables() - solution.getVariables().indexOf(71));
     constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() / 2) == 51 ? 0.0 : -1.0 * Math.abs((solution.getNumberOfVariables() / 2) - solution.getVariables().indexOf(51));
     constraint4 = solution -> solution.getVariables().indexOf(34) < solution.getNumberOfVariables() / 4 ? 0.0 : -1.0 * solution.getVariables().indexOf(34);
