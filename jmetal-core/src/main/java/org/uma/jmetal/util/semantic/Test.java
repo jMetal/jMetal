@@ -23,7 +23,7 @@ public class Test {
     OWLOntology ontology;
     OWLDataFactory factory;
     IRI iri=null;
-    String pathOWL = "/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic-tsp.owl";
+    String pathOWL = "jmetal-core/src/main/resources/ontology/traffic-tsp.owl";
     manager = OWLManager.createOWLOntologyManager();
     factory = manager.getOWLDataFactory();
     manager.getIRIMappers().add(new SimpleIRIMapper(IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam"),
