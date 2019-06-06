@@ -19,6 +19,7 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.semantic.OWLUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,7 +65,13 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
  */
 
-    Function<PermutationSolution<Integer>, Double> constraint1;
+    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
+    owlUtils.addImport("//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic.owl","http://www.khaos.uma.es/perception/traffic/khaosteam");
+    owlUtils.addImport("/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/bigowl.owl","http://www.khaos.uma.es/perception/bigowl");
+    owlUtils.loadOntology();
+    List<Function<PermutationSolution<Integer>, Double>> constraintList = owlUtils.getConstraintFromOntology();
+
+    /*Function<PermutationSolution<Integer>, Double> constraint1;
     Function<PermutationSolution<Integer>, Double> constraint2;
     Function<PermutationSolution<Integer>, Double> constraint3;
     Function<PermutationSolution<Integer>, Double> constraint4;
@@ -73,7 +80,7 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
             -1.0 * Math.abs(solution.getVariables().indexOf(52) - solution.getVariables().indexOf(9));
     //constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() - 1) == 71 ? 0.0 : -1.0 * (solution.getNumberOfVariables() - solution.getVariables().indexOf(71));
     constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() / 2) == 51 ? 0.0 : -1.0 * Math.abs((solution.getNumberOfVariables() / 2) - solution.getVariables().indexOf(51));
-    constraint4 = solution -> solution.getVariables().indexOf(34) < solution.getNumberOfVariables() / 4 ? 0.0 : -1.0 * solution.getVariables().indexOf(34);
+    constraint4 = solution -> solution.getVariables().indexOf(34) < solution.getNumberOfVariables() / 4 ? 0.0 : -1.0 * solution.getVariables().indexOf(34);*/
     //problem.addConstraint(solution -> (solution.getVariableValue(0) == 78 ? 0.0 : -1.0)) ;
 
     //problem.addConstraint(solution -> (constraint1.apply(solution))) ;
@@ -83,7 +90,7 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
     // No constraints
     int populationSize = 100;
-    int maxEvaluations = 55000;
+    int maxEvaluations = 110000;
 
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
         mutation, populationSize)
@@ -104,7 +111,12 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
     // Constraint 1
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    problem.addConstraint(constraint1) ;
+    if(constraintList!=null && !constraintList.isEmpty()){
+      for (Function<PermutationSolution<Integer>, Double> constraint : constraintList) {
+       problem.addConstraint(constraint) ;
+      }
+    }
+
 
     algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
         mutation, populationSize)
@@ -116,8 +128,13 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
         .execute();
 
     population = algorithm.getResult();
-
     new SolutionListOutput(population)
+            .setSeparator("\t")
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.Test.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.Test.tsv"))
+            .print();
+
+    /*new SolutionListOutput(population)
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.1.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.1.tsv"))
@@ -209,5 +226,6 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.all.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.all.tsv"))
         .print();
+  }*/
   }
 }
