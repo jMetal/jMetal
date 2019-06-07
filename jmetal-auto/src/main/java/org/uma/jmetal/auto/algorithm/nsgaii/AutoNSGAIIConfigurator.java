@@ -99,7 +99,7 @@ public class AutoNSGAIIConfigurator {
   Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
   DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
   MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
-      new MultiComparator<>(
+      new MultiComparator<DoubleSolution>(
           Arrays.asList(ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
   Replacement<DoubleSolution> replacement =
