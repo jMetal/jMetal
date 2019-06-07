@@ -1,5 +1,7 @@
 package org.uma.jmetal.auto.irace.parameter;
 
+import org.uma.jmetal.auto.irace.parameter.algorithmresult.AlgorithmResultParameter;
+import org.uma.jmetal.auto.irace.parameter.algorithmresult.AlgorithmResultType;
 import org.uma.jmetal.auto.irace.parameter.crossover.*;
 import org.uma.jmetal.auto.irace.parameter.mutation.MutationParameter;
 import org.uma.jmetal.auto.irace.parameter.mutation.PolynomialMutationDistributionIndexParameter;
@@ -25,13 +27,17 @@ public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
-    CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
-    algorithmResult.addValue("population");
-    algorithmResult.addValue("externalArchive");
+    CategoricalParameterType algorithmResult = new CategoricalParameterType(AlgorithmResultParameter.getName());
+    algorithmResult.addValue(AlgorithmResultParameter.POPULATION);
+    algorithmResult.addValue(AlgorithmResultParameter.EXTERNAL_ARCHIVE);
+
+    //CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
+    //algorithmResult.addValue(AlgorithmResultType.population.name());
+    //algorithmResult.addValue(AlgorithmResultType.externalArchive.name());
 
     CategoricalParameterType populationSize = new CategoricalParameterType("populationSize");
     populationSize.addValue("100");
-    populationSize.setParentTag("population");
+    populationSize.setParentTag(AlgorithmResultParameter.POPULATION);
 
     OrdinalParameterType populationSizeWithArchive =
         new OrdinalParameterType("populationSizeWithArchive");
@@ -41,7 +47,7 @@ public class GenerateIraceParameterFile {
     populationSizeWithArchive.addValue("100");
     populationSizeWithArchive.addValue("200");
     populationSizeWithArchive.addValue("400");
-    populationSizeWithArchive.setParentTag("externalArchive");
+    populationSizeWithArchive.setParentTag(AlgorithmResultParameter.EXTERNAL_ARCHIVE);
 
     algorithmResult.addSpecificParameter(populationSize);
     algorithmResult.addSpecificParameter(populationSizeWithArchive);
@@ -70,9 +76,9 @@ public class GenerateIraceParameterFile {
     // Variation
     CategoricalParameterType variation = new VariationParameter() ;
     variation.addValue(VariationType.crossoverAndMutationVariation.name());
-    variation.addValue(VariationType.differentialEvolutionVariation.name());
-    variation.addSpecificParameter(new DifferentialEvolutionCRValueParameter());
-    variation.addSpecificParameter(new DifferentialEvolutionFValueParameter());
+    //variation.addValue(VariationType.differentialEvolutionVariation.name());
+    //variation.addSpecificParameter(new DifferentialEvolutionCRValueParameter());
+    //variation.addSpecificParameter(new DifferentialEvolutionFValueParameter());
 
     parameters.add(variation) ;
 
@@ -92,6 +98,8 @@ public class GenerateIraceParameterFile {
     MutationParameter mutation = new MutationParameter();
     mutation.addSpecificParameter(new PolynomialMutationDistributionIndexParameter(5.0, 400.0));
     mutation.addSpecificParameter(new UniformMutationPerturbationParameter(0, 1));
+    mutation.setParent(variation);
+    mutation.setParentTag(VariationType.crossoverAndMutationVariation.name());
 
     parameters.add(mutation);
 
@@ -99,7 +107,7 @@ public class GenerateIraceParameterFile {
     SelectionParameter selection = new SelectionParameter();
     selection.addSpecificParameter(new NarityTournamentNParameter(2, 10));
     selection.addValue("random");
-    selection.addValue(SelectionType.differentialEvolution.toString());
+    //selection.addValue(SelectionType.differentialEvolution.toString());
 
     parameters.add(selection);
 

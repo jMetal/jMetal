@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with four versions of NSGA-II,
+ * ExampleOfParameterFileGeneration of experimental study based on solving the ZDT problems with four versions of NSGA-II,
  * each of them applying a different crossover probability (from 0.7 to 1.0).
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

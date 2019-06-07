@@ -11,16 +11,15 @@ import org.uma.jmetal.util.checking.Check;
 public class RealParameterType extends ParameterType {
   private String range;
 
-  public RealParameterType(String name,  double lowerBound, double upperBound) {
-    this(name, "--" + name, lowerBound, upperBound) ;
+  public RealParameterType(String name, double lowerBound, double upperBound) {
+    this(name, "--" + name, lowerBound, upperBound);
   }
 
-
   public RealParameterType(String name, String label, double lowerBound, double upperBound) {
-    super(name, label) ;
+    super(name, label);
 
     Check.isTrue(lowerBound < upperBound, "The range is invalid");
-    this.range = "(" + lowerBound + ", " + upperBound +")";
+    this.range = "(" + lowerBound + ", " + upperBound + ")";
   }
 
   @Override
@@ -35,6 +34,6 @@ public class RealParameterType extends ParameterType {
 
   @Override
   public void addSpecificParameter(ParameterType parameter) {
-    specificParameters.add(parameter) ;
+    specificParameters.add(parameter);
   }
 }
