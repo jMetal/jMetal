@@ -50,7 +50,7 @@ public class NSGAIIWithDE {
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
-    int archiveMaximumSize = 100 ;
+    int archiveMaximumSize = 100;
     int maxNumberOfEvaluations = 175000;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
@@ -61,14 +61,16 @@ public class NSGAIIWithDE {
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     Variation<DoubleSolution> variation =
-        new DifferentialCrossoverVariation(offspringPopulationSize, new DifferentialEvolutionCrossover(1.0, 0.5, "rand/1/bin"),
-                new PolynomialMutation(1.0/problem.getNumberOfVariables(), 200.0)) ;
+        new DifferentialCrossoverVariation(
+            offspringPopulationSize,
+            new DifferentialEvolutionCrossover(1.0, 0.5, "rand/1/bin"),
+            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 200.0));
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     MatingPoolSelection<DoubleSolution> selection =
-        new DifferentialEvolutionMatingPoolSelection(variation.getMatingPoolSize()) ;
+        new DifferentialEvolutionMatingPoolSelection(variation.getMatingPoolSize());
 
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
@@ -84,14 +86,14 @@ public class NSGAIIWithDE {
             replacement);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(5000);
-    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+    // RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
     //    new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
         new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
-    //algorithm.getObservable().register(runTimeChartObserver);
-    //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
+    // algorithm.getObservable().register(runTimeChartObserver);
+    // algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
     evaluation.getObservable().register(boundedArchiveObserver);
 
