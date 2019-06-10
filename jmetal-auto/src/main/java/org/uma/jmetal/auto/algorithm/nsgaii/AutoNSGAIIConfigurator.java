@@ -16,6 +16,8 @@ import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.auto.irace.parameter.algorithmresult.AlgorithmResultType;
+import org.uma.jmetal.auto.irace.parameter.createinitialsolutionsstrategy.CreateInitialSolutionsStrategyType;
 import org.uma.jmetal.auto.irace.parameter.crossover.CrossoverType;
 import org.uma.jmetal.auto.irace.parameter.mutation.MutationType;
 import org.uma.jmetal.auto.irace.parameter.repairstrategy.RepairStrategyType;
@@ -51,17 +53,6 @@ import picocli.CommandLine.Option;
 import java.util.Arrays;
 import java.util.List;
 
-enum AlgorithmResult {
-  population,
-  externalArchive
-}
-
-enum CreateInitialSolutionsStrategyType {
-  random,
-  scatterSearch,
-  latinHypercubeSampling
-}
-
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */
   int sizeOfTheFinalPopulation = 100;
@@ -69,7 +60,7 @@ public class AutoNSGAIIConfigurator {
   @Option(
       names = {"--algorithmResult"},
       description = "Algorithm result - population vs archive (default: ${DEFAULT-VALUE})")
-  private AlgorithmResult algorithmResult = AlgorithmResult.population;
+  private AlgorithmResultType algorithmResult = AlgorithmResultType.population;
 
   @Option(
       names = {"--populationSize"},
@@ -99,7 +90,7 @@ public class AutoNSGAIIConfigurator {
   Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
   DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
   MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
-      new MultiComparator<>(
+      new MultiComparator<DoubleSolution>(
           Arrays.asList(ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
   Replacement<DoubleSolution> replacement =
@@ -227,7 +218,7 @@ public class AutoNSGAIIConfigurator {
     selection = getSelection();
     evaluation = new SequentialEvaluation<>(problem);
 
-    if (algorithmResult.equals(AlgorithmResult.externalArchive)) {
+    if (algorithmResult.equals(AlgorithmResultType.externalArchive)) {
       boundedArchiveObserver =
           new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation));
       evaluation.getObservable().register(boundedArchiveObserver);

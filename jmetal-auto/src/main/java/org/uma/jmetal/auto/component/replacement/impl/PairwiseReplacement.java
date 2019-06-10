@@ -3,7 +3,7 @@ package org.uma.jmetal.auto.component.replacement.impl;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PairwiseReplacement<S extends Solution<?>> implements Replacement<S> {
   private DominanceComparator<S> dominanceComparator ;
-  private Checker checker = new Checker();
+  private Check checker = new Check();
 
   public PairwiseReplacement() {
     this(new DominanceComparator<>()) ;

@@ -22,7 +22,7 @@ package org.uma.jmetal.problem.multiobjective.zdt;
 
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -34,7 +34,6 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class ZDT5 extends AbstractBinaryProblem {
 	private List<Integer> bitsPerVariable ;
-  private Checker checker = new Checker() ;
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
@@ -66,7 +65,7 @@ public class ZDT5 extends AbstractBinaryProblem {
 
   @Override
   public int getBitsFromVariable(int index) {
-    checker.valueIsInRange(index, 0, this.getNumberOfVariables()) ;
+    Check.valueIsInRange(index, 0, this.getNumberOfVariables()) ;
 
   	return bitsPerVariable.get(index) ;
   }

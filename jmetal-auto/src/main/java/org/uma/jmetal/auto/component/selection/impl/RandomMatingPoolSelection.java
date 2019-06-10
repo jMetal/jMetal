@@ -2,8 +2,7 @@ package org.uma.jmetal.auto.component.selection.impl;
 
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingP
   }
 
   public List<S> select(List<S> solutionList) {
-    Checker.isNotNull(solutionList);
+    Check.isNotNull(solutionList);
     /*
-        Checker.that(
+        Check.that(
             solutionList.size() >= matingPoolSize,
             "The solution list size ("
                 + solutionList.size()

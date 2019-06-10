@@ -1,8 +1,7 @@
 package org.uma.jmetal.solution.util.impl;
 
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -35,7 +34,7 @@ public class RepairDoubleSolutionWithRandomValue implements RepairDoubleSolution
    * @return The same value if it is between the limits or a repaired value otherwise
    */
   public double repairSolutionVariableValue(double value, double lowerBound, double upperBound) {
-    Checker.that(lowerBound < upperBound, "The lower bound (" + lowerBound + ") is greater than the "
+    Check.that(lowerBound < upperBound, "The lower bound (" + lowerBound + ") is greater than the "
         + "upper bound (" + upperBound+")");
 
     double result = value ;

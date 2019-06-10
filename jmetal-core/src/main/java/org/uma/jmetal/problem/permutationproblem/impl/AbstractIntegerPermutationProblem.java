@@ -10,10 +10,6 @@ public abstract class AbstractIntegerPermutationProblem
     extends AbstractGenericProblem<PermutationSolution<Integer>> implements
     PermutationProblem<PermutationSolution<Integer>> {
 
-  /* Getters */
-
-  /* Setters */
-
   @Override
   public PermutationSolution<Integer> createSolution() {
     return new IntegerPermutationSolution(getNumberOfVariables(), getPermutationLength()) ;

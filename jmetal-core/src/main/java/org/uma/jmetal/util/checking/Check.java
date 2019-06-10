@@ -4,7 +4,7 @@ import org.uma.jmetal.util.checking.exception.*;
 
 import java.util.Collection;
 
-public class Checker {
+public class Check {
   public static void isNotNull(Object object) {
     if (null == object) {
       throw new NullParameterException() ;
@@ -37,7 +37,7 @@ public class Checker {
 
   public static void isTrue(boolean expression, String message) {
     if (!expression) {
-      throw new RuntimeException(message);
+      throw new InvalidConditionException(message);
     }
   }
 

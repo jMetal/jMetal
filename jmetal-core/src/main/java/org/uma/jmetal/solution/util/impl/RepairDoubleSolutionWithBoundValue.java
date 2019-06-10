@@ -1,7 +1,7 @@
 package org.uma.jmetal.solution.util.impl;
 
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 
 /**
  * @author Antonio J. Nebro
@@ -18,10 +18,8 @@ public class RepairDoubleSolutionWithBoundValue implements RepairDoubleSolution 
    * @return The same value if it is in the limits or a repaired value otherwise
    */
   public double repairSolutionVariableValue(double value, double lowerBound, double upperBound) {
-    if (lowerBound > upperBound) {
-      throw new JMetalException("The lower bound (" + lowerBound + ") is greater than the "
-          + "upper bound (" + upperBound+")") ;
-    }
+    Check.isTrue(lowerBound < upperBound, "The lower bound (" + lowerBound + ") is greater than the "
+            + "upper bound (" + upperBound+")");
 
     double result = value ;
     if (value < lowerBound) {

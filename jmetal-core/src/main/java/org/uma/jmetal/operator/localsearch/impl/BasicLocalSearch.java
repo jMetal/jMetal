@@ -84,22 +84,12 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
 
       problem.evaluate(mutatedSolution);
       evaluations++;
-      if (problem.getNumberOfConstraints() > 0) {
-        best = constraintComparator.compare(mutatedSolution, solution);
-        if (best == 0) {
-          best = comparator.compare(mutatedSolution, solution);
-        }
-      } else {
-        best = comparator.compare(mutatedSolution, solution);
-      }
 
+      best = comparator.compare(mutatedSolution, solution) ;
       if (best == -1) {
         solution = mutatedSolution;
         numberOfImprovements++;
-      } else if (best == 1) {
-        // Current solution is best
-      } else {
-
+      } else if (best == 0) {
         if (randomGenerator.getRandomValue() < 0.5) {
           solution = mutatedSolution;
         }

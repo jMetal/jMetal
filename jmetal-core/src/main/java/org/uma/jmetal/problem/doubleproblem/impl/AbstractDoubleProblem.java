@@ -6,7 +6,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.util.checking.Checker;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,9 +33,9 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
   }
 
   public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
-    Checker.isNotNull(lowerBounds);
-    Checker.isNotNull(upperBounds);
-    Checker.that(
+    Check.isNotNull(lowerBounds);
+    Check.isNotNull(upperBounds);
+    Check.that(
         lowerBounds.size() == upperBounds.size(),
         "The size of the lower bound list is not equal to the size of the upper bound list");
 

@@ -20,7 +20,7 @@ public class RepairDoubleSolutionWithBoundValueTest {
     repair = new RepairDoubleSolutionWithBoundValue() ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = RuntimeException.class)
   public void shouldRepairDoubleSolutionAtBoundsRaiseAnExceptionIfTheBoundsAreIncorrect() {
     repair.repairSolutionVariableValue(0.0, 1.0, -1.0) ;
   }
