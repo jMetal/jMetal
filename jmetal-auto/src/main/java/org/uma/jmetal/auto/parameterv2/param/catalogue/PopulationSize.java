@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.parameterv2.param;
+package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
 
