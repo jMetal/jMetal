@@ -79,7 +79,7 @@ public class MOEADDRAIT {
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
         .setDataDirectory(
-            "/Users/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/MOEAD_Weights")
+            "MOEAD_Weights")
         .build();
 
     algorithm.run();

@@ -45,7 +45,7 @@ public class MOMBI2IT {
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-        "mombi2-weights/weight/weight_03D_12.sld");
+        "/mombi2-weights/weight/weight_03D_12.sld");
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult() ;

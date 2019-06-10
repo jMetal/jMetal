@@ -79,7 +79,6 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
 						new SequentialSolutionListEvaluator<DoubleSolution>(),
 						epsilon,
 						referencePoint,
-						//"/home/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/mombi2-weights/weight/weight_02D_152.sld") ;
 		"MOEAD_Weights/W3D_100.dat") ;
 
     

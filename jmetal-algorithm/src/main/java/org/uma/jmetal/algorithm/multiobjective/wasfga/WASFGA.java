@@ -105,7 +105,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 			//For more than two objectives, weights are read from the resources file of jMetal
 			else {
 				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
-				weights = VectorFileUtils.readVectors("MOEAD_Weights/" + dataFileName);
+				weights = VectorFileUtils.readVectors(dataFileName);
 			}
 		} else { //If a file with weight vectors is given as parameter, weights are read from that file
 			//weights = WeightVectors.readFromFile(this.weightVectorsFileName) ;

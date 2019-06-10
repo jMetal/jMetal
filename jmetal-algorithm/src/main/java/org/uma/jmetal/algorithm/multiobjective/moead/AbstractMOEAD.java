@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -111,6 +112,8 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
         //       String path =
         // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
         // ();
+        JMetalLogger.logger.info("FILE PATH: " + dataDirectory + "/" + dataFileName); ;
+
         InputStream in =
             getClass()
                 .getClassLoader()
