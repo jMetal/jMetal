@@ -1,12 +1,12 @@
-package org.uma.jmetal.auto.parameterv2;
+package org.uma.jmetal.auto.parameterv2.param;
 
 import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
 
 import java.util.Arrays;
 import java.util.function.Function;
 
-abstract class Parameter<T> {
-  public enum ParameterType {singleValue, categorical}
+public abstract class Parameter<T> {
+  public enum ParameterType {singleValue, categorical, ordinal}
 
   protected T value;
   protected ParameterType type ;

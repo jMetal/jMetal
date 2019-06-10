@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.parameterv2;
+package org.uma.jmetal.auto.parameterv2.param;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-class AlgorithmResult extends Parameter<String> {
+public class AlgorithmResult extends Parameter<String> {
   private List<String> validValues = Arrays.asList("externalArchive", "population") ;
 
   public AlgorithmResult(String args[]) {
