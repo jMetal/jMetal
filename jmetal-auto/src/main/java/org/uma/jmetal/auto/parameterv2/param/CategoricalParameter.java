@@ -6,7 +6,6 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
   private List<T> validValues ;
 
   public CategoricalParameter(List<T> validValues) {
-    type = ParameterType.categorical ;
     this.validValues = validValues ;
   }
 

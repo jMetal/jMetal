@@ -8,7 +8,6 @@ public class OffspringPopulationSize extends OrdinalParameter<Integer> {
   public OffspringPopulationSize(String args[], List<Integer> validValues) {
     super(validValues) ;
     value = on("--offspringPopulationSize", args, Integer::parseInt);
-    type = ParameterType.singleValue ;
   }
 
   @Override

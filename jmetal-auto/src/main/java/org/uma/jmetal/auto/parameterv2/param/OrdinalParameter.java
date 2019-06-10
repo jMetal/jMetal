@@ -6,7 +6,6 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
   private List<T> validValues ;
 
   public OrdinalParameter(List<T> validValues) {
-    type = ParameterType.ordinal ;
     this.validValues = validValues ;
   }
 

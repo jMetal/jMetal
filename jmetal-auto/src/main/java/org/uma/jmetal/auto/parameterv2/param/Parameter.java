@@ -6,10 +6,7 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 public abstract class Parameter<T> {
-  public enum ParameterType {singleValue, categorical, ordinal}
-
   protected T value;
-  protected ParameterType type ;
 
   public T on(String key, String[] args, Function<String, T> parser) {
     return parser.apply(retrieve(args, key));
@@ -29,14 +26,4 @@ public abstract class Parameter<T> {
   public T getValue() {
     return value;
   }
-
-  public ParameterType getType() {return type ;} ;
-
-    /*
-    private Parameter<T> parent = null ;
-    protected Boolean isGlobalParameter = false ; ;
-
-    protected List<Parameter<?>> globalParameters = new ArrayList<>();
-    protected List<Parameter<?>> specificParameters = new ArrayList<>();
-    */
 }
