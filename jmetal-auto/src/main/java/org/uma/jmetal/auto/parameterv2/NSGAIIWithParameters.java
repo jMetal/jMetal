@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.parameterv2;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
+import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -29,44 +30,22 @@ public class NSGAIIWithParameters {
       selection.addSpecificParameter(selectionTournamentSize);
     }
 
-    /*
-    System.out.println("Population size: " + populationSize.getValue());
-    System.out.println(
-        "Algorithm result: "
-            + algorithmResult.getValue()
-            + ". Valid values: "
-            + algorithmResult.getValidValues());
-    System.out.println(
-        "Population size when an archive is used: "
-            + populationSizeWithArchive.getValue()
-            + ". Valid values: "
-            + populationSizeWithArchive.getValidValues());
+    Crossover crossover = new Crossover(args) ;
+    Probability crossoverProbability = new Probability(args, "crossoverProbability") ;
+    crossover.addGlobalParameter(crossoverProbability);
+    RepairStrategy crossoverRepairStrategy = new RepairStrategy(args, "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds")) ;
+    crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    System.out.println(
-        "Offspring population size: "
-            + offspringPopulationSize.getValue()
-            + ". Valid values: "
-            + offspringPopulationSize.getValidValues());
+    if (crossover.getValue().equals("SBX")) {
+      RealParameter distributionIndex = new DistributionIndex(args, "sbxDistributionIndex", 5.0, 400.0) ;
+      crossover.addSpecificParameter(distributionIndex);
+    }
 
-    System.out.println(
-        "Create initial solutions strategies: "
-            + createInitialSolutions.getValue()
-            + ". Valid values: "
-            + createInitialSolutions.getValidValues());
+    if (crossover.getValue().equals("BLX_ALPHA")) {
+      RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0) ;
+      crossover.addSpecificParameter(alpha);
+    }
 
-    System.out.println(
-        "Variation: "
-            + variation.getValue()
-            + ". Valid values: "
-            + variation.getValidValues());
-
-    System.out.println(
-        "Selection: "
-            + selection.getValue()
-            + ". Valid values: "
-            + selection.getValidValues()
-            + selection.getSpecificParameters());
-    */
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
     nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
@@ -74,6 +53,7 @@ public class NSGAIIWithParameters {
     nsgaIIParameters.put(createInitialSolutions.getName(), createInitialSolutions);
     nsgaIIParameters.put(variation.getName(), variation) ;
     nsgaIIParameters.put(selection.getName(), selection) ;
+    nsgaIIParameters.put(crossover.getName(), crossover) ;
 
     print(nsgaIIParameters) ;
     System.out.println() ;
@@ -94,7 +74,11 @@ public class NSGAIIWithParameters {
             "--createInitialSolutions random " +
             "--variation crossoverAndMutationVariation " +
             "--selection tournament " +
-            "--selectionTournamentSize 4")
+            "--selectionTournamentSize 4 " +
+            "--crossover SBX " +
+            "--crossoverProbability 0.9 " +
+            "--crossoverRepairStrategy bounds " +
+            "--sbxDistributionIndex 20.0 ")
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();

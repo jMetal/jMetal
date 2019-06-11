@@ -20,6 +20,8 @@ public class NSGAIIiraceParameterFile {
     Variation variation = (Variation) parameterMap.get("variation");
     Selection selection = (Selection) parameterMap.get("selection");
 
+    Crossover crossover = (Crossover) parameterMap.get("crossover") ;
+
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(
@@ -102,6 +104,41 @@ public class NSGAIIiraceParameterFile {
               decodeValidValues(specificParameter),
               "| selection %in% c(\"tournament\")"));
     }
+
+    stringBuilder.append("#\n");
+
+    stringBuilder.append(
+        String.format(
+            formatString,
+            crossover.getName(),
+            "--" + crossover.getName(),
+            decodeType(crossover),
+            decodeValidValues(crossover),
+            "| variation %in% c(\"crossoverAndMutationVariation\")"));
+
+    for (Parameter<?> parameter: crossover.getGlobalParameters()) {
+      Parameter<?> globalParameter = parameter;
+      stringBuilder.append(
+          String.format(
+              formatString,
+              globalParameter.getName(),
+              "--" + globalParameter.getName(),
+              decodeType(globalParameter),
+              decodeValidValues(globalParameter),
+              "| crossover %in% c(\"SBX\",\"BLX_ALPHA\")"));
+    }
+    if (crossover.getSpecificParameters().size() == 1) {
+      Parameter<?> specificParameter = crossover.getSpecificParameters().get(0);
+      stringBuilder.append(
+          String.format(
+              formatString,
+              specificParameter.getName(),
+              "--" + specificParameter.getName(),
+              decodeType(specificParameter),
+              decodeValidValues(specificParameter),
+              "| crossover %in% c(\"tournament\")"));
+    }
+
 
     System.out.println(stringBuilder.toString());
   }

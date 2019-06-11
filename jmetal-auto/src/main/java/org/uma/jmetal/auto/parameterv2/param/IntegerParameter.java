@@ -25,6 +25,9 @@ public abstract class IntegerParameter extends Parameter<Integer> {
   @Override
   public String toString() {
     String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Lower bound: " + lowerBound + ". Upper bound: " + upperBound  ;
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      result += " -> " + parameter.toString() ;
+    }
     for (Parameter<?> parameter : getSpecificParameters()) {
       result += " -> " + parameter.toString() ;
     }

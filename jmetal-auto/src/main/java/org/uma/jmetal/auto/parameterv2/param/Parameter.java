@@ -11,6 +11,7 @@ import java.util.function.Function;
 public abstract class Parameter<T> {
   protected T value;
   private List<Parameter<?>> specificParameters = new ArrayList<>();
+  private List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public T on(String key, String[] args, Function<String, T> parser) {
     return parser.apply(retrieve(args, key));
@@ -31,7 +32,10 @@ public abstract class Parameter<T> {
     return specificParameters;
   }
   public void addSpecificParameter(Parameter<?> parameter) { specificParameters.add(parameter);}
-
+  public List<Parameter<?>> getGlobalParameters() {
+    return globalParameters;
+  }
+  public void addGlobalParameter(Parameter<?> parameter) { globalParameters.add(parameter);}
   public T getValue() {
     return value;
   }
@@ -39,6 +43,9 @@ public abstract class Parameter<T> {
   @Override
   public String toString() {
     String result = "Name: " + getName() + ": " + "Value: " + getValue() ;
+    for (Parameter<?> parameter : globalParameters) {
+      result += " -> " + parameter.toString() ;
+    }
     for (Parameter<?> parameter : specificParameters) {
       result += " -> " + parameter.toString() ;
     }

@@ -20,6 +20,9 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
   @Override
   public String toString() {
     String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues ;
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      result += " -> " + parameter.toString() ;
+    }
     for (Parameter<?> parameter : getSpecificParameters()) {
       result += " -> " + parameter.toString() ;
     }
