@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.parameterv2.param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CategoricalParameter<T> extends Parameter<T> {
@@ -16,11 +17,13 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
   }
 
   public List<T> getValidValues() { return validValues ;}
-    /*
-    private Parameter<T> parent = null ;
-    protected Boolean isGlobalParameter = false ; ;
 
-    protected List<Parameter<?>> globalParameters = new ArrayList<>();
-    protected List<Parameter<?>> specificParameters = new ArrayList<>();
-    */
+  @Override
+  public String toString() {
+    String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues ;
+    for (Parameter<?> parameter : getSpecificParameters()) {
+      result += " -> " + parameter.toString() ;
+    }
+    return result ;
+  }
 }

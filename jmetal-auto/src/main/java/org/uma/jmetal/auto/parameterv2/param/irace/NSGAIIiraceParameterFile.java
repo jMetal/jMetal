@@ -1,15 +1,13 @@
 package org.uma.jmetal.auto.parameterv2.param.irace;
 
-import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
-import org.uma.jmetal.auto.parameterv2.param.OrdinalParameter;
-import org.uma.jmetal.auto.parameterv2.param.Parameter;
+import org.uma.jmetal.auto.parameterv2.param.*;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 
 import java.util.Map;
 
-public class NSGAIIParameterFile {
+public class NSGAIIiraceParameterFile {
   public void create(Map<String, Parameter<?>> parameterMap) {
-    parameterMap.forEach((key, value) -> System.out.println("Name: " + key + ". Value: " + value));
+    //parameterMap.forEach((key, value) -> System.out.println("Name: " + key + ". Value: " + value));
 
     AlgorithmResult algorithmResult = (AlgorithmResult) parameterMap.get("algorithmResult");
     PopulationSize populationSize = (PopulationSize) parameterMap.get("populationSize");
@@ -19,8 +17,8 @@ public class NSGAIIParameterFile {
         (OffspringPopulationSize) parameterMap.get("offspringPopulationSize");
     CreateInitialSolutions createInitialSolutions =
         (CreateInitialSolutions) parameterMap.get("createInitialSolutions");
-    Variation variation = (Variation) parameterMap.get("variation") ;
-    Selection selection = (Selection) parameterMap.get("selection") ;
+    Variation variation = (Variation) parameterMap.get("variation");
+    Selection selection = (Selection) parameterMap.get("selection");
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
     StringBuilder stringBuilder = new StringBuilder();
@@ -60,7 +58,7 @@ public class NSGAIIParameterFile {
             decodeValidValues(offspringPopulationSize),
             ""));
 
-    stringBuilder.append("#\n") ;
+    stringBuilder.append("#\n");
 
     stringBuilder.append(
         String.format(
@@ -71,7 +69,7 @@ public class NSGAIIParameterFile {
             decodeValidValues(createInitialSolutions),
             ""));
 
-    stringBuilder.append("#\n") ;
+    stringBuilder.append("#\n");
 
     stringBuilder.append(
         String.format(
@@ -82,7 +80,7 @@ public class NSGAIIParameterFile {
             decodeValidValues(variation),
             ""));
 
-    stringBuilder.append("#\n") ;
+    stringBuilder.append("#\n");
 
     stringBuilder.append(
         String.format(
@@ -93,6 +91,18 @@ public class NSGAIIParameterFile {
             decodeValidValues(selection),
             ""));
 
+    if (selection.getSpecificParameters().size() == 1) {
+      Parameter<?> specificParameter = selection.getSpecificParameters().get(0);
+      stringBuilder.append(
+          String.format(
+              formatString,
+              specificParameter.getName(),
+              "--" + specificParameter.getName(),
+              decodeType(specificParameter),
+              decodeValidValues(specificParameter),
+              "| selection %in% c(\"tournament\")"));
+    }
+
     System.out.println(stringBuilder.toString());
   }
 
@@ -102,6 +112,10 @@ public class NSGAIIParameterFile {
       result = "c";
     } else if (parameter instanceof OrdinalParameter) {
       result = "o";
+    } else if (parameter instanceof IntegerParameter) {
+      result = "i";
+    } else if (parameter instanceof RealParameter) {
+      result = "r";
     } else if (parameter instanceof Parameter) {
       result = "o";
     }
@@ -118,6 +132,14 @@ public class NSGAIIParameterFile {
       result = result.replace("]", ")");
     } else if (parameter instanceof OrdinalParameter) {
       result = ((OrdinalParameter<?>) parameter).getValidValues().toString();
+      result = result.replace("[", "(");
+      result = result.replace("]", ")");
+    } else if (parameter instanceof IntegerParameter) {
+      result = ((IntegerParameter) parameter).getValidValues().toString();
+      result = result.replace("[", "(");
+      result = result.replace("]", ")");
+    } else if (parameter instanceof RealParameter) {
+      result = ((RealParameter) parameter).getValidValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof Parameter) {

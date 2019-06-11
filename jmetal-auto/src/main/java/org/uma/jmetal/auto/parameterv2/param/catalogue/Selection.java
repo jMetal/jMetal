@@ -15,6 +15,18 @@ public class Selection extends CategoricalParameter<String> {
     super(selectionStrategies) ;
     value = on("--selection", args, Function.identity());
     check(value) ;
+
+    /*
+    if (value.equals("tournament")) {
+      getSpecificParameters().add(new NumericalParameter<Integer>() {
+        @Override
+        public String getName() {
+          return null;
+        }
+      }) ;
+    }
+
+     */
   }
 
   @Override

@@ -3,7 +3,7 @@ package org.uma.jmetal.auto.parameterv2;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
-import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIParameterFile;
+import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
@@ -23,8 +23,13 @@ public class NSGAIIWithParameters {
 
     CreateInitialSolutions createInitialSolutions = new CreateInitialSolutions(args);
     Variation variation = new Variation(args) ;
-    Selection selection = new Selection(args) ;
+    Selection selection = new Selection(args, Arrays.asList("tournament", "random")) ;
+    if (selection.getValue().equals("tournament")) {
+      SelectionTournamentSize selectionTournamentSize = new SelectionTournamentSize(args,2, 10) ;
+      selection.addSpecificParameter(selectionTournamentSize);
+    }
 
+    /*
     System.out.println("Population size: " + populationSize.getValue());
     System.out.println(
         "Algorithm result: "
@@ -59,8 +64,9 @@ public class NSGAIIWithParameters {
         "Selection: "
             + selection.getValue()
             + ". Valid values: "
-            + selection.getValidValues());
-
+            + selection.getValidValues()
+            + selection.getSpecificParameters());
+    */
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
     nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
@@ -69,7 +75,14 @@ public class NSGAIIWithParameters {
     nsgaIIParameters.put(variation.getName(), variation) ;
     nsgaIIParameters.put(selection.getName(), selection) ;
 
+    print(nsgaIIParameters) ;
+    System.out.println() ;
+
     return null;
+  }
+
+  public static void print(Map<String, Parameter<?>> parameterMap) {
+    parameterMap.forEach((key, value) -> System.out.println(value.toString()));
   }
 
   public static void main(String[] args) {
@@ -80,14 +93,15 @@ public class NSGAIIWithParameters {
             "--offspringPopulationSize 100 " +
             "--createInitialSolutions random " +
             "--variation crossoverAndMutationVariation " +
-            "--selection tournament")
+            "--selection tournament " +
+            "--selectionTournamentSize 4")
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create(parameters);
 
-    NSGAIIParameterFile nsgaiiParameterFile = new NSGAIIParameterFile();
-    nsgaiiParameterFile.create(nsgaiiWithParameters.nsgaIIParameters);
+    NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
+    nsgaiiiraceParameterFile.create(nsgaiiWithParameters.nsgaIIParameters);
   }
 }
