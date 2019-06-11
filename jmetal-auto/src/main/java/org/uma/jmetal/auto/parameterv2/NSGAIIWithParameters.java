@@ -20,7 +20,10 @@ public class NSGAIIWithParameters {
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     OffspringPopulationSize offspringPopulationSize =
         new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
+
     CreateInitialSolutions createInitialSolutions = new CreateInitialSolutions(args);
+    Variation variation = new Variation(args) ;
+    Selection selection = new Selection(args) ;
 
     System.out.println("Population size: " + populationSize.getValue());
     System.out.println(
@@ -46,11 +49,25 @@ public class NSGAIIWithParameters {
             + ". Valid values: "
             + createInitialSolutions.getValidValues());
 
+    System.out.println(
+        "Variation: "
+            + variation.getValue()
+            + ". Valid values: "
+            + variation.getValidValues());
+
+    System.out.println(
+        "Selection: "
+            + selection.getValue()
+            + ". Valid values: "
+            + selection.getValidValues());
+
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
     nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
     nsgaIIParameters.put(offspringPopulationSize.getName(), offspringPopulationSize);
     nsgaIIParameters.put(createInitialSolutions.getName(), createInitialSolutions);
+    nsgaIIParameters.put(variation.getName(), variation) ;
+    nsgaIIParameters.put(selection.getName(), selection) ;
 
     return null;
   }
@@ -61,7 +78,9 @@ public class NSGAIIWithParameters {
             "--algorithmResult population " +
             "--populationSizeWithArchive 100 " +
             "--offspringPopulationSize 100 " +
-            "--createInitialSolutions random")
+            "--createInitialSolutions random " +
+            "--variation crossoverAndMutationVariation " +
+            "--selection tournament")
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();

@@ -19,6 +19,8 @@ public class NSGAIIParameterFile {
         (OffspringPopulationSize) parameterMap.get("offspringPopulationSize");
     CreateInitialSolutions createInitialSolutions =
         (CreateInitialSolutions) parameterMap.get("createInitialSolutions");
+    Variation variation = (Variation) parameterMap.get("variation") ;
+    Selection selection = (Selection) parameterMap.get("selection") ;
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
     StringBuilder stringBuilder = new StringBuilder();
@@ -58,6 +60,8 @@ public class NSGAIIParameterFile {
             decodeValidValues(offspringPopulationSize),
             ""));
 
+    stringBuilder.append("#\n") ;
+
     stringBuilder.append(
         String.format(
             formatString,
@@ -65,6 +69,28 @@ public class NSGAIIParameterFile {
             "--" + createInitialSolutions.getName(),
             decodeType(createInitialSolutions),
             decodeValidValues(createInitialSolutions),
+            ""));
+
+    stringBuilder.append("#\n") ;
+
+    stringBuilder.append(
+        String.format(
+            formatString,
+            variation.getName(),
+            "--" + variation.getName(),
+            decodeType(variation),
+            decodeValidValues(variation),
+            ""));
+
+    stringBuilder.append("#\n") ;
+
+    stringBuilder.append(
+        String.format(
+            formatString,
+            selection.getName(),
+            "--" + selection.getName(),
+            decodeType(selection),
+            decodeValidValues(selection),
             ""));
 
     System.out.println(stringBuilder.toString());
