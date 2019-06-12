@@ -8,16 +8,22 @@ import java.util.function.Function;
 
 public class RepairStrategy extends CategoricalParameter<String> {
   private String name ;
+  private String[] args ;
 
   public RepairStrategy(String args[], String name, List<String> strategies) {
     super(strategies) ;
     this.name = name ;
-    value = on("--"+name, args, Function.identity());
-    check(value) ;
+    this.args = args ;
   }
 
   public RepairStrategy(String args[], String name) {
     this(args, name, Arrays.asList("random", "round","bounds")) ;
+  }
+
+  @Override
+  public CategoricalParameter<String> parse() {
+    value = on("--"+name, args, Function.identity());
+    return this ;
   }
 
   @Override

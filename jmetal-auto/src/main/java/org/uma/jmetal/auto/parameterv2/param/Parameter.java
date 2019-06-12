@@ -24,7 +24,8 @@ public abstract class Parameter<T> {
     }
   }
 
-  //public abstract void check() ;
+  public abstract void check() ;
+  public abstract Parameter<T> parse() ;
 
   public abstract String getName();
 

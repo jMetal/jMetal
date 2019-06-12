@@ -10,6 +10,12 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
     this.validValues = validValues ;
   }
 
+
+  @Override
+  public void check() {
+    check(value) ;
+  }
+
   protected void check(T value) {
     if (!validValues.contains(value)) {
       throw new RuntimeException("Invalid value: " + value + ". Valid values: " + validValues) ;

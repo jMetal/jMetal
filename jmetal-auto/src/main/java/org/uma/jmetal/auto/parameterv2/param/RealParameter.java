@@ -12,6 +12,11 @@ public abstract class RealParameter extends Parameter<Double> {
     this.upperBound = upperBound ;
   }
 
+  @Override
+  public void check() {
+    check(value) ;
+  }
+
   protected void check(Double value) {
     if ((value < lowerBound) || (value > upperBound))  {
       throw new RuntimeException("Invalid value: " + value + ". Range: " + lowerBound + ", " + upperBound) ;

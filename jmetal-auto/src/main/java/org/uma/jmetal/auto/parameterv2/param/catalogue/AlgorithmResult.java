@@ -6,10 +6,17 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 public class AlgorithmResult extends CategoricalParameter<String> {
+  private String args[] ;
+
   public AlgorithmResult(String args[]) {
     super(Arrays.asList("externalArchive", "population")) ;
+    this.args = args ;
+  }
+
+  @Override
+  public CategoricalParameter<String> parse() {
     value = on("--algorithmResult", args, Function.identity());
-    check(value) ;
+    return this ;
   }
 
   @Override

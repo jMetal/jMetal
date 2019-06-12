@@ -12,6 +12,12 @@ public abstract class IntegerParameter extends Parameter<Integer> {
     this.upperBound = upperBound ;
   }
 
+
+  @Override
+  public void check() {
+    check(value) ;
+  }
+
   protected void check(Integer value) {
     if ((value < lowerBound) || (value > upperBound))  {
       throw new RuntimeException("Invalid value: " + value + ". Range: " + lowerBound + ", " + upperBound) ;

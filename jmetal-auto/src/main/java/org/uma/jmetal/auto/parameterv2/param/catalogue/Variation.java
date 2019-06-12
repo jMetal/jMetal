@@ -7,14 +7,20 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Variation extends CategoricalParameter<String> {
+  private String[] args ;
+
   public Variation(String args[]) {
     this(args, Arrays.asList("crossoverAndMutationVariation")) ;
   }
 
   public Variation(String args[], List<String> variationStrategies) {
     super(variationStrategies) ;
+    this.args = args ;
+  }
+
+  public CategoricalParameter<String> parse() {
     value = on("--variation", args, Function.identity());
-    check(value) ;
+    return this ;
   }
 
   @Override

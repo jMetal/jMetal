@@ -42,11 +42,8 @@ public class NSGAIIWithParameters {
         new DistributionIndex(args, "sbxDistributionIndex", 5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
-    //RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
-    //crossover.addSpecificParameter("BLX_ALPHA", alpha);
-
-
-
+    RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
+    crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
@@ -57,7 +54,12 @@ public class NSGAIIWithParameters {
     nsgaIIParameters.put(selection.getName(), selection);
     nsgaIIParameters.put(crossover.getName(), crossover);
 
+    for (Parameter<?> parameter : nsgaIIParameters.values()) {
+      parameter.parse().check(); ;
+    }
+
     print(nsgaIIParameters);
+
     System.out.println();
 
     return null;

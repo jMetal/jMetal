@@ -9,6 +9,12 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     this.validValues = validValues ;
   }
 
+
+  @Override
+  public void check() {
+    check(value) ;
+  }
+
   public void check(T value) {
     if (!validValues.contains(value)) {
       throw new RuntimeException("Invalid value: " + value + ". Valid values: " + validValues) ;

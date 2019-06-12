@@ -126,19 +126,18 @@ public class NSGAIIiraceParameterFile {
               decodeValidValues(globalParameter),
               ""));
     }
-    /*
-    if (crossover.getSpecificParameters().size() == 1) {
-      Parameter<?> specificParameter = crossover.getSpecificParameters().get(0);
-      stringBuilder.append(
-          String.format(
-              formatString,
-              specificParameter.getName(),
-              "--" + specificParameter.getName(),
-              decodeType(specificParameter),
-              decodeValidValues(specificParameter),
-              "| crossover %in% c(\"tournament\")"));
-    }
-*/
+
+    crossover.getSpecificParameters()
+        .forEach((key, value) -> stringBuilder.append(
+            String.format(
+                formatString,
+                value.getName(),
+                "--" + value.getName(),
+                decodeType(value),
+                decodeValidValues(value),
+                "| crossover %in% c(\"" + key + "\")"))) ;
+
+    stringBuilder.append("#\n");
 
     System.out.println(stringBuilder.toString());
   }
