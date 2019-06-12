@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class Crossover extends CategoricalParameter<String> {
   public Crossover(String args[]) {
-    this(args, Arrays.asList("SBX", "BLXAlpha")) ;
+    this(args, Arrays.asList("SBX", "BLX_ALPHA")) ;
   }
 
   public Crossover(String args[], List<String> crossoverOperators) {

@@ -9,7 +9,7 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     this.validValues = validValues ;
   }
 
-  protected void check(T value) {
+  public void check(T value) {
     if (!validValues.contains(value)) {
       throw new RuntimeException("Invalid value: " + value + ". Valid values: " + validValues) ;
     }
@@ -23,7 +23,7 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result += " -> " + parameter.toString() ;
     }
-    for (Parameter<?> parameter : getSpecificParameters()) {
+    for (Parameter<?> parameter : getSpecificParameters().values()) {
       result += " -> " + parameter.toString() ;
     }
     return result ;

@@ -3,14 +3,12 @@ package org.uma.jmetal.auto.parameterv2.param;
 import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
 import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 public abstract class Parameter<T> {
   protected T value;
-  private List<Parameter<?>> specificParameters = new ArrayList<>();
+  private Map<String, Parameter<?>> specificParameters = new HashMap<>();
   private List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public T on(String key, String[] args, Function<String, T> parser) {
@@ -26,12 +24,14 @@ public abstract class Parameter<T> {
     }
   }
 
+  //public abstract void check() ;
+
   public abstract String getName();
 
-  public List<Parameter<?>> getSpecificParameters() {
+  public Map<String, Parameter<?>> getSpecificParameters() {
     return specificParameters;
   }
-  public void addSpecificParameter(Parameter<?> parameter) { specificParameters.add(parameter);}
+  public void addSpecificParameter(String dependsOn, Parameter<?> parameter) { specificParameters.put(dependsOn, parameter);}
   public List<Parameter<?>> getGlobalParameters() {
     return globalParameters;
   }
@@ -46,7 +46,7 @@ public abstract class Parameter<T> {
     for (Parameter<?> parameter : globalParameters) {
       result += " -> " + parameter.toString() ;
     }
-    for (Parameter<?> parameter : specificParameters) {
+    for (Parameter<?> parameter : specificParameters.values()) {
       result += " -> " + parameter.toString() ;
     }
     return result ;

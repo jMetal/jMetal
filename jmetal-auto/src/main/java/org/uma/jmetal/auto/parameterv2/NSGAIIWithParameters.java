@@ -23,40 +23,42 @@ public class NSGAIIWithParameters {
         new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
 
     CreateInitialSolutions createInitialSolutions = new CreateInitialSolutions(args);
-    Variation variation = new Variation(args) ;
-    Selection selection = new Selection(args, Arrays.asList("tournament", "random")) ;
-    if (selection.getValue().equals("tournament")) {
-      SelectionTournamentSize selectionTournamentSize = new SelectionTournamentSize(args,2, 10) ;
-      selection.addSpecificParameter(selectionTournamentSize);
-    }
 
-    Crossover crossover = new Crossover(args) ;
-    Probability crossoverProbability = new Probability(args, "crossoverProbability") ;
+    Variation variation = new Variation(args);
+
+    Selection selection = new Selection(args, Arrays.asList("tournament", "random"));
+    SelectionTournamentSize selectionTournamentSize = new SelectionTournamentSize(args, 2, 10);
+    selection.addSpecificParameter("tournament", selectionTournamentSize);
+
+    Crossover crossover = new Crossover(args, Arrays.asList("SBX", "BLX_ALPHA"));
+    Probability crossoverProbability = new Probability(args, "crossoverProbability");
     crossover.addGlobalParameter(crossoverProbability);
-    RepairStrategy crossoverRepairStrategy = new RepairStrategy(args, "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds")) ;
+    RepairStrategy crossoverRepairStrategy =
+        new RepairStrategy(
+            args, "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    if (crossover.getValue().equals("SBX")) {
-      RealParameter distributionIndex = new DistributionIndex(args, "sbxDistributionIndex", 5.0, 400.0) ;
-      crossover.addSpecificParameter(distributionIndex);
-    }
+    RealParameter distributionIndex =
+        new DistributionIndex(args, "sbxDistributionIndex", 5.0, 400.0);
+    crossover.addSpecificParameter("SBX", distributionIndex);
 
-    if (crossover.getValue().equals("BLX_ALPHA")) {
-      RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0) ;
-      crossover.addSpecificParameter(alpha);
-    }
+    //RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
+    //crossover.addSpecificParameter("BLX_ALPHA", alpha);
+
+
+
 
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
     nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
     nsgaIIParameters.put(offspringPopulationSize.getName(), offspringPopulationSize);
     nsgaIIParameters.put(createInitialSolutions.getName(), createInitialSolutions);
-    nsgaIIParameters.put(variation.getName(), variation) ;
-    nsgaIIParameters.put(selection.getName(), selection) ;
-    nsgaIIParameters.put(crossover.getName(), crossover) ;
+    nsgaIIParameters.put(variation.getName(), variation);
+    nsgaIIParameters.put(selection.getName(), selection);
+    nsgaIIParameters.put(crossover.getName(), crossover);
 
-    print(nsgaIIParameters) ;
-    System.out.println() ;
+    print(nsgaIIParameters);
+    System.out.println();
 
     return null;
   }
@@ -67,18 +69,18 @@ public class NSGAIIWithParameters {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--populationSize 100 " +
-            "--algorithmResult population " +
-            "--populationSizeWithArchive 100 " +
-            "--offspringPopulationSize 100 " +
-            "--createInitialSolutions random " +
-            "--variation crossoverAndMutationVariation " +
-            "--selection tournament " +
-            "--selectionTournamentSize 4 " +
-            "--crossover SBX " +
-            "--crossoverProbability 0.9 " +
-            "--crossoverRepairStrategy bounds " +
-            "--sbxDistributionIndex 20.0 ")
+        ("--populationSize 100 "
+                + "--algorithmResult population "
+                + "--populationSizeWithArchive 100 "
+                + "--offspringPopulationSize 100 "
+                + "--createInitialSolutions random "
+                + "--variation crossoverAndMutationVariation "
+                + "--selection tournament "
+                + "--selectionTournamentSize 4 "
+                + "--crossover SBX "
+                + "--crossoverProbability 0.9 "
+                + "--crossoverRepairStrategy bounds "
+                + "--sbxDistributionIndex 20.0 ")
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();

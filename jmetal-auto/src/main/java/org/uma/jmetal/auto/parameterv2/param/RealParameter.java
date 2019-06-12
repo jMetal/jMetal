@@ -28,7 +28,7 @@ public abstract class RealParameter extends Parameter<Double> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result += " -> " + parameter.toString() ;
     }
-    for (Parameter<?> parameter : getSpecificParameters()) {
+    for (Parameter<?> parameter : getSpecificParameters().values()) {
       result += " -> " + parameter.toString() ;
     }
     return result ;

@@ -93,17 +93,16 @@ public class NSGAIIiraceParameterFile {
             decodeValidValues(selection),
             ""));
 
-    if (selection.getSpecificParameters().size() == 1) {
-      Parameter<?> specificParameter = selection.getSpecificParameters().get(0);
-      stringBuilder.append(
-          String.format(
-              formatString,
-              specificParameter.getName(),
-              "--" + specificParameter.getName(),
-              decodeType(specificParameter),
-              decodeValidValues(specificParameter),
-              "| selection %in% c(\"tournament\")"));
-    }
+
+    selection.getSpecificParameters()
+        .forEach((key, value) -> stringBuilder.append(
+            String.format(
+                formatString,
+                value.getName(),
+                "--" + value.getName(),
+                decodeType(value),
+                decodeValidValues(value),
+                "| selection %in% c(\"" + key + "\")"))) ;
 
     stringBuilder.append("#\n");
 
@@ -125,8 +124,9 @@ public class NSGAIIiraceParameterFile {
               "--" + globalParameter.getName(),
               decodeType(globalParameter),
               decodeValidValues(globalParameter),
-              "| crossover %in% c(\"SBX\",\"BLX_ALPHA\")"));
+              ""));
     }
+    /*
     if (crossover.getSpecificParameters().size() == 1) {
       Parameter<?> specificParameter = crossover.getSpecificParameters().get(0);
       stringBuilder.append(
@@ -138,7 +138,7 @@ public class NSGAIIiraceParameterFile {
               decodeValidValues(specificParameter),
               "| crossover %in% c(\"tournament\")"));
     }
-
+*/
 
     System.out.println(stringBuilder.toString());
   }
