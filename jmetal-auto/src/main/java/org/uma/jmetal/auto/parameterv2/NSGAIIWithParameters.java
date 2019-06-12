@@ -15,8 +15,8 @@ public class NSGAIIWithParameters {
   public Map<String, Parameter<?>> nsgaIIParameters = new HashMap<>();
 
   public EvolutionaryAlgorithm<DoubleSolution> create(String[] args) {
-    PopulationSize populationSize = new PopulationSize(args);
     AlgorithmResult algorithmResult = new AlgorithmResult(args);
+    PopulationSize populationSize = new PopulationSize(args);
     PopulationSizeWithArchive populationSizeWithArchive =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     OffspringPopulationSize offspringPopulationSize =
@@ -24,11 +24,10 @@ public class NSGAIIWithParameters {
 
     CreateInitialSolutions createInitialSolutions = new CreateInitialSolutions(args);
 
-    Variation variation = new Variation(args);
-
     Selection selection = new Selection(args, Arrays.asList("tournament", "random"));
     SelectionTournamentSize selectionTournamentSize = new SelectionTournamentSize(args, 2, 10);
     selection.addSpecificParameter("tournament", selectionTournamentSize);
+
 
     Crossover crossover = new Crossover(args, Arrays.asList("SBX", "BLX_ALPHA"));
     Probability crossoverProbability = new Probability(args, "crossoverProbability");
@@ -45,6 +44,24 @@ public class NSGAIIWithParameters {
     RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
+    Mutation mutation = new Mutation(args, Arrays.asList("uniform", "polynomial")) ;
+    Probability mutationProbability = new Probability(args, "mutationProbability");
+    mutation.addGlobalParameter(mutationProbability);
+    RepairStrategy mutationRepairStrategy =
+        new RepairStrategy(
+            args, "mutationRepairStrategy", Arrays.asList("random", "round", "bounds"));
+    mutation.addGlobalParameter(mutationRepairStrategy);
+
+    RealParameter distributionIndexForMutation =
+        new DistributionIndex(args, "polynomialMutationDistributionIndex", 5.0, 400.0);
+    mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
+
+
+    Variation variation = new Variation(args, Arrays.asList("crossoverAndMutationVariation"));
+    //variation.addGlobalParameter(crossover);
+    //variation.addGlobalParameter(mutation);
+
+
     nsgaIIParameters.put(populationSize.getName(), populationSize);
     nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
     nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
@@ -53,6 +70,7 @@ public class NSGAIIWithParameters {
     nsgaIIParameters.put(variation.getName(), variation);
     nsgaIIParameters.put(selection.getName(), selection);
     nsgaIIParameters.put(crossover.getName(), crossover);
+    nsgaIIParameters.put(mutation.getName(), mutation);
 
     for (Parameter<?> parameter : nsgaIIParameters.values()) {
       parameter.parse().check(); ;
@@ -82,7 +100,11 @@ public class NSGAIIWithParameters {
                 + "--crossover SBX "
                 + "--crossoverProbability 0.9 "
                 + "--crossoverRepairStrategy bounds "
-                + "--sbxDistributionIndex 20.0 ")
+                + "--sbxDistributionIndex 20.0 "
+                + "--mutation polynomial "
+                + "--mutationProbability 0.01 "
+                + "--mutationRepairStrategy bounds "
+                + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();

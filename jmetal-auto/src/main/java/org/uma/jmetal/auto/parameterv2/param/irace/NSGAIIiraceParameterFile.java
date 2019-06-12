@@ -19,8 +19,8 @@ public class NSGAIIiraceParameterFile {
         (CreateInitialSolutions) parameterMap.get("createInitialSolutions");
     Variation variation = (Variation) parameterMap.get("variation");
     Selection selection = (Selection) parameterMap.get("selection");
-
     Crossover crossover = (Crossover) parameterMap.get("crossover") ;
+    Mutation mutation = (Mutation) parameterMap.get("mutation") ;
 
     String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
     StringBuilder stringBuilder = new StringBuilder();
@@ -136,6 +136,39 @@ public class NSGAIIiraceParameterFile {
                 decodeType(value),
                 decodeValidValues(value),
                 "| crossover %in% c(\"" + key + "\")"))) ;
+
+    stringBuilder.append("#\n");
+
+    stringBuilder.append(
+        String.format(
+            formatString,
+            mutation.getName(),
+            "--" + mutation.getName(),
+            decodeType(mutation),
+            decodeValidValues(mutation),
+            "| mutation %in% c(\"crossoverAndMutationVariation\")"));
+
+    for (Parameter<?> parameter: mutation.getGlobalParameters()) {
+      Parameter<?> globalParameter = parameter;
+      stringBuilder.append(
+          String.format(
+              formatString,
+              globalParameter.getName(),
+              "--" + globalParameter.getName(),
+              decodeType(globalParameter),
+              decodeValidValues(globalParameter),
+              ""));
+    }
+
+    mutation.getSpecificParameters()
+        .forEach((key, value) -> stringBuilder.append(
+            String.format(
+                formatString,
+                value.getName(),
+                "--" + value.getName(),
+                decodeType(value),
+                decodeValidValues(value),
+                "| mutation %in% c(\"" + key + "\")"))) ;
 
     stringBuilder.append("#\n");
 

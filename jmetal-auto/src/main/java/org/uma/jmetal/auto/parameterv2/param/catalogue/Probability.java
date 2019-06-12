@@ -14,7 +14,6 @@ public class Probability extends RealParameter {
     super(0.0, 1.0) ;
     this.name = name ;
     this.args = args ;
-    //check(value) ;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
+import org.uma.jmetal.auto.parameterv2.param.Parameter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,11 @@ public class Variation extends CategoricalParameter<String> {
 
   public CategoricalParameter<String> parse() {
     value = on("--variation", args, Function.identity());
+
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      parameter.parse().check();
+    }
+
     return this ;
   }
 
