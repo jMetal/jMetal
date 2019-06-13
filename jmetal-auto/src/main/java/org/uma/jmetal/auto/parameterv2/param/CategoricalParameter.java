@@ -9,7 +9,6 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
     this.validValues = validValues ;
   }
 
-
   @Override
   public void check() {
     check(value) ;

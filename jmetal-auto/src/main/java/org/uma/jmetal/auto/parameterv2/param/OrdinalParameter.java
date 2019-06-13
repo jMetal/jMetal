@@ -9,7 +9,6 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     this.validValues = validValues ;
   }
 
-
   @Override
   public void check() {
     check(value) ;

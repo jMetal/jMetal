@@ -48,6 +48,30 @@ public abstract class Parameter<T> {
   public T getValue() {
     return value;
   }
+  public void setValue(T value) {
+    this.value = value ;
+  }
+
+  protected Parameter<?> findGlobalParameter(String parameterName) {
+    Parameter<?> result =
+        getGlobalParameters().stream()
+            .filter(parameter -> parameter.getName().equals(parameterName))
+            .findFirst()
+            .orElse(null);
+
+    return result;
+  }
+
+  protected Parameter<?> findSpecificParameter(String parameterName) {
+    Parameter<?> result =
+        getSpecificParameters().entrySet().stream()
+            .filter(pair -> pair.getValue().getName().equals(parameterName))
+            .findFirst()
+            .orElse(null)
+            .getValue();
+
+    return result;
+  }
 
   @Override
   public String toString() {

@@ -6,16 +6,16 @@ import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import java.util.List;
 import java.util.function.Function;
 
-public class Crossover extends CategoricalParameter<String> {
+public class MutationParameter extends CategoricalParameter<String> {
   private String[] args;
 
-  public Crossover(String args[], List<String> crossoverOperators) {
+  public MutationParameter(String args[], List<String> crossoverOperators) {
     super(crossoverOperators);
     this.args = args;
   }
 
   public CategoricalParameter<String> parse() {
-    value = on("--crossover", args, Function.identity());
+    value = on("--mutation", args, Function.identity());
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
@@ -34,6 +34,6 @@ public class Crossover extends CategoricalParameter<String> {
 
   @Override
   public String getName() {
-    return "crossover";
+    return "mutation";
   }
 }
