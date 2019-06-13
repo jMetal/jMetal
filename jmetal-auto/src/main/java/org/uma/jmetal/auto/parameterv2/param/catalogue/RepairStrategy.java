@@ -16,10 +16,6 @@ public class RepairStrategy extends CategoricalParameter<String> {
     this.args = args ;
   }
 
-  public RepairStrategy(String args[], String name) {
-    this(args, name, Arrays.asList("random", "round","bounds")) ;
-  }
-
   @Override
   public CategoricalParameter<String> parse() {
     value = on("--"+name, args, Function.identity());

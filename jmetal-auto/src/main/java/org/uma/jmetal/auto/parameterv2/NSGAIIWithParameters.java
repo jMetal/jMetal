@@ -5,16 +5,20 @@ import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
-import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFileV2;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.wfg.WFG6;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 
 import java.util.*;
 
 public class NSGAIIWithParameters {
-  public List<Parameter<?>> parameterList = new ArrayList<>() ;
 
-  public EvolutionaryAlgorithm<DoubleSolution> create(String[] args) {
-    AlgorithmResult algorithmResult = new AlgorithmResult(args, Arrays.asList("externalArchive", "population"));
+  public List<Parameter<?>> parseParameters(String[] args) {
+    List<Parameter<?>> parameterList = new ArrayList<>();
+
+    AlgorithmResult algorithmResult =
+        new AlgorithmResult(args, Arrays.asList("externalArchive", "population"));
     PopulationSize populationSize = new PopulationSize(args);
     algorithmResult.addSpecificParameter("population", populationSize);
     PopulationSizeWithArchive populationSizeWithArchive =
@@ -24,12 +28,13 @@ public class NSGAIIWithParameters {
     OffspringPopulationSize offspringPopulationSize =
         new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
 
-    CreateInitialSolutions createInitialSolutions = new CreateInitialSolutions(args);
+    CreateInitialSolutions createInitialSolutions =
+        new CreateInitialSolutions(
+            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
     Selection selection = new Selection(args, Arrays.asList("tournament", "random"));
     SelectionTournamentSize selectionTournamentSize = new SelectionTournamentSize(args, 2, 10);
     selection.addSpecificParameter("tournament", selectionTournamentSize);
-
 
     Crossover crossover = new Crossover(args, Arrays.asList("SBX", "BLX_ALPHA"));
     Probability crossoverProbability = new Probability(args, "crossoverProbability");
@@ -46,7 +51,7 @@ public class NSGAIIWithParameters {
     RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
-    Mutation mutation = new Mutation(args, Arrays.asList("uniform", "polynomial")) ;
+    Mutation mutation = new Mutation(args, Arrays.asList("uniform", "polynomial"));
     Probability mutationProbability = new Probability(args, "mutationProbability");
     mutation.addGlobalParameter(mutationProbability);
     RepairStrategy mutationRepairStrategy =
@@ -58,27 +63,28 @@ public class NSGAIIWithParameters {
         new DistributionIndex(args, "polynomialMutationDistributionIndex", 5.0, 400.0);
     mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
 
-    RealParameter uniformMutationPerturbation = new RealValueInRange(args, "uniformMutationPerturbation", 0.0, 1.0) ;
+    RealParameter uniformMutationPerturbation =
+        new RealValueInRange(args, "uniformMutationPerturbation", 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     Variation variation = new Variation(args, Arrays.asList("crossoverAndMutationVariation"));
     variation.addGlobalParameter(crossover);
     variation.addGlobalParameter(mutation);
 
-    parameterList.add(algorithmResult) ;
-    parameterList.add(offspringPopulationSize) ;
-    parameterList.add(createInitialSolutions) ;
-    parameterList.add(variation) ;
-    parameterList.add(selection) ;
+    parameterList.add(algorithmResult);
+    parameterList.add(offspringPopulationSize);
+    parameterList.add(createInitialSolutions);
+    parameterList.add(variation);
+    parameterList.add(selection);
 
     for (Parameter<?> parameter : parameterList) {
-      parameter.parse().check(); ;
+      parameter.parse().check();
     }
 
-    print(parameterList);
+    return parameterList;
+  }
 
-    System.out.println();
-
+  EvolutionaryAlgorithm<DoubleSolution> create(String[] args, List<Parameter<?>> parameterList) {
     return null;
   }
 
@@ -89,6 +95,9 @@ public class NSGAIIWithParameters {
   public static void main(String[] args) {
     String[] parameters =
         ("--populationSize 100 "
+                + "--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+                + "--referenceFront ZDT1.pf "
+                + "--maximumNumberOfIterations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
@@ -107,10 +116,12 @@ public class NSGAIIWithParameters {
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
+    List<Parameter<?>> parameterList = nsgaiiWithParameters.parseParameters(parameters);
+    nsgaiiWithParameters.print(parameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create(parameters);
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create(args, parameterList);
 
-    NSGAIIiraceParameterFileV2 nsgaiiiraceParameterFile = new NSGAIIiraceParameterFileV2();
-    nsgaiiiraceParameterFile.create(nsgaiiWithParameters.parameterList);
+    NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
+    nsgaiiiraceParameterFile.generateConfigurationFile(parameterList);
   }
 }

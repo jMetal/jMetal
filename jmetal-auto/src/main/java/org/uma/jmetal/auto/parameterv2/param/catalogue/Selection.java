@@ -10,10 +10,6 @@ import java.util.function.Function;
 public class Selection extends CategoricalParameter<String> {
   private String[] args ;
 
-  public Selection(String args[]) {
-    this(args, Arrays.asList("tournament", "random")) ;
-  }
-
   public Selection(String args[], List<String> selectionStrategies) {
     super(selectionStrategies) ;
     this.args = args ;

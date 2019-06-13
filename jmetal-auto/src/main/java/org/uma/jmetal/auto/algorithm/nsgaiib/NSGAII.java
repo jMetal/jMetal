@@ -165,7 +165,7 @@ public class NSGAII<S extends Solution<?>> implements Algorithm<List<S>> {
 	/* XXX - Methods required by the run() method */
 
 	/**
-	 * This method implements a default scheme create the initial population of
+	 * This method implements a default scheme generateConfigurationFile the initial population of
 	 * genetic algorithm
 	 * 
 	 * @return
@@ -203,7 +203,7 @@ public class NSGAII<S extends Solution<?>> implements Algorithm<List<S>> {
 
 	/**
 	 * This methods iteratively applies a {@link CrossoverOperator} a
-	 * {@link MutationOperator} to the population to create the offspring
+	 * {@link MutationOperator} to the population to generateConfigurationFile the offspring
 	 * population. The population size must be divisible by the number of parents
 	 * required by the {@link CrossoverOperator}; this way, the needed parents are
 	 * taken sequentially from the population.

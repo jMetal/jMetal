@@ -4,13 +4,14 @@ import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
 import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 public class CreateInitialSolutions extends CategoricalParameter<String> {
   private String[] args ;
 
-  public CreateInitialSolutions(String args[]) {
-    super(Arrays.asList("random", "latinHypercubeSampling", "scatterSearch")) ;
+  public CreateInitialSolutions(String args[], List<String> validValues) {
+    super(validValues) ;
     this.args = args ;
   }
 

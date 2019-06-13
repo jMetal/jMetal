@@ -9,10 +9,6 @@ import java.util.List;
 public class PopulationSizeWithArchive extends OrdinalParameter<Integer> {
   private String[] args ;
 
-  public PopulationSizeWithArchive(String args[]) {
-    this(args, Arrays.asList(100)) ;
-  }
-
   public PopulationSizeWithArchive(String args[], List<Integer> validValues) {
     super(validValues) ;
     this.args = args ;

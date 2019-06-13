@@ -11,7 +11,6 @@ public class IntegerValueInRange extends IntegerParameter {
     super(lowerBound, upperBound) ;
     this.name = name ;
     this.args = args ;
-    //check(value) ;
   }
 
   @Override

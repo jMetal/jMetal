@@ -10,7 +10,6 @@ public class DistributionIndex extends RealParameter {
     super(lowerBound, upperBound) ;
     this.args = args ;
     this.name = name ;
-    //check(value) ;
   }
 
   @Override
