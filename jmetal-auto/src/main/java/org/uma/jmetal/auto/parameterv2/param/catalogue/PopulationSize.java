@@ -1,7 +1,5 @@
 package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
-import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
 
 public class PopulationSize extends Parameter<Integer> {

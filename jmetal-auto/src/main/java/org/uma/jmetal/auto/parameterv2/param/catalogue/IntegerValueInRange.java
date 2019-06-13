@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
-import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 
 public class IntegerValueInRange extends IntegerParameter {
   private String name ;

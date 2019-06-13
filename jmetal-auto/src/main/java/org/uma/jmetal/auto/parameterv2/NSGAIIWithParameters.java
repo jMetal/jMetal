@@ -5,18 +5,15 @@ import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.wfg.WFG6;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemUtils;
 
 import java.util.*;
 
 public class NSGAIIWithParameters {
+  public List<Parameter<?>> configurableParameterList = new ArrayList<>();
+  public Map<String, Parameter<?>> parameterMap = new HashMap<>() ;
 
-  public List<Parameter<?>> parseParameters(String[] args) {
-    List<Parameter<?>> parameterList = new ArrayList<>();
-
+  public void parseParameters(String[] args) {
     AlgorithmResult algorithmResult =
         new AlgorithmResult(args, Arrays.asList("externalArchive", "population"));
     PopulationSize populationSize = new PopulationSize(args);
@@ -71,17 +68,19 @@ public class NSGAIIWithParameters {
     variation.addGlobalParameter(crossover);
     variation.addGlobalParameter(mutation);
 
-    parameterList.add(algorithmResult);
-    parameterList.add(offspringPopulationSize);
-    parameterList.add(createInitialSolutions);
-    parameterList.add(variation);
-    parameterList.add(selection);
+    configurableParameterList.add(algorithmResult);
+    configurableParameterList.add(offspringPopulationSize);
+    configurableParameterList.add(createInitialSolutions);
+    configurableParameterList.add(variation);
+    configurableParameterList.add(selection);
 
-    for (Parameter<?> parameter : parameterList) {
+    for (Parameter<?> parameter : configurableParameterList) {
       parameter.parse().check();
     }
 
-    return parameterList;
+    parameterMap.put(algorithmResult.getName(), algorithmResult) ;
+    parameterMap.put(populationSize.getName(), populationSize) ;
+    parameterMap.put(populationSizeWithArchive.getName(), populationSizeWithArchive) ;
   }
 
   EvolutionaryAlgorithm<DoubleSolution> create(String[] args, List<Parameter<?>> parameterList) {
@@ -116,7 +115,8 @@ public class NSGAIIWithParameters {
             .split("\\s+");
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
-    List<Parameter<?>> parameterList = nsgaiiWithParameters.parseParameters(parameters);
+    nsgaiiWithParameters.parseParameters(parameters);
+    List<Parameter<?>> parameterList = nsgaiiWithParameters.configurableParameterList;
     nsgaiiWithParameters.print(parameterList);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create(args, parameterList);

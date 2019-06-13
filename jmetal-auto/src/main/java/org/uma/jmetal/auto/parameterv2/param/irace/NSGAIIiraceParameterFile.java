@@ -1,10 +1,8 @@
 package org.uma.jmetal.auto.parameterv2.param.irace;
 
 import org.uma.jmetal.auto.parameterv2.param.*;
-import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 
 import java.util.List;
-import java.util.Map;
 
 public class NSGAIIiraceParameterFile {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";

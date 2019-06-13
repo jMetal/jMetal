@@ -1,9 +1,7 @@
 package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
-import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
 import org.uma.jmetal.auto.parameterv2.param.OrdinalParameter;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class PopulationSizeWithArchive extends OrdinalParameter<Integer> {

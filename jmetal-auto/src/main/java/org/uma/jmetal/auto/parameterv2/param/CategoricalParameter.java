@@ -1,6 +1,5 @@
 package org.uma.jmetal.auto.parameterv2.param;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CategoricalParameter<T> extends Parameter<T> {

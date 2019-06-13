@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.parameterv2.param;
 
 import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
-import org.uma.jmetal.auto.irace.parametertype.ParameterType;
 
 import java.util.*;
 import java.util.function.Function;
