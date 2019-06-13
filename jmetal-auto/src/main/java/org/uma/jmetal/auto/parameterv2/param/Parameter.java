@@ -24,32 +24,48 @@ public abstract class Parameter<T> {
     }
   }
 
-  public abstract void check() ;
-  public abstract Parameter<T> parse() ;
+  public abstract void check();
+
+  public abstract Parameter<T> parse();
 
   public abstract String getName();
 
   public Map<String, Parameter<?>> getSpecificParameters() {
     return specificParameters;
   }
-  public void addSpecificParameter(String dependsOn, Parameter<?> parameter) { specificParameters.put(dependsOn, parameter);}
+
+  public void addSpecificParameter(String dependsOn, Parameter<?> parameter) {
+    specificParameters.put(dependsOn, parameter);
+  }
+
   public List<Parameter<?>> getGlobalParameters() {
     return globalParameters;
   }
-  public void addGlobalParameter(Parameter<?> parameter) { globalParameters.add(parameter);}
+
+  public void addGlobalParameter(Parameter<?> parameter) {
+    globalParameters.add(parameter);
+  }
+
   public T getValue() {
     return value;
   }
 
   @Override
   public String toString() {
-    String result = "Name: " + getName() + ": " + "Value: " + getValue() ;
-    for (Parameter<?> parameter : globalParameters) {
-      result += " -> " + parameter.toString() ;
+    String result = "Name: " + getName() + ": " + "Value: " + getValue();
+    if (globalParameters.size() > 0) {
+      result += "\n\t";
+      for (Parameter<?> parameter : globalParameters) {
+        result += " \n -> " + parameter.toString();
+      }
     }
-    for (Parameter<?> parameter : specificParameters.values()) {
-      result += " -> " + parameter.toString() ;
+    if (specificParameters.size() > 0) {
+      result += "\n\t";
+
+      for (Parameter<?> parameter : specificParameters.values()) {
+        result += " \n -> " + parameter.toString();
+      }
     }
-    return result ;
+    return result;
   }
 }

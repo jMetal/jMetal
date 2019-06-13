@@ -31,10 +31,10 @@ public abstract class RealParameter extends Parameter<Double> {
   public String toString() {
     String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Lower bound: " + lowerBound + ". Upper bound: " + upperBound  ;
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += " -> " + parameter.toString() ;
+      result += "\n -> " + parameter.toString() ;
     }
     for (Parameter<?> parameter : getSpecificParameters().values()) {
-      result += " -> " + parameter.toString() ;
+      result += "\n  -> " + parameter.toString() ;
     }
     return result ;
   }

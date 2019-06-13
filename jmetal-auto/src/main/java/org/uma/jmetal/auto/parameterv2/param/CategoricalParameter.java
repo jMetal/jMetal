@@ -28,10 +28,10 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
   public String toString() {
     String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues ;
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += " -> " + parameter.toString() ;
+      result += "\n -> " + parameter.toString() ;
     }
     for (Parameter<?> parameter : getSpecificParameters().values()) {
-      result += " -> " + parameter.toString() ;
+      result += "\n -> " + parameter.toString() ;
     }
     return result ;
   }

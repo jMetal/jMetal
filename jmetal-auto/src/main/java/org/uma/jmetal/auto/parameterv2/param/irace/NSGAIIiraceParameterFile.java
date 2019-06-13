@@ -33,6 +33,17 @@ public class NSGAIIiraceParameterFile {
             decodeValidValues(algorithmResult),
             ""));
 
+    algorithmResult.getSpecificParameters()
+        .forEach((key, value) -> stringBuilder.append(
+            String.format(
+                formatString,
+                value.getName(),
+                "--" + value.getName(),
+                decodeType(value),
+                decodeValidValues(value),
+                "| " + algorithmResult.getName() + " %in% c(\"" + key + "\")"))) ;
+
+    /*
     stringBuilder.append(
         String.format(
             formatString,
@@ -50,7 +61,7 @@ public class NSGAIIiraceParameterFile {
             decodeType(populationSizeWithArchive),
             decodeValidValues(populationSizeWithArchive),
             "| algorithmResult %in% c(\"externalArchive\")"));
-
+    */
     stringBuilder.append(
         String.format(
             formatString,

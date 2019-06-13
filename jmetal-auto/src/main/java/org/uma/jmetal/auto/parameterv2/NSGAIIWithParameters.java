@@ -5,20 +5,22 @@ import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
 import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
+import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFileV2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class NSGAIIWithParameters {
-  public Map<String, Parameter<?>> nsgaIIParameters = new HashMap<>();
+  public List<Parameter<?>> parameterList = new ArrayList<>() ;
 
   public EvolutionaryAlgorithm<DoubleSolution> create(String[] args) {
-    AlgorithmResult algorithmResult = new AlgorithmResult(args);
+    AlgorithmResult algorithmResult = new AlgorithmResult(args, Arrays.asList("externalArchive", "population"));
     PopulationSize populationSize = new PopulationSize(args);
+    algorithmResult.addSpecificParameter("population", populationSize);
     PopulationSizeWithArchive populationSizeWithArchive =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
+    algorithmResult.addSpecificParameter("externalArchive", populationSizeWithArchive);
+
     OffspringPopulationSize offspringPopulationSize =
         new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
 
@@ -56,42 +58,39 @@ public class NSGAIIWithParameters {
         new DistributionIndex(args, "polynomialMutationDistributionIndex", 5.0, 400.0);
     mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
 
+    RealParameter uniformMutationPerturbation = new RealValueInRange(args, "uniformMutationPerturbation", 0.0, 1.0) ;
+    mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     Variation variation = new Variation(args, Arrays.asList("crossoverAndMutationVariation"));
-    //variation.addGlobalParameter(crossover);
-    //variation.addGlobalParameter(mutation);
+    variation.addGlobalParameter(crossover);
+    variation.addGlobalParameter(mutation);
 
+    parameterList.add(algorithmResult) ;
+    parameterList.add(offspringPopulationSize) ;
+    parameterList.add(createInitialSolutions) ;
+    parameterList.add(variation) ;
+    parameterList.add(selection) ;
 
-    nsgaIIParameters.put(populationSize.getName(), populationSize);
-    nsgaIIParameters.put(algorithmResult.getName(), algorithmResult);
-    nsgaIIParameters.put(populationSizeWithArchive.getName(), populationSizeWithArchive);
-    nsgaIIParameters.put(offspringPopulationSize.getName(), offspringPopulationSize);
-    nsgaIIParameters.put(createInitialSolutions.getName(), createInitialSolutions);
-    nsgaIIParameters.put(variation.getName(), variation);
-    nsgaIIParameters.put(selection.getName(), selection);
-    nsgaIIParameters.put(crossover.getName(), crossover);
-    nsgaIIParameters.put(mutation.getName(), mutation);
-
-    for (Parameter<?> parameter : nsgaIIParameters.values()) {
+    for (Parameter<?> parameter : parameterList) {
       parameter.parse().check(); ;
     }
 
-    print(nsgaIIParameters);
+    print(parameterList);
 
     System.out.println();
 
     return null;
   }
 
-  public static void print(Map<String, Parameter<?>> parameterMap) {
-    parameterMap.forEach((key, value) -> System.out.println(value.toString()));
+  public static void print(List<Parameter<?>> parameterList) {
+    parameterList.forEach(item -> System.out.println(item));
   }
 
   public static void main(String[] args) {
     String[] parameters =
         ("--populationSize 100 "
                 + "--algorithmResult population "
-                + "--populationSizeWithArchive 100 "
+                + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
@@ -111,7 +110,7 @@ public class NSGAIIWithParameters {
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create(parameters);
 
-    NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    nsgaiiiraceParameterFile.create(nsgaiiWithParameters.nsgaIIParameters);
+    NSGAIIiraceParameterFileV2 nsgaiiiraceParameterFile = new NSGAIIiraceParameterFileV2();
+    nsgaiiiraceParameterFile.create(nsgaiiWithParameters.parameterList);
   }
 }
