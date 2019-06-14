@@ -196,6 +196,7 @@ public class NSGAIIWithParameters {
 
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
     nsgaiiWithParameters.parseParameters(parameters);
+
     List<Parameter<?>> parameterList = nsgaiiWithParameters.configurableParameterList;
     nsgaiiWithParameters.print(parameterList);
 
@@ -208,7 +209,7 @@ public class NSGAIIWithParameters {
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
-    //NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    //nsgaiiiraceParameterFile.generateConfigurationFile(parameterList);
+    NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
+    nsgaiiiraceParameterFile.generateConfigurationFile(parameterList);
   }
 }
