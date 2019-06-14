@@ -28,7 +28,7 @@ public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter<
 
   public RepairDoubleSolution getParameter() {
     RepairDoubleSolution result ;
-    switch (getName()) {
+    switch (getValue()) {
       case "random":
         result = new RepairDoubleSolutionWithRandomValue() ;
         break ;

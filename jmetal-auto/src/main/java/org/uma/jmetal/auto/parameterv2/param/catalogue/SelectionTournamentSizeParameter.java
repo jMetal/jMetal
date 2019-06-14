@@ -2,10 +2,10 @@ package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
 
-public class SelectionTournamentSize extends IntegerParameter {
+public class SelectionTournamentSizeParameter extends IntegerParameter {
   private String[] args ;
 
-  public SelectionTournamentSize(String args[], Integer lowerBound, Integer upperBound) {
+  public SelectionTournamentSizeParameter(String args[], Integer lowerBound, Integer upperBound) {
     super(lowerBound, upperBound) ;
     this.args = args ;
   }

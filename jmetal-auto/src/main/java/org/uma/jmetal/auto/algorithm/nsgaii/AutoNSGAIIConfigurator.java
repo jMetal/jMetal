@@ -192,18 +192,18 @@ public class AutoNSGAIIConfigurator {
 
   Variation<DoubleSolution> variation;
 
-  /* Selection */
+  /* SelectionParameter */
   @Option(
       names = {"--selection"},
       required = true,
-      description = "Selection: ${COMPLETION-CANDIDATES}")
+      description = "SelectionParameter: ${COMPLETION-CANDIDATES}")
   private SelectionType selectionType;
 
   MatingPoolSelection<DoubleSolution> selection;
 
   @Option(
       names = {"--selectionTournamentSize"},
-      description = "Selection: number of selected population")
+      description = "SelectionParameter: number of selected population")
   private int selectionTournamentSize = 2;
 
   public EvolutionaryAlgorithm<DoubleSolution> configureAndGetAlgorithm() {

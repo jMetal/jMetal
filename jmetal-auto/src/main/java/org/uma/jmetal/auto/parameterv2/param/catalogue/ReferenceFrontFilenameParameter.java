@@ -7,10 +7,10 @@ import org.uma.jmetal.util.ProblemUtils;
 
 import java.util.function.Function;
 
-public class ProblemName<S extends Solution<?>> extends Parameter<String> {
+public class ReferenceFrontFilenameParameter extends Parameter<String> {
   private String args[] ;
 
-  public ProblemName(String args[]) {
+  public ReferenceFrontFilenameParameter(String args[]) {
     this.args = args ;
   }
 
@@ -19,19 +19,15 @@ public class ProblemName<S extends Solution<?>> extends Parameter<String> {
     // TODO
   }
 
-  public Problem<S> getProblem() {
-    return ProblemUtils.<S>loadProblem(value);
-  }
-
   @Override
   public Parameter<String> parse() {
-    value = on("--problemName", args, Function.identity());
+    value = on("--referenceFrontFileName", args, Function.identity());
 
     return this ;
   }
 
   @Override
   public String getName() {
-    return "problemName";
+    return "referenceFrontFileName";
   }
 }

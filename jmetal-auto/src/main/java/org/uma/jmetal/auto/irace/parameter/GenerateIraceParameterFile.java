@@ -103,7 +103,7 @@ public class GenerateIraceParameterFile {
 
     parameters.add(mutation);
 
-    // Selection
+    // SelectionParameter
     SelectionParameter selection = new SelectionParameter();
     selection.addSpecificParameter(new NarityTournamentNParameter(2, 10));
     selection.addValue("random");

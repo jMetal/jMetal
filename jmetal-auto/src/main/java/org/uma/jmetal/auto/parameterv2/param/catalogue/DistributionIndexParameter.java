@@ -2,11 +2,11 @@ package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 
-public class DistributionIndex extends RealParameter {
+public class DistributionIndexParameter extends RealParameter {
   private String name ;
   private String args[] ;
 
-  public DistributionIndex(String args[], String name, Double lowerBound, Double upperBound)  {
+  public DistributionIndexParameter(String args[], String name, Double lowerBound, Double upperBound)  {
     super(lowerBound, upperBound) ;
     this.args = args ;
     this.name = name ;
