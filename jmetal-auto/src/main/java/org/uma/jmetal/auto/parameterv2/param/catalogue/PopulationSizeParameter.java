@@ -2,28 +2,22 @@ package org.uma.jmetal.auto.parameterv2.param.catalogue;
 
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
 
-public class PopulationSize extends Parameter<Integer> {
-  private String args[] ;
+public class PopulationSizeParameter extends Parameter<Integer> {
 
-  public PopulationSize(String args[]) {
-    this.args = args ;
+  public PopulationSizeParameter(String args[]) {
+    super("populationSize", args) ;
   }
 
   @Override
   public Parameter<Integer> parse() {
-    value = on("--populationSize", args, Integer::parseInt);
+    setValue(on("--populationSize", getArgs(), Integer::parseInt));
     return this ;
   }
 
   @Override
   public void check() {
-    if (value <= 0) {
+    if (getValue() <= 0) {
       throw new RuntimeException("The population size cannot not be <= 0") ;
     }
-  }
-
-  @Override
-  public String getName() {
-    return "populationSize";
   }
 }

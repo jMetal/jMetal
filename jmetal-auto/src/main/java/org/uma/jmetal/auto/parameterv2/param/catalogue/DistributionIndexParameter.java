@@ -6,15 +6,15 @@ public class DistributionIndexParameter extends RealParameter {
   private String name ;
   private String args[] ;
 
-  public DistributionIndexParameter(String args[], String name, Double lowerBound, Double upperBound)  {
-    super(lowerBound, upperBound) ;
+  public DistributionIndexParameter(String name, String args[], Double lowerBound, Double upperBound)  {
+    super(name, args, lowerBound, upperBound) ;
     this.args = args ;
     this.name = name ;
   }
 
   @Override
   public RealParameter parse() {
-    value = on("--"+name, args, Double::parseDouble);
+    setValue(on("--"+name, args, Double::parseDouble));
     return this ;
   }
 

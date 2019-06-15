@@ -14,15 +14,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public class MutationParameter extends CategoricalParameter<String> {
-  private String[] args;
-
-  public MutationParameter(String args[], List<String> crossoverOperators) {
-    super(crossoverOperators);
-    this.args = args;
+  public MutationParameter(String args[], List<String> mutationOperators) {
+    super("mutation", args, mutationOperators);
   }
 
   public CategoricalParameter<String> parse() {
-    value = on("--mutation", args, Function.identity());
+    setValue(on("--mutation", getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
@@ -31,7 +28,7 @@ public class MutationParameter extends CategoricalParameter<String> {
     getSpecificParameters()
         .forEach(
             (key, parameter) -> {
-              if (key.equals(this.value)) {
+              if (key.equals(getValue())) {
                 parameter.parse().check();
               }
             });

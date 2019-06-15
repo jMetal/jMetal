@@ -3,23 +3,26 @@ package org.uma.jmetal.auto.parameterv2.param;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class RealParameter extends Parameter<Double> {
+public class RealParameter extends Parameter<Double> {
   private double lowerBound;
   private double upperBound;
 
-  public RealParameter(double lowerBound, double upperBound) {
+  public RealParameter(String name, String[] args,  double lowerBound, double upperBound) {
+    super(name, args) ;
     this.lowerBound = lowerBound ;
     this.upperBound = upperBound ;
   }
 
   @Override
-  public void check() {
-    check(value) ;
+  public RealParameter parse() {
+    setValue(on("--"+getName(), getArgs(), Double::parseDouble));
+    return this ;
   }
 
-  protected void check(Double value) {
-    if ((value < lowerBound) || (value > upperBound))  {
-      throw new RuntimeException("Invalid value: " + value + ". Range: " + lowerBound + ", " + upperBound) ;
+  @Override
+  public void check() {
+    if ((getValue() < lowerBound) || (getValue() > upperBound))  {
+      throw new RuntimeException("Invalid value: " + getValue() + ". Range: " + lowerBound + ", " + upperBound) ;
     }
   }
 

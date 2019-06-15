@@ -16,20 +16,17 @@ import java.util.List;
 import java.util.function.Function;
 
 public class SelectionParameter extends CategoricalParameter<String> {
-  private String[] args ;
-
   public SelectionParameter(String args[], List<String> selectionStrategies) {
-    super(selectionStrategies) ;
-    this.args = args ;
+    super("selection", args, selectionStrategies) ;
   }
 
   public CategoricalParameter<String> parse() {
-    value = on("--selection", args, Function.identity());
+    setValue(on("--selection", getArgs(), Function.identity()));
 
     getSpecificParameters()
         .forEach(
             (key, parameter) -> {
-              if (key.equals(this.value)) {
+              if (key.equals(getValue())) {
                 parameter.parse().check();
               }
             });
@@ -55,10 +52,5 @@ public class SelectionParameter extends CategoricalParameter<String> {
     }
 
     return result ;
-  }
-
-  @Override
-  public String getName() {
-    return "selection";
   }
 }

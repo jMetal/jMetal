@@ -11,17 +11,17 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import java.util.List;
 import java.util.function.Function;
 
-public class CreateInitialSolutions extends CategoricalParameter<String> {
+public class CreateInitialSolutionsParameter extends CategoricalParameter<String> {
   private String[] args ;
 
-  public CreateInitialSolutions(String args[], List<String> validValues) {
-    super(validValues) ;
+  public CreateInitialSolutionsParameter(String args[], List<String> validValues) {
+    super("createInitialSolutions", args, validValues) ;
     this.args = args ;
   }
 
   @Override
   public CategoricalParameter<String>  parse() {
-    value = on("--createInitialSolutions", args, Function.identity());
+    setValue(on("--createInitialSolutions", args, Function.identity()));
     return this ;
   }
 

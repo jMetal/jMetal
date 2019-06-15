@@ -11,18 +11,13 @@ import java.util.List;
 import java.util.function.Function;
 
 public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter<String> {
-  private String name ;
-  private String[] args ;
-
-  public RepairDoubleSolutionStrategyParameter(String args[], String name, List<String> strategies) {
-    super(strategies) ;
-    this.name = name ;
-    this.args = args ;
+  public RepairDoubleSolutionStrategyParameter(String name, String args[], List<String> strategies) {
+    super(name, args, strategies) ;
   }
 
   @Override
   public CategoricalParameter<String> parse() {
-    value = on("--"+name, args, Function.identity());
+    setValue(on("--"+getName(), getArgs(), Function.identity()));
     return this ;
   }
 
@@ -43,10 +38,5 @@ public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter<
     }
 
     return result ;
-  }
-
-  @Override
-  public String getName() {
-    return name;
   }
 }

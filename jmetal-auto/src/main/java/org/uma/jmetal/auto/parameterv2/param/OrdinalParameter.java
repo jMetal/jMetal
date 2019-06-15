@@ -5,20 +5,16 @@ import java.util.List;
 public abstract class OrdinalParameter<T> extends Parameter<T> {
   private List<T> validValues ;
 
-  public OrdinalParameter(List<T> validValues) {
+  public OrdinalParameter(String name, String[] args, List<T> validValues) {
+    super(name, args) ;
     this.validValues = validValues ;
   }
 
   @Override
   public void check() {
-    check(value) ;
-  }
-
-  public void check(T value) {
-    if (!validValues.contains(value)) {
-      throw new RuntimeException("Invalid value: " + value + ". Valid values: " + validValues) ;
-    }
-  }
+    if (!validValues.contains(getValue())) {
+      throw new RuntimeException("Invalid value: " + getValue() + ". Valid values: " + validValues) ;
+    }  }
 
   public List<T> getValidValues() { return validValues ;}
 

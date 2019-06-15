@@ -6,9 +6,16 @@ import java.util.*;
 import java.util.function.Function;
 
 public abstract class Parameter<T> {
-  protected T value;
+  private T value;
+  private String name ;
+  private String[] args ;
   private Map<String, Parameter<?>> specificParameters = new HashMap<>();
   private List<Parameter<?>> globalParameters = new ArrayList<>();
+
+  public Parameter(String name, String[] args) {
+    this.name = name ;
+    this.args = args ;
+  }
 
   public T on(String key, String[] args, Function<String, T> parser) {
     return parser.apply(retrieve(args, key));
@@ -27,7 +34,9 @@ public abstract class Parameter<T> {
 
   public abstract Parameter<T> parse();
 
-  public abstract String getName();
+  public String getName() {
+    return name ;
+  }
 
   public Map<String, Parameter<?>> getSpecificParameters() {
     return specificParameters;
@@ -50,6 +59,10 @@ public abstract class Parameter<T> {
   }
   public void setValue(T value) {
     this.value = value ;
+  }
+
+  public String[] getArgs() {
+    return args ;
   }
 
   protected Parameter<?> findGlobalParameter(String parameterName) {

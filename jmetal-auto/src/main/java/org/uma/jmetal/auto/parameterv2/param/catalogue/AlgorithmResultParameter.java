@@ -6,17 +6,15 @@ import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import java.util.List;
 import java.util.function.Function;
 
-public class AlgorithmResult extends CategoricalParameter<String> {
-  private String args[] ;
+public class AlgorithmResultParameter extends CategoricalParameter<String> {
 
-  public AlgorithmResult(String args[], List<String> validValues) {
-    super(validValues) ;
-    this.args = args ;
+  public AlgorithmResultParameter(String args[], List<String> validValues) {
+    super("algorithmResult", args, validValues) ;
   }
 
   @Override
   public CategoricalParameter<String> parse() {
-    value = on("--algorithmResult", args, Function.identity());
+    setValue(on("--algorithmResult", getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
@@ -25,16 +23,11 @@ public class AlgorithmResult extends CategoricalParameter<String> {
     getSpecificParameters()
         .forEach(
             (key, parameter) -> {
-              if (key.equals(this.value)) {
+              if (key.equals(this.getValue())) {
                 parameter.parse().check();
               }
             });
 
     return this ;
-  }
-
-  @Override
-  public String getName() {
-    return "algorithmResult";
   }
 }

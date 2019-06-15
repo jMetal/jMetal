@@ -20,15 +20,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public class VariationParameter extends CategoricalParameter<String> {
-  private String[] args ;
-
   public VariationParameter(String args[], List<String> variationStrategies) {
-    super(variationStrategies) ;
-    this.args = args ;
+    super("variation", args, variationStrategies) ;
   }
 
   public CategoricalParameter<String> parse() {
-    value = on("--variation", args, Function.identity());
+    setValue(on("--variation", getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();

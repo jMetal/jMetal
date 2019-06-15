@@ -5,19 +5,21 @@ import java.util.List;
 public abstract class CategoricalParameter<T> extends Parameter<T> {
   private List<T> validValues ;
 
-  public CategoricalParameter(List<T> validValues) {
+  public CategoricalParameter(String name, String[] args, List<T> validValues) {
+    super(name, args) ;
     this.validValues = validValues ;
   }
 
   @Override
   public void check() {
-    check(value) ;
+    if (!validValues.contains(getValue())) {
+      throw new RuntimeException("Invalid value: " + getValue() + ". Valid values: " + validValues) ;
+    }
   }
 
-  protected void check(T value) {
-    if (!validValues.contains(value)) {
-      throw new RuntimeException("Invalid value: " + value + ". Valid values: " + validValues) ;
-    }
+  @Override
+  public Parameter<T> parse() {
+    return null;
   }
 
   public List<T> getValidValues() { return validValues ;}

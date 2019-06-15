@@ -8,10 +8,8 @@ import org.uma.jmetal.util.ProblemUtils;
 import java.util.function.Function;
 
 public class ReferenceFrontFilenameParameter extends Parameter<String> {
-  private String args[] ;
-
   public ReferenceFrontFilenameParameter(String args[]) {
-    this.args = args ;
+    super("referenceFrontFileName", args);
   }
 
   @Override
@@ -21,13 +19,8 @@ public class ReferenceFrontFilenameParameter extends Parameter<String> {
 
   @Override
   public Parameter<String> parse() {
-    value = on("--referenceFrontFileName", args, Function.identity());
+    setValue(on("--referenceFrontFileName", getArgs(), Function.identity()));
 
-    return this ;
-  }
-
-  @Override
-  public String getName() {
-    return "referenceFrontFileName";
+    return this;
   }
 }

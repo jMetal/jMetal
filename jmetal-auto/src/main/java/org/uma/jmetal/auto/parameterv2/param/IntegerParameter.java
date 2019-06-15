@@ -3,25 +3,27 @@ package org.uma.jmetal.auto.parameterv2.param;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class IntegerParameter extends Parameter<Integer> {
+public class IntegerParameter extends Parameter<Integer> {
   private Integer lowerBound;
   private Integer upperBound;
 
-  public IntegerParameter(Integer lowerBound, Integer upperBound) {
+  public IntegerParameter(String name, String[] args, Integer lowerBound, Integer upperBound) {
+    super(name, args) ;
     this.lowerBound = lowerBound ;
     this.upperBound = upperBound ;
   }
 
-
   @Override
   public void check() {
-    check(value) ;
+    if ((getValue() < lowerBound) || (getValue() > upperBound))  {
+      throw new RuntimeException("Invalid value: " + getValue() + ". Range: " + lowerBound + ", " + upperBound) ;
+    }
   }
 
-  protected void check(Integer value) {
-    if ((value < lowerBound) || (value > upperBound))  {
-      throw new RuntimeException("Invalid value: " + value + ". Range: " + lowerBound + ", " + upperBound) ;
-    }
+  @Override
+  public IntegerParameter parse() {
+    setValue(on("--"+getName(), getArgs(), Integer::parseInt));
+    return this ;
   }
 
   public List<Integer> getValidValues() {

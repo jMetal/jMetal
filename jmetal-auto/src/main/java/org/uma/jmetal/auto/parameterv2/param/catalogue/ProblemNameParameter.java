@@ -8,30 +8,23 @@ import org.uma.jmetal.util.ProblemUtils;
 import java.util.function.Function;
 
 public class ProblemNameParameter<S extends Solution<?>> extends Parameter<String> {
-  private String args[] ;
-
   public ProblemNameParameter(String args[]) {
-    this.args = args ;
+    super("problemName", args) ;
   }
 
   @Override
   public void check() {
-    // TODO
+    // nothing to check
   }
 
   public Problem<S> getProblem() {
-    return ProblemUtils.<S>loadProblem(value);
+    return ProblemUtils.<S>loadProblem(getValue());
   }
 
   @Override
   public Parameter<String> parse() {
-    value = on("--problemName", args, Function.identity());
+    setValue(on("--problemName", getArgs(), Function.identity())) ;
 
     return this ;
-  }
-
-  @Override
-  public String getName() {
-    return "problemName";
   }
 }

@@ -13,15 +13,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public class CrossoverParameter extends CategoricalParameter<String> {
-  private String[] args;
-
   public CrossoverParameter(String args[], List<String> crossoverOperators) {
-    super(crossoverOperators);
-    this.args = args;
+    super("crossover", args, crossoverOperators);
   }
 
   public CategoricalParameter<String> parse() {
-    value = on("--crossover", args, Function.identity());
+    setValue(on("--crossover", getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();
@@ -30,7 +27,7 @@ public class CrossoverParameter extends CategoricalParameter<String> {
     getSpecificParameters()
         .forEach(
             (key, parameter) -> {
-              if (key.equals(this.value)) {
+              if (key.equals(getValue())) {
                 parameter.parse().check();
               }
             });

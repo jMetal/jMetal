@@ -10,6 +10,7 @@ import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
+import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
 import org.uma.jmetal.auto.parameterv2.param.Parameter;
 import org.uma.jmetal.auto.parameterv2.param.RealParameter;
 import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
@@ -34,11 +35,11 @@ public class NSGAIIWithParameters {
 
   private ProblemNameParameter<DoubleSolution> problemName;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
-  private AlgorithmResult algorithmResultParameter;
-  private PopulationSize populationSizeParameter;
+  private AlgorithmResultParameter algorithmResultParameter;
+  private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchive;
   private OffspringPopulationSize offspringPopulationSize;
-  private CreateInitialSolutions createInitialSolutions;
+  private CreateInitialSolutionsParameter createInitialSolutions;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
@@ -50,8 +51,8 @@ public class NSGAIIWithParameters {
     referenceFrontFilename.parse();
 
     algorithmResultParameter =
-        new AlgorithmResult(args, Arrays.asList("externalArchive", "population"));
-    populationSizeParameter = new PopulationSize(args);
+        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+    populationSizeParameter = new PopulationSizeParameter(args);
     populationSizeWithArchive =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
@@ -60,44 +61,44 @@ public class NSGAIIWithParameters {
     offspringPopulationSize = new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
 
     createInitialSolutions =
-        new CreateInitialSolutions(
+        new CreateInitialSolutionsParameter(
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
     selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
-    SelectionTournamentSizeParameter selectionTournamentSize =
-        new SelectionTournamentSizeParameter(args, 2, 10);
+    IntegerParameter selectionTournamentSize =
+        new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
 
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    Probability crossoverProbability = new Probability(args, "crossoverProbability");
+    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability", args);
     crossover.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            args, "crossoverRepairStrategy", Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter("crossoverRepairStrategy",
+            args,  Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
     RealParameter distributionIndex =
-        new DistributionIndexParameter(args, "sbxDistributionIndex", 5.0, 400.0);
+        new DistributionIndexParameter("sbxDistributionIndex", args,5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
-    RealValueInRange alpha = new RealValueInRange(args, "blxAlphaCrossoverAlphaValue", 0.0, 1.0);
+    RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
-    Probability mutationProbability = new Probability(args, "mutationProbability");
+    ProbabilityParameter mutationProbability = new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            args, "mutationRepairStrategy", Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter("mutationRepairStrategy",
+            args,  Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForMutation =
-        new DistributionIndexParameter(args, "polynomialMutationDistributionIndex", 5.0, 400.0);
+        new DistributionIndexParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
 
     RealParameter uniformMutationPerturbation =
-        new RealValueInRange(args, "uniformMutationPerturbation", 0.0, 1.0);
+        new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     variationParameter =
