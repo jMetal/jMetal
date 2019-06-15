@@ -33,19 +33,19 @@ import java.util.*;
 public class NSGAIIWithParameters {
   public List<Parameter<?>> configurableParameterList = new ArrayList<>();
 
-  private ProblemNameParameter<DoubleSolution> problemName;
+  private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
   private AlgorithmResultParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
-  private PopulationSizeWithArchive populationSizeWithArchive;
-  private OffspringPopulationSize offspringPopulationSize;
-  private CreateInitialSolutionsParameter createInitialSolutions;
+  private PopulationSizeWithArchive populationSizeWithArchiveParameter;
+  private OffspringPopulationSize offspringPopulationSizeParameter;
+  private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseParameters(String[] args) {
-    problemName = new ProblemNameParameter<>(args);
-    problemName.parse();
+    problemNameParameter = new ProblemNameParameter<>(args);
+    problemNameParameter.parse();
 
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
     referenceFrontFilename.parse();
@@ -53,14 +53,14 @@ public class NSGAIIWithParameters {
     algorithmResultParameter =
         new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
     populationSizeParameter = new PopulationSizeParameter(args);
-    populationSizeWithArchive =
+    populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
-    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchive);
+    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
 
-    offspringPopulationSize = new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
+    offspringPopulationSizeParameter = new OffspringPopulationSize(args, Arrays.asList(1, 10, 50, 100));
 
-    createInitialSolutions =
+    createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
@@ -107,8 +107,8 @@ public class NSGAIIWithParameters {
     variationParameter.addGlobalParameter(mutation);
 
     configurableParameterList.add(algorithmResultParameter);
-    configurableParameterList.add(offspringPopulationSize);
-    configurableParameterList.add(createInitialSolutions);
+    configurableParameterList.add(offspringPopulationSizeParameter);
+    configurableParameterList.add(createInitialSolutionsParameter);
     configurableParameterList.add(variationParameter);
     configurableParameterList.add(selectionParameter);
 
@@ -123,7 +123,7 @@ public class NSGAIIWithParameters {
    * @return
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
-    DoubleProblem problem = (DoubleProblem) problemName.getProblem();
+    DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
     ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver = null;
 
@@ -131,7 +131,7 @@ public class NSGAIIWithParameters {
       boundedArchiveObserver =
           new ExternalArchiveObserver<>(
               new CrowdingDistanceArchive<>(populationSizeParameter.getValue()));
-      populationSizeParameter.setValue(populationSizeWithArchive.getValue());
+      populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
@@ -142,10 +142,10 @@ public class NSGAIIWithParameters {
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutions.getParameter(problem, populationSizeParameter.getValue());
+        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>)
-            variationParameter.getParameter(offspringPopulationSize.getValue());
+            variationParameter.getParameter(offspringPopulationSizeParameter.getValue());
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
