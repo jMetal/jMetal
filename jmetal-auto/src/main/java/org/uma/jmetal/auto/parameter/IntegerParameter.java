@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.parameterv2.param;
+package org.uma.jmetal.auto.parameter;
 
 import java.util.Arrays;
 import java.util.List;

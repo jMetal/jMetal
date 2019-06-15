@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.parameterv2;
+package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
@@ -10,11 +10,11 @@ import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.parameterv2.param.IntegerParameter;
-import org.uma.jmetal.auto.parameterv2.param.Parameter;
-import org.uma.jmetal.auto.parameterv2.param.RealParameter;
-import org.uma.jmetal.auto.parameterv2.param.catalogue.*;
-import org.uma.jmetal.auto.parameterv2.param.irace.NSGAIIiraceParameterFile;
+import org.uma.jmetal.auto.parameter.IntegerParameter;
+import org.uma.jmetal.auto.parameter.Parameter;
+import org.uma.jmetal.auto.parameter.RealParameter;
+import org.uma.jmetal.auto.parameter.catalogue.*;
+import org.uma.jmetal.auto.parameter.irace.NSGAIIiraceParameterFile;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;

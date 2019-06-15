@@ -1,6 +1,6 @@
-package org.uma.jmetal.auto.parameterv2.param.irace;
+package org.uma.jmetal.auto.parameter.irace;
 
-import org.uma.jmetal.auto.parameterv2.param.*;
+import org.uma.jmetal.auto.parameter.*;
 
 import java.util.List;
 

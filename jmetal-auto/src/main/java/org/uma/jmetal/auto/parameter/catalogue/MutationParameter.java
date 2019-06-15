@@ -1,10 +1,7 @@
-package org.uma.jmetal.auto.parameterv2.param.catalogue;
+package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
-import org.uma.jmetal.auto.parameterv2.param.Parameter;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;

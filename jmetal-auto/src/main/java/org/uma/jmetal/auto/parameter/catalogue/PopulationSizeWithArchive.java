@@ -1,6 +1,6 @@
-package org.uma.jmetal.auto.parameterv2.param.catalogue;
+package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.parameterv2.param.OrdinalParameter;
+import org.uma.jmetal.auto.parameter.OrdinalParameter;
 
 import java.util.List;
 

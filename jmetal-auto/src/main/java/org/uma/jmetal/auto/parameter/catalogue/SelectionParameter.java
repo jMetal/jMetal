@@ -1,15 +1,10 @@
-package org.uma.jmetal.auto.parameterv2.param.catalogue;
+package org.uma.jmetal.auto.parameter.catalogue;
 
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
-import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
-import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.util.Comparator;
 import java.util.List;

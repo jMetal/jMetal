@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.parameterv2.param;
+package org.uma.jmetal.auto.parameter;
 
 import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
 

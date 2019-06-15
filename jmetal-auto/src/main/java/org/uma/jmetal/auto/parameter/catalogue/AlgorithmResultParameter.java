@@ -1,7 +1,7 @@
-package org.uma.jmetal.auto.parameterv2.param.catalogue;
+package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
-import org.uma.jmetal.auto.parameterv2.param.Parameter;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.parameter.Parameter;
 
 import java.util.List;
 import java.util.function.Function;

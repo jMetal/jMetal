@@ -1,13 +1,11 @@
-package org.uma.jmetal.auto.parameterv2.param.catalogue;
+package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.parameterv2.param.CategoricalParameter;
-import org.uma.jmetal.auto.parameterv2.param.Parameter;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.util.RepairDoubleSolution;
 
 import java.util.List;
 import java.util.function.Function;
