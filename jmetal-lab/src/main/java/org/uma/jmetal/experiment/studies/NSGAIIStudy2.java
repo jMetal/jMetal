@@ -1,7 +1,9 @@
-package org.uma.jmetal.experiment;
+package org.uma.jmetal.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
 import org.uma.jmetal.experiment.component.*;
 import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.experiment.util.ExperimentProblem;
