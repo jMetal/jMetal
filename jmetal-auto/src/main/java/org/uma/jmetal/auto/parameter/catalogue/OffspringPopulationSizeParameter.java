@@ -4,10 +4,10 @@ import org.uma.jmetal.auto.parameter.OrdinalParameter;
 
 import java.util.List;
 
-public class OffspringPopulationSize extends OrdinalParameter<Integer> {
+public class OffspringPopulationSizeParameter extends OrdinalParameter<Integer> {
   private String[] args ;
 
-  public OffspringPopulationSize(String args[], List<Integer> validValues) {
+  public OffspringPopulationSizeParameter(String args[], List<Integer> validValues) {
     super("offspringPopulationSize", args, validValues) ;
     this.args = args ;
   }
