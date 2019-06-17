@@ -1,4 +1,4 @@
-package org.uma.jmetal.experiment;
+package org.uma.jmetal.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -31,20 +31,20 @@ import java.util.List;
  * of variables. This can be interesting to study the behaviour of the algorithms when solving an
  * scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and SMPSO.
  * <p>
- * This org.uma.jmetal.experiment assumes that the reference Pareto front is of problem ZDT1 is not known, so a
- * reference front must be obtained.
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front is of problem ZDT1 is known and that
+ * there is a file called ZDT1.pf containing it.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
  * The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the org.uma.jmetal.experiment 2. Execute the algorithms
- * 3. Generate the reference Pareto sets and Pareto fronts 4. Compute the quality indicators 5.
- * Generate Latex tables reporting means and medians 6. Generate Latex tables with the result of
- * applying the Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by
- * applying the Friedman test 8. Generate R scripts to obtain boxplots
+ * 3. Generate the reference Pareto fronts 4. Compute the quality indicators 5. Generate Latex
+ * tables reporting means and medians 6. Generate Latex tables with the result of applying the
+ * Wilcoxon Rank Sum Test 7. Generate Latex tables with the ranking obtained by applying the
+ * Friedman test 8. Generate R scripts to obtain boxplots
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ZDTScalabilityIStudy2 {
+public class ZDTScalabilityIStudy {
 
   private static final int INDEPENDENT_RUNS = 25;
 
@@ -60,7 +60,6 @@ public class ZDTScalabilityIStudy2 {
     problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
     problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
     problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
-
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
@@ -72,8 +71,6 @@ public class ZDTScalabilityIStudy2 {
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory("/pareto_fronts")
-                    .setReferenceFrontDirectory(
-                            experimentBaseDirectory + "/ZDTScalabilityStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -86,7 +83,6 @@ public class ZDTScalabilityIStudy2 {
                     .build();
 
     new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();

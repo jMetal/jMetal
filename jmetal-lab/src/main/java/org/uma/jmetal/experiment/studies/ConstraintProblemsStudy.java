@@ -1,4 +1,4 @@
-package org.uma.jmetal.experiment;
+package org.uma.jmetal.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
