@@ -5,16 +5,25 @@ import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * Abstract class representing generic parameters. Any parameter has a name and a value that is
+ * assigned by parsing an array called {@link Parameter#args} which contains sequences of pairs
+ * [key, value]. For example, the args field could contain these values:
+ * ["--populationSize", "100", "--offspringPopulationSize", "100", "--createInitialSolutions", "random"]
+ *
+ * @author Antonio J. Nebro
+ * @param <T> Type of the parameter
+ */
 public abstract class Parameter<T> {
   private T value;
-  private String name ;
-  private String[] args ;
+  private String name;
+  private String[] args;
   private Map<String, Parameter<?>> specificParameters = new HashMap<>();
   private List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public Parameter(String name, String[] args) {
-    this.name = name ;
-    this.args = args ;
+    this.name = name;
+    this.args = args;
   }
 
   public T on(String key, String[] args, Function<String, T> parser) {
@@ -35,7 +44,7 @@ public abstract class Parameter<T> {
   public abstract Parameter<T> parse();
 
   public String getName() {
-    return name ;
+    return name;
   }
 
   public Map<String, Parameter<?>> getSpecificParameters() {
@@ -57,12 +66,13 @@ public abstract class Parameter<T> {
   public T getValue() {
     return value;
   }
+
   public void setValue(T value) {
-    this.value = value ;
+    this.value = value;
   }
 
   public String[] getArgs() {
-    return args ;
+    return args;
   }
 
   protected Parameter<?> findGlobalParameter(String parameterName) {

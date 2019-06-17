@@ -17,11 +17,6 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
     }
   }
 
-  @Override
-  public Parameter<T> parse() {
-    return null;
-  }
-
   public List<T> getValidValues() { return validValues ;}
 
   @Override
