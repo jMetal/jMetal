@@ -1,6 +1,6 @@
 package org.uma.jmetal.auto.parameter;
 
-import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
+import org.uma.jmetal.auto.old.nsgaiib.MissingParameterException;
 
 import java.util.*;
 import java.util.function.Function;
