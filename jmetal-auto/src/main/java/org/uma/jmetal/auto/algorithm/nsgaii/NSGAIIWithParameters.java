@@ -32,11 +32,11 @@ import java.util.*;
 
 public class NSGAIIWithParameters {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> parameterList = new ArrayList<>();
+  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
-  private IntegerParameter maximumNumberOfEvaluationsParameter ;
+  private IntegerParameter maximumNumberOfEvaluationsParameter;
   private AlgorithmResultParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
@@ -48,13 +48,14 @@ public class NSGAIIWithParameters {
   public void parseParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
-    maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
+    maximumNumberOfEvaluationsParameter =
+        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
-    parameterList.add(problemNameParameter) ;
-    parameterList.add(referenceFrontFilename) ;
-    parameterList.add(maximumNumberOfEvaluationsParameter) ;
+    fixedParameterList.add(problemNameParameter);
+    fixedParameterList.add(referenceFrontFilename);
+    fixedParameterList.add(maximumNumberOfEvaluationsParameter);
 
-    for (Parameter<?> parameter : parameterList) {
+    for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
 
@@ -63,10 +64,13 @@ public class NSGAIIWithParameters {
     populationSizeParameter = new PopulationSizeParameter(args);
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
-    algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
-    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
+    algorithmResultParameter.addGlobalParameter(populationSizeParameter);
+    // algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
+    algorithmResultParameter.addSpecificParameter(
+        "externalArchive", populationSizeWithArchiveParameter);
 
-    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+    offspringPopulationSizeParameter =
+        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
 
     createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
@@ -78,15 +82,15 @@ public class NSGAIIWithParameters {
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
 
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability", args);
+    ProbabilityParameter crossoverProbability =
+        new ProbabilityParameter("crossoverProbability", args);
     crossover.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("crossoverRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex =
-        new RealParameter("sbxDistributionIndex", args,5.0, 400.0);
+    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -94,11 +98,12 @@ public class NSGAIIWithParameters {
 
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
-    ProbabilityParameter mutationProbability = new ProbabilityParameter("mutationProbability", args);
+    ProbabilityParameter mutationProbability =
+        new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("mutationRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForMutation =
@@ -135,7 +140,7 @@ public class NSGAIIWithParameters {
 
     ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver = null;
 
-    if (algorithmResultParameter.getValue() == "externalArchive") {
+    if (algorithmResultParameter.getValue().equals("externalArchive")) {
       boundedArchiveObserver =
           new ExternalArchiveObserver<>(
               new CrowdingDistanceArchive<>(populationSizeParameter.getValue()));
@@ -164,7 +169,8 @@ public class NSGAIIWithParameters {
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
 
-    Termination termination = new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
+    Termination termination =
+        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     class NSGAII extends EvolutionaryAlgorithm<DoubleSolution> {
       private ExternalArchiveObserver<DoubleSolution> archiveObserver;
@@ -187,6 +193,7 @@ public class NSGAIIWithParameters {
             variation,
             replacement);
         this.archiveObserver = archiveObserver;
+        evaluation.getObservable().register(archiveObserver);
       }
 
       @Override
@@ -223,8 +230,9 @@ public class NSGAIIWithParameters {
                 + "--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult population "
+                + "--algorithmResult externalArchive "
                 + "--populationSize 100 "
+                + "--populationSizeWithArchive 100 "
                 + "--offspringPopulationSize 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
@@ -243,19 +251,20 @@ public class NSGAIIWithParameters {
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
-    nsgaiiWithParameters.print(nsgaiiWithParameters.parameterList);
+    nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
     nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
     new SolutionListOutput(nsgaII.getResult())
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
+    nsgaiiiraceParameterFile.generateConfigurationFile(
+        nsgaiiWithParameters.autoConfigurableParameterList);
   }
 }
