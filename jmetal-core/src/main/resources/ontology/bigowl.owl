@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.khaos.uma.es/perception/bigowl#"
      xml:base="http://www.khaos.uma.es/perception/bigowl"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
-     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
     <owl:Ontology rdf:about="http://www.khaos.uma.es/perception/bigowl"/>
     
 
@@ -59,6 +59,15 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasColumn -->
+
+    <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasColumn">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.khaos.uma.es/perception/bigowl#Column"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#hasComponent -->
 
     <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasComponent">
@@ -80,6 +89,24 @@
             </owl:Class>
         </rdfs:domain>
         <rdfs:range rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasDataTypePrimitive -->
+
+    <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasDataTypePrimitive">
+        <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
+        <rdfs:range rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PrimitiveType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasDataTypeStructured -->
+
+    <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasDataTypeStructured">
+        <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
+        <rdfs:range rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#StructuredType"/>
     </owl:ObjectProperty>
     
 
@@ -231,6 +258,15 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#representsIndividual -->
+
+    <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#representsIndividual">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#solves -->
 
     <owl:ObjectProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#solves">
@@ -304,6 +340,24 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#columnDelimiter -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#columnDelimiter">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#commentChar -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#commentChar">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#dealWith -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#dealWith">
@@ -318,6 +372,24 @@
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#description">
         <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#encoding -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#encoding">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasColumnHeader -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasColumnHeader">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     </owl:DatatypeProperty>
     
 
@@ -354,7 +426,11 @@
     <!-- http://www.khaos.uma.es/perception/bigowl#hasLibraries -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasLibraries">
+        <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#IO-Class"/>
         <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow"/>
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Algorithm"/>
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Component"/>
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Task"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -364,6 +440,51 @@
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasName">
         <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasPosition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasPosition">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Column"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasRowHeader -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasRowHeader">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasSemanticMeaning -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasSemanticMeaning">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasTopic -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasTopic">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#hasType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#hasType">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Column"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -389,6 +510,15 @@
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#isCorrectWorkflow">
         <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#isLabel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#isLabel">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Column"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     </owl:DatatypeProperty>
     
@@ -441,6 +571,15 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#limitRows -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#limitRows">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#numTask -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#numTask">
@@ -455,6 +594,15 @@
                 </owl:withRestrictions>
             </rdfs:Datatype>
         </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#numberOfColumns -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#numberOfColumns">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
     </owl:DatatypeProperty>
     
 
@@ -527,6 +675,22 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#package -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#package">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.khaos.uma.es/perception/bigowl#Algorithm"/>
+                    <rdf:Description rdf:about="http://www.khaos.uma.es/perception/bigowl#Component"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#passwordLogin -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#passwordLogin">
@@ -564,7 +728,19 @@
     <!-- http://www.khaos.uma.es/perception/bigowl#programmingLanguage -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#programmingLanguage">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Algorithm"/>
         <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Component"/>
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Data"/>
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#Task"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#quoteChar -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#quoteChar">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -575,6 +751,51 @@
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#range">
         <rdfs:domain rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#rowDelimiter -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#rowDelimiter">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#scanLimit -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#scanLimit">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#skipFirstLines -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#skipFirstLines">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#supportShortLines -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#supportShortLines">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#timeOut -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/bigowl#timeOut">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
     </owl:DatatypeProperty>
     
 
@@ -1945,6 +2166,12 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/bigowl#Column -->
+
+    <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#Column"/>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/bigowl#Component -->
 
     <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#Component">
@@ -1957,6 +2184,7 @@
 
     <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#DMDataClass">
         <rdfs:subClassOf rdf:resource="http://www.khaos.uma.es/perception/bigowl#Data"/>
+        <rdfs:subClassOf rdf:resource="http://www.khaos.uma.es/perception/bigowl#Matrix"/>
         <rdfs:label>DM Data Class</rdfs:label>
     </owl:Class>
     
@@ -2042,6 +2270,22 @@
     <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#DataProcessing">
         <rdfs:subClassOf rdf:resource="http://www.khaos.uma.es/perception/bigowl#Component"/>
         <rdfs:label> Data Processing</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#DataSetJsonClass -->
+
+    <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#DataSetJsonClass">
+        <rdfs:subClassOf rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass -->
+
+    <owl:Class rdf:about="http://www.khaos.uma.es/perception/bigowl#DataSetTabularClass">
+        <rdfs:subClassOf rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass"/>
     </owl:Class>
     
 
@@ -2435,7 +2679,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/bigowl#ParameterSparkRunnerExecutorCores">
         <rdf:type rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
-        <hasPrimitiveType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">executor-cores</hasName>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parameter Spark Runner Executor Cores</rdfs:label>
     </owl:NamedIndividual>
@@ -2446,7 +2690,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/bigowl#ParameterSparkRunnerExecutorMemory">
         <rdf:type rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
-        <hasPrimitiveType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">executor-memory</hasName>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parameter Spark Runner Executor Memory</rdfs:label>
     </owl:NamedIndividual>
@@ -2457,7 +2701,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/bigowl#ParameterSparkRunnerMaster">
         <rdf:type rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
-        <hasPrimitiveType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">master</hasName>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parameter Spark Runner Master</rdfs:label>
     </owl:NamedIndividual>
@@ -2468,7 +2712,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/bigowl#ParameterSparkRunnerNumExecutor">
         <rdf:type rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
-        <hasPrimitiveType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">num-executor</hasName>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parameter Spark Runner Num Executor</rdfs:label>
     </owl:NamedIndividual>
@@ -2479,7 +2723,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/bigowl#ParameterSparkRunnerTotalExecutorCores">
         <rdf:type rdf:resource="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter"/>
-        <hasPrimitiveType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <hasName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">total-executor-cores</hasName>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parameter Spark Runner Total Executor Cores</rdfs:label>
     </owl:NamedIndividual>
@@ -2735,5 +2979,5 @@
 
 
 
-<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
 

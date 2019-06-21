@@ -54,7 +54,7 @@ public class OWLUtils {
             IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPosition"));
     this.hasDataType =
         factory.getOWLObjectProperty(
-            IRI.create("http://www.khaos.uma.es/perception/bigowl#hasDataType"));
+            IRI.create("http://www.khaos.uma.es/perception/bigowl#hasDataTypePrimitive"));
     this.containsNode =
         factory.getOWLObjectProperty(
             IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#containsNode"));

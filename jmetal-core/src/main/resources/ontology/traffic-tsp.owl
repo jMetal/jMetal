@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#"
      xml:base="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam"
-     xmlns:khaosteam="http://www.khaos.uma.es/perception/traffic/khaosteam#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:bigowl="http://www.khaos.uma.es/perception/bigowl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:bigowl="http://www.khaos.uma.es/perception/bigowl#"
+     xmlns:khaosteam="http://www.khaos.uma.es/perception/traffic/khaosteam#">
     <owl:Ontology rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam">
         <owl:imports rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam"/>
     </owl:Ontology>
@@ -38,7 +38,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryPosition">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#BakeryClient"/>
         <khaosteam:successor rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantPosition"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</bigowl:hasDataValue>
@@ -84,7 +84,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#FirstQuarterPosition">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#String"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#FirstQuarterClient"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">&lt;=25</bigowl:hasDataValue>
     </owl:NamedIndividual>
@@ -124,7 +124,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayPosition">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClient"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">50</bigowl:hasDataValue>
     </owl:NamedIndividual>
@@ -134,7 +134,7 @@
     <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient -->
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient">
-        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">71</khaosteam:hasID>
+        <khaosteam:hasID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">89</khaosteam:hasID>
     </owl:NamedIndividual>
     
 
@@ -142,7 +142,7 @@
     <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPosition -->
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClientPosition">
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#LastClient"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</bigowl:hasDataValue>
     </owl:NamedIndividual>
@@ -162,7 +162,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PreferencePosition">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#PriorityClient"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</bigowl:hasDataValue>
     </owl:NamedIndividual>
@@ -192,7 +192,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantPosition">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Position"/>
-        <bigowl:hasDataType rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
+        <bigowl:hasDataTypePrimitive rdf:resource="http://www.khaos.uma.es/perception/bigowl#Integer"/>
         <khaosteam:containsNode rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#RestaurantClient"/>
         <bigowl:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</bigowl:hasDataValue>
     </owl:NamedIndividual>
@@ -221,5 +221,5 @@
 
 
 
-<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
 
