@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
@@ -23,6 +24,9 @@ public class VariationParameter extends CategoricalParameter<String> {
       parameter.parse().check();
     }
 
+    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+      parameter.getValue().parse().check();
+    }
     return this;
   }
 
@@ -31,8 +35,8 @@ public class VariationParameter extends CategoricalParameter<String> {
     switch (getValue()) {
       case "crossoverAndMutationVariation":
         CrossoverParameter crossoverParameter =
-            (CrossoverParameter) findGlobalParameter("crossover");
-        MutationParameter mutationParameter = (MutationParameter) findGlobalParameter("mutation");
+            (CrossoverParameter) findSpecificParameter("crossover");
+        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
         CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
         MutationOperator<DoubleSolution> mutationOperatorOperator =

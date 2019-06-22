@@ -1,5 +1,7 @@
 package org.uma.jmetal.auto.parameter;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.List;
 
 public abstract class OrdinalParameter<T> extends Parameter<T> {
@@ -24,8 +26,8 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result += " -> " + parameter.toString() ;
     }
-    for (Parameter<?> parameter : getSpecificParameters().values()) {
-      result += " -> " + parameter.toString() ;
+    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+      result += "\n  -> " + parameter.getRight().toString() ;
     }
     return result ;
   }

@@ -1,5 +1,7 @@
 package org.uma.jmetal.auto.parameter;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.algorithm.nsgaiib.MissingParameterException;
 
 import java.util.*;
@@ -18,7 +20,8 @@ public abstract class Parameter<T> {
   private T value;
   private String name;
   private String[] args;
-  private Map<String, Parameter<?>> specificParameters = new HashMap<>();
+  private List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
+  //private Map<String, Parameter<?>> specificParameters = new HashMap<>();
   private List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public Parameter(String name, String[] args) {
@@ -47,12 +50,12 @@ public abstract class Parameter<T> {
     return name;
   }
 
-  public Map<String, Parameter<?>> getSpecificParameters() {
+  public List<Pair<String, Parameter<?>>> getSpecificParameters() {
     return specificParameters;
   }
 
   public void addSpecificParameter(String dependsOn, Parameter<?> parameter) {
-    specificParameters.put(dependsOn, parameter);
+    specificParameters.add(new ImmutablePair<>(dependsOn, parameter));
   }
 
   public List<Parameter<?>> getGlobalParameters() {
@@ -87,8 +90,8 @@ public abstract class Parameter<T> {
 
   protected Parameter<?> findSpecificParameter(String parameterName) {
     Parameter<?> result =
-        getSpecificParameters().entrySet().stream()
-            .filter(pair -> pair.getValue().getName().equals(parameterName))
+        getSpecificParameters().stream()
+            .filter(pair -> pair.getRight().getName().equals(parameterName))
             .findFirst()
             .orElse(null)
             .getValue();
@@ -108,7 +111,7 @@ public abstract class Parameter<T> {
     if (specificParameters.size() > 0) {
       result += "\n\t";
 
-      for (Parameter<?> parameter : specificParameters.values()) {
+      for (Pair<String, Parameter<?>> parameter : specificParameters) {
         result += " \n -> " + parameter.toString();
       }
     }

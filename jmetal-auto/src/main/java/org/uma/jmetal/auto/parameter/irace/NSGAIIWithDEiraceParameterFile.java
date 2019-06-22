@@ -1,16 +1,12 @@
 package org.uma.jmetal.auto.parameter.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithParameters;
 import org.uma.jmetal.auto.parameter.*;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.List;
 
-public class NSGAIIiraceParameterFile {
+public class NSGAIIWithDEiraceParameterFile {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
   public void generateConfigurationFile() {
@@ -39,7 +35,7 @@ public class NSGAIIiraceParameterFile {
     NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
-    NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
+    NSGAIIWithDEiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIWithDEiraceParameterFile();
     nsgaiiiraceParameterFile.generateConfigurationFile(
         nsgaiiWithParameters.autoConfigurableParameterList);
   }
@@ -131,6 +127,6 @@ public class NSGAIIiraceParameterFile {
   }
 
   public static void main(String[] args) {
-    new NSGAIIiraceParameterFile().generateConfigurationFile();
+    new NSGAIIWithDEiraceParameterFile().generateConfigurationFile();
   }
 }

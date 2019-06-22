@@ -14,7 +14,6 @@ import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
-import org.uma.jmetal.auto.parameter.irace.NSGAIIiraceParameterFile;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
@@ -28,9 +27,11 @@ import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class NSGAIIWithParameters {
+public class NSGAIIWithDEAndParameters {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> parameterList = new ArrayList<>();
 
@@ -110,7 +111,7 @@ public class NSGAIIWithParameters {
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     variationParameter =
-        new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
+        new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
 
@@ -240,7 +241,7 @@ public class NSGAIIWithParameters {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
+    NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
     nsgaiiWithParameters.print(nsgaiiWithParameters.parameterList);

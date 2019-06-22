@@ -1,5 +1,7 @@
 package org.uma.jmetal.auto.parameter;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class RealParameter extends Parameter<Double> {
     for (Parameter<?> parameter : getGlobalParameters()) {
       result += "\n -> " + parameter.toString() ;
     }
-    for (Parameter<?> parameter : getSpecificParameters().values()) {
-      result += "\n  -> " + parameter.toString() ;
+    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
+      result += "\n  -> " + parameter.getRight().toString() ;
     }
     return result ;
   }

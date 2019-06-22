@@ -20,9 +20,9 @@ public class SelectionParameter extends CategoricalParameter<String> {
 
     getSpecificParameters()
         .forEach(
-            (key, parameter) -> {
-              if (key.equals(getValue())) {
-                parameter.parse().check();
+            pair -> {
+              if (pair.getKey().equals(getValue())) {
+                pair.getValue().parse().check();
               }
             });
 
