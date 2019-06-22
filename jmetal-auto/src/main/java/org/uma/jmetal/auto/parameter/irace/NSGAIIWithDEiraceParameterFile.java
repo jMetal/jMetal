@@ -1,8 +1,10 @@
 package org.uma.jmetal.auto.parameter.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithDEAndParameters;
 import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithParameters;
 import org.uma.jmetal.auto.parameter.*;
+import sun.awt.geom.AreaOp;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class NSGAIIWithDEiraceParameterFile {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
+    NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
     NSGAIIWithDEiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIWithDEiraceParameterFile();
@@ -62,16 +64,44 @@ public class NSGAIIWithDEiraceParameterFile {
             ""));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
-      decodeParameter(globalParameter, stringBuilder);
+      decodeParameterGlobal(globalParameter, stringBuilder, parameter);
     }
 
     for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
-      decodeParameterSpecific(specificParameter, stringBuilder);
+      decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
 
+
+  private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
+    String dependenceString = parameter.getName() ;
+    if (parentParameter instanceof CategoricalParameter) {
+      dependenceString = ((CategoricalParameter)((CategoricalParameter<?>) parentParameter)).getValidValues().toString() ;
+      dependenceString = dependenceString.replace("[", "");
+      dependenceString = dependenceString.replace("]", "");
+    }
+
+    stringBuilder.append(
+        String.format(
+            formatString,
+            parameter.getName(),
+            "--" + parameter.getName(),
+            decodeType(parameter),
+            decodeValidValues(parameter),
+            "| " + parentParameter.getName() + " %in% c(\"" + dependenceString + "\")"));
+
+    for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
+      decodeParameterGlobal(globalParameter, stringBuilder, parameter);
+    }
+
+    for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
+      decodeParameterSpecific(specificParameter, stringBuilder, parameter);
+    }
+  }
+
+
   private void decodeParameterSpecific(
-      Pair<String, Parameter<?>> pair, StringBuilder stringBuilder) {
+      Pair<String, Parameter<?>> pair, StringBuilder stringBuilder, Parameter<?> parentParameter) {
     stringBuilder.append(
         String.format(
             formatString,
@@ -79,14 +109,14 @@ public class NSGAIIWithDEiraceParameterFile {
             "--" + pair.getRight().getName(),
             decodeType(pair.getRight()),
             decodeValidValues(pair.getRight()),
-            "| " + pair.getKey() + " %in% c(\"" + pair.getLeft() + "\")"));
+            "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
 
     for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
-      decodeParameter(globalParameter, stringBuilder);
+      decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());
     }
 
     for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
-      decodeParameterSpecific(specificParameter, stringBuilder);
+      decodeParameterSpecific(specificParameter, stringBuilder, pair.getValue());
     }
   }
 

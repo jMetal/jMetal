@@ -27,6 +27,7 @@ public class VariationParameter extends CategoricalParameter<String> {
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
       parameter.getValue().parse().check();
     }
+
     return this;
   }
 
