@@ -66,21 +66,28 @@ public class NSGAIIWithDEiraceParameterFile {
     }
 
     for (Pair<String, Parameter<?>> specificParameter : parameter.getSpecificParameters()) {
-      decodeParameter(specificParameter.getRight(), stringBuilder);
+      decodeParameterSpecific(specificParameter, stringBuilder);
+    }
+  }
+
+  private void decodeParameterSpecific(
+      Pair<String, Parameter<?>> pair, StringBuilder stringBuilder) {
+    stringBuilder.append(
+        String.format(
+            formatString,
+            pair.getRight().getName(),
+            "--" + pair.getRight().getName(),
+            decodeType(pair.getRight()),
+            decodeValidValues(pair.getRight()),
+            "| " + pair.getKey() + " %in% c(\"" + pair.getLeft() + "\")"));
+
+    for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
+      decodeParameter(globalParameter, stringBuilder);
     }
 
-    parameter
-        .getSpecificParameters()
-        .forEach(
-            pair ->
-                stringBuilder.append(
-                    String.format(
-                        formatString,
-                        pair.getRight().getName(),
-                        "--" + pair.getRight().getName(),
-                        decodeType(pair.getRight()),
-                        decodeValidValues(pair.getRight()),
-                        "| " + parameter.getName() + " %in% c(\"" + pair.getLeft() + "\")")));
+    for (Pair<String, Parameter<?>> specificParameter : pair.getValue().getSpecificParameters()) {
+      decodeParameterSpecific(specificParameter, stringBuilder);
+    }
   }
 
   private String decodeType(Parameter<?> parameter) {
