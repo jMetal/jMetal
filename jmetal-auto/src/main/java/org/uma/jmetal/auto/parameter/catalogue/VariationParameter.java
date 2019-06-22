@@ -3,10 +3,14 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
+import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
+import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
@@ -24,9 +28,13 @@ public class VariationParameter extends CategoricalParameter<String> {
       parameter.parse().check();
     }
 
-    for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      parameter.getValue().parse().check();
-    }
+    getSpecificParameters()
+        .forEach(
+            pair -> {
+              if (pair.getKey().equals(getValue())) {
+                pair.getValue().parse().check();
+              }
+            });
 
     return this;
   }
@@ -47,6 +55,12 @@ public class VariationParameter extends CategoricalParameter<String> {
             new CrossoverAndMutationVariation<DoubleSolution>(
                 offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
         break;
+      case "differentialEvolutionVariation":
+        DifferentialEvolutionCrossover crossover =
+            ((DifferentialEvolutionCrossoverParameter)findGlobalParameter("differentialEvolutionCrossover")).getParameter() ;
+
+        result = new DifferentialCrossoverVariation(offspringPopulationSize, crossover, new PolynomialMutation(0.0, 0.0)) ;
+        break ;
       default:
         throw new RuntimeException("Variation component unknown: " + getValue());
     }

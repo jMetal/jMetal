@@ -110,10 +110,19 @@ public class NSGAIIWithDEAndParameters {
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
+    DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
+        new DifferentialEvolutionCrossoverParameter(args);
+
+    RealParameter f = new RealParameter("f", args, 0.0, 1.0) ;
+    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0) ;
+    differentialEvolutionCrossover.addGlobalParameter(f);
+    differentialEvolutionCrossover.addGlobalParameter(cr);
+
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
+    variationParameter.addSpecificParameter("differentialEvolutionVariation", differentialEvolutionCrossover);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(offspringPopulationSizeParameter);
