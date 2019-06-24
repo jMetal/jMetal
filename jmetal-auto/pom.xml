@@ -37,7 +37,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.uma.jmetal.auto.algorithm.nsgaii.NSGAIICommandLineParsingRunner</mainClass>
+                            <mainClass>org.uma.jmetal.auto.old.nsgaii.NSGAIICommandLineParsingRunner</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

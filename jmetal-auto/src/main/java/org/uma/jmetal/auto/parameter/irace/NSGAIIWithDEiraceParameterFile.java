@@ -2,7 +2,6 @@ package org.uma.jmetal.auto.parameter.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithDEAndParameters;
-import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithParameters;
 import org.uma.jmetal.auto.parameter.*;
 import sun.awt.geom.AreaOp;
 

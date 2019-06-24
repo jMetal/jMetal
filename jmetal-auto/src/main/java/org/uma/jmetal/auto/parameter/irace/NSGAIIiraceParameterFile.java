@@ -2,7 +2,7 @@ package org.uma.jmetal.auto.parameter.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithParameters;
+import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIAuto;
 import org.uma.jmetal.auto.parameter.*;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -36,7 +36,7 @@ public class NSGAIIiraceParameterFile {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithParameters nsgaiiWithParameters = new NSGAIIWithParameters();
+    NSGAIIAuto nsgaiiWithParameters = new NSGAIIAuto();
     nsgaiiWithParameters.parseParameters(parameters);
 
     NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
