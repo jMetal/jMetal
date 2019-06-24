@@ -52,7 +52,7 @@ public class NSGAIIRNDSemanticRunner extends AbstractAlgorithmRunner {
            problem,
             crossover,
             mutation,
-            100)
+             populationSize)
             .setMaxEvaluations(25000)
             .build();
 

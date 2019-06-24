@@ -7,7 +7,6 @@
  */
 package org.uma.jmetal.problem.multiobjective;
 
-
 import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
@@ -15,7 +14,9 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /** Class representing problem RadioNetworkDesign */
 public class RadioNetworkDesign extends AbstractBinaryProblem {
@@ -35,7 +36,7 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
   static final int ANTENNA_TYPES = 1; // 1- type: sectorial, 2-type: omnidirectional, 3 type: square
   static final int RANGE =
       22; // Transmiter cover range (square area), when >23'6 total coverage of the terrain is
-          // achieved
+  // achieved
   static final int RANGE_SQ = 20;
   static final int STD_COST = 5; // Normalized cost of antenna
   static final int COST_CIRC = 5; // Each type of antenna has a different cost
@@ -48,11 +49,11 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
 
   static final double TARGET_FITNESS =
       147.85; // Es el fitness que se ha de alcanzar para que termine
+  protected List<Function<BinarySolution, Double>> constraints;
   // la ejecucion
-  private int bits ;
-
-  private OverallConstraintViolation<BinarySolution> overallConstraintViolationDegree ;
-  private NumberOfViolatedConstraints<BinarySolution> numberOfViolatedConstraints ;
+  private int bits;
+  private OverallConstraintViolation<BinarySolution> overallConstraintViolationDegree;
+  private NumberOfViolatedConstraints<BinarySolution> numberOfViolatedConstraints;
   /** Constructor Create a new RadioNetwork problem instance */
   public RadioNetworkDesign(int numberOfBits) {
     setNumberOfVariables(1);
@@ -60,16 +61,21 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
     setNumberOfConstraints(2);
     setName("RadioNetworkDesign");
 
-
-    bits = numberOfBits ;
-    overallConstraintViolationDegree = new OverallConstraintViolation<>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<>() ;
-
+    bits = numberOfBits;
+    overallConstraintViolationDegree = new OverallConstraintViolation<>();
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<>();
+    constraints = new ArrayList<>();
   } // RadioNetworkDesign
 
+  public RadioNetworkDesign addConstraint(Function<BinarySolution, Double> constraint) {
+    constraints.add(constraint);
+
+    return this;
+  }
+
   public void evaluate(BinarySolution solution) {
-    BinarySet gen = solution.getVariableValue(0);//we have only a variable
-   // DecisionVariables gen = individual.getDecisionVariables();
+    BinarySet gen = solution.getVariableValue(0); // we have only a variable
+    // DecisionVariables gen = individual.getDecisionVariables();
 
     int[] trans_location = {
       20, 20, 61, 20, 102, 20, 143, 20, 184, 20, 225, 20, 266, 20, 20, 61, 61, 61, 102, 61, 143, 61,
@@ -167,7 +173,31 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
     }
     overallConstraintViolationDegree.setAttribute(solution, total);
     numberOfViolatedConstraints.setAttribute(solution, violation);
+    evaluateConstraintsSemantic(solution);
+  }
 
+  private void evaluateConstraintsSemantic(BinarySolution solution) {
+    if (!constraints.isEmpty()) {
+      double overallConstraintViolation = 0.0;
+      int violatedConstraints = 0;
+      for (int i = 0; i < constraints.size(); i++) {
+        double violationDegree = constraints.get(i).apply(solution);
+        if (violationDegree < 0) {
+          overallConstraintViolation += violationDegree;
+          violatedConstraints++;
+        }
+      }
+      Double auxOverall = overallConstraintViolationDegree.getAttribute(solution);
+      if (auxOverall != null) {
+        overallConstraintViolation += auxOverall;
+      }
+      Integer auxNumber = numberOfViolatedConstraints.getAttribute(solution);
+      if (auxNumber != null) {
+        violatedConstraints += auxNumber;
+      }
+      overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+      numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
+    }
   }
 
   /**
@@ -184,10 +214,8 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
   @Override
   protected int getBitsPerVariable(int index) {
     if (index != 0) {
-      throw new JMetalException("Problem RND has only a variable. Index = " + index) ;
+      throw new JMetalException("Problem RND has only a variable. Index = " + index);
     }
-    return bits ;
+    return bits;
   }
-
-
 } // RadioNetworkDesign
