@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-public class OWLUtils {
+public class OWLUtils_old {
   private OWLOntologyManager manager;
   private OWLOntology ontology;
   private OWLDataFactory factory;
@@ -29,19 +29,15 @@ public class OWLUtils {
   private OWLNamedIndividual deliveryRoute;
   private OWLObjectProperty hasPreference;
   private OWLObjectProperty hasPosition;
-  private OWLObjectProperty hasCityObject;
-  private OWLObjectProperty hasNext;
-  private OWLObjectProperty hasLocation;
+  private OWLObjectProperty hasDataType;
+  private OWLObjectProperty containsNode;
+  private OWLObjectProperty successor;
   private OWLDataProperty hasDataValue;
   private OWLDataProperty isPriority;
   private OWLDataProperty hasID;
   private OWLDataProperty isFirst;
-  private OWLDataProperty hasDataType;
-  private OWLDataProperty hasPositionValue;
-  private OWLDataProperty hasX;
-  private OWLDataProperty hasY;
 
-  public OWLUtils(String pathOWL) {
+  public OWLUtils_old(String pathOWL) {
     this.manager = OWLManager.createOWLOntologyManager();
     this.factory = manager.getOWLDataFactory();
     this.pathOWL = pathOWL;
@@ -53,38 +49,30 @@ public class OWLUtils {
     this.hasPreference =
         factory.getOWLObjectProperty(
             IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPreference"));
-
     this.hasPosition =
-            factory.getOWLObjectProperty(
-                    IRI.create(
-                            "http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionInPreference"));
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPosition"));
     this.hasDataType =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasDataType"));
-    this.hasCityObject =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasCityObject"));
-    this.hasNext =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasNext"));
-    this.hasPositionValue =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionValue"));
-    this.hasLocation =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasLocation"));
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/bigowl#hasDataTypePrimitive"));
+    this.containsNode =
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#containsNode"));
+    this.successor =
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#successor"));
+    this.hasDataValue =
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/bigowl#hasDataValue"));
+    this.isPriority =
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#isPriority"));
     this.hasID =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasId"));
-    this.hasX =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasX"));
-    this.hasY =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasY"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasID"));
     this.isFirst =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#isFirst"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#isFirst"));
   }
 
   public void addImport(String pathFile, String uri) {
@@ -119,77 +107,78 @@ public class OWLUtils {
             getIndividualsByObjectProperty(reasoner, nodePreference, hasPosition);
 
         boolean quarter = false;
-        List<OWLNamedIndividual> buildings = null;
-
-        List<OWLNamedIndividual> locations = null;
+        List<OWLNamedIndividual> contains = null;
+        List<OWLNamedIndividual> successors = null;
+        List<OWLLiteral> priority = null;
         List<OWLLiteral> ids = null;
-        List<OWLLiteral> x = null;
-        List<OWLLiteral> y = null;
-        List<OWLLiteral> datatypes = null;
-        List<OWLLiteral> positionValues = null;
+        List<OWLNamedIndividual> datatypes = null;
+        List<OWLLiteral> values = null;
         double percentage = 1.0d;
         int index = 0;
         int id = 0;
         for (OWLNamedIndividual indPos : positions) {
-          buildings = getIndividualsByObjectProperty(reasoner, indPos, hasCityObject);
-          for (OWLNamedIndividual building : buildings) {
-            locations = getIndividualsByObjectProperty(reasoner, building, hasLocation);
-            if (locations != null && !locations.isEmpty()) {
-              for (OWLNamedIndividual location : locations) {
-                x = getDataPropertyByIndividual(reasoner, location, hasX);
-                y = getDataPropertyByIndividual(reasoner, location, hasY);
-              }
-            }
+          contains = getIndividualsByObjectProperty(reasoner, indPos, containsNode);
+          for (OWLNamedIndividual contain : contains) {
+            priority = getDataPropertyByIndividual(reasoner, contain, isPriority);
 
-            ids = getDataPropertyByIndividual(reasoner, building, hasID);
+            ids = getDataPropertyByIndividual(reasoner, contain, hasID);
           }
-          positionValues = getDataPropertyByIndividual(reasoner, indPos, hasPositionValue);
-          datatypes = getDataPropertyByIndividual(reasoner, indPos, hasDataType);
+          successors = getIndividualsByObjectProperty(reasoner, indPos, successor);
+          datatypes = getIndividualsByObjectProperty(reasoner, indPos, hasDataType);
+
+          values = getDataPropertyByIndividual(reasoner, indPos, hasDataValue);
         }
 
         if (positions != null) {
           if (positions.size() > 1) {
+
             OWLNamedIndividual first = getFirst(reasoner, positions, isFirst);
-            List<OWLNamedIndividual> routes = getNext(reasoner, first, hasNext);
+            List<OWLNamedIndividual> routes = getNext(reasoner, first, successor);
 
             List<OWLNamedIndividual> containsFirst =
-                    getIndividualsByObjectProperty(reasoner, routes.get(0), hasCityObject);
+                getIndividualsByObjectProperty(reasoner, routes.get(0), containsNode);
             List<OWLLiteral> idFirst =
-                    getDataPropertyByIndividual(reasoner, containsFirst.get(0), hasID);
+                getDataPropertyByIndividual(reasoner, containsFirst.get(0), hasID);
 
             List<OWLNamedIndividual> containsSecond =
-                    getIndividualsByObjectProperty(reasoner, routes.get(1), hasCityObject);
+                getIndividualsByObjectProperty(reasoner, routes.get(1), containsNode);
             List<OWLLiteral> idSecond =
-                    getDataPropertyByIndividual(reasoner, containsSecond.get(0), hasID);
+                getDataPropertyByIndividual(reasoner, containsSecond.get(0), hasID);
 
             int indexFirst = getIdToSolutionByPosition(idFirst.get(0).getLiteral());
             int indexSecond = getIdToSolutionByPosition(idSecond.get(0).getLiteral());
 
             Function<PermutationSolution<Integer>, Double> constraint =
-                    createSolutionByRoute(indexFirst, indexSecond);
+                createSolutionByRoute(indexFirst, indexSecond);
             result.add(constraint);
 
           } else {
             // de todos las listas solo va a haber un elemento en cada una de ellas
-            for (OWLNamedIndividual indPos : positions) {
-              if (positionValues.size() > 0) {
-                if (positionValues.get(0).getLiteral().contains("<")
-                        || positionValues.get(0).getLiteral().contains(">")
-                        || positionValues.get(0).getLiteral().contains("=")) {
-                  percentage = getPercentage(positionValues.get(0).getLiteral());
-                  index = getIdToSolutionByPosition(ids.get(0).getLiteral());
+
+            if (values.size() > 0) {
+              if (values.get(0).getLiteral().contains("<")
+                  || values.get(0).getLiteral().contains(">")
+                  || values.get(0).getLiteral().contains("=")) {
+                quarter = true;
+                percentage = getPercentage(values.get(0).getLiteral());
+                index = getIdToSolutionByPosition(ids.get(0).getLiteral());
+                Function<PermutationSolution<Integer>, Double> constraint =
+                    createSolutionByPositionQuarter(index, percentage);
+                result.add(constraint);
+              } else {
+                index = getIndexToSolutionByPosition(values.get(0).getLiteral());
+                id = getIdToSolutionByPosition(ids.get(0).getLiteral());
+                if (priority.size() > 0) {
                   Function<PermutationSolution<Integer>, Double> constraint =
-                          createSolutionByPositionQuarter(index, percentage);
+                      createSolutionByPositionPriority(index, id);
                   result.add(constraint);
                 } else {
-                  index = getIndexToSolutionByPosition(positionValues.get(0).getLiteral());
-                  id = getIdToSolutionByPosition(ids.get(0).getLiteral());
                   Function<PermutationSolution<Integer>, Double> constraint =
-                          createSolutionByPosition(index, id);
+                      createSolutionByPosition(index, id);
                   result.add(constraint);
                 }
               }
-            } // end positions
+            }
           }
         }
       }

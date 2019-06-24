@@ -8,17 +8,14 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.crossover.PMXCrossover;
 import org.uma.jmetal.operator.impl.mutation.PermutationSwapMutation;
 import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
-import org.uma.jmetal.problem.PermutationProblem;
 import org.uma.jmetal.problem.multiobjective.MultiobjectiveTSP;
 import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.semantic.OWLUtils;
 
 import java.io.IOException;
@@ -30,17 +27,16 @@ import java.util.function.Function;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
 public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws IOException
    * @throws SecurityException
-   * @throws ClassNotFoundException Invoking command:
-   *                                java org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
+   * @throws ClassNotFoundException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    //JMetalRandom.getInstance().setSeed(1);
+    // JMetalRandom.getInstance().setSeed(1);
 
     MultiobjectiveTSP problem;
     Algorithm<List<PermutationSolution<Integer>>> algorithm;
@@ -55,21 +51,23 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
     double mutationProbability = 0.01;
     mutation = new PermutationSwapMutation<Integer>(mutationProbability);
 
-    selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
-/**
- * List<Double> inters = new ArrayList<>();
- inters.add(0.0);
- inters.add(0.0);
- double epsilon =0.0001;
- algorithm = new RNSGAIIBuilder<>(problem, crossover, mutation,inters,epsilon)
-
- */
-
-    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology_old/traffic-tsp.owl");
-    owlUtils.addImport("//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology_old/traffic.owl","http://www.khaos.uma.es/perception/traffic/khaosteam");
-    owlUtils.addImport("/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology_old/bigowl.owl","http://www.khaos.uma.es/perception/bigowl");
+    selection =
+        new BinaryTournamentSelection<PermutationSolution<Integer>>(
+            new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
+    /**
+     * List<Double> inters = new ArrayList<>(); inters.add(0.0); inters.add(0.0); double epsilon
+     * =0.0001; algorithm = new RNSGAIIBuilder<>(problem, crossover, mutation,inters,epsilon)
+     */
+    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
+    owlUtils.addImport(
+        "//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic.owl",
+        "http://www.khaos.uma.es/perception/traffic/khaosteam");
+    owlUtils.addImport(
+        "/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/bigowl.owl",
+        "http://www.khaos.uma.es/perception/bigowl");
     owlUtils.loadOntology();
-    List<Function<PermutationSolution<Integer>, Double>> constraintList = owlUtils.getConstraintFromOntology();
+    List<Function<PermutationSolution<Integer>, Double>> constraintList =
+        owlUtils.getConstraintFromOntology();
 
     /*Function<PermutationSolution<Integer>, Double> constraint1;
     Function<PermutationSolution<Integer>, Double> constraint2;
@@ -81,25 +79,25 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
     //constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() - 1) == 71 ? 0.0 : -1.0 * (solution.getNumberOfVariables() - solution.getVariables().indexOf(71));
     constraint3 = solution -> solution.getVariableValue(solution.getNumberOfVariables() / 2) == 51 ? 0.0 : -1.0 * Math.abs((solution.getNumberOfVariables() / 2) - solution.getVariables().indexOf(51));
     constraint4 = solution -> solution.getVariables().indexOf(34) < solution.getNumberOfVariables() / 4 ? 0.0 : -1.0 * solution.getVariables().indexOf(34);*/
-    //problem.addConstraint(solution -> (solution.getVariableValue(0) == 78 ? 0.0 : -1.0)) ;
+    // problem.addConstraint(solution -> (solution.getVariableValue(0) == 78 ? 0.0 : -1.0)) ;
 
-    //problem.addConstraint(solution -> (constraint1.apply(solution))) ;
-    //problem.addConstraint(solution -> (constraint2.apply(solution))) ;
-    //problem.addConstraint(solution -> (constraint3.apply(solution))) ;
-    //problem.addConstraint(solution -> (constraint4.apply(solution))) ;
+    // problem.addConstraint(solution -> (constraint1.apply(solution))) ;
+    // problem.addConstraint(solution -> (constraint2.apply(solution))) ;
+    // problem.addConstraint(solution -> (constraint3.apply(solution))) ;
+    // problem.addConstraint(solution -> (constraint4.apply(solution))) ;
 
     // No constraints
     int populationSize = 100;
-    int maxEvaluations = 110000;
+    int maxEvaluations = 150000;
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
+    algorithm =
+        new NSGAIIBuilder<PermutationSolution<Integer>>(
+                problem, crossover, mutation, populationSize)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(maxEvaluations)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<PermutationSolution<Integer>> population = algorithm.getResult();
 
@@ -111,121 +109,120 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
     // Constraint 1
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    if(constraintList!=null && !constraintList.isEmpty()){
+    if (constraintList != null && !constraintList.isEmpty()) {
       for (Function<PermutationSolution<Integer>, Double> constraint : constraintList) {
-       problem.addConstraint(constraint) ;
+        problem.addConstraint(constraint);
       }
     }
 
+    algorithm =
+        new NSGAIIBuilder<PermutationSolution<Integer>>(
+                problem, crossover, mutation, populationSize)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(maxEvaluations)
+            .build();
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
-
-    algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     population = algorithm.getResult();
     new SolutionListOutput(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.Test.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.Test.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.Test.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.Test.tsv"))
+        .print();
 
     /*new SolutionListOutput(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.1.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.1.tsv"))
-        .print();
+          .setSeparator("\t")
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.1.tsv"))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.1.tsv"))
+          .print();
 
-    // Constraint 2
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    problem.addConstraint(constraint2) ;
+      // Constraint 2
+      problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+      problem.addConstraint(constraint2) ;
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
+      algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
+          mutation, populationSize)
+          .setSelectionOperator(selection)
+          .setMaxEvaluations(maxEvaluations)
+          .build();
 
-    algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+      algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+          .execute();
 
-    population = algorithm.getResult();
+      population = algorithm.getResult();
 
-    new SolutionListOutput(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.2.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.2.tsv"))
-        .print();
+      new SolutionListOutput(population)
+          .setSeparator("\t")
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.2.tsv"))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.2.tsv"))
+          .print();
 
-    // Constraint 3
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    problem.addConstraint(constraint3) ;
+      // Constraint 3
+      problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+      problem.addConstraint(constraint3) ;
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
+      algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
+          mutation, populationSize)
+          .setSelectionOperator(selection)
+          .setMaxEvaluations(maxEvaluations)
+          .build();
 
-    algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+      algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+          .execute();
 
-    population = algorithm.getResult();
+      population = algorithm.getResult();
 
-    new SolutionListOutput(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.3.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.3.tsv"))
-        .print();
+      new SolutionListOutput(population)
+          .setSeparator("\t")
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.3.tsv"))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.3.tsv"))
+          .print();
 
-    // Constraint 4
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    problem.addConstraint(constraint4) ;
+      // Constraint 4
+      problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+      problem.addConstraint(constraint4) ;
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
+      algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
+          mutation, populationSize)
+          .setSelectionOperator(selection)
+          .setMaxEvaluations(maxEvaluations)
+          .build();
 
-    algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+      algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+          .execute();
 
-    population = algorithm.getResult();
+      population = algorithm.getResult();
 
-    new SolutionListOutput(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.4.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.4.tsv"))
-        .print();
+      new SolutionListOutput(population)
+          .setSeparator("\t")
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.4.tsv"))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.4.tsv"))
+          .print();
 
-    // All constraints
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
-    problem.addConstraint(constraint1) ;
-    problem.addConstraint(constraint2) ;
-    problem.addConstraint(constraint3) ;
-    problem.addConstraint(constraint4) ;
+      // All constraints
+      problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+      problem.addConstraint(constraint1) ;
+      problem.addConstraint(constraint2) ;
+      problem.addConstraint(constraint3) ;
+      problem.addConstraint(constraint4) ;
 
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
-        mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .build();
+      algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover,
+          mutation, populationSize)
+          .setSelectionOperator(selection)
+          .setMaxEvaluations(maxEvaluations)
+          .build();
 
-    algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+      algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+          .execute();
 
-    population = algorithm.getResult();
+      population = algorithm.getResult();
 
-    new SolutionListOutput(population)
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.all.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.all.tsv"))
-        .print();
-  }*/
+      new SolutionListOutput(population)
+          .setSeparator("\t")
+          .setVarFileOutputContext(new DefaultFileOutputContext("VAR.all.tsv"))
+          .setFunFileOutputContext(new DefaultFileOutputContext("FUN.all.tsv"))
+          .print();
+    }*/
   }
 }
