@@ -1,5 +1,6 @@
 package org.uma.jmetal.runner.multiobjective;
 
+import java.util.function.Function;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -47,6 +48,10 @@ public class NSGAIIRNDSemanticRunner extends AbstractAlgorithmRunner {
     mutation =  new BitFlipMutation(
             1.0 / ((BinaryProblem) problem).getNumberOfBits(0));
 
+    Function<BinarySolution, Double> constraint;
+    constraint = solution -> !solution.getVariableValue(0).get(0) ? 0.0 : -1.0 * Double.MAX_VALUE;
+
+    ((RadioNetworkDesign) problem).addConstraint(constraint);
     int populationSize = 100 ;
      algorithm = new NSGAIIBuilder<BinarySolution>(
            problem,

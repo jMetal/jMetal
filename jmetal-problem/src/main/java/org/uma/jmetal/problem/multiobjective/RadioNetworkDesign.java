@@ -151,6 +151,9 @@ public class RadioNetworkDesign extends AbstractBinaryProblem {
 
     solution.setObjective(0, used_trans); // Number of antennae employed
     solution.setObjective(1, 100.0 - cover_rate); // Coverage rate unachieved
+    //evaluateConstraints(solution) ;
+    evaluateConstraintsSemantic(solution);
+
   }
 
   /**
