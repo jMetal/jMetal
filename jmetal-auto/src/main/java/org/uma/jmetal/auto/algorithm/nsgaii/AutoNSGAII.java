@@ -46,22 +46,23 @@ public class AutoNSGAII {
 
   public void parseParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
+    populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
     maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
 
     fixedParameterList.add(problemNameParameter) ;
     fixedParameterList.add(referenceFrontFilename) ;
     fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
+    fixedParameterList.add(populationSizeParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
 
     algorithmResultParameter =
-        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
-    populationSizeParameter = new PopulationSizeParameter(args);
+            new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
+            new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
     algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
 
@@ -228,8 +229,7 @@ public class AutoNSGAII {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--populationSizeParameter 100 "
-                + "--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult externalArchive "

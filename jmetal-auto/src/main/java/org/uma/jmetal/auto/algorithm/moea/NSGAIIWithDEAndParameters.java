@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.nsgaii;
+package org.uma.jmetal.auto.algorithm.moea;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
@@ -48,12 +48,14 @@ public class NSGAIIWithDEAndParameters {
 
   public void parseParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
+    populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
     maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
 
     fixedParameterList.add(problemNameParameter) ;
     fixedParameterList.add(referenceFrontFilename) ;
     fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
+    fixedParameterList.add(populationSizeParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
@@ -61,7 +63,6 @@ public class NSGAIIWithDEAndParameters {
 
     algorithmResultParameter =
         new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
-    populationSizeParameter = new PopulationSizeParameter(args);
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
@@ -73,7 +74,7 @@ public class NSGAIIWithDEAndParameters {
         new CreateInitialSolutionsParameter(
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
-    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
+    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random", "differentialEvolutionSelection"));
     IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
@@ -229,12 +230,12 @@ public class NSGAIIWithDEAndParameters {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--populationSizeParameter 100 "
-                + "--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult population "
+                + "--algorithmResult externalArchive "
                 + "--populationSize 100 "
+                + "--populationSizeWithArchive 100 "
                 + "--offspringPopulationSize 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "

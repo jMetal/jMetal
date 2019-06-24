@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithDEAndParameters;
+import org.uma.jmetal.auto.algorithm.moea.NSGAIIWithDEAndParameters;
 import org.uma.jmetal.auto.parameter.*;
 
 import java.util.List;
