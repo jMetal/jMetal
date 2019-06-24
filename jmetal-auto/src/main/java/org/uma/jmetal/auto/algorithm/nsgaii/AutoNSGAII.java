@@ -29,7 +29,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.*;
 
-public class NSGAIIAuto {
+public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -126,7 +126,6 @@ public class NSGAIIAuto {
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
-
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
@@ -251,7 +250,7 @@ public class NSGAIIAuto {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIAuto nsgaiiWithParameters = new NSGAIIAuto();
+    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
     nsgaiiWithParameters.parseParameters(parameters);
 
     nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);

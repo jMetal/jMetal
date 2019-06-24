@@ -35,7 +35,8 @@ public class AutoNSGAIIWithDEIraceParameterFileGenerator {
     NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
-    AutoNSGAIIWithDEIraceParameterFileGenerator nsgaiiiraceParameterFile = new AutoNSGAIIWithDEIraceParameterFileGenerator();
+    AutoNSGAIIWithDEIraceParameterFileGenerator nsgaiiiraceParameterFile =
+        new AutoNSGAIIWithDEIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(
         nsgaiiWithParameters.autoConfigurableParameterList);
   }
@@ -70,11 +71,14 @@ public class AutoNSGAIIWithDEIraceParameterFileGenerator {
     }
   }
 
-
-  private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
-    String dependenceString = parameter.getName() ;
+  private void decodeParameterGlobal(
+      Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
+    String dependenceString = parameter.getName();
     if (parentParameter instanceof CategoricalParameter) {
-      dependenceString = ((CategoricalParameter)((CategoricalParameter<?>) parentParameter)).getValidValues().toString() ;
+      dependenceString =
+          ((CategoricalParameter) ((CategoricalParameter<?>) parentParameter))
+              .getValidValues()
+              .toString();
       dependenceString = dependenceString.replace("[", "");
       dependenceString = dependenceString.replace("]", "");
     }
@@ -96,7 +100,6 @@ public class AutoNSGAIIWithDEIraceParameterFileGenerator {
       decodeParameterSpecific(specificParameter, stringBuilder, parameter);
     }
   }
-
 
   private void decodeParameterSpecific(
       Pair<String, Parameter<?>> pair, StringBuilder stringBuilder, Parameter<?> parentParameter) {

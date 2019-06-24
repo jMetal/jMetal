@@ -25,13 +25,14 @@ public class GenerateIraceParameterFile {
   public static void main(String[] args) throws IOException {
     List<ParameterType> parameters = new ArrayList<>();
 
-    CategoricalParameterType algorithmResult = new CategoricalParameterType(AlgorithmResultParameter.getName());
+    CategoricalParameterType algorithmResult =
+        new CategoricalParameterType(AlgorithmResultParameter.getName());
     algorithmResult.addValue(AlgorithmResultParameter.POPULATION);
     algorithmResult.addValue(AlgorithmResultParameter.EXTERNAL_ARCHIVE);
 
-    //CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
-    //algorithmResult.addValue(AlgorithmResultType.population.name());
-    //algorithmResult.addValue(AlgorithmResultType.externalArchive.name());
+    // CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
+    // algorithmResult.addValue(AlgorithmResultType.population.name());
+    // algorithmResult.addValue(AlgorithmResultType.externalArchive.name());
 
     CategoricalParameterType populationSize = new CategoricalParameterType("populationSize");
     populationSize.addValue("100");
@@ -72,13 +73,13 @@ public class GenerateIraceParameterFile {
     parameters.add(createInitialSolutions);
 
     // Variation
-    CategoricalParameterType variation = new VariationParameter() ;
+    CategoricalParameterType variation = new VariationParameter();
     variation.addValue(VariationType.crossoverAndMutationVariation.name());
-    //variation.addValue(VariationType.differentialEvolutionVariation.name());
-    //variation.addSpecificParameter(new DifferentialEvolutionCRValueParameter());
-    //variation.addSpecificParameter(new DifferentialEvolutionFValueParameter());
+    // variation.addValue(VariationType.differentialEvolutionVariation.name());
+    // variation.addSpecificParameter(new DifferentialEvolutionCRValueParameter());
+    // variation.addSpecificParameter(new DifferentialEvolutionFValueParameter());
 
-    parameters.add(variation) ;
+    parameters.add(variation);
 
     // Crossover
     CrossoverParameter crossover = new CrossoverParameter();
@@ -86,9 +87,9 @@ public class GenerateIraceParameterFile {
     crossover.addSpecificParameter(new BLXAlphaCrossoverAlphaValueParameter());
     crossover.setParent(variation);
     crossover.setParentTag(VariationType.crossoverAndMutationVariation.name());
-    //crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
-    //crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
-    //crossover.addValue(CrossoverType.DE.toString());
+    // crossover.addAssociatedParameter(new DifferentialEvolutionCRValueParameter());
+    // crossover.addAssociatedParameter(new DifferentialEvolutionFValueParameter());
+    // crossover.addValue(CrossoverType.DE.toString());
 
     parameters.add(crossover);
 
@@ -105,7 +106,7 @@ public class GenerateIraceParameterFile {
     SelectionParameter selection = new SelectionParameter();
     selection.addSpecificParameter(new NarityTournamentNParameter(2, 10));
     selection.addValue("random");
-    //selection.addValue(SelectionType.differentialEvolution.toString());
+    // selection.addValue(SelectionType.differentialEvolution.toString());
 
     parameters.add(selection);
 
@@ -141,8 +142,10 @@ public class GenerateIraceParameterFile {
                 relatedParameter.getRange(),
                 relatedParameter.getConditions()));
       }
+
       stringBuilder.append("#\n");
     }
+
     stringBuilder.append("\n");
     System.out.println(stringBuilder.toString());
     Files.write(Paths.get("parameters-NSGAII.txt"), stringBuilder.toString().getBytes());
