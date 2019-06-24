@@ -195,8 +195,10 @@ public class AutoNSGAII {
             selection,
             variation,
             replacement);
-        this.archiveObserver = archiveObserver;
-        evaluation.getObservable().register(archiveObserver);
+        if (archiveObserver != null) {
+          this.archiveObserver = archiveObserver;
+          evaluation.getObservable().register(archiveObserver);
+        }
       }
 
       @Override
