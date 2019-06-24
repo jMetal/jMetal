@@ -14,7 +14,6 @@ import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
-import org.uma.jmetal.auto.parameter.irace.NSGAIIiraceParameterFile;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
@@ -48,12 +47,11 @@ public class NSGAIIAuto {
   public void parseParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
-    maximumNumberOfEvaluationsParameter =
-        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
+    maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
 
-    fixedParameterList.add(problemNameParameter);
-    fixedParameterList.add(referenceFrontFilename);
-    fixedParameterList.add(maximumNumberOfEvaluationsParameter);
+    fixedParameterList.add(problemNameParameter) ;
+    fixedParameterList.add(referenceFrontFilename) ;
+    fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
@@ -64,13 +62,10 @@ public class NSGAIIAuto {
     populationSizeParameter = new PopulationSizeParameter(args);
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
-    algorithmResultParameter.addGlobalParameter(populationSizeParameter);
-    // algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
-    algorithmResultParameter.addSpecificParameter(
-        "externalArchive", populationSizeWithArchiveParameter);
+    algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
+    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
 
-    offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
 
     createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
@@ -82,15 +77,15 @@ public class NSGAIIAuto {
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
 
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability =
-        new ProbabilityParameter("crossoverProbability", args);
+    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability", args);
     crossover.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter("crossoverRepairStrategy",
+            args,  Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
+    RealParameter distributionIndex =
+        new RealParameter("sbxDistributionIndex", args,5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -98,12 +93,11 @@ public class NSGAIIAuto {
 
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
-    ProbabilityParameter mutationProbability =
-        new ProbabilityParameter("mutationProbability", args);
+    ProbabilityParameter mutationProbability = new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter(
-            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter("mutationRepairStrategy",
+            args,  Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForMutation =
@@ -113,6 +107,14 @@ public class NSGAIIAuto {
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
+
+    DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
+        new DifferentialEvolutionCrossoverParameter(args);
+
+    RealParameter f = new RealParameter("f", args, 0.0, 1.0) ;
+    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0) ;
+    differentialEvolutionCrossover.addGlobalParameter(f);
+    differentialEvolutionCrossover.addGlobalParameter(cr);
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -124,6 +126,7 @@ public class NSGAIIAuto {
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
+
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();

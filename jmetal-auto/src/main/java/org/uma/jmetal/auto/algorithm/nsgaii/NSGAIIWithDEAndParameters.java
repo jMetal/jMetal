@@ -33,7 +33,7 @@ import java.util.List;
 
 public class NSGAIIWithDEAndParameters {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
-  public List<Parameter<?>> parameterList = new ArrayList<>();
+  public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
@@ -51,11 +51,11 @@ public class NSGAIIWithDEAndParameters {
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
     maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
 
-    parameterList.add(problemNameParameter) ;
-    parameterList.add(referenceFrontFilename) ;
-    parameterList.add(maximumNumberOfEvaluationsParameter) ;
+    fixedParameterList.add(problemNameParameter) ;
+    fixedParameterList.add(referenceFrontFilename) ;
+    fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
 
-    for (Parameter<?> parameter : parameterList) {
+    for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
 
@@ -253,7 +253,7 @@ public class NSGAIIWithDEAndParameters {
     NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
     nsgaiiWithParameters.parseParameters(parameters);
 
-    nsgaiiWithParameters.print(nsgaiiWithParameters.parameterList);
+    nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
     nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
@@ -264,8 +264,5 @@ public class NSGAIIWithDEAndParameters {
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
-
-    //NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    //nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
   }
 }

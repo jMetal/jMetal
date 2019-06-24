@@ -1,13 +1,13 @@
-package org.uma.jmetal.auto.parameter.irace;
+package org.uma.jmetal.auto.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIAuto;
 import org.uma.jmetal.auto.algorithm.nsgaii.NSGAIIWithDEAndParameters;
 import org.uma.jmetal.auto.parameter.*;
-import sun.awt.geom.AreaOp;
 
 import java.util.List;
 
-public class NSGAIIWithDEiraceParameterFile {
+public class AutoNSGAIIIraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
   public void generateConfigurationFile() {
@@ -33,10 +33,10 @@ public class NSGAIIWithDEiraceParameterFile {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
+    NSGAIIAuto nsgaiiWithParameters = new NSGAIIAuto();
     nsgaiiWithParameters.parseParameters(parameters);
 
-    NSGAIIWithDEiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIWithDEiraceParameterFile();
+    AutoNSGAIIIraceParameterFileGenerator nsgaiiiraceParameterFile = new AutoNSGAIIIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(
         nsgaiiWithParameters.autoConfigurableParameterList);
   }
@@ -163,6 +163,6 @@ public class NSGAIIWithDEiraceParameterFile {
   }
 
   public static void main(String[] args) {
-    new NSGAIIWithDEiraceParameterFile().generateConfigurationFile();
+    new AutoNSGAIIIraceParameterFileGenerator().generateConfigurationFile();
   }
 }
