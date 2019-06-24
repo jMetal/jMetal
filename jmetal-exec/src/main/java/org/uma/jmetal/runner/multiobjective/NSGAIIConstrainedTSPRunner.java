@@ -65,9 +65,9 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
 
  */
 
-    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
-    owlUtils.addImport("//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic.owl","http://www.khaos.uma.es/perception/traffic/khaosteam");
-    owlUtils.addImport("/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/bigowl.owl","http://www.khaos.uma.es/perception/bigowl");
+    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology_old/traffic-tsp.owl");
+    owlUtils.addImport("//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology_old/traffic.owl","http://www.khaos.uma.es/perception/traffic/khaosteam");
+    owlUtils.addImport("/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology_old/bigowl.owl","http://www.khaos.uma.es/perception/bigowl");
     owlUtils.loadOntology();
     List<Function<PermutationSolution<Integer>, Double>> constraintList = owlUtils.getConstraintFromOntology();
 
