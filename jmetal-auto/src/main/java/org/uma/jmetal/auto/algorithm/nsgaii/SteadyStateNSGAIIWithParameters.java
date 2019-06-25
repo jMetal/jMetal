@@ -30,7 +30,7 @@ public class SteadyStateNSGAIIWithParameters {
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseParameters(parameters);
+    autoNSGAII.parseAndCheckParameters(parameters);
 
     autoNSGAII.print(autoNSGAII.fixedParameterList);
     autoNSGAII.print(autoNSGAII.autoConfigurableParameterList);

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NSGAIIWithDEAndParameters {
+public class AutoMOEA {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class NSGAIIWithDEAndParameters {
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
-  public void parseParameters(String[] args) {
+  public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
     populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
@@ -251,8 +251,8 @@ public class NSGAIIWithDEAndParameters {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
-    nsgaiiWithParameters.parseParameters(parameters);
+    AutoMOEA nsgaiiWithParameters = new AutoMOEA();
+    nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
     nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
     nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);

@@ -44,7 +44,7 @@ public class AutoNSGAII {
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
-  public void parseParameters(String[] args) {
+  public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
     populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
@@ -253,7 +253,7 @@ public class AutoNSGAII {
             .split("\\s+");
 
     AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseParameters(parameters);
+    nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
     nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
     nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);

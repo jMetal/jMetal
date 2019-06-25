@@ -32,7 +32,7 @@ public class AutoNSGAIITest {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseParameters(parameters);
+    autoNSGAII.parseAndCheckParameters(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
     nsgaII.run();
@@ -65,7 +65,7 @@ public class AutoNSGAIITest {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
     AutoNSGAII autoNSGAII = new AutoNSGAII();
-    autoNSGAII.parseParameters(parameters);
+    autoNSGAII.parseAndCheckParameters(parameters);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
     nsgaII.run();

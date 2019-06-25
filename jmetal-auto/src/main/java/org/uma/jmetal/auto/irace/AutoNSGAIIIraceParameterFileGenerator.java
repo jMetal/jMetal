@@ -33,7 +33,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
             .split("\\s+");
 
     AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseParameters(parameters);
+    nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
     AutoNSGAIIIraceParameterFileGenerator nsgaiiiraceParameterFile = new AutoNSGAIIIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(

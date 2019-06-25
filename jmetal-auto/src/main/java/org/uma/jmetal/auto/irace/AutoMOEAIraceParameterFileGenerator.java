@@ -1,12 +1,12 @@
 package org.uma.jmetal.auto.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.auto.algorithm.moea.NSGAIIWithDEAndParameters;
+import org.uma.jmetal.auto.algorithm.moea.AutoMOEA;
 import org.uma.jmetal.auto.parameter.*;
 
 import java.util.List;
 
-public class AutoNSGAIIWithDEIraceParameterFileGenerator {
+public class AutoMOEAIraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
   public void generateConfigurationFile() {
@@ -32,11 +32,11 @@ public class AutoNSGAIIWithDEIraceParameterFileGenerator {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    NSGAIIWithDEAndParameters nsgaiiWithParameters = new NSGAIIWithDEAndParameters();
-    nsgaiiWithParameters.parseParameters(parameters);
+    AutoMOEA nsgaiiWithParameters = new AutoMOEA();
+    nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
-    AutoNSGAIIWithDEIraceParameterFileGenerator nsgaiiiraceParameterFile =
-        new AutoNSGAIIWithDEIraceParameterFileGenerator();
+    AutoMOEAIraceParameterFileGenerator nsgaiiiraceParameterFile =
+        new AutoMOEAIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(
         nsgaiiWithParameters.autoConfigurableParameterList);
   }
@@ -165,6 +165,6 @@ public class AutoNSGAIIWithDEIraceParameterFileGenerator {
   }
 
   public static void main(String[] args) {
-    new AutoNSGAIIWithDEIraceParameterFileGenerator().generateConfigurationFile();
+    new AutoMOEAIraceParameterFileGenerator().generateConfigurationFile();
   }
 }
