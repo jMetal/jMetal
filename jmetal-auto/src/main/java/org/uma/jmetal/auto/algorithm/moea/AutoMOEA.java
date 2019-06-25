@@ -32,12 +32,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AutoMOEA {
-  public List<Parameter<?>> autoConfigurableParameterList ;
-  public List<Parameter<?>> fixedParameterList ;
+  public List<Parameter<?>> autoConfigurableParameterList;
+  public List<Parameter<?>> fixedParameterList;
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
-  private IntegerParameter maximumNumberOfEvaluationsParameter ;
+  private IntegerParameter maximumNumberOfEvaluationsParameter;
   private AlgorithmResultParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
@@ -45,15 +45,15 @@ public class AutoMOEA {
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
-  private ReplacementParameter replacementParameter ;
+  private ReplacementParameter replacementParameter;
 
   public AutoMOEA(String[] args) {
-    fixedParameterList = parseFixedParameters(args) ;
-    autoConfigurableParameterList = parseAutoConfigurableParameters(args) ;
+    fixedParameterList = parseFixedParameters(args);
+    autoConfigurableParameterList = parseAutoConfigurableParameters(args);
   }
 
   public List<Parameter<?>> parseAutoConfigurableParameters(String[] args) {
-    List<Parameter<?>> parameters = new ArrayList<>( );
+    List<Parameter<?>> parameters = new ArrayList<>();
 
     parseAlgorithmResult(args);
     parseCreateInitialSolutions(args);
@@ -65,31 +65,31 @@ public class AutoMOEA {
     parameters.add(createInitialSolutionsParameter);
     parameters.add(variationParameter);
     parameters.add(selectionParameter);
-    parameters.add(replacementParameter) ;
+    parameters.add(replacementParameter);
 
     for (Parameter<?> parameter : parameters) {
       parameter.parse().check();
     }
 
-    return parameters ;
+    return parameters;
   }
 
   private void parseReplacement(String[] args) {
-    replacementParameter = new ReplacementParameter(args, Arrays.asList("rankingAndDensityEstimatorReplacement"));
+    replacementParameter =
+        new ReplacementParameter(args, Arrays.asList("rankingAndDensityEstimatorReplacement"));
   }
-
 
   private void parseVariation(String[] args) {
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability", args);
+    ProbabilityParameter crossoverProbability =
+        new ProbabilityParameter("crossoverProbability", args);
     crossover.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("crossoverRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex =
-        new RealParameter("sbxDistributionIndex", args,5.0, 400.0);
+    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -97,11 +97,12 @@ public class AutoMOEA {
 
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
-    ProbabilityParameter mutationProbability = new ProbabilityParameter("mutationProbability", args);
+    ProbabilityParameter mutationProbability =
+        new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("mutationRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForMutation =
@@ -115,23 +116,28 @@ public class AutoMOEA {
     DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
         new DifferentialEvolutionCrossoverParameter(args);
 
-    RealParameter f = new RealParameter("f", args, 0.0, 1.0) ;
-    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0) ;
+    RealParameter f = new RealParameter("f", args, 0.0, 1.0);
+    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
     differentialEvolutionCrossover.addGlobalParameter(f);
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
-    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+    offspringPopulationSizeParameter =
+        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
 
     variationParameter =
-        new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation", "differentialEvolutionVariation"));
+        new VariationParameter(
+            args, Arrays.asList("crossoverAndMutationVariation", "differentialEvolutionVariation"));
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
-    variationParameter.addSpecificParameter("differentialEvolutionVariation", differentialEvolutionCrossover);
+    variationParameter.addSpecificParameter(
+        "differentialEvolutionVariation", differentialEvolutionCrossover);
   }
 
   private void parseSelectionParameter(String[] args) {
-    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random", "differentialEvolutionSelection"));
+    selectionParameter =
+        new SelectionParameter(
+            args, Arrays.asList("tournament", "random", "differentialEvolutionSelection"));
     IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
@@ -149,27 +155,29 @@ public class AutoMOEA {
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
-    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
+    algorithmResultParameter.addSpecificParameter(
+        "externalArchive", populationSizeWithArchiveParameter);
   }
 
   private List<Parameter<?>> parseFixedParameters(String[] args) {
-    List<Parameter<?>> parameters = new ArrayList<>( );
+    List<Parameter<?>> parameters = new ArrayList<>();
 
     problemNameParameter = new ProblemNameParameter<>(args);
     populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
-    maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
+    maximumNumberOfEvaluationsParameter =
+        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
-    parameters.add(problemNameParameter) ;
-    parameters.add(referenceFrontFilename) ;
-    parameters.add(maximumNumberOfEvaluationsParameter) ;
-    parameters.add(populationSizeParameter) ;
+    parameters.add(problemNameParameter);
+    parameters.add(referenceFrontFilename);
+    parameters.add(maximumNumberOfEvaluationsParameter);
+    parameters.add(populationSizeParameter);
 
     for (Parameter<?> parameter : parameters) {
       parameter.parse().check();
     }
 
-    return parameters ;
+    return parameters;
   }
 
   /**
@@ -198,9 +206,7 @@ public class AutoMOEA {
 
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
-    Variation<DoubleSolution> variation =
-        (Variation<DoubleSolution>)
-            variationParameter.getParameter();
+    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
@@ -208,9 +214,11 @@ public class AutoMOEA {
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    Replacement<DoubleSolution> replacement = (Replacement<DoubleSolution>)replacementParameter.getParameter() ;
+    Replacement<DoubleSolution> replacement =
+        (Replacement<DoubleSolution>) replacementParameter.getParameter();
 
-    Termination termination = new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
+    Termination termination =
+        new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     class MOEA extends EvolutionaryAlgorithm<DoubleSolution> {
       private ExternalArchiveObserver<DoubleSolution> archiveObserver;
@@ -299,9 +307,9 @@ public class AutoMOEA {
     moea.run();
 
     new SolutionListOutput(moea.getResult())
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
   }
 }
