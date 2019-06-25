@@ -140,7 +140,15 @@ public class AutoMOEA {
             args, Arrays.asList("tournament", "random", "differentialEvolutionSelection"));
     IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
+    //RankingParameter<DoubleSolution> ranking =
+    //    new RankingParameter<>(
+    //        "rankingForTournamentSelection", args, Arrays.asList("dominanceRanking"));
+    //DensityEstimatorParameter<DoubleSolution> densityEstimator =
+    //    new DensityEstimatorParameter<>(
+    //        "densityEstimatorForTournamentSelection", args, Arrays.asList("crowdingDistance"));
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
+    //selectionParameter.addSpecificParameter("tournament", ranking);
+    //selectionParameter.addSpecificParameter("tournament", densityEstimator);
   }
 
   private void parseCreateInitialSolutions(String[] args) {
@@ -206,7 +214,8 @@ public class AutoMOEA {
 
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
-    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
+    Variation<DoubleSolution> variation =
+        (Variation<DoubleSolution>) variationParameter.getParameter();
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
