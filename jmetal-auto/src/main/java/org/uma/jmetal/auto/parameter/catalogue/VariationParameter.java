@@ -39,8 +39,10 @@ public class VariationParameter extends CategoricalParameter<String> {
     return this;
   }
 
-  public Variation<?> getParameter(int offspringPopulationSize) {
+  public Variation<?> getParameter() {
     Variation<?> result;
+    int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
+
     switch (getValue()) {
       case "crossoverAndMutationVariation":
         CrossoverParameter crossoverParameter =

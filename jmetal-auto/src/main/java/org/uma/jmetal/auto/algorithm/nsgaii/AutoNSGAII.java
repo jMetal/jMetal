@@ -162,7 +162,7 @@ public class AutoNSGAII {
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>)
-            variationParameter.getParameter(offspringPopulationSizeParameter.getValue());
+            variationParameter.getParameter();
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
