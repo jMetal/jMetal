@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.util.SimpleIRIMapper;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.PermutationSolution;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class OWLUtils {
+  static final int GRID_SIZE_X = 20;
   private OWLOntologyManager manager;
   private OWLOntology ontology;
   private OWLDataFactory factory;
@@ -32,14 +34,18 @@ public class OWLUtils {
   private OWLObjectProperty hasCityObject;
   private OWLObjectProperty hasNext;
   private OWLObjectProperty hasLocation;
-  private OWLDataProperty hasDataValue;
-  private OWLDataProperty isPriority;
   private OWLDataProperty hasID;
   private OWLDataProperty isFirst;
   private OWLDataProperty hasDataType;
   private OWLDataProperty hasPositionValue;
   private OWLDataProperty hasX;
   private OWLDataProperty hasY;
+
+  private OWLNamedIndividual newYorkGridConstraint;
+  private OWLObjectProperty hasAntenna;
+  private OWLObjectProperty avoids;
+  private OWLObjectProperty attaches;
+  private OWLDataProperty hasMinimumCoverage;
 
   public OWLUtils(String pathOWL) {
     this.manager = OWLManager.createOWLOntologyManager();
@@ -55,36 +61,55 @@ public class OWLUtils {
             IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPreference"));
 
     this.hasPosition =
-            factory.getOWLObjectProperty(
-                    IRI.create(
-                            "http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionInPreference"));
+        factory.getOWLObjectProperty(
+            IRI.create(
+                "http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionInPreference"));
     this.hasDataType =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasDataType"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasDataType"));
     this.hasCityObject =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasCityObject"));
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasCityObject"));
     this.hasNext =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasNext"));
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasNext"));
     this.hasPositionValue =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionValue"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionValue"));
     this.hasLocation =
-            factory.getOWLObjectProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasLocation"));
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasLocation"));
     this.hasID =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasId"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasId"));
     this.hasX =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasX"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasX"));
     this.hasY =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasY"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasY"));
     this.isFirst =
-            factory.getOWLDataProperty(
-                    IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#isFirst"));
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#isFirst"));
+
+    this.newYorkGridConstraint =
+        factory.getOWLNamedIndividual(
+            IRI.create(
+                "http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#NewYorkGridConstraints"));
+    this.hasAntenna =
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasAntenna"));
+    this.avoids =
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#avoids"));
+
+    this.attaches =
+        factory.getOWLObjectProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#attaches"));
+
+    this.hasMinimumCoverage =
+        factory.getOWLDataProperty(
+            IRI.create("http://www.khaos.uma.es/perception/traffic/khaosteam#hasMinimumCoverage"));
   }
 
   public void addImport(String pathFile, String uri) {
@@ -104,7 +129,67 @@ public class OWLUtils {
     }
   }
 
-  public List<Function<PermutationSolution<Integer>, Double>> getConstraintFromOntology() {
+  public List<Function<BinarySolution, Double>> getRNDConstraintFromOntology() {
+    List<Function<BinarySolution, Double>> result = null;
+    if (ontology != null) {
+      result = new ArrayList<>();
+      NodeSet<OWLNamedIndividual> antennas =
+          reasoner.getObjectPropertyValues(newYorkGridConstraint, hasAntenna);
+
+      List<OWLLiteral> minimumCoverageList =
+          getDataPropertyByIndividual(reasoner, newYorkGridConstraint, hasMinimumCoverage);
+      if (minimumCoverageList != null && !minimumCoverageList.isEmpty()) {
+        double coverage = Double.valueOf(minimumCoverageList.get(0).getLiteral());
+        result.add(createSolutionByCoverage(coverage));
+      }
+      if (antennas != null && !antennas.isEmpty()) {
+        Iterator<Node<OWLNamedIndividual>> it = antennas.iterator();
+        while (it.hasNext()) {
+          OWLNamedIndividual antenna = it.next().iterator().next();
+
+          List<OWLNamedIndividual> avoidlist = null;
+          List<OWLNamedIndividual> locations = null;
+          List<OWLNamedIndividual> attachList = null;
+          List<OWLLiteral> x = null;
+          List<OWLLiteral> y = null;
+
+          avoidlist = getIndividualsByObjectProperty(reasoner, antenna, avoids);
+          locations = getIndividualsByObjectProperty(reasoner, antenna, hasLocation);
+          attachList = getIndividualsByObjectProperty(reasoner, antenna, attaches);
+          if (avoidlist != null && !avoidlist.isEmpty()) {
+            for (OWLNamedIndividual ind : avoidlist) {
+              List<OWLNamedIndividual> locationsAux =
+                  getIndividualsByObjectProperty(reasoner, ind, hasLocation);
+              if (locationsAux != null && !locationsAux.isEmpty()) {
+                int xValue = getValueFromLocation(reasoner, locationsAux.get(0), hasX);
+                int yValue = getValueFromLocation(reasoner, locationsAux.get(0), hasY);
+                result.add(createAvoidSolutionByGridPosition(xValue, yValue));
+              }
+            }
+          }
+          if (locations != null && !locations.isEmpty()) {
+            int xValue = getValueFromLocation(reasoner, locations.get(0), hasX);
+            int yValue = getValueFromLocation(reasoner, locations.get(0), hasY);
+            result.add(createAttachSolutionByGridPosition(xValue, yValue));
+          }
+          if (attachList != null && !attachList.isEmpty()) {
+            for (OWLNamedIndividual ind : attachList) {
+              List<OWLNamedIndividual> locationsAux =
+                  getIndividualsByObjectProperty(reasoner, ind, hasLocation);
+              if (locationsAux != null && !locationsAux.isEmpty()) {
+                int xValue = getValueFromLocation(reasoner, locationsAux.get(0), hasX);
+                int yValue = getValueFromLocation(reasoner, locationsAux.get(0), hasY);
+                result.add(createAttachSolutionByGridPosition(xValue, yValue));
+              }
+            }
+          }
+        }
+      } // enfif
+    }
+    return result;
+  }
+
+  public List<Function<PermutationSolution<Integer>, Double>> getTSPConstraintFromOntology() {
     List<Function<PermutationSolution<Integer>, Double>> result = null;
     if (ontology != null) {
       result = new ArrayList<>();
@@ -153,20 +238,20 @@ public class OWLUtils {
             List<OWLNamedIndividual> routes = getNext(reasoner, first, hasNext);
 
             List<OWLNamedIndividual> containsFirst =
-                    getIndividualsByObjectProperty(reasoner, routes.get(0), hasCityObject);
+                getIndividualsByObjectProperty(reasoner, routes.get(0), hasCityObject);
             List<OWLLiteral> idFirst =
-                    getDataPropertyByIndividual(reasoner, containsFirst.get(0), hasID);
+                getDataPropertyByIndividual(reasoner, containsFirst.get(0), hasID);
 
             List<OWLNamedIndividual> containsSecond =
-                    getIndividualsByObjectProperty(reasoner, routes.get(1), hasCityObject);
+                getIndividualsByObjectProperty(reasoner, routes.get(1), hasCityObject);
             List<OWLLiteral> idSecond =
-                    getDataPropertyByIndividual(reasoner, containsSecond.get(0), hasID);
+                getDataPropertyByIndividual(reasoner, containsSecond.get(0), hasID);
 
             int indexFirst = getIdToSolutionByPosition(idFirst.get(0).getLiteral());
             int indexSecond = getIdToSolutionByPosition(idSecond.get(0).getLiteral());
 
             Function<PermutationSolution<Integer>, Double> constraint =
-                    createSolutionByRoute(indexFirst, indexSecond);
+                createSolutionByRoute(indexFirst, indexSecond);
             result.add(constraint);
 
           } else {
@@ -174,18 +259,18 @@ public class OWLUtils {
             for (OWLNamedIndividual indPos : positions) {
               if (positionValues.size() > 0) {
                 if (positionValues.get(0).getLiteral().contains("<")
-                        || positionValues.get(0).getLiteral().contains(">")
-                        || positionValues.get(0).getLiteral().contains("=")) {
+                    || positionValues.get(0).getLiteral().contains(">")
+                    || positionValues.get(0).getLiteral().contains("=")) {
                   percentage = getPercentage(positionValues.get(0).getLiteral());
                   index = getIdToSolutionByPosition(ids.get(0).getLiteral());
                   Function<PermutationSolution<Integer>, Double> constraint =
-                          createSolutionByPositionQuarter(index, percentage);
+                      createSolutionByPositionQuarter(index, percentage);
                   result.add(constraint);
                 } else {
                   index = getIndexToSolutionByPosition(positionValues.get(0).getLiteral());
                   id = getIdToSolutionByPosition(ids.get(0).getLiteral());
                   Function<PermutationSolution<Integer>, Double> constraint =
-                          createSolutionByPosition(index, id);
+                      createSolutionByPosition(index, id);
                   result.add(constraint);
                 }
               }
@@ -193,6 +278,16 @@ public class OWLUtils {
           }
         }
       }
+    }
+    return result;
+  }
+
+  private int getValueFromLocation(
+      OWLReasoner reasoner, OWLNamedIndividual individual, OWLDataProperty dataProperty) {
+    int result = 0;
+    List<OWLLiteral> aux = getDataPropertyByIndividual(reasoner, individual, dataProperty);
+    if (aux != null && !aux.isEmpty()) {
+      result = Integer.valueOf(aux.get(0).getLiteral());
     }
     return result;
   }
@@ -299,6 +394,30 @@ public class OWLUtils {
             solution.getVariableValue(index) == value
                 ? 0.0
                 : -1.0 * solution.getVariables().indexOf(value);
+
+    return constraint;
+  }
+
+  private Function<BinarySolution, Double> createSolutionByCoverage(double coverage) {
+    Function<BinarySolution, Double> constraint =
+        solution ->
+            solution.getObjective(1) <= (100 - coverage) ? 0.0 : -1.0 * solution.getObjective(1);
+
+    return constraint;
+  }
+
+  private Function<BinarySolution, Double> createAvoidSolutionByGridPosition(int x, int y) {
+    int position = x + (y * GRID_SIZE_X);
+    Function<BinarySolution, Double> constraint =
+        solution -> !solution.getVariableValue(0).get(position) ? 0.0 : -1.0 * Double.MAX_VALUE;
+
+    return constraint;
+  }
+
+  private Function<BinarySolution, Double> createAttachSolutionByGridPosition(int x, int y) {
+    int position = x + (y * GRID_SIZE_X);
+    Function<BinarySolution, Double> constraint =
+        solution -> solution.getVariableValue(0).get(position) ? 0.0 : -1.0 * Double.MAX_VALUE;
 
     return constraint;
   }

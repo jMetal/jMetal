@@ -19,6 +19,7 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.semantic.OWLUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -48,10 +49,28 @@ public class NSGAIIRNDSemanticRunner extends AbstractAlgorithmRunner {
     mutation =  new BitFlipMutation(
             1.0 / ((BinaryProblem) problem).getNumberOfBits(0));
 
-    Function<BinarySolution, Double> constraint;
-    constraint = solution -> !solution.getVariableValue(0).get(0) ? 0.0 : -1.0 * Double.MAX_VALUE;
+    /*Function<BinarySolution, Double> constraint1;
+    Function<BinarySolution, Double> constraint2;
+    constraint1 = solution -> !solution.getVariableValue(0).get(0) ? 0.0 : -1.0 * Double.MAX_VALUE;
 
-    ((RadioNetworkDesign) problem).addConstraint(constraint);
+    constraint2 = solution -> solution.getObjective(1)<=(100-80) ? 0.0 : -1.0 * solution.getObjective(1);
+    ((RadioNetworkDesign) problem).addConstraint(constraint1);
+    ((RadioNetworkDesign) problem).addConstraint(constraint2);*/
+    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
+    owlUtils.addImport(
+            "//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic.owl",
+            "http://www.khaos.uma.es/perception/traffic/khaosteam");
+    owlUtils.addImport(
+            "/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/bigowl.owl",
+            "http://www.khaos.uma.es/perception/bigowl");
+    owlUtils.loadOntology();
+    List<Function<BinarySolution, Double>> constraintList =
+            owlUtils.getRNDConstraintFromOntology();
+    if (constraintList != null && !constraintList.isEmpty()) {
+      for (Function<BinarySolution, Double> constraint : constraintList) {
+        ((RadioNetworkDesign) problem).addConstraint(constraint);
+      }
+    }
     int populationSize = 100 ;
      algorithm = new NSGAIIBuilder<BinarySolution>(
            problem,

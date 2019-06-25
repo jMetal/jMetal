@@ -237,6 +237,15 @@
     
 
 
+    <!-- http://www.khaos.uma.es/perception/traffic/khaosteam#hasMinimumCoverage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/traffic/khaosteam#hasMinimumCoverage">
+        <rdfs:domain rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#GridConstraint"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionValue -->
 
     <owl:DatatypeProperty rdf:about="http://www.khaos.uma.es/perception/traffic/khaosteam#hasPositionValue">

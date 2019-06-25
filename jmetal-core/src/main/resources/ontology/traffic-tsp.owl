@@ -85,8 +85,8 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#AntennaSector2Location">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Point"/>
-        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">6</khaosteam:hasX>
-        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</khaosteam:hasY>
+        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</khaosteam:hasX>
+        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</khaosteam:hasY>
     </owl:NamedIndividual>
     
 
@@ -199,8 +199,8 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#HalfWayClientLocation">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Point"/>
-        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</khaosteam:hasX>
-        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</khaosteam:hasY>
+        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</khaosteam:hasX>
+        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</khaosteam:hasY>
     </owl:NamedIndividual>
     
 
@@ -299,6 +299,7 @@
         <khaosteam:hasAntenna rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#AntennaSector1"/>
         <khaosteam:hasAntenna rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#AntennaSector2"/>
         <khaosteam:hasAntenna rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#AntennaSector3"/>
+        <khaosteam:hasMinimumCoverage rdf:datatype="http://www.w3.org/2001/XMLSchema#double">80.0</khaosteam:hasMinimumCoverage>
     </owl:NamedIndividual>
     
 
@@ -344,14 +345,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#School">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Building"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SchoolConstraint -->
-
-    <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SchoolConstraint">
-        <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#GridConstraint"/>
+        <khaosteam:hasLocation rdf:resource="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SchoolLocation"/>
     </owl:NamedIndividual>
     
 
@@ -360,8 +354,8 @@
 
     <owl:NamedIndividual rdf:about="http://www.khaos.uma.es/perception/traffic-tsp/khaosteam#SchoolLocation">
         <rdf:type rdf:resource="http://www.khaos.uma.es/perception/traffic/khaosteam#Point"/>
-        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</khaosteam:hasX>
-        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</khaosteam:hasY>
+        <khaosteam:hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</khaosteam:hasX>
+        <khaosteam:hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#int">0</khaosteam:hasY>
     </owl:NamedIndividual>
     
 

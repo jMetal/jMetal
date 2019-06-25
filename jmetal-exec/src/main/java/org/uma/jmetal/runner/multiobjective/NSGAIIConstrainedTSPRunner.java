@@ -67,7 +67,7 @@ public class NSGAIIConstrainedTSPRunner extends AbstractAlgorithmRunner {
         "http://www.khaos.uma.es/perception/bigowl");
     owlUtils.loadOntology();
     List<Function<PermutationSolution<Integer>, Double>> constraintList =
-        owlUtils.getConstraintFromOntology();
+        owlUtils.getTSPConstraintFromOntology();
 
     /*Function<PermutationSolution<Integer>, Double> constraint1;
     Function<PermutationSolution<Integer>, Double> constraint2;
