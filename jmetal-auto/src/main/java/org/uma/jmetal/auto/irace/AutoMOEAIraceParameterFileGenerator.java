@@ -29,16 +29,15 @@ public class AutoMOEAIraceParameterFileGenerator {
                 + "--mutation polynomial "
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 ")
-            .split("\\s+");
+                + "--polynomialMutationDistributionIndex 20.0 "
+                + "--replacement rankingAndDensityEstimatorReplacement ").split("\\s+");
 
-    AutoMOEA nsgaiiWithParameters = new AutoMOEA();
-    nsgaiiWithParameters.parseAndCheckParameters(parameters);
+    AutoMOEA autoMOEA = new AutoMOEA(parameters);
 
-    AutoMOEAIraceParameterFileGenerator nsgaiiiraceParameterFile =
+    AutoMOEAIraceParameterFileGenerator autoMOEAIraceParameterFileGenerator =
         new AutoMOEAIraceParameterFileGenerator();
-    nsgaiiiraceParameterFile.generateConfigurationFile(
-        nsgaiiWithParameters.autoConfigurableParameterList);
+    autoMOEAIraceParameterFileGenerator.generateConfigurationFile(
+        autoMOEA.autoConfigurableParameterList);
   }
 
   public void generateConfigurationFile(List<Parameter<?>> parameterList) {

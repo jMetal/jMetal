@@ -66,8 +66,6 @@ public class AutoNSGAII {
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
     algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
 
-    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
-
     createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
@@ -117,8 +115,11 @@ public class AutoNSGAII {
     differentialEvolutionCrossover.addGlobalParameter(f);
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
+    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
+    variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
 
