@@ -9,15 +9,62 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
+import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
+import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.OVERALL_CONSTRAINT_VIOLATION_DEGREE;
+
 /** Created by Antonio J. Nebro on 6/12/14. */
 public class SolutionUtils {
 
   /**
-   * Return the best solution between those passed as arguments. If they are equal or incomparable
-   * one of them is chosen randomly.
+   * Set constraint attributes to a solution
    *
-   * @return The best solution
+   * @param solution
+   * @param constraintData Vector containing the violation degree of the constraints
+   * @param <S>
    */
+  public static <S extends Solution<?>> void setConstraintAttributes(S solution, double[] constraintData) {
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
+    for (int i = 0; i < constraintData.length; i++) {
+      if (constraintData[i] < 0.0) {
+        overallConstraintViolation += constraintData[i];
+        violatedConstraints++;
+      }
+    }
+
+    solution.setAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE, overallConstraintViolation);
+    solution.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, violatedConstraints);
+  }
+
+  public static <S extends Solution<?>> int getNumberOfViolatedConstraints(S solution) {
+    int result ;
+    if (solution.getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == null) {
+      result = 0 ;
+    } else {
+      result = (int) solution.getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS);
+      }
+
+    return result ;
+  }
+
+  public static <S extends Solution<?>> double getOverallConstraintViolationDegree(S solution) {
+    double result ;
+    if (solution.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE) == null) {
+      result = 0 ;
+    } else {
+      result = (double) solution.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE);
+    }
+
+    return result ;
+  }
+
+
+    /**
+     * Return the best solution between those passed as arguments. If they are equal or incomparable
+     * one of them is chosen randomly.
+     *
+     * @return The best solution
+     */
   public static <S extends Solution<?>> S getBestSolution(
       S solution1, S solution2, Comparator<S> comparator) {
     return getBestSolution(

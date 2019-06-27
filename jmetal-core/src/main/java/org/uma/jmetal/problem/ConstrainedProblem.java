@@ -11,14 +11,8 @@ import java.io.Serializable;
  *
  * @param <S> Encoding
  */
-public interface Problem<S> extends Serializable {
-  /* Getters */
-  int getNumberOfVariables() ;
-  int getNumberOfObjectives() ;
-  int getNumberOfConstraints() ;
-  String getName() ;
+public interface ConstrainedProblem<S> extends Problem<S> {
+  enum Attributes{NUMBER_OF_VIOLATED_CONSTRAINTS, OVERALL_CONSTRAINT_VIOLATION_DEGREE}
 
-  /* Methods */
-  void evaluate(S solution) ;
-  S createSolution() ;
+  void evaluateConstraints(S solution) ;
 }

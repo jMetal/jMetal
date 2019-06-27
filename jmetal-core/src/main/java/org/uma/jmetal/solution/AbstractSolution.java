@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
+
 /**
  * Abstract class representing a generic solution
  *
@@ -16,50 +18,48 @@ import java.util.Map;
 public abstract class AbstractSolution<T> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
-  protected Map<Object, Object> attributes ;
+  protected Map<Object, Object> attributes;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   protected AbstractSolution(int numberOfVariables, int numberOfObjectives) {
-    attributes = new HashMap<>() ;
+    attributes = new HashMap<>();
 
-    objectives = new double[numberOfObjectives] ;
-    variables = new ArrayList<>(numberOfVariables) ;
+    objectives = new double[numberOfObjectives];
+    variables = new ArrayList<>(numberOfVariables);
     for (int i = 0; i < numberOfVariables; i++) {
-      variables.add(i, null) ;
+      variables.add(i, null);
     }
 
-    for (int i = 0 ; i < numberOfObjectives; i++) {
-      objectives[i] = 0.0 ;
+    for (int i = 0; i < numberOfObjectives; i++) {
+      objectives[i] = 0.0;
     }
 
-    attributes = new HashMap<Object, Object>() ;
+    attributes = new HashMap<Object, Object>();
   }
 
   @Override
   public double[] getObjectives() {
-    return objectives ;
+    return objectives;
   }
 
   @Override
   public List<T> getVariables() {
-    return variables ;
+    return variables;
   }
 
   @Override
   public void setAttribute(Object id, Object value) {
-    attributes.put(id, value) ;
+    attributes.put(id, value);
   }
 
   @Override
   public Object getAttribute(Object id) {
-    return attributes.get(id) ;
+    return attributes.get(id);
   }
 
   @Override
   public void setObjective(int index, double value) {
-    objectives[index] = value ;
+    objectives[index] = value;
   }
 
   @Override
@@ -89,41 +89,50 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   protected void initializeObjectiveValues() {
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      objectives[i] = 0.0 ;
+      objectives[i] = 0.0;
     }
   }
 
   @Override
+  public boolean isFeasible() {
+    return ((getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == null)
+        || ((int) getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == 0));
+  }
+
+  @Override
   public String toString() {
-    String result = "Variables: " ;
+    String result = "Variables: ";
     for (T var : variables) {
-      result += "" + var + " " ;
+      result += "" + var + " ";
     }
-    result += "Objectives: " ;
+    result += "Objectives: ";
     for (Double obj : objectives) {
-      result += "" + obj + " " ;
+      result += "" + obj + " ";
     }
-    result += "\t" ;
-    result += "AlgorithmAttributes: " + attributes + "\n" ;
+    result += "\t";
+    result += "AlgorithmAttributes: " + attributes + "\n";
 
-    return result ;
+    return result;
   }
 
-  @Override public boolean equals(Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (o == null) {
-      throw new JMetalException("The solution to compare is null") ;
+      throw new JMetalException("The solution to compare is null");
     }
 
-    Solution<T> solution = (Solution<T>) o ;
+    Solution<T> solution = (Solution<T>) o;
 
-    return this.getVariables().equals(solution.getVariables()) ;
+    return this.getVariables().equals(solution.getVariables());
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     return variables.hashCode();
   }
 
-  @Override public Map<Object, Object> getAttributes() {
-    return attributes ;
+  @Override
+  public Map<Object, Object> getAttributes() {
+    return attributes;
   }
 }

@@ -167,6 +167,11 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
+    public boolean isFeasible() {
+      return true;
+    }
+
+    @Override
     public void setAttribute(Object id, Object value) {
       attributes.put(id, value);
     }
