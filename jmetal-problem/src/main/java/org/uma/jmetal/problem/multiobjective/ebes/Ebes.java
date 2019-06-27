@@ -15,10 +15,12 @@
  */
 package org.uma.jmetal.problem.multiobjective.ebes;
 
+import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.io.*;
@@ -33,7 +35,7 @@ import java.util.logging.Logger;
  * Spatial Bars Structure (Estructuras de Barras Espaciales)
  */
 @SuppressWarnings("serial")
-public class Ebes extends AbstractDoubleProblem {
+public class Ebes extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   /**
    * Constructor.
    * Creates a default instance of the Ebes problem.
@@ -1051,7 +1053,8 @@ public class Ebes extends AbstractDoubleProblem {
    * @param solution The solution
    * @throws JMetalException
    */
-  private void evaluateConstraints(DoubleSolution solution) {
+  @Override
+  public void evaluateConstraints(DoubleSolution solution) {
     double [] constraint = new double[this.getNumberOfConstraints()];
     double[] x = new double[getNumberOfVariables()] ;
 
@@ -1262,23 +1265,8 @@ public class Ebes extends AbstractDoubleProblem {
       }
     }
 
-    //constraint[0]=Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2)+Math.pow(z, 2))+0.005;
-    //descenso mÃƒÂ¡ximo en un nudo
-    //constraint[1]=StrainResidual_[0][hi];
-
-
-    double total = 0.0;
-    //int number = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        total+=constraint[i];
-        //number++;
-      }
-    overallConstraintViolationDegree.setAttribute(solution, total);
-    //solution.setOverallConstraintViolationDegree(total);
-    //solution.setNumberOfViolatedConstraint(number);
-
-  } // evaluateConstraints
+    SolutionUtils.setConstraintAttributes(solution, constraint);
+  }
 
   public void EBEsElementsTopology(DoubleSolution solution) throws JMetalException{
     // asignaciÃƒÂ³n de las variables para cada grupo

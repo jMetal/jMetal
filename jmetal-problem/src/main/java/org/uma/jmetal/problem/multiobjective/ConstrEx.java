@@ -1,7 +1,9 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
@@ -12,10 +14,7 @@ import java.util.List;
  * Class representing problem ConstrEx
  */
 @SuppressWarnings("serial")
-public class ConstrEx extends AbstractDoubleProblem {
-
-  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
-  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+public class ConstrEx extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
 
   /**
    * Constructor
@@ -31,9 +30,6 @@ public class ConstrEx extends AbstractDoubleProblem {
     List<Double> upperLimit = Arrays.asList(1.0, 5.0) ;
 
     setVariableBounds(lowerLimit, upperLimit);
-
-    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -50,7 +46,8 @@ public class ConstrEx extends AbstractDoubleProblem {
   }
 
   /** EvaluateConstraints() method */
-  private void evaluateConstraints(DoubleSolution solution)  {
+  @Override
+  public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     double x1 = solution.getVariableValue(0) ;
@@ -58,16 +55,7 @@ public class ConstrEx extends AbstractDoubleProblem {
         
     constraint[0] =  (x2 + 9*x1 -6.0) ;
     constraint[1] =  (-x2 + 9*x1 -1.0);
-        
-    double overallConstraintViolation = 0.0;
-    int violatedConstraints = 0;
-    for (int i = 0; i < this.getNumberOfConstraints(); i++)
-      if (constraint[i]<0.0){
-        overallConstraintViolation+=constraint[i];
-        violatedConstraints++;
-      }
 
-    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
-    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
+    SolutionUtils.setConstraintAttributes(solution, constraint);
   }
 }

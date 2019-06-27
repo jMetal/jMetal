@@ -1,7 +1,9 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
@@ -12,10 +14,7 @@ import java.util.List;
  * Class representing problem Water
  */
 @SuppressWarnings("serial")
-public class Water extends AbstractDoubleProblem {
-  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
-  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
-
+public class Water extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
   // defining the lower and upper limits
   public static final Double [] LOWERLIMIT = {0.01, 0.01, 0.01};
   public static final Double [] UPPERLIMIT = {0.45, 0.10, 0.10};
@@ -34,9 +33,6 @@ public class Water extends AbstractDoubleProblem {
     List<Double> upperLimit = Arrays.asList(UPPERLIMIT) ;
 
     setVariableBounds(lowerLimit, upperLimit);
-
-    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   /** Evaluate() method */
@@ -59,11 +55,10 @@ public class Water extends AbstractDoubleProblem {
     solution.setObjective(2,fx[2]);
     solution.setObjective(3,fx[3]);
     solution.setObjective(4,fx[4]);
-
-    this.evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
+  @Override
   public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[getNumberOfConstraints()];
     double[] x = new double[solution.getNumberOfVariables()];
@@ -79,16 +74,6 @@ public class Water extends AbstractDoubleProblem {
     constraint[5] = 2000 - (0.417*x[0]*x[1] + 1721.26*x[2]-136.54)       ;
     constraint[6] = 550 - (0.164/(x[0]*x[1])+631.13*x[2]-54.48) ;
 
-    double overallConstraintViolation = 0.0;
-    int violatedConstraints = 0;
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
-      if (constraint[i]<0.0){
-        overallConstraintViolation+=constraint[i];
-        violatedConstraints++;
-      }
-    }
-
-    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
-    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
+    SolutionUtils.setConstraintAttributes(solution, constraint);
   }
 }

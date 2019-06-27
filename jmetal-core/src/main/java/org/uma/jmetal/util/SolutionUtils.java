@@ -36,6 +36,12 @@ public class SolutionUtils {
     solution.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, violatedConstraints);
   }
 
+  /**
+   * Returns the number of constraints a solution violates.
+   * @param solution
+   * @param <S>
+   * @return
+   */
   public static <S extends Solution<?>> int getNumberOfViolatedConstraints(S solution) {
     int result ;
     if (solution.getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == null) {
@@ -47,6 +53,12 @@ public class SolutionUtils {
     return result ;
   }
 
+  /**
+   * Returns the overall constraint violatio degree of a solution.
+   * @param solution
+   * @param <S>
+   * @return
+   */
   public static <S extends Solution<?>> double getOverallConstraintViolationDegree(S solution) {
     double result ;
     if (solution.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE) == null) {
