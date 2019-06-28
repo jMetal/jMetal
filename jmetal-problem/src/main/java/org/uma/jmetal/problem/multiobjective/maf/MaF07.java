@@ -57,7 +57,7 @@ public class MaF07 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // evaluate g,h

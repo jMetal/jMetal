@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.comparator.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
@@ -13,15 +14,6 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 @SuppressWarnings("serial")
 public class OverallConstraintViolationComparator<S extends Solution<?>>
     implements ConstraintViolationComparator<S> {
-  private OverallConstraintViolation<S> overallConstraintViolation ;
-
-  /**
-   * Constructor
-   */
-  public OverallConstraintViolationComparator() {
-    overallConstraintViolation = new OverallConstraintViolation<S>() ;
-  }
-
   /**
    * Compares two solutions. If the solutions has no constraints the method return 0
    *
@@ -33,11 +25,9 @@ public class OverallConstraintViolationComparator<S extends Solution<?>>
   public int compare(S solution1, S solution2) {
     double violationDegreeSolution1 ;
     double violationDegreeSolution2;
-    if (overallConstraintViolation.getAttribute(solution1) == null) {
-      return 0 ;
-    }
-    violationDegreeSolution1 =  overallConstraintViolation.getAttribute(solution1);
-    violationDegreeSolution2 = overallConstraintViolation.getAttribute(solution2);
+
+    violationDegreeSolution1 = SolutionUtils.getOverallConstraintViolationDegree(solution1);
+    violationDegreeSolution2 = SolutionUtils.getOverallConstraintViolationDegree(solution2);
 
     if ((violationDegreeSolution1 < 0) && (violationDegreeSolution2 < 0)) {
       if (violationDegreeSolution1 > violationDegreeSolution2) {

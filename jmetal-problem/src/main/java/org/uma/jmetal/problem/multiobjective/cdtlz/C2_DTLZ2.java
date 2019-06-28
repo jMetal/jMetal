@@ -1,11 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * Problem C2-DTLZ2, defined in:
@@ -16,7 +13,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class C2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution> {
+public class C2_DTLZ2 extends DTLZ2 {
   private double rValue ;
   /**
    * Constructor
@@ -38,9 +35,9 @@ public class C2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution
   @Override
   public void evaluate(DoubleSolution solution) {
     super.evaluate(solution);
+    evaluateConstraints(solution);
   }
 
-  @Override
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()] ;
 
@@ -63,8 +60,6 @@ public class C2_DTLZ2 extends DTLZ2 implements ConstrainedProblem<DoubleSolution
 
     sum2 -= Math.pow(rValue, 2.0) ;
 
-    constraint[0] = Math.max(maxSum1, sum2) ;
-
-    SolutionUtils.setConstraintAttributes(solution, constraint);
+    solution.setConstraint(0, Math.max(maxSum1, sum2)) ;
   }
 }

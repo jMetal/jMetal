@@ -24,7 +24,7 @@ public class DefaultIntegerPermutationSolutionTest {
 
     List<Integer> values = new ArrayList<>() ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      values.add(solution.getVariableValue(i)) ;
+      values.add(solution.getVariable(i)) ;
     }
 
     Collections.sort(values);

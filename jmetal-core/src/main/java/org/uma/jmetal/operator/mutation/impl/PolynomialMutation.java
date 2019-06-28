@@ -128,7 +128,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
-        y = solution.getVariableValue(i);
+        y = solution.getVariable(i);
         yl = solution.getLowerBound(i);
         yu = solution.getUpperBound(i);
         if (yl == yu) {
@@ -150,7 +150,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
           y = y + deltaq * (yu - yl);
           y = solutionRepair.repairSolutionVariableValue(y, yl, yu);
         }
-        solution.setVariableValue(i, y);
+        solution.setVariable(i, y);
       }
     }
   }

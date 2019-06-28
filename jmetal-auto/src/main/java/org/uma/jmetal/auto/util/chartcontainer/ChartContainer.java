@@ -233,7 +233,7 @@ public class ChartContainer<S extends Solution<?>> {
     private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
         double[] result = new double[solutionList.size()];
         for (int i = 0; i < solutionList.size(); i++) {
-            result[i] = solutionList.get(i).getVariableValue(variable);
+            result[i] = solutionList.get(i).getVariable(variable);
         }
         return result;
     }

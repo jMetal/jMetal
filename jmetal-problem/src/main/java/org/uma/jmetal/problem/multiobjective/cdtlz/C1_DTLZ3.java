@@ -1,10 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,7 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class C1_DTLZ3 extends DTLZ3 implements ConstrainedProblem<DoubleSolution> {
+public class C1_DTLZ3 extends DTLZ3 {
   private static Map<Integer, Double> rValue;
 
   static {
@@ -47,9 +44,7 @@ public class C1_DTLZ3 extends DTLZ3 implements ConstrainedProblem<DoubleSolution
     this.evaluateConstraints(solution);
   }
 
-  @Override
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[this.getNumberOfConstraints()];
 
     double sum1 = 0 ;
     double sum2 = 0 ;
@@ -59,6 +54,6 @@ public class C1_DTLZ3 extends DTLZ3 implements ConstrainedProblem<DoubleSolution
       sum2 += v - Math.pow(rValue.get(getNumberOfObjectives()), 2.0) ;
     }
 
-    constraint[0] = sum1 * sum2;
+    solution.setConstraint(0, sum1 * sum2);
   }
 }

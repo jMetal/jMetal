@@ -72,7 +72,7 @@ public class SolutionListOutput {
         int numberOfVariables = solutionList.get(0).getNumberOfVariables();
         for (int i = 0; i < solutionList.size(); i++) {
           for (int j = 0; j < numberOfVariables; j++) {
-            bufferedWriter.write(solutionList.get(i).getVariableValueString(j) + context.getSeparator());
+            bufferedWriter.write("" + solutionList.get(i).getVariable(j) + context.getSeparator());
           }
           bufferedWriter.newLine();
         }

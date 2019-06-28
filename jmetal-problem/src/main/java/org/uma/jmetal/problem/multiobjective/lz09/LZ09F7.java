@@ -56,7 +56,7 @@ public class LZ09F7 extends AbstractDoubleProblem {
     List<Double> y = new ArrayList<Double>(getNumberOfObjectives());
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x.add(solution.getVariableValue(i));
+      x.add(solution.getVariable(i));
       y.add(0.0);
     }
 

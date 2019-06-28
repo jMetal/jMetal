@@ -17,8 +17,8 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   public void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
 
     DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariableValue(0)).thenReturn(1.0) ;
-    when(solution.getVariableValue(1)).thenReturn(1.0) ;
+    when(solution.getVariable(0)).thenReturn(1.0) ;
+    when(solution.getVariable(1)).thenReturn(1.0) ;
     when(solution.getNumberOfVariables()).thenReturn(2) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
@@ -36,13 +36,13 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   public void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
 
     DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariableValue(0)).thenReturn(1.0) ;
-    when(solution.getVariableValue(1)).thenReturn(1.0) ;
+    when(solution.getVariable(0)).thenReturn(1.0) ;
+    when(solution.getVariable(1)).thenReturn(1.0) ;
     when(solution.getNumberOfVariables()).thenReturn(2) ;
 
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
-    when(solution2.getVariableValue(0)).thenReturn(2.0) ;
-    when(solution2.getVariableValue(1)).thenReturn(2.0) ;
+    when(solution2.getVariable(0)).thenReturn(2.0) ;
+    when(solution2.getVariable(1)).thenReturn(2.0) ;
     when(solution2.getNumberOfVariables()).thenReturn(2) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
@@ -59,23 +59,23 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   public void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionAndKIsEqualToTwo() {
 
     DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariableValue(0)).thenReturn(1.0) ;
-    when(solution.getVariableValue(1)).thenReturn(1.0) ;
+    when(solution.getVariable(0)).thenReturn(1.0) ;
+    when(solution.getVariable(1)).thenReturn(1.0) ;
     when(solution.getNumberOfVariables()).thenReturn(2) ;
 
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
-    when(solution2.getVariableValue(0)).thenReturn(2.0) ;
-    when(solution2.getVariableValue(1)).thenReturn(2.0) ;
+    when(solution2.getVariable(0)).thenReturn(2.0) ;
+    when(solution2.getVariable(1)).thenReturn(2.0) ;
     when(solution2.getNumberOfVariables()).thenReturn(2) ;
 
     DoubleSolution solution3 = mock(DoubleSolution.class) ;
-    when(solution3.getVariableValue(0)).thenReturn(3.0) ;
-    when(solution3.getVariableValue(1)).thenReturn(3.0) ;
+    when(solution3.getVariable(0)).thenReturn(3.0) ;
+    when(solution3.getVariable(1)).thenReturn(3.0) ;
     when(solution3.getNumberOfVariables()).thenReturn(2) ;
 
     DoubleSolution solution4 = mock(DoubleSolution.class) ;
-    when(solution4.getVariableValue(0)).thenReturn(4.0) ;
-    when(solution4.getVariableValue(1)).thenReturn(4.0) ;
+    when(solution4.getVariable(0)).thenReturn(4.0) ;
+    when(solution4.getVariable(1)).thenReturn(4.0) ;
     when(solution4.getNumberOfVariables()).thenReturn(2) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;

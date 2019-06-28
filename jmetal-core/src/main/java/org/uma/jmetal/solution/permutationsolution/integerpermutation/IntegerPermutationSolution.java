@@ -32,7 +32,7 @@ public class IntegerPermutationSolution
     java.util.Collections.shuffle(randomSequence);
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, randomSequence.get(i)) ;
+      setVariable(i, randomSequence.get(i)) ;
     }
   }
 
@@ -45,14 +45,10 @@ public class IntegerPermutationSolution
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, solution.getVariableValue(i));
+      setVariable(i, solution.getVariable(i));
     }
     
     attributes = new HashMap<Object, Object>(solution.attributes) ;
-  }
-
-  @Override public String getVariableValueString(int index) {
-    return getVariableValue(index).toString();
   }
 
   @Override

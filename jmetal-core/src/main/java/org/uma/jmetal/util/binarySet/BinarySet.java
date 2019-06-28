@@ -27,4 +27,18 @@ public class BinarySet extends BitSet {
   public int getBinarySetLength() {
     return numberOfBits;
   }
+
+  @Override
+  public String toString() {
+    String result = "" ;
+    for (int i = 0; i < numberOfBits ; i++) {
+      if (get(i)) {
+        result += "1" ;
+      }
+      else {
+        result+= "0" ;
+      }
+    }
+    return result ;
+  }
 }

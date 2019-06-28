@@ -149,7 +149,7 @@ public class MaF09 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // check if the point is infeasible
@@ -159,7 +159,7 @@ public class MaF09 extends AbstractDoubleProblem {
       //re-generate a random variable
       for (int i = 0; i < numberOfVariables_; i++) {
         x[i] = generV(getLowerBound(i), getUpperBound(i));
-        solution.setVariableValue(i, x[i]);
+        solution.setVariable(i, x[i]);
       }
       infeasible = if_infeasible(x);
     }

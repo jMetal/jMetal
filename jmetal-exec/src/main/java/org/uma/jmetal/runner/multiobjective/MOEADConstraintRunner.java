@@ -44,7 +44,6 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-      problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP1";
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Tanaka.pf";
     }
 
@@ -61,7 +60,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
     algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(300000)
+            .setMaxEvaluations(150000)
             .setPopulationSize(300)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)

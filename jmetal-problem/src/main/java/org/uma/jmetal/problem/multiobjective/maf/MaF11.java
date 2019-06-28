@@ -64,7 +64,7 @@ public class MaF11 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     // evaluate zi,t1i,t2i,t3i,t4i,yi

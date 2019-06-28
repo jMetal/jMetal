@@ -115,11 +115,11 @@ public class PMXCrossover implements
 
       // STEP 3: Interchange
       for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {
-        offspring.get(0).setVariableValue(i, parents.get(1).getVariableValue(i));
-        offspring.get(1).setVariableValue(i, parents.get(0).getVariableValue(i));
+        offspring.get(0).setVariable(i, parents.get(1).getVariable(i));
+        offspring.get(1).setVariable(i, parents.get(0).getVariable(i));
 
-        replacement1[parents.get(1).getVariableValue(i)] = parents.get(0).getVariableValue(i) ;
-        replacement2[parents.get(0).getVariableValue(i)] = parents.get(1).getVariableValue(i) ;
+        replacement1[parents.get(1).getVariable(i)] = parents.get(0).getVariable(i) ;
+        replacement2[parents.get(0).getVariable(i)] = parents.get(1).getVariable(i) ;
       }
 
       // STEP 4: Repair offspring
@@ -127,10 +127,10 @@ public class PMXCrossover implements
         if ((i >= cuttingPoint1) && (i <= cuttingPoint2))
           continue;
 
-        int n1 = parents.get(0).getVariableValue(i);
+        int n1 = parents.get(0).getVariable(i);
         int m1 = replacement1[n1];
 
-        int n2 = parents.get(1).getVariableValue(i);
+        int n2 = parents.get(1).getVariable(i);
         int m2 = replacement2[n2];
 
         while (m1 != -1) {
@@ -143,8 +143,8 @@ public class PMXCrossover implements
           m2 = replacement2[m2];
         }
 
-        offspring.get(0).setVariableValue(i, n1);
-        offspring.get(1).setVariableValue(i, n2);
+        offspring.get(0).setVariable(i, n1);
+        offspring.get(1).setVariable(i, n2);
       }
     }
 

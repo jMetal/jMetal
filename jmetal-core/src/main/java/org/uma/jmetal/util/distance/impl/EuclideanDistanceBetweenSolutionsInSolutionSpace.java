@@ -18,7 +18,7 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
 
     double diff;
     for (int i = 0; i < solution1.getNumberOfVariables() ; i++){
-      diff = solution1.getVariableValue(i) - solution2.getVariableValue(i);
+      diff = solution1.getVariable(i) - solution2.getVariable(i);
       distance += Math.pow(diff,2.0);
     }
 

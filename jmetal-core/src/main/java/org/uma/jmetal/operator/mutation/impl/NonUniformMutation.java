@@ -98,13 +98,13 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
         double tmp;
 
         if (rand <= 0.5) {
-          tmp = delta(solution.getUpperBound(i) - solution.getVariableValue(i),
+          tmp = delta(solution.getUpperBound(i) - solution.getVariable(i),
               perturbation);
-          tmp += solution.getVariableValue(i);
+          tmp += solution.getVariable(i);
         } else {
-          tmp = delta(solution.getLowerBound(i) - solution.getVariableValue(i),
+          tmp = delta(solution.getLowerBound(i) - solution.getVariable(i),
               perturbation);
-          tmp += solution.getVariableValue(i);
+          tmp += solution.getVariable(i);
         }
 
         if (tmp < solution.getLowerBound(i)) {
@@ -112,7 +112,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
         } else if (tmp > solution.getUpperBound(i)) {
           tmp = solution.getUpperBound(i);
         }
-        solution.setVariableValue(i, tmp);
+        solution.setVariable(i, tmp);
       }
     }
   }

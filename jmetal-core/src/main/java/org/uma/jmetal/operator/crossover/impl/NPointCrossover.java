@@ -68,8 +68,8 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
 
     for (int i = 0; i < mom.getNumberOfVariables(); i++) {
       if (swap) {
-        boy.setVariableValue(i, mom.getVariableValue(i));
-        girl.setVariableValue(i, dad.getVariableValue(i));
+        boy.setVariable(i, mom.getVariable(i));
+        girl.setVariable(i, dad.getVariable(i));
 
       }
 

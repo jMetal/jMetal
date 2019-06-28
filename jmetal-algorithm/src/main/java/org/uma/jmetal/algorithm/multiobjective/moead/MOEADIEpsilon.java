@@ -4,15 +4,13 @@ import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.SolutionUtils;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.OVERALL_CONSTRAINT_VIOLATION_DEGREE;
 
 /**
  * This class implements the MOEA/D-IEpsilon algorithm based on the one presented in the paper: "Z.
@@ -31,7 +29,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   private double phiMax = -1e30;
 
   public MOEADIEpsilon(
-      ConstrainedProblem<DoubleSolution> problem,
+      Problem<DoubleSolution> problem,
       int populationSize,
       int resultPopulationSize,
       int maxEvaluations,
@@ -67,8 +65,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
     double[] constraints = new double[populationSize];
     for (int i = 0; i < populationSize; i++) {
-      constraints[i] = (double)population.get(i).getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE) ;
-    }
+      constraints[i] = SolutionUtils.getOverallConstraintViolationDegree(population.get(i));
+      }
     Arrays.sort(constraints);
     double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
 
@@ -111,13 +109,12 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         DoubleSolution child = children.get(0);
         mutationOperator.execute(child);
         problem.evaluate(child);
-        ((ConstrainedProblem)problem).evaluateConstraints(child) ;
 
         evaluations++;
 
         // Update PhiMax
-        if (phiMax < Math.abs((double) child.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE))) {
-          phiMax = (double) child.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE);
+        if (phiMax < Math.abs((double) SolutionUtils.getOverallConstraintViolationDegree(child))) {
+          phiMax = (double) SolutionUtils.getOverallConstraintViolationDegree(child);
         }
 
         idealPoint.update(child.getObjectives());
@@ -134,7 +131,6 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       DoubleSolution newSolution = (DoubleSolution) problem.createSolution();
 
       problem.evaluate(newSolution);
-      ((ConstrainedProblem)problem).evaluateConstraints(newSolution) ;
       population.add(newSolution);
     }
   }
@@ -169,9 +165,9 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       f2 = fitnessFunction(individual, lambda[k]);
 
       double cons1 =
-          Math.abs((double) population.get(k).getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE));
+          Math.abs(SolutionUtils.getOverallConstraintViolationDegree(population.get(k))) ;
       double cons2 =
-          Math.abs((double) individual.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE));
+          Math.abs(SolutionUtils.getOverallConstraintViolationDegree(individual));
 
       if (cons1 < epsilonK && cons2 <= epsilonK) {
         if (f2 < f1) {

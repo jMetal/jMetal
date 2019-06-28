@@ -60,7 +60,7 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
       	Double value = solution.getLowerBound(i) +
       			((solution.getUpperBound(i) - solution.getLowerBound(i)) * randomGenerator.getRandomValue()) ;
       	
-      	solution.setVariableValue(i, value) ;
+      	solution.setVariable(i, value) ;
       }
     }
 	}

@@ -54,7 +54,7 @@ public class DTLZ5 extends AbstractDoubleProblem {
     int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     for (int i = numberOfVariables - k; i < numberOfVariables; i++) {

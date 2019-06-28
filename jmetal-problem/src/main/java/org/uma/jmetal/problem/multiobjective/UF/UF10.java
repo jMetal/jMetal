@@ -50,7 +50,7 @@ public class UF10 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
   	int count1, count2, count3;

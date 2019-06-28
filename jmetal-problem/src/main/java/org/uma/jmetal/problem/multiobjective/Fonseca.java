@@ -37,7 +37,7 @@ public class Fonseca extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     double sum1 = 0.0;

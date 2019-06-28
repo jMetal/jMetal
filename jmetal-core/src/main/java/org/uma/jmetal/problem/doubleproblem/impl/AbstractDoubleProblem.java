@@ -47,7 +47,7 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives());
+    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
   }
 
   @Override

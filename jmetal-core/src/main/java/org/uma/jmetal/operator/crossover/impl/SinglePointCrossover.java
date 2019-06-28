@@ -86,20 +86,20 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
 
       // 3. Compute the variable containing the crossover bit
       int variable = 0;
-      int bitsAccount = parent1.getVariableValue(variable).getBinarySetLength() ;
+      int bitsAccount = parent1.getVariable(variable).getBinarySetLength() ;
       while (bitsAccount < (crossoverPoint + 1)) {
         variable++;
-        bitsAccount += parent1.getVariableValue(variable).getBinarySetLength() ;
+        bitsAccount += parent1.getVariable(variable).getBinarySetLength() ;
       }
 
       // 4. Compute the bit into the selected variable
       int diff = bitsAccount - crossoverPoint;
-      int intoVariableCrossoverPoint = parent1.getVariableValue(variable).getBinarySetLength() - diff ;
+      int intoVariableCrossoverPoint = parent1.getVariable(variable).getBinarySetLength() - diff ;
 
       // 5. Apply the crossover to the variable;
       BinarySet offspring1, offspring2;
-      offspring1 = (BinarySet) parent1.getVariableValue(variable).clone();
-      offspring2 = (BinarySet) parent2.getVariableValue(variable).clone();
+      offspring1 = (BinarySet) parent1.getVariable(variable).clone();
+      offspring2 = (BinarySet) parent2.getVariable(variable).clone();
 
       for (int i = intoVariableCrossoverPoint; i < offspring1.getBinarySetLength(); i++) {
         boolean swap = offspring1.get(i);
@@ -107,13 +107,13 @@ public class SinglePointCrossover implements CrossoverOperator<BinarySolution> {
         offspring2.set(i, swap);
       }
 
-      offspring.get(0).setVariableValue(variable, offspring1);
-      offspring.get(1).setVariableValue(variable, offspring2);
+      offspring.get(0).setVariable(variable, offspring1);
+      offspring.get(1).setVariable(variable, offspring2);
 
       // 6. Apply the crossover to the other variables
       for (int i = variable + 1; i < parent1.getNumberOfVariables(); i++) {
-          offspring.get(0).setVariableValue(i, (BinarySet) parent2.getVariableValue(i).clone());
-          offspring.get(1).setVariableValue(i, (BinarySet) parent1.getVariableValue(i).clone());
+          offspring.get(0).setVariable(i, (BinarySet) parent2.getVariable(i).clone());
+          offspring.get(1).setVariable(i, (BinarySet) parent1.getVariable(i).clone());
       }
 
     }

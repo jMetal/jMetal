@@ -14,56 +14,48 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class DefaultIntegerSolution
-    extends AbstractSolution<Integer>
-    implements IntegerSolution {
-  protected List<Pair<Integer, Integer>> bounds ;
+public class DefaultIntegerSolution extends AbstractSolution<Integer> implements IntegerSolution {
+  protected List<Pair<Integer, Integer>> bounds;
 
   /** Constructor */
-  public DefaultIntegerSolution(
-      List<Pair<Integer, Integer>> bounds,
-      int numberOfObjectives) {
-    super(bounds.size(), numberOfObjectives) ;
+  public DefaultIntegerSolution(List<Pair<Integer, Integer>> bounds, int numberOfObjectives) {
+    super(bounds.size(), numberOfObjectives);
 
-    for (int i = 0 ; i < bounds.size(); i++) {
-      setVariableValue(i, JMetalRandom.getInstance().nextInt(bounds.get(i).getLeft(), bounds.get(i).getRight()));
+    for (int i = 0; i < bounds.size(); i++) {
+      setVariable(
+          i, JMetalRandom.getInstance().nextInt(bounds.get(i).getLeft(), bounds.get(i).getRight()));
     }
   }
 
   /** Copy constructor */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives()) ;
+    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives());
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      setVariableValue(i, solution.getVariableValue(i));
+      setVariable(i, solution.getVariable(i));
     }
 
     for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
+      setObjective(i, solution.getObjective(i));
     }
 
-    bounds = solution.bounds ;
+    bounds = solution.bounds;
 
-    attributes = new HashMap<>(solution.attributes) ;
+    attributes = new HashMap<>(solution.attributes);
   }
 
   @Override
   public Integer getLowerBound(int index) {
-    return this.bounds.get(index).getLeft() ;
+    return this.bounds.get(index).getLeft();
   }
 
   @Override
   public Integer getUpperBound(int index) {
-    return this.bounds.get(index).getRight() ;
+    return this.bounds.get(index).getRight();
   }
 
   @Override
   public DefaultIntegerSolution copy() {
     return new DefaultIntegerSolution(this);
   }
-
-  @Override
-  public String getVariableValueString(int index) {
-    return getVariableValue(index).toString() ;
   }
-}

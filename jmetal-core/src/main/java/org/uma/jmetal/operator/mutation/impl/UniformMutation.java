@@ -81,13 +81,13 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
         double rand = randomGenerator.getRandomValue();
         double tmp = (rand - 0.5) * perturbation;
 
-        tmp += solution.getVariableValue(i);
+        tmp += solution.getVariable(i);
 
         tmp =
             solutionRepair.repairSolutionVariableValue(
                 tmp, solution.getLowerBound(i), solution.getUpperBound(i));
 
-        solution.setVariableValue(i, tmp);
+        solution.setVariable(i, tmp);
       }
     }
   }

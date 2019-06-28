@@ -1,15 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.OVERALL_CONSTRAINT_VIOLATION_DEGREE;
 
 /**
  * Class representing problem LIR-CMOP1, defined in:
@@ -17,7 +12,7 @@ import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.OVERALL_CONST
  * Fan, Z., Li, W., Cai, X. et al. Soft Comput (2019). https://doi.org/10.1007/s00500-019-03794-x
  */
 @SuppressWarnings("serial")
-public class LIRCMOP1 extends AbstractDoubleProblem implements ConstrainedProblem<DoubleSolution> {
+public class LIRCMOP1 extends AbstractDoubleProblem {
   /**
    * Constructor
    */
@@ -51,7 +46,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem implements ConstrainedProble
     double[] fx = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     fx[0] = x[0] + g1(x) ;
@@ -60,25 +55,21 @@ public class LIRCMOP1 extends AbstractDoubleProblem implements ConstrainedProble
     solution.setObjective(0, fx[0]);
     solution.setObjective(1, fx[1]);
 
-    //evaluateConstraints(solution);
+    evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
-  @Override
   public void evaluateConstraints(DoubleSolution solution)  {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
-    double[] constraint = new double[this.getNumberOfConstraints()];
     final double a = 0.51 ;
     final double b = 0.5 ;
 
-    constraint[0] = (a - g1(x)) * (g1(x) - b) ;
-    constraint[1] = (a - g2(x)) * (g2(x) - b) ;
-
-    SolutionUtils.setConstraintAttributes(solution, constraint);
+    solution.setConstraint(0, (a - g1(x)) * (g1(x) - b));
+    solution.setConstraint(1, (a - g2(x)) * (g2(x) - b));
   }
 
   protected double g1(double[] x) {

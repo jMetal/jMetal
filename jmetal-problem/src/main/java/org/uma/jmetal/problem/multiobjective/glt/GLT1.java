@@ -49,17 +49,17 @@ public class GLT1 extends AbstractDoubleProblem {
 
   @Override
   public void evaluate(DoubleSolution solution) {
-    solution.setObjective(0, (1.0 + g(solution))*solution.getVariableValue(0));
-    solution.setObjective(1, (1.0 + g(solution))*(2.0-solution.getVariableValue(0)
-        -Math.signum(Math.cos(2*Math.PI*solution.getVariableValue(0)))));
+    solution.setObjective(0, (1.0 + g(solution))*solution.getVariable(0));
+    solution.setObjective(1, (1.0 + g(solution))*(2.0-solution.getVariable(0)
+        -Math.signum(Math.cos(2*Math.PI*solution.getVariable(0)))));
   }
 
   private double g(DoubleSolution solution) {
     double result = 0.0 ;
 
     for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      double value =solution.getVariableValue(i)
-          - Math.sin(2*Math.PI*solution.getVariableValue(0)+i*Math.PI/solution.getNumberOfVariables()) ;
+      double value =solution.getVariable(i)
+          - Math.sin(2*Math.PI*solution.getVariable(0)+i*Math.PI/solution.getNumberOfVariables()) ;
 
       result += value * value ;
     }

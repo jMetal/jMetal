@@ -48,7 +48,7 @@ public class PolynomialMutationWorkingTest {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setVariableValue(0, 0.0);
+    solution.setVariable(0, 0.0);
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0 ; i < numberOfPoints ; i++) {
@@ -87,7 +87,7 @@ public class PolynomialMutationWorkingTest {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariableValue(0) <= classifier[index][0]) {
+        if (solution.getVariable(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {
@@ -121,11 +121,11 @@ public class PolynomialMutationWorkingTest {
         return -1;
       }
 
-      if (solution1.getVariableValue(0) < solution2.getVariableValue(0)) {
+      if (solution1.getVariable(0) < solution2.getVariable(0)) {
         return -1;
       }
 
-      if (solution1.getVariableValue(0) > solution2.getVariableValue(0)) {
+      if (solution1.getVariable(0) > solution2.getVariable(0)) {
         return 1;
       }
 

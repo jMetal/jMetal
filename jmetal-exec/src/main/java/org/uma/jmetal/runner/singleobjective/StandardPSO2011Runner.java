@@ -74,7 +74,7 @@ public class StandardPSO2011Runner {
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + solution.getVariableValueString(0)) ;
+    JMetalLogger.logger.info("Solution: " + solution.getVariable(0)) ;
     evaluator.shutdown();
   }
 }

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
-
 /**
  * Abstract class representing a generic solution
  *
@@ -18,20 +16,33 @@ import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIO
 public abstract class AbstractSolution<T> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
+  private double[] constraints;
+
   protected Map<Object, Object> attributes;
 
   /** Constructor */
   protected AbstractSolution(int numberOfVariables, int numberOfObjectives) {
+    this(numberOfVariables, numberOfObjectives, 0);
+  }
+
+  /** Constructor */
+  protected AbstractSolution(
+      int numberOfVariables, int numberOfObjectives, int numberOfConstraints) {
     attributes = new HashMap<>();
 
-    objectives = new double[numberOfObjectives];
     variables = new ArrayList<>(numberOfVariables);
     for (int i = 0; i < numberOfVariables; i++) {
       variables.add(i, null);
     }
 
+    objectives = new double[numberOfObjectives];
     for (int i = 0; i < numberOfObjectives; i++) {
       objectives[i] = 0.0;
+    }
+
+    constraints = new double[numberOfConstraints];
+    for (int i = 0; i < numberOfConstraints; i++) {
+      constraints[i] = 0.0;
     }
 
     attributes = new HashMap<Object, Object>();
@@ -48,6 +59,11 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
+  public double[] getConstraints() {
+    return constraints ;
+  }
+
+  @Override
   public void setAttribute(Object id, Object value) {
     attributes.put(id, value);
   }
@@ -55,6 +71,11 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public Object getAttribute(Object id) {
     return attributes.get(id);
+  }
+
+  @Override
+  public boolean hasAttribute(Object id) {
+    return attributes.containsKey(id);
   }
 
   @Override
@@ -68,13 +89,23 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public T getVariableValue(int index) {
+  public T getVariable(int index) {
     return variables.get(index);
   }
 
   @Override
-  public void setVariableValue(int index, T value) {
+  public void setVariable(int index, T value) {
     variables.set(index, value);
+  }
+
+  @Override
+  public double getConstraint(int index) {
+    return constraints[index] ;
+  }
+
+  @Override
+  public void setConstraint(int index, double value) {
+    constraints[index] = value ;
   }
 
   @Override
@@ -87,16 +118,23 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     return objectives.length;
   }
 
-  protected void initializeObjectiveValues() {
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      objectives[i] = 0.0;
-    }
+  @Override
+  public int getNumberOfConstraints() {
+    return constraints.length ;
   }
 
   @Override
   public boolean isFeasible() {
-    return ((getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == null)
-        || ((int) getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == 0));
+    boolean result = true;
+    if (getNumberOfConstraints() > 0) {
+      for (int i = 0; i < getNumberOfConstraints(); i++) {
+        if (constraints[i] != 0) {
+          result = false;
+        }
+      }
+    }
+
+    return result;
   }
 
   @Override

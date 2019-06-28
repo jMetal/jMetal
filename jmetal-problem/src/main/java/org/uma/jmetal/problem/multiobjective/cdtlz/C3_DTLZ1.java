@@ -1,11 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import org.uma.jmetal.problem.ConstrainedProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * Problem C3-DTLZ1, defined in:
@@ -16,7 +13,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class C3_DTLZ1 extends DTLZ1 implements ConstrainedProblem<DoubleSolution> {
+public class C3_DTLZ1 extends DTLZ1 {
   /**
    * Constructor
    * @param numberOfVariables
@@ -34,7 +31,6 @@ public class C3_DTLZ1 extends DTLZ1 implements ConstrainedProblem<DoubleSolution
     this.evaluateConstraints(solution);
   }
 
-  @Override
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
@@ -49,6 +45,8 @@ public class C3_DTLZ1 extends DTLZ1 implements ConstrainedProblem<DoubleSolution
       }
     }
 
-    SolutionUtils.setConstraintAttributes(solution, constraint);
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
+      solution.setConstraint(i, constraint[i]);
+    }
   }
 }

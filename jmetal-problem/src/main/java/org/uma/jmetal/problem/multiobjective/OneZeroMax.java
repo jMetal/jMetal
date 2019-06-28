@@ -57,7 +57,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
     counterOnes = 0;
     counterZeroes = 0;
 
-    BitSet bitset = solution.getVariableValue(0) ;
+    BitSet bitset = solution.getVariable(0) ;
 
     for (int i = 0; i < bitset.length(); i++) {
       if (bitset.get(i)) {

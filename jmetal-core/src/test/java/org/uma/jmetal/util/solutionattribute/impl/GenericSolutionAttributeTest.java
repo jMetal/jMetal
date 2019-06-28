@@ -137,18 +137,28 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
-    public Double getVariableValue(int index) {
+    public Double getVariable(int index) {
       return null;
     }
 
     @Override
-    public void setVariableValue(int index, Double value) {
+    public void setVariable(int index, Double value) {
 
     }
 
     @Override
-    public String getVariableValueString(int index) {
-      return null;
+    public double[] getConstraints() {
+      return new double[0];
+    }
+
+    @Override
+    public double getConstraint(int index) {
+      return 0;
+    }
+
+    @Override
+    public void setConstraint(int index, double value) {
+
     }
 
     @Override
@@ -158,6 +168,11 @@ public class GenericSolutionAttributeTest {
 
     @Override
     public int getNumberOfObjectives() {
+      return 0;
+    }
+
+    @Override
+    public int getNumberOfConstraints() {
       return 0;
     }
 
@@ -179,6 +194,11 @@ public class GenericSolutionAttributeTest {
     @Override
     public Object getAttribute(Object id) {
       return attributes.get(id);
+    }
+
+    @Override
+    public boolean hasAttribute(Object id) {
+      return false;
     }
 
     @Override

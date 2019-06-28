@@ -9,32 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.OVERALL_CONSTRAINT_VIOLATION_DEGREE;
-
 /** Created by Antonio J. Nebro on 6/12/14. */
 public class SolutionUtils {
-
-  /**
-   * Set constraint attributes to a solution
-   *
-   * @param solution
-   * @param constraintData Vector containing the violation degree of the constraints
-   * @param <S>
-   */
-  public static <S extends Solution<?>> void setConstraintAttributes(S solution, double[] constraintData) {
-    double overallConstraintViolation = 0.0;
-    int violatedConstraints = 0;
-    for (int i = 0; i < constraintData.length; i++) {
-      if (constraintData[i] < 0.0) {
-        overallConstraintViolation += constraintData[i];
-        violatedConstraints++;
-      }
-    }
-
-    solution.setAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE, overallConstraintViolation);
-    solution.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, violatedConstraints);
-  }
 
   /**
    * Returns the number of constraints a solution violates.
@@ -43,31 +19,31 @@ public class SolutionUtils {
    * @return
    */
   public static <S extends Solution<?>> int getNumberOfViolatedConstraints(S solution) {
-    int result ;
-    if (solution.getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS) == null) {
-      result = 0 ;
-    } else {
-      result = (int) solution.getAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS);
+    int result = 0 ;
+    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+      if (solution.getConstraint(i) != 0) {
+        result ++ ;
       }
+    }
 
     return result ;
   }
 
   /**
-   * Returns the overall constraint violatio degree of a solution.
+   * Returns the overall constraint violation degree of a solution.
    * @param solution
    * @param <S>
    * @return
    */
   public static <S extends Solution<?>> double getOverallConstraintViolationDegree(S solution) {
-    double result ;
-    if (solution.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE) == null) {
-      result = 0 ;
-    } else {
-      result = (double) solution.getAttribute(OVERALL_CONSTRAINT_VIOLATION_DEGREE);
+    double overallConstraintViolation = 0.0;
+    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+      if (solution.getConstraint(i) < 0.0) {
+        overallConstraintViolation += solution.getConstraint(i) ;
+      }
     }
 
-    return result ;
+    return overallConstraintViolation ;
   }
 
 
@@ -183,7 +159,7 @@ public class SolutionUtils {
 
     double diff;
     for (int i = 0; i < solutionI.getNumberOfVariables(); i++) {
-      diff = solutionI.getVariableValue(i) - solutionJ.getVariableValue(i);
+      diff = solutionI.getVariable(i) - solutionJ.getVariable(i);
       distance += Math.pow(diff, 2.0);
     }
 

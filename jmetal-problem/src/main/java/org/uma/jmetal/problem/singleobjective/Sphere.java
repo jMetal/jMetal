@@ -41,7 +41,7 @@ public class Sphere extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     double sum = 0.0 ;

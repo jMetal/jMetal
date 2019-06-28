@@ -14,7 +14,6 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -151,13 +150,13 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertThat(newSolutions.get(0).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(0).getVariable(0), Matchers
         .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
-    assertThat(newSolutions.get(0).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(0).getVariable(0), Matchers
         .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(1).getVariable(0), Matchers
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(1).getVariable(0), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
     verify(randomGenerator, times(3)).getRandomValue();
   }
@@ -175,15 +174,15 @@ public class BLXAlphaCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(1) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
-    solutions.get(0).setVariableValue(0, 1.0);
-    solutions.get(1).setVariableValue(0, 1.0);
+    solutions.get(0).setVariable(0, 1.0);
+    solutions.get(1).setVariable(0, 1.0);
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariableValue(0), newSolutions.get(0).getVariableValue(0), EPSILON) ;
-    assertEquals(solutions.get(1).getVariableValue(0), newSolutions.get(1).getVariableValue(0), EPSILON) ;
+    assertEquals(solutions.get(0).getVariable(0), newSolutions.get(0).getVariable(0), EPSILON) ;
+    assertEquals(solutions.get(1).getVariable(0), newSolutions.get(1).getVariable(0), EPSILON) ;
     verify(randomGenerator, times(3)).getRandomValue();
   }
 
@@ -200,31 +199,31 @@ public class BLXAlphaCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(2) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
-    solution1.setVariableValue(0, 1.0);
-    solution1.setVariableValue(1, 2.0);
-    solution2.setVariableValue(0, 2.0);
-    solution2.setVariableValue(1, 1.0);
+    solution1.setVariable(0, 1.0);
+    solution1.setVariable(1, 2.0);
+    solution2.setVariable(0, 2.0);
+    solution2.setVariable(1, 1.0);
     List<DoubleSolution> solutions = Arrays.asList(solution1, solution2) ;
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertThat(newSolutions.get(0).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(0).getVariable(0), Matchers
         .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
-    assertThat(newSolutions.get(0).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(0).getVariable(0), Matchers
         .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(1).getVariable(0), Matchers
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(0), Matchers
+    assertThat(newSolutions.get(1).getVariable(0), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
-    assertThat(newSolutions.get(0).getVariableValue(1), Matchers
+    assertThat(newSolutions.get(0).getVariable(1), Matchers
         .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
-    assertThat(newSolutions.get(0).getVariableValue(1), Matchers
+    assertThat(newSolutions.get(0).getVariable(1), Matchers
         .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(1), Matchers
+    assertThat(newSolutions.get(1).getVariable(1), Matchers
         .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
-    assertThat(newSolutions.get(1).getVariableValue(1), Matchers
+    assertThat(newSolutions.get(1).getVariable(1), Matchers
         .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
     verify(randomGenerator, times(5)).getRandomValue();
   }

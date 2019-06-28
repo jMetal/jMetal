@@ -108,7 +108,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.nextDouble() <= probability) {
-        y = solution.getVariableValue(i);
+        y = solution.getVariable(i);
         yl = solution.getLowerBound(i) ;
         yu = solution.getUpperBound(i) ;
         rnd = randomGenerator.nextDouble();
@@ -118,7 +118,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
           
         y = y + deltaq * (yu - yl);
         y = solutionRepair.repairSolutionVariableValue(y, yl, yu);
-        solution.setVariableValue(i, y);
+        solution.setVariable(i, y);
       }
     }
   }

@@ -73,14 +73,14 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
     if (randomGenerator.getRandomValue() < probability) {
       for (int var = 0; var < parent1.getNumberOfVariables(); var++) {
-        BinarySet p1 = parent1.getVariableValue(var);
-        BinarySet p2 = parent2.getVariableValue(var);
+        BinarySet p1 = parent1.getVariable(var);
+        BinarySet p2 = parent2.getVariable(var);
 
         for (int bit = 0; bit < p1.size(); bit++) {
           if (p1.get(bit) != p2.get(bit)) {
             if (randomGenerator.getRandomValue() < 0.5) {
-              offspring.get(0).getVariableValue(var).set(bit, p2.get(bit));
-              offspring.get(1).getVariableValue(var).set(bit, p1.get(bit));
+              offspring.get(0).getVariable(var).set(bit, p2.get(bit));
+              offspring.get(1).getVariable(var).set(bit, p1.get(bit));
             }
           }
         }

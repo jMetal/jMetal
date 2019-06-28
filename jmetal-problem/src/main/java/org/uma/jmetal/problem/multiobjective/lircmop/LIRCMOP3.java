@@ -1,7 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionUtils;
 
 /**
  * Class representing problem LIR-CMOP3, defined in:
@@ -22,16 +21,18 @@ public class LIRCMOP3 extends LIRCMOP1 {
   }
 
   /** EvaluateConstraints() method */
-  protected void evaluateConstraints(DoubleSolution solution, double[]x)  {
-    double[] constraint = new double[this.getNumberOfConstraints()];
+  public void evaluateConstraints(DoubleSolution solution)  {
+    double[] x = new double[getNumberOfVariables()];
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      x[i] = solution.getVariable(i) ;
+    }
+
     final double a = 0.51 ;
     final double b = 0.5 ;
     final double c = 20.0 ;
 
-    constraint[0] = (a - g1(x)) * (g1(x) - b) ;
-    constraint[1] = (a - g2(x)) * (g2(x) - b) ;
-    constraint[2] = Math.sin(c*Math.PI*x[0] -0.5) ;
-
-    SolutionUtils.setConstraintAttributes(solution, constraint);
+    solution.setConstraint(0, (a - g1(x)) * (g1(x) - b) );
+    solution.setConstraint(1, (a - g2(x)) * (g2(x) - b));
+    solution.setConstraint(2, Math.sin(c*Math.PI*x[0] -0.5));
   }
 }

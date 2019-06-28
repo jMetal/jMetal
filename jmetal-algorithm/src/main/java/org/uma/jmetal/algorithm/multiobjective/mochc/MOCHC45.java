@@ -176,7 +176,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(i));
+      distance += hammingDistance(solutionOne.getVariable(i), solutionTwo.getVariable(i));
     }
 
     return distance;

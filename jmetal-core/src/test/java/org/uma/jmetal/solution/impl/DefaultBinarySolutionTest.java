@@ -35,17 +35,17 @@ public class DefaultBinarySolutionTest {
     BinarySolution solutionA = new DefaultBinarySolution(Arrays.asList(5), 2);
     BinarySolution solutionB = new DefaultBinarySolution(Arrays.asList(5),2);
 
-    solutionA.getVariableValue(0).set(0) ;
-    solutionA.getVariableValue(0).clear(1) ;
-    solutionA.getVariableValue(0).set(2) ;
-    solutionA.getVariableValue(0).clear(3) ;
-    solutionA.getVariableValue(0).set(4) ;
+    solutionA.getVariable(0).set(0) ;
+    solutionA.getVariable(0).clear(1) ;
+    solutionA.getVariable(0).set(2) ;
+    solutionA.getVariable(0).clear(3) ;
+    solutionA.getVariable(0).set(4) ;
 
-    solutionB.getVariableValue(0).set(0) ;
-    solutionB.getVariableValue(0).clear(1) ;
-    solutionB.getVariableValue(0).set(2) ;
-    solutionB.getVariableValue(0).clear(3) ;
-    solutionB.getVariableValue(0).set(4) ;
+    solutionB.getVariable(0).set(0) ;
+    solutionB.getVariable(0).clear(1) ;
+    solutionB.getVariable(0).set(2) ;
+    solutionB.getVariable(0).clear(3) ;
+    solutionB.getVariable(0).set(4) ;
 
     assertEquals(solutionA.hashCode(), solutionB.hashCode());
   }
@@ -53,11 +53,11 @@ public class DefaultBinarySolutionTest {
 
   @Test public void shouldGetVariableValueStringReturnARightStringRepresentation() {
     BinarySolution solution = new DefaultBinarySolution(Arrays.asList(5), 2);
-    solution.getVariableValue(0).set(0, 5) ;
+    solution.getVariable(0).set(0, 5) ;
 
-    assertEquals("11111", solution.getVariableValueString(0)) ;
+    assertEquals("11111", solution.getVariable(0).toString()) ;
 
-    solution.getVariableValue(0).clear(2) ;
-    assertEquals("11011", solution.getVariableValueString(0)) ;
+    solution.getVariable(0).clear(2) ;
+    assertEquals("11011", solution.getVariable(0).toString()) ;
   }
 }

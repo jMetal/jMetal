@@ -18,7 +18,6 @@ import java.util.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.uma.jmetal.problem.ConstrainedProblem.Attributes.NUMBER_OF_VIOLATED_CONSTRAINTS;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -476,9 +475,10 @@ public class SolutionListUtilsTest {
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
-    s1.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, 1);
-    s2.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, 1);
-    s3.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, 1);
+    s1.setConstraint(0, -4);
+    s2.setConstraint(0, -4);
+    s3.setConstraint(0, -4);
+
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3);
     assertEquals(0.0, SolutionListUtils.getFeasibilityRatio(solutionList), EPSILON);
@@ -491,8 +491,8 @@ public class SolutionListUtilsTest {
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
     DoubleSolution s4 = problem.createSolution();
-    s1.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, 1);
-    s3.setAttribute(NUMBER_OF_VIOLATED_CONSTRAINTS, 1);
+    s1.setConstraint(0, -4);
+    s3.setConstraint(0, -4);
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4);
     assertEquals(0.5, SolutionListUtils.getFeasibilityRatio(solutionList), EPSILON);
@@ -508,7 +508,7 @@ public class SolutionListUtilsTest {
     public MockedDoubleProblem() {
       setNumberOfVariables(2);
       setNumberOfObjectives(2);
-      setNumberOfConstraints(0);
+      setNumberOfConstraints(1);
 
       setVariableBounds(Arrays.asList(0.0, 0.0), Arrays.asList(1.0, 1.0));
     }

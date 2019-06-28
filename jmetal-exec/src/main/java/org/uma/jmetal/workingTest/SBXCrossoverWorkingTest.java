@@ -48,8 +48,8 @@ public class SBXCrossoverWorkingTest {
 
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
-    solution1.setVariableValue(0, -3.0);
-    solution2.setVariableValue(0, 3.0);
+    solution1.setVariable(0, -3.0);
+    solution2.setVariable(0, 3.0);
     List<DoubleSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
@@ -95,7 +95,7 @@ public class SBXCrossoverWorkingTest {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariableValue(0) <= classifier[index][0]) {
+        if (solution.getVariable(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {
@@ -129,11 +129,11 @@ public class SBXCrossoverWorkingTest {
         return -1;
       }
 
-      if (solution1.getVariableValue(0) < solution2.getVariableValue(0)) {
+      if (solution1.getVariable(0) < solution2.getVariable(0)) {
         return -1;
       }
 
-      if (solution1.getVariableValue(0) > solution2.getVariableValue(0)) {
+      if (solution1.getVariable(0) > solution2.getVariable(0)) {
         return 1;
       }
 

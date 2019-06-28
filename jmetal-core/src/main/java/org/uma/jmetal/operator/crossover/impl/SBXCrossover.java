@@ -111,8 +111,8 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
 
     if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
-        valueX1 = parent1.getVariableValue(i);
-        valueX2 = parent2.getVariableValue(i);
+        valueX1 = parent1.getVariable(i);
+        valueX2 = parent2.getVariable(i);
         if (randomGenerator.getRandomValue() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
             if (valueX1 < valueX2) {
@@ -153,19 +153,19 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
             c2 = solutionRepair.repairSolutionVariableValue(c2, lowerBound, upperBound) ;
 
             if (randomGenerator.getRandomValue() <= 0.5) {
-              offspring.get(0).setVariableValue(i, c2);
-              offspring.get(1).setVariableValue(i, c1);
+              offspring.get(0).setVariable(i, c2);
+              offspring.get(1).setVariable(i, c1);
             } else {
-              offspring.get(0).setVariableValue(i, c1);
-              offspring.get(1).setVariableValue(i, c2);
+              offspring.get(0).setVariable(i, c1);
+              offspring.get(1).setVariable(i, c2);
             }
           } else {
-            offspring.get(0).setVariableValue(i, valueX1);
-            offspring.get(1).setVariableValue(i, valueX2);
+            offspring.get(0).setVariable(i, valueX1);
+            offspring.get(1).setVariable(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariableValue(i, valueX2);
-          offspring.get(1).setVariableValue(i, valueX1);
+          offspring.get(0).setVariable(i, valueX2);
+          offspring.get(1).setVariable(i, valueX1);
         }
       }
     }

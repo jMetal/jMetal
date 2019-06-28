@@ -41,6 +41,6 @@ public class LocalSearchRunner {
     BinarySolution newSolution = localSearch.getResult() ;
 
     JMetalLogger.logger.info("Fitness: " + newSolution.getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + newSolution.getVariableValueString(0)) ;
+    JMetalLogger.logger.info("Solution: " + newSolution.getVariable(0)) ;
   }
 }

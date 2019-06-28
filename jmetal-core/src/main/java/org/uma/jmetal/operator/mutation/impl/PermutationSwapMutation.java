@@ -86,9 +86,9 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
             pos2 = positionRandomGenerator.getRandomValue(pos1, permutationLength - 1);
         }
 
-        T temp = solution.getVariableValue(pos1);
-        solution.setVariableValue(pos1, solution.getVariableValue(pos2));
-        solution.setVariableValue(pos2, temp);
+        T temp = solution.getVariable(pos1);
+        solution.setVariable(pos1, solution.getVariable(pos2));
+        solution.setVariable(pos2, temp);
       }
     }
   }

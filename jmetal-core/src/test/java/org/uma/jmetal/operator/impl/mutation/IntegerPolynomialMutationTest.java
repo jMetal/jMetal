@@ -152,9 +152,9 @@ public class IntegerPolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariableValue(0), Matchers
+    assertThat(solution.getVariable(0), Matchers
         .greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -176,8 +176,8 @@ public class IntegerPolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -203,10 +203,10 @@ public class IntegerPolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertEquals(1, (long)solution.getVariableValue(0));
+    assertEquals(1, (long)solution.getVariable(0));
 
     //int expectedValue = 1 ;
-    //assertTrue(expectedValue == solution.getVariableValue(0)); ;
+    //assertTrue(expectedValue == solution.getVariable(0)); ;
   }
 
   /**

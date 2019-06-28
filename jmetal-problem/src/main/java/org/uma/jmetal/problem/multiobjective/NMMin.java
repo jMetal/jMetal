@@ -50,7 +50,7 @@ public class NMMin extends AbstractIntegerProblem {
     approximationToM = 0;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      int value = solution.getVariableValue(i) ;
+      int value = solution.getVariable(i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }

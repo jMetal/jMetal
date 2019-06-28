@@ -66,8 +66,8 @@ public class ZDT4 extends ZDT1 {
   public double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int var = 1; var < solution.getNumberOfVariables(); var++) {
-      g += Math.pow(solution.getVariableValue(var), 2.0) +
-        -10.0 * Math.cos(4.0 * Math.PI * solution.getVariableValue(var));
+      g += Math.pow(solution.getVariable(var), 2.0) +
+        -10.0 * Math.cos(4.0 * Math.PI * solution.getVariable(var));
     }
 
     double constant = 1.0 + 10.0 * (solution.getNumberOfVariables() - 1);

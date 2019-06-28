@@ -27,7 +27,6 @@ public class DefaultBinarySolution
     this.bitsPerVariable = bitsPerVariable ;
 
     initializeBinaryVariables(JMetalRandom.getInstance());
-    initializeObjectiveValues();
   }
 
   /** Copy constructor */
@@ -37,7 +36,7 @@ public class DefaultBinarySolution
     this.bitsPerVariable = solution.bitsPerVariable ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, (BinarySet) solution.getVariableValue(i).clone());
+      setVariable(i, (BinarySet) solution.getVariable(i).clone());
     }
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
@@ -63,7 +62,7 @@ public class DefaultBinarySolution
 
   @Override
   public int getNumberOfBits(int index) {
-    return getVariableValue(index).getBinarySetLength() ;
+    return getVariable(index).getBinarySetLength() ;
   }
 
   @Override
@@ -75,29 +74,15 @@ public class DefaultBinarySolution
   public int getTotalNumberOfBits() {
     int sum = 0 ;
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      sum += getVariableValue(i).getBinarySetLength() ;
+      sum += getVariable(i).getBinarySetLength() ;
     }
 
     return sum ;
   }
-
-  @Override
-  public String getVariableValueString(int index) {
-    String result = "" ;
-    for (int i = 0; i < getVariableValue(index).getBinarySetLength() ; i++) {
-      if (getVariableValue(index).get(i)) {
-        result += "1" ;
-      }
-      else {
-        result+= "0" ;
-      }
-    }
-    return result ;
-  }
   
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariableValue(i, createNewBitSet(bitsPerVariable.get(i), randomGenerator));
+      setVariable(i, createNewBitSet(bitsPerVariable.get(i), randomGenerator));
     }
   }
 

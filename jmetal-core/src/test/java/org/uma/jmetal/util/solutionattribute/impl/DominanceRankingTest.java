@@ -207,11 +207,11 @@ public class DominanceRankingTest {
     population = new ArrayList<>();
 
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
-    solution.setVariableValue(0, -93536.88629126895);
+    solution.setVariable(0, -93536.88629126895);
     solution.setObjective(0, 8.749149097065777E9);
     solution.setObjective(1, 8.749523248610943E9);
     DoubleSolution solution2 = (DoubleSolution)problem.createSolution() ;
-    solution2.setVariableValue(0, -55341.05654491017);
+    solution2.setVariable(0, -55341.05654491017);
     solution2.setObjective(0, 3.0626325395069447E9);
     solution2.setObjective(1, 3.0628539077331243E9);
 
