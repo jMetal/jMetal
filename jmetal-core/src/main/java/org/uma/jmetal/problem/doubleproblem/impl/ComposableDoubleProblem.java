@@ -5,8 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,25 +46,21 @@ import java.util.stream.IntStream;
 @SuppressWarnings("serial")
 public class ComposableDoubleProblem implements DoubleProblem {
 
-  private List<Function<Double[], Double>> objectiveFunction ;
+  private List<Function<Double[], Double>> objectiveFunctions;
   private List<Function<Double[], Double>> constraints ;
   private List<Pair<Double, Double>> bounds ;
   private String name ;
-  private OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
-  private NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
   public ComposableDoubleProblem() {
-    objectiveFunction = new ArrayList<>() ;
+    objectiveFunctions = new ArrayList<>() ;
     constraints = new ArrayList<>() ;
     bounds = new ArrayList<>() ;
 
-    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
     name = "" ;
   }
 
   public ComposableDoubleProblem addFunction(Function<Double[], Double> objective) {
-    objectiveFunction.add(objective) ;
+    objectiveFunctions.add(objective) ;
     return this ;
   }
 
@@ -93,7 +87,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   @Override
   public int getNumberOfObjectives() {
-    return objectiveFunction.size() ;
+    return objectiveFunctions.size() ;
   }
 
   @Override
@@ -118,7 +112,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives())  ;
+    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints())  ;
   }
 
   @Override
@@ -131,8 +125,11 @@ public class ComposableDoubleProblem implements DoubleProblem {
     Double[] vars = solution.getVariables().toArray(new Double[getNumberOfVariables()]);
 
     IntStream.range(0, getNumberOfObjectives())
-        .forEach(i -> solution.setObjective(i, objectiveFunction.get(i).apply(vars)));
+        .forEach(i -> solution.setObjective(i, objectiveFunctions.get(i).apply(vars)));
 
+    IntStream.range(0, getNumberOfConstraints())
+            .forEach(i -> solution.setConstraint(i, constraints.get(i).apply(vars)));
+    /*
     if (getNumberOfConstraints() > 0) {
       double overallConstraintViolation = 0.0 ;
       int violatedConstraints = 0 ;
@@ -145,6 +142,8 @@ public class ComposableDoubleProblem implements DoubleProblem {
       }
       overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
       numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
-    }
+
+     */
+
   }
 }
