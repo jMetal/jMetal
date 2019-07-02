@@ -169,6 +169,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       double cons2 =
           Math.abs(SolutionUtils.getOverallConstraintViolationDegree(individual));
 
+      System.out.println(SolutionUtils.getOverallConstraintViolationDegree(population.get(k)));
+
       if (cons1 < epsilonK && cons2 <= epsilonK) {
         if (f2 < f1) {
           population.set(k, (DoubleSolution) individual.copy());

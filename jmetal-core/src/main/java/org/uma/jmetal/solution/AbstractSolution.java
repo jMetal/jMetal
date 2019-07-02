@@ -147,6 +147,10 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     for (Double obj : objectives) {
       result += "" + obj + " ";
     }
+    result += "Constraints: ";
+    for (Double obj : constraints) {
+      result += "" + obj + " ";
+    }
     result += "\t";
     result += "AlgorithmAttributes: " + attributes + "\n";
 

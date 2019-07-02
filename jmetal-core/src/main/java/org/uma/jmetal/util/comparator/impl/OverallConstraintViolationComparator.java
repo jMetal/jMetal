@@ -29,6 +29,8 @@ public class OverallConstraintViolationComparator<S extends Solution<?>>
     violationDegreeSolution1 = SolutionUtils.getOverallConstraintViolationDegree(solution1);
     violationDegreeSolution2 = SolutionUtils.getOverallConstraintViolationDegree(solution2);
 
+    System.out.println(violationDegreeSolution1) ;
+
     if ((violationDegreeSolution1 < 0) && (violationDegreeSolution2 < 0)) {
       if (violationDegreeSolution1 > violationDegreeSolution2) {
         return -1;

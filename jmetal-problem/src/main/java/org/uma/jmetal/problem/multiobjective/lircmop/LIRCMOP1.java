@@ -1,7 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionUtils;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +46,13 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public void evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i) ;
     }
 
-    fx[0] = x[0] + g1(x) ;
-    fx[1] = 1 - x[0]*x[0] + g2(x) ;
-
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.setObjective(0, x[0] + g1(x));
+    solution.setObjective(1, 1 - x[0]*x[0] + g2(x));
 
     evaluateConstraints(solution);
   }
@@ -77,7 +76,6 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     for (int i = 2; i < getNumberOfVariables(); i+=2) {
       result += Math.pow(x[i] - Math.sin(0.5*Math.PI*x[0]), 2.0) ;
     }
-
     return result ;
   }
 
@@ -88,5 +86,22 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     }
 
     return result ;
+  }
+
+  public static void main(String[] args) {
+    System.out.println("asdfas") ;
+
+    JMetalRandom.getInstance().setSeed(1);
+    LIRCMOP1 problem = new LIRCMOP1(3) ;
+    DoubleSolution solution = problem.createSolution() ;
+    solution.setVariable(0, 0.5);
+    solution.setVariable(1, 0.1);
+    solution.setVariable(2, 0.2);
+
+    problem.evaluate(solution);
+    System.out.println(solution) ;
+    System.out.println(SolutionUtils.getOverallConstraintViolationDegree(solution) );
+
+
   }
 }
