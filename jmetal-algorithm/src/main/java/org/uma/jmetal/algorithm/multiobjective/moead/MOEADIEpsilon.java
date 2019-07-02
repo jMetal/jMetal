@@ -6,8 +6,7 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.SolutionUtils;
+import org.uma.jmetal.util.ConstraintHandling;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,7 +64,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
     double[] constraints = new double[populationSize];
     for (int i = 0; i < populationSize; i++) {
-      constraints[i] = SolutionUtils.getOverallConstraintViolationDegree(population.get(i));
+      constraints[i] = ConstraintHandling.overallConstraintViolationDegree(population.get(i));
       }
     Arrays.sort(constraints);
     double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
@@ -77,7 +76,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
     int tc = (int) (0.8 * maxEvaluations / populationSize);
     tc = 800 ;
     double tao = 0.05;
-    double rk = SolutionListUtils.getFeasibilityRatio(population);
+    double rk = ConstraintHandling.feasibilityRatio(population);
 
     evaluations = populationSize;
     int generationCounter = 0 ;
@@ -113,14 +112,14 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         evaluations++;
 
         // Update PhiMax
-        if (phiMax < Math.abs((double) SolutionUtils.getOverallConstraintViolationDegree(child))) {
-          phiMax = (double) SolutionUtils.getOverallConstraintViolationDegree(child);
+        if (phiMax < Math.abs((double) ConstraintHandling.overallConstraintViolationDegree(child))) {
+          phiMax = (double) ConstraintHandling.overallConstraintViolationDegree(child);
         }
 
         idealPoint.update(child.getObjectives());
         updateNeighborhood(child, subProblemId, neighborType);
       }
-      rk = SolutionListUtils.getFeasibilityRatio(population);
+      rk = ConstraintHandling.feasibilityRatio(population);
 
       generationCounter++ ;
     } while (evaluations < maxEvaluations);
@@ -165,11 +164,9 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       f2 = fitnessFunction(individual, lambda[k]);
 
       double cons1 =
-          Math.abs(SolutionUtils.getOverallConstraintViolationDegree(population.get(k))) ;
+          Math.abs(ConstraintHandling.overallConstraintViolationDegree(population.get(k))) ;
       double cons2 =
-          Math.abs(SolutionUtils.getOverallConstraintViolationDegree(individual));
-
-      System.out.println(SolutionUtils.getOverallConstraintViolationDegree(population.get(k)));
+          Math.abs(ConstraintHandling.overallConstraintViolationDegree(individual));
 
       if (cons1 < epsilonK && cons2 <= epsilonK) {
         if (f2 < f1) {

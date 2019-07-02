@@ -87,21 +87,4 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
     return result ;
   }
-
-  public static void main(String[] args) {
-    System.out.println("asdfas") ;
-
-    JMetalRandom.getInstance().setSeed(1);
-    LIRCMOP1 problem = new LIRCMOP1(3) ;
-    DoubleSolution solution = problem.createSolution() ;
-    solution.setVariable(0, 0.5);
-    solution.setVariable(1, 0.1);
-    solution.setVariable(2, 0.2);
-
-    problem.evaluate(solution);
-    System.out.println(solution) ;
-    System.out.println(SolutionUtils.getOverallConstraintViolationDegree(solution) );
-
-
-  }
 }

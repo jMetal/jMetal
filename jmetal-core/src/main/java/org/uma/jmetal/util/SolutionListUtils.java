@@ -372,22 +372,6 @@ public class SolutionListUtils {
     return result;
   }
 
-  /**
-   * Returns the ratio of feasible solutions in a solution list
-   * @param solutions
-   * @return
-   */
-  public static <S extends Solution<?>> double getFeasibilityRatio(List<S>  solutions) {
-    double result = 0.0 ;
-    for (Solution<?> solution: solutions) {
-      if (solution.isFeasible()) {
-        result +=1 ;
-      }
-    }
-
-    return result/solutions.size() ;
-  }
-
   @SuppressWarnings("serial")
   private static class NullSolutionListException extends JMetalException {
     public NullSolutionListException() {

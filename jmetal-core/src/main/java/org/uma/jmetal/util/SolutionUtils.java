@@ -12,42 +12,8 @@ import java.util.function.BinaryOperator;
 /** Created by Antonio J. Nebro on 6/12/14. */
 public class SolutionUtils {
 
-  /**
-   * Returns the number of constraints a solution violates.
-   * @param solution
-   * @param <S>
-   * @return
-   */
-  public static <S extends Solution<?>> int getNumberOfViolatedConstraints(S solution) {
-    int result = 0 ;
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      if (solution.getConstraint(i) != 0) {
-        result ++ ;
-      }
-    }
-
-    return result ;
-  }
 
   /**
-   * Returns the overall constraint violation degree of a solution.
-   * @param solution
-   * @param <S>
-   * @return
-   */
-  public static <S extends Solution<?>> double getOverallConstraintViolationDegree(S solution) {
-    double overallConstraintViolation = 0.0;
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      if (solution.getConstraint(i) < 0.0) {
-        overallConstraintViolation += solution.getConstraint(i) ;
-      }
-    }
-
-    return overallConstraintViolation ;
-  }
-
-
-    /**
      * Return the best solution between those passed as arguments. If they are equal or incomparable
      * one of them is chosen randomly.
      *

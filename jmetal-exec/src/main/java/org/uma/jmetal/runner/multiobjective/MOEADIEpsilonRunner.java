@@ -64,7 +64,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
             .setMutation(mutation)
             .setMaxEvaluations(300000)
             .setPopulationSize(300)
-            .setResultPopulationSize(100)
+            .setResultPopulationSize(300)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(30)

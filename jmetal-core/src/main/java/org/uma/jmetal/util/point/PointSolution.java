@@ -125,11 +125,6 @@ public class PointSolution implements Solution<Double> {
     return new PointSolution(this);
   }
 
-  @Override
-  public boolean isFeasible() {
-    return true;
-  }
-
   @Override public void setAttribute(Object id, Object value) {
     attributes.put(id, value) ;
   }

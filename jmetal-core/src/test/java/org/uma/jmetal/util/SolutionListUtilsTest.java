@@ -466,7 +466,7 @@ public class SolutionListUtilsTest {
     DoubleSolution s3 = problem.createSolution();
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3);
-    assertEquals(1.0, SolutionListUtils.getFeasibilityRatio(solutionList), EPSILON);
+    assertEquals(1.0, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);
   }
 
   @Test
@@ -481,7 +481,7 @@ public class SolutionListUtilsTest {
 
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3);
-    assertEquals(0.0, SolutionListUtils.getFeasibilityRatio(solutionList), EPSILON);
+    assertEquals(0.0, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);
   }
 
   @Test
@@ -495,7 +495,7 @@ public class SolutionListUtilsTest {
     s3.setConstraint(0, -4);
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4);
-    assertEquals(0.5, SolutionListUtils.getFeasibilityRatio(solutionList), EPSILON);
+    assertEquals(0.5, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);
   }
 
   /** TODO */

@@ -124,20 +124,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public boolean isFeasible() {
-    boolean result = true;
-    if (getNumberOfConstraints() > 0) {
-      for (int i = 0; i < getNumberOfConstraints(); i++) {
-        if (constraints[i] != 0) {
-          result = false;
-        }
-      }
-    }
-
-    return result;
-  }
-
-  @Override
   public String toString() {
     String result = "Variables: ";
     for (T var : variables) {

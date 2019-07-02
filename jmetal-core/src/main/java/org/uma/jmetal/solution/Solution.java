@@ -29,8 +29,6 @@ public interface Solution<T> extends Serializable {
 
   Solution<T> copy() ;
 
-  boolean isFeasible() ;
-
   void setAttribute(Object id, Object value) ;
   Object getAttribute(Object id) ;
   boolean hasAttribute(Object id) ;

@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionUtils;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)
@@ -26,10 +25,8 @@ public class OverallConstraintViolationComparator<S extends Solution<?>>
     double violationDegreeSolution1 ;
     double violationDegreeSolution2;
 
-    violationDegreeSolution1 = SolutionUtils.getOverallConstraintViolationDegree(solution1);
-    violationDegreeSolution2 = SolutionUtils.getOverallConstraintViolationDegree(solution2);
-
-    System.out.println(violationDegreeSolution1) ;
+    violationDegreeSolution1 = ConstraintHandling.overallConstraintViolationDegree(solution1);
+    violationDegreeSolution2 = ConstraintHandling.overallConstraintViolationDegree(solution2);
 
     if ((violationDegreeSolution1 < 0) && (violationDegreeSolution2 < 0)) {
       if (violationDegreeSolution1 > violationDegreeSolution2) {

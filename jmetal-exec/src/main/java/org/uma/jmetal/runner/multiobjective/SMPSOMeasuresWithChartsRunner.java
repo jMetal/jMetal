@@ -48,8 +48,8 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.Golinski";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Golinski.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -60,14 +60,13 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int maxIterations = 250 ;
-    int swarmSize = 100 ;
+    int maxIterations = 3000 ;
+    int swarmSize = 200 ;
 
     algorithm = new SMPSOBuilder(problem, archive)
         .setMutation(mutation)
         .setMaxIterations(maxIterations)
         .setSwarmSize(swarmSize)
-        .setRandomGenerator(new MersenneTwisterGenerator())
         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
         .setVariant(SMPSOBuilder.SMPSOVariant.Measures)
         .build();
