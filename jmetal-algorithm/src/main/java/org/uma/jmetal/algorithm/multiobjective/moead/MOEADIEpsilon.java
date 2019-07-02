@@ -7,9 +7,20 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
+import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.uma.jmetal.util.ConstraintHandling.feasibilityRatio;
+import static org.uma.jmetal.util.ConstraintHandling.isFeasible;
 
 /**
  * This class implements the MOEA/D-IEpsilon algorithm based on the one presented in the paper: "Z.
@@ -26,6 +37,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   private DifferentialEvolutionCrossover differentialEvolutionCrossover;
   private double epsilonK;
   private double phiMax = -1e30;
+  private List<DoubleSolution> archive ;
 
   public MOEADIEpsilon(
       Problem<DoubleSolution> problem,
@@ -53,6 +65,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         neighborSize);
 
     differentialEvolutionCrossover = (DifferentialEvolutionCrossover) crossoverOperator;
+    archive = new ArrayList<>() ;
   }
 
   @Override
@@ -75,8 +88,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
     int tc = (int) (0.8 * maxEvaluations / populationSize);
     tc = 800 ;
-    double tao = 0.05;
-    double rk = ConstraintHandling.feasibilityRatio(population);
+    double tao = 0.1;
+    double rk = feasibilityRatio(population);
 
     evaluations = populationSize;
     int generationCounter = 0 ;
@@ -119,8 +132,9 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         idealPoint.update(child.getObjectives());
         updateNeighborhood(child, subProblemId, neighborType);
       }
-      rk = ConstraintHandling.feasibilityRatio(population);
+      rk = feasibilityRatio(population);
 
+      updateExternalArchive();
       generationCounter++ ;
     } while (evaluations < maxEvaluations);
   }
@@ -190,12 +204,54 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   @Override
+  public List<DoubleSolution> getResult() {
+    return archive ;
+  }
+
+  @Override
   public String getName() {
     return "MOEA/D IEpsilon";
   }
 
+
   @Override
   public String getDescription() {
     return "MOEA/D with improved epsilon constraint handling method";
+  }
+
+  private void updateExternalArchive() {
+    List<DoubleSolution> feasibleSolutions = new ArrayList<>() ;
+    for (DoubleSolution solution: population) {
+      if (isFeasible(solution)) {
+        feasibleSolutions.add((DoubleSolution) solution.copy()) ;
+      }
+    }
+
+    if (feasibleSolutions.size() > 0) {
+      feasibleSolutions.addAll(archive) ;
+      Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
+      ranking.computeRanking(feasibleSolutions) ;
+
+      List<DoubleSolution> firstRankSolutions = ranking.getSubFront(0) ;
+
+      CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<>() ;
+      if (firstRankSolutions.size() <= populationSize) {
+        archive.clear();
+        for (DoubleSolution solution: firstRankSolutions) {
+          archive.add((DoubleSolution)solution.copy()) ;
+        }
+      } else {
+        while (firstRankSolutions.size() > populationSize) {
+          crowdingDistance.computeDensityEstimator(firstRankSolutions);
+          firstRankSolutions.sort(new CrowdingDistanceComparator<>());
+          firstRankSolutions.remove(firstRankSolutions.size() - 1) ;
+        }
+
+        archive.clear();
+        for (int i = 0 ; i < populationSize; i++) {
+          archive.add((DoubleSolution)firstRankSolutions.get(i).copy()) ;
+        }
+      }
+    }
   }
 }
