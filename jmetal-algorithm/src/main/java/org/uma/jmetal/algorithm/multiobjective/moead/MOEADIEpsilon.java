@@ -234,13 +234,13 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
       List<DoubleSolution> firstRankSolutions = ranking.getSubFront(0) ;
 
-      CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<>() ;
       if (firstRankSolutions.size() <= populationSize) {
         archive.clear();
         for (DoubleSolution solution: firstRankSolutions) {
           archive.add((DoubleSolution)solution.copy()) ;
         }
       } else {
+        CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<>() ;
         while (firstRankSolutions.size() > populationSize) {
           crowdingDistance.computeDensityEstimator(firstRankSolutions);
           firstRankSolutions.sort(new CrowdingDistanceComparator<>());

@@ -18,8 +18,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in: * An Improved
- * epsilon-constrained Method in MOEA/D for CMOPs with Large Infeasible Regions * Fan, Z., Li, W.,
+ * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in:
+ * An Improved epsilon-constrained Method in MOEA/D for CMOPs with Large Infeasible Regions * Fan, Z., Li, W.,
  * Cai, X. et al. Soft Comput (2019). https://doi.org/10.1007/s00500-019-03794-x
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
