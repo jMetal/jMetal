@@ -18,8 +18,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in: * An Improved
- * epsilon-constrained Method in MOEA/D for CMOPs with Large Infeasible Regions * Fan, Z., Li, W.,
+ * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in:
+ * An Improved epsilon-constrained Method in MOEA/D for CMOPs with Large Infeasible Regions * Fan, Z., Li, W.,
  * Cai, X. et al. Soft Comput (2019). https://doi.org/10.1007/s00500-019-03794-x
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -45,8 +45,8 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LIRCMOP1.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP2";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LIRCMOP2.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -64,7 +64,6 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
             .setMutation(mutation)
             .setMaxEvaluations(300000)
             .setPopulationSize(300)
-            .setResultPopulationSize(300)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(30)

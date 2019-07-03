@@ -8,16 +8,7 @@ import java.util.List;
 public class ConstraintHandling {
 
   public static <S extends Solution<?>> boolean isFeasible(S solution) {
-    boolean result = true;
-    if (solution.getNumberOfConstraints() > 0) {
-      for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-        if (solution.getConstraint(i) != 0) {
-          result = false;
-        }
-      }
-    }
-
-    return result;
+    return numberOfViolatedConstraints(solution) == 0 ;
   }
 
   /**
@@ -29,7 +20,7 @@ public class ConstraintHandling {
   public static <S extends Solution<?>> int numberOfViolatedConstraints(S solution) {
     int result = 0 ;
     for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      if (solution.getConstraint(i) != 0) {
+      if (solution.getConstraint(i) < 0) {
         result ++ ;
       }
     }
