@@ -56,7 +56,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
         String.format(
             formatString,
             parameter.getName(),
-            "--" + parameter.getName(),
+            "\""+"--" + parameter.getName()+"\"",
             decodeType(parameter),
             decodeValidValues(parameter),
             ""));
@@ -83,7 +83,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
         String.format(
             formatString,
             parameter.getName(),
-            "--" + parameter.getName(),
+                "\""+"--" + parameter.getName()+"\"",
             decodeType(parameter),
             decodeValidValues(parameter),
             "| " + parentParameter.getName() + " %in% c(\"" + dependenceString + "\")"));
@@ -104,7 +104,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
         String.format(
             formatString,
             pair.getRight().getName(),
-            "--" + pair.getRight().getName(),
+                "\""+"--" + pair.getRight().getName()+"\"",
             decodeType(pair.getRight()),
             decodeValidValues(pair.getRight()),
             "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
