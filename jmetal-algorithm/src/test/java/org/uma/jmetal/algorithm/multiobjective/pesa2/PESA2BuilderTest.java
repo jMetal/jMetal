@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.pesa2.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import org.junit.After;
 import org.junit.Before;
