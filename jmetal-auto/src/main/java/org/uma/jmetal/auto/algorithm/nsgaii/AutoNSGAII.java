@@ -46,24 +46,23 @@ public class AutoNSGAII {
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
-    populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
     maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
 
     fixedParameterList.add(problemNameParameter) ;
     fixedParameterList.add(referenceFrontFilename) ;
     fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
-    fixedParameterList.add(populationSizeParameter) ;
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
+    populationSizeParameter = new PopulationSizeParameter(args);
 
     algorithmResultParameter =
             new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
             new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
-    algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
+    //algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
     algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
 
     createInitialSolutionsParameter =
@@ -122,6 +121,8 @@ public class AutoNSGAII {
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
+
+    autoConfigurableParameterList.add(populationSizeParameter) ;
 
     autoConfigurableParameterList.add(algorithmResultParameter);
     //autoConfigurableParameterList.add(offspringPopulationSizeParameter);
