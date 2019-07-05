@@ -11,8 +11,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
 
   public void generateConfigurationFile() {
     String[] parameters =
-        ("--populationSizeParameter 100 "
-                + "--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "

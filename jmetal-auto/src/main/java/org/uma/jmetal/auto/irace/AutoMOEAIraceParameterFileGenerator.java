@@ -75,11 +75,14 @@ public class AutoMOEAIraceParameterFileGenerator {
     String dependenceString = parameter.getName();
     if (parentParameter instanceof CategoricalParameter) {
       dependenceString =
-          ((CategoricalParameter) ((CategoricalParameter<?>) parentParameter))
+          ((CategoricalParameter) parentParameter)
               .getValidValues()
               .toString();
       dependenceString = dependenceString.replace("[", "");
       dependenceString = dependenceString.replace("]", "");
+      for (String value: dependenceString.split(",")) {
+        dependenceString= dependenceString.replace(value.trim(), "\"" + value.trim() +"\"") ;
+      }
     }
 
     stringBuilder.append(
@@ -89,7 +92,7 @@ public class AutoMOEAIraceParameterFileGenerator {
             "--" + parameter.getName(),
             decodeType(parameter),
             decodeValidValues(parameter),
-            "| " + parentParameter.getName() + " %in% c(\"" + dependenceString + "\")"));
+            "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
