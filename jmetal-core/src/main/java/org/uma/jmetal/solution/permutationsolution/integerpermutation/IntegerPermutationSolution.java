@@ -20,7 +20,7 @@ public class IntegerPermutationSolution
     implements PermutationSolution<Integer> {
 
   /** Constructor */
-  public IntegerPermutationSolution(int numberOfObjectives, int permutationLength) {
+  public IntegerPermutationSolution(int permutationLength, int numberOfObjectives) {
     super(permutationLength, numberOfObjectives) ;
 
     List<Integer> randomSequence = new ArrayList<>(permutationLength);
@@ -31,14 +31,14 @@ public class IntegerPermutationSolution
 
     java.util.Collections.shuffle(randomSequence);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < permutationLength; i++) {
       setVariable(i, randomSequence.get(i)) ;
     }
   }
 
   /** Copy Constructor */
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
-    super(solution.getNumberOfObjectives(), solution.getPermutationLength()) ;
+    super(solution.getPermutationLength(), solution.getNumberOfObjectives()) ;
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i));
