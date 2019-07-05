@@ -23,9 +23,39 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>> implem
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
-    RankingAndDensityEstimatorMatingPoolSelection<S> selection ;
-    selection = new RankingAndDensityEstimatorMatingPoolSelection<S>(solutionList.size(), ranking, densityEstimator);
+    //RankingAndDensityEstimatorMatingPoolSelection<S> selection ;
+    //selection = new RankingAndDensityEstimatorMatingPoolSelection<S>(solutionList.size(), ranking, densityEstimator);
 
-    return selection.select(jointPopulation) ;
+    //return selection.select(jointPopulation) ;
+    ranking.computeRanking(jointPopulation) ;
+    //return truncate(jointPopulation, solutionList.size(),densityEstimator) ;
+    return truncate2(ranking, 0, solutionList.size()) ;
   }
+
+  private List<S> truncate(List<S> solutionList, int size, DensityEstimator<S> densityEstimator) {
+    return new RankingAndDensityEstimatorMatingPoolSelection<S>(size, ranking, densityEstimator)
+        .select((solutionList));
+  }
+
+  private List<S> truncate2(Ranking<S> ranking, int rankingId, int sizeOfTheResultingSolutionList) {
+    List<S> currentRankSolutions = ranking.getSubFront(rankingId) ;
+    densityEstimator.computeDensityEstimator(currentRankSolutions) ;
+
+    List<S> resultList = new ArrayList<>() ;
+
+    if (currentRankSolutions.size() < sizeOfTheResultingSolutionList) {
+      resultList.addAll(ranking.getSubFront(rankingId)) ;
+      resultList.addAll(truncate2(ranking, rankingId+1, sizeOfTheResultingSolutionList - currentRankSolutions.size())) ;
+    } else {
+      densityEstimator.sort(currentRankSolutions) ;
+      int i = 0 ;
+      while (resultList.size() < sizeOfTheResultingSolutionList) {
+        resultList.add(currentRankSolutions.get(i)) ;
+        i++ ;
+      }
+    }
+
+    return resultList ;
+  }
+
 }

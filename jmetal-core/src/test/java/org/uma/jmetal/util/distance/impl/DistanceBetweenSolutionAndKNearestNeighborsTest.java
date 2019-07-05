@@ -25,8 +25,8 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     solutionList.add(solution) ;
 
     int k = 1  ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
     double receivedValue = distance.getDistance(solution, solutionList) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
@@ -49,10 +49,10 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     solutionList.add(solution2) ;
 
     int k = 1 ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
     double receivedValue = distance.getDistance(solution, solutionList) ;
-    assertEquals(Math.sqrt(2)/k, receivedValue, EPSILON) ;
+    assertEquals(Math.sqrt(2), receivedValue, EPSILON) ;
   }
 
   @Test
@@ -84,10 +84,10 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     solutionList.add(solution4) ;
 
     int k = 2 ;
-    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution, List<DoubleSolution>> distance =
-            new DistanceBetweenSolutionAndKNearestNeighbors<>(k) ;
+    DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
+            new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
     double receivedValue = distance.getDistance(solution, solutionList) ;
-    assertEquals((Math.sqrt(1+1) + Math.sqrt(4+4))/k, receivedValue, EPSILON) ;
+    assertEquals((Math.sqrt(4+4)), receivedValue, EPSILON) ;
   }
 }
