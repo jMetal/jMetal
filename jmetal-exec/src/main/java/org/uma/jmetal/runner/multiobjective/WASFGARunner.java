@@ -27,9 +27,8 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
-   * @throws FileNotFoundException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.WASFGABinaryRunner problemName [referenceFront]
+   * @throws FileNotFoundException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.WASFGABinaryRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
     /*Problem<DoubleSolution> problem;
@@ -44,24 +43,24 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
     MutationOperator<PermutationSolution<Integer>> mutation;
     SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+    crossover = new PMXCrossover(0.9);
 
-    crossover = new PMXCrossover(0.9) ;
+    double mutationProbability = 0.2;
+    mutation = new PermutationSwapMutation<Integer>(mutationProbability);
 
-    double mutationProbability = 0.2 ;
-    mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
-
-    selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
-    String referenceParetoFront = "" ;
+    selection =
+        new BinaryTournamentSelection<PermutationSolution<Integer>>(
+            new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
+    String referenceParetoFront = "";
     List<Double> referencePoint = null;
 
-    //problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    // problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
 
     referencePoint = new ArrayList<>();
     referencePoint.add(0.0);
     referencePoint.add(0.0);
-/*
+    /*
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
@@ -72,21 +71,29 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());*/
 
-double epsilon = 0.01 ;
-    algorithm = new WASFGA<PermutationSolution<Integer>>(problem, 100, 250, crossover, mutation, selection,
-            new SequentialSolutionListEvaluator<PermutationSolution<Integer>>(),epsilon, referencePoint) ;
+    double epsilon = 0.01;
+    algorithm =
+        new WASFGA<PermutationSolution<Integer>>(
+            problem,
+            100,
+            250,
+            crossover,
+            mutation,
+            selection,
+            new SequentialSolutionListEvaluator<PermutationSolution<Integer>>(),
+            epsilon,
+            referencePoint);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<PermutationSolution<Integer>> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<PermutationSolution<Integer>> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }

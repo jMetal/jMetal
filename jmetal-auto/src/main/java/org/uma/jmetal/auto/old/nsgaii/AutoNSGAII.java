@@ -76,7 +76,8 @@ public class AutoNSGAII {
       autoNSGAII.updatePopulation(externalArchiveObserver.getArchive().getSolutionList());
     }
 
-    Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());
+    String referenceFrontFile = configurator.getReferenceParetoFront() ;
+    Front referenceFront = new ArrayFront(referenceFrontFile);
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
     Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
     Front normalizedFront = frontNormalizer.normalize(new ArrayFront(autoNSGAII.getResult()));

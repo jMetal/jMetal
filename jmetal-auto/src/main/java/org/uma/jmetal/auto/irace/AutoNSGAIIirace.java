@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.nsgaii;
+package org.uma.jmetal.auto.irace;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
@@ -20,16 +20,23 @@ import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.PointSolution;
 
-import java.util.*;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class AutoNSGAII {
+public class AutoNSGAIIirace {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -124,7 +131,7 @@ public class AutoNSGAII {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
-    //autoConfigurableParameterList.add(offspringPopulationSizeParameter);
+    autoConfigurableParameterList.add(offspringPopulationSizeParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
@@ -226,49 +233,28 @@ public class AutoNSGAII {
     return nsgaii;
   }
 
-  public static void print(List<Parameter<?>> parameterList) {
-    parameterList.forEach(item -> System.out.println(item));
-  }
-
-  public static void main(String[] args) {
-    String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
-                + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult externalArchive "
-                + "--populationSize 100 "
-                + "--populationSizeWithArchive 100 "
-                + "--offspringPopulationSize 100 "
-                + "--createInitialSolutions random "
-                + "--variation crossoverAndMutationVariation "
-                + "--selection tournament "
-                + "--selectionTournamentSize 2 "
-                + "--crossover SBX "
-                + "--crossoverProbability 0.9 "
-                + "--crossoverRepairStrategy bounds "
-                + "--sbxDistributionIndex 20.0 "
-                + "--mutation polynomial "
-                + "--mutationProbability 0.01 "
-                + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 ")
-            .split("\\s+");
-
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseAndCheckParameters(parameters);
-
-    nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
-    nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);
+  public static void main(String[] args) throws FileNotFoundException {
+    AutoNSGAIIirace nsgaiiWithParameters = new AutoNSGAIIirace();
+    nsgaiiWithParameters.parseAndCheckParameters(args);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
-    new SolutionListOutput(nsgaII.getResult())
-        .setSeparator("\t")
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-        .print();
+    String referenceFrontFile = "/pareto_fronts/" + nsgaiiWithParameters.referenceFrontFilename.getValue() ;
+    Front referenceFront = new ArrayFront(referenceFrontFile);
 
-    //NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    //nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
+    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
+    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(nsgaII.getResult()));
+    List<PointSolution> normalizedPopulation =
+            FrontUtils.convertFrontToSolutionList(normalizedFront);
+
+    double referenceFrontHV =
+            new PISAHypervolume<PointSolution>(normalizedReferenceFront)
+                    .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
+    double obtainedFrontHV =
+            new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
+    //System.out.println(obtainedFrontHV);
+    System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
   }
 }
