@@ -240,7 +240,9 @@ public class AutoNSGAIIirace {
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
     nsgaII.run();
 
-    Front referenceFront = new ArrayFront(nsgaiiWithParameters.referenceFrontFilename.getValue());
+    String referenceFrontFile = "/pareto_fronts/" + nsgaiiWithParameters.referenceFrontFilename.getValue() ;
+    Front referenceFront = new ArrayFront(referenceFrontFile);
+
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
     Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
     Front normalizedFront = frontNormalizer.normalize(new ArrayFront(nsgaII.getResult()));
