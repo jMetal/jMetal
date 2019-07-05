@@ -9,6 +9,7 @@ public class NSGAIIWithParameters {
 
   public static void main(String[] args) {
     String[] parameters =
+            /*
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
@@ -27,6 +28,26 @@ public class NSGAIIWithParameters {
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 ")
+                */
+            ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+                    + "--referenceFrontFileName ZDT1.pf "
+                    + "--maximumNumberOfEvaluations 25000 "
+                    + "--algorithmResult externalArchive "
+                    + "--populationSizeWithArchive 20 "
+                    + "--populationSize 100 "
+                    + "--offspringPopulationSize 50 "
+                    + "--createInitialSolutions random "
+                    + "--variation crossoverAndMutationVariation "
+                    + "--selection tournament "
+                    + "--selectionTournamentSize 2 "
+                    + "--crossover SBX "
+                    + "--crossoverProbability 0.9 "
+                    + "--crossoverRepairStrategy bounds "
+                    + "--sbxDistributionIndex 20.0 "
+                    + "--mutation polynomial "
+                    + "--mutationProbability 0.01 "
+                    + "--mutationRepairStrategy bounds "
+                    + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
     AutoNSGAII autoNSGAII = new AutoNSGAII();

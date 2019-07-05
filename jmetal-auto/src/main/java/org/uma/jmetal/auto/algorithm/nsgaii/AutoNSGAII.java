@@ -46,25 +46,25 @@ public class AutoNSGAII {
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
-    populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
-    maximumNumberOfEvaluationsParameter = new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000) ;
+    maximumNumberOfEvaluationsParameter =
+        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
-    fixedParameterList.add(problemNameParameter) ;
-    fixedParameterList.add(referenceFrontFilename) ;
-    fixedParameterList.add(maximumNumberOfEvaluationsParameter) ;
-    fixedParameterList.add(populationSizeParameter) ;
+    fixedParameterList.add(problemNameParameter);
+    fixedParameterList.add(referenceFrontFilename);
+    fixedParameterList.add(maximumNumberOfEvaluationsParameter);
 
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
+    populationSizeParameter = new PopulationSizeParameter(args);
 
     algorithmResultParameter =
-            new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
-            new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
-    algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
-    algorithmResultParameter.addSpecificParameter("externalArchive", populationSizeWithArchiveParameter);
+        new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
+    algorithmResultParameter.addSpecificParameter(
+        "externalArchive", populationSizeWithArchiveParameter);
 
     createInitialSolutionsParameter =
         new CreateInitialSolutionsParameter(
@@ -76,15 +76,15 @@ public class AutoNSGAII {
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
 
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
-    ProbabilityParameter crossoverProbability = new ProbabilityParameter("crossoverProbability", args);
+    ProbabilityParameter crossoverProbability =
+        new ProbabilityParameter("crossoverProbability", args);
     crossover.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("crossoverRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     crossover.addGlobalParameter(crossoverRepairStrategy);
 
-    RealParameter distributionIndex =
-        new RealParameter("sbxDistributionIndex", args,5.0, 400.0);
+    RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
     crossover.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
@@ -92,11 +92,12 @@ public class AutoNSGAII {
 
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
-    ProbabilityParameter mutationProbability = new ProbabilityParameter("mutationProbability", args);
+    ProbabilityParameter mutationProbability =
+        new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
-        new RepairDoubleSolutionStrategyParameter("mutationRepairStrategy",
-            args,  Arrays.asList("random", "round", "bounds"));
+        new RepairDoubleSolutionStrategyParameter(
+            "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForMutation =
@@ -110,12 +111,13 @@ public class AutoNSGAII {
     DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
         new DifferentialEvolutionCrossoverParameter(args);
 
-    RealParameter f = new RealParameter("f", args, 0.0, 1.0) ;
-    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0) ;
+    RealParameter f = new RealParameter("f", args, 0.0, 1.0);
+    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
     differentialEvolutionCrossover.addGlobalParameter(f);
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
-    offspringPopulationSizeParameter = new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+    offspringPopulationSizeParameter =
+        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -123,8 +125,10 @@ public class AutoNSGAII {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
 
+    autoConfigurableParameterList.add(populationSizeParameter);
+
     autoConfigurableParameterList.add(algorithmResultParameter);
-    //autoConfigurableParameterList.add(offspringPopulationSizeParameter);
+    // autoConfigurableParameterList.add(offspringPopulationSizeParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
@@ -161,8 +165,7 @@ public class AutoNSGAII {
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
     Variation<DoubleSolution> variation =
-        (Variation<DoubleSolution>)
-            variationParameter.getParameter();
+        (Variation<DoubleSolution>) variationParameter.getParameter();
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
@@ -268,7 +271,7 @@ public class AutoNSGAII {
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
         .print();
 
-    //NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    //nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
+    // NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
+    // nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
   }
 }
