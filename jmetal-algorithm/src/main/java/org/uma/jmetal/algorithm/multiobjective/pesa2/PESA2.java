@@ -21,7 +21,6 @@ import java.util.List;
 public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   private int maxEvaluations ;
   private int archiveSize ;
-  private int populationSize ;
   private int biSections ;
 
   private int evaluations ;
@@ -36,7 +35,7 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
       MutationOperator<S> mutationOperator, SolutionListEvaluator<S> evaluator) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations ;
-    this.populationSize = populationSize ;
+    setMaxPopulationSize(populationSize); ;
     this.archiveSize = archiveSize ;
     this.biSections = biSections ;
 
@@ -50,11 +49,11 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override protected void initProgress() {
-    evaluations = populationSize ;
+    evaluations = getMaxPopulationSize() ;
   }
 
   @Override protected void updateProgress() {
-    evaluations += populationSize ;
+    evaluations += getMaxPopulationSize() ;
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -68,13 +67,13 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = new ArrayList<>(populationSize) ;
+    List<S> matingPopulation = new ArrayList<>(getMaxPopulationSize()) ;
 
     for (S solution : population) {
       archive.add(solution) ;
     }
 
-    while (matingPopulation.size() < populationSize) {
+    while (matingPopulation.size() < getMaxPopulationSize()) {
       S solution = selectionOperator.execute(archive) ;
 
       matingPopulation.add(solution);
@@ -84,8 +83,8 @@ public class PESA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   }
 
   @Override protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(populationSize);
-    for (int i = 0; i < populationSize; i+=2) {
+    List<S> offspringPopulation = new ArrayList<>(getMaxPopulationSize());
+    for (int i = 0; i < getMaxPopulationSize(); i+=2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(population.get(i));
       parents.add(population.get(i + 1));
