@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.old.nsgaiib.MissingParameterException;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.*;
 import java.util.function.Function;
@@ -35,11 +36,12 @@ public abstract class Parameter<T> {
 
   private String retrieve(String[] args, String key) {
     int index = Arrays.asList(args).indexOf(key);
-    if (index == -1 || index == args.length - 1) {
-      throw new MissingParameterException(key);
-    } else {
-      return args[index + 1];
-    }
+    Check.that(index != -1 && index != args.length - 1, "Missing parameter: " + key);
+    //if (index == -1 || index == args.length - 1) {
+    //  throw new MissingParameterException(key);
+    //} else {
+    return args[index + 1];
+    //}
   }
 
   public abstract void check();
