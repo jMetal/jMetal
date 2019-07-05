@@ -124,7 +124,7 @@ public class AutoNSGAII {
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
 
     autoConfigurableParameterList.add(algorithmResultParameter);
-    autoConfigurableParameterList.add(offspringPopulationSizeParameter);
+    //autoConfigurableParameterList.add(offspringPopulationSizeParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
