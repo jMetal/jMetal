@@ -28,15 +28,13 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
 public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws java.io.IOException
    * @throws SecurityException
-   * @throws ClassNotFoundException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
+   * @throws ClassNotFoundException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
     JMetalRandom.getInstance().setSeed(100L);
@@ -49,37 +47,33 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
 
     problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
 
-    crossover = new PMXCrossover(0.9) ;
+    crossover = new PMXCrossover(0.9);
 
-    double mutationProbability = 0.2 ;
-    mutation = new PermutationSwapMutation<Integer>(mutationProbability) ;
+    double mutationProbability = 0.2;
+    mutation = new PermutationSwapMutation<Integer>(mutationProbability);
 
-    selection = new BinaryTournamentSelection<PermutationSolution<Integer>>(new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
-/**
- * List<Double> inters = new ArrayList<>();
- inters.add(0.0);
- inters.add(0.0);
- double epsilon =0.0001;
- algorithm = new RNSGAIIBuilder<>(problem, crossover, mutation,inters,epsilon)
+    selection =
+        new BinaryTournamentSelection<PermutationSolution<Integer>>(
+            new RankingAndCrowdingDistanceComparator<PermutationSolution<Integer>>());
 
- */
     int populationSize = 100;
-    algorithm = new NSGAIIBuilder<PermutationSolution<Integer>>(problem, crossover, mutation, populationSize)
+    algorithm =
+        new NSGAIIBuilder<PermutationSolution<Integer>>(
+                problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(10000)
-            .build() ;
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<PermutationSolution<Integer>> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<PermutationSolution<Integer>> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     new SolutionListOutput(population)
-            .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
-            .print();
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

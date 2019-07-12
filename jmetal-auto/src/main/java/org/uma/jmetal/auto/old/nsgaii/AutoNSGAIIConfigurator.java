@@ -55,7 +55,7 @@ import java.util.List;
 
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */
-  int sizeOfTheFinalPopulation = 100;
+  private int sizeOfTheFinalPopulation = 100;
 
   @Option(
       names = {"--algorithmResult"},

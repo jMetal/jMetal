@@ -23,14 +23,14 @@ import java.util.*;
  */
 @SuppressWarnings("serial")
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
-
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator ;
   private Distance<S, S> distance = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>() ;
-  private int k = 1 ;
+  private int k ;
   private double[][] distanceMatrix ;
 
-  public KnnDensityEstimator() {
+  public KnnDensityEstimator(int k) {
+    this.k = k ;
     solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
   }
 
@@ -99,29 +99,24 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
       solutionList.get(i).setAttribute("DISTANCES_", distances) ;
     }
 
-    //Collections.sort(solutionList, getSolutionComparator());
-    Collections.sort(solutionList, new Comparator<S>() {
-      @Override
-      public int compare(S s1, S s2) {
-        List<Double> d1 = (List<Double>)s1.getAttribute("DISTANCES_") ;
-        List<Double> d2 = (List<Double>)s2.getAttribute("DISTANCES_") ;
-        int localK = k ;
-        if (d1.get(localK) > d2.get(localK)) {
-          return -1 ;
-        } else if (d1.get(localK) < d2.get(localK)) {
-          return +1 ;
-        } else {
-          while (localK < (d1.size()-1)) {
-            localK++ ;
-            if (d1.get(localK) > d2.get(localK)) {
-              return -1 ;
-            } else if (d1.get(localK) < d2.get(localK)) {
-              return +1 ;
-            }
+    Collections.sort(solutionList, (s1, s2) -> {
+      List<Double> d1 = (List<Double>)s1.getAttribute("DISTANCES_") ;
+      List<Double> d2 = (List<Double>)s2.getAttribute("DISTANCES_") ;
+      int localK = k ;
+      if (d1.get(localK) > d2.get(localK)) {
+        return -1 ;
+      } else if (d1.get(localK) < d2.get(localK)) {
+        return +1 ;
+      } else {
+        while (localK < (d1.size()-1)) {
+          localK++ ;
+          if (d1.get(localK) > d2.get(localK)) {
+            return -1 ;
+          } else if (d1.get(localK) < d2.get(localK)) {
+            return +1 ;
           }
-          return 0;
-
         }
+        return 0;
       }
     });
 

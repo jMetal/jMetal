@@ -30,10 +30,6 @@ public class GenerateIraceParameterFile {
     algorithmResult.addValue(AlgorithmResultParameter.POPULATION);
     algorithmResult.addValue(AlgorithmResultParameter.EXTERNAL_ARCHIVE);
 
-    // CategoricalParameterType algorithmResult = new CategoricalParameterType("algorithmResult");
-    // algorithmResult.addValue(AlgorithmResultType.population.name());
-    // algorithmResult.addValue(AlgorithmResultType.externalArchive.name());
-
     CategoricalParameterType populationSize = new CategoricalParameterType("populationSize");
     populationSize.addValue("100");
     populationSize.setParentTag(AlgorithmResultParameter.POPULATION);
