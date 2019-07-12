@@ -10,22 +10,30 @@ public class IntegerParameter extends Parameter<Integer> {
   private Integer upperBound;
 
   public IntegerParameter(String name, String[] args, Integer lowerBound, Integer upperBound) {
-    super(name, args) ;
-    this.lowerBound = lowerBound ;
-    this.upperBound = upperBound ;
+    super(name, args);
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
   }
 
   @Override
   public void check() {
-    if ((getValue() < lowerBound) || (getValue() > upperBound))  {
-      throw new RuntimeException("Invalid value: " + getValue() + ". Range: " + lowerBound + ", " + upperBound) ;
+    if ((getValue() < lowerBound) || (getValue() > upperBound)) {
+      throw new RuntimeException(
+          "Parameter "
+              + getName()
+              + ": Invalid value: "
+              + getValue()
+              + ". Range: "
+              + lowerBound
+              + ", "
+              + upperBound);
     }
   }
 
   @Override
   public IntegerParameter parse() {
-    setValue(on("--"+getName(), getArgs(), Integer::parseInt));
-    return this ;
+    setValue(on("--" + getName(), getArgs(), Integer::parseInt));
+    return this;
   }
 
   public List<Integer> getValidValues() {
@@ -34,13 +42,22 @@ public class IntegerParameter extends Parameter<Integer> {
 
   @Override
   public String toString() {
-    String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Lower bound: " + lowerBound + ". Upper bound: " + upperBound  ;
+    String result =
+        "Name: "
+            + getName()
+            + ": "
+            + "Value: "
+            + getValue()
+            + ". Lower bound: "
+            + lowerBound
+            + ". Upper bound: "
+            + upperBound;
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += "\n -> " + parameter.toString() ;
+      result += "\n -> " + parameter.toString();
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n  -> " + parameter.getRight().toString() ;
+      result += "\n  -> " + parameter.getRight().toString();
     }
-    return result ;
+    return result;
   }
 }

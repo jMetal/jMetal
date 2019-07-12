@@ -9,22 +9,30 @@ public class RealParameter extends Parameter<Double> {
   private double lowerBound;
   private double upperBound;
 
-  public RealParameter(String name, String[] args,  double lowerBound, double upperBound) {
-    super(name, args) ;
-    this.lowerBound = lowerBound ;
-    this.upperBound = upperBound ;
+  public RealParameter(String name, String[] args, double lowerBound, double upperBound) {
+    super(name, args);
+    this.lowerBound = lowerBound;
+    this.upperBound = upperBound;
   }
 
   @Override
   public RealParameter parse() {
-    setValue(on("--"+getName(), getArgs(), Double::parseDouble));
-    return this ;
+    setValue(on("--" + getName(), getArgs(), Double::parseDouble));
+    return this;
   }
 
   @Override
   public void check() {
-    if ((getValue() < lowerBound) || (getValue() > upperBound))  {
-      throw new RuntimeException("Invalid value: " + getValue() + ". Range: " + lowerBound + ", " + upperBound) ;
+    if ((getValue() < lowerBound) || (getValue() > upperBound)) {
+      throw new RuntimeException(
+          "Parameter "
+              + getName()
+              + ": Invalid value: "
+              + getValue()
+              + ". Range: "
+              + lowerBound
+              + ", "
+              + upperBound);
     }
   }
 
@@ -34,13 +42,22 @@ public class RealParameter extends Parameter<Double> {
 
   @Override
   public String toString() {
-    String result = "Name: " + getName() + ": " + "Value: " + getValue() + ". Lower bound: " + lowerBound + ". Upper bound: " + upperBound  ;
+    String result =
+        "Name: "
+            + getName()
+            + ": "
+            + "Value: "
+            + getValue()
+            + ". Lower bound: "
+            + lowerBound
+            + ". Upper bound: "
+            + upperBound;
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += "\n -> " + parameter.toString() ;
+      result += "\n -> " + parameter.toString();
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n  -> " + parameter.getRight().toString() ;
+      result += "\n  -> " + parameter.getRight().toString();
     }
-    return result ;
+    return result;
   }
 }
