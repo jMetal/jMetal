@@ -108,7 +108,7 @@ public class MOEAD {
             termination,
             selection,
             variation,
-            replacement);
+            replacement, null);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

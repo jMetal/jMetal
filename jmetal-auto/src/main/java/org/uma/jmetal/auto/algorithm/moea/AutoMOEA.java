@@ -5,7 +5,6 @@ import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
@@ -16,11 +15,11 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -196,12 +195,9 @@ public class AutoMOEA {
   EvolutionaryAlgorithm<DoubleSolution> create() {
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
-    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver = null;
-
+    Archive<DoubleSolution> archive = null;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      boundedArchiveObserver =
-          new ExternalArchiveObserver<>(
-              new CrowdingDistanceArchive<>(populationSizeParameter.getValue()));
+      archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
@@ -229,44 +225,8 @@ public class AutoMOEA {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    class MOEA extends EvolutionaryAlgorithm<DoubleSolution> {
-      private ExternalArchiveObserver<DoubleSolution> archiveObserver;
-
-      public MOEA(
-          String name,
-          Evaluation<DoubleSolution> evaluation,
-          InitialSolutionsCreation<DoubleSolution> createInitialSolutionList,
-          Termination termination,
-          MatingPoolSelection<DoubleSolution> selection,
-          Variation<DoubleSolution> variation,
-          Replacement<DoubleSolution> replacement,
-          ExternalArchiveObserver<DoubleSolution> archiveObserver) {
-        super(
-            name,
-            evaluation,
-            createInitialSolutionList,
-            termination,
-            selection,
-            variation,
-            replacement);
-        if (archiveObserver != null) {
-          this.archiveObserver = archiveObserver;
-          evaluation.getObservable().register(archiveObserver);
-        }
-      }
-
-      @Override
-      public List<DoubleSolution> getResult() {
-        if (archiveObserver != null) {
-          return archiveObserver.getArchive().getSolutionList();
-        } else {
-          return population;
-        }
-      }
-    }
-
-    MOEA moea =
-        new MOEA(
+    EvolutionaryAlgorithm<DoubleSolution> moea =
+        new EvolutionaryAlgorithm<>(
             "Generic MOEA",
             evaluation,
             initialSolutionsCreation,
@@ -274,7 +234,7 @@ public class AutoMOEA {
             selection,
             variation,
             replacement,
-            boundedArchiveObserver);
+            archive);
 
     return moea;
   }

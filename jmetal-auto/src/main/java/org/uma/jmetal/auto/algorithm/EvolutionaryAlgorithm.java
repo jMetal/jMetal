@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
@@ -11,6 +11,7 @@ import org.uma.jmetal.auto.util.observable.Observable;
 import org.uma.jmetal.auto.util.observable.ObservableEntity;
 import org.uma.jmetal.auto.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.Archive;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.Map;
 
 public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity {
-  protected List<S> population;
+  private List<S> population;
+  private Archive<S> externalArchive;
 
   private Evaluation<S> evaluation;
   private InitialSolutionsCreation<S> createInitialPopulation;
@@ -43,7 +45,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
-      Replacement<S> replacement) {
+      Replacement<S> replacement,
+      Archive<S> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialPopulation = initialPopulationCreation;
@@ -51,6 +54,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     this.selection = selection;
     this.variation = variation;
     this.replacement = replacement;
+    this.externalArchive = externalArchive;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -64,9 +68,18 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       List<S> matingPopulation = selection.select(population);
       List<S> offspringPopulation = variation.variate(population, matingPopulation);
       offspringPopulation = evaluation.evaluate(offspringPopulation);
+      updateArchive(offspringPopulation);
 
       population = replacement.replace(population, offspringPopulation);
       updateProgress();
+    }
+  }
+
+  private void updateArchive(List<S> population) {
+    if (externalArchive != null) {
+      for (S solution : population) {
+        externalArchive.add(solution);
+      }
     }
   }
 
@@ -103,11 +116,15 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   @Override
   public List<S> getResult() {
-    return population;
+    if (externalArchive != null) {
+      return externalArchive.getSolutionList();
+    } else {
+      return population;
+    }
   }
 
   public void updatePopulation(List<S> newPopulation) {
-    this.population = newPopulation ;
+    this.population = newPopulation;
   }
 
   @Override

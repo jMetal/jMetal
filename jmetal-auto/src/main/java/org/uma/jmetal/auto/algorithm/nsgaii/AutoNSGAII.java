@@ -16,18 +16,20 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
@@ -144,14 +146,12 @@ public class AutoNSGAII {
    * @return
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
+
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
-    ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver = null;
-
+    Archive<DoubleSolution> archive = null;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      boundedArchiveObserver =
-          new ExternalArchiveObserver<>(
-              new CrowdingDistanceArchive<>(populationSizeParameter.getValue()));
+      archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
@@ -179,44 +179,8 @@ public class AutoNSGAII {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    class NSGAII extends EvolutionaryAlgorithm<DoubleSolution> {
-      private ExternalArchiveObserver<DoubleSolution> archiveObserver;
-
-      public NSGAII(
-          String name,
-          Evaluation<DoubleSolution> evaluation,
-          InitialSolutionsCreation<DoubleSolution> createInitialSolutionList,
-          Termination termination,
-          MatingPoolSelection<DoubleSolution> selection,
-          Variation<DoubleSolution> variation,
-          Replacement<DoubleSolution> replacement,
-          ExternalArchiveObserver<DoubleSolution> archiveObserver) {
-        super(
-            name,
-            evaluation,
-            createInitialSolutionList,
-            termination,
-            selection,
-            variation,
-            replacement);
-        if (archiveObserver != null) {
-          this.archiveObserver = archiveObserver;
-          evaluation.getObservable().register(archiveObserver);
-        }
-      }
-
-      @Override
-      public List<DoubleSolution> getResult() {
-        if (archiveObserver != null) {
-          return archiveObserver.getArchive().getSolutionList();
-        } else {
-          return population;
-        }
-      }
-    }
-
-    NSGAII nsgaii =
-        new NSGAII(
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii =
+        new EvolutionaryAlgorithm(
             "NSGAII",
             evaluation,
             initialSolutionsCreation,
@@ -224,7 +188,7 @@ public class AutoNSGAII {
             selection,
             variation,
             replacement,
-            boundedArchiveObserver);
+            archive);
 
     return nsgaii;
   }
@@ -235,13 +199,13 @@ public class AutoNSGAII {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult externalArchive "
                 + "--populationSize 100 "
                 + "--populationSizeWithArchive 100 "
-                + "--offspringPopulationSize 100 "
+                + "--offspringPopulationSize 20 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "

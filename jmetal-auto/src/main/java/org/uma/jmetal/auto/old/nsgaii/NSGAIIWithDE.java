@@ -83,7 +83,7 @@ public class NSGAIIWithDE {
             termination,
             selection,
             variation,
-            replacement);
+            replacement, null);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(5000);
     // RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

@@ -45,6 +45,7 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithOppositeBoundValue;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -218,48 +219,15 @@ public class AutoNSGAIIConfigurator {
     selection = getSelection();
     evaluation = new SequentialEvaluation<>(problem);
 
+    Archive<DoubleSolution> archive = null;
+
     if (algorithmResult.equals(AlgorithmResultType.externalArchive)) {
-      boundedArchiveObserver =
-          new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation));
-      evaluation.getObservable().register(boundedArchiveObserver);
+      archive = new CrowdingDistanceArchive<>(sizeOfTheFinalPopulation);
       populationSize = populationSizeWithArchive;
     }
 
-    class NSGAII extends EvolutionaryAlgorithm<DoubleSolution> {
-      private ExternalArchiveObserver<DoubleSolution> archiveObserver;
-
-      public NSGAII(
-          String name,
-          Evaluation<DoubleSolution> evaluation,
-          InitialSolutionsCreation<DoubleSolution> createInitialSolutionList,
-          Termination termination,
-          MatingPoolSelection<DoubleSolution> selection,
-          Variation<DoubleSolution> variation,
-          Replacement<DoubleSolution> replacement,
-          ExternalArchiveObserver<DoubleSolution> archiveObserver) {
-        super(
-            name,
-            evaluation,
-            createInitialSolutionList,
-            termination,
-            selection,
-            variation,
-            replacement);
-        this.archiveObserver = archiveObserver;
-      }
-
-      @Override
-      public List<DoubleSolution> getResult() {
-        if (archiveObserver != null) {
-          return archiveObserver.getArchive().getSolutionList();
-        } else {
-          return population;
-        }
-      }
-    }
-
-    NSGAII nsgaii =
-        new NSGAII(
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii =
+        new EvolutionaryAlgorithm<DoubleSolution>(
             "NSGAII",
             evaluation,
             createInitialSolutions,
@@ -267,7 +235,7 @@ public class AutoNSGAIIConfigurator {
             selection,
             variation,
             replacement,
-            boundedArchiveObserver);
+            archive);
 
     return nsgaii;
   }
