@@ -199,13 +199,13 @@ public class AutoNSGAII {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName ZDT1.pf "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult externalArchive "
                 + "--populationSize 100 "
                 + "--populationSizeWithArchive 100 "
-                + "--offspringPopulationSize 20 "
+                + "--offspringPopulationSize 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "

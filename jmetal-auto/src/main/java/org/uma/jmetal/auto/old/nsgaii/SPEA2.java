@@ -27,7 +27,13 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.Kursawe;
+import org.uma.jmetal.problem.multiobjective.Schaffer;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
@@ -35,17 +41,20 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.Arrays;
 
 public class SPEA2 {
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT1();
-    String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
+    DoubleProblem problem = new DTLZ1();
+    String referenceParetoFront = "/pareto_fronts/ZDT1.2D.pf";
+
+    //JMetalRandom.getInstance().setSeed(1);
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
-    int maxNumberOfEvaluations = 25000;
+    int maxNumberOfEvaluations = 50000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
     double crossoverProbability = 0.9;
@@ -61,7 +70,7 @@ public class SPEA2 {
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
     Variation<DoubleSolution> variation =
-            new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
+        new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
@@ -79,7 +88,7 @@ public class SPEA2 {
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
-    int tournamentSize = 2 ;
+    int tournamentSize = 2;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             tournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
@@ -89,7 +98,8 @@ public class SPEA2 {
                 new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
     */
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
+        new RankingAndDensityEstimatorReplacement<>(
+            ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm =
         new EvolutionaryAlgorithm<>(
@@ -99,19 +109,20 @@ public class SPEA2 {
             termination,
             selection,
             variation,
-            replacement, null);
+            replacement,
+            null);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("SPEA2", 80, referenceParetoFront);
-    //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
+    // ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
     //    new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
-    //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
+    //algorithm.getObservable().register(runTimeChartObserver);
+    // algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
-    //evaluation.getObservable().register(boundedArchiveObserver);
+    // evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();
 
