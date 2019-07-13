@@ -16,7 +16,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
 
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
-    this(ranking, densityEstimator, RemovalPolicy.oneShot) ;
+    this(ranking, densityEstimator, RemovalPolicy.sequential) ;
   }
 
   public RankingAndDensityEstimatorReplacement(

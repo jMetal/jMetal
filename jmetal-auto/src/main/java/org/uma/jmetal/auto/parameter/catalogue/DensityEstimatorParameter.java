@@ -4,6 +4,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.solution.Solution;
@@ -37,12 +38,14 @@ public class DensityEstimatorParameter<S extends Solution<?>> extends Categorica
   public DensityEstimator<S> getParameter() {
     DensityEstimator<S> result ;
     switch (getValue()) {
-      case "CrowdingDistance":
+      case "crowdingDistance":
         result = new CrowdingDistanceDensityEstimator<>() ;
         break;
-
+      case "knn":
+        result = new KnnDensityEstimator<>(1) ;
+        break;
       default:
-        throw new RuntimeException("Density estimatorg does not exist: " + getName());
+        throw new RuntimeException("Density estimator does not exist: " + getName());
     }
     return result;
   }

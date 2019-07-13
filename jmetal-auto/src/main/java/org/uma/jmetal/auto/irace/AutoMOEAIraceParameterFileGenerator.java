@@ -22,6 +22,8 @@ public class AutoMOEAIraceParameterFileGenerator {
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "
                 + "--selectionTournamentSize 2 "
+                + "--rankingForSelection dominanceRanking "
+                + "--densityEstimatorForSelection crowdingDistance "
                 + "--crossover SBX "
                 + "--crossoverProbability 0.9 "
                 + "--crossoverRepairStrategy bounds "
@@ -30,9 +32,13 @@ public class AutoMOEAIraceParameterFileGenerator {
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
-                + "--replacement rankingAndDensityEstimatorReplacement ").split("\\s+");
+                + "--replacement rankingAndDensityEstimatorReplacement "
+                + "--rankingForReplacement dominanceRanking "
+                + "--densityEstimatorForReplacement crowdingDistance ")
+                .split("\\s+");
 
-    AutoMOEA autoMOEA = new AutoMOEA(parameters);
+    AutoMOEA autoMOEA = new AutoMOEA();
+    autoMOEA.parseAndCheckParameters(parameters);
 
     AutoMOEAIraceParameterFileGenerator autoMOEAIraceParameterFileGenerator =
         new AutoMOEAIraceParameterFileGenerator();

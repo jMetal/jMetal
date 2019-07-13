@@ -9,6 +9,7 @@ import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;
@@ -46,36 +47,56 @@ public class AutoMOEA {
   private VariationParameter variationParameter;
   private ReplacementParameter replacementParameter;
 
-  public AutoMOEA(String[] args) {
-    fixedParameterList = parseFixedParameters(args);
-    autoConfigurableParameterList = parseAutoConfigurableParameters(args);
-  }
+  public void parseAndCheckParameters(String[] args) {
+    fixedParameterList = new ArrayList<>();
+    autoConfigurableParameterList = new ArrayList<>();
 
-  public List<Parameter<?>> parseAutoConfigurableParameters(String[] args) {
-    List<Parameter<?>> parameters = new ArrayList<>();
+    problemNameParameter = new ProblemNameParameter<>(args);
+    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
+    maximumNumberOfEvaluationsParameter =
+        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
+
+    fixedParameterList.add(problemNameParameter);
+    fixedParameterList.add(referenceFrontFilename);
+    fixedParameterList.add(maximumNumberOfEvaluationsParameter);
+
+    for (Parameter<?> parameter : fixedParameterList) {
+      parameter.parse().check();
+    }
+    populationSizeParameter = new PopulationSizeParameter(args);
 
     parseAlgorithmResult(args);
     parseCreateInitialSolutions(args);
-    parseSelectionParameter(args);
+    parseSelection(args);
     parseVariation(args);
     parseReplacement(args);
 
-    parameters.add(algorithmResultParameter);
-    parameters.add(createInitialSolutionsParameter);
-    parameters.add(variationParameter);
-    parameters.add(selectionParameter);
-    parameters.add(replacementParameter);
+    autoConfigurableParameterList.add(populationSizeParameter);
+    autoConfigurableParameterList.add(algorithmResultParameter);
+    autoConfigurableParameterList.add(createInitialSolutionsParameter);
+    autoConfigurableParameterList.add(variationParameter);
+    autoConfigurableParameterList.add(selectionParameter);
+    autoConfigurableParameterList.add(replacementParameter);
 
-    for (Parameter<?> parameter : parameters) {
+    for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
-
-    return parameters;
   }
 
   private void parseReplacement(String[] args) {
     replacementParameter =
         new ReplacementParameter(args, Arrays.asList("rankingAndDensityEstimatorReplacement"));
+    RankingParameter<?> rankingForReplacement =
+        new RankingParameter<>(
+            "rankingForReplacement", args, Arrays.asList("dominanceRanking", "strengthRanking"));
+    DensityEstimatorParameter<?> densityEstimatorForReplacement =
+        new DensityEstimatorParameter<>(
+            "densityEstimatorForReplacement", args, Arrays.asList("crowdingDistance", "knn"));
+
+    replacementParameter.addSpecificParameter(
+        "rankingAndDensityEstimatorReplacement", rankingForReplacement);
+    replacementParameter.addSpecificParameter(
+        "rankingAndDensityEstimatorReplacement", densityEstimatorForReplacement);
   }
 
   private void parseVariation(String[] args) {
@@ -121,7 +142,7 @@ public class AutoMOEA {
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
     offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100));
+        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
 
     variationParameter =
         new VariationParameter(
@@ -133,21 +154,23 @@ public class AutoMOEA {
         "differentialEvolutionVariation", differentialEvolutionCrossover);
   }
 
-  private void parseSelectionParameter(String[] args) {
+  private void parseSelection(String[] args) {
+    RankingParameter<?> rankingForSelection =
+        new RankingParameter<>(
+            "rankingForSelection", args, Arrays.asList("dominanceRanking", "strengthRanking"));
+    DensityEstimatorParameter<?> densityEstimatorForSelection =
+        new DensityEstimatorParameter<>(
+            "densityEstimatorForSelection", args, Arrays.asList("crowdingDistance", "knn"));
+
     selectionParameter =
         new SelectionParameter(
             args, Arrays.asList("tournament", "random", "differentialEvolutionSelection"));
     IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
-    //RankingParameter<DoubleSolution> ranking =
-    //    new RankingParameter<>(
-    //        "rankingForTournamentSelection", args, Arrays.asList("dominanceRanking"));
-    //DensityEstimatorParameter<DoubleSolution> densityEstimator =
-    //    new DensityEstimatorParameter<>(
-    //        "densityEstimatorForTournamentSelection", args, Arrays.asList("crowdingDistance"));
+
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
-    //selectionParameter.addSpecificParameter("tournament", ranking);
-    //selectionParameter.addSpecificParameter("tournament", densityEstimator);
+    selectionParameter.addSpecificParameter("tournament", rankingForSelection);
+    selectionParameter.addSpecificParameter("tournament", densityEstimatorForSelection);
   }
 
   private void parseCreateInitialSolutions(String[] args) {
@@ -195,11 +218,19 @@ public class AutoMOEA {
   EvolutionaryAlgorithm<DoubleSolution> create() {
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
+    // Algorithm result
     Archive<DoubleSolution> archive = null;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
       archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
+
+    // Create initial solutions
+    InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
+        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
+
+    // Variation
+    if (selectionParameter.getValue().equals("RankingAndDensityEstimator")) {}
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
@@ -208,20 +239,24 @@ public class AutoMOEA {
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
-    InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>) variationParameter.getParameter();
+
+    // Selection
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
                 variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
+    // Evaluation
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
+    // Replacement
     Replacement<DoubleSolution> replacement =
-        (Replacement<DoubleSolution>) replacementParameter.getParameter();
+        (Replacement<DoubleSolution>)
+            replacementParameter.getParameter(rankingAndCrowdingComparator);
 
+    // Variation
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
@@ -256,6 +291,8 @@ public class AutoMOEA {
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "
                 + "--selectionTournamentSize 2 "
+                + "--rankingForSelection dominanceRanking "
+                + "--densityEstimatorForSelection crowdingDistance "
                 + "--crossover SBX "
                 + "--crossoverProbability 0.9 "
                 + "--crossoverRepairStrategy bounds "
@@ -264,10 +301,13 @@ public class AutoMOEA {
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
-                + "--replacement rankingAndDensityEstimatorReplacement ")
+                + "--replacement rankingAndDensityEstimatorReplacement "
+                + "--rankingForReplacement dominanceRanking "
+                + "--densityEstimatorForReplacement crowdingDistance ")
             .split("\\s+");
 
-    AutoMOEA autoMOEA = new AutoMOEA(parameters);
+    AutoMOEA autoMOEA = new AutoMOEA();
+    autoMOEA.parseAndCheckParameters(parameters);
 
     autoMOEA.print(autoMOEA.fixedParameterList);
     autoMOEA.print(autoMOEA.autoConfigurableParameterList);

@@ -9,8 +9,10 @@ import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
+import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
@@ -37,14 +39,28 @@ public class ReplacementParameter extends CategoricalParameter<String> {
     return this;
   }
 
-  public Replacement<?> getParameter() {
+  public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
     Replacement<?> result ;
     switch(getValue()) {
       case "rankingAndDensityEstimatorReplacement":
-        Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
-        DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-        result = new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
+        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue() ;
+        String densityEstimatorName = (String) findSpecificParameter("densityEstimatorForReplacement").getValue() ;
+        Ranking<?> ranking ;
+        if (rankingName.equals("dominanceRanking")) {
+          ranking = new DominanceRanking<>();
+        } else {
+          ranking = new StrengthRanking<>() ;
+        }
+
+        DensityEstimator<?> densityEstimator ;
+        if (densityEstimatorName.equals("crowdingDistance")){
+          densityEstimator = new CrowdingDistanceDensityEstimator<>();
+        } else {
+          densityEstimator = new KnnDensityEstimator<>(1);
+        }
+
+        result = new RankingAndDensityEstimatorReplacement(ranking, densityEstimator);
 
         break ;
       default:

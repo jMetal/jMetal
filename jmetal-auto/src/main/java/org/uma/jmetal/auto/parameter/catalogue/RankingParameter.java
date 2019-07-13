@@ -4,6 +4,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
+import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
@@ -42,7 +43,9 @@ public class RankingParameter <S extends Solution<?>> extends CategoricalParamet
       case "dominanceRanking":
         result = new DominanceRanking<>() ;
         break;
-
+      case "strengthRanking":
+        result = new StrengthRanking<>() ;
+        break;
       default:
         throw new RuntimeException("Ranking does not exist: " + getName());
     }

@@ -61,22 +61,23 @@ public class AutoNSGAII {
     }
     populationSizeParameter = new PopulationSizeParameter(args);
 
-    algorithmResultParameter =
-        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
-    populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
-    algorithmResultParameter.addSpecificParameter(
-        "externalArchive", populationSizeWithArchiveParameter);
+    algorithmResult(args);
+    createInitialSolution(args);
+    selection(args);
+    variation(args);
 
-    createInitialSolutionsParameter =
-        new CreateInitialSolutionsParameter(
-            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+    autoConfigurableParameterList.add(populationSizeParameter);
+    autoConfigurableParameterList.add(algorithmResultParameter);
+    autoConfigurableParameterList.add(createInitialSolutionsParameter);
+    autoConfigurableParameterList.add(variationParameter);
+    autoConfigurableParameterList.add(selectionParameter);
 
-    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
-    IntegerParameter selectionTournamentSize =
-        new IntegerParameter("selectionTournamentSize", args, 2, 10);
-    selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
+    for (Parameter<?> parameter : autoConfigurableParameterList) {
+      parameter.parse().check();
+    }
+  }
 
+  private void variation(String[] args) {
     CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
@@ -126,18 +127,28 @@ public class AutoNSGAII {
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
+  }
 
-    autoConfigurableParameterList.add(populationSizeParameter);
+  private void selection(String[] args) {
+    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
+    IntegerParameter selectionTournamentSize =
+        new IntegerParameter("selectionTournamentSize", args, 2, 10);
+    selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
+  }
 
-    autoConfigurableParameterList.add(algorithmResultParameter);
-    // autoConfigurableParameterList.add(offspringPopulationSizeParameter);
-    autoConfigurableParameterList.add(createInitialSolutionsParameter);
-    autoConfigurableParameterList.add(variationParameter);
-    autoConfigurableParameterList.add(selectionParameter);
+  private void createInitialSolution(String[] args) {
+    createInitialSolutionsParameter =
+        new CreateInitialSolutionsParameter(
+            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+  }
 
-    for (Parameter<?> parameter : autoConfigurableParameterList) {
-      parameter.parse().check();
-    }
+  private void algorithmResult(String[] args) {
+    algorithmResultParameter =
+        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+    populationSizeWithArchiveParameter =
+        new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
+    algorithmResultParameter.addSpecificParameter(
+        "externalArchive", populationSizeWithArchiveParameter);
   }
 
   /**

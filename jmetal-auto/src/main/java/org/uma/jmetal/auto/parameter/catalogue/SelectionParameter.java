@@ -5,8 +5,17 @@ import org.uma.jmetal.auto.component.selection.impl.DifferentialEvolutionMatingP
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.auto.util.ranking.Ranking;
+import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
+import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.MultiComparator;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -30,14 +39,34 @@ public class SelectionParameter extends CategoricalParameter<String> {
     return this;
   }
 
-  public MatingPoolSelection<?> getParameter(int matingPoolSize, Comparator<DoubleSolution> comparator) {
+  public MatingPoolSelection<?> getParameter(int matingPoolSize, Comparator<?> comparator) {
     MatingPoolSelection<?> result ;
     switch(getValue()) {
       case "tournament":
         int tournamentSize =
                 (Integer) findSpecificParameter("selectionTournamentSize").getValue();
-        result = new NaryTournamentMatingPoolSelection<>(
-                tournamentSize, matingPoolSize, comparator);
+        String rankingName = (String) findSpecificParameter("rankingForSelection").getValue() ;
+        String densityEstimatorName = (String) findSpecificParameter("densityEstimatorForSelection").getValue() ;
+        Ranking<?> ranking ;
+        if (rankingName.equals("dominanceRanking")) {
+          ranking = new DominanceRanking<>();
+        } else {
+          ranking = new StrengthRanking<>() ;
+        }
+
+        DensityEstimator<?> densityEstimator ;
+        if (densityEstimatorName.equals("crowdingDistance")){
+          densityEstimator = new CrowdingDistanceDensityEstimator<>();
+        } else {
+          densityEstimator = new KnnDensityEstimator<>(1) ;
+        }
+
+        MultiComparator<?> rankingAndCrowdingComparator =
+            new MultiComparator(
+                Arrays.asList(
+                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
+        result = new NaryTournamentMatingPoolSelection(
+                tournamentSize, matingPoolSize, rankingAndCrowdingComparator);
 
         break ;
       case "random":

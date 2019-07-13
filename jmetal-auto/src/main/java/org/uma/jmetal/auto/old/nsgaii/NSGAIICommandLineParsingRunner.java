@@ -24,19 +24,19 @@ import java.util.List;
 public class NSGAIICommandLineParsingRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
-/*
-    String argumentString =  "--problemName " + "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3 " +
-            "--referenceFront " +  "DTLZ3.2D.pf   " +
-            " --algorithmResult externalArchive --populationSizeWithArchive 20 " +
-            "--crossover BLX_ALPHA --crossoverProbability 0.915 --crossoverRepairStrategy bounds " +
-            "--blxAlphaCrossoverAlphaValue 0.6778 " +
-            "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
-            "--polynomialMutationDistributionIndex 351.2327 " +
-            "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
-            "--variation crossoverAndMutationVariation --createInitialSolutions latinHypercubeSampling " ;
+    /*
+        String argumentString =  "--problemName " + "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3 " +
+                "--referenceFront " +  "DTLZ3.2D.pf   " +
+                " --algorithmResult externalArchive --populationSizeWithArchive 20 " +
+                "--crossover BLX_ALPHA --crossoverProbability 0.915 --crossoverRepairStrategy bounds " +
+                "--blxAlphaCrossoverAlphaValue 0.6778 " +
+                "--mutation polynomial --mutationProbability 0.0162 --mutationRepairStrategy random " +
+                "--polynomialMutationDistributionIndex 351.2327 " +
+                "--selection tournament --selectionTournamentSize 10 --offspringPopulationSize 1 " +
+                "--variation crossoverAndMutationVariation --createInitialSolutions latinHypercubeSampling " ;
 
-    String[] arguments = argumentString.split("\\s+") ;
-*/
+        String[] arguments = argumentString.split("\\s+") ;
+    */
     AutoNSGAIIConfigurator configurator =
         CommandLine.populateCommand(new AutoNSGAIIConfigurator(), args);
 
@@ -63,14 +63,7 @@ public class NSGAIICommandLineParsingRunner {
             .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-  /*  double idg =
-        new InvertedGenerationalDistancePlus<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) ;
-*/
-//    System.out.println(idg);
+
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
-/*
-     AlgorithmDefaultOutputData.generateMultiObjectiveAlgorithmOutputData(
-        autoNSGAII.getResult(), autoNSGAII.getTotalComputingTime());
-        */
   }
 }
