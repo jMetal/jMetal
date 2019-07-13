@@ -203,27 +203,6 @@ public class AutoMOEA {
             args, Arrays.asList("EA", "DE"));
   }
 
-  private List<Parameter<?>> parseFixedParameters(String[] args) {
-    List<Parameter<?>> parameters = new ArrayList<>();
-
-    problemNameParameter = new ProblemNameParameter<>(args);
-    populationSizeParameter = new PopulationSizeParameter(args);
-    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
-    maximumNumberOfEvaluationsParameter =
-        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
-
-    parameters.add(problemNameParameter);
-    parameters.add(referenceFrontFilename);
-    parameters.add(maximumNumberOfEvaluationsParameter);
-    parameters.add(populationSizeParameter);
-
-    for (Parameter<?> parameter : parameters) {
-      parameter.parse().check();
-    }
-
-    return parameters;
-  }
-
   /**
    * Creates an instance of NSGA-II from the parsed parameters
    *
@@ -244,7 +223,7 @@ public class AutoMOEA {
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
 
     // Variation
-    if (selectionParameter.getValue().equals("RankingAndDensityEstimator")) {}
+    //if (selectionParameter.getValue().equals("RankingAndDensityEstimator")) {}
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();

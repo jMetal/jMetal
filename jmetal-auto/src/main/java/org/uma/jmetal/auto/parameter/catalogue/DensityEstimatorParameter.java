@@ -44,7 +44,9 @@ public class DensityEstimatorParameter<S extends Solution<?>> extends Categorica
       case "knn":
         result = new KnnDensityEstimator<>(1) ;
         break;
-      default:
+      //case "hypervolumeContribution":
+        //result = new Hyper
+        default:
         throw new RuntimeException("Density estimator does not exist: " + getName());
     }
     return result;
