@@ -19,6 +19,7 @@ public class AutoMOEAIraceParameterFileGenerator {
                 + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
                 + "--createInitialSolutions random "
+                + "--algorithmType EA "
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "
                 + "--selectionTournamentSize 2 "
@@ -33,6 +34,7 @@ public class AutoMOEAIraceParameterFileGenerator {
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
                 + "--replacement rankingAndDensityEstimatorReplacement "
+                + "--removalPolicy oneShot "
                 + "--rankingForReplacement dominanceRanking "
                 + "--densityEstimatorForReplacement crowdingDistance ")
                 .split("\\s+");

@@ -42,6 +42,7 @@ public class AutoMOEA {
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
   private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
+  private StringCategoricalParameter algorithmType;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
   private ReplacementParameter replacementParameter;
@@ -66,6 +67,7 @@ public class AutoMOEA {
 
     parseAlgorithmResult(args);
     parseCreateInitialSolutions(args);
+    parseAlgorithmType(args) ;
     parseSelection(args);
     parseVariation(args);
     parseReplacement(args);
@@ -73,6 +75,7 @@ public class AutoMOEA {
     autoConfigurableParameterList.add(populationSizeParameter);
     autoConfigurableParameterList.add(algorithmResultParameter);
     autoConfigurableParameterList.add(createInitialSolutionsParameter);
+    autoConfigurableParameterList.add(algorithmType);
     autoConfigurableParameterList.add(variationParameter);
     autoConfigurableParameterList.add(selectionParameter);
     autoConfigurableParameterList.add(replacementParameter);
@@ -192,6 +195,12 @@ public class AutoMOEA {
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
+  }
+
+  private void parseAlgorithmType(String[] args) {
+    algorithmType =
+        new StringCategoricalParameter("algorithmType",
+            args, Arrays.asList("EA", "DE"));
   }
 
   private List<Parameter<?>> parseFixedParameters(String[] args) {
