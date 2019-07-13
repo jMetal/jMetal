@@ -7,6 +7,7 @@ import org.uma.jmetal.auto.component.selection.impl.DifferentialEvolutionMatingP
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
@@ -22,11 +23,15 @@ import java.util.function.Function;
 
 public class ReplacementParameter extends CategoricalParameter<String> {
   public ReplacementParameter(String args[], List<String> selectionStrategies) {
-    super("replacement", args, selectionStrategies) ;
+    super("replacement", args, selectionStrategies);
   }
 
   public CategoricalParameter<String> parse() {
     setValue(on("--replacement", getArgs(), Function.identity()));
+
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      parameter.parse().check();
+    }
 
     getSpecificParameters()
         .forEach(
@@ -40,33 +45,41 @@ public class ReplacementParameter extends CategoricalParameter<String> {
   }
 
   public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {
-    Replacement<?> result ;
-    switch(getValue()) {
+    String removalPolicy = (String) findGlobalParameter("removalPolicy").getValue();
+    Replacement<?> result;
+    switch (getValue()) {
       case "rankingAndDensityEstimatorReplacement":
-
-        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue() ;
-        String densityEstimatorName = (String) findSpecificParameter("densityEstimatorForReplacement").getValue() ;
-        Ranking<?> ranking ;
+        String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
+        String densityEstimatorName =
+            (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
+        Ranking<?> ranking;
         if (rankingName.equals("dominanceRanking")) {
           ranking = new DominanceRanking<>();
         } else {
-          ranking = new StrengthRanking<>() ;
+          ranking = new StrengthRanking<>();
         }
 
-        DensityEstimator<?> densityEstimator ;
-        if (densityEstimatorName.equals("crowdingDistance")){
+        DensityEstimator<?> densityEstimator;
+        if (densityEstimatorName.equals("crowdingDistance")) {
           densityEstimator = new CrowdingDistanceDensityEstimator<>();
         } else {
           densityEstimator = new KnnDensityEstimator<>(1);
         }
+        if (removalPolicy.equals("oneShot")) {
+          result =
+              new RankingAndDensityEstimatorReplacement(
+                  ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+        } else {
+          result =
+              new RankingAndDensityEstimatorReplacement(
+                  ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
+        }
 
-        result = new RankingAndDensityEstimatorReplacement(ranking, densityEstimator);
-
-        break ;
+        break;
       default:
-        throw new RuntimeException("Replacement component unknown: " + getValue()) ;
+        throw new RuntimeException("Replacement component unknown: " + getValue());
     }
 
-    return result ;
+    return result;
   }
 }

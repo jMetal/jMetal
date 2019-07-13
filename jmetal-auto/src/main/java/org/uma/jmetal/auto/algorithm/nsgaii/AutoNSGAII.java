@@ -38,7 +38,7 @@ public class AutoNSGAII {
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
-  private AlgorithmResultParameter algorithmResultParameter;
+  private StringCategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
   private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
@@ -144,7 +144,7 @@ public class AutoNSGAII {
 
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
-        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+        new StringCategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter(

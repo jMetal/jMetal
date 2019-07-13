@@ -16,7 +16,6 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -44,7 +43,7 @@ public class AutoNSGAIIirace {
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
-  private AlgorithmResultParameter algorithmResultParameter;
+  private StringCategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
   private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
@@ -68,7 +67,7 @@ public class AutoNSGAIIirace {
     }
 
     algorithmResultParameter =
-            new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+            new StringCategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
             new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);

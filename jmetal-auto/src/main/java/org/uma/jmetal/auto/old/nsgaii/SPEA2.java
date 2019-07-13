@@ -7,7 +7,6 @@ import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCr
 import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacementV2;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;

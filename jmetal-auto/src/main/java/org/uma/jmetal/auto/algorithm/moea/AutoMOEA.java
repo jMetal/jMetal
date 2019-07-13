@@ -9,7 +9,6 @@ import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;
@@ -38,7 +37,7 @@ public class AutoMOEA {
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
-  private AlgorithmResultParameter algorithmResultParameter;
+  private StringCategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
   private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
@@ -86,6 +85,10 @@ public class AutoMOEA {
   private void parseReplacement(String[] args) {
     replacementParameter =
         new ReplacementParameter(args, Arrays.asList("rankingAndDensityEstimatorReplacement"));
+    StringCategoricalParameter removalPolicy =
+        new StringCategoricalParameter(
+            "removalPolicy", args, Arrays.asList("sequential", "oneShot"));
+
     RankingParameter<?> rankingForReplacement =
         new RankingParameter<>(
             "rankingForReplacement", args, Arrays.asList("dominanceRanking", "strengthRanking"));
@@ -93,6 +96,7 @@ public class AutoMOEA {
         new DensityEstimatorParameter<>(
             "densityEstimatorForReplacement", args, Arrays.asList("crowdingDistance", "knn"));
 
+    replacementParameter.addGlobalParameter(removalPolicy);
     replacementParameter.addSpecificParameter(
         "rankingAndDensityEstimatorReplacement", rankingForReplacement);
     replacementParameter.addSpecificParameter(
@@ -181,7 +185,8 @@ public class AutoMOEA {
 
   private void parseAlgorithmResult(String[] args) {
     algorithmResultParameter =
-        new AlgorithmResultParameter(args, Arrays.asList("externalArchive", "population"));
+        new StringCategoricalParameter(
+            "algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);

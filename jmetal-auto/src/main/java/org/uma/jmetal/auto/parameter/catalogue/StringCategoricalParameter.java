@@ -6,15 +6,15 @@ import org.uma.jmetal.auto.parameter.Parameter;
 import java.util.List;
 import java.util.function.Function;
 
-public class AlgorithmResultParameter extends CategoricalParameter<String> {
+public class StringCategoricalParameter extends CategoricalParameter<String> {
 
-  public AlgorithmResultParameter(String args[], List<String> validValues) {
-    super("algorithmResult", args, validValues) ;
+  public StringCategoricalParameter(String name, String args[], List<String> validValues) {
+    super(name, args, validValues) ;
   }
 
   @Override
   public CategoricalParameter<String> parse() {
-    setValue(on("--algorithmResult", getArgs(), Function.identity()));
+    setValue(on("--" + getName(), getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();

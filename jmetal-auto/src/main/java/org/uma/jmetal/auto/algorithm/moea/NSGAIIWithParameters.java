@@ -51,6 +51,7 @@ public class NSGAIIWithParameters {
             + "--mutationRepairStrategy bounds "
             + "--polynomialMutationDistributionIndex 20.0 "
             + "--replacement rankingAndDensityEstimatorReplacement "
+            + "--removalPolicy oneShot "
             + "--rankingForReplacement dominanceRanking "
             + "--densityEstimatorForReplacement crowdingDistance ")
             .split("\\s+");

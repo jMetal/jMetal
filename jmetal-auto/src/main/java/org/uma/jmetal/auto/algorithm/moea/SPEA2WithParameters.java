@@ -50,6 +50,7 @@ public class SPEA2WithParameters {
             + "--mutationRepairStrategy bounds "
             + "--polynomialMutationDistributionIndex 20.0 "
             + "--replacement rankingAndDensityEstimatorReplacement "
+            + "--removalPolicy sequential "
             + "--rankingForReplacement strengthRanking "
             + "--densityEstimatorForReplacement knn ")
             .split("\\s+");
