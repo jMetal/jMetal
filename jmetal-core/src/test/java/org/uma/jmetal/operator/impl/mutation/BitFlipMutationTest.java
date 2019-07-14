@@ -9,6 +9,7 @@ import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -46,7 +47,7 @@ public class BitFlipMutationTest {
     assertEquals(mutationProbability, mutation.getMutationProbability(), EPSILON) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
     BitFlipMutation mutation = new BitFlipMutation(0.1) ;
 

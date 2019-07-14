@@ -6,6 +6,8 @@ import org.junit.rules.ExpectedException;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -29,8 +31,8 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("Parameter is null"));
+    exception.expect(NullParameterException.class);
+    exception.expectMessage(containsString("The parameter is null"));
 
     selection = new DifferentialEvolutionSelection();
 
@@ -39,8 +41,8 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsHasOneSolution() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The population has less than four solutions: " + 1));
+    exception.expect(InvalidConditionException.class);
+    exception.expectMessage(containsString("The population has less than 4 solutions: " + 1));
 
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
@@ -52,8 +54,8 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The population has less than four solutions: " + 0));
+    exception.expect(InvalidConditionException.class);
+    exception.expectMessage(containsString("The population has less than 4 solutions: " + 0));
 
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
@@ -65,7 +67,7 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsNegative() {
-    exception.expect(JMetalException.class);
+    exception.expect(InvalidConditionException.class);
     exception.expectMessage(containsString("Index value invalid: " + -1));
 
     selection = new DifferentialEvolutionSelection();
@@ -80,7 +82,7 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsNotIndicated() {
-    exception.expect(JMetalException.class);
+    exception.expect(InvalidConditionException.class);
     exception.expectMessage(containsString("Index value invalid: " + Integer.MIN_VALUE));
 
     selection = new DifferentialEvolutionSelection();
@@ -94,7 +96,7 @@ public class DifferentialEvolutionSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsHigherThanTheSolutionListLength() {
-    exception.expect(JMetalException.class);
+    exception.expect(InvalidConditionException.class);
     exception.expectMessage(containsString("Index value invalid: " + 5));
 
     selection = new DifferentialEvolutionSelection();

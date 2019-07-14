@@ -57,7 +57,7 @@ public class DifferentialEvolutionSelection
         "Index value invalid: " + solutionListIndex);
     Check.isTrue(
         solutionList.size() >= numberOfSolutionsToSelect,
-        "The population has less than " + numberOfSolutionsToSelect + " solution: " + solutionList.size());
+        "The population has less than " + (numberOfSolutionsToSelect + 1) + " solutions: " + solutionList.size());
 
     List<Integer> indexList = new ArrayList<>(numberOfSolutionsToSelect);
 
