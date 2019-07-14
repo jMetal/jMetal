@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -59,7 +60,7 @@ public class DifferentialEvolutionCrossoverTest {
 		}, (a, b) -> {
 			custom2Uses[0]++;
 			return new Random().nextDouble() * (b - a) + a;
-		});
+		}, new RepairDoubleSolutionWithBoundValue());
 		crossover2.setCurrentSolution(currentSolution);
 		crossover2.execute(parentSolutions);
 		assertTrue("Default random generator used", defaultUses[0] == 0);

@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
@@ -41,9 +43,29 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private BoundedRandomGenerator<Integer> jRandomGenerator;
   private BoundedRandomGenerator<Double> crRandomGenerator;
 
+  private RepairDoubleSolution solutionRepair;
+
   /** Constructor */
   public DifferentialEvolutionCrossover() {
     this(DEFAULT_CR, DEFAULT_F, DEFAULT_K, DEFAULT_DE_VARIANT);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param cr
+   * @param f
+   * @param variant
+   */
+  public DifferentialEvolutionCrossover(
+      double cr, double f, String variant, RepairDoubleSolution solutionRepair) {
+    this(
+        cr,
+        f,
+        variant,
+        (a, b) -> JMetalRandom.getInstance().nextInt(a, b),
+        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b),
+        solutionRepair);
   }
 
   /**
@@ -59,7 +81,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         f,
         variant,
         (a, b) -> JMetalRandom.getInstance().nextInt(a, b),
-        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b),
+        new RepairDoubleSolutionWithBoundValue());
   }
 
   /**
@@ -76,7 +99,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         f,
         variant,
         BoundedRandomGenerator.fromDoubleToInteger(randomGenerator),
-        BoundedRandomGenerator.bound(randomGenerator));
+        BoundedRandomGenerator.bound(randomGenerator),
+        new RepairDoubleSolutionWithBoundValue());
   }
 
   /**
@@ -93,7 +117,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       double f,
       String variant,
       BoundedRandomGenerator<Integer> jRandomGenerator,
-      BoundedRandomGenerator<Double> crRandomGenerator) {
+      BoundedRandomGenerator<Double> crRandomGenerator,
+      RepairDoubleSolution solutionRepair) {
     this.cr = cr;
     this.f = f;
     this.k = DEFAULT_K;
@@ -101,6 +126,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
     this.jRandomGenerator = jRandomGenerator;
     this.crRandomGenerator = crRandomGenerator;
+    this.solutionRepair = solutionRepair;
   }
 
   /** Constructor */
@@ -166,12 +192,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
                       * (parentSolutions.get(0).getVariable(j)
                           - parentSolutions.get(1).getVariable(j));
 
-          if (value < child.getLowerBound(j)) {
-            value = child.getLowerBound(j);
-          }
-          if (value > child.getUpperBound(j)) {
-            value = child.getUpperBound(j);
-          }
+          value = solutionRepair.repairSolutionVariableValue(value, child.getLowerBound(j), child.getUpperBound(j)) ;
+
           child.setVariable(j, value);
         } else {
           double value;
@@ -189,12 +211,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
                       * (parentSolutions.get(0).getVariable(j)
                           - parentSolutions.get(1).getVariable(j));
 
-          if (value < child.getLowerBound(j)) {
-            value = child.getLowerBound(j);
-          }
-          if (value > child.getUpperBound(j)) {
-            value = child.getUpperBound(j);
-          }
+          value = solutionRepair.repairSolutionVariableValue(value, child.getLowerBound(j), child.getUpperBound(j)) ;
 
           child.setVariable(j, value);
         } else {
@@ -209,19 +226,12 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         double value;
         value =
             currentSolution.getVariable(j)
-                + k
-                    * (parentSolutions.get(2).getVariable(j)
-                        - currentSolution.getVariable(j))
+                + k * (parentSolutions.get(2).getVariable(j) - currentSolution.getVariable(j))
                 + f
                     * (parentSolutions.get(0).getVariable(j)
                         - parentSolutions.get(1).getVariable(j));
 
-        if (value < child.getLowerBound(j)) {
-          value = child.getLowerBound(j);
-        }
-        if (value > child.getUpperBound(j)) {
-          value = child.getUpperBound(j);
-        }
+        value = solutionRepair.repairSolutionVariableValue(value, child.getLowerBound(j), child.getUpperBound(j)) ;
 
         child.setVariable(j, value);
       }
@@ -231,19 +241,12 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
           double value;
           value =
               currentSolution.getVariable(j)
-                  + k
-                      * (parentSolutions.get(2).getVariable(j)
-                          - currentSolution.getVariable(j))
+                  + k * (parentSolutions.get(2).getVariable(j) - currentSolution.getVariable(j))
                   + f
                       * (parentSolutions.get(0).getVariable(j)
                           - parentSolutions.get(1).getVariable(j));
 
-          if (value < child.getLowerBound(j)) {
-            value = child.getLowerBound(j);
-          }
-          if (value > child.getUpperBound(j)) {
-            value = child.getUpperBound(j);
-          }
+          value = solutionRepair.repairSolutionVariableValue(value, child.getLowerBound(j), child.getUpperBound(j)) ;
 
           child.setVariable(j, value);
         } else {
@@ -258,19 +261,12 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
           double value;
           value =
               currentSolution.getVariable(j)
-                  + k
-                      * (parentSolutions.get(2).getVariable(j)
-                          - currentSolution.getVariable(j))
+                  + k * (parentSolutions.get(2).getVariable(j) - currentSolution.getVariable(j))
                   + f
                       * (parentSolutions.get(0).getVariable(j)
                           - parentSolutions.get(1).getVariable(j));
 
-          if (value < child.getLowerBound(j)) {
-            value = child.getLowerBound(j);
-          }
-          if (value > child.getUpperBound(j)) {
-            value = child.getUpperBound(j);
-          }
+          value = solutionRepair.repairSolutionVariableValue(value, child.getLowerBound(j), child.getUpperBound(j)) ;
 
           child.setVariable(j, value);
         } else {
@@ -303,6 +299,6 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
   @Override
   public double getCrossoverProbability() {
-    return 1.0 ;
+    return 1.0;
   }
 }
