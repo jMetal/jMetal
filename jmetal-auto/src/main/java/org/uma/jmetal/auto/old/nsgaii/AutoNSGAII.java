@@ -70,12 +70,13 @@ public class AutoNSGAII {
 
     System.out.println("Evals: " + autoNSGAII.getNumberOfEvaluations()) ;
 
+    /*
     if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
       Collection<Observer<DoubleSolution>> observers = autoNSGAII.getEvaluation().getObservable().getObservers() ;
       ExternalArchiveObserver<DoubleSolution> externalArchiveObserver = (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
       autoNSGAII.updatePopulation(externalArchiveObserver.getArchive().getSolutionList());
     }
-
+*/
     String referenceFrontFile = configurator.getReferenceParetoFront() ;
     Front referenceFront = new ArrayFront(referenceFrontFile);
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
