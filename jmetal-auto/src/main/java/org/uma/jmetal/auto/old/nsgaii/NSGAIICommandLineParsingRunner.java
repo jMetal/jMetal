@@ -43,6 +43,7 @@ public class NSGAIICommandLineParsingRunner {
     EvolutionaryAlgorithm<DoubleSolution> autoNSGAII = configurator.configureAndGetAlgorithm();
     autoNSGAII.run();
 
+    /*
     if (autoNSGAII.getEvaluation().getObservable().numberOfRegisteredObservers() == 1) {
       Collection<Observer<DoubleSolution>> observers =
           autoNSGAII.getEvaluation().getObservable().getObservers();
@@ -50,7 +51,7 @@ public class NSGAIICommandLineParsingRunner {
           (ExternalArchiveObserver<DoubleSolution>) observers.toArray()[0];
       autoNSGAII.updatePopulation(externalArchiveObserver.getArchive().getSolutionList());
     }
-
+    */
     Front referenceFront = new ArrayFront(configurator.getReferenceParetoFront());
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
     Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);

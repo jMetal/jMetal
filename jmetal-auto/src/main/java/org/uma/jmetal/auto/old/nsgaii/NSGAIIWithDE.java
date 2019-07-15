@@ -82,7 +82,7 @@ public class NSGAIIWithDE {
     // algorithm.getObservable().register(runTimeChartObserver);
     // algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
-    evaluation.getObservable().register(boundedArchiveObserver);
+    //evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();
 
