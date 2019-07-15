@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.wasfga;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
+public class WASFGAMeasuresRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -47,16 +47,15 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    
+
     referencePoint = new ArrayList<>();
-    referencePoint.add(0.0);
-		referencePoint.add(0.0);
-		referencePoint.add(0.0);
+    referencePoint.add(0.6);
+    referencePoint.add(0.4);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -73,14 +72,9 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
     				problem,
 						100,
 						250,
-						crossover,
-						mutation,
-						selection,
-						new SequentialSolutionListEvaluator<DoubleSolution>(),
-						epsilon,
-						referencePoint,
-		"MOEAD_Weights/W3D_100.dat") ;
-
+						crossover, mutation, selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
+            epsilon,
+            referencePoint) ;
     
     /* Measure management */
     MeasureManager measureManager = ((WASFGAMeasures<DoubleSolution>) algorithm).getMeasureManager();

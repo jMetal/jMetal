@@ -1,29 +1,36 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.WFGHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
 
 /**
- * Class for configuring and running the SMPSO algorithm (parallel version)
+ * Class for configuring and running the SMPSO algorithm using an HypervolumeArchive, i.e, the
+ * SMPSOhv algorithm described in:
+ * A.J Nebro, J.J. Durillo, C.A. Coello Coello. Analysis of Leader Selection Strategies in a
+ * Multi-Objective Particle Swarm Optimizer. 2013 IEEE Congress on Evolutionary Computation. June 2013
+ * DOI: 10.1109/CEC.2013.6557955
+ *
+ * This is a variant using the WFG Hypervolume implementation
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
-public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
+public class SMPSOHv2Runner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
@@ -31,13 +38,12 @@ public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.ParallelSMPSORunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.smpso.SMPSOHvRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
-    SolutionListEvaluator<DoubleSolution> evaluator ;
 
     String referenceParetoFront = "" ;
 
@@ -48,34 +54,34 @@ public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      //problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+      //referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ1.3D.pf" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    BoundedArchive<DoubleSolution> archive =
+        new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>()) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
-
     algorithm = new SMPSOBuilder(problem, archive)
-            .setMutation(mutation)
-            .setMaxIterations(250)
-            .setSwarmSize(100)
-            .setSolutionListEvaluator(evaluator)
-            .build();
+        .setMutation(mutation)
+        .setMaxIterations(250)
+        .setSwarmSize(100)
+        .setRandomGenerator(new MersenneTwisterGenerator())
+        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+        .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute();
+        .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = ((SMPSO)algorithm).getResult();
     long computingTime = algorithmRunner.getComputingTime();
-
-    evaluator.shutdown();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

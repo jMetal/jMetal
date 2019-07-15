@@ -1,7 +1,7 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.wasfga;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
+import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -9,28 +9,22 @@ import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.runner.AlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.util.*;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class for configuring and running the SPEA2 algorithm (binary encoding)
- *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
-
-public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
+public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
+   * @throws JMetalException
+   * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.SPEA2BinaryRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.WASFGA.WASFGARunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     BinaryProblem problem;
@@ -38,8 +32,8 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
     CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
     SelectionOperator<List<BinarySolution>, BinarySolution> selection;
-
     String referenceParetoFront = "" ;
+    List<Double> referencePoint = null;
 
     String problemName ;
     if (args.length == 1) {
@@ -48,29 +42,34 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.OneZeroMax";
-      referenceParetoFront = "" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT5";
     }
 
-    problem = (BinaryProblem)ProblemUtils.<BinarySolution> loadProblem(problemName);
+    problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
+    
+    referencePoint = new ArrayList<>();
+    referencePoint.add(10.0);
+    referencePoint.add(4.0);
 
     double crossoverProbability = 0.9 ;
     crossover = new SinglePointCrossover(crossoverProbability) ;
 
-    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection<BinarySolution>(new RankingAndCrowdingDistanceComparator<BinarySolution>());
+    selection = new BinaryTournamentSelection<BinarySolution>() ;
 
-    algorithm = new SPEA2Builder<>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxIterations(250)
-        .setPopulationSize(100)
-        .build() ;
+    double epsilon = 0.01 ;
+    algorithm = new WASFGA<BinarySolution>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<BinarySolution>(),epsilon, referencePoint) ;
 
-    new AlgorithmRunner.Executor(algorithm).execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
-    List<BinarySolution> population = algorithm.getResult();
+    List<BinarySolution> population = algorithm.getResult() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
+
+    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {

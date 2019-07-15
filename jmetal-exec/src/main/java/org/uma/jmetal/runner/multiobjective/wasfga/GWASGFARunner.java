@@ -1,7 +1,7 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.wasfga;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
+import org.uma.jmetal.algorithm.multiobjective.gwasfga.GWASFGA;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -13,24 +13,18 @@ import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-/**
- /**
- * Class for configuring and running the SPEA2 algorithm
- *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
-public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
+public class GWASGFARunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
+   * @throws JMetalException
+   * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.ParallelSPEA2Runner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.WASFGA.GWASGFARunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -38,8 +32,6 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    SolutionListEvaluator<DoubleSolution> evaluator ;
-
     String referenceParetoFront = "" ;
 
     String problemName ;
@@ -53,7 +45,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -65,23 +57,15 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
-
-    algorithm = new SPEA2Builder<DoubleSolution>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxIterations(250)
-        .setPopulationSize(100)
-        .setSolutionListEvaluator(evaluator)
-        .build() ;
+    double epsilon = 0.01 ;
+    algorithm = new GWASFGA<DoubleSolution>(problem, 100, 250, crossover, mutation, selection,
+            new SequentialSolutionListEvaluator<DoubleSolution>(),epsilon) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+            .execute() ;
 
-    List<DoubleSolution> population =algorithm.getResult();
-
+    List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
-
-    evaluator.shutdown();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

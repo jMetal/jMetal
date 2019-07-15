@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
@@ -21,12 +21,12 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADSTMRunner extends AbstractAlgorithmRunner {
+public class MOEADRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.MOEADRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.moead.MOEADRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
@@ -56,18 +56,17 @@ public class MOEADSTMRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADSTM)
-        .setCrossover(crossover)
-        .setMutation(mutation)
-        .setMaxEvaluations(150000)
-        .setPopulationSize(300)
-        .setResultPopulationSize(300)
-        .setNeighborhoodSelectionProbability(0.9)
-        .setMaximumNumberOfReplacedSolutions(2)
-        .setNeighborSize(20)
-        .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory("MOEAD_Weights")
-        .build() ;
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
+            .setCrossover(crossover)
+            .setMutation(mutation)
+            .setMaxEvaluations(150000)
+            .setPopulationSize(300)
+            .setResultPopulationSize(100)
+            .setNeighborhoodSelectionProbability(0.9)
+            .setMaximumNumberOfReplacedSolutions(2)
+            .setNeighborSize(20)
+            .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+            .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
@@ -8,9 +8,9 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 
@@ -18,16 +18,18 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D algorithm
+ * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in:
+ * An Improved epsilon-constrained Method in MOEA/D for CMOPs with Large Infeasible Regions * Fan, Z., Li, W.,
+ * Cai, X. et al. Soft Comput (2019). https://doi.org/10.1007/s00500-019-03794-x
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
+public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.MOEADRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.MOEADIEpsilon problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
@@ -43,8 +45,8 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Tanaka.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP2";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LIRCMOP2.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -57,15 +59,14 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)
+    algorithm = new MOEADBuilder(problem, Variant.MOEADIEPSILON)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(150000)
+            .setMaxEvaluations(300000)
             .setPopulationSize(300)
-            .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
-            .setNeighborSize(20)
+            .setNeighborSize(30)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
             .setDataDirectory("MOEAD_Weights")
             .build() ;

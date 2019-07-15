@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
@@ -27,9 +27,9 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Usage: three options
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner problemName
-   *        - org.uma.jmetal.runner.multiobjective.NSGAIIIRunner problemName paretoFrontFile
+   *        - org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner
+   *        - org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner problemName
+   *        - org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIRunner problemName paretoFrontFile
    */
   public static void main(String[] args) throws JMetalException {
 	    Problem<DoubleSolution> problem;

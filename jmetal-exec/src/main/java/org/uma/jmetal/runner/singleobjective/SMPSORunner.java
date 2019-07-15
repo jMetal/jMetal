@@ -32,7 +32,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.SMPSORunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.smpso.SMPSORunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
