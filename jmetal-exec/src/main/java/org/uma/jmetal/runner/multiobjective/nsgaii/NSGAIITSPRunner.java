@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -34,7 +34,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.NSGAIITSPRunner problemName [referenceFront]
+   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
     JMetalRandom.getInstance().setSeed(100L);

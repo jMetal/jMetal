@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -9,39 +9,53 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
+import org.uma.jmetal.problem.multiobjective.cec2015OptBigDataCompetition.BigOpt2015;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm to solve the Ebes problem
+ * Class for configuring and running the NSGA-II algorithm to solve a problem of the CEC 2015
+ * Big Optimization competition
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIEbesRunner extends AbstractAlgorithmRunner {
+
+public class NSGAIIBigDataRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException
+   * @throws java.io.IOException
+   * @throws SecurityException
+   * @throws ClassNotFoundException
    * Invoking command:
-    java org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIBigDataRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args)
+      throws JMetalException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
+      InvocationTargetException, InstantiationException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
 
-    problem = new Ebes("ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D", "ENS"}) ;
+    String instanceName ;
+
+    if (args.length == 1) {
+      instanceName = args[0] ;
+    } else {
+      instanceName = "D12" ;
+    }
+
+    problem = new BigOpt2015(instanceName) ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -53,10 +67,10 @@ public class NSGAIIEbesRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int populationSize = 100 ;
+    int populationSize = 20 ;
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
+        .setMaxEvaluations(50000)
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -65,11 +79,14 @@ public class NSGAIIEbesRunner extends AbstractAlgorithmRunner {
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
+    new SolutionListOutput(population)
+        .setSeparator("\t")
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .print();
+
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
-    }
   }
 }

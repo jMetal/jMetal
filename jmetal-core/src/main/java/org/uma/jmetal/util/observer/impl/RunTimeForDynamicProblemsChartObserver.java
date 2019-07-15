@@ -30,11 +30,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
    */
   public RunTimeForDynamicProblemsChartObserver(String legend, int delay) {
     chart = new ChartForDynamicProblemsContainer<S>(legend, delay) ;
-    try {
-      chart.setFrontChart(0, 1, null);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    chart.setFrontChart(0, 1);
     chart.initChart();
   }
 

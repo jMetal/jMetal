@@ -11,7 +11,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilder;
@@ -44,7 +44,7 @@ public class RNSGAIIConstraintRunner extends AbstractAlgorithmRunner {
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-    java org.uma.jmetal.runner.multiobjective.RNSGAIIRunner problemName [referenceFront]
+    java org.uma.jmetal.runner.multiobjective.nsgaii.RNSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;

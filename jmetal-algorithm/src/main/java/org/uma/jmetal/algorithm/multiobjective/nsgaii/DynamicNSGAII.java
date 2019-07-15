@@ -128,44 +128,4 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
   public Observable<Map<String, Object>> getObservable() {
     return observable;
   }
-
-  /**
-   * main() method to run the algorithm as a process
-   *
-   * @param args
-   */
-  public static void main(String[] args) {
-    DynamicProblem<DoubleSolution, Integer> problem = new FDA2();
-
-    // STEP 2. Create the algorithm
-    CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(0.9, 20.0);
-    MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
-        new BinaryTournamentSelection<DoubleSolution>();
-
-    DynamicAlgorithm<List<DoubleSolution>> algorithm =
-        new DynamicNSGAII<DoubleSolution>(
-            problem,
-            25000,
-            100,
-            100,
-            100,
-            crossover,
-            mutation,
-            selection,
-            new SequentialSolutionListEvaluator<>(),
-            new DefaultRestartStrategy<>(
-                new RemoveNRandomSolutions<>(10), new CreateNRandomSolutions<>()),
-            new DefaultObservable<>(""));
-
-    //EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeForDynamicProblemsChartObserver<>("Dynamic NSGA-II", 80);
-
-    //algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
-
-    algorithm.run();
-  }
 }

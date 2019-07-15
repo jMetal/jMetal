@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -32,7 +32,7 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException
    * @throws ClassNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAIIIntegerRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIIntegerRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws FileNotFoundException {
     Problem<IntegerSolution> problem;

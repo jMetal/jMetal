@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DNSGAII;

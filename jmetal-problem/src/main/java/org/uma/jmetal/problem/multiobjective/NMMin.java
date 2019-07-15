@@ -38,6 +38,7 @@ public class NMMin extends AbstractIntegerProblem {
     }
 
     setVariableBounds(lowerLimit, upperLimit);
+    int a = 4 ;
   }
 
   /** Evaluate() method */

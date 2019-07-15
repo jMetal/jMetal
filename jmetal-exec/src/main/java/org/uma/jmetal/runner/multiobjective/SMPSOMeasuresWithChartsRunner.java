@@ -31,7 +31,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
   public static void main(String[] args)
           throws JMetalException, InterruptedException, IOException {

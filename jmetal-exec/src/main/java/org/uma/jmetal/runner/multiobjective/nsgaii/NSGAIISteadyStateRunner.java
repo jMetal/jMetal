@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -12,23 +12,23 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.runner.AlgorithmRunner;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.*;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the NSGA-II algorithm (parallel version)
+ * Class to configure and run the NSGA-II (steady state version) algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
+public class NSGAIISteadyStateRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.ParallelNSGAIIRunner problemName [referenceFront]
+   * @throws JMetalException
+   * @throws FileNotFoundException Invoking command:
+   *                               java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIISteadyStateRunner problemName [referenceFront]
    */
+
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
@@ -36,9 +36,9 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
+    String problemName;
     String referenceParetoFront = "";
 
-    String problemName;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
@@ -61,26 +61,20 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
-    SolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(8, problem);
-
-    int populationSize = 100;
-    NSGAIIBuilder<DoubleSolution> builder =
-        new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
-            .setSolutionListEvaluator(evaluator);
+            .setMatingPoolSize(2)
+            .setOffspringPopulationSize(1)
+            .setVariant(NSGAIIBuilder.NSGAIIVariant.SteadyStateNSGAII)
+            .build();
 
-    algorithm = builder.build();
-
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
-
-    builder.getSolutionListEvaluator().shutdown();
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute();
 
     List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
-
-    evaluator.shutdown();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

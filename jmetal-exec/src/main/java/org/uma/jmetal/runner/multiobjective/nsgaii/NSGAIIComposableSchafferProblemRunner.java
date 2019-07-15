@@ -1,57 +1,53 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII45;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.runner.AlgorithmRunner;
+import org.uma.jmetal.problem.doubleproblem.impl.ComposableDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.*;
+import org.uma.jmetal.util.AbstractAlgorithmRunner;
+import org.uma.jmetal.runner.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the implementation of the NSGA-II algorithm included
- * in {@link NSGAII45}
+ * Class to configure and run the NSGA-II algorithm to solve the
+ * {@link org.uma.jmetal.problem.multiobjective.Schaffer} problem, which is defined dynamically by
+ * using the {@link ComposableDoubleProblem} class.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAII45Runner extends AbstractAlgorithmRunner {
+public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAII45Runner problemName [referenceFront]
+    java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
+    ComposableDoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Schaffer.pf" ;
 
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
-    }
-
-    problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = new ComposableDoubleProblem()
+        .setName("Schaffer")
+        .addVariable(-10, 10)
+        .addVariable(-10, 10)
+        .addFunction((x) -> x[0] * x[0])
+        .addFunction((x) -> (x[0] - 2.0) * (x[0] - 2.0));
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
@@ -61,13 +57,16 @@ public class NSGAII45Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>(
+        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAII45<DoubleSolution>(problem, 25000, 100, crossover, mutation,
-            selection, new SequentialSolutionListEvaluator<DoubleSolution>()) ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, 100)
+        .setSelectionOperator(selection)
+        .setMaxEvaluations(25000)
+        .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+        .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;

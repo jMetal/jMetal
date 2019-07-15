@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -28,7 +28,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException Invoking command:
-   *                               java org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
+   *                               java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;

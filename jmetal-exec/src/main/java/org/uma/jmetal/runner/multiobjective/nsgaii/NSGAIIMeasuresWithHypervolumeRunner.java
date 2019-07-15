@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -10,9 +10,6 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.Epsilon;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -29,15 +26,14 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm (variant with measures) getting the value of quality indicators of
- * each iteration.
+ * Class to configure and run the NSGA-II algorithm (variant with measures)
  */
-public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmRunner {
+public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
   public static void main(String[] args)
       throws JMetalException, InterruptedException, FileNotFoundException {
@@ -86,10 +82,10 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
-            .<List<DoubleSolution>>getPushMeasure("currentPopulation");
+    BasicMeasure<Double> hypervolumeMeasure =
+            (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("hypervolume");
 
-    solutionListMeasure.register(new Listener(referenceParetoFront));
+    hypervolumeMeasure.register(new Listener());
     /* End of measure management */
 
     Thread algorithmThread = new Thread(algorithm) ;
@@ -108,25 +104,12 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
     }
   }
 
-  private static class Listener implements MeasureListener<List<DoubleSolution>> {
-    private static int counter = 1 ;
-
-    ArrayFront referenceParetoFront ;
-
-    public Listener(String referenceParetoFrontFile) throws FileNotFoundException {
-      referenceParetoFront = new ArrayFront(referenceParetoFrontFile) ;
+  private static class Listener implements MeasureListener<Double> {
+    private static int counter = 0 ;
+    @Override synchronized public void measureGenerated(Double value) {
+      if ((counter++ % 10 == 0)) {
+        System.out.println("Hypervolume: " + value) ;
+      }
     }
-
-    @Override synchronized public void measureGenerated(List<DoubleSolution> solutionList) {
-      QualityIndicator<List<DoubleSolution>, Double> epsilon =
-              new Epsilon<DoubleSolution>(referenceParetoFront) ;
-      QualityIndicator<List<DoubleSolution>, Double> hv =
-              new PISAHypervolume<>(referenceParetoFront) ;
-
-      System.out.println("Iteration: " + counter +
-              ". Epsilon: " + epsilon.evaluate(solutionList) + ". Hypervolume: " + hv.evaluate(solutionList)) ;
-      counter ++ ;
-    }
-
   }
 }

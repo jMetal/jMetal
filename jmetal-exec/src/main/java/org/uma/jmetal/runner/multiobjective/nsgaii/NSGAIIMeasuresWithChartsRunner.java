@@ -1,4 +1,4 @@
-package org.uma.jmetal.runner.multiobjective;
+package org.uma.jmetal.runner.multiobjective.nsgaii;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -31,7 +31,7 @@ import java.util.List;
 public class NSGAIIMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.NSGAIIMeasuresRunner
+   * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner
    *                           problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, InterruptedException, IOException {
