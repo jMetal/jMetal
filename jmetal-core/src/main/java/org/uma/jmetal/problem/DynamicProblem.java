@@ -13,7 +13,9 @@ import org.uma.jmetal.util.observer.Observer;
  * @author Antonio J. Nebro <ajnebro@uma.es>
  */
 public interface DynamicProblem<S extends Solution<?>, D>
-    extends Problem<S>, Observer<D> {
+    extends Problem<S> {
+
+  void update(D value) ;
 
   boolean hasChanged() ;
   void setChanged() ;
