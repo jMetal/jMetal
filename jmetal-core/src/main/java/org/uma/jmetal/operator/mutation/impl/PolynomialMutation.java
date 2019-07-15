@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -81,11 +82,8 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
       double distributionIndex,
       RepairDoubleSolution solutionRepair,
       RandomGenerator<Double> randomGenerator) {
-    if (mutationProbability < 0) {
-      throw new JMetalException("Mutation probability is negative: " + mutationProbability);
-    } else if (distributionIndex < 0) {
-      throw new JMetalException("Distribution index is negative: " + distributionIndex);
-    }
+    Check.isValidProbability(mutationProbability);
+    Check.isTrue(distributionIndex >= 0, "Distribution index is negative: " + distributionIndex);
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
     this.solutionRepair = solutionRepair;
@@ -113,21 +111,19 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
-    if (null == solution) {
-      throw new JMetalException("Null parameter");
-    }
+    Check.isNotNull(solution);
 
-    doMutation(mutationProbability, solution);
+    doMutation(solution);
     return solution;
   }
 
   /** Perform the mutation operation */
-  private void doMutation(double probability, DoubleSolution solution) {
+  private void doMutation(DoubleSolution solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      if (randomGenerator.getRandomValue() <= probability) {
+      if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = solution.getVariable(i);
         yl = solution.getLowerBound(i);
         yu = solution.getUpperBound(i);
