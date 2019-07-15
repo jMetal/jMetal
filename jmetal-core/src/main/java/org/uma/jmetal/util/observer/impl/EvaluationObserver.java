@@ -7,7 +7,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import java.util.Map;
 
 /**
- * This observer prints the current evaluation number of an algorithm. It requires a pair
+ * This observer prints the current evaluation number of an algorithm. It expects a pair
  * (EVALUATIONS, int) in the map used in the update() method.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -18,9 +18,8 @@ public class EvaluationObserver implements Observer<Map<String, Object>> {
 
   /**
    * Constructor
-   * value.
+   * @param frequency Print frequency in term of times the update method has been invoked
    */
-
   public EvaluationObserver(Integer frequency) {
     this.frequency = frequency ;
   }

@@ -8,6 +8,12 @@ import org.uma.jmetal.util.archive.Archive;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This observer add the solutions of population to an archive. It expects a pair
+ * (EVALUATIONS, int) in the map used in the update() method.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
 public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
 
   private Archive<S> archive ;
