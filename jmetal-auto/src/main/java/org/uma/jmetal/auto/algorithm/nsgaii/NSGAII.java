@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.old.nsgaii;
+package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
@@ -14,15 +14,15 @@ import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
+import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
@@ -35,16 +35,15 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 import java.util.Arrays;
 
-public class SPEA2 {
+public class NSGAII {
   public static void main(String[] args) {
-    DoubleProblem problem = new DTLZ1();
-    String referenceParetoFront = "/pareto_fronts/ZDT1.2D.pf";
-
-    //JMetalRandom.getInstance().setSeed(1);
+    DoubleProblem problem = new ZDT1();
+    String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
-    int maxNumberOfEvaluations = 50000;
+    int archiveMaximumSize = 100 ;
+    int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
     double crossoverProbability = 0.9;
@@ -60,7 +59,7 @@ public class SPEA2 {
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
     Variation<DoubleSolution> variation =
-        new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
+            new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
@@ -69,16 +68,15 @@ public class SPEA2 {
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
-    Ranking<DoubleSolution> ranking = new StrengthRanking<>(new DominanceComparator<>());
-    DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
-    //DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
+    DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<DoubleSolution>(
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
-    int tournamentSize = 2;
+    int tournamentSize = 2 ;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
             tournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
@@ -88,12 +86,11 @@ public class SPEA2 {
                 new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
     */
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
+        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm =
         new EvolutionaryAlgorithm<>(
-            "SPEA2",
+            "NSGA-II",
             evaluation,
             createInitialPopulation,
             termination,
@@ -104,15 +101,15 @@ public class SPEA2 {
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("SPEA2", 80, referenceParetoFront);
-    // ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+    //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
     //    new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
 
     algorithm.getObservable().register(evaluationObserver);
-    //algorithm.getObservable().register(runTimeChartObserver);
-    // algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
+    algorithm.getObservable().register(runTimeChartObserver);
+    //algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80,
     // referenceParetoFront));
-    // evaluation.getObservable().register(boundedArchiveObserver);
+    //evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();
 

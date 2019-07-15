@@ -1,6 +1,7 @@
-package org.uma.jmetal.auto.algorithm.moea;
+package org.uma.jmetal.auto.algorithm.spea2;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.auto.algorithm.moea.AutoMOEA;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;

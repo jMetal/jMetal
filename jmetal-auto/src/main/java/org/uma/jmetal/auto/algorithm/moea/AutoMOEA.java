@@ -208,7 +208,7 @@ public class AutoMOEA {
    *
    * @return
    */
-  EvolutionaryAlgorithm<DoubleSolution> create() {
+  public EvolutionaryAlgorithm<DoubleSolution> create() {
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
     // Algorithm result
