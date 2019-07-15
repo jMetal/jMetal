@@ -7,9 +7,9 @@ import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.util.observable.Observable;
-import org.uma.jmetal.auto.util.observable.ObservableEntity;
-import org.uma.jmetal.auto.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observable.ObservableEntity;
+import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 

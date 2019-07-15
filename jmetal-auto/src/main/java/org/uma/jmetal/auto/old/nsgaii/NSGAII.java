@@ -5,7 +5,7 @@ import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCr
 import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.auto.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
@@ -14,7 +14,7 @@ import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.auto.component.variation.Variation;

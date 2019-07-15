@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.old.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.util.observer.Observer;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
+import org.uma.jmetal.util.observer.Observer;
+import org.uma.jmetal.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.front.Front;

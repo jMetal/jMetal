@@ -1,8 +1,8 @@
-package org.uma.jmetal.auto.util.observable.impl;
+package org.uma.jmetal.util.observable.impl;
 
-import org.uma.jmetal.auto.util.observer.Observer;
-import org.uma.jmetal.auto.util.observable.Observable;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observer.Observer;
 
 import java.util.Collection;
 import java.util.HashSet;

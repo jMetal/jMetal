@@ -1,10 +1,11 @@
-package org.uma.jmetal.auto.util.observer.impl;
+package org.uma.jmetal.util.observer.impl;
 
-import org.uma.jmetal.auto.util.observable.Observable;
-import org.uma.jmetal.auto.util.observer.Observer;
+import org.uma.jmetal.util.chartcontainer.ChartContainer;
+import org.uma.jmetal.util.chartcontainer.GenericChartContainer;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observer.Observer;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.auto.util.chartcontainer.ChartContainer;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
-  private ChartContainer<S> chart;
+  private GenericChartContainer<S> chart;
   private Integer evaluations ;
 
   /**
@@ -38,7 +39,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
    * @param referenceFrontName File name containing a reference front
    */
   public RunTimeChartObserver(String legend, int delay, String referenceFrontName) {
-    chart = new ChartContainer<S>(legend, delay) ;
+    chart = new GenericChartContainer<S>(legend, delay) ;
     try {
       chart.setFrontChart(0, 1, referenceFrontName);
     } catch (FileNotFoundException e) {
@@ -78,7 +79,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     }
   }
 
-  public ChartContainer getChart() {
+  public GenericChartContainer getChart() {
     return chart ;
   }
 

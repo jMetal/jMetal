@@ -25,7 +25,7 @@ import org.uma.jmetal.auto.old.irace.parameter.selection.SelectionType;
 import org.uma.jmetal.auto.old.irace.parameter.variation.VariationType;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.observer.impl.ExternalArchiveObserver;
+import org.uma.jmetal.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.auto.component.variation.Variation;
@@ -52,7 +52,6 @@ import org.uma.jmetal.util.comparator.MultiComparator;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class AutoNSGAIIConfigurator {
   /* Fixed parameters */

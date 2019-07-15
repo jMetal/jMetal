@@ -1,7 +1,7 @@
-package org.uma.jmetal.auto.util.observer;
+package org.uma.jmetal.util.observer;
 
-import org.uma.jmetal.auto.util.observable.Observable;
-import org.uma.jmetal.util.naming.DescribedEntity;
+
+import org.uma.jmetal.util.observable.Observable;
 
 /**
  * Interface representing observers according to the Observer Pattern

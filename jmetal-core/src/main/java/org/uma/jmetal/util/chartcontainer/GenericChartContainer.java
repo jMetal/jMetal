@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.util.chartcontainer;
+package org.uma.jmetal.util.chartcontainer;
 
 import org.knowm.xchart.*;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author Jorge Rodriguez Ordonez
  */
 
-public class ChartContainer<S extends Solution<?>> {
+public class GenericChartContainer<S extends Solution<?>> {
     private Map<String, XYChart> charts;
     private XYChart frontChart;
     private XYChart varChart;
@@ -34,11 +34,11 @@ public class ChartContainer<S extends Solution<?>> {
     private Map<String, List<Double>> indicatorValues;
     private List<String> referencePointName ;
 
-    public ChartContainer(String name) {
+    public GenericChartContainer(String name) {
         this(name, 0);
     }
 
-    public ChartContainer(String name, int delay) {
+    public GenericChartContainer(String name, int delay) {
         this.name = name;
         this.delay = delay;
         this.charts = new LinkedHashMap<String, XYChart>();
@@ -248,7 +248,7 @@ public class ChartContainer<S extends Solution<?>> {
         return this.name;
     }
 
-    public ChartContainer setName(String name) {
+    public GenericChartContainer setName(String name) {
         this.name = name;
         return this;
     }
@@ -257,7 +257,7 @@ public class ChartContainer<S extends Solution<?>> {
         return this.delay;
     }
 
-    public ChartContainer setDelay(int delay) {
+    public GenericChartContainer setDelay(int delay) {
         this.delay = delay;
         return this;
     }
