@@ -11,8 +11,6 @@ import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;

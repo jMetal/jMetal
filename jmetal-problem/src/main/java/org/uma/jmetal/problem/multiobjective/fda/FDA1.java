@@ -5,7 +5,6 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

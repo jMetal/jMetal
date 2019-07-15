@@ -1,24 +1,22 @@
 package org.uma.jmetal.auto.old.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
 import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
+import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
-import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
+import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.ranking.Ranking;
+import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -32,6 +30,8 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 import java.util.Arrays;
 

@@ -10,8 +10,6 @@ import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
-import java.util.Arrays;
-
 /**
  * This class implements a polynomial mutation operator
  *

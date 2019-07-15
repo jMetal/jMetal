@@ -3,7 +3,6 @@ package org.uma.jmetal.util.checking;
 import org.junit.Test;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
-
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.checking.exception.ValueOutOfRangeException;
 

@@ -1,13 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * Class representing problem LIR-CMOP13, defined in:

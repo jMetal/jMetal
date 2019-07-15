@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.parameter;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.List;
 

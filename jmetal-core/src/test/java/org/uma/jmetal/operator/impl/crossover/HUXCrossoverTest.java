@@ -2,8 +2,6 @@ package org.uma.jmetal.operator.impl.crossover;
 
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.HUXCrossover;
-import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
-import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;

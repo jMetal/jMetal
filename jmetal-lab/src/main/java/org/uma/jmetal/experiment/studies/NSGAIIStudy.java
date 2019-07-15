@@ -2,6 +2,11 @@ package org.uma.jmetal.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentBuilder;
+import org.uma.jmetal.experiment.component.*;
+import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -10,11 +15,6 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.experiment.Experiment;
-import org.uma.jmetal.experiment.ExperimentBuilder;
-import org.uma.jmetal.experiment.component.*;
-import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.experiment.util.ExperimentProblem;
 
 import java.io.IOException;
 import java.util.ArrayList;

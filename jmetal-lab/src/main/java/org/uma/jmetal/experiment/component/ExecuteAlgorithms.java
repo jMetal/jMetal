@@ -1,10 +1,10 @@
 package org.uma.jmetal.experiment.component;
 
+import org.uma.jmetal.experiment.Experiment;
+import org.uma.jmetal.experiment.ExperimentComponent;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.experiment.Experiment;
-import org.uma.jmetal.experiment.ExperimentComponent;
 
 import java.io.File;
 import java.util.List;

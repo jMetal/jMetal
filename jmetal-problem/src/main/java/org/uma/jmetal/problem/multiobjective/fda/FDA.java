@@ -5,10 +5,6 @@ import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
-
-import java.io.Serializable;
 
 /** Cristóbal Barba <cbarba@lcc.uma.es> */
 public abstract class FDA extends AbstractDoubleProblem

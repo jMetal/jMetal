@@ -2,8 +2,6 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import static java.lang.Math.sqrt;
-
 /**
  * Class representing problem LIR-CMOP3, defined in: An Improved epsilon-constrained Method in
  * MOEA/D for CMOPs with Large Infeasible Regions Fan, Z., Li, W., Cai, X. et al. Soft Comput

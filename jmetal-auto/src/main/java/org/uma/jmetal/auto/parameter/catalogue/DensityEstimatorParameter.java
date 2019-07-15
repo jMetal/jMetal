@@ -5,8 +5,6 @@ import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;

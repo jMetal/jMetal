@@ -1,10 +1,10 @@
 package org.uma.jmetal.auto.component.initialsolutionscreation.impl;
 
+import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmDefaultOutputData;
 

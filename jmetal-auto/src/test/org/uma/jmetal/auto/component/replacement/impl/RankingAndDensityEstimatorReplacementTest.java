@@ -2,12 +2,10 @@ package org.uma.jmetal.auto.component.replacement.impl;
 
 import org.junit.Test;
 import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimatorTest;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;

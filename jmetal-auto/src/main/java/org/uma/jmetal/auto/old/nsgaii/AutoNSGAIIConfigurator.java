@@ -1,12 +1,12 @@
 package org.uma.jmetal.auto.old.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.auto.component.evaluation.Evaluation;
+import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
 import org.uma.jmetal.auto.component.initialsolutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
 import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.auto.component.initialsolutionscreation.impl.ScatterSearchSolutionsCreation;
-import org.uma.jmetal.auto.component.evaluation.Evaluation;
-import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
@@ -15,6 +15,8 @@ import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSele
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.component.termination.Termination;
 import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.auto.component.variation.Variation;
+import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.auto.old.irace.parameter.algorithmresult.AlgorithmResultType;
 import org.uma.jmetal.auto.old.irace.parameter.createinitialsolutionsstrategy.CreateInitialSolutionsStrategyType;
@@ -25,11 +27,8 @@ import org.uma.jmetal.auto.old.irace.parameter.selection.SelectionType;
 import org.uma.jmetal.auto.old.irace.parameter.variation.VariationType;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
-import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -49,6 +48,7 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.observer.impl.ExternalArchiveObserver;
 import picocli.CommandLine.Option;
 
 import java.util.Arrays;

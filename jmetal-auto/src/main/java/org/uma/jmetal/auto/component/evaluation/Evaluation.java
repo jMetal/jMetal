@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.component.evaluation;
 
-import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.observable.ObservableEntity;
 
 import java.util.List;
 

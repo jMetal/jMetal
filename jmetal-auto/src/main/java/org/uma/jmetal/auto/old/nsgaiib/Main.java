@@ -1,14 +1,15 @@
 package org.uma.jmetal.auto.old.nsgaiib;
 
-import static org.uma.jmetal.auto.old.nsgaiib.NSGAII.Step.*;
+import org.uma.jmetal.auto.old.nsgaiib.NSGAII.Step;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-import org.uma.jmetal.auto.old.nsgaiib.NSGAII.Step;
-import org.uma.jmetal.solution.Solution;
+import static org.uma.jmetal.auto.old.nsgaiib.NSGAII.Step.DONE;
+import static org.uma.jmetal.auto.old.nsgaiib.NSGAII.Step.MATE;
 
 public class Main {
 

@@ -6,13 +6,9 @@ import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.Comparator;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
 
 /**
  * Abstract class representing a local search algorithm

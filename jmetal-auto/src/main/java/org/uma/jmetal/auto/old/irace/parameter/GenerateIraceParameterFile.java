@@ -1,6 +1,9 @@
 package org.uma.jmetal.auto.old.irace.parameter;
 
 import org.uma.jmetal.auto.old.irace.parameter.algorithmresult.AlgorithmResultParameter;
+import org.uma.jmetal.auto.old.irace.parameter.crossover.BLXAlphaCrossoverAlphaValueParameter;
+import org.uma.jmetal.auto.old.irace.parameter.crossover.CrossoverParameter;
+import org.uma.jmetal.auto.old.irace.parameter.crossover.SBXCrossoverDistributionIndexParameter;
 import org.uma.jmetal.auto.old.irace.parameter.mutation.MutationParameter;
 import org.uma.jmetal.auto.old.irace.parameter.mutation.PolynomialMutationDistributionIndexParameter;
 import org.uma.jmetal.auto.old.irace.parameter.mutation.UniformMutationPerturbationParameter;
@@ -11,9 +14,6 @@ import org.uma.jmetal.auto.old.irace.parameter.variation.VariationType;
 import org.uma.jmetal.auto.old.irace.parametertype.ParameterType;
 import org.uma.jmetal.auto.old.irace.parametertype.impl.CategoricalParameterType;
 import org.uma.jmetal.auto.old.irace.parametertype.impl.OrdinalParameterType;
-import org.uma.jmetal.auto.old.irace.parameter.crossover.BLXAlphaCrossoverAlphaValueParameter;
-import org.uma.jmetal.auto.old.irace.parameter.crossover.CrossoverParameter;
-import org.uma.jmetal.auto.old.irace.parameter.crossover.SBXCrossoverDistributionIndexParameter;
 
 import java.io.IOException;
 import java.nio.file.Files;

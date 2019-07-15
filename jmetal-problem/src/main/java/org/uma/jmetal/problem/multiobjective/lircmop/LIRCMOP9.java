@@ -1,10 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing problem LIR-CMOP9, defined in:

@@ -2,7 +2,6 @@ package org.uma.jmetal.util.distance.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
 
 import java.util.List;
 

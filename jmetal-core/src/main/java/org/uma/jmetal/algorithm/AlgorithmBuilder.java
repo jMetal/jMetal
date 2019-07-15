@@ -1,7 +1,5 @@
 package org.uma.jmetal.algorithm;
 
-import org.uma.jmetal.algorithm.Algorithm;
-
 /**
  * Interface representing algorithm builders
  *

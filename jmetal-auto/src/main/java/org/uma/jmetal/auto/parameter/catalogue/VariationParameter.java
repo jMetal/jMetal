@@ -1,12 +1,10 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;

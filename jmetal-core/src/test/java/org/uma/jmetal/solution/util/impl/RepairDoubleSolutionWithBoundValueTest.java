@@ -3,7 +3,6 @@ package org.uma.jmetal.solution.util.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,11 +1,11 @@
 package org.uma.jmetal.experiment.component;
 
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.experiment.ExperimentComponent;
 import org.uma.jmetal.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.experiment.util.ExperimentProblem;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;

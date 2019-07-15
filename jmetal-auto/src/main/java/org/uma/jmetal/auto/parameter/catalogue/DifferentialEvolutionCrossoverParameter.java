@@ -2,15 +2,9 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.auto.parameter.RealParameter;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Function;
 
 public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter<String> {

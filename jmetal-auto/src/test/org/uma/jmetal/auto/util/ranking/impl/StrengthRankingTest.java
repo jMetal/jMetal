@@ -1,8 +1,6 @@
 package org.uma.jmetal.auto.util.ranking.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimatorTest;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;

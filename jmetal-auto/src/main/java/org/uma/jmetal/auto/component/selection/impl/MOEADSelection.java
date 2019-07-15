@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.component.selection.impl;
 
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
-import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;

@@ -2,10 +2,11 @@ package org.uma.jmetal.auto.parameter;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.auto.old.nsgaiib.MissingParameterException;
 import org.uma.jmetal.util.checking.Check;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 /**

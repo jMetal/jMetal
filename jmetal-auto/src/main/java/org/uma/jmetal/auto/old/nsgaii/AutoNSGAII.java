@@ -1,8 +1,6 @@
 package org.uma.jmetal.auto.old.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.util.observer.Observer;
-import org.uma.jmetal.util.observer.impl.ExternalArchiveObserver;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmDefaultOutputData;
@@ -14,7 +12,6 @@ import org.uma.jmetal.util.point.PointSolution;
 import picocli.CommandLine;
 
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import java.util.List;
 
 /**

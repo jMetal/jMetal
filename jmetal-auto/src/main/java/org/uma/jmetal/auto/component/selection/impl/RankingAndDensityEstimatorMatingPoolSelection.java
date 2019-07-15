@@ -5,7 +5,6 @@ import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

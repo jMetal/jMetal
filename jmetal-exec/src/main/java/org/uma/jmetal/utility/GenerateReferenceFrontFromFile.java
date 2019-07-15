@@ -1,12 +1,10 @@
 package org.uma.jmetal.utility;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
-import weka.core.neighboursearch.balltrees.PointsClosestToFurthestChildren;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

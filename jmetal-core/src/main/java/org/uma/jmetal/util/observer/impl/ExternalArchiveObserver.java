@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.observer.impl;
 
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observer.Observer;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observer.Observer;
 
 import java.util.List;
 import java.util.Map;

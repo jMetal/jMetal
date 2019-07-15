@@ -1,7 +1,5 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.problem.Problem;
-
 @SuppressWarnings("serial")
 public abstract class AbstractGenericProblem<S> implements Problem<S> {
   private int numberOfVariables = 0 ;

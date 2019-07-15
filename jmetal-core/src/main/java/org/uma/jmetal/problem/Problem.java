@@ -1,7 +1,5 @@
 package org.uma.jmetal.problem;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 
 /**

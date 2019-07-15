@@ -1,24 +1,16 @@
 package org.uma.jmetal.auto.util.densityestimator.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacementTest;
-import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 
-import javax.swing.text.MaskFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class KnnDensityEstimatorTest {
   private double EPSILON = 0.00000000000001;

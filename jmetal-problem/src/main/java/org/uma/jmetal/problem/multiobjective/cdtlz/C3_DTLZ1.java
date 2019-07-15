@@ -2,7 +2,6 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionUtils;
 
 /**
  * Problem C3-DTLZ1, defined in:

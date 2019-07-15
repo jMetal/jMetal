@@ -1,20 +1,17 @@
 package org.uma.jmetal.auto.util.densityestimator.impl;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
 import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
-import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class implements the a density estimator based on the distance to the k-th nearest solution

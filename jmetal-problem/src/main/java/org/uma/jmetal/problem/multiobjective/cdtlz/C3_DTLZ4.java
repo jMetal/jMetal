@@ -2,7 +2,6 @@ package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionUtils;
 
 /**
  * Problem C3-DTLZ4, defined in: Jain, H. and K. Deb. "An Evolutionary Many-Objective Optimization

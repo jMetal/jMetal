@@ -1,9 +1,9 @@
 package org.uma.jmetal.experiment.util;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.experiment.Experiment;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 

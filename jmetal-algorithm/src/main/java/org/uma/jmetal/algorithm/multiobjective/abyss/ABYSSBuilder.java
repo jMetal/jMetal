@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
@@ -8,10 +9,8 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparatorV2;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
