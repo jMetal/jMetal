@@ -11,6 +11,7 @@ import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.fda.FDA2;
+import org.uma.jmetal.problem.multiobjective.fda.FDA3;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -19,6 +20,7 @@ import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.CreateNRandomSolutions;
 import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
@@ -86,10 +88,6 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
 
       Map<String, Object> algorithmData = new HashMap<>();
 
-      //algorithmData.put("numberOfIterations", completedIterations);
-      //algorithmData.put("algorithmName", getName());
-      //algorithmData.put("problemName", problem.getName());
-      //algorithmData.put("numberOfObjectives", problem.getNumberOfObjectives());
       algorithmData.put("EVALUATIONS", completedIterations);
       algorithmData.put("POPULATION", getPopulation());
 
@@ -159,15 +157,13 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
             new SequentialSolutionListEvaluator<>(),
             new DefaultRestartStrategy<>(
                 new RemoveNRandomSolutions<>(10), new CreateNRandomSolutions<>()),
-            new DefaultObservable<>("asdfaf"));
+            new DefaultObservable<>(""));
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, null);
-    //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =
-    //    new ExternalArchiveObserver<>(new CrowdingDistanceArchive<>(archiveMaximumSize));
+    //EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeForDynamicProblemsChartObserver<>("Dynamic NSGA-II", 80);
 
-    algorithm.getObservable().register(evaluationObserver);
+    //algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();
