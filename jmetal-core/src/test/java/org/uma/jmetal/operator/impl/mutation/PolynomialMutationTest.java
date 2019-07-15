@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -78,6 +79,12 @@ public class PolynomialMutationTest {
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
+    new PolynomialMutation(mutationProbability, 2.0) ;
+  }
+
+  @Test (expected = InvalidProbabilityValueException.class)
+  public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
+    double mutationProbability = 1.1 ;
     new PolynomialMutation(mutationProbability, 2.0) ;
   }
 
