@@ -21,6 +21,8 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   public DefaultIntegerSolution(List<Pair<Integer, Integer>> bounds, int numberOfObjectives) {
     super(bounds.size(), numberOfObjectives);
 
+    this.bounds = bounds ;
+
     for (int i = 0; i < bounds.size(); i++) {
       setVariable(
           i, JMetalRandom.getInstance().nextInt(bounds.get(i).getLeft(), bounds.get(i).getRight()));
