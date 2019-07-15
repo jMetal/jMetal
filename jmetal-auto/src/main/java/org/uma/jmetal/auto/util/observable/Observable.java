@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Observable<D> extends DescribedEntity {
+public interface Observable<D> {
 	void register(Observer<D> observer) ;
 	void unregister(Observer<D> observer) ;
 

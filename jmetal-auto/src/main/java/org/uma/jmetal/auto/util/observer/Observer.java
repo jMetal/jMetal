@@ -8,6 +8,7 @@ import org.uma.jmetal.util.naming.DescribedEntity;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Observer<D> extends DescribedEntity {
+@FunctionalInterface
+public interface Observer<D> {
 	void update(Observable<D> observable, D data) ;
 }

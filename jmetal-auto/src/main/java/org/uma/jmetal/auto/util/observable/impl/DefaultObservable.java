@@ -25,7 +25,7 @@ public class DefaultObservable<D> implements Observable<D> {
 	@Override
 	public synchronized void register(Observer<D> observer) {
 		observers.add(observer) ;
-    JMetalLogger.logger.info("DefaultObservable " + name + ": " + observer.getName() + " registered") ;
+    JMetalLogger.logger.info("DefaultObservable " + name + ": " + observer + " registered") ;
 	}
 
 	@Override
@@ -61,13 +61,7 @@ public class DefaultObservable<D> implements Observable<D> {
 		dataHasChanged = false ;
 	}
 
-	@Override
 	public synchronized String getName() {
-		return name;
-	}
-
-	@Override
-	public synchronized String getDescription() {
 		return name;
 	}
 

@@ -52,13 +52,12 @@ public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
     }
   }
 
-  @Override
   public String getName() {
     return "Print objectives observer";
   }
 
   @Override
-  public String getDescription() {
-    return "Observer of the objectives of the first solution in a population provided by an algorithm";
+  public String toString() {
+    return getName() ;
   }
 }

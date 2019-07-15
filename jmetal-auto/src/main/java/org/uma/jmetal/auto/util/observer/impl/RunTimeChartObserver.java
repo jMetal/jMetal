@@ -82,13 +82,12 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     return chart ;
   }
 
-  @Override
   public String getName() {
     return "Runtime chart observer";
   }
 
   @Override
-  public String getDescription() {
-    return "Observer that shows how a front produced by an algorithm is evolved in runtime";
+  public String toString() {
+    return getName() ;
   }
 }

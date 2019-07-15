@@ -47,13 +47,12 @@ public class EvaluationObserver implements Observer<Map<String, Object>> {
     }
   }
 
-  @Override
   public String getName() {
     return "Evaluation observer";
   }
 
   @Override
-  public String getDescription() {
-    return "Observer of the number of evaluations of an algorithm";
+  public String toString() {
+    return getName() ;
   }
 }

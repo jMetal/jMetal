@@ -13,5 +13,5 @@ import java.util.logging.SocketHandler;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface ObservableEntity {
-  Observable getObservable();
+  Observable<?> getObservable();
 }

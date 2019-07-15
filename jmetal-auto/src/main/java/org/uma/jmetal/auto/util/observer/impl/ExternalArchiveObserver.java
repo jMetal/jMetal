@@ -26,13 +26,12 @@ public class ExternalArchiveObserver<S extends Solution<?>> implements Observer<
     return archive;
   }
 
-  @Override
   public String getName() {
     return "External archive observer";
   }
 
   @Override
-  public String getDescription() {
-    return "";
+  public String toString() {
+    return getName() ;
   }
 }
