@@ -15,17 +15,13 @@ public class FDA4 extends FDA {
   private boolean theProblemHasBeenModified;
   private final int M = 3;
 
-  public FDA4(Observable<Integer> observable) {
-    this(12, 3, observable);
-  }
-
   public FDA4() {
-    this(new DefaultObservable<>("FDA4 observable"));
+    this(12, 3);
   }
 
-  public FDA4(Integer numberOfVariables, Integer numberOfObjectives, Observable<Integer> observer)
+  public FDA4(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
-    super(observer);
+    super();
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA4");

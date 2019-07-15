@@ -13,16 +13,16 @@ import java.util.List;
 public class FDA1 extends FDA {
 
   public FDA1(Observable<Integer> observable) {
-    this(100, 2, observable);
+    this(100, 2);
   }
 
   public FDA1() {
     this(new DefaultObservable<>("FDA1 observable"));
   }
 
-  public FDA1(Integer numberOfVariables, Integer numberOfObjectives, Observable<Integer> observer)
+  public FDA1(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
-    super(observer);
+    super();
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA1");

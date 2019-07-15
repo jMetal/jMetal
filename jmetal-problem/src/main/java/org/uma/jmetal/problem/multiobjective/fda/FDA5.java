@@ -14,17 +14,13 @@ public class FDA5 extends FDA implements Serializable {
 
   private final int M = 3;
 
-  public FDA5(Observable<Integer> observable) {
-    this(12, 3, observable);
-  }
-
   public FDA5() {
-    this(new DefaultObservable<>("FDA5 observable"));
+    this(12, 3);
   }
 
-  public FDA5(Integer numberOfVariables, Integer numberOfObjectives, Observable<Integer> observer)
+  public FDA5(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
-    super(observer);
+    super();
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA5");

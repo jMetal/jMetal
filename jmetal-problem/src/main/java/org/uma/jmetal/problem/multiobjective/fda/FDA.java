@@ -15,25 +15,16 @@ public abstract class FDA extends AbstractDoubleProblem
     implements DynamicProblem<DoubleSolution, Integer>, BoundedProblem<Double, DoubleSolution> {
   protected double time;
   private boolean changeStatus = false;
-  protected Observable<Integer> observable;
 
   private int tauT = 5;
   private int nT = 10;
 
-  public FDA(Observable<Integer> observable) {
-    this.observable = observable;
-    observable.register(this);
-  }
-
   public FDA() {
-    this(new DefaultObservable<>("FDA observable"));
   }
 
-  @Override
-  public void update(Observable<Integer> observable, Integer counter) {
+  public void update(Integer counter) {
     time = (1.0d / (double) nT) * Math.floor(counter / (double) tauT);
     JMetalLogger.logger.info("Received counter: " + counter + ". Time: " + time);
-    ;
 
     setChanged();
   }

@@ -16,17 +16,14 @@ public class FDA3 extends FDA implements Serializable {
   private final int limitSupI = 1;
   private final int limitInfII = 1;
 
-  public FDA3(Observable<Integer> observable) {
-    this(30, 2, observable);
-  }
-
   public FDA3() {
-    this(new DefaultObservable<>("FDA3 observable"));
+    this(30, 2);
   }
 
-  public FDA3(Integer numberOfVariables, Integer numberOfObjectives, Observable<Integer> observer)
+
+  public FDA3(Integer numberOfVariables, Integer numberOfObjectives)
       throws JMetalException {
-    super(observer);
+    super();
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA3");

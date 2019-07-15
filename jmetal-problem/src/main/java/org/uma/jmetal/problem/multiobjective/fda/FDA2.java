@@ -12,16 +12,12 @@ import java.util.List;
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
 public class FDA2 extends FDA implements Serializable {
 
-  public FDA2(Observable<Integer> observable) {
-    this(31, 2, observable);
-  }
-
   public FDA2() {
-    this(new DefaultObservable<>("FDA2 observable"));
+    this(31, 2);
   }
 
-  public FDA2(Integer numberOfVariables, Integer numberOfObjectives, Observable<Integer> observer) {
-    super(observer);
+  public FDA2(Integer numberOfVariables, Integer numberOfObjectives) {
+    super();
     setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("FDA2");
