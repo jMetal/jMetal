@@ -3,6 +3,7 @@ package org.uma.jmetal.operator.crossover.impl;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,8 @@ public class NullCrossover<S extends Solution<?>>
 
   /** Execute() method */
   @Override public List<S> execute(List<S> source) {
-    if (null == source) {
-      throw new JMetalException("Null parameter") ;
-    } else if (source.size() != 2) {
-      throw new JMetalException("There must be two parents instead of " + source.size()) ;
-    }
+    Check.isNotNull(source);
+    Check.isTrue(source.size() == 2, "There must be two parents instead of " + source.size());
 
     List<S> list = new ArrayList<>() ;
     list.add((S) source.get(0).copy()) ;
