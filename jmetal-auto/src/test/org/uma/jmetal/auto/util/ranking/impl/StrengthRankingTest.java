@@ -69,7 +69,7 @@ public class StrengthRankingTest {
          0 1 2 3 4 5
 
          List: 1,2,3,4,5
-         Expected result: 4, 1, 2, 5, 3
+         Expected result: two ranks (rank 0: 1, 2, 5, 4; rank 1: 3)
     */
     DoubleProblem problem = new MockDoubleProblem(2);
 

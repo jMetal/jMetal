@@ -17,13 +17,13 @@ import java.util.stream.IntStream;
  * This class implements some facilities for ranking set of population. Given a collection of
  * population, they are ranked according to scheme proposed in NSGA-II; as an output, a set of
  * subsets are obtained. The subsets are numbered starting from 0 (in NSGA-II, the numbering starts
- * from 1); thus, subset 0 contains the non-dominated population, subset 1 contains the non-dominated
- * population after removing those belonging to subset 0, and so on.
+ * from 1); thus, subset 0 contains the non-dominated population, subset 1 contains the
+ * non-dominated population after removing those belonging to subset 0, and so on.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
-  private String attributeId = getClass().getName() ;
+  private String attributeId = getClass().getName();
   private Comparator<S> dominanceComparator;
   private Comparator<S> solutionComparator;
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
@@ -35,7 +35,8 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
   public StrengthRanking(Comparator<S> comparator) {
     this.dominanceComparator = comparator;
     rankedSubPopulations = new ArrayList<>();
-    this.solutionComparator = new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
+    this.solutionComparator =
+        new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING);
   }
 
   /** Constructor */
@@ -67,29 +68,33 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
       }
     }
 
-    int maxFitnessValue = 0 ;
+    int maxFitnessValue = 0;
     for (int i = 0; i < solutionList.size(); i++) {
       solutionList.get(i).setAttribute(attributeId, rawFitness[i]);
       if (rawFitness[i] > maxFitnessValue) {
-        maxFitnessValue = rawFitness[i] ;
+        maxFitnessValue = rawFitness[i];
       }
     }
 
     // front[i] contains the list of individuals belonging to the front i
-    rankedSubPopulations = new ArrayList<>(maxFitnessValue+1);
-    IntStream.range(0, maxFitnessValue+1).forEach(index -> rankedSubPopulations.add(new ArrayList<>()));
+    rankedSubPopulations = new ArrayList<>(maxFitnessValue + 1);
+    IntStream.range(0, maxFitnessValue + 1)
+        .forEach(index -> rankedSubPopulations.add(new ArrayList<>()));
 
     // Assign each solution to its corresponding front
-    solutionList.stream().forEach(solution -> rankedSubPopulations.get((int)solution.getAttribute(attributeId)).add(solution));
+    solutionList.stream()
+        .forEach(
+            solution ->
+                rankedSubPopulations.get((int) solution.getAttribute(attributeId)).add(solution));
 
     // Remove empty fronts
-    //rankedSubPopulations.stream().filter(list -> (list.size() == 0));
-    int counter = 0 ;
+    // rankedSubPopulations.stream().filter(list -> (list.size() == 0));
+    int counter = 0;
     while (counter < rankedSubPopulations.size()) {
       if (rankedSubPopulations.get(counter).size() == 0) {
-        rankedSubPopulations.remove(counter) ;
+        rankedSubPopulations.remove(counter);
       } else {
-        counter ++ ;
+        counter++;
       }
     }
 
@@ -117,6 +122,6 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
   @Override
   public String getAttributeId() {
-    return attributeId ;
+    return attributeId;
   }
 }

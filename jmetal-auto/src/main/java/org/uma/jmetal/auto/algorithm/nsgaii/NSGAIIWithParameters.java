@@ -20,7 +20,7 @@ public class NSGAIIWithParameters {
             + "--variation crossoverAndMutationVariation "
             + "--selection tournament "
             + "--selectionTournamentSize 2 "
-            + "--rankingForSelection dominanceRanki01_metro_orientation_plan.pngng "
+            + "--rankingForSelection dominanceRanking "
             + "--densityEstimatorForSelection crowdingDistance "
             + "--crossover SBX "
             + "--crossoverProbability 0.9 "

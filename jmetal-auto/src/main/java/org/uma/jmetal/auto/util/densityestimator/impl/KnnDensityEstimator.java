@@ -54,7 +54,8 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
         distanceMatrix[i][j] = distanceMatrix[j][i] = distance.getDistance(solutionList.get(i), solutionList.get(j)) ;
       }
     }
-    /* List of the k-nearest distance of all the solutions */
+
+    /* Gets the k-nearest distance of all the solutions */
     for (int i = 0 ; i< solutionList.size(); i++) {
       List<Double> distances = new ArrayList<>() ;
       for (int j = 0 ; j < solutionList.size(); j++) {
