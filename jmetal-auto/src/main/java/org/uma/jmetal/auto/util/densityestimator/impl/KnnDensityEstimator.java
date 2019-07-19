@@ -55,7 +55,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
       }
     }
 
-    /* Gets the k-nearest distance of all the solutions */
+    /* Get the k-nearest distance of all the solutions */
     for (int i = 0 ; i< solutionList.size(); i++) {
       List<Double> distances = new ArrayList<>() ;
       for (int j = 0 ; j < solutionList.size(); j++) {
@@ -64,16 +64,6 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
       distances.sort(Comparator.naturalOrder());
       solutionList.get(i).setAttribute(attributeId, distances.get(k)) ;
     }
-
-    //for (int i = 0; i < distance.length; i++) {
-    //  Arrays.sort(distance[i]);
-    //  kDistance = 1.0 / (distance[i][k] + 2.0);
-    //  solutionSet.get(i).setAttribute(getAttributeIdentifier(), rawFitness[i] + kDistance);
-    //}
-
-    //for (S solution: solutionList) {
-    //  solution.setAttribute(attributeId, 1.0/(d + 2.0));
-    //}
   }
 
   @Override

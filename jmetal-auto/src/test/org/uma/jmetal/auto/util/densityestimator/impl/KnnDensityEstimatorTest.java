@@ -150,6 +150,7 @@ public class KnnDensityEstimatorTest {
     assertEquals(solutionList.get(2), solution2);
     assertEquals(solutionList.get(3), solution5);
   }
+
   /** Mock class representing a double problem */
   @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {

@@ -8,9 +8,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -75,6 +73,24 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
         maxFitnessValue = rawFitness[i];
       }
     }
+
+    /*
+    Map<Integer, List<S>> map = new HashMap<>() ;
+    solutionList.stream()
+        .forEach(
+            solution -> {
+              if (map.get(solution.getAttribute(attributeId)) != null) {
+                List<S> sublist = new ArrayList<>() ;
+                sublist.add(solution) ;
+                map.put((int)solution.getAttribute(attributeId), sublist) ;
+              } else {
+                map.get((int)solution.getAttribute(attributeId)).add(solution) ;
+              }
+            });
+
+    map.forEach((key, value) -> );
+    */
+
 
     // front[i] contains the list of individuals belonging to the front i
     rankedSubPopulations = new ArrayList<>(maxFitnessValue + 1);

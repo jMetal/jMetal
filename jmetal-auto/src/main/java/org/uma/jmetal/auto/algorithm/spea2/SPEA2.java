@@ -24,6 +24,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
@@ -41,11 +43,9 @@ public class SPEA2 {
     DoubleProblem problem = new DTLZ2();
     String referenceParetoFront = "/pareto_fronts/DTLZ2.3D.pf";
 
-    //JMetalRandom.getInstance().setSeed(1);
-
     int populationSize = 100;
     int offspringPopulationSize = 100;
-    int maxNumberOfEvaluations = 50000;
+    int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
     double crossoverProbability = 0.9;
@@ -72,7 +72,6 @@ public class SPEA2 {
 
     Ranking<DoubleSolution> ranking = new StrengthRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
-    //DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<DoubleSolution>(
