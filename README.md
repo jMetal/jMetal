@@ -32,6 +32,7 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Bugs
 * Fixed a bug in class `ComputeQualityIndicators`
 * Fixed a bug in class `ExtendedPseudoRandomgGenerator` (issue #312)
+* Fixed a bug in algorithm PESA2
 
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
