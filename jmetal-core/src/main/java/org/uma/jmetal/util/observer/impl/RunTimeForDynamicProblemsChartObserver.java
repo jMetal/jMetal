@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.observer.impl;
 
+import org.knowm.xchart.style.Styler;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.chartcontainer.ChartForDynamicProblemsContainer;
@@ -29,6 +30,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
   public RunTimeForDynamicProblemsChartObserver(String legend, int delay) {
     chart = new ChartForDynamicProblemsContainer<S>(legend, delay) ;
     chart.setFrontChart(0, 1);
+    chart.getFrontChart().getStyler().setLegendPosition(Styler.LegendPosition.InsideNE) ;
     chart.initChart();
   }
 
