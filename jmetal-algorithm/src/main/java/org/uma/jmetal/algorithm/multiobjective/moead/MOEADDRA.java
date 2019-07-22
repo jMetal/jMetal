@@ -62,11 +62,9 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     int generation = 0 ;
     evaluations = populationSize ;
     do {
-      int[] permutation = new int[populationSize];
-      MOEADUtils.randomPermutation(permutation, populationSize);
-
-      for (int i = 0; i < populationSize; i++) {
-        int subProblemId = permutation[i];
+      List<Integer> order = tourSelection(10) ;
+      for (int i = 0; i < order.size(); i++) {
+        int subProblemId = order.get(i);
         frequency[subProblemId]++;
 
         NeighborType neighborType = chooseNeighborType() ;
