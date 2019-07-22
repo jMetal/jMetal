@@ -21,14 +21,15 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private String attributeId = getClass().getName();
-  private Comparator<S> solutionComparator ;
-  private Distance<S, S> distance = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>() ;
-  private int k ;
-  private double[][] distanceMatrix ;
+  private Comparator<S> solutionComparator;
+  private Distance<S, S> distance = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
+  private int k;
+  private double[][] distanceMatrix;
 
   public KnnDensityEstimator(int k) {
-    this.k = k ;
-    solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
+    this.k = k;
+    solutionComparator =
+        new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING);
   }
 
   /**
@@ -42,73 +43,79 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
 
     Check.isTrue(size > 0, "The solution list size must be greater than zero");
     if (size <= k) {
-      return ;
+      return;
     }
 
     /* Compute the distance matrix */
-    distanceMatrix = new double[solutionList.size()][solutionList.size()] ;
-    for (int i = 0 ; i < solutionList.size(); i++) {
-      distanceMatrix[i][i] = 0 ;
+    distanceMatrix = new double[solutionList.size()][solutionList.size()];
+    for (int i = 0; i < solutionList.size(); i++) {
+      distanceMatrix[i][i] = 0;
 
-      for (int j = i+1 ; j < solutionList.size(); j++) {
-        distanceMatrix[i][j] = distanceMatrix[j][i] = distance.getDistance(solutionList.get(i), solutionList.get(j)) ;
+      for (int j = i + 1; j < solutionList.size(); j++) {
+        distanceMatrix[i][j] =
+            distanceMatrix[j][i] = distance.getDistance(solutionList.get(i), solutionList.get(j));
       }
     }
 
     /* Get the k-nearest distance of all the solutions */
-    for (int i = 0 ; i< solutionList.size(); i++) {
-      List<Double> distances = new ArrayList<>() ;
-      for (int j = 0 ; j < solutionList.size(); j++) {
-        distances.add(distanceMatrix[i][j]) ;
+    for (int i = 0; i < solutionList.size(); i++) {
+      List<Double> distances = new ArrayList<>();
+      for (int j = 0; j < solutionList.size(); j++) {
+        distances.add(distanceMatrix[i][j]);
       }
       distances.sort(Comparator.naturalOrder());
-      solutionList.get(i).setAttribute(attributeId, distances.get(k)) ;
+      solutionList.get(i).setAttribute(attributeId, distances.get(k));
     }
   }
 
   @Override
   public String getAttributeId() {
-    return attributeId ;
+    return attributeId;
   }
 
   @Override
   public Comparator<S> getSolutionComparator() {
-    return solutionComparator ;
+    return solutionComparator;
   }
 
   @Override
   public List<S> sort(List<S> solutionList) {
-    for (int i = 0 ; i< solutionList.size(); i++) {
-      List<Double> distances = new ArrayList<>() ;
-      for (int j = 0 ; j < solutionList.size(); j++) {
-        distances.add(distanceMatrix[i][j]) ;
+    for (int i = 0; i < solutionList.size(); i++) {
+      List<Double> distances = new ArrayList<>();
+      for (int j = 0; j < solutionList.size(); j++) {
+        distances.add(distanceMatrix[i][j]);
       }
       distances.sort(Comparator.naturalOrder());
-      solutionList.get(i).setAttribute("DISTANCES_", distances) ;
+      solutionList.get(i).setAttribute("DISTANCES_", distances);
     }
 
-    Collections.sort(solutionList, (s1, s2) -> {
-      List<Double> d1 = (List<Double>)s1.getAttribute("DISTANCES_") ;
-      List<Double> d2 = (List<Double>)s2.getAttribute("DISTANCES_") ;
-      int localK = k ;
-      if (d1.get(localK) > d2.get(localK)) {
-        return -1 ;
-      } else if (d1.get(localK) < d2.get(localK)) {
-        return +1 ;
-      } else {
-        while (localK < (d1.size()-1)) {
-          localK++ ;
-          if (d1.get(localK) > d2.get(localK)) {
-            return -1 ;
-          } else if (d1.get(localK) < d2.get(localK)) {
-            return +1 ;
+    Collections.sort(
+        solutionList,
+        (s1, s2) -> {
+          List<Double> d1 = (List<Double>) s1.getAttribute("DISTANCES_");
+          List<Double> d2 = (List<Double>) s2.getAttribute("DISTANCES_");
+          if (k >= d1.size()) {
+            return 0;
+          } else {
+            int localK = k;
+            if (d1.get(localK) > d2.get(localK)) {
+              return -1;
+            } else if (d1.get(localK) < d2.get(localK)) {
+              return +1;
+            } else {
+              while (localK < (d1.size() - 1)) {
+                localK++;
+                if (d1.get(localK) > d2.get(localK)) {
+                  return -1;
+                } else if (d1.get(localK) < d2.get(localK)) {
+                  return +1;
+                }
+              }
+              return 0;
+            }
           }
-        }
-        return 0;
-      }
-    });
+        });
 
-    return solutionList ;
+    return solutionList;
   }
 }
-

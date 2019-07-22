@@ -34,10 +34,10 @@ public class DynamicNSGAIIRunner {
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
-        new BinaryTournamentSelection<DoubleSolution>();
+        new BinaryTournamentSelection<>();
 
     DynamicAlgorithm<List<DoubleSolution>> algorithm =
-        new DynamicNSGAII<DoubleSolution>(
+        new DynamicNSGAII<>(
             problem,
             25000,
             100,
@@ -49,7 +49,7 @@ public class DynamicNSGAIIRunner {
             new SequentialSolutionListEvaluator<>(),
             new DefaultRestartStrategy<>(
                 new RemoveNRandomSolutions<>(10), new CreateNRandomSolutions<>()),
-            new DefaultObservable<>(""));
+            new DefaultObservable<>("Dynamic NSGA-II"));
 
     //EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeForDynamicProblemsChartObserver<DoubleSolution> runTimeChartObserver =
