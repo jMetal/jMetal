@@ -86,7 +86,7 @@ public class NSGAII {
                 new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
     */
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator);
+        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm =
         new EvolutionaryAlgorithm<>(
