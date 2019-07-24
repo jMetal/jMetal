@@ -38,7 +38,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected BoundedArchive<S> archive;
 
   protected Comparator<S> dominanceComparator;
-  protected LocationAttribute<S> location;
 
   /**
    * Constructor
@@ -79,6 +78,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected void initProgress() {
     evaluations = 0;
     currentIndividual = 0;
+    for (S solution : population) {
+      archive.add((S) solution.copy());
+    }
   }
 
   @Override
@@ -93,22 +95,9 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
-    List<S> population = new ArrayList<>(getMaxPopulationSize());
-    for (int i = 0; i < getMaxPopulationSize(); i++) {
-      S newIndividual = getProblem().createSolution();
-      population.add(newIndividual);
-    }
-    return population;
-  }
-
-  @Override
   @SuppressWarnings("unchecked")
   protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, getProblem());
-    for (S solution : population) {
-      archive.add((S) solution.copy());
-    }
 
     return population;
   }
@@ -139,15 +128,14 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    location = new LocationAttribute<>(population);
-
     int flag =
         dominanceComparator.compare(population.get(currentIndividual), offspringPopulation.get(0));
 
     if (flag == 1) { // The new individual dominates
       population = insertNewIndividualWhenItDominatesTheCurrentOne(population, offspringPopulation);
     } else if (flag == 0) { // The new individual is non-dominated
-      population = insertNewIndividualWhenItAndTheCurrentOneAreNonDominated(population, offspringPopulation);
+      population =
+          insertNewIndividualWhenItAndTheCurrentOneAreNonDominated(population, offspringPopulation);
     }
     return population;
   }
@@ -167,8 +155,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   private List<S> insertNewIndividualWhenItAndTheCurrentOneAreNonDominated(
       List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
-    //location.setAttribute(offspringPopulation.get(0), -1);
-    //List<S> result = new ArrayList<>(population);
+
     Ranking<S> rank = new DominanceRanking<S>();
     rank.computeRanking(currentNeighbors);
 
@@ -180,13 +167,12 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     Collections.sort(this.currentNeighbors, new RankingAndCrowdingDistanceComparator<S>());
     S worst = this.currentNeighbors.get(this.currentNeighbors.size() - 1);
 
-    if (worst == offspringPopulation.get(0)) {
-      archive.add(offspringPopulation.get(0));
-    } else {
+    archive.add(offspringPopulation.get(0));
+
+    if (worst != offspringPopulation.get(0)) {
       population.set(currentIndividual, offspringPopulation.get(0));
-      archive.add(offspringPopulation.get(0));
     }
-    return population ;
+    return population;
   }
 
   @Override
@@ -196,6 +182,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   public String getDescription() {
-    return "Multi-Objective Cellular evolutionry algorithm";
+    return "Multi-Objective Cellular evolutionary algorithm";
   }
 }
