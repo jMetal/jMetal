@@ -49,7 +49,7 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
       referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
     }
 
@@ -67,7 +67,7 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
 
     algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(50000)
+        .setMaxEvaluations(25000)
         .setPopulationSize(100)
         .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;

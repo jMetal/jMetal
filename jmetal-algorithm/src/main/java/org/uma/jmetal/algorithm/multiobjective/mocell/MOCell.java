@@ -11,6 +11,7 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
@@ -140,7 +141,14 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     if (flag == 1) { //The new individual dominates
       population= insertNewIndividualWhenDominates(population,offspringPopulation);
     } else if (flag == 0) { //The new individual is non-dominated
-      population= insertNewIndividualWhenNonDominated(population,offspringPopulation);
+      if (JMetalRandom.getInstance().nextDouble() < 0.5) {
+        // population = insertNewIndividualWhenNonDominated(population, offspringPopulation);
+        archive.add(offspringPopulation.get(0));
+        }
+      else {
+        population.set(location.getAttribute(population.get(currentIndividual)), offspringPopulation.get(0)) ;
+        archive.add(offspringPopulation.get(0));
+      }
     }
     return population;
   }
