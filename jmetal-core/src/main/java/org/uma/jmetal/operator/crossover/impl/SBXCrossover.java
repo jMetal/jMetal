@@ -52,9 +52,7 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   /** Constructor */
   public SBXCrossover(double crossoverProbability, double distributionIndex, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
     Check.isValidProbability(crossoverProbability);
-    if (distributionIndex < 0) {
-      throw new JMetalException("Distribution index is negative: " + distributionIndex);
-    }
+    Check.that(distributionIndex >= 0, "Distribution index is negative: " + distributionIndex);
 
     this.crossoverProbability = crossoverProbability ;
     this.distributionIndex = distributionIndex ;

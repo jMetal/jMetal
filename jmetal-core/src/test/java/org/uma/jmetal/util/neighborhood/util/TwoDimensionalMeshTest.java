@@ -222,7 +222,7 @@ public class TwoDimensionalMeshTest {
    * 3 4 5
    * 6 7 8
    *
-   * The solution location is 2, the neighborhood is 2, 6, 7, 5
+   * The solution location is 8, the neighborhood is 2, 6, 7, 5
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {
