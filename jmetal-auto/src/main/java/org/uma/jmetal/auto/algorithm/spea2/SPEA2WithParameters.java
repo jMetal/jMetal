@@ -10,9 +10,9 @@ public class SPEA2WithParameters {
 
   public static void main(String[] args) {
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1 "
-            + "--referenceFrontFileName DTLZ1.3D.pf "
-            + "--maximumNumberOfEvaluations 50000 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+            + "--referenceFrontFileName ZDT4.pf "
+            + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "
             + "--offspringPopulationSize 100 "
@@ -30,13 +30,10 @@ public class SPEA2WithParameters {
             + "--mutationProbability 0.01 "
             + "--mutationRepairStrategy bounds "
             + "--polynomialMutationDistributionIndex 20.0 "
-            + "--replacement rankingAndDensityEstimatorReplacement "
-            + "--removalPolicy sequential "
-            + "--rankingForReplacement strengthRanking "
-            + "--densityEstimatorForReplacement knn ")
+            + "--knnDistanceKValue 1 ")
             .split("\\s+");
 
-    AutoMOEA SPEA2 = new AutoMOEA();
+    AutoSPEA2 SPEA2 = new AutoSPEA2();
     SPEA2.parseAndCheckParameters(parameters);
 
     SPEA2.print(SPEA2.fixedParameterList);

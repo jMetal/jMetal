@@ -29,14 +29,10 @@ public class NSGAIIWithParameters {
             + "--mutation polynomial "
             + "--mutationProbability 0.01 "
             + "--mutationRepairStrategy bounds "
-            + "--polynomialMutationDistributionIndex 20.0 "
-            + "--replacement rankingAndDensityEstimatorReplacement "
-            + "--removalPolicy oneShot "
-            + "--rankingForReplacement dominanceRanking "
-            + "--densityEstimatorForReplacement crowdingDistance ")
+            + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoMOEA NSGAII = new AutoMOEA();
+    AutoNSGAII NSGAII = new AutoNSGAII();
     NSGAII.parseAndCheckParameters(parameters);
 
     NSGAII.print(NSGAII.fixedParameterList);
