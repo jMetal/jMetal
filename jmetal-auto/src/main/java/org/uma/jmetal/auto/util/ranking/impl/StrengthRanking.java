@@ -12,11 +12,12 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 /**
- * This class implements some facilities for ranking set of population. Given a collection of
- * population, they are ranked according to scheme proposed in NSGA-II; as an output, a set of
- * subsets are obtained. The subsets are numbered starting from 0 (in NSGA-II, the numbering starts
- * from 1); thus, subset 0 contains the non-dominated population, subset 1 contains the
- * non-dominated population after removing those belonging to subset 0, and so on.
+ * This class implements a solution list ranking based on the strength concept defined in SPEA2.
+ * The strength of solution is computed by considering the number of solutions they dominates and the strenght of the
+ * solutions dominating it.
+ * As an output, a set of subsets are obtained. The subsets are numbered starting from 0; thus, subset 0 contains the
+ * non-dominated solutions, subset 1 contains the non-dominated population after removing those belonging to subset
+ * 0, and so on.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -73,24 +74,6 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
         maxFitnessValue = rawFitness[i];
       }
     }
-
-    /*
-    Map<Integer, List<S>> map = new HashMap<>() ;
-    solutionList.stream()
-        .forEach(
-            solution -> {
-              if (map.get(solution.getAttribute(attributeId)) != null) {
-                List<S> sublist = new ArrayList<>() ;
-                sublist.add(solution) ;
-                map.put((int)solution.getAttribute(attributeId), sublist) ;
-              } else {
-                map.get((int)solution.getAttribute(attributeId)).add(solution) ;
-              }
-            });
-
-    map.forEach((key, value) -> );
-    */
-
 
     // front[i] contains the list of individuals belonging to the front i
     rankedSubPopulations = new ArrayList<>(maxFitnessValue + 1);
