@@ -55,7 +55,6 @@ public class StrengthRankingTest {
     assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
     assertEquals(0, solution3.getAttribute(ranking.getAttributeId()));
     assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
-
   }
 
   @Test
