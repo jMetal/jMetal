@@ -170,7 +170,7 @@ public class AutoSPEA2 {
 
     Ranking<DoubleSolution> ranking = new StrengthRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
+    MultiComparator<DoubleSolution> rankingAndDensityEstimatorComparator =
         new MultiComparator<DoubleSolution>(
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
@@ -182,7 +182,7 @@ public class AutoSPEA2 {
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
-                variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+                variation.getMatingPoolSize(), rankingAndDensityEstimatorComparator);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
