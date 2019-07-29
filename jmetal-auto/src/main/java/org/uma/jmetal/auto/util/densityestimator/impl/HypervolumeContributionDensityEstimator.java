@@ -42,7 +42,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
       return;
     }
 
-    solutionList = hypervolume.computeHypervolumeContribution(solutionList, referenceFront) ;
+    hypervolume.computeHypervolumeContribution(solutionList, referenceFront) ;
   }
 
   @Override
