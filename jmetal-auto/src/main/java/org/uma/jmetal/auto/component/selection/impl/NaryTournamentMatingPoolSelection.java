@@ -17,7 +17,9 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     implements MatingPoolSelection<S> {
   private NaryTournamentSelection<S> selectionOperator;
   private int matingPoolSize;
+  private Preference<S> preference ;
 
+  @Deprecated
   public NaryTournamentMatingPoolSelection(
       int tournamentSize, int matingPoolSize, Comparator<S> comparator) {
     selectionOperator = new NaryTournamentSelection<>(tournamentSize, comparator);
@@ -25,6 +27,7 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
   }
 
   public List<S> select(List<S> solutionList) {
+    preference.recompute(solutionList);
     List<S> matingPool = new ArrayList<>(matingPoolSize);
 
     while (matingPool.size() < matingPoolSize) {
@@ -36,12 +39,12 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
 
   public NaryTournamentMatingPoolSelection(
       int tournamentSize, int matingPoolSize, Preference<S> preference) {
-    this(
-        tournamentSize,
-        matingPoolSize,
-        new MultiComparator<>(
-            Arrays.asList(
-                preference.getRanking().getSolutionComparator(),
-                preference.getDensityEstimator().getSolutionComparator())));
+    this.preference = preference ;
+    Comparator<S> comparator = new MultiComparator<>(
+        Arrays.asList(
+            preference.getRanking().getSolutionComparator(),
+            preference.getDensityEstimator().getSolutionComparator())) ;
+    this.selectionOperator = new NaryTournamentSelection<>(tournamentSize, comparator) ;
+    this.matingPoolSize = matingPoolSize ;
   }
 }

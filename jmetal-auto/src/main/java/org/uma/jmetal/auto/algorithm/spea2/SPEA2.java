@@ -15,6 +15,7 @@ import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -73,23 +74,15 @@ public class SPEA2 {
     Ranking<DoubleSolution> ranking = new StrengthRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
 
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
-        new MultiComparator<DoubleSolution>(
-            Arrays.asList(
-                ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
+    Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
+    Replacement<DoubleSolution> replacement =
+        new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.sequential);
 
-    int tournamentSize = 2;
+    int tournamentSize = 2 ;
+    Preference<DoubleSolution> preferenceForSelection = new Preference<>(ranking, densityEstimator, preferenceForReplacement) ;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
-            tournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
-
-    /*
-        MatingPoolSelection<DoubleSolution> selection =
-                new RandomMatingPoolSelection<>(variation.getMatingPoolSize()) ;
-    */
-    Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
+            tournamentSize, variation.getMatingPoolSize(), preferenceForSelection);
 
     EvolutionaryAlgorithm<DoubleSolution> algorithm =
         new EvolutionaryAlgorithm<>(

@@ -15,6 +15,7 @@ import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -88,10 +89,13 @@ public class MOEAD {
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
+
     int tournamentSize = 2 ;
+    Preference<DoubleSolution> preferenceForSelection = new Preference<>(ranking, densityEstimator) ;
     MatingPoolSelection<DoubleSolution> selection =
         new NaryTournamentMatingPoolSelection<>(
-            tournamentSize, variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+            tournamentSize, variation.getMatingPoolSize(), preferenceForSelection);
+
 
     /*
         MatingPoolSelection<DoubleSolution> selection =

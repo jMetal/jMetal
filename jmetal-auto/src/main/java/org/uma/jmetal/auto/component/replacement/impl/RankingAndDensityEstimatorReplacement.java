@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.component.replacement.impl;
 
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 
@@ -13,16 +14,25 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
   private RemovalPolicy removalPolicy ;
+  private Preference<S> preference ;
 
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
     this(ranking, densityEstimator, RemovalPolicy.sequential) ;
   }
 
+  @Deprecated
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator, RemovalPolicy removalPolicy) {
     this.ranking = ranking;
     this.densityEstimator = densityEstimator;
+    this.removalPolicy = removalPolicy ;
+  }
+
+  public RankingAndDensityEstimatorReplacement(Preference<S> preference, RemovalPolicy removalPolicy) {
+    this.preference = preference ;
+    this.ranking = preference.getRanking();
+    this.densityEstimator = preference.getDensityEstimator();
     this.removalPolicy = removalPolicy ;
   }
 
