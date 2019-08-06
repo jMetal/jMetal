@@ -56,12 +56,12 @@ public class NSGAIIRNDSemanticRunner extends AbstractAlgorithmRunner {
     constraint2 = solution -> solution.getObjective(1)<=(100-80) ? 0.0 : -1.0 * solution.getObjective(1);
     ((RadioNetworkDesign) problem).addConstraint(constraint1);
     ((RadioNetworkDesign) problem).addConstraint(constraint2);*/
-    OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
+    /*OWLUtils owlUtils = new OWLUtils("jmetal-core/src/main/resources/ontology/traffic-tsp.owl");
     owlUtils.addImport(
-            "//home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/traffic.owl",
+            "/Users/cbarba/Documents/proyectos/jMetal/jmetal-core/src/main/resources/ontology/traffic.owl",
             "http://www.khaos.uma.es/perception/traffic/khaosteam");
     owlUtils.addImport(
-            "/home/cbarba/Documents/projectIdea/jmetal/jmetal-core/src/main/resources/ontology/bigowl.owl",
+            "/Users/cbarba/Documents/proyectos/jMetal/jmetal-core/src/main/resources/ontology/bigowl.owl",
             "http://www.khaos.uma.es/perception/bigowl");
     owlUtils.loadOntology();
     List<Function<BinarySolution, Double>> constraintList =
@@ -70,7 +70,7 @@ public class NSGAIIRNDSemanticRunner extends AbstractAlgorithmRunner {
       for (Function<BinarySolution, Double> constraint : constraintList) {
         ((RadioNetworkDesign) problem).addConstraint(constraint);
       }
-    }
+    }*/
     int populationSize = 100 ;
      algorithm = new NSGAIIBuilder<BinarySolution>(
            problem,
