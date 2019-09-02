@@ -18,8 +18,8 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   protected List<Pair<Integer, Integer>> bounds;
 
   /** Constructor */
-  public DefaultIntegerSolution(List<Pair<Integer, Integer>> bounds, int numberOfObjectives) {
-    super(bounds.size(), numberOfObjectives);
+  public DefaultIntegerSolution(List<Pair<Integer, Integer>> bounds, int numberOfObjectives, int numberOfConstraints) {
+    super(bounds.size(), numberOfObjectives, numberOfConstraints);
 
     this.bounds = bounds ;
 
@@ -29,9 +29,17 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
     }
   }
 
+  /** Constructor */
+  public DefaultIntegerSolution(
+      List<Pair<Integer, Integer>> bounds,
+      int numberOfObjectives) {
+    this(bounds, numberOfObjectives, 0) ;
+  }
+
+
   /** Copy constructor */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives());
+    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints());
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       setVariable(i, solution.getVariable(i));
@@ -39,6 +47,10 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i));
+    }
+
+    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+      setConstraint(i, solution.getConstraint(i));
     }
 
     bounds = solution.bounds;
