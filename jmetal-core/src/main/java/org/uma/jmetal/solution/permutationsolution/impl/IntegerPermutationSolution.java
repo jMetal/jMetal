@@ -1,4 +1,4 @@
-package org.uma.jmetal.solution.permutationsolution.integerpermutation;
+package org.uma.jmetal.solution.permutationsolution.impl;
 
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
