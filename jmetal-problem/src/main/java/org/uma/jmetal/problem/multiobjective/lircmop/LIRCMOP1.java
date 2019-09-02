@@ -46,6 +46,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     solution.setObjective(0, x[0] + g1(x));
     solution.setObjective(1, 1 - x[0] * x[0] + g2(x));
 
+    /*
     double sum1 = 0.0, sum2 = 0.0, yj;
     for (int j = 2; j <= getNumberOfVariables(); j++) {
       if (j % 2 == 1) {
@@ -57,7 +58,6 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
       }
     }
 
-    /*
     System.out.println("sum1: " + sum1) ;
     System.out.println("sum2: " + sum2) ;
     System.out.println("g1  : " + g1(x)) ;

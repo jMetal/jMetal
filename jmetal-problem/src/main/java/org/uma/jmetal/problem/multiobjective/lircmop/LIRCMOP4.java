@@ -30,6 +30,6 @@ public class LIRCMOP4 extends LIRCMOP2 {
 
     solution.setConstraint(0, (a - g1(x)) * (g1(x) - b));
     solution.setConstraint(1, (a - g2(x)) * (g2(x) - b));
-    solution.setConstraint(2, Math.sin(c * Math.PI * x[0] - 0.5));
+    solution.setConstraint(2, Math.sin(c * Math.PI * x[0]) - 0.5);
   }
 }

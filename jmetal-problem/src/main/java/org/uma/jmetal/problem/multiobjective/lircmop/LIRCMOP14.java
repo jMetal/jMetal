@@ -16,6 +16,7 @@ public class LIRCMOP14 extends LIRCMOP13 {
   /** Constructor */
   public LIRCMOP14(int numberOfVariables) {
     super(numberOfVariables);
+    setNumberOfConstraints(3);
     setName("LIRCMOP14");
   }
 
