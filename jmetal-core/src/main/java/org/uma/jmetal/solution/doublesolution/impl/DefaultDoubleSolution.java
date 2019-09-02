@@ -20,7 +20,8 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
   /** Constructor */
   public DefaultDoubleSolution(
       List<Pair<Double, Double>> bounds,
-      int numberOfObjectives, int numberOfConstraints) {
+      int numberOfObjectives,
+      int numberOfConstraints) {
     super(bounds.size(), numberOfObjectives, numberOfConstraints) ;
 
     this.bounds = bounds ;
