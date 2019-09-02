@@ -43,21 +43,23 @@ public class SelectionParameter extends CategoricalParameter<String> {
       case "tournament":
         int tournamentSize =
                 (Integer) findSpecificParameter("selectionTournamentSize").getValue();
+        /*
         String rankingName = (String) findSpecificParameter("rankingForSelection").getValue() ;
         String densityEstimatorName = (String) findSpecificParameter("densityEstimatorForSelection").getValue() ;
         Ranking<?> ranking ;
         if (rankingName.equals("dominanceRanking")) {
-          ranking = new DominanceRanking<>();
         } else {
           ranking = new StrengthRanking<>() ;
         }
 
         DensityEstimator<?> densityEstimator ;
         if (densityEstimatorName.equals("crowdingDistance")){
-          densityEstimator = new CrowdingDistanceDensityEstimator<>();
         } else {
           densityEstimator = new KnnDensityEstimator<>(1) ;
         }
+        */
+        Ranking<?> ranking = new DominanceRanking<>();
+        DensityEstimator<?> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
         MultiComparator<?> rankingAndCrowdingComparator =
             new MultiComparator(

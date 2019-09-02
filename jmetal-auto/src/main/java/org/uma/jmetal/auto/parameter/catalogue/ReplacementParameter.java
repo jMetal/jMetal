@@ -47,6 +47,7 @@ public class ReplacementParameter extends CategoricalParameter<String> {
         String rankingName = (String) findSpecificParameter("rankingForReplacement").getValue();
         String densityEstimatorName =
             (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
+
         Ranking<?> ranking;
         if (rankingName.equals("dominanceRanking")) {
           ranking = new DominanceRanking<>();
@@ -60,6 +61,7 @@ public class ReplacementParameter extends CategoricalParameter<String> {
         } else {
           densityEstimator = new KnnDensityEstimator<>(1);
         }
+
         if (removalPolicy.equals("oneShot")) {
           result =
               new RankingAndDensityEstimatorReplacement(

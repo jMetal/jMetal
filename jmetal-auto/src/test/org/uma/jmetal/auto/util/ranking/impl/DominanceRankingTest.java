@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class StrengthRankingTest {
+public class DominanceRankingTest {
 
   @Test
   public void shouldRankingAssignZeroToAllTheSolutionsIfTheyAreNonDominated() {
@@ -47,7 +47,7 @@ public class StrengthRankingTest {
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4) ;
 
-    Ranking<Solution<?>> ranking = new StrengthRanking<>() ;
+    Ranking<Solution<?>> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(solutionList);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -55,6 +55,7 @@ public class StrengthRankingTest {
     assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
     assertEquals(0, solution3.getAttribute(ranking.getAttributeId()));
     assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
+
   }
 
   @Test
@@ -95,7 +96,7 @@ public class StrengthRankingTest {
 
     List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
-    Ranking<DoubleSolution> ranking = new StrengthRanking<>() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(solutionList);
 
     assertEquals(2, ranking.getNumberOfSubFronts());

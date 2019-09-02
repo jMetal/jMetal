@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.nsgaii;
+package org.uma.jmetal.auto.algorithm.spea2;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.component.evaluation.Evaluation;
@@ -16,8 +16,10 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
+import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AutoNSGAII {
+public class AutoSPEA2 {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -152,7 +154,7 @@ public class AutoNSGAII {
   }
 
   /**
-   * Creates an instance of NSGA-II from the parsed parameters
+   * Creates an instance of SPEA2 from the parsed parameters
    *
    * @return
    */
@@ -166,34 +168,33 @@ public class AutoNSGAII {
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
-    Ranking<DoubleSolution> ranking = new DominanceRanking<>(new DominanceComparator<>());
-    DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-    MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
+    Ranking<DoubleSolution> ranking = new StrengthRanking<>(new DominanceComparator<>());
+    DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
+    MultiComparator<DoubleSolution> rankingAndDensityEstimatorComparator =
         new MultiComparator<DoubleSolution>(
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
-
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>) variationParameter.getParameter();
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
-                variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+                variation.getMatingPoolSize(), rankingAndDensityEstimatorComparator);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new EvolutionaryAlgorithm(
-            "NSGA-II",
+            "SPEA2",
             evaluation,
             initialSolutionsCreation,
             termination,
@@ -212,7 +213,7 @@ public class AutoNSGAII {
   public static void main(String[] args) {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
+                + "--referenceFrontFileName ZDT4.pf "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
@@ -231,16 +232,16 @@ public class AutoNSGAII {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseAndCheckParameters(parameters);
+    AutoSPEA2 spea2WithParameters = new AutoSPEA2();
+    spea2WithParameters.parseAndCheckParameters(parameters);
 
-    nsgaiiWithParameters.print(nsgaiiWithParameters.fixedParameterList);
-    nsgaiiWithParameters.print(nsgaiiWithParameters.autoConfigurableParameterList);
+    spea2WithParameters.print(spea2WithParameters.fixedParameterList);
+    spea2WithParameters.print(spea2WithParameters.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
-    nsgaII.run();
+    EvolutionaryAlgorithm<DoubleSolution> spea2 = spea2WithParameters.create();
+    spea2.run();
 
-    new SolutionListOutput(nsgaII.getResult())
+    new SolutionListOutput(spea2.getResult())
         .setSeparator("\t")
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
