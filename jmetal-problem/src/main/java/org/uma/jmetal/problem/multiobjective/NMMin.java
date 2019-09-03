@@ -19,7 +19,7 @@ public class NMMin extends AbstractIntegerProblem {
   private int valueM ;
 
   public NMMin() {
-    this(10, 100, -100, -1000, +1000);
+    this(20, 100, -100, -1000, +1000);
   }
 
   /** Constructor */

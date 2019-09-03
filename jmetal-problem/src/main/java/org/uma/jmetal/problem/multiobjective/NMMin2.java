@@ -76,7 +76,7 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
       approximationToM += Math.abs(valueM - integerVariables.get(i));
     }
 
-    List<Double> doubleVariables = ((DoubleSolution) solution.getVariable(0)).getVariables();
+    List<Double> doubleVariables = ((DoubleSolution) solution.getVariable(1)).getVariables();
     for (int i = 0; i < integerVariables.size(); i++) {
       approximationToN += Math.abs(valueN - doubleVariables.get(i));
       approximationToM += Math.abs(valueM - doubleVariables.get(i));
