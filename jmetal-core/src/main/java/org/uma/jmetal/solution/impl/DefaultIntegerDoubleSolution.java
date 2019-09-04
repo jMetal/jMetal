@@ -33,7 +33,7 @@ public class DefaultIntegerDoubleSolution
 
   /** Copy constructor */
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
-    super(solution.problem) ;
+    this(solution.problem) ;
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       setObjective(i, solution.getObjective(i)) ;
