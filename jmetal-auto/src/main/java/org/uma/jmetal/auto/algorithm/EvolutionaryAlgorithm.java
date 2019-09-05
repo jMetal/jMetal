@@ -38,6 +38,17 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   private final String name;
 
+  /**
+   * Constructor
+   * @param name Algorithm name
+   * @param evaluation
+   * @param initialPopulationCreation
+   * @param termination
+   * @param selection
+   * @param variation
+   * @param replacement
+   * @param externalArchive
+   */
   public EvolutionaryAlgorithm(
       String name,
       Evaluation<S> evaluation,
@@ -58,6 +69,27 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
+  }
+
+  /**
+   * Constructor
+   * @param name Algorithm name
+   * @param evaluation
+   * @param initialPopulationCreation
+   * @param termination
+   * @param selection
+   * @param variation
+   * @param replacement
+   */
+  public EvolutionaryAlgorithm(
+          String name,
+          Evaluation<S> evaluation,
+          InitialSolutionsCreation<S> initialPopulationCreation,
+          Termination termination,
+          MatingPoolSelection<S> selection,
+          Variation<S> variation,
+          Replacement<S> replacement) {
+    this(name, evaluation, initialPopulationCreation, termination, selection, variation, replacement, null) ;
   }
 
   public void run() {

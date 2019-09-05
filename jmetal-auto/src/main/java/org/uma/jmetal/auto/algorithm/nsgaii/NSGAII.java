@@ -43,7 +43,6 @@ public class NSGAII {
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
-    int archiveMaximumSize = 100 ;
     int maxNumberOfEvaluations = 25000;
 
     RepairDoubleSolution crossoverSolutionRepair = new RepairDoubleSolutionWithRandomValue();
