@@ -393,4 +393,12 @@ public class SMPSORP
       leaders.get(i).changeReferencePoint(referencePoints.get(i));
     }
   }
+
+  public List<DoubleSolution> getReferencePointSolutions() {
+    return referencePointSolutions;
+  }
+
+  public void setReferencePointSolutions(List<DoubleSolution> referencePointSolutions) {
+    this.referencePointSolutions = referencePointSolutions;
+  }
 }

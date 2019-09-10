@@ -31,6 +31,9 @@ If you are interested in contributing with your ideas and comments, please take 
 ### Features
 ### Bugs
 * Fixed a bug in class `ComputeQualityIndicators`
+* Fixed a bug in class `ExtendedPseudoRandomgGenerator` (issue #312)
+* Fixed a bug in algorithm PESA2
+* Fixed a bug in class `DefaultIntegerDoubleSolution` (issue #336)
 
 ## jMetal documentation
 The documentation is hosted in https://github.com/jMetal/jMetalDocumentation
