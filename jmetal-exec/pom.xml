@@ -7,6 +7,7 @@
         <artifactId>jmetal</artifactId>
         <version>6.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>jmetal-exec</artifactId>
     <packaging>jar</packaging>
 
