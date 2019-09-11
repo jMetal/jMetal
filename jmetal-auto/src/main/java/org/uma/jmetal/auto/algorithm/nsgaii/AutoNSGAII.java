@@ -245,8 +245,5 @@ public class AutoNSGAII {
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
         .print();
-
-    // NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    // nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
   }
 }
