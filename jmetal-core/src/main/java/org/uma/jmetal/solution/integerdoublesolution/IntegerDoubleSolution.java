@@ -1,6 +1,5 @@
 package org.uma.jmetal.solution.integerdoublesolution;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
