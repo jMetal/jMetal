@@ -41,7 +41,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
       double mutationProbability,
       RandomGenerator<Double> mutationRandomGenerator,
       BoundedRandomGenerator<Integer> positionRandomGenerator) {
-    Check.isValidProbability(mutationProbability);
+    Check.probabilityIsValid(mutationProbability);
     this.mutationProbability = mutationProbability;
     this.mutationRandomGenerator = mutationRandomGenerator;
     this.positionRandomGenerator = positionRandomGenerator;

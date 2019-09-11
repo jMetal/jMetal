@@ -32,7 +32,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
   /** Constructor */
   public HUXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
-    Check.isValidProbability(crossoverProbability) ;
+    Check.probabilityIsValid(crossoverProbability) ;
 
     this.crossoverProbability = crossoverProbability;
     this.randomGenerator = randomGenerator;
@@ -51,7 +51,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
 
   /** Execute() method */
   public List<BinarySolution> execute(List<BinarySolution> parents) {
-    Check.that(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
+    Check.isTrue(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
 
     return doCrossover(crossoverProbability, parents.get(0), parents.get(1));
   }

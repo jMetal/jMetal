@@ -37,7 +37,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
   public S execute(List<S> solutionList) {
     Check.isNotNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
-    Check.that(
+    Check.isTrue(
         solutionList.size() >= numberOfSolutionsToBeReturned,
         "The solution list size ("
             + solutionList.size()
