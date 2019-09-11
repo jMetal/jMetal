@@ -4,6 +4,9 @@ import org.uma.jmetal.util.checking.exception.*;
 
 import java.util.Collection;
 
+/**
+ * Static class for error checking
+ */
 public class Check {
   public static void isNotNull(Object object) {
     if (null == object) {
