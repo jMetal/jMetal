@@ -7,8 +7,7 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.awt.*;
 import java.awt.geom.Area;
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -349,12 +348,12 @@ public class Qom extends AbstractDoubleProblem {
   double peakQV_ = 0;
   double peakQT_ = 0;
   
-  public Qom() {
+  public Qom(String qomDataFile) {
     line_ = 0;
-    Qom_Initialize();
+    Qom_Initialize(qomDataFile);
   }
 
-  public void Qom_Initialize() {
+  public void Qom_Initialize(String qomDataFile) {
 
     // name of class and problem
     setName("Qom");
@@ -362,7 +361,7 @@ public class Qom extends AbstractDoubleProblem {
     System.out.println("Qom a simple model of losses and excesses");
     System.out.println("Qom-Clark V2.0 (2017/07/14) a rainfall-runoff model");
     // read definition problem
-    Qom_ReadProblems("Qom.txt");
+    Qom_ReadProblems(qomDataFile);
     // dataset read files
     System.out.println("Problem file: " + file_);
     Qom_ReadFileBasin(file_ + ".basin");
@@ -504,12 +503,12 @@ public class Qom extends AbstractDoubleProblem {
 
       solution.setObjective(i, fx[i]);
     }
-    // END OBJETIVES FUNCTION
 
     VHo_ = SumVolumeOfHydrograph(Vo_);
     VHc_ = SumVolumeOfHydrograph(Vc_);
 
     numberOfEval_++;
+    this.evaluateConstraints(solution);
   } // evaluate
 
   /**
@@ -1848,10 +1847,19 @@ public class Qom extends AbstractDoubleProblem {
     selectedOF_ = new String[2];
 
     try {
+      InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
+
+      if (inputStream == null) {
+        inputStream = new FileInputStream("Qom.txt");
+      }
+
+      InputStreamReader isr = new InputStreamReader(inputStream);
+      BufferedReader br = new BufferedReader(isr);
+
       // create a File instance
-      java.io.File file = new java.io.File(fileName);
+      //java.io.File file = new java.io.File(fileName);
       // create a Scanner for the file
-      Scanner input = new Scanner(file);
+      Scanner input = new Scanner(br);
       // Head read
       lineN++;
       line = input.nextLine();
@@ -1923,12 +1931,14 @@ public class Qom extends AbstractDoubleProblem {
       input.close();
 
       // for validation at VAR jMetal file
+      /*
       if (test_ == -1) {
         // count amount lines
         String directory = "C:/jMetal_5.0_Home/Qom/QomStudy/pareto_fronts/";
         fileLoad = directory + "ReferenceFrontAndVariableStudy-jMetal.txt";
-        file = new java.io.File(fileLoad);
-        Scanner s = new Scanner(file);
+        //java.io.File file = new java.io.File(fileName);
+        //file = new java.io.File(fileLoad);
+        Scanner s = new Scanner(br);
         maxLine_ = -1; // head
         do {
           String linea = s.nextLine();
@@ -1940,8 +1950,8 @@ public class Qom extends AbstractDoubleProblem {
         // read variables in VAR jMetal file
         fd_ = new double[maxLine_][getNumberOfObjectives()];
         var_ = new double[maxLine_][getNumberOfVariables()];
-        file = new java.io.File(fileLoad);
-        s = new Scanner(file);
+        //file = new java.io.File(fileLoad);
+        s = new Scanner(br);
         String linea = s.nextLine(); // head
         i = 0;
         do {
@@ -1961,6 +1971,7 @@ public class Qom extends AbstractDoubleProblem {
         // close the file
         input.close();
       }
+      */
     } catch (Exception ex) {
       System.out.println(
           "ERROR in file: " + fileLoad + " - (" + ex.getMessage() + ") in line No:" + lineN);
@@ -2350,9 +2361,8 @@ public class Qom extends AbstractDoubleProblem {
       System.out.println("*.basin file has been read");
 
     } catch (Exception ex) {
-      System.out.println(
+      throw new RuntimeException(
           "ERROR in file: " + fileName + " - (" + ex.getMessage() + ") in line No:" + lineN);
-      System.exit(1);
     }
   }
 
