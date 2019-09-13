@@ -21,8 +21,10 @@ project = 'jmetal'
 copyright = '2019, Antonio J. Nebro'
 author = 'Antonio J. Nebro'
 
+highlight_language = 'java'
+
 # The full version, including alpha/beta/rc tags
-release = '6.0'
+release = '6.0-SNAPSHOT'
 
 
 # -- General configuration ---------------------------------------------------
@@ -53,3 +55,5 @@ html_theme = 'alabaster'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+show_authors = 'true'
