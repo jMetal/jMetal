@@ -2,6 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.Operator;
+import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmBuilder;
@@ -28,7 +30,7 @@ public class PESA2Builder<S extends Solution<?>> implements AlgorithmBuilder<PES
   public PESA2Builder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator) {
     this.problem = problem;
-    maxEvaluations = 250;
+    maxEvaluations = 25000;
     populationSize = 100;
     archiveSize = 100 ;
     biSections = 5 ;

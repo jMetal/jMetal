@@ -57,7 +57,7 @@ public class PESA2Runner extends AbstractAlgorithmRunner {
 
     algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
         .setMaxEvaluations(25000)
-        .setPopulationSize(10)
+        .setPopulationSize(100)
         .setArchiveSize(100)
         .setBisections(5)
         .build() ;
