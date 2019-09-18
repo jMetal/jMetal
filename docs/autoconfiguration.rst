@@ -1,14 +1,13 @@
 Auto-configuration of evolutionary algorithms: NSGA-II
 =====================================================
 
-Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and
-irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832)
+Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832)
 
 Motivation
 ----------
 A current trend in multi-objective optimization is to use automatic parameter configuration tools to find accurate settings of metaheuristics to effectively solve a number of problems. The idea is to avoid the traditional approach of carrying out a number of pilot tests, which are typically conducted without following a systematic strategy. In this context, an algorithm configuration is a complete assignment of values to all required parameters of the algorithm.
 
-The autoconfiguration tool we have selected is irace, an R package that implements an
+The auto-configuration tool we have selected is irace, an R package that implements an
 elitist iterated racing algorithm, where algorithm configurations
 are sampled from a sampling distribution, uniformly at random at the beginning, but biased towards the best configurations found in later iterations. At each iteration, the generated configurations and
 the "elite" ones from previous iterations are raced by evaluating
@@ -39,7 +38,7 @@ The parameters or components of NSGA-II that can be adjusted are included in thi
 +---------------------------------------+-----------------------------------------------------+
 | Parameter name                        | Allowed values                                      | 
 +=======================================+=====================================================+
-| *algorithmResult*                     | *externalArchive*, *population*                      |
+| *algorithmResult*                     | *externalArchive*, *population*                     |
 +---------------------------------------+-----------------------------------------------------+
 | *populationSize*                      | 100                                                 |
 +---------------------------------------+-----------------------------------------------------+ 
@@ -86,6 +85,33 @@ The *autoNSGAII* has a *variation* component than can take a single value named 
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
+As we intend to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships. We have created then a file called ``parameters-NSGAII.txt`` containing the required data:: 
+
+  algorithmResult                          "--algorithmResult "                     c       (externalArchive,population)
+  populationSize                           "--populationSize "                      o       (100)                          
+  populationSizeWithArchive                "--populationSizeWithArchive "           o       (10,20,50,100,200)         | algorithmResult %in% c("externalArchive")
+  #
+  maximumNumberOfEvaluations               "--maximumNumberOfEvaluations "          c       (25000)
+  createInitialSolutions                   "--createInitialSolutions "              c       (random,latinHypercubeSampling,scatterSearch)
+  #
+  variation                                "--variation "                           c       (crossoverAndMutationVariation)
+  offspringPopulationSize                  "--offspringPopulationSize "             o       (1,10,50,100)               
+  crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)               
+  crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
+  crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA")
+  sbxDistributionIndex                     "--sbxDistributionIndex "                r       (5.0, 400.0)                   | crossover %in% c("SBX")
+  blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
+  mutation                                 "--mutation "                            c       (uniform, polynomial)          
+  mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("uniform","polynomial")
+  mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial")
+  polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
+  uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
+  #
+  selection                                "--selection "                           c       (tournament, random)
+  selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
+  #
+
+To know about the syntax of irace configuration files, please refer to the irace documentation. 
 
 ``AutoNSGA-II`` implementation
 ------------------------------
