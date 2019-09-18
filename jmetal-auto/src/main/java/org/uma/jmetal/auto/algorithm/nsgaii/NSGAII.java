@@ -97,7 +97,6 @@ public class NSGAII {
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
-    algorithm.getObservable().register(new RunTimeChartObserver<>("EVALS", 80, referenceParetoFront));
     //evaluation.getObservable().register(boundedArchiveObserver);
 
     algorithm.run();

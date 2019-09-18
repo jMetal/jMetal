@@ -45,7 +45,7 @@ public class NSGAIIWithParameters {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "jmetal-problem/src/main/resources/pareto_fronts/ZDT1.pf");
+            "NSGA-II", 80, "/pareto_fronts/ZDT1.pf");
 
     nsgaII.getObservable().register(evaluationObserver);
     nsgaII.getObservable().register(runTimeChartObserver);
