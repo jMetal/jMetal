@@ -215,7 +215,6 @@ public class AutoNSGAIIirace {
                     .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
     double obtainedFrontHV =
             new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-    //System.out.println(obtainedFrontHV);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
   }
 }

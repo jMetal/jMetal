@@ -1,4 +1,4 @@
-Autoconfiguration of evolutionary algorithms: NSGA-II
+Auto-configuration of evolutionary algorithms: NSGA-II
 =====================================================
 
 Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and
@@ -17,9 +17,7 @@ decide which configurations should be eliminated from the race.
 When the race terminates, the surviving configurations become
 elites for the next iteration.
 
-The issue we studied in the aformentioned paper is how to use jMetal combined with irace to allow the automatic configuration of multiobjective metaheuristics. As this is our first approximation to this matter, we decided to focus on NSGA-II and its use to solve continuous problems.
-
-
+The issue we studied in the aforementioned paper is how to use jMetal combined with irace to allow the automatic configuration of multiobjective metaheuristics. As this is our first approximation to this matter, we decided to focus on NSGA-II and its use to solve continuous problems.
 
 
 NSGA-II parameters
@@ -41,7 +39,7 @@ The parameters or components of NSGA-II that can be adjusted are included in thi
 +---------------------------------------+-----------------------------------------------------+
 | Parameter name                        | Allowed values                                      | 
 +=======================================+=====================================================+
-| *algorithmResult*                     | *extenalArchive*, *population*                      |
+| *algorithmResult*                     | *externalArchive*, *population*                      |
 +---------------------------------------+-----------------------------------------------------+
 | *populationSize*                      | 100                                                 |
 +---------------------------------------+-----------------------------------------------------+ 
@@ -84,14 +82,18 @@ In the classical NSGA-II, the offspring population size is equal to the populati
 
 The initial population is typically filled with randomly created solutions, but we also allows to use a latin hypercube sampling scheme and a strategy similar to the one used in the scatter search algorithm.
 
-The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossver* operators included are *SBX* (simulated binary crossover) and *BLX_Alpha*, which ara featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossver produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_Alpha* require, if selected, a distribution index (a value in the range [5.0, 400]) and an alpha value (in the range [0.0, 1.0]), respectively. Similarly, there are two possible mutation operators to choose from, *polynomial* and *uniform*, requiring both a mutation probability and a repairing strategy; the polymial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* mutation needs a perturbation value (in the range [0.0, 1.0]).
+The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_Alpha*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_Alpha* require, if selected, a distribution index (a value in the range [5.0, 400]) and an alpha value (in the range [0.0, 1.0]), respectively. Similarly, there are two possible mutation operators to choose from, *polynomial* and *uniform*, requiring both a mutation probability and a repairing strategy; the polynomial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* mutation needs a perturbation value (in the range [0.0, 1.0]).
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
 
-Evolutionary algorithm template
--------------------------------
-The following code snippet include the most relevant parts of the ``ÈvolutionaryAlgorithm`` class, which is the algorithm template we have defined for developing autoconfigurable metaheuristics. It is not an abstract but a regular class containing the basic components of an evolutionary algorithm, including the selection, variation and replacement steps. 
+``AutoNSGA-II`` implementation
+------------------------------
+Once we have defined the parameters of NSGA-II that can be tuned, the next issue to deal with is to have an implementation of the algorithm that can be configured with any valid combination of parameter values. The implementation of NSGA-II provided by jMetal is based on inheritance from the ``AbstractEvolutionaryAlgorithm`` class, so adapting it for auto-configuration is not a simple task, so our decision has been to create a new Maven subproject, called ``jmetal-auto`` from scratch and include in it all the classes related to the auto-configuration of metaheuristics. This way we do not interfere in the existing code, but with the disadvantage that we are going to have duplications of some functionalities. In particular, 
+
+
+
+The following code snippet include the most relevant parts of the ``EvolutionaryAlgorithm`` class, which is the algorithm template we have defined for developing autoconfigurable metaheuristics. It is not an abstract but a regular class containing the basic components of an evolutionary algorithm, including the selection, variation and replacement steps. 
 
 
 .. code-block:: java
