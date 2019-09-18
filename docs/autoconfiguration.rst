@@ -1,7 +1,8 @@
 Autoconfiguration of evolutionary algorithms: NSGA-II
 =====================================================
 
-Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: )
+Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and
+irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832)
 
 Motivation
 ----------
