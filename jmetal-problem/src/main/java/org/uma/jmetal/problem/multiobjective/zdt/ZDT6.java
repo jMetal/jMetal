@@ -25,6 +25,10 @@ import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem ZDT6
+ * Difined in
+ * E. Zitzler, K. Deb, and L. Thiele, "Comparison of Multiobjective
+ * Evolutionary Algorithms: Empirical Results," Evolutionary Computation,
+ * vol. 8, no. 2, pp. 173-195, 2000, doi: 10.1162/106365600568202.
  */
 @SuppressWarnings("serial")
 public class ZDT6 extends ZDT1 {
@@ -43,6 +47,22 @@ public class ZDT6 extends ZDT1 {
     super(numberOfVariables) ;
     setName("ZDT6");
   }
+
+  /** Evaluate() method */
+  public void evaluate(DoubleSolution solution) {
+    double[] f = new double[getNumberOfObjectives()];
+
+    double x1;
+    x1 = solution.getVariableValue(0);
+    f[0] = 1 - Math.exp(-4 * x1) * Math.pow(Math.sin(6 * Math.PI * x1), 6);
+    double g = this.evalG(solution);
+    double h = this.evalH(f[0], g);
+    f[1] = h * g;
+
+    solution.setObjective(0, f[0]);
+    solution.setObjective(1, f[1]);
+  }
+
 
   /**
    * Returns the value of the ZDT6 function G.
