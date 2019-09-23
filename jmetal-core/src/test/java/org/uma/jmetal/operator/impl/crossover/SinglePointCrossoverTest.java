@@ -9,6 +9,8 @@ import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -46,14 +48,14 @@ public class SinglePointCrossoverTest {
     assertEquals(crossoverProbability, crossover.getCrossoverProbability(), EPSILON) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
     SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
 
     crossover.execute(null) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsOnlyOneSolution() {
     MockBinaryProblem problem = new MockBinaryProblem(1) ;
     SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;
@@ -63,7 +65,7 @@ public class SinglePointCrossoverTest {
     crossover.execute(solutions) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldExecuteFailIfTheListContainsMoreThanTwoSolutions() {
     MockBinaryProblem problem = new MockBinaryProblem(1) ;
     SinglePointCrossover crossover = new SinglePointCrossover(0.1) ;

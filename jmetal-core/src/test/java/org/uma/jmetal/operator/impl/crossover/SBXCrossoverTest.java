@@ -13,6 +13,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -56,7 +57,7 @@ public class SBXCrossoverTest {
     new SBXCrossover(crossoverProbability, 2.0) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
     double distributionIndex = -0.1 ;
     new SBXCrossover(0.1, distributionIndex) ;

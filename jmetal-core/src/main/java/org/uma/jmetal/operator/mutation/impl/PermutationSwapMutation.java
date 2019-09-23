@@ -2,7 +2,6 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -42,7 +41,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
       double mutationProbability,
       RandomGenerator<Double> mutationRandomGenerator,
       BoundedRandomGenerator<Integer> positionRandomGenerator) {
-    Check.isValidProbability(mutationProbability);
+    Check.probabilityIsValid(mutationProbability);
     this.mutationProbability = mutationProbability;
     this.mutationRandomGenerator = mutationRandomGenerator;
     this.positionRandomGenerator = positionRandomGenerator;

@@ -37,7 +37,7 @@ public abstract class Parameter<T> {
 
   private String retrieve(String[] args, String key) {
     int index = Arrays.asList(args).indexOf(key);
-    Check.that(index != -1 && index != args.length - 1, "Missing parameter: " + key);
+    Check.isTrue(index != -1 && index != args.length - 1, "Missing parameter: " + key);
     //if (index == -1 || index == args.length - 1) {
     //  throw new MissingParameterException(key);
     //} else {

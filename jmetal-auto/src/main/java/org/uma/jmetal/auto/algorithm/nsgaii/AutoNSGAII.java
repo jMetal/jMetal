@@ -208,7 +208,7 @@ public class AutoNSGAII {
   public static void print(List<Parameter<?>> parameterList) {
     parameterList.forEach(item -> System.out.println(item));
   }
-
+  /*
   public static void main(String[] args) {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -245,8 +245,6 @@ public class AutoNSGAII {
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
         .print();
-
-    // NSGAIIiraceParameterFile nsgaiiiraceParameterFile = new NSGAIIiraceParameterFile();
-    // nsgaiiiraceParameterFile.generateConfigurationFile(nsgaiiWithParameters.autoConfigurableParameterList);
   }
+  */
 }

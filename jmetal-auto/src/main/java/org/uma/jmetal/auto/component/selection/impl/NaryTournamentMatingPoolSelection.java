@@ -4,9 +4,7 @@ import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
 import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

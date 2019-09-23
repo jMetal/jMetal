@@ -1,13 +1,10 @@
 package org.uma.jmetal.auto.util.densityestimator.impl;
 
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

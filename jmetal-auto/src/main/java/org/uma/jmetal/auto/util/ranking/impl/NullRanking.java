@@ -5,13 +5,10 @@ import org.uma.jmetal.auto.util.attribute.util.attributecomparator.impl.IntegerV
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * This class a null ranking scheme, i.e., the result is a set with all the solutions (no ranking is applied)

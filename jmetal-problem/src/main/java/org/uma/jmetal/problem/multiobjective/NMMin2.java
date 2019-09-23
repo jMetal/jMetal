@@ -3,14 +3,10 @@ package org.uma.jmetal.problem.multiobjective;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.AbstractGenericProblem;
-import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integerdoublesolution.IntegerDoubleSolution;
 import org.uma.jmetal.solution.integerdoublesolution.impl.DefaultIntegerDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 
 import java.util.ArrayList;
 import java.util.List;

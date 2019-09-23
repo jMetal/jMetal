@@ -7,10 +7,8 @@ import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.DominanceRanking;
-import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;
