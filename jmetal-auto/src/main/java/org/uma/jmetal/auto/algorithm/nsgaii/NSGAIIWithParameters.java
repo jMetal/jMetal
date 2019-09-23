@@ -1,12 +1,12 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.observer.impl.WriteSolutionsToFilesObserver;
 
 public class NSGAIIWithParameters {
 
@@ -46,9 +46,11 @@ public class NSGAIIWithParameters {
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, "/pareto_fronts/ZDT1.pf");
+    WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);
     nsgaII.getObservable().register(runTimeChartObserver);
+    nsgaII.getObservable().register(writeSolutionsToFilesObserver);
 
     nsgaII.run();
 
