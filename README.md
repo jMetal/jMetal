@@ -27,11 +27,18 @@ The jMetal development version is hosted in this repository; this way, intereste
 If you are interested in contributing with your ideas and comments, please take a look at the current discussions in the [Issues section](https://github.com/jMetal/jMetal/issues).
 
 ## Changelog of the next incoming release (jMetal 5.8)
+
 ### Algorithms
+
 * Add class [`GMOCellRunner`](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/GMOCellRunner.java). This class shows how MOCell can be configured to select a priori a region of the Pareto
 accorring by indicating a reference point.
+
 ### Features
+
+* New implementation of the WFG hypervolume. Contribution of Alejandro Santiago.
+
 ### Bugs
+
 * Fixed a bug in class `ComputeQualityIndicators`
 * Fixed a bug in class `ExtendedPseudoRandomgGenerator` (issue #312)
 * Fixed a bug in algorithm PESA2
