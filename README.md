@@ -28,6 +28,8 @@ If you are interested in contributing with your ideas and comments, please take 
 
 ## Changelog of the next incoming release (jMetal 5.8)
 ### Algorithms
+* Add class [`GMOCellRunner`](https://github.com/jMetal/jMetal/blob/master/jmetal-exec/src/main/java/org/uma/jmetal/runner/multiobjective/GMOCellRunner.java). This class shows how MOCell can be configured to select a priori a region of the Pareto
+accorring by indicating a reference point.
 ### Features
 ### Bugs
 * Fixed a bug in class `ComputeQualityIndicators`
