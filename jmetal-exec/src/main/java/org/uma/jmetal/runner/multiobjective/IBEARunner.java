@@ -60,14 +60,12 @@ public class IBEARunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>() ;
+    selection = new BinaryTournamentSelection<>() ;
 
-    algorithm = new IBEABuilder(problem)
+    algorithm = new IBEABuilder(problem, crossover, mutation)
       .setArchiveSize(100)
       .setPopulationSize(100)
       .setMaxEvaluations(25000)
-      .setCrossover(crossover)
-      .setMutation(mutation)
       .setSelection(selection)
       .build() ;
 
