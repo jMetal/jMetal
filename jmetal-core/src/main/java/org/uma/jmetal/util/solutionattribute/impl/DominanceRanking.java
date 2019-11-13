@@ -137,7 +137,7 @@ public class DominanceRanking <S extends Solution<?>>
   }
 
   @Override
-  public List<S> getSubFront(int rank) {
+  public List<S> getSubfront(int rank) {
     if (rank >= rankedSubPopulations.size()) {
       throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() -1)) ;
     }
@@ -145,7 +145,7 @@ public class DominanceRanking <S extends Solution<?>>
   }
 
   @Override
-  public int getNumberOfSubFronts() {
+  public int getNumberOfSubfronts() {
     return rankedSubPopulations.size();
   }
 }

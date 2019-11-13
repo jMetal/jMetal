@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Creates a default WFG9 problem with
@@ -134,7 +134,7 @@ public class WFG9 extends WFG {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.getVariableValue(i);
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {

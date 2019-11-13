@@ -2,11 +2,12 @@ package org.uma.jmetal.algorithm.multiobjective.gde3;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class GDE3TestIT {
             .setPopulationSize(100)
             .build() ;
 
-    algorithm.run();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -49,7 +50,7 @@ public class GDE3TestIT {
             .setPopulationSize(100)
             .build() ;
 
-    algorithm.run();
+    new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 

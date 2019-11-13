@@ -3,21 +3,16 @@ package org.uma.jmetal.operator.impl.mutation;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
-import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
-import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
+import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -47,7 +42,7 @@ public class BitFlipMutationTest {
     assertEquals(mutationProbability, mutation.getMutationProbability(), EPSILON) ;
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test (expected = JMetalException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
     BitFlipMutation mutation = new BitFlipMutation(0.1) ;
 
@@ -92,7 +87,7 @@ public class BitFlipMutationTest {
 
     mutation.execute(solution) ;
 
-    assertNotEquals(oldSolution.getVariable(0).get(1), solution.getVariable(0).get(1)) ;
+    assertNotEquals(oldSolution.getVariableValue(0).get(1), solution.getVariableValue(0).get(1)) ;
     verify(randomGenerator, times(4)).getRandomValue();
   }
 
@@ -134,8 +129,8 @@ public class BitFlipMutationTest {
 
     mutation.execute(solution) ;
 
-    assertNotEquals(oldSolution.getVariable(0).get(0), solution.getVariable(0).get(0)) ;
-    assertNotEquals(oldSolution.getVariable(1).get(2), solution.getVariable(1).get(2)) ;
+    assertNotEquals(oldSolution.getVariableValue(0).get(0), solution.getVariableValue(0).get(0)) ;
+    assertNotEquals(oldSolution.getVariableValue(1).get(2), solution.getVariableValue(1).get(2)) ;
     verify(randomGenerator, times(8)).getRandomValue();
  }
 
@@ -159,18 +154,13 @@ public class BitFlipMutationTest {
     }
 
     @Override
-    public int getBitsFromVariable(int index) {
+    protected int getBitsPerVariable(int index) {
       return bitsPerVariable[index] ;
     }
 
     @Override
-    public List<Integer> getListOfBitsPerVariable() {
-      return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
-    }
-
-    @Override
     public BinarySolution createSolution() {
-      return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives()) ;
+      return new DefaultBinarySolution(this) ;
     }
 
     /** Evaluate() method */
@@ -185,8 +175,26 @@ public class BitFlipMutationTest {
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
 		double mutationProbability = 0.1;
+		@SuppressWarnings("serial")
+		BinaryProblem problem = new AbstractBinaryProblem() {
 
-		BinarySolution solution = new DefaultBinarySolution(Arrays.asList(2), 2) ;
+			@Override
+			public void evaluate(BinarySolution solution) {
+				// Do nothing
+			}
+
+			@Override
+			protected int getBitsPerVariable(int index) {
+				return 5;
+			}
+			
+			@Override
+			public int getNumberOfVariables() {
+				return 10;
+			}
+
+		};
+		BinarySolution solution = problem.createSolution();
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

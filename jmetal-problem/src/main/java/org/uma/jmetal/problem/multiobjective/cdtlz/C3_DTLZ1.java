@@ -1,7 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * Problem C3-DTLZ1, defined in:
@@ -13,6 +15,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C3_DTLZ1 extends DTLZ1 {
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+
   /**
    * Constructor
    * @param numberOfVariables
@@ -22,6 +27,9 @@ public class C3_DTLZ1 extends DTLZ1 {
     super(numberOfVariables, numberOfObjectives) ;
 
     setNumberOfConstraints(numberOfConstraints);
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   @Override
@@ -30,7 +38,7 @@ public class C3_DTLZ1 extends DTLZ1 {
     this.evaluateConstraints(solution);
   }
 
-  public void evaluateConstraints(DoubleSolution solution) {
+  private void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     for (int j = 0; j < getNumberOfConstraints(); j++) {
@@ -44,8 +52,16 @@ public class C3_DTLZ1 extends DTLZ1 {
       }
     }
 
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      if (constraint[i]<0.0){
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
+      }
     }
+
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }

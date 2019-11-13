@@ -11,10 +11,16 @@ import org.uma.jmetal.util.distance.Distance;
 public class EuclideanDistanceBetweenSolutionsInObjectiveSpace<S extends Solution<?>>
     implements Distance<S, S> {
 
-  private EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
-
   @Override
   public double getDistance(S solution1, S solution2) {
-    return distance.getDistance(solution1.getObjectives(), solution2.getObjectives()) ;
+    double diff;
+    double distance = 0.0;
+
+    for (int nObj = 0; nObj < solution1.getNumberOfObjectives();nObj++){
+      diff = solution1.getObjective(nObj) - solution2.getObjective(nObj);
+      distance += Math.pow(diff,2.0);
+    }
+
+    return Math.sqrt(distance);
   }
 }

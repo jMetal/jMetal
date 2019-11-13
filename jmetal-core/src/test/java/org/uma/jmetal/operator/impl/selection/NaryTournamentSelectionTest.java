@@ -5,14 +5,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,7 +39,8 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    exception.expect(NullParameterException.class);
+    exception.expect(JMetalException.class);
+    exception.expectMessage(containsString("The solution list is null"));
 
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
     List<IntegerSolution> population ;
@@ -51,7 +49,7 @@ public class NaryTournamentSelectionTest {
     selection.execute(population) ;
   }
 
-  @Test (expected = EmptyCollectionException.class)
+  @Test (expected = JMetalException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
 
@@ -92,7 +90,7 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
+    exception.expect(JMetalException.class);
     exception.expectMessage(containsString("The solution list size (1) is less than " +
         "the number of requested solutions (4)"));
 

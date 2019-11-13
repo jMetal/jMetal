@@ -21,12 +21,10 @@ public class KNearestNeighborhoodTest {
     Solution<?> point1 = mock(Solution.class) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2) ;
 
@@ -46,19 +44,16 @@ public class KNearestNeighborhoodTest {
     when(point1.getNumberOfObjectives()).thenReturn(2) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getNumberOfObjectives()).thenReturn(2) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     Solution<?> point3 = mock(Solution.class) ;
     when(point3.getNumberOfObjectives()).thenReturn(2) ;
     when(point3.getObjective(0)).thenReturn(2.0) ;
     when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
 
@@ -79,19 +74,16 @@ public class KNearestNeighborhoodTest {
     when(point1.getNumberOfObjectives()).thenReturn(2) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getNumberOfObjectives()).thenReturn(2) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     Solution<?> point3 = mock(Solution.class) ;
     when(point3.getNumberOfObjectives()).thenReturn(2) ;
     when(point3.getObjective(0)).thenReturn(2.0) ;
     when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
 
@@ -112,19 +104,16 @@ public class KNearestNeighborhoodTest {
     when(point1.getNumberOfObjectives()).thenReturn(2) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getNumberOfObjectives()).thenReturn(2) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     Solution<?> point3 = mock(Solution.class) ;
     when(point3.getNumberOfObjectives()).thenReturn(2) ;
     when(point3.getObjective(0)).thenReturn(2.0) ;
     when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
 
@@ -145,31 +134,26 @@ public class KNearestNeighborhoodTest {
     when(point1.getNumberOfObjectives()).thenReturn(2) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getNumberOfObjectives()).thenReturn(2) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     Solution<?> point3 = mock(Solution.class) ;
     when(point3.getNumberOfObjectives()).thenReturn(2) ;
     when(point3.getObjective(0)).thenReturn(2.0) ;
     when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
 
     Solution<?> point4 = mock(Solution.class) ;
     when(point4.getNumberOfObjectives()).thenReturn(2) ;
     when(point4.getObjective(0)).thenReturn(3.0) ;
     when(point4.getObjective(1)).thenReturn(3.0) ;
-    when(point4.getObjectives()).thenReturn(new double[]{3.0, 3.0}) ;
 
     Solution<?> point5 = mock(Solution.class) ;
     when(point5.getNumberOfObjectives()).thenReturn(2) ;
     when(point5.getObjective(0)).thenReturn(4.0) ;
     when(point5.getObjective(1)).thenReturn(4.0) ;
-    when(point5.getObjectives()).thenReturn(new double[]{4.0, 4.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3, point4, point5) ;
 
@@ -191,31 +175,26 @@ public class KNearestNeighborhoodTest {
     when(point1.getNumberOfObjectives()).thenReturn(2) ;
     when(point1.getObjective(0)).thenReturn(0.0) ;
     when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
 
     Solution<?> point2 = mock(Solution.class) ;
     when(point2.getNumberOfObjectives()).thenReturn(2) ;
     when(point2.getObjective(0)).thenReturn(1.0) ;
     when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
 
     Solution<?> point3 = mock(Solution.class) ;
     when(point3.getNumberOfObjectives()).thenReturn(2) ;
     when(point3.getObjective(0)).thenReturn(2.0) ;
     when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
 
     Solution<?> point4 = mock(Solution.class) ;
     when(point4.getNumberOfObjectives()).thenReturn(2) ;
     when(point4.getObjective(0)).thenReturn(3.0) ;
     when(point4.getObjective(1)).thenReturn(3.0) ;
-    when(point4.getObjectives()).thenReturn(new double[]{3.0, 3.0}) ;
 
     Solution<?> point5 = mock(Solution.class) ;
     when(point5.getNumberOfObjectives()).thenReturn(2) ;
     when(point5.getObjective(0)).thenReturn(4.0) ;
     when(point5.getObjective(1)).thenReturn(4.0) ;
-    when(point5.getObjectives()).thenReturn(new double[]{4.0, 4.0}) ;
 
     List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3, point4, point5) ;
 

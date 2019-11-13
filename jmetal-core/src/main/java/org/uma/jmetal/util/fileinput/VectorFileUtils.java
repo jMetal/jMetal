@@ -3,6 +3,7 @@ package org.uma.jmetal.util.fileinput;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;

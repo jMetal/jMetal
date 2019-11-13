@@ -3,6 +3,8 @@ package org.uma.jmetal.util.fileinput;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * created at 下午3:54, 2019/1/29
  *

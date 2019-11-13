@@ -1,21 +1,15 @@
 package org.uma.jmetal.operator.impl.mutation;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.solution.util.RepairDoubleSolutionAtBounds;
+import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -75,19 +69,13 @@ public class PolynomialMutationTest {
         .getField(mutation, "distributionIndex"), EPSILON) ;
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
+  @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
     new PolynomialMutation(mutationProbability, 2.0) ;
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
-  public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
-    double mutationProbability = 1.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
-  }
-
-  @Test (expected = InvalidConditionException.class)
+  @Test (expected = JMetalException.class)
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
     double distributionIndex = -0.1 ;
     new PolynomialMutation(0.1, distributionIndex) ;
@@ -105,7 +93,7 @@ public class PolynomialMutationTest {
     assertEquals(30.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test (expected = JMetalException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
     PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
 
@@ -166,9 +154,9 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(
+    assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(
         solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -189,12 +177,11 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    assertThat(solution.getVariableValue(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
+    assertThat(solution.getVariableValue(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
-  @Ignore
   @Test
   public void shouldMutateASingleVariableSolutionWithSameLowerAndUpperBoundsReturnTheBoundValue() {
     @SuppressWarnings("unchecked")
@@ -216,7 +203,7 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertEquals(1.0, solution.getVariable(0), EPSILON) ;
+    assertEquals(1.0, solution.getVariableValue(0), EPSILON) ;
   }
 
   /**
@@ -238,12 +225,13 @@ public class PolynomialMutationTest {
         upperLimit.add(4.0);
       }
 
-      setVariableBounds(lowerLimit, upperLimit);
+      setLowerLimit(lowerLimit);
+      setUpperLimit(upperLimit);
     }
 
     @Override
     public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(getVariableBounds(), getNumberOfObjectives()) ;
+      return new DefaultDoubleSolution(this) ;
     }
 
     /** Evaluate() method */
@@ -259,10 +247,32 @@ public class PolynomialMutationTest {
 		// Configuration
 		double crossoverProbability = 0.1;
 		int alpha = 20;
-		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
+		RepairDoubleSolutionAtBounds solutionRepair = new RepairDoubleSolutionAtBounds();
+		@SuppressWarnings("serial")
+		DoubleProblem problem = new AbstractDoubleProblem() {
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
+			@Override
+			public void evaluate(DoubleSolution solution) {
+				// Do nothing
+			}
+			
+			@Override
+			public int getNumberOfVariables() {
+				return 5;
+			}
+			
+			@Override
+			public Double getLowerBound(int index) {
+				return 0.0;
+			}
+			
+			@Override
+			public Double getUpperBound(int index) {
+				return 10.0;
+			}
+
+		};
+		DoubleSolution solution = problem.createSolution();
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

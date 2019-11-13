@@ -2,16 +2,16 @@ package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
-import org.uma.jmetal.runner.AlgorithmRunner;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -39,7 +39,7 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
 
     crossover = new SinglePointCrossover(0.9) ;
 
-    double mutationProbability = 1.0 / problem.getBitsFromVariable(0) ;
+    double mutationProbability = 1.0 / problem.getNumberOfBits(0) ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
     selection = new BinaryTournamentSelection<BinarySolution>();
@@ -70,6 +70,6 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
     JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + solution.getVariable(0)) ;
+    JMetalLogger.logger.info("Solution: " + solution.getVariableValueString(0)) ;
   }
 }

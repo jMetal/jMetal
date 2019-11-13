@@ -85,27 +85,16 @@ public class PointSolution implements Solution<Double> {
     return Collections.emptyList() ;
   }
 
-  @Override public Double getVariable(int index) {
+  @Override public Double getVariableValue(int index) {
     return null;
   }
 
-  @Override public void setVariable(int index, Double value) {
+  @Override public void setVariableValue(int index, Double value) {
 	  //This method is an intentionally-blank override.
   }
 
-  @Override
-  public double[] getConstraints() {
-    return new double[0];
-  }
-
-  @Override
-  public double getConstraint(int index) {
-    return 0;
-  }
-
-  @Override
-  public void setConstraint(int index, double value) {
-
+  @Override public String getVariableValueString(int index) {
+    return null;
   }
 
   @Override public int getNumberOfVariables() {
@@ -114,11 +103,6 @@ public class PointSolution implements Solution<Double> {
 
   @Override public int getNumberOfObjectives() {
     return numberOfObjectives;
-  }
-
-  @Override
-  public int getNumberOfConstraints() {
-    return 0;
   }
 
   @Override public PointSolution copy() {
@@ -131,11 +115,6 @@ public class PointSolution implements Solution<Double> {
 
   @Override public Object getAttribute(Object id) {
     return attributes.get(id);
-  }
-
-  @Override
-  public boolean hasAttribute(Object id) {
-    return false;
   }
 
   @Override public boolean equals(Object o) {

@@ -1,7 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
+import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 /**
  * Problem C2-DTLZ2, defined in:
@@ -13,6 +15,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class C2_DTLZ2 extends DTLZ2 {
+  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
+  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
+
   private double rValue ;
   /**
    * Constructor
@@ -29,15 +34,18 @@ public class C2_DTLZ2 extends DTLZ2 {
     } else {
       rValue = 0.5 ;
     }
+
+    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
+    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
   }
 
   @Override
   public void evaluate(DoubleSolution solution) {
     super.evaluate(solution);
-    evaluateConstraints(solution);
+    this.evaluateConstraints(solution);
   }
 
-  public void evaluateConstraints(DoubleSolution solution) {
+  private void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()] ;
 
     double sum2 = 0 ;
@@ -59,6 +67,18 @@ public class C2_DTLZ2 extends DTLZ2 {
 
     sum2 -= Math.pow(rValue, 2.0) ;
 
-    solution.setConstraint(0, Math.max(maxSum1, sum2)) ;
+    constraint[0] = Math.max(maxSum1, sum2) ;
+
+    double overallConstraintViolation = 0.0;
+    int violatedConstraints = 0;
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
+      if (constraint[i]<0.0){
+        overallConstraintViolation+=constraint[i];
+        violatedConstraints++;
+      }
+    }
+
+    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
+    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }

@@ -1,7 +1,28 @@
+//  ZDT1.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
+//
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
+
+
+
+
+//
+
+
+
+
+// 
+
+
+
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +54,15 @@ public class ZDT1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
   }
 
   /** Evaluate() method */
   public void evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
 
-    f[0] = solution.getVariable(0);
+    f[0] = solution.getVariableValue(0);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);
     f[1] = h * g;
@@ -57,7 +79,7 @@ public class ZDT1 extends AbstractDoubleProblem {
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      g += solution.getVariable(i);
+      g += solution.getVariableValue(i);
     }
     double constant = 9.0 / (solution.getNumberOfVariables() - 1);
 

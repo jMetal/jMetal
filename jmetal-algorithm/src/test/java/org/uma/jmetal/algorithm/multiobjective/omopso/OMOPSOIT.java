@@ -2,13 +2,13 @@ package org.uma.jmetal.algorithm.multiobjective.omopso;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
-import org.uma.jmetal.operator.mutation.impl.UniformMutation;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
+import org.uma.jmetal.operator.impl.mutation.UniformMutation;
+import org.uma.jmetal.problem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.util.List;

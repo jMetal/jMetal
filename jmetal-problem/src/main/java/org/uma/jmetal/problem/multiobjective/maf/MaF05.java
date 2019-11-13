@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,8 @@ public class MaF05 extends AbstractDoubleProblem {
       upper.add(1.0);
     }
 
-    setVariableBounds(lower, upper);
+    setLowerLimit(lower);
+    setUpperLimit(upper);
 
     //other constants during the whole process once M&D are defined
     double[] c5 = new double[numberOfObjectives];
@@ -67,7 +68,7 @@ public class MaF05 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.getVariableValue(i);
     }
     double g = 0;
     // evaluate g

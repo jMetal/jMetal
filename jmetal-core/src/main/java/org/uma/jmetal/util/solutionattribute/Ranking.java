@@ -8,7 +8,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface Ranking<S> extends SolutionAttribute<S, Integer>{
-  Ranking<S> computeRanking(List<S> solutionList) ;
-  List<S> getSubFront(int rank) ;
-  int getNumberOfSubFronts() ;
+  public Ranking<S> computeRanking(List<S> solutionList) ;
+  public List<S> getSubfront(int rank) ;
+  public int getNumberOfSubfronts() ;
 }

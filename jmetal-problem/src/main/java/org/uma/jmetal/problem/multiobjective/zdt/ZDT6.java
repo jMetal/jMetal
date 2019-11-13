@@ -1,6 +1,27 @@
+//  ZDT6.java
+//
+//  Author:
+//       Antonio J. Nebro <antonio@lcc.uma.es>
+//       Juan J. Durillo <durillo@lcc.uma.es>
+//
+//  Copyright (c) 2011 Antonio J. Nebro, Juan J. Durillo
+//
+
+
+
+
+//
+
+
+
+
+// 
+
+
+
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 /**
  * Class representing problem ZDT6
@@ -32,7 +53,7 @@ public class ZDT6 extends ZDT1 {
     double[] f = new double[getNumberOfObjectives()];
 
     double x1;
-    x1 = solution.getVariable(0);
+    x1 = solution.getVariableValue(0);
     f[0] = 1 - Math.exp(-4 * x1) * Math.pow(Math.sin(6 * Math.PI * x1), 6);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);
@@ -51,7 +72,7 @@ public class ZDT6 extends ZDT1 {
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int var = 1; var < solution.getNumberOfVariables(); var++) {
-      g += solution.getVariable(var);
+      g += solution.getVariableValue(var);
     }
     g = g / (solution.getNumberOfVariables() - 1);
     g = Math.pow(g, 0.25);

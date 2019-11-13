@@ -1,10 +1,11 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
@@ -60,7 +61,13 @@ public class PISAHypervolumeTest {
         upperLimit.add(4.0);
       }
 
-      setVariableBounds(lowerLimit, upperLimit);
+      setLowerLimit(lowerLimit);
+      setUpperLimit(upperLimit);
+    }
+
+    @Override
+    public DoubleSolution createSolution() {
+      return new DefaultDoubleSolution(this) ;
     }
 
     /** Evaluate() method */

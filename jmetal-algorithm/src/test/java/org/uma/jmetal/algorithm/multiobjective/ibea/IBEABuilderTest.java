@@ -2,13 +2,14 @@ package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.junit.Test;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.DoubleSolution;
 
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class IBEABuilderTest {
   private MutationOperator<DoubleSolution> mutation;
 
   @SuppressWarnings("unchecked")
-  @Before public void startup() {
+  @Before
+  public void startup() {
     problem = mock(Problem.class);
     when(problem.getNumberOfVariables()).thenReturn(NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM);
 
@@ -42,16 +44,17 @@ public class IBEABuilderTest {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int populationSize  = 100 ;
     builder = new IBEABuilder<>(problem, crossover, mutation);
   }
 
-  @After public void cleanup() {
+  @After
+  public void cleanup() {
     problem = null;
     builder = null;
   }
 
-  @Test public void buildAlgorithm() {
+  @Test
+  public void buildAlgorithm() {
     IBEA<DoubleSolution> algorithm = builder.build();
     assertNotNull(algorithm);
   }
@@ -70,7 +73,7 @@ public class IBEABuilderTest {
 
     PolynomialMutation mutation = (PolynomialMutation) builder.getMutation();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.getMutationProbability(),
-        EPSILON);
+            EPSILON);
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);
   }
 

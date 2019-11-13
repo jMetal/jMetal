@@ -18,7 +18,7 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
     Ranking<S> ranking = new DominanceRanking<S>();
-    return ranking.computeRanking(solutionList).getSubFront(0);
+    return ranking.computeRanking(solutionList).getSubfront(0);
   }
 
   public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {

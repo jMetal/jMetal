@@ -136,12 +136,12 @@ public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribu
 	}
 
 	@Override
-	public List<S> getSubFront(int rank) {
+	public List<S> getSubfront(int rank) {
 		return this.rankedSubpopulations.get(rank);
 	}
 
 	@Override
-	public int getNumberOfSubFronts() {
+	public int getNumberOfSubfronts() {
 		return this.rankedSubpopulations.size();
 	}
 

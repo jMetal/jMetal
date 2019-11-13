@@ -1,16 +1,12 @@
 package org.uma.jmetal.operator.impl.crossover;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
+import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -25,16 +21,36 @@ public class DifferentialEvolutionCrossoverTest {
 		double cr = 0.5;
 		double f = 0.5;
 		String variant = "rand/1/bin";
+		@SuppressWarnings("serial")
+		DoubleProblem problem = new AbstractDoubleProblem() {
 
-		List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+			@Override
+			public void evaluate(DoubleSolution solution) {
+				// Do nothing
+			}
+			
+			@Override
+			public int getNumberOfVariables() {
+				return 5;
+			}
+			
+			@Override
+			public Double getLowerBound(int index) {
+				return 0.0;
+			}
+			
+			@Override
+			public Double getUpperBound(int index) {
+				return 10.0;
+			}
 
-		DoubleSolution currentSolution = new DefaultDoubleSolution(bounds, 2) ;
+		};
+		DoubleSolution currentSolution = problem.createSolution();
 		List<DoubleSolution> parentSolutions = new LinkedList<>();
-
-		parentSolutions.add(new DefaultDoubleSolution(bounds, 2));
-		parentSolutions.add(new DefaultDoubleSolution(bounds, 2));
-		parentSolutions.add(new DefaultDoubleSolution(bounds, 2));
-		parentSolutions.add(new DefaultDoubleSolution(bounds, 2));
+		parentSolutions.add(problem.createSolution());
+		parentSolutions.add(problem.createSolution());
+		parentSolutions.add(problem.createSolution());
+		parentSolutions.add(problem.createSolution());
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };
@@ -58,7 +74,7 @@ public class DifferentialEvolutionCrossoverTest {
 		}, (a, b) -> {
 			custom2Uses[0]++;
 			return new Random().nextDouble() * (b - a) + a;
-		}, new RepairDoubleSolutionWithBoundValue());
+		});
 		crossover2.setCurrentSolution(currentSolution);
 		crossover2.execute(parentSolutions);
 		assertTrue("Default random generator used", defaultUses[0] == 0);

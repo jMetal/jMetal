@@ -1,10 +1,10 @@
 package org.uma.jmetal.utility;
 
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -35,7 +35,7 @@ public class GenerateReferenceFrontFromFile {
     String inputFileName = args[0] ;
     String outputFileName = args[1] ;
 
-    NonDominatedSolutionListArchive<PointSolution> archive = new NonDominatedSolutionListArchive<>();
+    NonDominatedSolutionListArchive<Solution<?>> archive = new NonDominatedSolutionListArchive<>();
     List<String> fileNameList = new ArrayList<>();
 
     if (Files.isRegularFile(Paths.get(inputFileName))) {

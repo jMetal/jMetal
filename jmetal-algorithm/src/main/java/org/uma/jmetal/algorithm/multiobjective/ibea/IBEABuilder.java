@@ -1,12 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
-import org.uma.jmetal.algorithm.AlgorithmBuilder;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.AlgorithmBuilder;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class IBEABuilder<S extends Solution<?>> implements AlgorithmBuilder<IBEA
    * @param problem
    */
   public IBEABuilder(
-      Problem<S> problem, CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
+          Problem<S> problem, CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
     this.problem = problem;
     populationSize = 100;
     archiveSize = 100;
@@ -107,6 +107,6 @@ public class IBEABuilder<S extends Solution<?>> implements AlgorithmBuilder<IBEA
 
   public IBEA<S> build() {
     return new IBEA<S>(
-        problem, populationSize, archiveSize, maxEvaluations, selection, crossover, mutation);
+            problem, populationSize, archiveSize, maxEvaluations, selection, crossover, mutation);
   }
 }

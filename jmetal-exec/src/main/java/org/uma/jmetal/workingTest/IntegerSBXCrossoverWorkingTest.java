@@ -1,10 +1,10 @@
 package org.uma.jmetal.workingTest;
 
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
-import org.uma.jmetal.problem.integerproblem.IntegerProblem;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
+import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -49,8 +49,8 @@ public class IntegerSBXCrossoverWorkingTest {
 
     IntegerSolution solution1 = problem.createSolution() ;
     IntegerSolution solution2 = problem.createSolution() ;
-    solution1.setVariable(0, -50);
-    solution2.setVariable(0, 50);
+    solution1.setVariableValue(0, -50);
+    solution2.setVariableValue(0, 50);
     List<IntegerSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;
@@ -96,7 +96,7 @@ public class IntegerSBXCrossoverWorkingTest {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariable(0) <= classifier[index][0]) {
+        if (solution.getVariableValue(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {
@@ -130,11 +130,11 @@ public class IntegerSBXCrossoverWorkingTest {
         return -1;
       }
 
-      if (solution1.getVariable(0) < solution2.getVariable(0)) {
+      if (solution1.getVariableValue(0) < solution2.getVariableValue(0)) {
         return -1;
       }
 
-      if (solution1.getVariable(0) > solution2.getVariable(0)) {
+      if (solution1.getVariableValue(0) > solution2.getVariableValue(0)) {
         return 1;
       }
 

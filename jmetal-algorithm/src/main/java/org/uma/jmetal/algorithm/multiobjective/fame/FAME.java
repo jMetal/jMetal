@@ -8,14 +8,14 @@ import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.UniformMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
+import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
+import org.uma.jmetal.operator.impl.mutation.UniformMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -343,7 +343,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
       } else {
-        SSD.computeDensityEstimator(ranking.getSubFront(rankingIndex));
+        SSD.computeDensityEstimator(ranking.getSubfront(rankingIndex));
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }
@@ -357,13 +357,13 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   protected boolean subfrontFillsIntoThePopulation(
       Ranking<S> ranking, int rank, List<S> population) {
-    return ranking.getSubFront(rank).size() < (getMaxPopulationSize() - population.size());
+    return ranking.getSubfront(rank).size() < (getMaxPopulationSize() - population.size());
   }
 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> front;
 
-    front = ranking.getSubFront(rank);
+    front = ranking.getSubfront(rank);
 
     for (S solution : front) {
       population.add(solution);
@@ -372,7 +372,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   protected void addLastRankedSolutionsToPopulation(
       Ranking<S> ranking, int rank, List<S> population) {
-    List<S> currentRankedFront = ranking.getSubFront(rank);
+    List<S> currentRankedFront = ranking.getSubfront(rank);
 
     Collections.sort(currentRankedFront, new SpatialSpreadDeviationComparator<>());
 

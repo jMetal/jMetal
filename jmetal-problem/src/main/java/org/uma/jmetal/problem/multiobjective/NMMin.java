@@ -1,15 +1,14 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
+import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.
- * Bi-objective problem for testing class {@link DefaultIntegerSolution )}, e.g., integer encoding.
+ * Bi-objective problem for testing integer encoding.
  * Objective 1: minimizing the distance to value N
  * Objective 2: minimizing the distance to value M
  */
@@ -19,7 +18,7 @@ public class NMMin extends AbstractIntegerProblem {
   private int valueM ;
 
   public NMMin() {
-    this(20, 100, -100, -1000, +1000);
+    this(10, 100, -100, -1000, +1000);
   }
 
   /** Constructor */
@@ -38,7 +37,8 @@ public class NMMin extends AbstractIntegerProblem {
       upperLimit.add(upperBound);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
   }
 
   /** Evaluate() method */
@@ -51,7 +51,7 @@ public class NMMin extends AbstractIntegerProblem {
     approximationToM = 0;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      int value = solution.getVariable(i) ;
+      int value = solution.getVariableValue(i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }

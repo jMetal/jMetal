@@ -18,22 +18,21 @@
 // 
 
 
+
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.JMetalException;
 
-import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
 /**
  * Class representing problem ZDT5
  */
 @SuppressWarnings("serial")
 public class ZDT5 extends AbstractBinaryProblem {
-	private List<Integer> bitsPerVariable ;
+	private int[] bitsPerVariable ;
 
   /** Creates a default instance of problem ZDT5 (11 decision variables) */
   public ZDT5() {
@@ -50,30 +49,26 @@ public class ZDT5 extends AbstractBinaryProblem {
     setNumberOfObjectives(2);
     setName("ZDT5");
 
-    bitsPerVariable = new ArrayList<>(numberOfVariables) ;
+    bitsPerVariable = new int[numberOfVariables] ;
 
-    bitsPerVariable.add(30);
+    bitsPerVariable[0] = 30;
     for (int var = 1; var < numberOfVariables; var++) {
-      bitsPerVariable.add(5);
+      bitsPerVariable[var] = 5;
     }
   }
-
+  
   @Override
-  public List<Integer> getListOfBitsPerVariable() {
-    return bitsPerVariable ;
-  }
-
-  @Override
-  public int getBitsFromVariable(int index) {
-    Check.valueIsInRange(index, 0, this.getNumberOfVariables()) ;
-
-  	return bitsPerVariable.get(index) ;
+  protected int getBitsPerVariable(int index) {
+  	if ((index <0) || (index >= this.getNumberOfVariables())) {
+  		throw new JMetalException("Index value is incorrect: " + index) ;
+  	}
+  	return bitsPerVariable[index] ;
   }
 
   /** Evaluate() method */
   public void evaluate(BinarySolution solution) {
     double[] f = new double[solution.getNumberOfObjectives()];
-    f[0] = 1 + u(solution.getVariable(0));
+    f[0] = 1 + u(solution.getVariableValue(0));
     double g = evalG(solution);
     double h = evalH(f[0], g);
     f[1] = h * g;
@@ -90,7 +85,7 @@ public class ZDT5 extends AbstractBinaryProblem {
   public double evalG(BinarySolution solution) {
     double res = 0.0;
     for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      res += evalV(u(solution.getVariable(i)));
+      res += evalV(u(solution.getVariableValue(i)));
     }
 
     return res;

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lz09;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -46,7 +46,8 @@ public class LZ09F1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setVariableBounds(lowerLimit, upperLimit);
+    setLowerLimit(lowerLimit);
+    setUpperLimit(upperLimit);
   }
 
   /** Evaluate() method */
@@ -55,7 +56,7 @@ public class LZ09F1 extends AbstractDoubleProblem {
     List<Double> y = new ArrayList<Double>(getNumberOfObjectives());
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x.add(solution.getVariable(i));
+      x.add(solution.getVariableValue(i));
       y.add(0.0);
     }
 
