@@ -16,7 +16,6 @@ import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiv
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

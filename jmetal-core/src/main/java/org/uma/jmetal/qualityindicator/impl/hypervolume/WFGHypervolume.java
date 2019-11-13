@@ -4,18 +4,13 @@ import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
-import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 import java.io.FileNotFoundException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * This class implements the hypervolume indicator developed by the WFG
