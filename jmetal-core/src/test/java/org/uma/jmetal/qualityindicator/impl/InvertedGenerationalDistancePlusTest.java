@@ -62,8 +62,8 @@ public class InvertedGenerationalDistancePlusTest {
     Front paretoFront = new ArrayFront(numberOfPoints, numberOfDimensions);
 
     Point point1 = new ArrayPoint(numberOfDimensions) ;
-    point1.setValue(0, 4.0);
-    point1.setValue(1, 10.0);
+    point1.setValue(0, 1.0);
+    point1.setValue(1, 1.0);
 
     frontApproximation.setPoint(0, point1);
     paretoFront.setPoint(0, point1);
@@ -169,6 +169,9 @@ public class InvertedGenerationalDistancePlusTest {
 
     InvertedGenerationalDistancePlus<PointSolution> igdPlus =
         new InvertedGenerationalDistancePlus<PointSolution>(paretoFront) ;
+
+    System.out.println((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0) ;
+    double v = igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)) ;
 
     assertEquals((0.2 + Math.sqrt(0.01+0.16) + Math.sqrt(0.01+0.04))/3.0,
         igdPlus.evaluate(FrontUtils.convertFrontToSolutionList(frontApproximation)),
