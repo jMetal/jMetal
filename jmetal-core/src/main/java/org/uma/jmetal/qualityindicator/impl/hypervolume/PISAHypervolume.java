@@ -17,27 +17,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class implements the hypervolume indicator. The code is the a Java version
- * of the original metric implementation by Eckart Zitzler.
- * Reference: E. Zitzler and L. Thiele
- * Multiobjective Evolutionary Algorithms: A Comparative Case Study and the Strength Pareto Approach,
- * IEEE Transactions on Evolutionary Computation, vol. 3, no. 4,
- * pp. 257-271, 1999.
-
+ * This class implements the hypervolume indicator. The code is the a Java version of the original
+ * metric implementation by Eckart Zitzler. Reference: E. Zitzler and L. Thiele Multiobjective
+ * Evolutionary Algorithms: A Comparative Case Study and the Strength Pareto Approach, IEEE
+ * Transactions on Evolutionary Computation, vol. 3, no. 4, pp. 257-271, 1999.
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
 public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
-  private static final double DEFAULT_OFFSET = 100.0 ;
-  private double offset = DEFAULT_OFFSET ;
+  private static final double DEFAULT_OFFSET = 100.0;
+  private double offset = DEFAULT_OFFSET;
 
-  /**
-   * Default constructor
-   */
-  public PISAHypervolume() {
-  }
+  /** Default constructor */
+  public PISAHypervolume() {}
 
   /**
    * Constructor
@@ -46,7 +41,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    * @throws FileNotFoundException
    */
   public PISAHypervolume(String referenceParetoFrontFile) throws FileNotFoundException {
-    super(referenceParetoFrontFile) ;
+    super(referenceParetoFrontFile);
   }
 
   /**
@@ -56,25 +51,28 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    * @throws FileNotFoundException
    */
   public PISAHypervolume(Front referenceParetoFront) {
-    super(referenceParetoFront) ;
+    super(referenceParetoFront);
   }
 
   /**
    * Evaluate() method
+   *
    * @param paretoFrontApproximation
    * @return
    */
-  @Override public Double evaluate(List<S> paretoFrontApproximation) {
+  @Override
+  public Double evaluate(List<S> paretoFrontApproximation) {
     if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation is null") ;
+      throw new JMetalException("The pareto front approximation is null");
     }
 
-    return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);  }
+    return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
+  }
 
   /*
-   returns true if 'point1' dominates 'points2' with respect to the
-   to the first 'noObjectives' objectives
-   */
+  returns true if 'point1' dominates 'points2' with respect to the
+  to the first 'noObjectives' objectives
+  */
   private boolean dominates(double point1[], double point2[], int noObjectives) {
     int i;
     int betterInAnyObjective;
@@ -111,12 +109,12 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       j = i + 1;
       while (j < n) {
         if (dominates(front[i], front[j], noObjectives)) {
-  /* remove point 'j' */
+          /* remove point 'j' */
           n--;
           swap(front, j, n);
         } else if (dominates(front[j], front[i], noObjectives)) {
-	/* remove point 'i'; ensure that the point copied to index 'i'
-	   is considered in the next outer loop (thus, decrement i) */
+          /* remove point 'i'; ensure that the point copied to index 'i'
+          is considered in the next outer loop (thus, decrement i) */
           n--;
           swap(front, i, n);
           i--;
@@ -131,7 +129,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   /* calculate next value regarding dimension 'objective'; consider
-     points referenced in 'front[0..noPoints-1]' */
+  points referenced in 'front[0..noPoints-1]' */
   private double surfaceUnchangedTo(double[][] front, int noPoints, int objective) {
     int i;
     double minValue, value;
@@ -151,11 +149,11 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   /* remove all points which have a value <= 'threshold' regarding the
-     dimension 'objective'; the points referenced by
-     'front[0..noPoints-1]' are considered; 'front' is resorted, such that
-     'front[0..n-1]' contains the remaining points; 'n' is returned */
-  private int reduceNondominatedSet(double[][] front, int noPoints, int objective,
-                                    double threshold) {
+  dimension 'objective'; the points referenced by
+  'front[0..noPoints-1]' are considered; 'front' is resorted, such that
+  'front[0..n-1]' contains the remaining points; 'n' is returned */
+  private int reduceNondominatedSet(
+      double[][] front, int noPoints, int objective, double threshold) {
     int n;
     int i;
 
@@ -203,43 +201,46 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   /**
    * Returns the hypervolume value of a front of points
    *
-   * @param front        The front
-   * @param referenceFront    The true pareto front
+   * @param front The front
+   * @param referenceFront The true pareto front
    */
   private double hypervolume(Front front, Front referenceFront) {
 
     Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 
-    int numberOfObjectives = referenceFront.getPoint(0).getDimension() ;
+    int numberOfObjectives = referenceFront.getPoint(0).getDimension();
 
     // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
-    return this.calculateHypervolume(FrontUtils.convertFrontToArray(invertedFront),
-        invertedFront.getNumberOfPoints(), numberOfObjectives);
-  }
-
-  @Override public String getDescription() {
-    return "PISA implementation of the hypervolume quality indicator" ;
+    return this.calculateHypervolume(
+        FrontUtils.convertFrontToArray(invertedFront),
+        invertedFront.getNumberOfPoints(),
+        numberOfObjectives);
   }
 
   @Override
-  public void setOffset (double offset) {
-    this.offset = offset ;
+  public String getDescription() {
+    return "PISA implementation of the hypervolume quality indicator";
+  }
+
+  @Override
+  public void setOffset(double offset) {
+    this.offset = offset;
   }
 
   @Override
   public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
-      Front front = new ArrayFront(solutionList) ;
-      Front referenceFront = new ArrayFront(referenceFrontList) ;
+      Front front = new ArrayFront(solutionList);
+      Front referenceFront = new ArrayFront(referenceFrontList);
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
-      double[] maximumValues = FrontUtils.getMaximumValues(referenceFront) ;
-      double[] minimumValues = FrontUtils.getMinimumValues(referenceFront) ;
+      double[] maximumValues = FrontUtils.getMaximumValues(referenceFront);
+      double[] minimumValues = FrontUtils.getMinimumValues(referenceFront);
 
       // STEP 2. Get the normalized front
-      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues) ;
-      Front normalizedFront = frontNormalizer.normalize(front) ;
+      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
+      Front normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
@@ -252,14 +253,14 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
       // shift away from origin, so that boundary points also get a contribution > 0
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {
-        Point point = invertedFront.getPoint(i) ;
+        Point point = invertedFront.getPoint(i);
 
         for (int j = 0; j < point.getDimension(); j++) {
-          point.setValue(j, point.getValue(j)+ offsets[j]);
+          point.setValue(j, point.getValue(j) + offsets[j]);
         }
       }
 
-      HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<>() ;
+      HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<>();
 
       // calculate contributions and sort
       double[] contributions = hvContributions(FrontUtils.convertFrontToArray(invertedFront));
@@ -268,28 +269,25 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       }
 
       Collections.sort(solutionList, new HypervolumeContributionComparator<S>());
-
     }
-    return solutionList ;
+    return solutionList;
   }
 
   @Override
-
   public double getOffset() {
-    return offset ;
+    return offset;
   }
 
   /**
-   * Calculates how much hypervolume each point dominates exclusively. The points
-   * have to be transformed beforehand, to accommodate the assumptions of Zitzler's
-   * hypervolume code.
+   * Calculates how much hypervolume each point dominates exclusively. The points have to be
+   * transformed beforehand, to accommodate the assumptions of Zitzler's hypervolume code.
    *
    * @param front transformed objective values
    * @return HV contributions
    */
   private double[] hvContributions(double[][] front) {
 
-    int numberOfObjectives = front[0].length ;
+    int numberOfObjectives = front[0].length;
     double[] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();
@@ -309,5 +307,4 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     }
     return contributions;
   }
-
 }
