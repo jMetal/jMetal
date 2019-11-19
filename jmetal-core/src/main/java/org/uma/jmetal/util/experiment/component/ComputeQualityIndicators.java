@@ -95,6 +95,38 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
     writeSummaryFile(experiment);
   }
 
+  public void runSingleObjectiveIndicators() throws IOException {
+    experiment.removeDuplicatedAlgorithms() ;
+    resetIndicatorFiles() ;
+
+    for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
+      JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
+
+      for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
+        String algorithmDirectory;
+        algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
+        for (ExperimentProblem<?> problem : experiment.getProblemList()) {
+          String problemDirectory = algorithmDirectory + "/" + problem.getTag();
+          String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
+
+          for (int run = 0; run < experiment.getIndependentRuns(); run++) {
+            String frontFileName = problemDirectory + "/" +
+                    experiment.getOutputParetoFrontFileName() + run + ".tsv";
+
+            Front front = new ArrayFront(frontFileName);
+            List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
+            Double indicatorValue = (Double) indicator.evaluate((List<S>) solutionList) ;
+            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
+
+            writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
+          }
+        }
+      }
+    }
+    findBestIndicatorFronts(experiment) ;
+    writeSummaryFile(experiment);
+  }
+
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {
 
     try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) {
