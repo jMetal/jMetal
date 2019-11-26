@@ -35,8 +35,6 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
 
     // Delegation.
     private NonDominatedSorting sortingInstance = null;
-    private double[][] points = null;
-    private int[] ranks = null;
 
     @Override
     public Ranking<S> computeRanking(List<S> solutionList) {
@@ -74,6 +72,7 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
             for (int i = 1; i < nSolutions; ++i) {
                 double currConstraint = getConstraint(defensiveCopy.get(i));
                 if (lastConstraint != currConstraint) {
+                    lastConstraint = currConstraint;
                     rankOffset = 1 + runSorting(defensiveCopy, lastSpanStart, i, nObjectives, rankOffset);
                     lastSpanStart = i;
                 }
@@ -86,6 +85,8 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
 
     private int runSorting(List<S> solutions, int from, int until, int dimension, int rankOffset) {
         ensureEnoughSpace(until - from, dimension);
+        double[][] points = new double[until - from][];
+        int[] ranks = new int[until - from];
         for (int i = from; i < until; ++i) {
             points[i - from] = solutions.get(i).getObjectives();
         }
@@ -114,8 +115,6 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
             sortingInstance = JensenFortinBuzdalov
                     .getRedBlackTreeSweepHybridENSImplementation(1)
                     .getInstance(nPoints, dimension);
-            points = new double[nPoints][];
-            ranks = new int[nPoints];
         }
     }
 
