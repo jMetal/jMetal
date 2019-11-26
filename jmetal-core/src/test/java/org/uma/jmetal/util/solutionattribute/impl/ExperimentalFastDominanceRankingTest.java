@@ -6,6 +6,7 @@ import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertEquals;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class ExperimentalFastDominanceRankingTest {
+  private OverallConstraintViolation<PointSolution> constraintViolation = new OverallConstraintViolation<>();
   private DoubleProblem problem ;
 
   @Test
@@ -198,6 +200,35 @@ public class ExperimentalFastDominanceRankingTest {
 
     assertEquals(0, (int) ranking.getAttribute(subfront.get(0)));
     assertEquals(1, (int) ranking.getAttribute(subfront1.get(0)));
+  }
+
+  @Test
+  public void testWithConstraints() {
+    List<PointSolution> solutions = Arrays.asList(
+            makeConstrained(8, 0, 0), makeConstrained(0, 4, -1), makeConstrained(8, 5, 0),
+            makeConstrained(0, 0, -1), makeConstrained(7, 0, -1), makeConstrained(2, 7, 0),
+            makeConstrained(4, 8, 0), makeConstrained(5, 8, 0), makeConstrained(8, 1, -1),
+            makeConstrained(6, 3, -1));
+    Ranking<PointSolution> ranking = new ExperimentalFastDominanceRanking<>();
+    ranking.computeRanking(solutions);
+    assertEquals(0, (int) ranking.getAttribute(solutions.get(0)));
+    assertEquals(4, (int) ranking.getAttribute(solutions.get(1)));
+    assertEquals(1, (int) ranking.getAttribute(solutions.get(2)));
+    assertEquals(3, (int) ranking.getAttribute(solutions.get(3)));
+    assertEquals(4, (int) ranking.getAttribute(solutions.get(4)));
+    assertEquals(0, (int) ranking.getAttribute(solutions.get(5)));
+    assertEquals(1, (int) ranking.getAttribute(solutions.get(6)));
+    assertEquals(2, (int) ranking.getAttribute(solutions.get(7)));
+    assertEquals(5, (int) ranking.getAttribute(solutions.get(8)));
+    assertEquals(4, (int) ranking.getAttribute(solutions.get(9)));
+  }
+
+  private PointSolution makeConstrained(double x, double y, double c) {
+    PointSolution sol = new PointSolution(2);
+    sol.setObjective(0, x);
+    sol.setObjective(1, y);
+    constraintViolation.setAttribute(sol, c);
+    return sol;
   }
 
   @SuppressWarnings("serial")
