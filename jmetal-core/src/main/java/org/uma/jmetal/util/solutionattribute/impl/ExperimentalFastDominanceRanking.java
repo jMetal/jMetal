@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
@@ -29,12 +30,22 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
     private final List<List<S>> subFronts = new ArrayList<>();
 
     // Constraint violation checking support.
-    private final OverallConstraintViolation<S> overallConstraintViolation = new OverallConstraintViolation<>();
     private final OverallConstraintViolationComparator<S> overallConstraintViolationComparator
             = new OverallConstraintViolationComparator<>();
 
     // Delegation.
     private NonDominatedSorting sortingInstance = null;
+
+    /**
+     * Creates an instance of the experimental fast dominance ranking.
+     *
+     * Note that this class has the same identifier as the {@link DominanceRanking} class,
+     * as this class is intended to be a drop-in replacement.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public ExperimentalFastDominanceRanking() {
+        super(DominanceRanking.class);
+    }
 
     @Override
     public Ranking<S> computeRanking(List<S> solutionList) {
@@ -119,17 +130,16 @@ public class ExperimentalFastDominanceRanking<S extends Solution<?>>
     }
 
     private double getConstraint(S solution) {
-        Double result = overallConstraintViolation.getAttribute(solution);
-        return result == null ? 0 : result;
+        return ConstraintHandling.overallConstraintViolationDegree(solution);
     }
 
     @Override
-    public List<S> getSubfront(int rank) {
+    public List<S> getSubFront(int rank) {
         return subFronts.get(rank);
     }
 
     @Override
-    public int getNumberOfSubfronts() {
+    public int getNumberOfSubFronts() {
         return subFronts.size();
     }
 }
