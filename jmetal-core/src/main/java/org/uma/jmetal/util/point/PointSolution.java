@@ -158,11 +158,11 @@ public class PointSolution implements Solution<Double> {
   
   @Override
   public String toString() {
-	return Arrays.toString(objectives);
+    return Arrays.toString(objectives);
   }
 
   @Override
   public Map<Object, Object> getAttributes() {
-	return attributes;
+    return attributes;
   }
 }
