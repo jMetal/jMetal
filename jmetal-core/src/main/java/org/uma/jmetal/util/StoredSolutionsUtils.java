@@ -1,11 +1,9 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.SolutionTextRepresentation;
 
@@ -23,8 +21,7 @@ public class StoredSolutionsUtils {
   private static final String DEFAULT_REGEX = "[ \t,]";
   private static final GenericSolutionAttribute<Solution<?>, String> textRepresentation = SolutionTextRepresentation.getAttribute();
 
-
-  public static List<Solution<?>> readSolutionsFromFile(String inputFileName, int numberOfObjectives) {
+  public static List<PointSolution> readSolutionsFromFile(String inputFileName, int numberOfObjectives) {
     Stream<String> lines;
 
     try {
@@ -33,12 +30,12 @@ public class StoredSolutionsUtils {
       throw new JMetalException(e);
     }
 
-    DummyProblem dummyProblem = new DummyProblem(numberOfObjectives);
+    //DummyProblem dummyProblem = new DummyProblem(numberOfObjectives);
 
-    List<Solution<?>> solutions = lines
+    List<PointSolution> solutions = lines
       .map(line -> {
         String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
-        DoubleSolution solution = new DefaultDoubleSolution(dummyProblem);
+        PointSolution solution = new PointSolution(numberOfObjectives);
         for (int i = 0; i < numberOfObjectives; i++) {
           solution.setObjective(i, Double.parseDouble(textNumbers[i]));
         }
@@ -53,7 +50,7 @@ public class StoredSolutionsUtils {
     return solutions;
   }
 
-  public static void writeToOutput(NonDominatedSolutionListArchive<Solution<?>> archive, FileOutputContext context) {
+  public static void writeToOutput(NonDominatedSolutionListArchive<PointSolution> archive, FileOutputContext context) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
@@ -69,20 +66,6 @@ public class StoredSolutionsUtils {
       bufferedWriter.close();
     } catch (IOException e) {
       throw new JMetalException("Error printing objecives to file: ", e);
-    }
-  }
-
-
-  @SuppressWarnings("serial")
-  private static class DummyProblem extends AbstractDoubleProblem {
-
-    public DummyProblem(int numberOfObjectives) {
-      this.setNumberOfObjectives(numberOfObjectives);
-    }
-
-    @Override
-    public void evaluate(DoubleSolution solution) {
-
     }
   }
 }

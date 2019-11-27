@@ -1,8 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
@@ -111,7 +111,7 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
     Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
     ranking.computeRanking(population);
 
-    numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubfront(0).size());
+    numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubFront(0).size());
 
     return pop;
   }

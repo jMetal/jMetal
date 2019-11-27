@@ -3,10 +3,10 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
@@ -201,8 +201,7 @@ public class ErrorRatioTest {
         upperLimit.add(4.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     /** Evaluate() method */

@@ -3,16 +3,15 @@ package org.uma.jmetal.algorithm.multiobjective.mocell;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class MOCellIT {
         .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
@@ -61,7 +60,7 @@ public class MOCellIT {
         .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
         .build() ;
 
-    new AlgorithmRunner.Executor(algorithm).execute();
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 

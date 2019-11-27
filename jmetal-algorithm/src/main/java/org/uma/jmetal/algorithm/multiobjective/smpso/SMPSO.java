@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -185,8 +185,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         speed[i][var] = velocityConstriction(constrictionCoefficient(c1, c2) * (
                         inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var] +
-                                c1 * r1 * (bestParticle.getVariableValue(var) - particle.getVariableValue(var)) +
-                                c2 * r2 * (bestGlobal.getVariableValue(var) - particle.getVariableValue(var))),
+                                c1 * r1 * (bestParticle.getVariable(var) - particle.getVariable(var)) +
+                                c2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var))),
                 deltaMax, deltaMin, var);
       }
     }
@@ -197,14 +197,14 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
-        particle.setVariableValue(j, particle.getVariableValue(j) + speed[i][j]);
+        particle.setVariable(j, particle.getVariable(j) + speed[i][j]);
 
-        if (particle.getVariableValue(j) < problem.getLowerBound(j)) {
-          particle.setVariableValue(j, problem.getLowerBound(j));
+        if (particle.getVariable(j) < problem.getLowerBound(j)) {
+          particle.setVariable(j, problem.getLowerBound(j));
           speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getVariableValue(j) > problem.getUpperBound(j)) {
-          particle.setVariableValue(j, problem.getUpperBound(j));
+        if (particle.getVariable(j) > problem.getUpperBound(j)) {
+          particle.setVariable(j, problem.getUpperBound(j));
           speed[i][j] = speed[i][j] * changeVelocity2;
         }
       }

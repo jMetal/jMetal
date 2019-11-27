@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -35,8 +35,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   public NSGAII(Problem<S> problem, int maxEvaluations, int populationSize,
                 int matingPoolSize, int offspringPopulationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
+                CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     this(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
             crossoverOperator, mutationOperator, selectionOperator, new DominanceComparator<S>(), evaluator);
   }

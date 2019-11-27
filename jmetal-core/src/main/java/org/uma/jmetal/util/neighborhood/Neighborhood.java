@@ -9,5 +9,5 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface Neighborhood<S> extends Serializable {
-  public List<S> getNeighbors(List<S> solutionList, int solutionIndex) ;
+  List<S> getNeighbors(List<S> solutionList, int solutionIndex) ;
 }

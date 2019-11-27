@@ -2,9 +2,9 @@ package org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.operator.impl.selection.BestSolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.selection.impl.BestSolutionSelection;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -157,8 +157,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         speed[i][j] = (randomGenerator.nextDouble(
-                particle.getLowerBound(j) - particle.getVariableValue(0),
-                particle.getUpperBound(j) - particle.getVariableValue(0)));
+                particle.getLowerBound(j) - particle.getVariable(0),
+                particle.getUpperBound(j) - particle.getVariable(0)));
       }
     }
   }
@@ -178,19 +178,19 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       if (this.localBest[i] != this.neighborhoodBest[i]) {
         for (int var = 0; var < particle.getNumberOfVariables(); var++) {
           double G;
-          G = particle.getVariableValue(var) +
-                  c * (localBest[i].getVariableValue(var) +
-                          neighborhoodBest[i].getVariableValue(var) - 2 *
-                          particle.getVariableValue(var)) / 3.0;
+          G = particle.getVariable(var) +
+                  c * (localBest[i].getVariable(var) +
+                          neighborhoodBest[i].getVariable(var) - 2 *
+                          particle.getVariable(var)) / 3.0;
 
-          gravityCenter.setVariableValue(var, G);
+          gravityCenter.setVariable(var, G);
         }
       } else {
         for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-          double g  = particle.getVariableValue(var) +
-                  c * (localBest[i].getVariableValue(var) - particle.getVariableValue(var)) / 2.0;
+          double g  = particle.getVariable(var) +
+                  c * (localBest[i].getVariable(var) - particle.getVariable(var)) / 2.0;
 
-          gravityCenter.setVariableValue(var, g);
+          gravityCenter.setVariable(var, g);
         }
       }
 
@@ -202,27 +202,27 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        randomParticle.setVariableValue(var, gravityCenter.getVariableValue(var) + radius * random[var]);
+        randomParticle.setVariable(var, gravityCenter.getVariable(var) + radius * random[var]);
       }
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         speed[i][var] =
-                weight * speed[i][var] + randomParticle.getVariableValue(var) - particle.getVariableValue(var);
+                weight * speed[i][var] + randomParticle.getVariable(var) - particle.getVariable(var);
       }
 
 
       if (localBest[i] != neighborhoodBest[i]) {
         for (int var = 0; var < particle.getNumberOfVariables(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariableValue(var) - particle.getVariableValue(var)) +
-                  r2 * (neighborhoodBest[i].getVariableValue(var) - particle.getVariableValue
+                  r1 * (localBest[i].getVariable(var) - particle.getVariable(var)) +
+                  r2 * (neighborhoodBest[i].getVariable(var) - particle.getVariable
                           (var));
         }
       } else {
         for (int var = 0; var < particle.getNumberOfVariables(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariableValue(var) -
-                          particle.getVariableValue(var));
+                  r1 * (localBest[i].getVariable(var) -
+                          particle.getVariable(var));
         }
       }
     }
@@ -233,14 +233,14 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]);
+        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
 
-        if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
-          particle.setVariableValue(var, problem.getLowerBound(var));
+        if (particle.getVariable(var) < problem.getLowerBound(var)) {
+          particle.setVariable(var, problem.getLowerBound(var));
           speed[i][var] = changeVelocity * speed[i][var];
         }
-        if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
-          particle.setVariableValue(var, problem.getUpperBound(var));
+        if (particle.getVariable(var) > problem.getUpperBound(var)) {
+          particle.setVariable(var, problem.getUpperBound(var));
           speed[i][var] = changeVelocity * speed[i][var];
         }
       }

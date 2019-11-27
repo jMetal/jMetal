@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.List;
  *
  * @author <antonio@lcc.uma.es>
  */
-public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Double>, L extends List<S>>
-        implements Distance<S, L> {
+public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
+        implements Distance<S, List<S>> {
 
   private final int k ;
   private Distance<S, S> distance ;
@@ -25,7 +25,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Doub
   }
 
   public DistanceBetweenSolutionAndKNearestNeighbors(int k) {
-    this(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<S>()) ;
+    this(k, new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>()) ;
   }
 
   /**
@@ -35,7 +35,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Doub
    * @return
    */
   @Override
-  public double getDistance(S solution, L solutionList) {
+  public double getDistance(S solution, List<S> solutionList) {
     List<Double> listOfDistances = knnDistances(solution, solutionList) ;
     listOfDistances.sort(Comparator.naturalOrder());
 
@@ -45,11 +45,12 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Doub
     if (limit == 0) {
       result = 0.0 ;
     } else {
-      double sum = 0.0;
-      for (int i = 0; i < limit; i++) {
-        sum += listOfDistances.get(i);
-      }
-      result = sum/limit ;
+      //double sum = 0.0;
+      //for (int i = 0; i < limit; i++) {
+      //  sum += listOfDistances.get(i);
+      //}
+      //result = sum/limit ;
+      result = listOfDistances.get(limit-1) ;
     }
     return result;
   }
@@ -60,7 +61,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<Doub
    * @param solutionList
    * @return A list with the distances
    */
-  private List<Double> knnDistances(S solution, L solutionList) {
+  private List<Double> knnDistances(S solution, List<S> solutionList) {
     List<Double> listOfDistances = new ArrayList<>() ;
     for (int i = 0 ; i< solutionList.size(); i++) {
       double distanceBetweenSolutions = distance.getDistance(solution, solutionList.get(i)) ;

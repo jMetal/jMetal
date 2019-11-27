@@ -2,7 +2,7 @@ package org.uma.jmetal.util.archive.impl;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import static org.junit.Assert.*;

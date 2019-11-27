@@ -1,33 +1,20 @@
 package org.uma.jmetal.util.comparator.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import java.util.List;
 
 /**
- * This class implements the ViolationThreshold Comparator *
+ * This class implements the ViolationThreshold Comparator
  *
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
 public class ViolationThresholdComparator<S extends Solution<?>> implements
     ConstraintViolationComparator<S> {
-
   private double threshold = 0.0;
-
-  private OverallConstraintViolation<S> overallConstraintViolation ;
-  private NumberOfViolatedConstraints<S> numberOfViolatedConstraints ;
-
-  /**
-   * Constructor
-   */
-  public ViolationThresholdComparator() {
-    overallConstraintViolation = new OverallConstraintViolation<S>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<S>() ;
-  }
 
   /**
    * Compares two solutions. If the solutions has no constraints the method return 0
@@ -39,15 +26,9 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
    */
   @Override
   public int compare(S solution1, S solution2) {
-    if (overallConstraintViolation.getAttribute(solution1) == null) {
-      return 0 ;
-    }
-
     double overall1, overall2;
-    overall1 = numberOfViolatedConstraints.getAttribute(solution1) *
-        overallConstraintViolation.getAttribute(solution1);
-    overall2 = numberOfViolatedConstraints.getAttribute(solution2) *
-        overallConstraintViolation.getAttribute(solution2);
+    overall1 = ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1);
+    overall2 = ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2);
 
     if ((overall1 < 0) && (overall2 < 0)) {
       if (overall1 > overall2) {
@@ -73,10 +54,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
   public boolean needToCompare(S solution1, S solution2) {
     boolean needToCompare;
     double overall1, overall2;
-    overall1 = Math.abs(numberOfViolatedConstraints.getAttribute(solution1) *
-        overallConstraintViolation.getAttribute(solution1));
-    overall2 = Math.abs(numberOfViolatedConstraints.getAttribute(solution2) *
-        overallConstraintViolation.getAttribute(solution2));
+    overall1 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1));
+    overall2 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2));
 
     needToCompare = (overall1 > this.threshold) || (overall2 > this.threshold);
 
@@ -90,7 +69,7 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
   public double feasibilityRatio(List<S> solutionSet) {
     double aux = 0.0;
     for (int i = 0; i < solutionSet.size(); i++) {
-      if (overallConstraintViolation.getAttribute(solutionSet.get(i)) < 0) {
+      if (ConstraintHandling.numberOfViolatedConstraints(solutionSet.get(i)) < 0) {
         aux = aux + 1.0;
       }
     }
@@ -104,8 +83,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
   public double meanOverallViolation(List<S> solutionSet) {
     double aux = 0.0;
     for (int i = 0; i < solutionSet.size(); i++) {
-      aux += Math.abs(numberOfViolatedConstraints.getAttribute(solutionSet.get(i)) *
-          overallConstraintViolation.getAttribute(solutionSet.get(i)));
+      aux += Math.abs(ConstraintHandling.numberOfViolatedConstraints(solutionSet.get(i)) *
+          ConstraintHandling.overallConstraintViolationDegree(solutionSet.get(i)));
     }
     return aux / (double) solutionSet.size();
   }

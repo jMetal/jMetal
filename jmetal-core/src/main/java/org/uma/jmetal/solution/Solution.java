@@ -15,18 +15,23 @@ public interface Solution<T> extends Serializable {
   double getObjective(int index) ;
   double[] getObjectives() ;
 
-  T getVariableValue(int index) ;
+  T getVariable(int index) ;
   List<T> getVariables() ;
-  void setVariableValue(int index, T value) ;
-  String getVariableValueString(int index) ;
+  void setVariable(int index, T variable) ;
+
+  double[] getConstraints() ;
+  double getConstraint(int index) ;
+  void setConstraint(int index, double value) ;
 
   int getNumberOfVariables() ;
   int getNumberOfObjectives() ;
+  int getNumberOfConstraints() ;
 
   Solution<T> copy() ;
 
   void setAttribute(Object id, Object value) ;
   Object getAttribute(Object id) ;
+  boolean hasAttribute(Object id) ;
   
-  public Map<Object, Object> getAttributes();
+  Map<Object, Object> getAttributes();
 }

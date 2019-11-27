@@ -13,21 +13,21 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Builder class for algorithm CDG
  *
- * @author  Feng Zhang
+ * @author Feng Zhang
  * @version 1.0
  */
 public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>> {
 
-  protected Problem<DoubleSolution> problem ;
+  protected Problem<DoubleSolution> problem;
 
   /** Delta in Zhang & Li paper */
   protected double neighborhoodSelectionProbability;
@@ -35,56 +35,54 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   protected CrossoverOperator<DoubleSolution> crossover;
 
   protected int populationSize;
-  
-  protected int resultPopulationSize ;
 
-  protected int numberOfThreads ;
-  
-  protected double sigma_ ;
-  
+  protected int resultPopulationSize;
+
+  protected int numberOfThreads;
+
+  protected double sigma_;
+
   protected int maxEvaluations;
-  
-  protected int k_ ;
-  
+
+  protected int k_;
+
   protected int t_;
-  
+
   protected int subproblemNum_;
-  
+
   protected int childGrid_;
-  
+
   protected int childGridNum_;
 
   /** Constructor */
   public CDGBuilder(Problem<DoubleSolution> problem) {
 
-    this.problem = problem ;
-    populationSize = 300 ;
-    resultPopulationSize = 300 ;
-    maxEvaluations = 300000 ;
-    crossover = new DifferentialEvolutionCrossover() ;
-    neighborhoodSelectionProbability = 0.9 ;
-    numberOfThreads = 1 ;
-    sigma_ = 10e-6 ;
-    
-    if(problem.getNumberOfObjectives() == 2){
-    	k_ = 180;
-    	t_ = 1;
-    	childGrid_ = 60;
-    }
-    else if(problem.getNumberOfObjectives() == 3){
-    	k_ = 25;
-    	t_ = 1;
-    	k_++;
-    	childGrid_ = 20;
-    }
-    else{
-    	k_ = 180;
-    	t_ = 5;
+    this.problem = problem;
+    populationSize = 300;
+    resultPopulationSize = 300;
+    maxEvaluations = 300000;
+    crossover = new DifferentialEvolutionCrossover();
+    neighborhoodSelectionProbability = 0.9;
+    numberOfThreads = 1;
+    sigma_ = 10e-6;
+
+    if (problem.getNumberOfObjectives() == 2) {
+      k_ = 180;
+      t_ = 1;
+      childGrid_ = 60;
+    } else if (problem.getNumberOfObjectives() == 3) {
+      k_ = 25;
+      t_ = 1;
+      k_++;
+      childGrid_ = 20;
+    } else {
+      k_ = 180;
+      t_ = 5;
     }
     childGridNum_ = (int) Math.pow(childGrid_, problem.getNumberOfObjectives());
     childGridNum_++;
-	subproblemNum_ = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
-	subproblemNum_ = subproblemNum_ * problem.getNumberOfObjectives();
+    subproblemNum_ = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
+    subproblemNum_ = subproblemNum_ * problem.getNumberOfObjectives();
   }
 
   /* Getters/Setters */
@@ -93,9 +91,9 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   }
 
   public int getMaxEvaluations() {
-	return maxEvaluations;
+    return maxEvaluations;
   }
-  
+
   public int getResultPopulationSize() {
     return resultPopulationSize;
   }
@@ -109,25 +107,25 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   }
 
   public int getNumberOfThreads() {
-    return numberOfThreads ;
+    return numberOfThreads;
   }
-  
+
   public int getK() {
-	return k_ ;
+    return k_;
   }
-  
+
   public double getT() {
-	return t_ ;
+    return t_;
   }
-  
+
   public int getChildGrid() {
-	return childGrid_ ;
+    return childGrid_;
   }
-  
+
   public int getChildGridNum() {
-	return childGridNum_ ;
+    return childGridNum_;
   }
-  
+
   public CDGBuilder setPopulationSize(int populationSize) {
     this.populationSize = populationSize;
 
@@ -141,58 +139,69 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
   }
 
   public CDGBuilder setMaxEvaluations(int maxEvaluations) {
-	this.maxEvaluations = maxEvaluations;
+    this.maxEvaluations = maxEvaluations;
 
-	return this;
+    return this;
   }
-  
-  public CDGBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
-    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
 
-    return this ;
+  public CDGBuilder setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
+
+    return this;
   }
 
   public CDGBuilder setCrossover(CrossoverOperator<DoubleSolution> crossover) {
-    this.crossover = crossover ;
+    this.crossover = crossover;
 
-    return this ;
+    return this;
   }
 
   public CDGBuilder setNumberOfThreads(int numberOfThreads) {
-    this.numberOfThreads = numberOfThreads ;
+    this.numberOfThreads = numberOfThreads;
 
-    return this ;
+    return this;
   }
-  
+
   public CDGBuilder setK(int k) {
-	this.k_ = k ;
+    this.k_ = k;
 
-	return this ;
+    return this;
   }
-  
+
   public CDGBuilder setT(int t) {
-	this.t_ = t ;
+    this.t_ = t;
 
-	return this ;
+    return this;
   }
-  
+
   public CDGBuilder setChildGrid(int childGrid) {
-	this.childGrid_ = childGrid ;
+    this.childGrid_ = childGrid;
 
-	return this ;
+    return this;
   }
-  
+
   public CDGBuilder setChildGridNum(int childGridNum) {
-	this.childGridNum_ = childGridNum ;
+    this.childGridNum_ = childGridNum;
 
-	return this ;
+    return this;
   }
-  
+
   public AbstractCDG<DoubleSolution> build() {
-	  AbstractCDG<DoubleSolution> algorithm = null ;
-      algorithm = new CDG(problem, populationSize, resultPopulationSize, maxEvaluations, 
-          crossover, neighborhoodSelectionProbability, sigma_, k_, t_, subproblemNum_,
-          childGrid_ ,childGridNum_);
-    return algorithm ;
+    AbstractCDG<DoubleSolution> algorithm = null;
+    algorithm =
+        new CDG(
+            problem,
+            populationSize,
+            resultPopulationSize,
+            maxEvaluations,
+            crossover,
+            neighborhoodSelectionProbability,
+            sigma_,
+            k_,
+            t_,
+            subproblemNum_,
+            childGrid_,
+            childGridNum_);
+    return algorithm;
   }
 }

@@ -13,18 +13,17 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
+/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class GenericSolutionAttributeTest {
 
   @Test
-  public void shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassObject() {
+  public void
+      shouldDefaultConstructorCreateASolutionAttributedWithAnIdentifierEqualToTheClassObject() {
     GenericSolutionAttribute<?, ?> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object solutionAttributeId = ReflectionTestUtils
-        .getField(genericSolutionAttribute, "identifier");
+    Object solutionAttributeId =
+        ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
 
     assertEquals(genericSolutionAttribute.getClass(), solutionAttributeId);
   }
@@ -35,8 +34,8 @@ public class GenericSolutionAttributeTest {
     Object attributeIdentifier = new Double(4);
     genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
 
-    Object solutionAttributeId = ReflectionTestUtils
-        .getField(genericSolutionAttribute, "identifier");
+    Object solutionAttributeId =
+        ReflectionTestUtils.getField(genericSolutionAttribute, "identifier");
 
     assertEquals(attributeIdentifier, solutionAttributeId);
   }
@@ -46,8 +45,8 @@ public class GenericSolutionAttributeTest {
     GenericSolutionAttribute<?, ?> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    assertEquals(genericSolutionAttribute.getClass(),
-        genericSolutionAttribute.getAttributeIdentifier());
+    assertEquals(
+        genericSolutionAttribute.getClass(), genericSolutionAttribute.getAttributeIdentifier());
   }
 
   @Test
@@ -86,27 +85,27 @@ public class GenericSolutionAttributeTest {
 
     assertEquals(value, genericSolutionAttribute.getAttribute(solution));
   }
-  
-	@Test
-	public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
-		
-		MockedDoubleSolution solution = new MockedDoubleSolution();
-		
-		assertTrue(solution.getAttributes().isEmpty());
-	}
 
-	@Test
-	public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+  @Test
+  public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
 
-		MockedDoubleSolution solution = new MockedDoubleSolution();
+    MockedDoubleSolution solution = new MockedDoubleSolution();
 
-		solution.setAttribute("fake-atribute-1", 1);
-		solution.setAttribute("fake-atribute-2", 2);
+    assertTrue(solution.getAttributes().isEmpty());
+  }
 
-		assertFalse(solution.getAttributes().isEmpty());
-		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
-		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
-	}
+  @Test
+  public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
+
+    MockedDoubleSolution solution = new MockedDoubleSolution();
+
+    solution.setAttribute("fake-atribute-1", 1);
+    solution.setAttribute("fake-atribute-2", 2);
+
+    assertFalse(solution.getAttributes().isEmpty());
+    assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
+    assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+  }
 
   @SuppressWarnings("serial")
   private class MockedDoubleSolution implements Solution<Double> {
@@ -118,8 +117,7 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
-    public void setObjective(int index, double value) {
-    }
+    public void setObjective(int index, double value) {}
 
     @Override
     public double[] getObjectives() {
@@ -137,19 +135,25 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
-    public Double getVariableValue(int index) {
+    public Double getVariable(int index) {
       return null;
     }
 
     @Override
-    public void setVariableValue(int index, Double value) {
+    public void setVariable(int index, Double value) {}
 
+    @Override
+    public double[] getConstraints() {
+      return new double[0];
     }
 
     @Override
-    public String getVariableValueString(int index) {
-      return null;
+    public double getConstraint(int index) {
+      return 0;
     }
+
+    @Override
+    public void setConstraint(int index, double value) {}
 
     @Override
     public int getNumberOfVariables() {
@@ -158,6 +162,11 @@ public class GenericSolutionAttributeTest {
 
     @Override
     public int getNumberOfObjectives() {
+      return 0;
+    }
+
+    @Override
+    public int getNumberOfConstraints() {
       return 0;
     }
 
@@ -177,8 +186,13 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
+    public boolean hasAttribute(Object id) {
+      return false;
+    }
+
+    @Override
+    public Map<Object, Object> getAttributes() {
+      return attributes;
+    }
   }
 }

@@ -1,8 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
-
-import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.*;
@@ -42,8 +41,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
       int x ;
       int y ;
 
-      x = solution.getVariableValue(i) ;
-      y = solution.getVariableValue(i+1) ;
+      x = solution.getVariable(i) ;
+      y = solution.getVariable(i+1) ;
 
       fitness1 += distanceMatrix[x][y] ;
       fitness2 += costMatrix[x][y];
@@ -51,8 +50,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     int firstCity ;
     int lastCity  ;
 
-    firstCity = solution.getVariableValue(0) ;
-    lastCity = solution.getVariableValue(numberOfCities - 1) ;
+    firstCity = solution.getVariable(0) ;
+    lastCity = solution.getVariable(numberOfCities - 1) ;
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
