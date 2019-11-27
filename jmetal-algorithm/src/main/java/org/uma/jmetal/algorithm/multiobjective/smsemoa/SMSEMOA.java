@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
@@ -31,8 +31,8 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
    * Constructor
    */
   public SMSEMOA(Problem<S> problem, int maxEvaluations, int populationSize, double offset,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, Hypervolume<S> hypervolumeImplementation) {
+                 CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                 SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator, Hypervolume<S> hypervolumeImplementation) {
     super(problem) ;
     this.maxEvaluations = maxEvaluations;
     setMaxPopulationSize(populationSize);
@@ -96,13 +96,13 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation);
 
     Ranking<S> ranking = computeRanking(jointPopulation);
-    List<S> lastSubfront = ranking.getSubfront(ranking.getNumberOfSubfronts()-1) ;
+    List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
     List<S> resultPopulation = new ArrayList<>() ;
-    for (int i = 0; i < ranking.getNumberOfSubfronts()-1; i++) {
-      for (S solution : ranking.getSubfront(i)) {
+    for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
+      for (S solution : ranking.getSubFront(i)) {
         resultPopulation.add(solution);
       }
     }

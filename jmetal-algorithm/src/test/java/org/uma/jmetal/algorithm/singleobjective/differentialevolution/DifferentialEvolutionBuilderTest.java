@@ -3,10 +3,10 @@ package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
 
@@ -48,8 +48,7 @@ public class DifferentialEvolutionBuilderTest {
     DifferentialEvolutionCrossover crossover = builder.getCrossoverOperator();
     assertEquals(0.5, crossover.getCr(), EPSILON);
     assertEquals(0.5, crossover.getF(), EPSILON);
-    assertEquals(0.5, crossover.getK(), EPSILON);
-    assertTrue("rand/1/bin".equals(crossover.getVariant()));
+    assertTrue(DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN.equals(crossover.getVariant()));
   }
 
   @Test public void setValidPopulationSize() {

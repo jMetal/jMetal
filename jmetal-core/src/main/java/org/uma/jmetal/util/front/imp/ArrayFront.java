@@ -2,15 +2,11 @@ package org.uma.jmetal.util.front.imp;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -21,31 +17,31 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class ArrayFront implements Front {
   protected Point[] points;
-  protected int numberOfPoints ;
-  private int pointDimensions ;
+  protected int numberOfPoints;
+  private int pointDimensions;
 
   /** Constructor */
   public ArrayFront() {
-    points = null ;
-    numberOfPoints = 0 ;
-    pointDimensions = 0 ;
+    points = null;
+    numberOfPoints = 0;
+    pointDimensions = 0;
   }
 
   /** Constructor */
   public ArrayFront(List<? extends Solution<?>> solutionList) {
     if (solutionList == null) {
-      throw new JMetalException("The list of solutions is null") ;
+      throw new JMetalException("The list of solutions is null");
     } else if (solutionList.size() == 0) {
-      throw new JMetalException("The list of solutions is empty") ;
+      throw new JMetalException("The list of solutions is empty");
     }
 
     numberOfPoints = solutionList.size();
-    pointDimensions = solutionList.get(0).getNumberOfObjectives() ;
-    points = new Point[numberOfPoints] ;
+    pointDimensions = solutionList.get(0).getNumberOfObjectives();
+    points = new Point[numberOfPoints];
 
     points = new Point[numberOfPoints];
     for (int i = 0; i < numberOfPoints; i++) {
-      Point point = new ArrayPoint(pointDimensions) ;
+      Point point = new ArrayPoint(pointDimensions);
       for (int j = 0; j < pointDimensions; j++) {
         point.setValue(j, solutionList.get(i).getObjective(j));
       }
@@ -56,13 +52,13 @@ public class ArrayFront implements Front {
   /** Copy Constructor */
   public ArrayFront(Front front) {
     if (front == null) {
-      throw new JMetalException("The front is null") ;
+      throw new JMetalException("The front is null");
     } else if (front.getNumberOfPoints() == 0) {
-      throw new JMetalException("The front is empty") ;
+      throw new JMetalException("The front is empty");
     }
     numberOfPoints = front.getNumberOfPoints();
-    pointDimensions = front.getPoint(0).getDimension() ;
-    points = new Point[numberOfPoints] ;
+    pointDimensions = front.getPoint(0).getDimension();
+    points = new Point[numberOfPoints];
 
     points = new Point[numberOfPoints];
     for (int i = 0; i < numberOfPoints; i++) {
@@ -73,44 +69,48 @@ public class ArrayFront implements Front {
   /** Constructor */
   public ArrayFront(int numberOfPoints, int dimensions) {
     this.numberOfPoints = numberOfPoints;
-    pointDimensions = dimensions ;
+    pointDimensions = dimensions;
     points = new Point[this.numberOfPoints];
 
     for (int i = 0; i < this.numberOfPoints; i++) {
-      Point point = new ArrayPoint(pointDimensions) ;
+      Point point = new ArrayPoint(pointDimensions);
       for (int j = 0; j < pointDimensions; j++) {
-        point.setValue(j, 0.0) ;
+        point.setValue(j, 0.0);
       }
-      points[i] = point ;
+      points[i] = point;
     }
   }
 
   /**
    * Constructor
+   *
    * @param fileName File containing the data. Each line of the file is a list of objective values
    * @throws FileNotFoundException
    */
   public ArrayFront(String fileName) throws FileNotFoundException {
-    this() ;
-    InputStream inputStream = null;
-    try {
-      URL url = VectorFileUtils.class.getClassLoader().getResource(fileName) ;
-      if (url != null) {
-        String uri = Paths.get(url.toURI()).toString();
-        inputStream = createInputStream(uri) ;
-      } else {
-        inputStream = createInputStream(fileName) ;
+    this();
+    /*
+      InputStream inputStream = null;
+      try {
+        URL url = VectorFileUtils.class.getClassLoader().getResource(fileName) ;
+        if (url != null) {
+          String uri = Paths.get(url.toURI()).toString();
+          inputStream = createInputStream(uri) ;
+        } else {
+          inputStream = createInputStream(fileName) ;
+        }
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
       }
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    */
 
+    InputStream inputStream = createInputStream(fileName);
     InputStreamReader isr = new InputStreamReader(inputStream);
     BufferedReader br = new BufferedReader(isr);
 
     List<Point> list = new ArrayList<>();
     int numberOfObjectives = 0;
-    String aux ;
+    String aux;
     try {
       aux = br.readLine();
 
@@ -120,11 +120,15 @@ public class ArrayFront implements Front {
         if (numberOfObjectives == 0) {
           numberOfObjectives = tokenizer.countTokens();
         } else if (numberOfObjectives != tokenizer.countTokens()) {
-          throw new JMetalException("Invalid number of points read. "
-              + "Expected: " + numberOfObjectives + ", received: " + tokenizer.countTokens()) ;
+          throw new JMetalException(
+              "Invalid number of points read. "
+                  + "Expected: "
+                  + numberOfObjectives
+                  + ", received: "
+                  + tokenizer.countTokens());
         }
 
-        Point point = new ArrayPoint(numberOfObjectives) ;
+        Point point = new ArrayPoint(numberOfObjectives);
         while (tokenizer.hasMoreTokens()) {
           double value = new Double(tokenizer.nextToken());
           point.setValue(i, value);
@@ -142,11 +146,11 @@ public class ArrayFront implements Front {
 
     numberOfPoints = list.size();
     points = new Point[list.size()];
-    points = list.toArray(points) ;
+    points = list.toArray(points);
     if (numberOfPoints == 0) {
-      pointDimensions = 0 ;
+      pointDimensions = 0;
     } else {
-      pointDimensions = points[0].getDimension() ;
+      pointDimensions = points[0].getDimension();
     }
     for (int i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);
@@ -156,74 +160,96 @@ public class ArrayFront implements Front {
   public InputStream createInputStream(String fileName) throws FileNotFoundException {
     InputStream inputStream = getClass().getResourceAsStream(fileName);
     if (inputStream == null) {
-      inputStream = new FileInputStream(fileName) ;
+      inputStream = new FileInputStream(fileName);
     }
 
-    return inputStream ;
+    return inputStream;
   }
 
-  @Override public int getNumberOfPoints() {
-    return numberOfPoints ;
+  @Override
+  public int getNumberOfPoints() {
+    return numberOfPoints;
   }
 
-  @Override public int getPointDimensions() {
-    return pointDimensions ;
+  @Override
+  public int getPointDimensions() {
+    return pointDimensions;
   }
 
-  @Override public Point getPoint(int index) {
+  @Override
+  public Point getPoint(int index) {
     if (index < 0) {
-      throw new JMetalException("The index value is negative") ;
+      throw new JMetalException("The index value is negative");
     } else if (index >= numberOfPoints) {
       throw new JMetalException(
-          "The index value (" + index + ") is greater than the number of " + "points (" + numberOfPoints + ")");
+          "The index value ("
+              + index
+              + ") is greater than the number of "
+              + "points ("
+              + numberOfPoints
+              + ")");
     }
     return points[index];
   }
 
-  @Override public void setPoint(int index, Point point) {
+  @Override
+  public void setPoint(int index, Point point) {
     if (index < 0) {
-      throw new JMetalException("The index value is negative") ;
+      throw new JMetalException("The index value is negative");
     } else if (index >= numberOfPoints) {
-      throw new JMetalException("The index value (" + index + ") is greater than the number of "
-          + "points (" + numberOfPoints +")") ;
+      throw new JMetalException(
+          "The index value ("
+              + index
+              + ") is greater than the number of "
+              + "points ("
+              + numberOfPoints
+              + ")");
     } else if (point == null) {
-      throw new JMetalException("The point is null") ;
+      throw new JMetalException("The point is null");
     }
-    points[index] = point ;
+    points[index] = point;
   }
 
-  @Override public void sort(Comparator<Point> comparator) {
-    //Arrays.sort(points, comparator);
+  @Override
+  public void sort(Comparator<Point> comparator) {
+    // Arrays.sort(points, comparator);
     Arrays.sort(points, 0, numberOfPoints, comparator);
   }
 
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
     ArrayFront that = (ArrayFront) o;
 
-    if (numberOfPoints != that.numberOfPoints)
-      return false;
-    if (pointDimensions != that.pointDimensions)
-      return false;
-    if (!Arrays.equals(points, that.points))
-      return false;
+    if (numberOfPoints != that.numberOfPoints) return false;
+    if (pointDimensions != that.pointDimensions) return false;
+    if (!Arrays.equals(points, that.points)) return false;
 
     return true;
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     int result = Arrays.hashCode(points);
     result = 31 * result + numberOfPoints;
     result = 31 * result + pointDimensions;
     return result;
   }
-  
+
   @Override
-	public String toString() {
-		return Arrays.toString(points);
-	}
+  public String toString() {
+    return Arrays.toString(points);
+  }
+
+  @Override
+  public double[][] getMatrix() {
+    double[][] matrix = new double[getNumberOfPoints()][];
+    for (int i = 0; i < getNumberOfPoints(); i++) {
+      matrix[i] = points[i].getValues();
+    }
+
+    return matrix;
+  }
 }

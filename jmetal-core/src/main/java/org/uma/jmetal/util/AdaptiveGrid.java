@@ -306,7 +306,7 @@ public class AdaptiveGrid<S extends Solution<?>> {
   }
 
   /**
-   * Returns a random hypercube using a rouleteWheel method.
+   * Returns a random hypercube using a rouletteWheel method.
    * 
    * @param randomGenerator the {@link BoundedRandomGenerator} to use for the roulette
    * 

@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.cellde;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -107,7 +107,7 @@ public class CellDE45 implements Algorithm<List<DoubleSolution>> {
         } else if (result == 0) {
           Ranking<DoubleSolution> ranking = computeRanking(currentNeighbors);
 
-          distance.computeDensityEstimator(ranking.getSubfront(0));
+          distance.computeDensityEstimator(ranking.getSubFront(0));
           boolean deleteMutant = true ;
           int compareResult = comparator.compare(solution, offspring) ;
 

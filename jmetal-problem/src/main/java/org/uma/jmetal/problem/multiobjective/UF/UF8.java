@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.UF;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,7 @@ public class UF8 extends AbstractDoubleProblem {
       upperLimit.add(2.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -51,7 +50,7 @@ public class UF8 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
   	int count1, count2, count3;

@@ -1,12 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Builder class for algorithm MOEA/D and variants
@@ -15,7 +15,7 @@ import org.uma.jmetal.util.AlgorithmBuilder;
  * @version 1.0
  */
 public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSolution>> {
-  public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA, MOEADSTM, MOEADD} ;
+  public enum Variant {MOEAD, ConstraintMOEAD, MOEADDRA, MOEADSTM, MOEADD, MOEADIEPSILON} ;
 
   protected Problem<DoubleSolution> problem ;
 
@@ -191,7 +191,12 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
       algorithm = new MOEADD<>(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation,
               functionType, dataDirectory, neighborhoodSelectionProbability,
               maximumNumberOfReplacedSolutions, neighborSize);
+    } else if (moeadVariant.equals(Variant.MOEADIEPSILON)) {
+      algorithm = new MOEADIEpsilon(problem, populationSize, resultPopulationSize, maxEvaluations, mutation,
+          crossover, functionType, dataDirectory, neighborhoodSelectionProbability,
+          maximumNumberOfReplacedSolutions, neighborSize);
     }
+
     return algorithm ;
   }
 }

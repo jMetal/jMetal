@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -33,10 +33,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
   JMetalRandom randomGenerator;
 
   public MOEADSTM(Problem<DoubleSolution> problem, int populationSize, int resultPopulationSize,
-      int maxEvaluations,
-      MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
-      FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
-      int maximumNumberOfReplacedSolutions, int neighborSize) {
+                  int maxEvaluations,
+                  MutationOperator<DoubleSolution> mutation, CrossoverOperator<DoubleSolution> crossover,
+                  FunctionType functionType, String dataDirectory, double neighborhoodSelectionProbability,
+                  int maximumNumberOfReplacedSolutions, int neighborSize) {
     super(problem, populationSize, resultPopulationSize, maxEvaluations, crossover, mutation,
         functionType,
         dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions,

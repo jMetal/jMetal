@@ -7,10 +7,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,14 +37,14 @@ public class BinaryTournamentSelectionTest {
   @Mock private Problem<Solution<Object>> problem ;
   private List<Solution<Object>> population ;
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
     population = null ;
     BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;
     selection.execute(population) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = EmptyCollectionException.class)
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
     population = new ArrayList<>(0) ;
     BinaryTournamentSelection<Solution<Object>> selection = new BinaryTournamentSelection<Solution<Object>>() ;

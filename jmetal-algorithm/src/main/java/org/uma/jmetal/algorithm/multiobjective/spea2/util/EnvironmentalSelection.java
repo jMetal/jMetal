@@ -1,7 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.spea2.util;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.StrengthFitnessComparator;

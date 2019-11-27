@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -24,7 +24,7 @@ public class DifferentialEvolutionBuilder {
     this.problem = problem;
     this.populationSize = 100;
     this.maxEvaluations = 25000;
-    this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin");
+    this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     this.selectionOperator = new DifferentialEvolutionSelection();
     this.evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
   }

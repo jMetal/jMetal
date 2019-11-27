@@ -1,8 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -201,10 +201,10 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       //Computing the velocity of this particle
         speed[i][var] = velocityConstriction(constrictionCoefficient(C1, C2) *
                 (inertiaWeight(iterations, maxIterations, this.weightMax, this.weightMin) * speed[i][var] +
-                        C1 * r1 * (bestParticle.getVariableValue(var) -
-                                particle.getVariableValue(var)) +
-                        C2 * r2 * (bestGlobal.getVariableValue(var) -
-                                particle.getVariableValue(var))), deltaMax, deltaMin, var, i) ;
+                        C1 * r1 * (bestParticle.getVariable(var) -
+                                particle.getVariable(var)) +
+                        C2 * r2 * (bestGlobal.getVariable(var) -
+                                particle.getVariable(var))), deltaMax, deltaMin, var, i) ;
 
     }
   }
@@ -212,7 +212,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   private void computeNewPositions(int i) {
     DoubleSolution particle = getSwarm().get(i) ;
     for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-      particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]) ;
+      particle.setVariable(var, particle.getVariable(var) + speed[i][var]) ;
     }
   }
 
@@ -396,12 +396,12 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     DoubleSolution particle = getSwarm().get(part) ;
 
     for(int var = 0; var < particle.getNumberOfVariables(); var++){
-      if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
-        particle.setVariableValue(var, problem.getLowerBound(var));
+      if (particle.getVariable(var) < problem.getLowerBound(var)) {
+        particle.setVariable(var, problem.getLowerBound(var));
         speed[part][var] = speed[part][var] * changeVelocity1;
       }
-      if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
-        particle.setVariableValue(var, problem.getUpperBound(var));
+      if (particle.getVariable(var) > problem.getUpperBound(var)) {
+        particle.setVariable(var, problem.getUpperBound(var));
         speed[part][var] = speed[part][var] * changeVelocity2;
       }
     }
@@ -416,15 +416,15 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       gB = globalBest[shfGBest[i]];
       pB = localBest[i];
 
-      mean = (gB.getVariableValue(var) - pB.getVariableValue(var))/2;
+      mean = (gB.getVariable(var) - pB.getVariable(var))/2;
 
-      sigma = Math.abs(gB.getVariableValue(var) - pB.getVariableValue(var));
+      sigma = Math.abs(gB.getVariable(var) - pB.getVariable(var));
 
       java.util.Random rnd = new java.util.Random();
 
       N = rnd.nextGaussian()*sigma + mean;
 
-      particle.setVariableValue(var,N);
+      particle.setVariable(var,N);
       speed[i][var] = 0.0;
     }
   }

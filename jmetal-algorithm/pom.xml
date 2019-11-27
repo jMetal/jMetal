@@ -7,6 +7,7 @@
         <artifactId>jmetal</artifactId>
         <version>6.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>jmetal-algorithm</artifactId>
     <packaging>jar</packaging>
 
@@ -67,7 +68,7 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
+            <artifactId>mockito-all</artifactId>
             <version>1.10.8</version>
             <scope>test</scope>
         </dependency>

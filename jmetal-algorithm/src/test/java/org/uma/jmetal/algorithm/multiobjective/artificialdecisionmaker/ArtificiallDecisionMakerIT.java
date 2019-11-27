@@ -5,16 +5,15 @@ import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificialDecisionMakerDecisionTree;
 import org.uma.jmetal.util.artificialdecisionmaker.impl.ArtificiallDecisionMakerBuilder;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -86,7 +85,8 @@ public class ArtificiallDecisionMakerIT {
           .setTolerance(0.001)
           .setAsp(asp)
           .build();
-      new AlgorithmRunner.Executor(algorithm).execute();
+      algorithm.run();
+
       List<Double> referencePoints = ((ArtificialDecisionMakerDecisionTree<DoubleSolution>) algorithm)
           .getReferencePoints();
 

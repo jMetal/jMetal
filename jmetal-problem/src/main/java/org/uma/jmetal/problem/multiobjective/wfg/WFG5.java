@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * This class implements the WFG5 problem
@@ -115,7 +115,7 @@ public class WFG5 extends WFG {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariableValue(i);
+      x[i] = solution.getVariable(i);
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {

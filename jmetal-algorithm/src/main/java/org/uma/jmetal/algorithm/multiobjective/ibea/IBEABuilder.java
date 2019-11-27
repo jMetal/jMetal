@@ -1,42 +1,49 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
 
-/** This class implements the IBEA algorithm */
-public class IBEABuilder<S extends Solution<?>> implements AlgorithmBuilder<IBEA<S>> {
-  private Problem<S> problem;
+/**
+ * This class implements the IBEA algorithm
+ */
+public class IBEABuilder implements AlgorithmBuilder<IBEA<DoubleSolution>> {
+  private Problem<DoubleSolution> problem;
   private int populationSize;
   private int archiveSize;
   private int maxEvaluations;
 
-  private CrossoverOperator<S> crossover;
-  private MutationOperator<S> mutation;
-  private SelectionOperator<List<S>, S> selection;
+  private CrossoverOperator<DoubleSolution> crossover;
+  private MutationOperator<DoubleSolution> mutation;
+  private SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
   /**
    * Constructor
-   *
    * @param problem
    */
-  public IBEABuilder(
-          Problem<S> problem, CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
+  public IBEABuilder(Problem<DoubleSolution> problem) {
     this.problem = problem;
     populationSize = 100;
     archiveSize = 100;
     maxEvaluations = 25000;
 
-    this.crossover = crossover;
-    this.mutation = mutation;
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    selection = new BinaryTournamentSelection<S>();
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+
+    selection = new BinaryTournamentSelection<DoubleSolution>();
   }
 
   /* Getters */
@@ -52,15 +59,15 @@ public class IBEABuilder<S extends Solution<?>> implements AlgorithmBuilder<IBEA
     return maxEvaluations;
   }
 
-  public CrossoverOperator<S> getCrossover() {
+  public CrossoverOperator<DoubleSolution> getCrossover() {
     return crossover;
   }
 
-  public MutationOperator<S> getMutation() {
+  public MutationOperator<DoubleSolution> getMutation() {
     return mutation;
   }
 
-  public SelectionOperator<List<S>, S> getSelection() {
+  public SelectionOperator<List<DoubleSolution>, DoubleSolution> getSelection() {
     return selection;
   }
 
@@ -83,30 +90,26 @@ public class IBEABuilder<S extends Solution<?>> implements AlgorithmBuilder<IBEA
     return this;
   }
 
-  public IBEABuilder setCrossover(CrossoverOperator<S> crossover) {
+  public IBEABuilder setCrossover(CrossoverOperator<DoubleSolution> crossover) {
     this.crossover = crossover;
 
     return this;
   }
 
-  public IBEABuilder setMutation(MutationOperator<S> mutation) {
+  public IBEABuilder setMutation(MutationOperator<DoubleSolution> mutation) {
     this.mutation = mutation;
 
     return this;
   }
 
-  public IBEABuilder setSelection(SelectionOperator<List<S>, S> selection) {
+  public IBEABuilder setSelection(SelectionOperator<List<DoubleSolution>, DoubleSolution> selection) {
     this.selection = selection;
 
     return this;
   }
 
-  public Problem<S> getProblem() {
-    return problem ;
-  }
-
-  public IBEA<S> build() {
-    return new IBEA<S>(
-            problem, populationSize, archiveSize, maxEvaluations, selection, crossover, mutation);
+  public IBEA<DoubleSolution> build() {
+    return new IBEA<DoubleSolution>(problem, populationSize, archiveSize, maxEvaluations, selection, crossover,
+        mutation);
   }
 }

@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -38,8 +38,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
       upperLimit.add(1.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -53,7 +52,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
     int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
 
     double g = 0.0;

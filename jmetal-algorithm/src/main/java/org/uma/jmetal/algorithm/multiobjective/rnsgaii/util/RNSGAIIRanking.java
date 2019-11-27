@@ -129,11 +129,11 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         return result;
         }
 
-    public List<S> getSubfront(int rank) {
+    public List<S> getSubFront(int rank) {
         return this.rankedSubpopulations.get(rank);
     }
 
-    public int getNumberOfSubfronts() {
+    public int getNumberOfSubFronts() {
         return this.rankedSubpopulations.size();
     }
 

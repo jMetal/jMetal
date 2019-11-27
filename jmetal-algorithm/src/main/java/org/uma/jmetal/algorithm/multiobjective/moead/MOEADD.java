@@ -1,10 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.solutionattribute.Ranking;
@@ -67,8 +67,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     }
 
     ranking = computeRanking(population);
-    for (int curRank = 0; curRank < ranking.getNumberOfSubfronts(); curRank++) {
-      List<S> front = ranking.getSubfront(curRank);
+    for (int curRank = 0; curRank < ranking.getNumberOfSubFronts(); curRank++) {
+      List<S> front = ranking.getSubFront(curRank);
       for (S s : front) {
         int position = this.population.indexOf(s);
         rankIdx[curRank][position] = 1;

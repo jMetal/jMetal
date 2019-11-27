@@ -1,9 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +11,6 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class Tanaka extends AbstractDoubleProblem {
-  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
-  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
-
   /**
    * Constructor.
    * Creates a default instance of the problem Tanaka
@@ -34,41 +29,28 @@ public class Tanaka extends AbstractDoubleProblem {
       upperLimit.add(Math.PI);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-
-    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   @Override
   public void evaluate(DoubleSolution solution)  {
-    solution.setObjective(0, solution.getVariableValue(0));
-    solution.setObjective(1, solution.getVariableValue(1));
+    solution.setObjective(0, solution.getVariable(0));
+    solution.setObjective(1, solution.getVariable(1));
 
     this.evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
-  private void evaluateConstraints(DoubleSolution solution)  {
+  public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariableValue(0) ;
-    double x2 = solution.getVariableValue(1) ;
+    double x1 = solution.getVariable(0) ;
+    double x2 = solution.getVariable(1) ;
 
     constraint[0] = (x1 * x1 + x2 * x2 - 1.0 - 0.1 * Math.cos(16.0 * Math.atan(x1 / x2)));
     constraint[1] = -2.0 * ((x1 - 0.5) * (x1 - 0.5) + (x2 - 0.5) * (x2 - 0.5) - 0.5);
 
-    double overallConstraintViolation = 0.0;
-    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      if (constraint[i]<0.0){
-        overallConstraintViolation+=constraint[i];
-        violatedConstraints++;
-      }
-    }
-
-    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
-    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
-  }
+      solution.setConstraint(i, constraint[i]);
+    }  }
 }

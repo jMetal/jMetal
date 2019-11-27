@@ -3,8 +3,8 @@ package org.uma.jmetal.util.neighborhood.util;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -222,7 +222,7 @@ public class TwoDimensionalMeshTest {
    * 3 4 5
    * 6 7 8
    *
-   * The solution location is 2, the neighborhood is 2, 6, 7, 5
+   * The solution location is 8, the neighborhood is 2, 6, 7, 5
    */
   @Test
   public void shouldGetNeighborsReturnFourNeighborsCase5() {

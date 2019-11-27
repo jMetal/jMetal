@@ -2,9 +2,9 @@ package org.uma.jmetal.algorithm.multiobjective.spea2;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.spea2.util.EnvironmentalSelection;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -27,8 +27,8 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
   protected final int k ;
 
   public SPEA2(Problem<S> problem, int maxIterations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,
+               CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+               SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,
                int k) {
     super(problem);
     this.maxIterations = maxIterations;

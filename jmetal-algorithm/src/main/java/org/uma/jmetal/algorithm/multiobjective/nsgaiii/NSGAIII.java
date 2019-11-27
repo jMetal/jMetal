@@ -134,9 +134,9 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     int rankingIndex = 0;
     int candidateSolutions = 0;
     while (candidateSolutions < getMaxPopulationSize()) {
-      fronts.add(ranking.getSubfront(rankingIndex));
-      candidateSolutions += ranking.getSubfront(rankingIndex).size();
-      if ((pop.size() + ranking.getSubfront(rankingIndex).size()) <= getMaxPopulationSize())
+      fronts.add(ranking.getSubFront(rankingIndex));
+      candidateSolutions += ranking.getSubFront(rankingIndex).size();
+      if ((pop.size() + ranking.getSubFront(rankingIndex).size()) <= getMaxPopulationSize())
         addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
       rankingIndex++;
     }
@@ -166,7 +166,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> front ;
 
-    front = ranking.getSubfront(rank);
+    front = ranking.getSubFront(rank);
 
     for (int i = 0 ; i < front.size(); i++) {
       population.add(front.get(i));

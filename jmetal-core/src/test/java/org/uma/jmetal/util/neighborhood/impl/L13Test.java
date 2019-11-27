@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 import java.util.ArrayList;
 import java.util.List;

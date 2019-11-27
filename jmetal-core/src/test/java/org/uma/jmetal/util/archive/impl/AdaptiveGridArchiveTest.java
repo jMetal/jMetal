@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.archive.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 import static org.junit.Assert.assertEquals;
 

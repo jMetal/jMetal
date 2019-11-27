@@ -1,9 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.solutionattribute.impl.NumberOfViolatedConstraints;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +9,6 @@ import java.util.List;
 /** Class representing problem Srinivas */
 @SuppressWarnings("serial")
 public class Srinivas extends AbstractDoubleProblem {
-
-  public OverallConstraintViolation<DoubleSolution> overallConstraintViolationDegree ;
-  public NumberOfViolatedConstraints<DoubleSolution> numberOfViolatedConstraints ;
 
   /** Constructor */
   public Srinivas()  {
@@ -30,11 +25,7 @@ public class Srinivas extends AbstractDoubleProblem {
       upperLimit.add(20.0);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
-
-    overallConstraintViolationDegree = new OverallConstraintViolation<DoubleSolution>() ;
-    numberOfViolatedConstraints = new NumberOfViolatedConstraints<DoubleSolution>() ;
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -42,37 +33,29 @@ public class Srinivas extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution)  {
     double[] f = new double[solution.getNumberOfVariables()];
 
-    double x1 = solution.getVariableValue(0);
-    double x2 = solution.getVariableValue(1);
+    double x1 = solution.getVariable(0);
+    double x2 = solution.getVariable(1);
     f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
     f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
 
-    this.evaluateConstraints(solution);
+    evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method  */
-  private void evaluateConstraints(DoubleSolution solution)  {
+  public void evaluateConstraints(DoubleSolution solution)  {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariableValue(0) ;
-    double x2 = solution.getVariableValue(1) ;
+    double x1 = solution.getVariable(0) ;
+    double x2 = solution.getVariable(1) ;
 
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
-    double overallConstraintViolation = 0.0;
-    int violatedConstraints = 0;
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      if (constraint[i]<0.0){
-        overallConstraintViolation+=constraint[i];
-        violatedConstraints++;
-      }
+      solution.setConstraint(i, constraint[i]);
     }
-
-    overallConstraintViolationDegree.setAttribute(solution, overallConstraintViolation);
-    numberOfViolatedConstraints.setAttribute(solution, violatedConstraints);
   }
 }

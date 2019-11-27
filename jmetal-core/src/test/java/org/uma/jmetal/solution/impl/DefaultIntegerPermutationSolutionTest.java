@@ -1,8 +1,8 @@
 package org.uma.jmetal.solution.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class DefaultIntegerPermutationSolutionTest {
 
     List<Integer> values = new ArrayList<>() ;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      values.add(solution.getVariableValue(i)) ;
+      values.add(solution.getVariable(i)) ;
     }
 
     Collections.sort(values);

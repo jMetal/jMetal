@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.uma.jmetal</groupId>
@@ -32,7 +33,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-5.8</tag>
+        <tag>jmetal-6.0</tag>
     </scm>
 
     <distributionManagement>
@@ -49,8 +50,10 @@
     <modules>
         <module>jmetal-core</module>
         <module>jmetal-algorithm</module>
+        <module>jmetal-lab</module>
+        <module>jmetal-example</module>
         <module>jmetal-problem</module>
-        <module>jmetal-exec</module>
+        <module>jmetal-auto</module>
     </modules>
 
     <properties>
@@ -120,7 +123,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -142,7 +145,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>1.5</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -186,7 +189,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.7.201606060606</version>
+                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <goals>
@@ -224,24 +227,6 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                    </formats>
-                    <instrumentation>
-                        <ignoreTrivial>true</ignoreTrivial>
-                    </instrumentation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -251,7 +236,7 @@
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
-                <artifactId>jmetal-exec</artifactId>
+                <artifactId>jmetal-examples</artifactId>
                 <version>6.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -264,6 +249,12 @@
                 <artifactId>jmetal-algorithm</artifactId>
                 <version>6.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-lab</artifactId>
+                <version>6.0-SNAPSHOT</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

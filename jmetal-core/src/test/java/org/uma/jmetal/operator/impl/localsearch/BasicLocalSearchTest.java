@@ -1,20 +1,13 @@
 package org.uma.jmetal.operator.impl.localsearch;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.IntegerProblem;
-import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
-
-import java.util.Random;
-
-import static org.junit.Assert.assertTrue;
 
 public class BasicLocalSearchTest {
 
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
+		// TODO. The tested class are to be replaced by another different
+		/*
 		// Configuration
 		@SuppressWarnings("serial")
 		IntegerProblem problem = new AbstractIntegerProblem() {
@@ -45,6 +38,6 @@ public class BasicLocalSearchTest {
 		}).execute(solution);
 		assertTrue("Default random generator used", defaultUses[0] == 0);
 		assertTrue("No use of the custom generator", customUses[0] > 0);
+		*/
 	}
-
 }
