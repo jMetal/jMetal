@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.util.fitness.impl;
 
+import org.uma.jmetal.auto.util.fitness.Fitness;
 import org.uma.jmetal.densityestimator.DensityEstimator;
 import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.auto.util.fitness.Fitness;
 import org.uma.jmetal.ranking.Ranking;
 import org.uma.jmetal.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.Solution;

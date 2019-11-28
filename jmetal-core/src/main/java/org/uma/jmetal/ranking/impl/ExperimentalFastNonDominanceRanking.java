@@ -1,9 +1,9 @@
 package org.uma.jmetal.ranking.impl;
 
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
+import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 import ru.ifmo.nds.JensenFortinBuzdalov;

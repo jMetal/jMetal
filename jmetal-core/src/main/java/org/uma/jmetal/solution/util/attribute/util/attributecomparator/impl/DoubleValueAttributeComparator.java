@@ -1,7 +1,7 @@
 package org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl;
 
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.util.checking.Check;
 
 /**

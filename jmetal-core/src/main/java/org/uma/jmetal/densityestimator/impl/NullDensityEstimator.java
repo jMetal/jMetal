@@ -1,9 +1,9 @@
 package org.uma.jmetal.densityestimator.impl;
 
 import org.uma.jmetal.densityestimator.DensityEstimator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.Collections;
 import java.util.Comparator;
