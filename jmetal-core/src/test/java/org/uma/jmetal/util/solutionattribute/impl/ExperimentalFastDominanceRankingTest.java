@@ -17,7 +17,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ExperimentalFastDominanceRankingTest {
+public class ExperimentalFastDominanceRankingTest extends DominanceRankingTestBase {
+  @Override
+  Ranking<PointSolution> makeRanking() {
+    return new ExperimentalFastDominanceRanking<>();
+  }
+
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubFronts() {
     List<Solution<?>> population = Collections.emptyList();

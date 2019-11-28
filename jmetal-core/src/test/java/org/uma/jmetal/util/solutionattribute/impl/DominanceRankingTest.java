@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -19,13 +20,18 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DominanceRankingTest {
-  private List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+public class DominanceRankingTest extends DominanceRankingTestBase {
+  @Override
+  Ranking<PointSolution> makeRanking() {
+    return new DominanceRanking<>();
+  }
+
+  private List<Pair<Double, Double>> bounds = Collections.singletonList(new ImmutablePair<>(0.0, 1.0));
 
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
     List<Solution<?>> population = Collections.emptyList() ;
-    Ranking<Solution<?>> ranking = new DominanceRanking<Solution<?>>() ;
+    Ranking<Solution<?>> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(0, ranking.getNumberOfSubFronts()) ;
@@ -34,13 +40,13 @@ public class DominanceRankingTest {
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnOneSubfronts(){
     //problem = new DummyProblem(2) ;
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
-    List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
+    List<Pair<Double, Double>> bounds = Collections.singletonList(new ImmutablePair<>(0.0, 1.0));
+    List<DoubleSolution> population = Arrays.asList(
             new DefaultDoubleSolution(bounds, 2),
             new DefaultDoubleSolution(bounds, 2),
             new DefaultDoubleSolution(bounds, 2));
 
-    Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>() ;
+    Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
     ranking.computeRanking(population) ;
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -48,8 +54,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
@@ -78,8 +82,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
@@ -113,8 +115,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithThreeDominatedSolutionsReturnThreeSubfronts() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
@@ -155,8 +155,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithFiveSolutionsWorkProperly() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
