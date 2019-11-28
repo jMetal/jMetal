@@ -1,6 +1,7 @@
 package org.uma.jmetal.auto.util.densityestimator.impl;
 
 import org.junit.Test;
+import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;

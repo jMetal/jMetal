@@ -1,9 +1,9 @@
 package org.uma.jmetal.auto.component.replacement.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
+import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.ranking.Ranking;
+import org.uma.jmetal.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

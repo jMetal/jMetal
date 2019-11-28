@@ -5,10 +5,10 @@ import org.uma.jmetal.auto.component.selection.impl.DifferentialEvolutionMatingP
 import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.densityestimator.DensityEstimator;
+import org.uma.jmetal.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.ranking.Ranking;
+import org.uma.jmetal.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;

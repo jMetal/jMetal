@@ -2,9 +2,9 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithOppositeBoundValue;
-import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
+import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
+import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithOppositeBoundValue;
+import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 
 import java.util.List;
 import java.util.function.Function;

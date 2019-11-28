@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.util.preference;
 
-import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.auto.util.ranking.Ranking;
+import org.uma.jmetal.densityestimator.DensityEstimator;
+import org.uma.jmetal.ranking.Ranking;
 
 import java.util.List;
 
