@@ -16,6 +16,7 @@ import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
 import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -183,8 +184,9 @@ public class AutoNSGAII {
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
+    Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
     Replacement<DoubleSolution> replacement =
-        new RankingAndDensityEstimatorReplacement<>(ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
