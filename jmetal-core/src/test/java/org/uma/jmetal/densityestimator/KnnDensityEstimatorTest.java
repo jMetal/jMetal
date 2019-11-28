@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.util.densityestimator.impl;
+package org.uma.jmetal.densityestimator;
 
 import org.junit.Test;
 import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
