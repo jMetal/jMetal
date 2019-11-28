@@ -2,8 +2,6 @@
 jMetal 6 project documentation
 ==============================
 
-.. sectionauthor:: Antonio J. Nebro <ajnebro@uma.es>
-
 *Author: Antonio J. Nebro* <ajnebro@uma.es>
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics. It is an open-source project released under MIT license, and it is hosted in GitHub: https://github.com/jMetal/jMetal.
