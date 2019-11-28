@@ -8,7 +8,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
+import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;
@@ -56,7 +56,7 @@ public class SelectionParameter extends CategoricalParameter<String> {
           densityEstimator = new KnnDensityEstimator<>(1) ;
         }
         */
-        Ranking<?> ranking = new FastNonDominanceSortRanking<>();
+        Ranking<?> ranking = new FastNonDominatedSortRanking<>();
         DensityEstimator<?> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
         MultiComparator<?> rankingAndCrowdingComparator =

@@ -16,12 +16,12 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class FastNonDominanceSortRankingTest {
+public class FastNonDominatedSortingRankingTest {
 
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
     List<Solution<?>> population = Collections.emptyList();
-    Ranking<Solution<?>> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(0, ranking.getNumberOfSubFronts());
@@ -43,7 +43,7 @@ public class FastNonDominanceSortRankingTest {
     population.add(solution);
     population.add(solution2);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -72,7 +72,7 @@ public class FastNonDominanceSortRankingTest {
     population.add(solution);
     population.add(solution2);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -111,7 +111,7 @@ public class FastNonDominanceSortRankingTest {
     population.add(solution2);
     population.add(solution3);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(3, ranking.getNumberOfSubFronts());
@@ -161,7 +161,7 @@ public class FastNonDominanceSortRankingTest {
     population.add(solution4);
     population.add(solution5);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -209,7 +209,7 @@ public class FastNonDominanceSortRankingTest {
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
-    Ranking<Solution<?>> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -258,7 +258,7 @@ public class FastNonDominanceSortRankingTest {
     List<DoubleSolution> solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -297,7 +297,7 @@ public class FastNonDominanceSortRankingTest {
       solutionList.add(solution) ;
     });
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>();
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(11, solutionList.size());

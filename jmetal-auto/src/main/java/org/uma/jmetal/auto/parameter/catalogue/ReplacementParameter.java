@@ -8,7 +8,7 @@ import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
+import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -50,7 +50,7 @@ public class ReplacementParameter extends CategoricalParameter<String> {
 
         Ranking<?> ranking;
         if (rankingName.equals("dominanceRanking")) {
-          ranking = new FastNonDominanceSortRanking<>();
+          ranking = new FastNonDominatedSortRanking<>();
         } else {
           ranking = new StrengthRanking<>();
         }

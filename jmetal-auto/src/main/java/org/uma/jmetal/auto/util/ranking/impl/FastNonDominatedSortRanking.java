@@ -20,7 +20,7 @@ import java.util.*;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class FastNonDominanceSortRanking<S extends Solution<?>> implements Ranking<S> {
+public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName() ;
   private Comparator<S> dominanceComparator ;
   private Comparator<S> solutionComparator;
@@ -32,7 +32,7 @@ public class FastNonDominanceSortRanking<S extends Solution<?>> implements Ranki
   /**
    * Constructor
    */
-  public FastNonDominanceSortRanking(Comparator<S> comparator) {
+  public FastNonDominatedSortRanking(Comparator<S> comparator) {
     this.dominanceComparator = comparator ;
     rankedSubPopulations = new ArrayList<>();
     this.solutionComparator = new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING) ;
@@ -41,7 +41,7 @@ public class FastNonDominanceSortRanking<S extends Solution<?>> implements Ranki
   /**
    * Constructor
    */
-  public FastNonDominanceSortRanking() {
+  public FastNonDominatedSortRanking() {
     this(new DominanceComparator<>()) ;
   }
 

@@ -3,7 +3,7 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
+import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.auto.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.Solution;
 
@@ -37,7 +37,7 @@ public class RankingParameter <S extends Solution<?>> extends CategoricalParamet
     Ranking<S> result ;
     switch (getValue()) {
       case "dominanceRanking":
-        result = new FastNonDominanceSortRanking<>() ;
+        result = new FastNonDominatedSortRanking<>() ;
         break;
       case "strengthRanking":
         result = new StrengthRanking<>() ;

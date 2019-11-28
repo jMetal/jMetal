@@ -17,14 +17,12 @@ import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.ExperimentalFastNonDominanceRanking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
+import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
@@ -32,8 +30,6 @@ import org.uma.jmetal.solution.util.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -75,7 +71,7 @@ public class NSGAII {
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>(new DominanceComparator<>());
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceComparator<>());
     //ranking = new ExperimentalFastNonDominanceRanking<>() ;
 
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();

@@ -18,7 +18,7 @@ import org.uma.jmetal.auto.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.auto.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.auto.util.ranking.Ranking;
-import org.uma.jmetal.auto.util.ranking.impl.FastNonDominanceSortRanking;
+import org.uma.jmetal.auto.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
@@ -165,7 +165,7 @@ public class AutoNSGAII {
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
-    Ranking<DoubleSolution> ranking = new FastNonDominanceSortRanking<>(new DominanceComparator<>());
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<DoubleSolution>(
