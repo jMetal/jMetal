@@ -8,4 +8,4 @@ The software requirements to use jMetal 6.0-SNAPSHOT are:
 * Maven
 * Optional: R, Latex, Tablesaw, Smile.
 
-To work with the jMetal 6.0-SNAPSHOT version, just clone the repository in https://github.com/jMetal/jMetal.
+To work with the jMetal 6.0-SNAPSHOT version, just clone the repository https://github.com/jMetal/jMetal.

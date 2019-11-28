@@ -4,6 +4,12 @@ jMetal 6 project Web site
     :alt: Build Status
     :target: https://travis-ci.org/jMetal/jMetal
 
+.. |Documentation Status| image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
+   :target: http://jmetal.readthedocs.io/?badge=latest
+
+.. |GitHub license| image:: https://img.shields.io/github/license/Naereen/StrapDown.js.svg
+   :target: https://github.com/jMetal/jMetal/LICENSE.txt
+
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The current stable version is 5.8 (https://github.com/jMetal/jMetal/tree/jmetal-5.8), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
 
 After five years working with jMetal 5, a new major release, jMetal 6, is under development and, after some months working of a development branch, it has been moved to the master branch as version 6.0-SNAPSHOT.
