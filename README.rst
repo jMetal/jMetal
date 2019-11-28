@@ -1,6 +1,8 @@
 jMetal 6 project Web site
 ==========================
-[![Build Status](https://travis-ci.org/jMetal/jMetal.svg?branch=master)](https://travis-ci.org/jMetal/jMetal)
+.. image:: https://travis-ci.org/jMetal/jMetal.svg?branch=master
+    :alt: Build Status
+    :target: https://travis-ci.org/jMetal/jMetal
 
 jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The current stable version is 5.8 (https://github.com/jMetal/jMetal/tree/jmetal-5.8), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
 
@@ -8,7 +10,7 @@ After five years working with jMetal 5, a new major release, jMetal 6, is under 
 
 A summary of the features of jMetal 6.0 are listed next:
 
-* Use of Sphinx for the documentation. In jMetal 5 the documentation is based on Markdown files; it is not complete and some parts are outdated (this documentation is still available: https://github.com/jMetal/jMetalDocumentation). The documentation of jMetal 6 is being elaborated here :https://jmetal.readthedocs.io/en/latest/.
+* Use of Sphinx for the documentation. In jMetal 5 the documentation is based on Markdown files; it is not complete and some parts are outdated (this documentation is still available: https://github.com/jMetal/jMetalDocumentation). The documentation of jMetal 6 is being elaborated here: https://jmetal.readthedocs.io/en/latest/.
 
 * Support for automatic configuration of metaheuristics. We include a sub-project called ``jmetal-auto``, which currently contains a version of NSGA-II that can be fully auto tuned using ``irace``, as is described in the paper "Automatic Configuration of NSGA-II with jMetal and irace", presented at GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832).
 
