@@ -1,6 +1,8 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -61,9 +63,11 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
             new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = 1010;
 
     Termination termination = new TerminationByEvaluations(25000);
+
+    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>() ;
 
     algorithm =
         new NSGAII<>(
@@ -74,6 +78,7 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
             mutation,
             selection,
             termination,
+            ranking,
             new SequentialSolutionListEvaluator<>());
 
     algorithm.run();
