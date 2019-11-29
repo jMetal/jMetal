@@ -24,6 +24,17 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     this.matingPoolSize = matingPoolSize;
   }
 
+  public NaryTournamentMatingPoolSelection(
+          int tournamentSize, int matingPoolSize, Preference<S> preference) {
+    this.preference = preference ;
+    Comparator<S> comparator = new MultiComparator<>(
+            Arrays.asList(
+                    preference.getRanking().getSolutionComparator(),
+                    preference.getDensityEstimator().getSolutionComparator())) ;
+    this.selectionOperator = new NaryTournamentSelection<>(tournamentSize, comparator) ;
+    this.matingPoolSize = matingPoolSize ;
+  }
+
   public List<S> select(List<S> solutionList) {
     preference.recompute(solutionList);
     List<S> matingPool = new ArrayList<>(matingPoolSize);
@@ -35,14 +46,5 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     return matingPool;
   }
 
-  public NaryTournamentMatingPoolSelection(
-      int tournamentSize, int matingPoolSize, Preference<S> preference) {
-    this.preference = preference ;
-    Comparator<S> comparator = new MultiComparator<>(
-        Arrays.asList(
-            preference.getRanking().getSolutionComparator(),
-            preference.getDensityEstimator().getSolutionComparator())) ;
-    this.selectionOperator = new NaryTournamentSelection<>(tournamentSize, comparator) ;
-    this.matingPoolSize = matingPoolSize ;
-  }
+
 }

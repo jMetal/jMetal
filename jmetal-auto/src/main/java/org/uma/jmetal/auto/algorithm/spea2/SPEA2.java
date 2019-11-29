@@ -41,8 +41,6 @@ public class SPEA2 {
     DoubleProblem problem = new ZDT1();
     String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
-    JMetalRandom.getInstance().setSeed(1);
-
     int populationSize = 100;
     int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 25000;
