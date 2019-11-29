@@ -63,10 +63,6 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
@@ -83,7 +79,6 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
             offspringPopulationSize,
             crossover,
             mutation,
-            selection,
             termination,
             ranking,
             new SequentialSolutionListEvaluator<>());

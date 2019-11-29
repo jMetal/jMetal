@@ -58,12 +58,8 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
-
     int populationSize = 100;
-    int offspringPopulationSize = 1010;
+    int offspringPopulationSize = 100;
 
     Termination termination = new TerminationByEvaluations(25000);
 
@@ -76,7 +72,6 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
             offspringPopulationSize,
             crossover,
             mutation,
-            selection,
             termination,
             ranking,
             new SequentialSolutionListEvaluator<>());

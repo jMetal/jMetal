@@ -34,18 +34,24 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
     Check.isNotNull(solution1);
     Check.isNotNull(solution2);
 
-    Check.isNotNull(solution1.getAttribute(attributeName));
-    Check.isNotNull(solution2.getAttribute(attributeName));
+    //Check.isNotNull(solution1.getAttribute(attributeName));
+    //Check.isNotNull(solution2.getAttribute(attributeName));
 
     int result ;
 
+    int value1 = 0 ;
+    int value2 = 0 ;
+
+    if (solution1.getAttribute(attributeName) != null) {
+      value1 = (int) solution1.getAttribute(attributeName);
+    }
+    if (solution2.getAttribute(attributeName) != null) {
+      value2 = (int) solution2.getAttribute(attributeName);
+    }
+
     if (ordering.equals(Ordering.DESCENDING)) {
-      int value1 = (int) solution1.getAttribute(attributeName);
-      int value2 = (int) solution2.getAttribute(attributeName);
       result = Double.compare(value2, value1);
     } else {
-      int value1 = (int) solution1.getAttribute(attributeName);
-      int value2 = (int) solution2.getAttribute(attributeName);
       result = Double.compare(value1, value2);
     }
 

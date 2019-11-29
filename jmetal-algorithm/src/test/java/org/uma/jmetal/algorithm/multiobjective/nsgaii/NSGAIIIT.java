@@ -57,7 +57,6 @@ public class NSGAIIIT {
                     offspringPopulationSize,
                     crossover,
                     mutation,
-                    new BinaryTournamentSelection<>(),
                     termination,
                     new SequentialSolutionListEvaluator<>());
 
@@ -98,7 +97,6 @@ public class NSGAIIIT {
                     offspringPopulationSize,
                     crossover,
                     mutation,
-                    new BinaryTournamentSelection<>(),
                     termination,
                     new SequentialSolutionListEvaluator<>());
 

@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
@@ -9,12 +10,14 @@ import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorRepla
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
@@ -50,7 +53,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       int offspringPopulationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator,
       Termination termination,
       Ranking<S> ranking,
       SolutionListEvaluator<S> evaluator) {
@@ -59,14 +61,21 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
-    this.selectionOperator = selectionOperator;
 
     this.ranking = ranking;
+    DensityEstimator<S> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-    this.termination = termination;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, new CrowdingDistanceDensityEstimator<>(), Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+
+    this.selectionOperator =
+        new BinaryTournamentSelection<>(
+            new MultiComparator<>(
+                Arrays.asList(
+                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+
+    this.termination = termination;
 
     this.evaluator = evaluator;
     this.offspringPopulationSize = offspringPopulationSize;
@@ -85,7 +94,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       int offspringPopulationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator,
       Termination termination,
       SolutionListEvaluator<S> evaluator) {
     this(
@@ -94,7 +102,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
         offspringPopulationSize,
         crossoverOperator,
         mutationOperator,
-        selectionOperator,
         termination,
         new FastNonDominatedSortRanking<>(),
         evaluator);
