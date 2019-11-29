@@ -21,6 +21,7 @@ import java.util.*;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
