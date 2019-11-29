@@ -14,22 +14,21 @@ import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.util.preference.Preference;
-import org.uma.jmetal.densityestimator.DensityEstimator;
-import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.component.densityestimator.DensityEstimator;
+import org.uma.jmetal.component.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.ranking.Ranking;
-import org.uma.jmetal.ranking.impl.StrengthRanking;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Class implementing an algorithm based on SPEA2 by using the {@link EvolutionaryAlgorithm} class.

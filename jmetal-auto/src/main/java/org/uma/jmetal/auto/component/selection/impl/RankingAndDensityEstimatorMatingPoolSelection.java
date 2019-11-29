@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.component.selection.impl;
 
 import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
-import org.uma.jmetal.densityestimator.DensityEstimator;
-import org.uma.jmetal.ranking.Ranking;
+import org.uma.jmetal.component.densityestimator.DensityEstimator;
+import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;

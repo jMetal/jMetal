@@ -2,8 +2,8 @@ package org.uma.jmetal.auto.component.replacement.impl;
 
 import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.util.preference.Preference;
-import org.uma.jmetal.densityestimator.DensityEstimator;
-import org.uma.jmetal.ranking.Ranking;
+import org.uma.jmetal.component.densityestimator.DensityEstimator;
+import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;

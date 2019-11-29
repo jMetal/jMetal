@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAII;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;

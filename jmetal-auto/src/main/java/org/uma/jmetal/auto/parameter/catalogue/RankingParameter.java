@@ -2,9 +2,9 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.ranking.Ranking;
-import org.uma.jmetal.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.ranking.impl.StrengthRanking;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.component.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;

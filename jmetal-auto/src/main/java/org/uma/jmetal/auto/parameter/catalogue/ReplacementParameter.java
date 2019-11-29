@@ -4,12 +4,12 @@ import org.uma.jmetal.auto.component.replacement.Replacement;
 import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
-import org.uma.jmetal.densityestimator.DensityEstimator;
-import org.uma.jmetal.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.densityestimator.impl.KnnDensityEstimator;
-import org.uma.jmetal.ranking.Ranking;
-import org.uma.jmetal.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.ranking.impl.StrengthRanking;
+import org.uma.jmetal.component.densityestimator.DensityEstimator;
+import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.component.ranking.impl.StrengthRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Comparator;
