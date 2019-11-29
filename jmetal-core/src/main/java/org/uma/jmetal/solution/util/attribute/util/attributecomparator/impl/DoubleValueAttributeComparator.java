@@ -33,30 +33,18 @@ public class DoubleValueAttributeComparator<S extends Solution<?>> extends Attri
     Check.isNotNull(solution1);
     Check.isNotNull(solution2);
 
+    Check.isNotNull(solution1.getAttribute(attributeName));
+    Check.isNotNull(solution2.getAttribute(attributeName));
+
     int result ;
 
     if (ordering.equals(Ordering.DESCENDING)) {
-      double value1 = Double.MIN_VALUE;
-      if (solution1.getAttribute(attributeName) != null) {
-        value1 = (double) solution1.getAttribute(attributeName);
-      }
-
-      double value2 = Double.MIN_VALUE;
-      if (solution2.getAttribute(attributeName) != null) {
-        value2 = (double) solution2.getAttribute(attributeName);
-      }
-
+      double value1 = (double) solution1.getAttribute(attributeName);
+      double value2 = (double) solution2.getAttribute(attributeName);
       result = Double.compare(value2, value1);
     } else {
-      double value1 = Double.MAX_VALUE;
-      if (solution1.getAttribute(attributeName) != null) {
-        value1 = (double) solution1.getAttribute(attributeName);
-      }
-
-      double value2 = Double.MAX_VALUE;
-      if (solution2.getAttribute(attributeName) != null) {
-        value2 = (double) solution2.getAttribute(attributeName);
-      }
+      double value1 = (double) solution1.getAttribute(attributeName);
+      double value2 = (double) solution2.getAttribute(attributeName);
       result = Double.compare(value1, value2);
     }
 

@@ -23,6 +23,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.ranking.Ranking;
+import org.uma.jmetal.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -42,7 +43,7 @@ public class NSGAII {
     DoubleProblem problem = new ZDT1();
     String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
-    JMetalRandom.getInstance().setSeed(1);
+    //JMetalRandom.getInstance().setSeed(1);
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

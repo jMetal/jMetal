@@ -71,7 +71,6 @@ public class SPEA2 {
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     Ranking<DoubleSolution> ranking = new StrengthRanking<>() ;
-
     DensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
 
     Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;

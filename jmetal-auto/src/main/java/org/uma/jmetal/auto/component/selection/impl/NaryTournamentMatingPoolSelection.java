@@ -25,7 +25,7 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
   }
 
   public List<S> select(List<S> solutionList) {
-    //preference.recompute(solutionList);
+    preference.recompute(solutionList);
     List<S> matingPool = new ArrayList<>(matingPoolSize);
 
     while (matingPool.size() < matingPoolSize) {

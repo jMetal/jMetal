@@ -17,6 +17,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -51,8 +53,8 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Srinivas.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -83,7 +85,10 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-    printFinalSolutionSet(population);
+    new SolutionListOutput(population)
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }

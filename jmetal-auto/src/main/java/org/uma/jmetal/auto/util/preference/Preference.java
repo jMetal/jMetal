@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * A preference is a list composed of a ranking and a density estimator that specifies preferences in the selection
- * and replacement componentes of an evolutionary algorithm.
+ * and replacement components of an evolutionary algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -15,6 +15,7 @@ public class Preference<S>  {
   private Ranking<S> ranking ;
   private DensityEstimator<S> densityEstimator ;
   private Preference<S> relatedPreference ;
+  private boolean preferenceHasBeenComputedFirstTime = false ;
 
   public Preference(Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
     this(ranking, densityEstimator, null) ;
@@ -32,7 +33,11 @@ public class Preference<S>  {
    * related preference.
    */
   public void recompute(List<S> solutionList) {
-    if (relatedPreference != null) {
+    if (!preferenceHasBeenComputedFirstTime) {
+      recomputeRanking(solutionList) ;
+      recomputeDensityEstimator() ;
+      preferenceHasBeenComputedFirstTime = true ;
+    } else if (relatedPreference != null) {
       if (rankingsAreDifferent()) {
         recomputeRanking(solutionList) ;
         recomputeDensityEstimator() ;
