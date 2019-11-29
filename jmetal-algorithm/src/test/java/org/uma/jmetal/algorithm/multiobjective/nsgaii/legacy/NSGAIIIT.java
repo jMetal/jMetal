@@ -1,23 +1,17 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
-import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -37,29 +31,16 @@ public class NSGAIIIT {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    double crossoverProbability = 0.9 ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
-
-    Termination termination = new TerminationByEvaluations(25000);
-
-    algorithm =
-            new NSGAII<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation,
-                    new BinaryTournamentSelection<>(),
-                    termination,
-                    new SequentialSolutionListEvaluator<>());
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
     algorithm.run();
 
@@ -78,29 +59,16 @@ public class NSGAIIIT {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    double crossoverProbability = 0.9 ;
+    double crossoverDistributionIndex = 20.0 ;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+    double mutationDistributionIndex = 20.0 ;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int populationSize = 100;
-    int offspringPopulationSize = 100;
-
-    Termination termination = new TerminationByEvaluations(25000);
-
-    algorithm =
-            new NSGAII<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation,
-                    new BinaryTournamentSelection<>(),
-                    termination,
-                    new SequentialSolutionListEvaluator<>());
+    int populationSize  = 100 ;
+    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
 
     algorithm.run();
 
