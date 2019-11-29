@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
@@ -12,6 +13,7 @@ import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.component.termination.Termination;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
@@ -34,10 +36,12 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   private Termination termination;
   private Replacement<S> replacement;
 
-  private long startTime ;
-  private long totalComputingTime ;
+  private long startTime;
+  private long totalComputingTime;
 
   private Observable<Map<String, Object>> observable;
+
+  private Ranking<S> ranking;
 
   /** Constructor */
   public NSGAII(
@@ -48,6 +52,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator,
       Termination termination,
+      Ranking<S> ranking,
       SolutionListEvaluator<S> evaluator) {
     super(problem);
     setMaxPopulationSize(populationSize);
@@ -56,12 +61,12 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
 
+    this.ranking = ranking;
+
     this.termination = termination;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            new FastNonDominatedSortRanking<>(),
-            new CrowdingDistanceDensityEstimator<>(),
-            Replacement.RemovalPolicy.oneShot);
+            ranking, new CrowdingDistanceDensityEstimator<>(), Replacement.RemovalPolicy.oneShot);
 
     this.evaluator = evaluator;
     this.offspringPopulationSize = offspringPopulationSize;
@@ -73,10 +78,33 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.matingPoolSize = computeMatingPoolSize(offspringPopulationSize, crossoverOperator);
   }
 
-  @Override public void run() {
-    startTime = System.currentTimeMillis() ;
-    super.run() ;
-    totalComputingTime = System.currentTimeMillis() - startTime ;
+  /** Constructor */
+  public NSGAII(
+      Problem<S> problem,
+      int populationSize,
+      int offspringPopulationSize,
+      CrossoverOperator<S> crossoverOperator,
+      MutationOperator<S> mutationOperator,
+      SelectionOperator<List<S>, S> selectionOperator,
+      Termination termination,
+      SolutionListEvaluator<S> evaluator) {
+    this(
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossoverOperator,
+        mutationOperator,
+        selectionOperator,
+        termination,
+        new FastNonDominatedSortRanking<>(),
+        evaluator);
+  }
+
+  @Override
+  public void run() {
+    startTime = System.currentTimeMillis();
+    super.run();
+    totalComputingTime = System.currentTimeMillis() - startTime;
   }
 
   @Override
@@ -197,11 +225,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   public long getTotalComputingTime() {
-    return totalComputingTime ;
+    return totalComputingTime;
   }
 
   public long getEvaluations() {
-    return evaluations ;
+    return evaluations;
   }
 
   protected int computeMatingPoolSize(
