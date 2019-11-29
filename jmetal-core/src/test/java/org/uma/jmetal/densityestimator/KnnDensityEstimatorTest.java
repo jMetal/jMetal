@@ -62,48 +62,6 @@ public class KnnDensityEstimatorTest {
   }
 
   @Test
-  public void shouldSortOrderTheSolutionsTakingIntoAccountTheDraws() {
-    /*
-         5 1
-         4   2
-         3     3
-         2
-         1         4
-         0 1 2 3 4 5
-
-         Result after sort: 4, 3, 1, 2
-    */
-    DoubleProblem problem = new MockDoubleProblem(2);
-    KnnDensityEstimator<Solution<?>> densityEstimator = new KnnDensityEstimator<>(1);
-    DoubleSolution solution1 = problem.createSolution();
-    DoubleSolution solution2 = problem.createSolution();
-    DoubleSolution solution3 = problem.createSolution();
-    DoubleSolution solution4 = problem.createSolution();
-
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
-
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
-
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
-
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
-
-    List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
-
-    densityEstimator.computeDensityEstimator(solutionList);
-    densityEstimator.sort(solutionList);
-
-    assertEquals(solutionList.get(0), solution4);
-    assertEquals(solutionList.get(1), solution3);
-    assertEquals(solutionList.get(2), solution1);
-    assertEquals(solutionList.get(3), solution2);
-  }
-
-  @Test
   public void shouldSortOrderTheSolutions() {
     /*
          5 1
