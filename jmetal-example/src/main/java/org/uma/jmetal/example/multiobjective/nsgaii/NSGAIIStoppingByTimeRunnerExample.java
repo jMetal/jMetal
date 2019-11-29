@@ -93,8 +93,5 @@ public class NSGAIIStoppingByTimeRunnerExample extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
-
-    // PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
-    // plot.plot();
   }
 }
