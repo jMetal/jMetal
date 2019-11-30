@@ -20,9 +20,9 @@ A summary of the features of jMetal 6.0 are listed next:
 
 * Improved experimentation. The output of an experiment (i.e., the execution of a number of algorithms on a set of problems) is an CSV file which can be further analyzed to produce Latex tables and graphics with statistical information. I plan to use Tablesaw (https://github.com/jtablesaw/tablesaw) and Smile (http://haifengl.github.io/smile/) for analysis tasks and for visualization. All the experimentation code is located in a new sub-package called ``jmetal-lab``.
 
-* All the core packages in ``jmetal-core`` (``solution``, ``problem``, ``algorithm``, ``operator``, ``quality indicator``), are being reviewed, tested, and refactored. The same applies to the ``jmetal-core/util`` package.
+* All the core packages in ``jmetal-core`` (``solution``, ``problem``, ``algorithm``, ``operator``, ``quality indicator``), are being revised, tested, and refactored. The same applies to the ``jmetal-core/util`` package.
 
-* The implementation of the algorithms in ``jmetal-algorithm`` will be revised. A major issue here is that the current base classes for evolutionary algorithms were designed to be extended by using inheritance, while for the autoconfiguration of algorithms we have designed a new template based on delegation, which is more flexible and allows to fully configure an algorithm with a string of arguments. As for now, the only algorithm we are working with is NSGA-II, so we have now different versions of it (the original one in sub-project ``jmetal-algorithm`` and two new versions in sub-project ``jmetal-auto``).
+* The implementation of the algorithms in ``jmetal-algorithm`` will be revised. 
 
 jMetal 6 is implemented in Java 8 (although I plan to change to Java 11) and it is a Maven project structured in six sub-projects:
 
@@ -49,3 +49,6 @@ All the code included in jMetal 5.8 is included in jMetal 6.0-SNAPSHOT, so the p
 
 Comments and suggestions are very welcome.
 
+Changelog
+---------
+* [11/02/2019] New implementation of NSGA-II (class `org.uma.jmetal.algorithm.multiobjective.nsgaii <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii>`). This class is documented `here <https://jmetal.readthedocs.io/en/latest/nsgaII.html>`.
