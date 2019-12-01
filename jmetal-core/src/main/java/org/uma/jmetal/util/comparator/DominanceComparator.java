@@ -19,23 +19,12 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
 
   /** Constructor */
   public DominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>(), 0.0);
-  }
-
-  /** Constructor */
-  public DominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator<S>(), epsilon);
+    this(new OverallConstraintViolationComparator<S>());
   }
 
   /** Constructor */
   public DominanceComparator(ConstraintViolationComparator<S> constraintComparator) {
-    this(constraintComparator, 0.0);
-  }
-
-  /** Constructor */
-  public DominanceComparator(
-      ConstraintViolationComparator<S> constraintComparator, double epsilon) {
-    constraintViolationComparator = constraintComparator;
+    this.constraintViolationComparator = constraintComparator;
   }
 
   /**
