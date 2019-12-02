@@ -4,6 +4,8 @@ import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
@@ -36,11 +38,12 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected CrossoverOperator<S> crossoverOperator ;
   protected MutationOperator<S> mutationOperator ;
 
-  private final SolutionListEvaluator<S> evaluator;
+  private SolutionListEvaluator<S> evaluator;
 
   private Map<String, Object> algorithmStatusData;
 
   private Termination termination;
+  private InitialSolutionsCreation<S> initialSolutionsCreation ;
   private Replacement<S> replacement;
 
   private long startTime;
@@ -64,6 +67,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
+
+    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize) ;
 
     DensityEstimator<S> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
@@ -143,7 +148,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> createInitialPopulation() {
-    return null;
+    return initialSolutionsCreation.create();
   }
 
   @Override
@@ -186,8 +191,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   @Override
   protected List<S> reproduction(List<S> matingPool) {
     int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
-
-    checkNumberOfParents(matingPool, numberOfParents);
 
     List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
     for (int i = 0; i < matingPool.size(); i += numberOfParents) {
@@ -258,5 +261,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     }
 
     return size;
+  }
+
+  public NSGAII<S> setEvaluator(SolutionListEvaluator<S> evaluator) {
+    this.evaluator = evaluator ;
+
+    return this ;
   }
 }
