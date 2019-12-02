@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -24,11 +25,16 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import java.util.*;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>>
+public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
   private int evaluations;
+  private int populationSize ;
   private int offspringPopulationSize;
   private int matingPoolSize;
+
+  protected SelectionOperator<List<S>, S> selectionOperator ;
+  protected CrossoverOperator<S> crossoverOperator ;
+  protected MutationOperator<S> mutationOperator ;
 
   private final SolutionListEvaluator<S> evaluator;
 
@@ -52,8 +58,9 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       Termination termination,
       Ranking<S> ranking,
       SolutionListEvaluator<S> evaluator) {
-    super(problem);
-    setMaxPopulationSize(populationSize);
+
+    this.populationSize = populationSize ;
+    this.problem = problem ;
 
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
@@ -111,7 +118,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   protected void initProgress() {
-    evaluations = getMaxPopulationSize();
+    evaluations = populationSize;
 
     algorithmStatusData.put("EVALUATIONS", evaluations);
     algorithmStatusData.put("POPULATION", population);
@@ -132,6 +139,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   @Override
   protected boolean isStoppingConditionReached() {
     return termination.isMet(algorithmStatusData);
+  }
+
+  @Override
+  protected List<S> createInitialPopulation() {
+    return null;
   }
 
   @Override
