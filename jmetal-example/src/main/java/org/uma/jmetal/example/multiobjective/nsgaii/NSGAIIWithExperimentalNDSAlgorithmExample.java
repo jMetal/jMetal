@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
