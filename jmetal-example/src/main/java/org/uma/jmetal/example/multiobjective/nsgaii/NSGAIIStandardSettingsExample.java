@@ -57,7 +57,7 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
