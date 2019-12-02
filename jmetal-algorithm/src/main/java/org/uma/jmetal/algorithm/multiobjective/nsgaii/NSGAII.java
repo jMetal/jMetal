@@ -42,8 +42,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   private Observable<Map<String, Object>> observable;
 
-  private Ranking<S> ranking;
-
   /** Constructor */
   public NSGAII(
       Problem<S> problem,
@@ -60,7 +58,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
 
-    this.ranking = ranking;
     DensityEstimator<S> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     this.replacement =

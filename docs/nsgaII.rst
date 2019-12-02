@@ -19,6 +19,8 @@ Examples of different configurations of NSGA-II are included in the `jmetal-exam
 * ``NSGAIIWithChartExample``. Example of plotting the final population using Smile.
 * ``NSGAIIWithPlotliExample``. Example of plotting the final population using Tablesaw.
 * ``GNSGAIIExample``. NSGA-II using g-dominance to focus the search on a region of interest indicated by a reference point. The current population and the reference point are plotted while the algorithm is running.
+* ``NSGAIIBinaryProblemExample``. NSGA-II configured to solved a binary encoded problem.
+* ``ParallelNSGAIIExample``. NSGA-II using a multithreaded evaluator, which evaluates the population in parallel using threads.
 
 The former implementation and variants of NSGA-II in jMetal 5.x are available in the `legacy <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/legacy>`_ directory of the NSGA-II examples package.  
 
