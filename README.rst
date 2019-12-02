@@ -52,3 +52,5 @@ Comments and suggestions are very welcome.
 Changelog
 ---------
 * [11/02/2019] New implementation of NSGA-II (class `org.uma.jmetal.algorithm.multiobjective.nsgaii <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii>`_). This class is documented `here <https://jmetal.readthedocs.io/en/latest/nsgaII.html>`_.
+
+* [11/02/2019] Experimental non dominated sorting algorithm (contributed by Maxim Buzdalov). The code is included in (class `org.uma.jmetal.component.ranking.ExperimentalFastNonDominanceRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/ranking/impl/ExperimentalFastNonDominanceRanking.java>`_). An example of using this class in NSGA-II is contained in class `NSGAIIWithExperimentalNDSAlgorithmExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithExperimentalNDSAlgorithmExample.java>`_.
