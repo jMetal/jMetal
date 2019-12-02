@@ -9,6 +9,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
@@ -63,7 +64,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     localBest = new DoubleSolution[swarmSize];
     leaderArchive = new CrowdingDistanceArchive<DoubleSolution>(this.archiveSize);
-    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new DominanceComparator<DoubleSolution>(eta));
+    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new EpsilonDominanceComparator<DoubleSolution>(eta));
 
     dominanceComparator = new DominanceComparator<DoubleSolution>();
     crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();

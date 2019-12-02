@@ -28,7 +28,7 @@ public class LocalSearchRunner {
 
     int improvementRounds = 10000 ;
 
-    Comparator<BinarySolution> comparator = new DominanceComparator<>(0) ;
+    Comparator<BinarySolution> comparator = new DominanceComparator<>() ;
 
     DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<BinarySolution>(
             improvementRounds,

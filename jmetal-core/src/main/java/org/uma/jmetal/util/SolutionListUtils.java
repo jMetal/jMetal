@@ -1,12 +1,12 @@
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.*;
 
@@ -16,8 +16,8 @@ import java.util.*;
  */
 public class SolutionListUtils {
 
-  public static <S extends Solution<?>> List<S> getNondominatedSolutions(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>();
+  public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
+    Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
     return ranking.computeRanking(solutionList).getSubFront(0);
   }
 

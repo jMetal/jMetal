@@ -11,11 +11,9 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -209,7 +207,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(getPopulation());
+    return SolutionListUtils.getNonDominatedSolutions(getPopulation());
   }
 
   @Override

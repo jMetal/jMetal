@@ -172,7 +172,7 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
-    return SolutionListUtils.getNondominatedSolutions(solutionList);
+    return SolutionListUtils.getNonDominatedSolutions(solutionList);
   }
 
   @Override public String getName() {

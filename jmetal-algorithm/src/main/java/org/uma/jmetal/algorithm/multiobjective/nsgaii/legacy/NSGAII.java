@@ -146,7 +146,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override public List<S> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(getPopulation());
+    return SolutionListUtils.getNonDominatedSolutions(getPopulation());
   }
 
   @Override public String getName() {

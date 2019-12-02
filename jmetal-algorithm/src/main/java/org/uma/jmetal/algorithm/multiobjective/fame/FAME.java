@@ -320,7 +320,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(archiveSSD.getSolutionList());
+    return SolutionListUtils.getNonDominatedSolutions(archiveSSD.getSolutionList());
   }
 
   @Override

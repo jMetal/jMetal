@@ -116,7 +116,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   @Override public List<S> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(archive);
+    return SolutionListUtils.getNonDominatedSolutions(archive);
   }
 
   /**
