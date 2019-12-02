@@ -4,8 +4,8 @@ import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
-import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 import ru.ifmo.nds.JensenFortinBuzdalov;
 import ru.ifmo.nds.NonDominatedSorting;
 
@@ -20,9 +20,9 @@ import java.util.List;
  * It uses the solution's objectives directly, and not the dominance comparators,
  * as the structure of the efficient algorithms requires it to be this way.
  *
- * Additionally, if the {@link OverallConstraintViolation} property is set for at least one solution, and is less than
- * zero, it is used as a preliminary comparison key: all solutions are first sorted in the decreasing order of this
- * property, then non-dominated sorting is executed for each block of solutions with equal value of this property.
+ * Additionally, if {@link ConstraintHandling#overallConstraintViolationDegree(Solution)} is less than zero for at least
+ * one solution, it is used as a preliminary comparison key: all solutions are first sorted in the decreasing order of
+ * this property, then non-dominated sorting is executed for each block of solutions with equal value of this property.
  *
  * @param <S> the exact type of a solution.
  * @author Maxim Buzdalov
@@ -40,7 +40,6 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   private final List<List<S>> subFronts = new ArrayList<>();
 
   // Constraint violation checking support.
-  private final OverallConstraintViolation<S> overallConstraintViolation = new OverallConstraintViolation<>();
   private final OverallConstraintViolationComparator<S> overallConstraintViolationComparator
           = new OverallConstraintViolationComparator<>();
 
@@ -130,8 +129,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   }
 
   private double getConstraint(S solution) {
-    Double result = overallConstraintViolation.getAttribute(solution);
-    return result == null ? 0 : result;
+    return ConstraintHandling.overallConstraintViolationDegree(solution);
   }
 
   @Override
