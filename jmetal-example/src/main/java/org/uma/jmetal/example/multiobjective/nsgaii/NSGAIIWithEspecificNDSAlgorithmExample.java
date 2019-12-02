@@ -59,7 +59,7 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
@@ -94,8 +94,5 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
-
-    // PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
-    // plot.plot();
   }
 }
