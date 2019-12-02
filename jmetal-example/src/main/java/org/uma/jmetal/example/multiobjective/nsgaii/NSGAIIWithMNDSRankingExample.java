@@ -3,6 +3,7 @@ package org.uma.jmetal.example.multiobjective.nsgaii;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.ExperimentalFastNonDominanceRanking;
+import org.uma.jmetal.component.ranking.impl.MergeSortNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -10,14 +11,12 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -31,7 +30,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -59,11 +58,12 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(75000);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>() ;
+    Ranking<DoubleSolution> ranking =
+        new MergeSortNonDominatedSortRanking<>(populationSize*2, problem.getNumberOfObjectives());
 
     algorithm =
         new NSGAII<>(
