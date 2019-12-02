@@ -51,4 +51,4 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
-* [11/02/2019] New implementation of NSGA-II (class `org.uma.jmetal.algorithm.multiobjective.nsgaii <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii>`). This class is documented `here <https://jmetal.readthedocs.io/en/latest/nsgaII.html>`.
+* [11/02/2019] New implementation of NSGA-II (class `org.uma.jmetal.algorithm.multiobjective.nsgaii <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii>`_). This class is documented `here <https://jmetal.readthedocs.io/en/latest/nsgaII.html>`_.
