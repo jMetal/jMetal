@@ -70,8 +70,7 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
             offspringPopulationSize,
             crossover,
             mutation,
-            termination,
-            new SequentialSolutionListEvaluator<>());
+            termination);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);

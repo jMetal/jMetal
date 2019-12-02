@@ -61,8 +61,6 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    SolutionListEvaluator evaluator = new MultithreadedSolutionListEvaluator(8, problem) ;
-
     algorithm =
         new NSGAII<>(
             problem,
@@ -70,8 +68,8 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
             offspringPopulationSize,
             crossover,
             mutation,
-            termination,
-            evaluator);
+            termination)
+                .setEvaluator(new MultithreadedSolutionListEvaluator<>(8, problem));
 
     algorithm.run();
 

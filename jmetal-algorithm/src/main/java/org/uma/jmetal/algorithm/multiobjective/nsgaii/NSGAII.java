@@ -20,6 +20,7 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
@@ -59,8 +60,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
-      Ranking<S> ranking,
-      SolutionListEvaluator<S> evaluator) {
+      Ranking<S> ranking) {
 
     this.populationSize = populationSize ;
     this.problem = problem ;
@@ -84,7 +84,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
     this.termination = termination;
 
-    this.evaluator = evaluator;
+    this.evaluator = new SequentialSolutionListEvaluator<>();
     this.offspringPopulationSize = offspringPopulationSize;
 
     this.algorithmStatusData = new HashMap<>();
@@ -101,8 +101,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
       int offspringPopulationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      Termination termination,
-      SolutionListEvaluator<S> evaluator) {
+      Termination termination) {
     this(
         problem,
         populationSize,
@@ -110,8 +109,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
         crossoverOperator,
         mutationOperator,
         termination,
-        new FastNonDominatedSortRanking<>(),
-        evaluator);
+        new FastNonDominatedSortRanking<>());
   }
 
   @Override

@@ -72,8 +72,7 @@ public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithm
             crossover,
             mutation,
             termination,
-            ranking,
-            new SequentialSolutionListEvaluator<>());
+            ranking);
 
     algorithm.run();
 

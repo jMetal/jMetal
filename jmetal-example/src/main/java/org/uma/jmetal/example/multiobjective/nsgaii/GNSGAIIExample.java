@@ -80,8 +80,7 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
             crossover,
             mutation,
             termination,
-            ranking,
-            new SequentialSolutionListEvaluator<>());
+            ranking);
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     algorithm.getObservable().register(runTimeChartObserver);

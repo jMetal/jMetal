@@ -57,8 +57,7 @@ public class NSGAIIIT {
                     offspringPopulationSize,
                     crossover,
                     mutation,
-                    termination,
-                    new SequentialSolutionListEvaluator<>());
+                    termination);
 
     algorithm.run();
 
@@ -97,8 +96,7 @@ public class NSGAIIIT {
                     offspringPopulationSize,
                     crossover,
                     mutation,
-                    termination,
-                    new SequentialSolutionListEvaluator<>());
+                    termination);
 
     algorithm.run();
 

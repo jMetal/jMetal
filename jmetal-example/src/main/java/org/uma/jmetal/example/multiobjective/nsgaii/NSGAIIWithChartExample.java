@@ -71,8 +71,7 @@ public class NSGAIIWithChartExample extends AbstractAlgorithmRunner {
             offspringPopulationSize,
             crossover,
             mutation,
-            termination,
-            new SequentialSolutionListEvaluator<>());
+            termination);
 
     algorithm.run();
 
