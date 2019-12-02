@@ -9,15 +9,16 @@ The implementation of NSGA-II in jMetal 6 (contained in class `org.uma.jmetal.al
 * The stopping condition is defined with a `Termination <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/termination/Termination.java>`_ object. This way, different stopping conditions can be defined: maximum number of evaluations, maximum computing time, or when a keyboard key is pressed.
 * Different ranking implementations can be used. This allows, for example, to incorporate a preferente articulation mechanism in NSGA-II by using the concept of g-dominance.
 
-Examples of different configurations of NSGA-II are included in the `jmetal-example <<https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/html>`_ package. Currently, the following examples are provided:
-* `NSGAIIStandardSettingsExample`. NSGA-II with default settings. 
-* `NSGAIISteadyStateExample`. Steady-stater NSGA-II.
-* `NSGAIIStoppingByTimeExample`. NSGA-II stopping by fixing a maximum computing time.
-* `NSGAIIStoppingByKeyboardExample`. NSGA-II stopping when the user presses any key.
-* `NSGAIIWithRealTimeChartExample`. Example of using an observer object that plots the current population at the end of each iteration.
-* `NSGAIIWithChartExample`. Example of plotting the final population using Smile.
-* `NSGAIIWithPlotliExample`. Example of plotting the final population using Tablesaw.
-* `GNSGAIIExample`. NSGA-II using g-dominance to focus the search on a region of interest indicated by a reference point. The current population and the reference point are plotted while the algorithm is running.
+Examples of different configurations of NSGA-II are included in the `jmetal-example <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/html>`_ package. Currently, the following examples are provided:
+
+* ``NSGAIIStandardSettingsExample``. NSGA-II with default settings. 
+* ``NSGAIISteadyStateExample``. Steady-stater NSGA-II.
+* ``NSGAIIStoppingByTimeExample``. NSGA-II stopping by fixing a maximum computing time.
+* ``NSGAIIStoppingByKeyboardExample``. NSGA-II stopping when the user presses any key.
+* ``NSGAIIWithRealTimeChartExample``. Example of using an observer object that plots the current population at the end of each iteration.
+* ``NSGAIIWithChartExample``. Example of plotting the final population using Smile.
+* ``NSGAIIWithPlotliExample``. Example of plotting the final population using Tablesaw.
+* ``GNSGAIIExample``. NSGA-II using g-dominance to focus the search on a region of interest indicated by a reference point. The current population and the reference point are plotted while the algorithm is running.
 
 The former implementation and variants of NSGA-II in jMetal 5.x are available in the `legacy <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/legacy>`_ directory of the NSGA-II examples package.  
 
