@@ -10,6 +10,10 @@ import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.selection.Selection;
+import org.uma.jmetal.component.selection.impl.NaryTournamentSelection;
+import org.uma.jmetal.component.variation.Variation;
+import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -46,6 +50,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private Termination termination;
   private InitialSolutionsCreation<S> initialSolutionsCreation ;
   private Replacement<S> replacement;
+  private Variation<S> variation ;
 
   private long startTime;
   private long totalComputingTime;
@@ -75,6 +80,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
             ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+
+    this.variation = new CrossoverAndMutationVariation<>(offspringPopulationSize, crossoverOperator, mutationOperator) ;
 
     this.selectionOperator =
         new BinaryTournamentSelection<>(
@@ -188,24 +195,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    int numberOfParents = crossoverOperator.getNumberOfRequiredParents();
-
-    List<S> offspringPopulation = new ArrayList<>(offspringPopulationSize);
-    for (int i = 0; i < matingPool.size(); i += numberOfParents) {
-      List<S> parents = new ArrayList<>(numberOfParents);
-      for (int j = 0; j < numberOfParents; j++) {
-        parents.add(population.get(i + j));
-      }
-
-      List<S> offspring = crossoverOperator.execute(parents);
-
-      for (S s : offspring) {
-        mutationOperator.execute(s);
-        offspringPopulation.add(s);
-        if (offspringPopulation.size() >= offspringPopulationSize) break;
-      }
-    }
-    return offspringPopulation;
+    return variation.variate(population, matingPool) ;
   }
 
   @Override
@@ -263,6 +253,12 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   public NSGAII<S> setEvaluator(SolutionListEvaluator<S> evaluator) {
     this.evaluator = evaluator ;
+
+    return this ;
+  }
+
+  public NSGAII<S> setInitialSolutionsCreation(InitialSolutionsCreation<S> initialSolutionsCreation) {
+    this.initialSolutionsCreation = initialSolutionsCreation ;
 
     return this ;
   }
