@@ -27,7 +27,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each iteration is displayed.
+ * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each
+ * iteration is displayed.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -59,15 +60,11 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     algorithm =
         new NSGAII<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination);
+            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
