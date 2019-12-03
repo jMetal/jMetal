@@ -20,6 +20,9 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.observer.impl.WriteSolutionsToFilesObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
@@ -44,8 +47,10 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
+    JMetalRandom.getInstance().setSeed(1);
+
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ3.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -60,7 +65,7 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(75000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     Ranking<DoubleSolution> ranking =
         new MergeSortNonDominatedSortRanking<>(populationSize*2, problem.getNumberOfObjectives());
@@ -75,6 +80,12 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
             termination,
             ranking,
             new SequentialSolutionListEvaluator<>());
+
+    //WriteSolutionsToFilesObserver evaluationObserver = new WriteSolutionsToFilesObserver();
+    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+
+    //algorithm.getObservable().register(evaluationObserver);
+    //algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();
 

@@ -45,7 +45,7 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);

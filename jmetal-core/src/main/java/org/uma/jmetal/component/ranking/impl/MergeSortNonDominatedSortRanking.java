@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Inte
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.*;
 
@@ -64,24 +65,24 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
 
   @Override
   public Ranking<S> computeRanking(List<S> solutionSet) {
-    _population =
-        new double[_n]
-            [_m + 2]; // 2 campos extra: id de la solucion e indice de la primera ordenacion
+    _population = new double[_n][_m + 2];//2 campos extra: id de la solucion e indice de la primera ordenacion
     for (int i = 0; i < _n; i++) {
       _population[i] = new double[_m + 2];
       System.arraycopy(solutionSet.get(i).getObjectives(), 0, _population[i], 0, _m);
-      _population[i][_m] = i; // asignamos id a la solucion
+      _population[i][_m] = i; //asignamos id a la solucion
     }
     int ranking[] = sort(_population);
     rankedSubPopulations = new ArrayList<ArrayList<S>>();
-    for (int r, rank, i = 0; i < _n; i++) {
-      rank = ranking[i];
-      for (r = rankedSubPopulations.size(); r <= rank; r++)
+    for (int i = 0; i < _n; i++) {
+      for (int r = rankedSubPopulations.size(); r <= ranking[i]; r++) {
         rankedSubPopulations.add(new ArrayList<S>());
-      rankedSubPopulations.get(rank).add(solutionSet.get(i));
+      }
+      solutionSet.get(i).setAttribute(attributeId, ranking[i]);
+      rankedSubPopulations.get(ranking[i]).add(solutionSet.get(i));
     }
     return this;
   }
+
 
   public final long getNumberOfEarlyDetections() {
     return _nonDomEarlyDetection;
