@@ -31,28 +31,22 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm to solve a binary problem
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIBinaryProblemExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     BinaryProblem problem;
     NSGAII<BinarySolution> algorithm;
     CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
 
-    problem = new OneZeroMax(250) ;
+    problem = new OneZeroMax(250);
 
-    crossover = new SinglePointCrossover(0.9) ;
+    crossover = new SinglePointCrossover(0.9);
 
-    mutation = new BitFlipMutation(1.0/problem.getTotalNumberOfBits()) ;
+    mutation = new BitFlipMutation(1.0 / problem.getTotalNumberOfBits());
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
@@ -61,12 +55,7 @@ public class NSGAIIBinaryProblemExample extends AbstractAlgorithmRunner {
 
     algorithm =
         new NSGAII<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination);
+            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
     algorithm.run();
 
@@ -81,7 +70,7 @@ public class NSGAIIBinaryProblemExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
+    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix());
     plot.plot();
   }
 }

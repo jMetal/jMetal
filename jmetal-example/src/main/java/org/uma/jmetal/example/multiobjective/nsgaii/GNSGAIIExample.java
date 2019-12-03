@@ -32,17 +32,13 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm using a {@link GDominanceComparator}, which
+ * allows empower NSGA-II with a preference articulation mechanism based on reference point.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GNSGAIIExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
+
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
@@ -69,7 +65,7 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
     Termination termination = new TerminationByEvaluations(25000);
 
     List<Double> referencePoint = Arrays.asList(0.1, 0.5);
-    Comparator<DoubleSolution> dominanceComparator = new GDominanceComparator<>(referencePoint) ;
+    Comparator<DoubleSolution> dominanceComparator = new GDominanceComparator<>(referencePoint);
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
 
     algorithm =
@@ -82,7 +78,8 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
             termination,
             ranking);
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     algorithm.getObservable().register(runTimeChartObserver);
 
     runTimeChartObserver.setReferencePointList(Arrays.asList(referencePoint));

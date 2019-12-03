@@ -25,17 +25,11 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run a steady-state version of the NSGA-II algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIISteadyStateExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
@@ -63,12 +57,7 @@ public class NSGAIISteadyStateExample extends AbstractAlgorithmRunner {
 
     algorithm =
         new NSGAII<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination);
+            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
     algorithm.run();
 

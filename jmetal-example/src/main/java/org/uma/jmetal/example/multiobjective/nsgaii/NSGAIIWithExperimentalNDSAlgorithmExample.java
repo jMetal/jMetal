@@ -27,17 +27,13 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm using the {@link
+ * ExperimentalFastNonDominanceRanking} ranking method.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
+
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
@@ -60,9 +56,9 @@ public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithm
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(75000);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>() ;
+    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
 
     algorithm =
         new NSGAII<>(

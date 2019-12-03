@@ -29,17 +29,12 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm. At the end of the execution an HTML with the
+ * produced front is shown.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
@@ -67,12 +62,7 @@ public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
 
     algorithm =
         new NSGAII<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination);
+            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
     algorithm.run();
 
@@ -93,7 +83,7 @@ public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix()) ;
+    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix());
     plot.plot();
   }
 }
