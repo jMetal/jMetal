@@ -35,27 +35,26 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   private int _initialPopulationSize;
   private int SORT_INDEX, SOL_ID;
   private int[] _ranking;
-  private double[][] _population; // Population to be sorted: Last objective must be the solution ID
+  private double[][] _population; //Population to be sorted: Last objective must be the solution ID
   private double[][] _work; // Work array
   private ArrayList<int[]> _duplicatedSolutions;
   private MNDSBitsetManager bsManager;
   private List<ArrayList<S>> rankedSubPopulations;
 
   public MergeSortNonDominatedSortRanking(int populationSize, int nObjectives) {
-    _initialPopulationSize = populationSize ;
+    _initialPopulationSize = populationSize;
     _n = populationSize;
     _m = nObjectives;
     bsManager = new MNDSBitsetManager(_n);
     SORT_INDEX = _m + 1;
     SOL_ID = _m;
-    _work = new double[_n][SORT_INDEX + 1]; // m=solID, m+1=solNewIndex
+    _work = new double[_n][SORT_INDEX + 1]; //m=solID, m+1=solNewIndex
     _nonDomEarlyDetection = 0;
 
-    this.solutionComparator =
-        new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING);
+    this.solutionComparator = new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING) ;
   }
 
-  public final void freeMem() {
+  final public void freeMem() {
     _population = null;
     _work = null;
     _duplicatedSolutions = null;
@@ -65,6 +64,7 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
 
   @Override
   public Ranking<S> computeRanking(List<S> solutionSet) {
+    //DominanceRanking dr = new DominanceRanking();
     _population = new double[_n][_m + 2];//2 campos extra: id de la solucion e indice de la primera ordenacion
     for (int i = 0; i < _n; i++) {
       _population[i] = new double[_m + 2];
@@ -84,30 +84,31 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   }
 
 
-  public final long getNumberOfEarlyDetections() {
+  final public long getNumberOfEarlyDetections() {
     return _nonDomEarlyDetection;
   }
 
-  public final long getComparisonCounter() {
+  final public long getComparisonCounter() {
     return _comparisonCounter;
   }
 
-  public final int getNumberOfDuplicatedSolutions() {
+  final public int getNumberOfDuplicatedSolutions() {
     return _duplicatedSolutions.size();
   }
 
-  private final int compare_lex(double[] s1, double[] s2, int fromObj, int toObj) {
+  final private int compare_lex(double[] s1, double[] s2, int fromObj, int toObj) {
     for (; fromObj < toObj; fromObj++) {
       _comparisonCounter++;
-      if (s1[fromObj] < s2[fromObj]) return -1;
+      if (s1[fromObj] < s2[fromObj])
+        return -1;
       _comparisonCounter++;
-      if (s1[fromObj] > s2[fromObj]) return 1;
+      if (s1[fromObj] > s2[fromObj])
+        return 1;
     }
     return 0;
   }
 
-  private boolean merge_sort(
-      double src[][], double dest[][], int low, int high, int obj, int toObj) {
+  private boolean merge_sort(double src[][], double dest[][], int low, int high, int obj, int toObj) {
     int i, j, s;
     double temp[] = null;
     int destLow = low;
@@ -121,7 +122,7 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
           dest[j - 1] = temp;
         }
       }
-      return temp == null; // if temp==null, src is already sorted
+      return temp == null; //if temp==null, src is already sorted
     }
     int mid = (low + high) >>> 1;
     boolean isSorted = merge_sort(dest, src, low, mid, obj, toObj);
@@ -159,7 +160,7 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
         _population[p] = _work[q];
         _population[p][SORT_INDEX] = p;
       } else
-        _duplicatedSolutions.add(new int[] {(int) _population[p][SOL_ID], (int) _work[q][SOL_ID]});
+        _duplicatedSolutions.add(new int[] { (int) _population[p][SOL_ID], (int) _work[q][SOL_ID] });
     }
     _n = p + 1;
     return _n > 1;
@@ -168,24 +169,17 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   private boolean sortSecondObjective() {
     int p, solutionId;
     _obj++;
-    boolean dominance = true;
+    boolean dominance = false;
     System.arraycopy(_population, 0, _work, 0, _n);
-    if (!merge_sort(
-        _population,
-        _work,
-        0,
-        _n,
-        _obj,
-        _obj + 1)) { // Population doesn't have the same order as in previous objective
-      System.arraycopy(_work, 0, _population, 0, _n);
-      dominance = false;
-      for (p = 0; p < _n; p++) {
-        solutionId = ((int) _population[p][SORT_INDEX]);
-        dominance |= bsManager.initializeSolutionBitset(solutionId);
-        bsManager.updateIncrementalBitset(solutionId);
-      }
-      if (!dominance) _nonDomEarlyDetection++;
+    merge_sort(_population, _work, 0, _n, _obj, _obj + 1);
+    System.arraycopy(_work, 0, _population, 0, _n);
+    for (p = 0; p < _n; p++) {
+      solutionId = ((int) _population[p][SORT_INDEX]);
+      dominance |= bsManager.initializeSolutionBitset(solutionId);
+      bsManager.updateIncrementalBitset(solutionId);
     }
+    if (!dominance)
+      _nonDomEarlyDetection++;
     return dominance;
   }
 
@@ -194,17 +188,11 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
     boolean dominance;
     System.arraycopy(_population, 0, _work, 0, _n);
     for (_obj++; _obj < _m; _obj++) {
-      if (merge_sort(
-          _population,
-          _work,
-          0,
-          _n,
-          _obj,
-          _obj + 1)) { // Population has the same order as in previous objective
+      if (merge_sort(_population, _work, 0, _n, _obj, _obj + 1)) {//Population has the same order as in previous objective
         if (_obj == lastObjective) {
           for (p = 0; p < _n; p++)
-            bsManager.computeSolutionRanking(
-                (int) _population[p][SORT_INDEX], (int) _population[p][SOL_ID]);
+            bsManager.computeSolutionRanking((int) _population[p][SORT_INDEX],
+                    (int) _population[p][SOL_ID]);
         }
         continue;
       }
@@ -214,8 +202,10 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
       for (p = 0; p < _n; p++) {
         initSolId = ((int) _population[p][SOL_ID]);
         solutionId = ((int) _population[p][SORT_INDEX]);
-        if (_obj < lastObjective) dominance |= bsManager.updateSolutionDominance(solutionId);
-        else bsManager.computeSolutionRanking(solutionId, initSolId);
+        if (_obj < lastObjective)
+          dominance |= bsManager.updateSolutionDominance(solutionId);
+        else
+          bsManager.computeSolutionRanking(solutionId, initSolId);
         bsManager.updateIncrementalBitset(solutionId);
       }
       if (!dominance) {
@@ -226,12 +216,12 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   }
 
   // main
-  public final int[] sort(double[][] populationData) {
-    // INITIALIZATION
+  final public int[] sort(double[][] populationData) {
+    //INITIALIZATION
     _comparisonCounter = 0;
     _population = populationData;
     _duplicatedSolutions = new ArrayList<int[]>(_n);
-    // SORTING
+    //SORTING
     if (sortFirstObjective()) {
       if (sortSecondObjective()) {
         sortRestOfObjectives();
@@ -240,10 +230,9 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
     _ranking = bsManager.getRanking();
     // UPDATING DUPLICATED SOLUTIONS
     for (int[] duplicated : _duplicatedSolutions)
-      _ranking[duplicated[1]] =
-          _ranking[duplicated[0]]; // ranking[dup solution]=ranking[original solution]
+      _ranking[duplicated[1]] = _ranking[duplicated[0]]; //ranking[dup solution]=ranking[original solution]
 
-    _n = _initialPopulationSize; // equivalent to n += duplicatedSolutions.size();
+    _n = _initialPopulationSize; //equivalent to n += duplicatedSolutions.size();
     return _ranking;
   }
 
