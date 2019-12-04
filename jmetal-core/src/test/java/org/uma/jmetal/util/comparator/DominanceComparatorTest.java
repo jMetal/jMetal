@@ -5,11 +5,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 

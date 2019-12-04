@@ -1,9 +1,9 @@
 package org.uma.jmetal.component.ranking;
 
 import org.junit.Test;
+import org.uma.jmetal.component.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.component.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -16,7 +16,9 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ExperimentalFastNonDominanceRankingTest {
+public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolution>> {
+  protected R ranking ;
+
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
     List<Solution<?>> population = Collections.emptyList();
@@ -42,7 +44,6 @@ public class ExperimentalFastNonDominanceRankingTest {
     population.add(solution);
     population.add(solution2);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -71,7 +72,6 @@ public class ExperimentalFastNonDominanceRankingTest {
     population.add(solution);
     population.add(solution2);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -110,7 +110,6 @@ public class ExperimentalFastNonDominanceRankingTest {
     population.add(solution2);
     population.add(solution3);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(3, ranking.getNumberOfSubFronts());
@@ -160,7 +159,6 @@ public class ExperimentalFastNonDominanceRankingTest {
     population.add(solution4);
     population.add(solution5);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -204,9 +202,8 @@ public class ExperimentalFastNonDominanceRankingTest {
     solution4.setObjective(0, 5.0);
     solution4.setObjective(1, 1.0);
 
-    List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
-    Ranking<Solution<?>> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
@@ -254,7 +251,6 @@ public class ExperimentalFastNonDominanceRankingTest {
     List<DoubleSolution> solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -295,7 +291,6 @@ public class ExperimentalFastNonDominanceRankingTest {
               solutionList.add(solution);
             });
 
-    Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
     ranking.computeRanking(solutionList);
 
     assertEquals(11, solutionList.size());
