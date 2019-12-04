@@ -45,10 +45,8 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTL2.3D.pf";
-
-    JMetalRandom.getInstance().setSeed(1);
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -60,10 +58,10 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 1000;
+    int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     algorithm =
         new NSGAII<>(

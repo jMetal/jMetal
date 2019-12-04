@@ -30,17 +30,12 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm
+ * Class to configure and run the NSGA-II algorithm using the {@Link MergeSortNonDominatedSortRanking} algorithm.
+ * This algorithm can be applied to problems having three or more objectives.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
@@ -48,10 +43,8 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    JMetalRandom.getInstance().setSeed(1);
-
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ4.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -66,7 +59,7 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     int populationSize = 1000;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(000);
 
     Ranking<DoubleSolution> ranking =
         new MergeSortNonDominatedSortRanking<>();
@@ -81,12 +74,6 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
             termination,
             ranking,
             new SequentialSolutionListEvaluator<>());
-
-    //WriteSolutionsToFilesObserver evaluationObserver = new WriteSolutionsToFilesObserver();
-    //RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
-
-    //algorithm.getObservable().register(evaluationObserver);
-    //algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();
 
@@ -106,8 +93,5 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
-
-    // PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
-    // plot.plot();
   }
 }
