@@ -41,6 +41,10 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   private MNDSBitsetManager bsManager;
   private List<ArrayList<S>> rankedSubPopulations;
 
+  public MergeSortNonDominatedSortRanking() {
+    this.solutionComparator = new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING) ;
+  }
+
   public MergeSortNonDominatedSortRanking(int populationSize, int nObjectives) {
     _initialPopulationSize = populationSize;
     _n = populationSize;
@@ -64,6 +68,15 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
 
   @Override
   public Ranking<S> computeRanking(List<S> solutionSet) {
+    _initialPopulationSize = solutionSet.size();
+    _n = solutionSet.size();
+    _m = solutionSet.get(0).getNumberOfObjectives();
+    bsManager = new MNDSBitsetManager(_n);
+    SORT_INDEX = _m + 1;
+    SOL_ID = _m;
+    _work = new double[_n][SORT_INDEX + 1]; //m=solID, m+1=solNewIndex
+    _nonDomEarlyDetection = 0;
+
     //DominanceRanking dr = new DominanceRanking();
     _population = new double[_n][_m + 2];//2 campos extra: id de la solucion e indice de la primera ordenacion
     for (int i = 0; i < _n; i++) {

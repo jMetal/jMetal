@@ -47,6 +47,8 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    JMetalRandom.getInstance().setSeed(1);
+
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -58,10 +60,10 @@ public class NSGAIIWithEspecificNDSAlgorithmExample extends AbstractAlgorithmRun
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
+    int populationSize = 1000;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(75000);
+    Termination termination = new TerminationByEvaluations(100000);
 
     Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>() ;
 

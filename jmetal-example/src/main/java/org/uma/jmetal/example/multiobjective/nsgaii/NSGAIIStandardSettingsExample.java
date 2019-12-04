@@ -10,6 +10,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -44,8 +46,9 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTL2.3D.pf";
 
+    JMetalRandom.getInstance().setSeed(1);
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -57,10 +60,10 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 100;
+    int populationSize = 1000;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(100000);
 
     algorithm =
         new NSGAII<>(
