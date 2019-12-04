@@ -17,16 +17,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class MergeNonDominatedSortingRankingTest {
 
-  /*
-    @Test
-    public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
-      List<Solution<?>> population = Collections.emptyList();
-      Ranking<Solution<?>> ranking = new MergeSortNonDominatedSortRanking<>(0, 2);
-      ranking.computeRanking(population);
-
-      assertEquals(0, ranking.getNumberOfSubFronts());
-    }
-  */
   @Test
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
     DoubleProblem problem = new MockDoubleProblem(3, 3);
