@@ -7,7 +7,9 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.Attribute
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.JMetalException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class implements a solution list ranking based on dominance ranking. Given a collection of

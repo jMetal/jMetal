@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy;
 
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;

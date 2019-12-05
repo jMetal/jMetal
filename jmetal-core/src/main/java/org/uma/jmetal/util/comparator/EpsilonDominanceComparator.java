@@ -1,10 +1,7 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 /**

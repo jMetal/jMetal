@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
-import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
@@ -10,8 +9,7 @@ import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.component.selection.Selection;
-import org.uma.jmetal.component.selection.impl.NaryTournamentSelection;
+import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -20,7 +18,6 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
