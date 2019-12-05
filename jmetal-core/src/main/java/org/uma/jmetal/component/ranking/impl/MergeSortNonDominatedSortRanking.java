@@ -37,7 +37,6 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
 
   public MergeSortNonDominatedSortRanking() {
     this.solutionComparator =
-        this.solutionComparator =
             new IntegerValueAttributeComparator<>(
                 attributeId, AttributeComparator.Ordering.ASCENDING);
   }
