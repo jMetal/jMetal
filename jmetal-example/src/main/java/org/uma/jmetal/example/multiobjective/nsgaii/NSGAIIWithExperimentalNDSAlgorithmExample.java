@@ -12,6 +12,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -27,7 +28,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm using the {@link ExperimentalFastNonDominanceRanking} ranking method.
+ * Class to configure and run the NSGA-II algorithm using the {@link
+ * ExperimentalFastNonDominanceRanking} ranking method.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -43,6 +45,7 @@ public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithm
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = new DTLZ4(10, 3);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -55,7 +58,7 @@ public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithm
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(21);
 
     Ranking<DoubleSolution> ranking = new ExperimentalFastNonDominanceRanking<>();
 

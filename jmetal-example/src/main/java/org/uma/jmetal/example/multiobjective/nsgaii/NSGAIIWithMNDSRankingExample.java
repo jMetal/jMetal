@@ -13,6 +13,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -31,7 +32,6 @@ import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm using the {@Link MergeSortNonDominatedSortRanking} algorithm.
- * This algorithm can be applied to problems having three or more objectives.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -42,8 +42,8 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ4.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -55,10 +55,10 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 1000;
+    int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(75000);
 
     Ranking<DoubleSolution> ranking =
         new MergeSortNonDominatedSortRanking<>();
