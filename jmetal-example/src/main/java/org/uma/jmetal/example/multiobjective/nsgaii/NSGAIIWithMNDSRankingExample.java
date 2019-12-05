@@ -13,6 +13,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -43,8 +44,8 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ4.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT4.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -56,10 +57,10 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 1000;
+    int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     Ranking<DoubleSolution> ranking =
         new MergeSortNonDominatedSortRanking<>();

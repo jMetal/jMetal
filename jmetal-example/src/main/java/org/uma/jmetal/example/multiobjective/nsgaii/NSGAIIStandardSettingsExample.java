@@ -12,6 +12,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -32,18 +33,11 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
