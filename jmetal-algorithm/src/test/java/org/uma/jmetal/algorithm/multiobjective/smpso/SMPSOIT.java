@@ -51,7 +51,7 @@ public class SMPSOIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("../referenceFronts/ZDT4.pf") ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
@@ -71,7 +71,7 @@ public class SMPSOIT {
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "/referenceFronts/ConstrEx.pf" ;
+    String referenceFrontFileName = "../referenceFronts/ConstrEx.pf" ;
 
     Front referenceFront = new ArrayFront(referenceFrontFileName);
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
