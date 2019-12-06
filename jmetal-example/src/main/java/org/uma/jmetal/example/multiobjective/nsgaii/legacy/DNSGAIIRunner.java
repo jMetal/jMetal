@@ -31,7 +31,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
 
     // problem
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";

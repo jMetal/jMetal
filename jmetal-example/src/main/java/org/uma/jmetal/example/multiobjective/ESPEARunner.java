@@ -44,8 +44,7 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-//      problemName = "org.uma.jmetal.problem.multiobjective.wfg.WFG2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT3.pf";
+      referenceParetoFront = "referenceFronts/ZDT3.pf";
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);

@@ -46,7 +46,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.lircmop.LIRCMOP2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LIRCMOP2.pf";
+      referenceParetoFront = "referenceFronts/LIRCMOP2.pf";
     }
 
     problem = (DoubleProblem)ProblemUtils.<DoubleSolution> loadProblem(problemName);

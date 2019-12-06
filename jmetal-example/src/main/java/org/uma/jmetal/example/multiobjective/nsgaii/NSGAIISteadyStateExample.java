@@ -44,7 +44,7 @@ public class NSGAIISteadyStateExample extends AbstractAlgorithmRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
+    String referenceParetoFront = "referenceFronts/ZDT1.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
