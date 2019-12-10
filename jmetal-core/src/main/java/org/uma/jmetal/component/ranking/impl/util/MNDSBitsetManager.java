@@ -20,15 +20,6 @@ public class MNDSBitsetManager {
 	private long[] incrementalBitset;
 	private int incBsFstWord, incBsLstWord;
 
-	public void freeMem() {
-		incrementalBitset = null;
-		bitsets = null;
-		bsRanges = null;
-		wordRanking = null;
-		ranking = null;
-		ranking0 = null;
-	}
-
 	public int[] getRanking() {
 		return ranking0;
 	}
@@ -120,7 +111,7 @@ public class MNDSBitsetManager {
 			return intersection != 0;
 		}
 		//more than one word in common
-		int lw = incBsLstWord < wordIndex ? incBsLstWord : wordIndex;
+		int lw = Math.min(incBsLstWord, wordIndex);
 		bsRanges[solutionId][FIRST_WORD_RANGE] = incBsFstWord;
 		bsRanges[solutionId][LAST_WORD_RANGE] = lw;
 		bitsets[solutionId] = new long[lw + 1];
