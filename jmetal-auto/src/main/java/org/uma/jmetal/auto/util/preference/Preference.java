@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.util.preference;
 
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class Preference<S>  {
+public class Preference<S extends Solution<?>>  {
   private Ranking<S> ranking ;
   private DensityEstimator<S> densityEstimator ;
   private Preference<S> relatedPreference ;
@@ -48,7 +49,7 @@ public class Preference<S>  {
   }
 
   private boolean densityEstimatorsAreDifferent() {
-    return densityEstimator.getAttributeId() != relatedPreference.getDensityEstimator().getAttributeId() ;
+    return !densityEstimator.getAttributeId().equals(relatedPreference.getDensityEstimator().getAttributeId());
   }
 
   private void recomputeDensityEstimator() {
@@ -62,7 +63,7 @@ public class Preference<S>  {
   }
 
   private boolean rankingsAreDifferent() {
-    return ranking.getAttributeId() != relatedPreference.getRanking().getAttributeId() ;
+    return !ranking.getAttributeId().equals(relatedPreference.getRanking().getAttributeId());
   }
 
   public Ranking<S> getRanking() {
