@@ -64,13 +64,14 @@ public class MNDSBitsetManager {
 			fw = incBsFstWord;
 		if (fw > lw)
 			return;
-		long word;
-		int i = 0, rank = 0, offset;
+
+		int rank = 0;
+		long[] solutionBS = bitsets[solutionId];
 		for (; fw <= lw; fw++) {
-			word = bitsets[solutionId][fw] & incrementalBitset[fw];
+			long word = solutionBS[fw] & incrementalBitset[fw];
 			if (word != 0) {
-				i = Long.numberOfTrailingZeros(word);
-				offset = fw * WORD_SIZE;
+				int i = Long.numberOfTrailingZeros(word);
+				int offset = fw * WORD_SIZE;
 				do {
 					if (ranking[offset + i] >= rank)
 						rank = ranking[offset + i] + 1;
@@ -85,7 +86,7 @@ public class MNDSBitsetManager {
 		}
 		ranking[solutionId] = rank;
 		ranking0[initSolId] = rank;
-		i = solutionId >> N_BIT_ADDR;
+		int i = solutionId >> N_BIT_ADDR;
 		if (rank > wordRanking[i])
 			wordRanking[i] = rank;
 	}
