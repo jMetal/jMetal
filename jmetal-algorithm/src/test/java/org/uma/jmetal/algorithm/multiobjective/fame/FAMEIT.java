@@ -31,12 +31,12 @@ public class FAMEIT {
     int archiveSize=100 ;
     int maxEvaluations=25000;
 
-    algorithm = new FAME(problem,
+    algorithm = new FAME<>(problem,
             populationSize,
             archiveSize,
             maxEvaluations,
             selection,
-            new SequentialSolutionListEvaluator()) ;
+            new SequentialSolutionListEvaluator<>()) ;
 
     algorithm.run();
 
@@ -62,13 +62,13 @@ public class FAMEIT {
     int maxEvaluations = 25000;
 
     algorithm =
-        new FAME(
+        new FAME<>(
             problem,
             populationSize,
             archiveSize,
             maxEvaluations,
             selection,
-            new SequentialSolutionListEvaluator());
+            new SequentialSolutionListEvaluator<>());
 
     algorithm.run();
 
