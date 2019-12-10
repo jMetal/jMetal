@@ -64,7 +64,7 @@ public class MOCellIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("/referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("../referenceFronts/ZDT4.pf") ;
 
     // Rationale: the default problem is ZDT4, and MOCell, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65

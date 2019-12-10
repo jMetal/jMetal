@@ -73,7 +73,7 @@ public class FAMEIT {
     algorithm.run();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/referenceFronts/ZDT1.pf");
+        new PISAHypervolume<>("../referenceFronts/ZDT1.pf");
 
     // Rationale: the default problem is ZDT1, and GDE3, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.66

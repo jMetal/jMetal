@@ -26,7 +26,7 @@ public class PISAHypervolumeTest {
     referenceFront.setPoint(0, new ArrayPoint(new double[]{1.0, 0.0}));
     referenceFront.setPoint(0, new ArrayPoint(new double[]{0.0, 1.0}));
 
-    Front storeFront = new ArrayFront("/pareto_fronts/ZDT1.pf") ;
+    Front storeFront = new ArrayFront("../referenceFronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
 

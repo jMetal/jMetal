@@ -113,7 +113,7 @@ public class ABYSSConstrainedProblemIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/referenceFronts/ZDT1.pf");
+        new PISAHypervolume<>("../referenceFronts/ZDT1.pf");
 
     // Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings,
     // should

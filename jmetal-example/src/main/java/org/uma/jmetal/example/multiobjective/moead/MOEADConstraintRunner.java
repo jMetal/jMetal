@@ -43,7 +43,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Tanaka.pf";
+      referenceParetoFront = "referenceFronts/Tanaka.pf";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);

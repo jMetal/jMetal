@@ -40,7 +40,7 @@ public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunn
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/Schaffer.pf" ;
+    String referenceParetoFront = "referenceFronts/Schaffer.pf" ;
 
     problem = new ComposableDoubleProblem()
         .setName("Schaffer")

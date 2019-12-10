@@ -91,20 +91,10 @@ public class BinaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteWorkProperlyIfTheTwoSolutionsInTheListAreNondominated() {
-    @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class) ;
 
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
-    Mockito.when(solution1.getNumberOfObjectives()).thenReturn(2) ;
-    Mockito.when(solution1.getObjective(0)).thenReturn(1.0) ;
-    Mockito.when(solution1.getObjective(1)).thenReturn(2.0) ;
-
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
-    Mockito.when(solution2.getNumberOfObjectives()).thenReturn(1) ;
-    Mockito.when(solution2.getObjective(0)).thenReturn(2.0) ;
-    Mockito.when(solution2.getObjective(1)).thenReturn(1.0) ;
-
-    Mockito.when(comparator.compare(solution1, solution2)).thenReturn(0) ;
 
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(solution1, solution2);
 

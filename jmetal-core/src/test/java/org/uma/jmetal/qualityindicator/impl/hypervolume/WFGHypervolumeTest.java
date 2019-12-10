@@ -124,7 +124,7 @@ public class WFGHypervolumeTest {
    */
   @Test
   public void shouldEvaluateWorkProperlyCase4() throws FileNotFoundException {
-    Front storeFront = new ArrayFront("/pareto_fronts/ZDT1.pf") ;
+    Front storeFront = new ArrayFront("../referenceFronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
 

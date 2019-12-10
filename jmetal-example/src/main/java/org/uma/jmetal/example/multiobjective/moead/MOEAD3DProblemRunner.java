@@ -42,7 +42,7 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F6.pf";
+      referenceParetoFront = "referenceFronts/LZ09_F6.pf";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);

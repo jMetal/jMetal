@@ -42,7 +42,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-      referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/LZ09_F2.pf";
+      referenceParetoFront = "referenceFronts/LZ09_F2.pf";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
