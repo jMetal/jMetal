@@ -2,7 +2,7 @@ package org.uma.jmetal.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.ranking.Ranking;
-import org.uma.jmetal.component.ranking.impl.MergeSortNonDominatedSortRanking;
+import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -35,7 +35,7 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -53,7 +53,7 @@ public class NSGAIIWithMNDSRankingExample extends AbstractAlgorithmRunner {
     Termination termination = new TerminationByEvaluations(75000);
 
     Ranking<DoubleSolution> ranking =
-        new MergeSortNonDominatedSortRanking<>();
+        new MergeNonDominatedSortRanking<>();
 
     algorithm =
         new NSGAII<>(

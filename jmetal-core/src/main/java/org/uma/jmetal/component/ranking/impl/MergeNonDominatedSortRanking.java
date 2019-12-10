@@ -17,51 +17,54 @@ import java.util.List;
  * output, a set of subsets are obtained. The subsets are numbered starting from 0 (in NSGA-II, the
  * numbering starts from 1); thus, subset 0 contains the non-dominated solutions, subset 1 contains
  * the non-dominated population after removing those belonging to subset 0, and so on.
+ *
+ * @author Javier Moreno <javier.morenom@edu.uah.es>
  */
 @SuppressWarnings("serial")
-public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
+public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator;
 
   private static final int INSERTIONSORT = 7;
-  private int _m; // Number of Objectives
-  private int _n; // Population Size
-  private int _initialPopulationSize;
-  private int SORT_INDEX, SOL_ID;
-  private int[] _ranking;
-  private double[][] _population; // Population to be sorted: Last objective must be the solution ID
-  private double[][] _work; // Work array
-  private ArrayList<int[]> _duplicatedSolutions;
+  private int SOL_ID; //field to store the identifier of the jMetal solution
+  private int SORT_INDEX; //field to store the solution index after ordering by the first objective
+  private int m; // Number of Objectives
+  private int n; // Population Size
+  private int initialPopulationSize;
+  private int[] ranking;
+  private double[][] population;
+  private double[][] work; // Working array for merge sort
+  private ArrayList<int[]> duplicatedSolutions;
   private MNDSBitsetManager bsManager;
   private List<ArrayList<S>> rankedSubPopulations;
 
-  public MergeSortNonDominatedSortRanking() {
+  public MergeNonDominatedSortRanking() {
     this.solutionComparator =
             new IntegerValueAttributeComparator<>(
-                attributeId, AttributeComparator.Ordering.ASCENDING);
+                    attributeId, AttributeComparator.Ordering.ASCENDING);
   }
 
   @Override
   public Ranking<S> computeRanking(List<S> solutionSet) {
-    _initialPopulationSize = solutionSet.size();
-    _n = solutionSet.size();
-    _m = solutionSet.get(0).getNumberOfObjectives();
-    bsManager = new MNDSBitsetManager(_n);
-    SORT_INDEX = _m + 1;
-    SOL_ID = _m;
-    _work = new double[_n][SORT_INDEX + 1]; // m=solID, m+1=solNewIndex
+    initialPopulationSize = solutionSet.size();
+    n = solutionSet.size();
+    m = solutionSet.get(0).getNumberOfObjectives();
+    bsManager = new MNDSBitsetManager(n);
+    SOL_ID = m;
+    SORT_INDEX = SOL_ID + 1;
+    work = new double[n][SORT_INDEX + 1];
 
-    _population =
-        new double[_n]
-            [_m + 2]; // 2 campos extra: id de la solucion e indice de la primera ordenacion
-    for (int i = 0; i < _n; i++) {
-      _population[i] = new double[_m + 2];
-      System.arraycopy(solutionSet.get(i).getObjectives(), 0, _population[i], 0, _m);
-      _population[i][_m] = i; // asignamos id a la solucion
+    population =
+            new double[n]
+                    [SORT_INDEX + 1]; // 2 extra fields to store: The solution id and the solution index after ordering by the first objective
+    for (int i = 0; i < n; i++) {
+      population[i] = new double[SORT_INDEX + 1];
+      System.arraycopy(solutionSet.get(i).getObjectives(), 0, population[i], 0, m);
+      population[i][SOL_ID] = i;
     }
-    int ranking[] = sort(_population);
+    int ranking[] = sort(population);
     rankedSubPopulations = new ArrayList<ArrayList<S>>();
-    for (int i = 0; i < _n; i++) {
+    for (int i = 0; i < n; i++) {
       for (int r = rankedSubPopulations.size(); r <= ranking[i]; r++) {
         rankedSubPopulations.add(new ArrayList<S>());
       }
@@ -80,7 +83,7 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   }
 
   private boolean merge_sort(
-      double src[][], double dest[][], int low, int high, int obj, int toObj) {
+          double src[][], double dest[][], int low, int high, int obj, int toObj) {
     int i, j, s;
     double temp[] = null;
     int destLow = low;
@@ -120,34 +123,34 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
 
   private boolean sortFirstObjective() {
     int p = 0;
-    System.arraycopy(_population, 0, _work, 0, _n);
-    merge_sort(_population, _work, 0, _n, 0, _m);
-    _population[0] = _work[0];
-    _population[0][SORT_INDEX] = 0;
-    for (int q = 1; q < _n; q++) {
-      if (0 != compare_lex(_population[p], _work[q], 0, _m)) {
+    System.arraycopy(population, 0, work, 0, n);
+    merge_sort(population, work, 0, n, 0, m);
+    population[0] = work[0];
+    population[0][SORT_INDEX] = 0;
+    for (int q = 1; q < n; q++) {
+      if (0 != compare_lex(population[p], work[q], 0, m)) {
         p++;
-        _population[p] = _work[q];
-        _population[p][SORT_INDEX] = p;
+        population[p] = work[q];
+        population[p][SORT_INDEX] = p;
       } else
-        _duplicatedSolutions.add(new int[] {(int) _population[p][SOL_ID], (int) _work[q][SOL_ID]});
+        duplicatedSolutions.add(new int[] {(int) population[p][SOL_ID], (int) work[q][SOL_ID]});
     }
-    _n = p + 1;
-    return _n > 1;
+    n = p + 1;
+    return n > 1;
   }
 
   private boolean sortSecondObjective() {
     int p, solutionId;
     boolean dominance = false;
-    System.arraycopy(_population, 0, _work, 0, _n);
-    merge_sort(_population, _work, 0, _n, 1, 2);
-    System.arraycopy(_work, 0, _population, 0, _n);
-    for (p = 0; p < _n; p++) {
-      solutionId = ((int) _population[p][SORT_INDEX]);
+    System.arraycopy(population, 0, work, 0, n);
+    merge_sort(population, work, 0, n, 1, 2);
+    System.arraycopy(work, 0, population, 0, n);
+    for (p = 0; p < n; p++) {
+      solutionId = ((int) population[p][SORT_INDEX]);
       dominance |= bsManager.initializeSolutionBitset(solutionId);
       bsManager.updateIncrementalBitset(solutionId);
-      if (2 == _m) {
-        int initSolId = ((int) _population[p][SOL_ID]);
+      if (2 == m) {
+        int initSolId = ((int) population[p][SOL_ID]);
         bsManager.computeSolutionRanking(solutionId, initSolId);
       }
     }
@@ -155,30 +158,30 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   }
 
   private void sortRestOfObjectives() {
-    int p, solutionId, initSolId, lastObjective = _m - 1;
+    int p, solutionId, initSolId, lastObjective = m - 1;
     boolean dominance;
-    System.arraycopy(_population, 0, _work, 0, _n);
-    for (int obj = 2; obj < _m; obj++) {
+    System.arraycopy(population, 0, work, 0, n);
+    for (int obj = 2; obj < m; obj++) {
       if (merge_sort(
-          _population,
-          _work,
-          0,
-          _n,
-          obj,
-          obj + 1)) { // Population has the same order as in previous objective
+              population,
+              work,
+              0,
+              n,
+              obj,
+              obj + 1)) { // Population has the same order as in previous objective
         if (obj == lastObjective) {
-          for (p = 0; p < _n; p++)
+          for (p = 0; p < n; p++)
             bsManager.computeSolutionRanking(
-                (int) _population[p][SORT_INDEX], (int) _population[p][SOL_ID]);
+                    (int) population[p][SORT_INDEX], (int) population[p][SOL_ID]);
         }
         continue;
       }
-      System.arraycopy(_work, 0, _population, 0, _n);
+      System.arraycopy(work, 0, population, 0, n);
       bsManager.clearIncrementalBitset();
       dominance = false;
-      for (p = 0; p < _n; p++) {
-        initSolId = ((int) _population[p][SOL_ID]);
-        solutionId = ((int) _population[p][SORT_INDEX]);
+      for (p = 0; p < n; p++) {
+        initSolId = ((int) population[p][SOL_ID]);
+        solutionId = ((int) population[p][SORT_INDEX]);
         if (obj < lastObjective) dominance |= bsManager.updateSolutionDominance(solutionId);
         else bsManager.computeSolutionRanking(solutionId, initSolId);
         bsManager.updateIncrementalBitset(solutionId);
@@ -192,29 +195,29 @@ public class MergeSortNonDominatedSortRanking<S extends Solution<?>> implements 
   // main
   public final int[] sort(double[][] populationData) {
     // INITIALIZATION
-    _population = populationData;
-    _duplicatedSolutions = new ArrayList<int[]>(_n);
+    population = populationData;
+    duplicatedSolutions = new ArrayList<int[]>(n);
     // SORTING
     if (sortFirstObjective()) {
       if (sortSecondObjective()) {
         sortRestOfObjectives();
       }
     }
-    _ranking = bsManager.getRanking();
+    ranking = bsManager.getRanking();
     // UPDATING DUPLICATED SOLUTIONS
-    for (int[] duplicated : _duplicatedSolutions)
-      _ranking[duplicated[1]] =
-          _ranking[duplicated[0]]; // ranking[dup solution]=ranking[original solution]
+    for (int[] duplicated : duplicatedSolutions)
+      ranking[duplicated[1]] =
+              ranking[duplicated[0]]; // ranking[dup solution]=ranking[original solution]
 
-    _n = _initialPopulationSize; // equivalent to n += duplicatedSolutions.size();
-    return _ranking;
+    n = initialPopulationSize; // equivalent to n += duplicatedSolutions.size();
+    return ranking;
   }
 
   @Override
   public List<S> getSubFront(int rank) {
     if (rank >= rankedSubPopulations.size()) {
       throw new JMetalException(
-          "Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() - 1));
+              "Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() - 1));
     }
     return rankedSubPopulations.get(rank);
   }

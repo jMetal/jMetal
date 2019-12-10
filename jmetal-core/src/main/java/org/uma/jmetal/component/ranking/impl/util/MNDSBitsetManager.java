@@ -1,14 +1,11 @@
 package org.uma.jmetal.component.ranking.impl.util;
 
 /**
- * 
+ *
+ * This class implements a simple bitset adapted to the Merge Non-dominated Sorting (MNDS) algorithm
+ * Please, note that in MNDS the size of a bitset can only be reduced or remain the same
+ *
  * @author Javier Moreno <javier.morenom@edu.uah.es>
- * 
- *         Su objetivo es implementar las operaciones con conjuntos que necesita
- *         el algoritmo MNDS.
- *         Se parte de la premisa de que en MNDS los conjuntos nunca aumentan
- *         de tamaño: solo pueden permanecer igual o reducirse.
- * 
  */
 public class MNDSBitsetManager {
 	private final static int FIRST_WORD_RANGE = 0;
@@ -16,9 +13,9 @@ public class MNDSBitsetManager {
 	private final static int N_BIT_ADDR = 6;
 	private final static int WORD_SIZE = 1 << N_BIT_ADDR;
 	private static final long WORD_MASK = 0xffffffffffffffffL;
-	private long[][] bitsets;
-	private int[][] bsRanges;
-	private int[] wordRanking;
+	private long[][] bitsets; //N bitsets. Each solution has a bitset
+	private int[][] bsRanges; //N ranges [first sol - last sol]. Each of each bitset of each solution
+	private int[] wordRanking;//Ranking of each bitset word. A bitset word contains 64 solutions.
 	private int[] ranking, ranking0;
 	private int maxRank;
 	private long[] incrementalBitset;

@@ -1,9 +1,9 @@
 package org.uma.jmetal.component.ranking;
 
-import org.uma.jmetal.component.ranking.impl.MergeSortNonDominatedSortRanking;
+import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 
 public class MergeNonDominatedSortingRankingTest extends NonDominanceRankingTestCases {
   public MergeNonDominatedSortingRankingTest() {
-    this.ranking = new MergeSortNonDominatedSortRanking();
+    this.ranking = new MergeNonDominatedSortRanking();
   }
 }
