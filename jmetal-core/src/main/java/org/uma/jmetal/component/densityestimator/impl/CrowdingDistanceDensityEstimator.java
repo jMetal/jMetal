@@ -7,7 +7,6 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -47,40 +46,42 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
     if (size == 2) {
       solutionList.get(0).setAttribute(attributeId, Double.POSITIVE_INFINITY);
       solutionList.get(1).setAttribute(attributeId, Double.POSITIVE_INFINITY);
-
       return;
     }
 
     // Use a new SolutionSet to avoid altering the original solutionSet
-    List<S> front = new ArrayList<>(size);
-    for (S solution : solutionList) {
-      front.add(solution);
-    }
+    List<S> front = new ArrayList<>(solutionList);
 
     for (int i = 0; i < size; i++) {
       front.get(i).setAttribute(attributeId, 0.0);
     }
 
-    double objetiveMaxn;
-    double objetiveMinn;
-    double distance;
-
     int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
-      Collections.sort(front, new ObjectiveComparator<S>(i)) ;
-      objetiveMinn = front.get(0).getObjective(i);
-      objetiveMaxn = front.get(front.size() - 1).getObjective(i);
+      front.sort(new ObjectiveComparator<>(i));
 
-      // Set de crowding distance
+      // It may be beneficial to change this according to https://dl.acm.org/citation.cfm?doid=2463372.2463456.
+      // The additional change that may be beneficial is that if we have only two distinct objective values,
+      //   we also don't update the crowding distance, as they all will "go to eleven",
+      //   which makes no sense as this objective just appears to be non-discriminating.
+
+      double minObjective = front.get(0).getObjective(i);
+      double maxObjective = front.get(front.size() - 1).getObjective(i);
+      if (minObjective == maxObjective) {
+        continue; // otherwise all crowding distances will be NaN = 0.0 / 0.0 except for two
+      }
+
+      // Set the crowding distance for the extreme points
       front.get(0).setAttribute(attributeId, Double.POSITIVE_INFINITY);
       front.get(size - 1).setAttribute(attributeId, Double.POSITIVE_INFINITY);
 
+      // Increase the crowding distances for all the intermediate points
       for (int j = 1; j < size - 1; j++) {
-        distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
-        distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (double)front.get(j).getAttribute(attributeId);
+        double distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
+        distance = distance / (maxObjective - minObjective);
+        distance += (double) front.get(j).getAttribute(attributeId);
         front.get(j).setAttribute(attributeId, distance);
       }
     }
@@ -98,9 +99,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
 
   @Override
   public List<S> sort(List<S> solutionList) {
-    Collections.sort(solutionList, getSolutionComparator());
-
+    solutionList.sort(getSolutionComparator());
     return solutionList ;
   }
 }
-
