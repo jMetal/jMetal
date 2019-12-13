@@ -57,7 +57,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     selection = new DifferentialEvolutionSelection();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem);
+        new MultithreadedSolutionListEvaluator<DoubleSolution>(0);
 
     algorithm =
         new GDE3Builder(problem)

@@ -105,7 +105,7 @@ public class NSGAIIBuilderTest {
 
   @Test public void setNewEvaluator() {
     MultithreadedSolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(2, problem);
+        new MultithreadedSolutionListEvaluator<DoubleSolution>(2);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);
     assertEquals(evaluator, builder.getSolutionListEvaluator());

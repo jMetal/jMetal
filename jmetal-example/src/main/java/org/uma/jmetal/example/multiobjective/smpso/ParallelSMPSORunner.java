@@ -60,7 +60,7 @@ public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
+    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0) ;
 
     algorithm = new SMPSOBuilder(problem, archive)
             .setMutation(mutation)

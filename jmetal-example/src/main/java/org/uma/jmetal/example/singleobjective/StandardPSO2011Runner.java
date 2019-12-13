@@ -17,52 +17,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to configure and run a StandardPSO2007. The algorithm can be configured
- * to use threads. The number of cores is specified as an optional parameter. The target problem is Sphere.
+ * Class to configure and run a StandardPSO2007. The algorithm can be configured to use threads. The
+ * number of cores is specified as an optional parameter. The target problem is Sphere.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class StandardPSO2011Runner {
-  private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
+  private static final int DEFAULT_NUMBER_OF_CORES = 1;
 
-  /**
-   *  Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores]
-   */
+  /** Usage: java org.uma.jmetal.runner.singleobjective.StandardPSO2007Runner [cores] */
   public static void main(String[] args) throws Exception {
 
     DoubleProblem problem;
     Algorithm<DoubleSolution> algorithm;
-    SolutionListEvaluator<DoubleSolution> evaluator ;
+    SolutionListEvaluator<DoubleSolution> evaluator;
 
-    String problemName = "org.uma.jmetal.problem.singleobjective.Sphere" ;
+    String problemName = "org.uma.jmetal.problem.singleobjective.Sphere";
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int numberOfCores ;
+    int numberOfCores;
     if (args.length == 1) {
-      numberOfCores = Integer.valueOf(args[0]) ;
+      numberOfCores = Integer.valueOf(args[0]);
     } else {
-      numberOfCores = DEFAULT_NUMBER_OF_CORES ;
+      numberOfCores = DEFAULT_NUMBER_OF_CORES;
     }
 
     if (numberOfCores == 1) {
-      evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
+      evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
     } else {
-      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores, problem) ;
+      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
     }
 
-    algorithm = new StandardPSO2011(problem,
+    algorithm =
+        new StandardPSO2011(
+            problem,
             10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
-            25000, 3, evaluator) ;
+            25000,
+            3,
+            evaluator);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    DoubleSolution solution = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    DoubleSolution solution = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
-    List<DoubleSolution> population = new ArrayList<>(1) ;
-    population.add(solution) ;
+    List<DoubleSolution> population = new ArrayList<>(1);
+    population.add(solution);
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
@@ -72,8 +73,8 @@ public class StandardPSO2011Runner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + solution.getVariable(0)) ;
+    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0));
+    JMetalLogger.logger.info("Solution: " + solution.getVariable(0));
     evaluator.shutdown();
   }
 }

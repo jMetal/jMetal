@@ -49,7 +49,7 @@ public class DifferentialEvolutionRunner {
     if (numberOfCores == 1) {
       evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
     } else {
-      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores, problem);
+      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
     }
 
     crossover =

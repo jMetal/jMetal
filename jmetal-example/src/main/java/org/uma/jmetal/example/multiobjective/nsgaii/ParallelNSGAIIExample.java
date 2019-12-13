@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.component.evaluation.impl.MultithreadedEvaluation;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -57,7 +58,7 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
     algorithm =
         new NSGAII<>(
                 problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
-            .setEvaluator(new MultithreadedSolutionListEvaluator<>(8, problem));
+            .setEvaluation(new MultithreadedEvaluation<>(problem,8));
 
     algorithm.run();
 

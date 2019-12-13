@@ -3,6 +3,8 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.ranking.Ranking;
@@ -40,12 +42,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected CrossoverOperator<S> crossoverOperator;
   protected MutationOperator<S> mutationOperator;
 
-  private SolutionListEvaluator<S> evaluator;
-
   private Map<String, Object> algorithmStatusData;
 
   private InitialSolutionsCreation<S> initialSolutionsCreation;
   private Termination termination;
+  private Evaluation<S> evaluation ;
   private Replacement<S> replacement;
   private Variation<S> variation;
   private MatingPoolSelection<S> selection;
@@ -93,7 +94,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
     this.termination = termination;
 
-    this.evaluator = new SequentialSolutionListEvaluator<>();
+    this.evaluation = new SequentialEvaluation<>(problem);
     this.offspringPopulationSize = offspringPopulationSize;
 
     this.algorithmStatusData = new HashMap<>();
@@ -158,7 +159,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluator.evaluate(population, getProblem());
+    population = evaluation.evaluate(population);
 
     return population;
   }
@@ -231,8 +232,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return evaluations;
   }
 
-  public NSGAII<S> setEvaluator(SolutionListEvaluator<S> evaluator) {
-    this.evaluator = evaluator;
+  public NSGAII<S> setEvaluation(Evaluation<S> evaluation) {
+    this.evaluation = evaluation ;
 
     return this;
   }

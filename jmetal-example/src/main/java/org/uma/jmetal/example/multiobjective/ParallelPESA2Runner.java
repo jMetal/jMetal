@@ -27,9 +27,8 @@ import java.util.List;
 public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.ParallelPESA2Runner problemName [referenceFront]
+   * @throws SecurityException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.ParallelPESA2Runner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -37,45 +36,46 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
+    String referenceParetoFront = "";
 
-    String problemName ;
+    String problemName;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
+      problemName = args[0];
+      referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "referenceFronts/ZDT1.pf" ;
+      referenceParetoFront = "referenceFronts/ZDT1.pf";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    double crossoverProbability = 0.9 ;
-    double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-    double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    SolutionListEvaluator<DoubleSolution> evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0, problem) ;
+    SolutionListEvaluator<DoubleSolution> evaluator =
+        new MultithreadedSolutionListEvaluator<DoubleSolution>(0);
 
-    algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(10)
-        .setArchiveSize(100)
-        .setBisections(5)
-        .setSolutionListEvaluator(evaluator)
-        .build() ;
+    algorithm =
+        new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
+            .setMaxEvaluations(25000)
+            .setPopulationSize(10)
+            .setArchiveSize(100)
+            .setBisections(5)
+            .setSolutionListEvaluator(evaluator)
+            .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    long computingTime = algorithmRunner.getComputingTime() ;
+    long computingTime = algorithmRunner.getComputingTime();
 
     evaluator.shutdown();
 
@@ -83,7 +83,7 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }
