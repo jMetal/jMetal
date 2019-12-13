@@ -1,10 +1,11 @@
 package org.uma.jmetal.component.evaluation;
 
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.observable.ObservableEntity;
 
 import java.util.List;
 
-public interface Evaluation<S extends Solution<?>> extends ObservableEntity {
-  List<S> evaluate(List<S> solutionList) ;
+public interface Evaluation<S extends Solution<?>> {
+  List<S> evaluate(List<S> solutionList, Problem<S> problem) ;
+  int getComputedEvaluations() ;
 }
