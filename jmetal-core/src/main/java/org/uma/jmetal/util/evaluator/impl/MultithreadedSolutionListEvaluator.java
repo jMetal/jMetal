@@ -14,7 +14,7 @@ public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvalua
 
   private int numberOfThreads;
 
-  public MultithreadedSolutionListEvaluator(int numberOfThreads, Problem<S> problem) {
+  public MultithreadedSolutionListEvaluator(int numberOfThreads) {
     if (numberOfThreads == 0) {
       this.numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else {
