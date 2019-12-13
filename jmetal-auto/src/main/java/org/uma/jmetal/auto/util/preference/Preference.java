@@ -2,7 +2,6 @@ package org.uma.jmetal.auto.util.preference;
 
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
-import org.uma.jmetal.solution.Solution;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class Preference<S extends Solution<?>>  {
+public class Preference<S>  {
   private Ranking<S> ranking ;
   private DensityEstimator<S> densityEstimator ;
   private Preference<S> relatedPreference ;
