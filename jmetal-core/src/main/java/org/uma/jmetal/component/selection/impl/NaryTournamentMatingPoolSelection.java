@@ -1,21 +1,20 @@
 package org.uma.jmetal.component.selection.impl;
 
-import org.uma.jmetal.component.selection.Selection;
+import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class NaryTournamentSelection<S extends Solution<?>> implements Selection<S> {
-  private org.uma.jmetal.operator.selection.impl.NaryTournamentSelection<S> selectionOperator;
+public class NaryTournamentMatingPoolSelection<S extends Solution<?>> implements MatingPoolSelection<S> {
+  private NaryTournamentSelection<S> selectionOperator;
   private int matingPoolSize;
 
-  @Deprecated
-  public NaryTournamentSelection(int tournamentSize, int matingPoolSize, Comparator<S> comparator) {
+  public NaryTournamentMatingPoolSelection(int tournamentSize, int matingPoolSize, Comparator<S> comparator) {
     selectionOperator =
-        new org.uma.jmetal.operator.selection.impl.NaryTournamentSelection<>(
-            tournamentSize, comparator);
+        new NaryTournamentSelection<>(tournamentSize, comparator);
     this.matingPoolSize = matingPoolSize;
   }
 
