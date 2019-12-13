@@ -94,7 +94,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
     this.termination = termination;
 
-    this.evaluation = new SequentialEvaluation<>(problem);
+    this.evaluation = new SequentialEvaluation<>();
     this.offspringPopulationSize = offspringPopulationSize;
 
     this.algorithmStatusData = new HashMap<>();
@@ -159,9 +159,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    population = evaluation.evaluate(population);
-
-    return population;
+    return  evaluation.evaluate(population, getProblem());
   }
 
   /**

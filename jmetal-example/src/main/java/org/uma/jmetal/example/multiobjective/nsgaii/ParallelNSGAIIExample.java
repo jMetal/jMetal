@@ -58,7 +58,7 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
     algorithm =
         new NSGAII<>(
                 problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
-            .setEvaluation(new MultithreadedEvaluation<>(problem,8));
+            .setEvaluation(new MultithreadedEvaluation<>(8));
 
     algorithm.run();
 

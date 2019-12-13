@@ -34,7 +34,6 @@ public class NSGAIIStoppingByTimeExample extends AbstractAlgorithmRunner {
     NSGAII<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "referenceFronts/ZDT1.pf";
