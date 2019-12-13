@@ -3,7 +3,7 @@ package org.uma.jmetal.component.ranking;
 import org.junit.Test;
 import org.uma.jmetal.component.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -30,7 +30,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -92,7 +92,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithThreeDominatedSolutionsReturnThreeSubfronts() {
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithFiveSolutionsWorkProperly() {
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -184,7 +184,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
          1         4
          0 1 2 3 4 5
     */
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
@@ -225,7 +225,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
          List: 1,2,3,4,5
          Expected result: two ranks (rank 0: 1, 2, 5, 4; rank 1: 3)
     */
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -263,7 +263,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingWorkOnTheExampleInTheMNDSPaper() {
-    DoubleProblem problem = new MockDoubleProblem(2, 3);
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
         new double[][] {
@@ -303,7 +303,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTenSolutionsWorkProperly() {
-    DoubleProblem problem = new MockDoubleProblem(2, 3);
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
             new double[][] {
@@ -341,7 +341,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwentySolutionsWorkProperly() {
-    DoubleProblem problem = new MockDoubleProblem(2, 3);
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
         new double[][] {
@@ -387,31 +387,5 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     assertEquals(5, ranking.getSubFront(2).size());
     assertEquals(2, ranking.getSubFront(3).size());
     assertEquals(1, ranking.getSubFront(4).size());
-  }
-
-  private class MockDoubleProblem extends AbstractDoubleProblem {
-
-    public MockDoubleProblem(Integer numberOfVariables) {
-      this(numberOfVariables, 2);
-    }
-
-    public MockDoubleProblem(Integer numberOfVariables, int numberOfObjectives) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(numberOfObjectives);
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(0.0);
-        upperLimit.add(5.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    /** Evaluate() method */
-    @Override
-    public void evaluate(DoubleSolution solution) {}
   }
 }
