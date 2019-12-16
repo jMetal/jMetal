@@ -1,6 +1,7 @@
-package org.uma.jmetal.algorithm.impl;
+package org.uma.jmetal.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.replacement.Replacement;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends AbstractEvolutionaryAlgorithm<S, List<S>>{
+public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends AbstractEvolutionaryAlgorithm<S, List<S>> {
   private Evaluation<S> evaluation;
   private InitialSolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -80,7 +81,6 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
 
   @Override
@@ -89,7 +89,6 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
-    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
@@ -130,22 +129,17 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
     return population;
   }
 
-  public long getCurrentComputingTime() {
-    return System.currentTimeMillis() - initTime;
+  @Override
+  public String getName() {
+    return "Algorithm based on the component based evolutionary algorithm class";
   }
 
-  public int getNumberOfEvaluations() {
-    return evaluations;
+  @Override
+  public String getDescription() {
+    return "";
   }
 
   public long getTotalComputingTime() {
-    return totalComputingTime;
+    return totalComputingTime ;
   }
-
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
 }
