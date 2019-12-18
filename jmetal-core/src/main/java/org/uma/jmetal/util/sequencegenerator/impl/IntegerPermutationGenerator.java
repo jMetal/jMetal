@@ -1,38 +1,64 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
+import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
-  private List<Integer> sequence;
+  private int[] sequence;
   private int index;
-  private Random random;
+  private int size ;
 
-  public IntegerPermutationGenerator(int size, Random random) {
-    sequence = IntStream.range(0, size).boxed().collect(Collectors.toList());
-    Collections.shuffle(sequence, random);
-
-    this.random = random;
+  public IntegerPermutationGenerator(int size) {
+    Check.that(size > 0, "The " + size + " is not a positive number greater than zero");
+    this.size = size ;
+    sequence = randomPermutation(size) ;
 
     index = 0;
   }
 
   @Override
   public Integer getValue() {
-    return sequence.get(index);
+    return sequence[index];
   }
 
   @Override
   public void generateNext() {
     index++;
-    if (index == sequence.size()) {
-      Collections.shuffle(sequence, random);
+    if (index == sequence.length) {
+      sequence = randomPermutation(size) ;
       index = 0;
     }
+  }
+
+  private int[] randomPermutation(int size) {
+    int[] permutation = new int[size] ;
+    JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+    int[] index = new int[size];
+    boolean[] flag = new boolean[size];
+
+    for (int n = 0; n < size; n++) {
+      index[n] = n;
+      flag[n] = true;
+    }
+
+    int num = 0;
+    while (num < size) {
+      int start = randomGenerator.nextInt(0, size - 1);
+      while (true) {
+        if (flag[start]) {
+          permutation[num] = index[start];
+          flag[start] = false;
+          num++;
+          break;
+        }
+        if (start == (size - 1)) {
+          start = 0;
+        } else {
+          start++;
+        }
+      }
+    }
+    return permutation ;
   }
 }

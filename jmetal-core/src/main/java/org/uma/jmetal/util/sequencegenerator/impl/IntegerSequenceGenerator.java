@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 import java.util.List;
@@ -7,23 +8,24 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class IntegerSequenceGenerator implements SequenceGenerator<Integer> {
-  private List<Integer> sequence;
   private int index;
+  private int size ;
 
   public IntegerSequenceGenerator(int size) {
-    sequence = IntStream.range(0, size).boxed().collect(Collectors.toList());
+    Check.that(size > 0, "The " + size + " is not a positive number greater than zero");
+    this.size = size ;
     index = 0;
   }
 
   @Override
   public Integer getValue() {
-    return sequence.get(index) ;
+    return index ;
   }
 
   @Override
   public void generateNext() {
     index++;
-    if (index == sequence.size()) {
+    if (index == size) {
       index = 0;
     }
   }
