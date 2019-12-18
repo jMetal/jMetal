@@ -89,20 +89,6 @@ public class ArrayFront implements Front {
    */
   public ArrayFront(String fileName) throws FileNotFoundException {
     this();
-    /*
-      InputStream inputStream = null;
-      try {
-        URL url = VectorFileUtils.class.getClassLoader().getResource(fileName) ;
-        if (url != null) {
-          String uri = Paths.get(url.toURI()).toString();
-          inputStream = createInputStream(uri) ;
-        } else {
-          inputStream = createInputStream(fileName) ;
-        }
-      } catch (URISyntaxException e) {
-        e.printStackTrace();
-      }
-    */
 
     InputStream inputStream = createInputStream(fileName);
     InputStreamReader isr = new InputStreamReader(inputStream);
