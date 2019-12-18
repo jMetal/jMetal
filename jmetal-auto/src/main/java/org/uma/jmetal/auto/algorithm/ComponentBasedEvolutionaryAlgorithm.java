@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Class representing an evolutionary algorithm. It implements the {@link Algorithm} interface by applying a
  * component based approach, in which each step of an evolutionary algorithm (i.e, selection, variation,
- * replacement, etc. is considered as component.
+ * replacement, etc.) is considered as a component that can be set in the class constructor.
  *
  * @param <S> Solution
  *
@@ -131,12 +131,16 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
   @Override
   public String getName() {
-    return "Algorithm based on the component based evolutionary algorithm class";
+    return name ;
   }
 
   @Override
   public String getDescription() {
-    return "";
+    return name;
+  }
+
+  public Map<String, Object> getAttributes() {
+    return attributes;
   }
 
   public long getTotalComputingTime() {
