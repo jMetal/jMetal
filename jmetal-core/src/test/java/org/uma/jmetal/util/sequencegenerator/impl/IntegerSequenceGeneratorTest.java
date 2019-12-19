@@ -1,23 +1,29 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class IntegerSequenceGeneratorTest {
 
-  @Test(expected = InvalidConditionException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsZero() {
-    new IntegerSequenceGenerator(0);
+    Exception exception =
+            assertThrows(InvalidConditionException.class, () -> new IntegerSequenceGenerator(0));
+    assertEquals("Size 0 is not a positive number greater than zero", exception.getMessage());
   }
 
-  @Test(expected = InvalidConditionException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsNegative() {
-    new IntegerSequenceGenerator(-1);
+    Exception exception =
+            assertThrows(InvalidConditionException.class, () -> new IntegerSequenceGenerator(-1));
+    assertEquals("Size -1 is not a positive number greater than zero", exception.getMessage());
   }
 
   @Test
