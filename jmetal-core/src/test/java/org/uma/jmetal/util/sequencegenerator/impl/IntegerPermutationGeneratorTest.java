@@ -1,20 +1,25 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class IntegerPermutationGeneratorTest {
-    @Test(expected = InvalidConditionException.class)
+    @Test
     public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsZero() {
-        new IntegerPermutationGenerator(0);
+        Exception exception = assertThrows(InvalidConditionException.class, () -> new IntegerPermutationGenerator(0) ) ;
+        assertEquals("Size == 0 is not a positive number greater than zero", exception.getMessage());
+
     }
 
-    @Test(expected = InvalidConditionException.class)
+    @Test
     public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsNegative() {
-        new IntegerPermutationGenerator(-1);
+        Exception exception = assertThrows(InvalidConditionException.class, () -> new IntegerPermutationGenerator(-1) ) ;
+        assertEquals("Size == -1 is not a positive number greater than zero", exception.getMessage());
     }
 
     @Test
@@ -34,7 +39,12 @@ public class IntegerPermutationGeneratorTest {
 
     @Test
     public void shouldGetValueTheRigthValuesWhenInvokedTwiceAndSequenceLengthIsTwo() {
-        SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(2);
-        // TODO
+        int sequenceLength = 2 ;
+        int[] values = new int[sequenceLength] ;
+        SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
+        //IntStream.range(0, sequenceLength).forEach(i -> {values[i] = sequenceGenerator.getValue() ; sequenceGenerator.generateNext();}) ;
+
+        values = new int[]{0,1} ;
+        //assertThat(values, Matchers.arrayContainingInAnyOrder(new int[]{0, 1}));
     }
 }

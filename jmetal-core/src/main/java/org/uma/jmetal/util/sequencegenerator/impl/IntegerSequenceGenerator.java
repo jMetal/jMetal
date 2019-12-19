@@ -12,7 +12,7 @@ public class IntegerSequenceGenerator implements SequenceGenerator<Integer> {
   private int size ;
 
   public IntegerSequenceGenerator(int size) {
-    Check.that(size > 0, "The " + size + " is not a positive number greater than zero");
+    Check.that(size > 0, size + " is not a positive number greater than zero");
     this.size = size ;
     index = 0;
   }
