@@ -39,7 +39,9 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
     initializeNeighborhood();
   }
 
-  public WeightVectorNeighborhood(int numberOfWeightVectors, int weightVectorSize, int neighborSize, String vectorFileName) throws FileNotFoundException {
+  public WeightVectorNeighborhood(
+      int numberOfWeightVectors, int weightVectorSize, int neighborSize, String vectorFileName)
+      throws FileNotFoundException {
     this.numberOfWeightVectors = numberOfWeightVectors;
     this.weightVectorSize = weightVectorSize;
     this.neighborSize = neighborSize;
@@ -53,7 +55,7 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
   }
 
   private void readWeightsFromFile(String vectorFileName) throws FileNotFoundException {
-    //try {
+    // try {
     InputStream inputStream;
     inputStream = getClass().getResourceAsStream(vectorFileName);
     if (null == inputStream) {
@@ -61,7 +63,7 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
     }
     InputStreamReader isr = new InputStreamReader(inputStream);
 
-    try(BufferedReader br = new BufferedReader(isr)) {
+    try (BufferedReader br = new BufferedReader(isr)) {
       int i = 0;
       int j;
       String aux = br.readLine();
@@ -77,10 +79,9 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
         i++;
       }
     } catch (IOException e) {
-      throw new JMetalException("readWeightsFromFile: failed when reading for file: "
-              + vectorFileName, e);
+      throw new JMetalException(
+          "readWeightsFromFile: failed when reading for file: " + vectorFileName, e);
     }
-
   }
 
   private void initializeNeighborhood() {

@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
@@ -17,32 +17,51 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
+public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
+  protected enum NeighborType {NEIGHBOR, POPULATION}
+
   private int evaluations;
   private int populationSize;
   private int offspringPopulationSize;
 
-  protected SelectionOperator<List<S>, S> selectionOperator;
-  protected CrossoverOperator<S> crossoverOperator;
-  protected MutationOperator<S> mutationOperator;
+  private int neighborSize;
+  private double neighborhoodSelectionProbability;
+  private int maximumNumberOfReplacedSolutions;
 
-  private Map<String, Object> algorithmStatusData;
+  private AggregativeFunction aggregativeFunction;
+  private SequenceGenerator<Integer> sequenceGenerator ;
+
+  private WeightVectorNeighborhood<S> weightVectorNeighborhood;
+
+  private SelectionOperator<List<S>, List<S>> selectionOperator;  private CrossoverOperator<S> crossoverOperator;
+  private MutationOperator<S> mutationOperator;
+
+  private int currentSubProblem;
+  private NeighborType neighborType;
 
   private InitialSolutionsCreation<S> initialSolutionsCreation;
   private Termination termination;
@@ -54,70 +73,55 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private long startTime;
   private long totalComputingTime;
 
+  private Map<String, Object> algorithmStatusData;
   private Observable<Map<String, Object>> observable;
 
   /** Constructor */
-  public NSGAII(
+  public MOEAD6(
       Problem<S> problem,
       int populationSize,
-      int offspringPopulationSize,
-      CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator,
-      Termination termination,
-      Ranking<S> ranking) {
+      int neighborSize,
+      double neighborhoodSelectionProbability,
+      int maximumNumberOfReplacedSolutions,
+      AggregativeFunction aggregativeFunction,
+      SequenceGenerator<Integer> sequenceGenerator,
+      Termination termination) {
 
     this.populationSize = populationSize;
     this.problem = problem;
 
+    this.neighborSize = neighborSize ;
+    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
+    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
+
+    this.aggregativeFunction = aggregativeFunction ;
+    this.sequenceGenerator = sequenceGenerator ;
+
+    this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize) ;
+
+    selectionOperator = new NaryRandomSelection<>(2);
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
 
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    DensityEstimator<S> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+    this.replacement = null ;
 
     this.variation =
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossoverOperator, mutationOperator);
 
-    this.selection =
-        new NaryTournamentMatingPoolSelection<>(
-            2,
-            variation.getMatingPoolSize(),
-            new MultiComparator<>(
-                Arrays.asList(
-                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+    this.selection = null ;
 
     this.termination = termination;
 
-    this.evaluation = new SequentialEvaluation<>();
-    this.offspringPopulationSize = offspringPopulationSize;
+    this.evaluation = new SequentialEvaluation<>() ;
+
+    this.offspringPopulationSize = 1;
 
     this.algorithmStatusData = new HashMap<>();
 
-    this.observable = new DefaultObservable<>("NSGAII algorithm");
-  }
-
-  /** Constructor */
-  public NSGAII(
-      Problem<S> problem,
-      int populationSize,
-      int offspringPopulationSize,
-      CrossoverOperator<S> crossoverOperator,
-      MutationOperator<S> mutationOperator,
-      Termination termination) {
-    this(
-        problem,
-        populationSize,
-        offspringPopulationSize,
-        crossoverOperator,
-        mutationOperator,
-        termination,
-        new FastNonDominatedSortRanking<>());
+    this.observable = new DefaultObservable<>("MOEA/D algorithm");
   }
 
   @Override
@@ -130,6 +134,10 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   @Override
   protected void initProgress() {
     evaluations = populationSize;
+
+    for (S solution: population) {
+      aggregativeFunction.update(solution.getObjectives());
+    }
 
     algorithmStatusData.put("EVALUATIONS", evaluations);
     algorithmStatusData.put("POPULATION", population);
@@ -174,8 +182,20 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> selection(List<S> population) {
-    return this.selection.select(population);
-  }
+    currentSubProblem = sequenceGenerator.getValue() ;
+    neighborType = chooseNeighborType() ;
+
+    List<S> matingPool;
+    if (neighborType.equals(NeighborType.NEIGHBOR)) {
+      matingPool = selectionOperator
+              .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
+    } else {
+      matingPool = selectionOperator.execute(population);
+    }
+
+    matingPool.add(population.get(currentSubProblem));
+
+    return matingPool;  }
 
   /**
    * This methods iteratively applies a {@link CrossoverOperator} a {@link MutationOperator} to the
@@ -206,14 +226,26 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return SolutionListUtils.getNonDominatedSolutions(getPopulation());
   }
 
+  protected NeighborType chooseNeighborType() {
+    double rnd = JMetalRandom.getInstance().nextDouble();
+    NeighborType neighborType;
+
+    if (rnd < neighborhoodSelectionProbability) {
+      neighborType = NeighborType.NEIGHBOR;
+    } else {
+      neighborType = NeighborType.POPULATION;
+    }
+    return neighborType;
+  }
+
   @Override
   public String getName() {
-    return "NSGAII";
+    return "MOEA/D";
   }
 
   @Override
   public String getDescription() {
-    return "Nondominated Sorting Genetic Algorithm version II";
+    return "MOEA/D";
   }
 
   public Map<String, Object> getAlgorithmStatusData() {
@@ -233,13 +265,13 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return evaluations;
   }
 
-  public NSGAII<S> setEvaluation(Evaluation<S> evaluation) {
+  public MOEAD6<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation ;
 
     return this;
   }
 
-  public NSGAII<S> setInitialSolutionsCreation(
+  public MOEAD6<S> setInitialSolutionsCreation(
       InitialSolutionsCreation<S> initialSolutionsCreation) {
     this.initialSolutionsCreation = initialSolutionsCreation;
 
