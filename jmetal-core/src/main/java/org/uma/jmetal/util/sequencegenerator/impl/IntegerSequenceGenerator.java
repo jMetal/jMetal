@@ -29,4 +29,9 @@ public class IntegerSequenceGenerator implements SequenceGenerator<Integer> {
       index = 0;
     }
   }
+
+  @Override
+  public int getSequenceLength() {
+    return size ;
+  }
 }

@@ -19,6 +19,7 @@ import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
@@ -33,6 +34,7 @@ import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,7 +44,10 @@ import java.util.Map;
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
-  protected enum NeighborType {NEIGHBOR, POPULATION}
+  protected enum NeighborType {
+    NEIGHBOR,
+    POPULATION
+  }
 
   private int evaluations;
   private int populationSize;
@@ -53,11 +58,13 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private int maximumNumberOfReplacedSolutions;
 
   private AggregativeFunction aggregativeFunction;
-  private SequenceGenerator<Integer> sequenceGenerator ;
+  private SequenceGenerator<Integer> sequenceGenerator;
 
   private WeightVectorNeighborhood<S> weightVectorNeighborhood;
 
-  private SelectionOperator<List<S>, List<S>> selectionOperator;  private CrossoverOperator<S> crossoverOperator;
+  private SelectionOperator<List<S>, List<S>> selectionOperator;
+  private DifferentialEvolutionCrossover crossoverOperator;
+  //private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
 
   private int currentSubProblem;
@@ -65,7 +72,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   private InitialSolutionsCreation<S> initialSolutionsCreation;
   private Termination termination;
-  private Evaluation<S> evaluation ;
+  private Evaluation<S> evaluation;
   private Replacement<S> replacement;
   private Variation<S> variation;
   private MatingPoolSelection<S> selection;
@@ -85,37 +92,38 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
       int maximumNumberOfReplacedSolutions,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
+      MutationOperator<S> mutationOperator,
       Termination termination) {
 
     this.populationSize = populationSize;
     this.problem = problem;
 
-    this.neighborSize = neighborSize ;
-    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability ;
-    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
+    this.neighborSize = neighborSize;
+    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
+    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
-    this.aggregativeFunction = aggregativeFunction ;
-    this.sequenceGenerator = sequenceGenerator ;
+    this.aggregativeFunction = aggregativeFunction;
+    this.sequenceGenerator = sequenceGenerator;
 
-    this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize) ;
+    this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
-    this.crossoverOperator = crossoverOperator;
-    this.mutationOperator = mutationOperator;
+    double cr = 1.0;
+    double f = 0.5;
+    this.crossoverOperator = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    this.mutationOperator = mutationOperator ;
 
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    this.replacement = null ;
+    this.replacement = null;
 
-    this.variation =
-        new CrossoverAndMutationVariation<>(
-            offspringPopulationSize, crossoverOperator, mutationOperator);
+    this.variation = null ;
 
-    this.selection = null ;
+    this.selection = null;
 
     this.termination = termination;
 
-    this.evaluation = new SequentialEvaluation<>() ;
+    this.evaluation = new SequentialEvaluation<>();
 
     this.offspringPopulationSize = 1;
 
@@ -135,7 +143,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected void initProgress() {
     evaluations = populationSize;
 
-    for (S solution: population) {
+    for (S solution : population) {
       aggregativeFunction.update(solution.getObjectives());
     }
 
@@ -170,7 +178,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    return  evaluation.evaluate(population, getProblem());
+    return evaluation.evaluate(population, getProblem());
   }
 
   /**
@@ -182,20 +190,23 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> selection(List<S> population) {
-    currentSubProblem = sequenceGenerator.getValue() ;
-    neighborType = chooseNeighborType() ;
+    currentSubProblem = sequenceGenerator.getValue();
+    sequenceGenerator.generateNext();
+    neighborType = chooseNeighborType();
 
     List<S> matingPool;
     if (neighborType.equals(NeighborType.NEIGHBOR)) {
-      matingPool = selectionOperator
-              .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
+      matingPool =
+          selectionOperator.execute(
+              weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
     } else {
       matingPool = selectionOperator.execute(population);
     }
 
     matingPool.add(population.get(currentSubProblem));
 
-    return matingPool;  }
+    return matingPool;
+  }
 
   /**
    * This methods iteratively applies a {@link CrossoverOperator} a {@link MutationOperator} to the
@@ -211,19 +222,31 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    return variation.variate(population, matingPool);
+    S currentSolution = population.get(currentSubProblem) ;
+    crossoverOperator.setCurrentSolution((DoubleSolution) currentSolution);
+
+    List<S> offspringPopulation = (List<S>)crossoverOperator.execute((List<DoubleSolution>)matingPool);
+    mutationOperator.execute(offspringPopulation.get(0));
+
+    return offspringPopulation;
+    //return variation.variate(population, matingPool);
   }
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> newPopulation = replacement.replace(population, offspringPopulation);
+    //List<S> newPopulation = replacement.replace(population, offspringPopulation);
 
-    return newPopulation;
+    S newSolution = offspringPopulation.get(0) ;
+    aggregativeFunction.update(newSolution.getObjectives());
+
+    List<S> newPopulation = updateCurrentSubProblemNeighborhood(newSolution, population) ;
+
+    return newPopulation ;
   }
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.getNonDominatedSolutions(getPopulation());
+    return population ;
   }
 
   protected NeighborType chooseNeighborType() {
@@ -236,6 +259,38 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
       neighborType = NeighborType.POPULATION;
     }
     return neighborType;
+  }
+
+  protected boolean maxReplacementLimitAchieved(int numberOfReplaceSolutions) {
+    return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
+  }
+
+  protected List<S> updateCurrentSubProblemNeighborhood(S newSolution, List<S> population) {
+    IntegerPermutationGenerator randomPermutation =
+        new IntegerPermutationGenerator(
+            neighborType.equals(NeighborType.NEIGHBOR) ? neighborSize : populationSize);
+
+    int replacements = 0;
+
+    for (int i = 0;
+        i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
+        i++) {
+      int k = randomPermutation.getValue();
+      randomPermutation.generateNext();
+
+      double f1 =
+          aggregativeFunction.compute(
+              population.get(k).getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+      double f2 =
+          aggregativeFunction.compute(
+              newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+
+      if (f2 < f1) {
+        population.set(k, (S) newSolution.copy());
+        replacements++;
+      }
+    }
+    return population;
   }
 
   @Override
@@ -266,7 +321,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   }
 
   public MOEAD6<S> setEvaluation(Evaluation<S> evaluation) {
-    this.evaluation = evaluation ;
+    this.evaluation = evaluation;
 
     return this;
   }
