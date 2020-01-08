@@ -19,6 +19,7 @@ import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
@@ -96,16 +97,23 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
-    this.weightVectorNeighborhood = new WeightVectorNeighborhood<DoubleSolution>(populationSize, neighborSize);
+    this.weightVectorNeighborhood =
+        new WeightVectorNeighborhood<DoubleSolution>(populationSize, neighborSize);
 
-    selectionOperator = new NaryRandomSelection<>(2);
-    selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true);
+    this.variation = variation;
+
+    selectionOperator =
+        new NaryRandomSelection<>(variation.getCrossover().getNumberOfRequiredParents() - 1);
+    selection =
+        new DifferentialEvolutionMatingPoolSelection(
+            variation.getMatingPoolSize(),
+            variation.getCrossover().getNumberOfRequiredParents(),
+            true,
+            sequenceGenerator);
 
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.replacement = null;
-
-    this.variation = variation;
 
     // this.selection = null;
 
@@ -176,6 +184,7 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
    */
   @Override
   protected List<DoubleSolution> selection(List<DoubleSolution> population) {
+
     currentSubProblemId = sequenceGenerator.getValue();
     neighborType = chooseNeighborType();
 
@@ -189,6 +198,13 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     }
 
     matingPool.add(population.get(currentSubProblemId));
+
+    Check.that(
+        matingPool.size() == variation.getMatingPoolSize(),
+        "The mating pool size is "
+            + matingPool.size()
+            + " instead of "
+            + variation.getMatingPoolSize());
 
     return matingPool;
   }
@@ -207,26 +223,19 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
    */
   @Override
   protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPool) {
-    /*
-    variation.variate(population, matingPool) ;
-
-    DoubleSolution currentSolution = population.get(currentSubProblemId);
-    crossoverOperator.setCurrentSolution(currentSolution);
-
-    List<DoubleSolution> offspringPopulation = crossoverOperator.execute(matingPool);
-    mutationOperator.execute(offspringPopulation.get(0));
-*/
     return variation.variate(population, matingPool);
   }
 
   @Override
-  protected List<DoubleSolution> replacement(List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
+  protected List<DoubleSolution> replacement(
+      List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
     // List<S> newPopulation = replacement.replace(population, offspringPopulation);
 
     DoubleSolution newSolution = offspringPopulation.get(0);
     aggregativeFunction.update(newSolution.getObjectives());
 
-    List<DoubleSolution> newPopulation = updateCurrentSubProblemNeighborhood(newSolution, population);
+    List<DoubleSolution> newPopulation =
+        updateCurrentSubProblemNeighborhood(newSolution, population);
 
     sequenceGenerator.generateNext();
 
@@ -254,7 +263,8 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
   }
 
-  protected List<DoubleSolution> updateCurrentSubProblemNeighborhood(DoubleSolution newSolution, List<DoubleSolution> population) {
+  protected List<DoubleSolution> updateCurrentSubProblemNeighborhood(
+      DoubleSolution newSolution, List<DoubleSolution> population) {
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
             neighborType.equals(MOEADDE.NeighborType.NEIGHBOR) ? neighborSize : populationSize);

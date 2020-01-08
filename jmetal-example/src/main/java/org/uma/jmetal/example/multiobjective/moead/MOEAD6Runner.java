@@ -47,6 +47,7 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
 
     int populationSize = 100;
     int offspringPopulationSize = 1;
+
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;

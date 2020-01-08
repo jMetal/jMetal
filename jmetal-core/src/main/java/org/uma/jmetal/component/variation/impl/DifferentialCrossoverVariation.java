@@ -18,6 +18,7 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
   private SequenceGenerator<Integer> solutionIndexGenerator ;
 
   private DifferentialEvolutionCrossover crossover;
+
   private MutationOperator<DoubleSolution> mutation;
 
   public DifferentialCrossoverVariation(
@@ -60,6 +61,14 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     }
 
     return offspringPopulation;
+  }
+
+  public DifferentialEvolutionCrossover getCrossover() {
+    return crossover;
+  }
+
+  public MutationOperator<DoubleSolution> getMutation() {
+    return mutation;
   }
 
   @Override

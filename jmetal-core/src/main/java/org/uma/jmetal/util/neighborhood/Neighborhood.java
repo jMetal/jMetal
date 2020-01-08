@@ -9,5 +9,10 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface Neighborhood<S> extends Serializable {
+  enum NeighborType {
+    NEIGHBOR,
+    POPULATION,
+    ARCHIVE
+  }
   List<S> getNeighbors(List<S> solutionList, int solutionIndex) ;
 }

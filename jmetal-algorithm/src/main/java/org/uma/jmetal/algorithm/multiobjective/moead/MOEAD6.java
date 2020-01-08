@@ -97,7 +97,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.weightVectorNeighborhood = new WeightVectorNeighborhood<S>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
-    selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true);
+    selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true, null);
 
     double cr = 1.0;
     double f = 0.5;
