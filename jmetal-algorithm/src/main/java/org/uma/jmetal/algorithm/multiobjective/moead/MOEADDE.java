@@ -10,6 +10,7 @@ import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
+import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -80,8 +81,7 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
       int maximumNumberOfReplacedSolutions,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
-      DifferentialEvolutionCrossover crossoverOperator,
-      MutationOperator<DoubleSolution> mutationOperator,
+      DifferentialCrossoverVariation variation,
       Termination termination) {
 
     this.populationSize = populationSize;
@@ -91,6 +91,8 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
+    this.offspringPopulationSize = 1;
+
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
@@ -99,22 +101,17 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     selectionOperator = new NaryRandomSelection<>(2);
     selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true);
 
-    this.crossoverOperator = crossoverOperator ;
-    this.mutationOperator = mutationOperator;
-
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.replacement = null;
 
-    this.variation = null;
+    this.variation = variation;
 
     // this.selection = null;
 
     this.termination = termination;
 
     this.evaluation = new SequentialEvaluation<>();
-
-    this.offspringPopulationSize = 1;
 
     this.algorithmStatusData = new HashMap<>();
 
@@ -180,7 +177,6 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   @Override
   protected List<DoubleSolution> selection(List<DoubleSolution> population) {
     currentSubProblemId = sequenceGenerator.getValue();
-    sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
     List<DoubleSolution> matingPool;
@@ -211,13 +207,16 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
    */
   @Override
   protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPool) {
+    /*
+    variation.variate(population, matingPool) ;
+
     DoubleSolution currentSolution = population.get(currentSubProblemId);
-    crossoverOperator.setCurrentSolution((DoubleSolution) currentSolution);
+    crossoverOperator.setCurrentSolution(currentSolution);
 
     List<DoubleSolution> offspringPopulation = crossoverOperator.execute(matingPool);
     mutationOperator.execute(offspringPopulation.get(0));
-
-    return offspringPopulation;
+*/
+    return variation.variate(population, matingPool);
   }
 
   @Override
@@ -228,6 +227,8 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     aggregativeFunction.update(newSolution.getObjectives());
 
     List<DoubleSolution> newPopulation = updateCurrentSubProblemNeighborhood(newSolution, population);
+
+    sequenceGenerator.generateNext();
 
     return newPopulation;
   }

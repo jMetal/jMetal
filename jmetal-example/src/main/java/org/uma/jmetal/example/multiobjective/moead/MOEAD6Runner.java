@@ -3,6 +3,7 @@ package org.uma.jmetal.example.multiobjective.moead;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -16,6 +17,7 @@ import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.io.FileNotFoundException;
@@ -43,6 +45,10 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
+    int populationSize = 100;
+    int offspringPopulationSize = 1;
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
+
     double cr = 1.0;
     double f = 0.5;
     crossover =
@@ -53,17 +59,20 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
+    DifferentialCrossoverVariation differentialCrossoverVariation =
+        new DifferentialCrossoverVariation(
+            offspringPopulationSize, crossover, mutation, sequenceGenerator);
+
     algorithm =
         new MOEADDE(
             problem,
-            100,
+            populationSize,
             20,
             0.9,
             2,
             new Tschebyscheff(),
-            new IntegerPermutationGenerator(100),
-            crossover,
-            mutation,
+            sequenceGenerator,
+            differentialCrossoverVariation,
             new TerminationByEvaluations(150000));
 
     algorithm.run();
@@ -73,9 +82,9 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
