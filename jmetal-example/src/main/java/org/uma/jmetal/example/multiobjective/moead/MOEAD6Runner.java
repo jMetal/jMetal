@@ -79,7 +79,7 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
             new Tschebyscheff(),
             new IntegerPermutationGenerator(100),
             mutation,
-            new TerminationByEvaluations(175000));
+            new TerminationByEvaluations(150000));
 
     /*
     new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)

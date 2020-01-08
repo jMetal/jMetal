@@ -1,33 +1,24 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
-import org.uma.jmetal.component.densityestimator.DensityEstimator;
-import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.component.ranking.Ranking;
-import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
-import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
-import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
-import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
@@ -36,7 +27,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +58,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   //private CrossoverOperator<S> crossoverOperator;
   private MutationOperator<S> mutationOperator;
 
-  private int currentSubProblem;
+  private int currentSubProblemId;
   private NeighborType neighborType;
 
   private InitialSolutionsCreation<S> initialSolutionsCreation;
@@ -75,7 +66,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private Evaluation<S> evaluation;
   private Replacement<S> replacement;
   private Variation<S> variation;
-  private MatingPoolSelection<S> selection;
+  private MatingPoolSelection<DoubleSolution> selection;
 
   private long startTime;
   private long totalComputingTime;
@@ -108,6 +99,9 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
+    selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true) ;
+
+
     double cr = 1.0;
     double f = 0.5;
     this.crossoverOperator = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
@@ -119,7 +113,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
     this.variation = null ;
 
-    this.selection = null;
+    //this.selection = null;
 
     this.termination = termination;
 
@@ -190,20 +184,51 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> selection(List<S> population) {
-    currentSubProblem = sequenceGenerator.getValue();
+    currentSubProblemId = sequenceGenerator.getValue();
     sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
-    List<S> matingPool;
+    List<S> matingPool = new ArrayList<>();
+    int numberOfSolutionsToSelect = 2 ;
+    int selectedSolutionId ;
+    List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
+
+    while (listOfSolutions.size() < numberOfSolutionsToSelect) {
+      if (neighborType.equals(NeighborType.NEIGHBOR)) {
+        int random = JMetalRandom.getInstance().nextInt(0, neighborSize - 1);
+        selectedSolutionId = weightVectorNeighborhood.getNeighborhood()[currentSubProblemId][random];
+      } else {
+        selectedSolutionId = JMetalRandom.getInstance().nextInt(0, populationSize - 1);
+      }
+      boolean flag = true;
+      for (Integer individualId : listOfSolutions) {
+        if (individualId == selectedSolutionId) {
+          flag = false;
+          break;
+        }
+      }
+
+      if (flag) {
+        listOfSolutions.add(selectedSolutionId);
+      }
+    }
+    /*
     if (neighborType.equals(NeighborType.NEIGHBOR)) {
-      matingPool =
-          selectionOperator.execute(
-              weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
+      //matingPool =
+      //    selectionOperator.execute(
+      //        weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
+      matingPool = (List<S>)selection.select((List<DoubleSolution>)weightVectorNeighborhood.getNeighbors(population, currentSubProblemId)) ;
     } else {
-      matingPool = selectionOperator.execute(population);
+      //matingPool = selectionOperator.execute(population);
+      matingPool = (List<S>)selection.select((List<DoubleSolution>)population) ;
     }
 
-    matingPool.add(population.get(currentSubProblem));
+    //matingPool.add(population.get(currentSubProblem));
+*/
+    for (Integer solutionId: listOfSolutions) {
+      matingPool.add(population.get(solutionId)) ;
+    }
+    matingPool.add(population.get(currentSubProblemId)) ;
 
     return matingPool;
   }
@@ -222,7 +247,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> reproduction(List<S> matingPool) {
-    S currentSolution = population.get(currentSubProblem) ;
+    S currentSolution = population.get(currentSubProblemId) ;
     crossoverOperator.setCurrentSolution((DoubleSolution) currentSolution);
 
     List<S> offspringPopulation = (List<S>)crossoverOperator.execute((List<DoubleSolution>)matingPool);
