@@ -10,31 +10,31 @@ import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class IntegerSequenceGeneratorTest {
+public class IntegerBoundedSequenceGeneratorTest {
 
   @Test
   public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsZero() {
     Exception exception =
-            assertThrows(InvalidConditionException.class, () -> new IntegerSequenceGenerator(0));
+            assertThrows(InvalidConditionException.class, () -> new IntegerBoundedSequenceGenerator(0));
     assertEquals("Size 0 is not a positive number greater than zero", exception.getMessage());
   }
 
   @Test
   public void shouldConstructorRaiseAnExceptionIfTheSequenceSizeIsNegative() {
     Exception exception =
-            assertThrows(InvalidConditionException.class, () -> new IntegerSequenceGenerator(-1));
+            assertThrows(InvalidConditionException.class, () -> new IntegerBoundedSequenceGenerator(-1));
     assertEquals("Size -1 is not a positive number greater than zero", exception.getMessage());
   }
 
   @Test
   public void shouldConstructorCreateANonNullObjectIfTheSizeValeIsCorrect() {
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerSequenceGenerator(2);
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(2);
     assertNotNull(sequenceGenerator);
   }
 
   @Test
   public void shouldGetValueReturnAlwaysZeroIfTheSequenceHasSizeOne() {
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerSequenceGenerator(1);
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(1);
     assertEquals(0, (int)sequenceGenerator.getValue());
 
     sequenceGenerator.generateNext();
@@ -43,7 +43,7 @@ public class IntegerSequenceGeneratorTest {
 
   @Test
   public void shouldGetValueReturnZeroOneZeroIfTheSequenceHasSizeTwoWhenInvokedThreeTimes() {
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerSequenceGenerator(2);
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(2);
     int value0 = sequenceGenerator.getValue() ;
     sequenceGenerator.generateNext();
     int value1 = sequenceGenerator.getValue() ;
@@ -58,7 +58,7 @@ public class IntegerSequenceGeneratorTest {
 
   @Test
   public void shouldGenerateNextWorkProperlyWhenInvokedSixTimesAndTheSequenceLengthIsFour() {
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerSequenceGenerator(4);
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(4);
     int sequenceLength = 6 ;
     int[] values = new int[sequenceLength] ;
     IntStream.range(0, sequenceLength).forEach(i -> {values[i] = sequenceGenerator.getValue() ; sequenceGenerator.generateNext();}) ;

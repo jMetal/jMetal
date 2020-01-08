@@ -3,15 +3,17 @@ package org.uma.jmetal.util.sequencegenerator.impl;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-public class IntegerSequenceGenerator implements SequenceGenerator<Integer> {
+/**
+ * This class generates a bounded sequence of consecutive integer numbers. When the last number is generated, the
+ * sequence starts again.
+ *
+ * @author Antonio J. Nebro
+ */
+public class IntegerBoundedSequenceGenerator implements SequenceGenerator<Integer> {
   private int index;
   private int size ;
 
-  public IntegerSequenceGenerator(int size) {
+  public IntegerBoundedSequenceGenerator(int size) {
     Check.that(size > 0, "Size " + size + " is not a positive number greater than zero");
     this.size = size ;
     index = 0;
