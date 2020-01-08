@@ -27,7 +27,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +95,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
-    this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize);
+    this.weightVectorNeighborhood = new WeightVectorNeighborhood<S>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
     selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true) ;
@@ -184,12 +183,13 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    */
   @Override
   protected List<S> selection(List<S> population) {
+
     currentSubProblemId = sequenceGenerator.getValue();
     sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
     List<S> matingPool;
-    if (neighborType.equals(MOEAD62.NeighborType.NEIGHBOR)) {
+    if (neighborType.equals(MOEAD6.NeighborType.NEIGHBOR)) {
       matingPool = selectionOperator
               .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblemId));
     } else {
@@ -222,7 +222,6 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     mutationOperator.execute(offspringPopulation.get(0));
 
     return offspringPopulation;
-    //return variation.variate(population, matingPool);
   }
 
   @Override
@@ -258,25 +257,33 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
   }
 
-  protected List<S> updateCurrentSubProblemNeighborhood(S newSolution, List<S> population) {
+  protected List<S> updateCurrentSubProblemNeighborhood(
+          S newSolution,
+          List<S> population) {
+
     IntegerPermutationGenerator randomPermutation =
-        new IntegerPermutationGenerator(
-            neighborType.equals(NeighborType.NEIGHBOR) ? neighborSize : populationSize);
+            new IntegerPermutationGenerator(
+                    neighborType.equals(MOEAD6Old.NeighborType.NEIGHBOR) ? neighborSize : populationSize);
 
     int replacements = 0;
 
     for (int i = 0;
-        i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
-        i++) {
-      int k = randomPermutation.getValue();
+         i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
+         i++) {
+      int k ;
+      if (neighborType.equals(MOEAD6Old.NeighborType.NEIGHBOR)) {
+        k = weightVectorNeighborhood.getNeighborhood()[currentSubProblemId][randomPermutation.getValue()];
+      } else {
+        k = randomPermutation.getValue() ;
+      }
       randomPermutation.generateNext();
 
       double f1 =
-          aggregativeFunction.compute(
-              population.get(k).getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+              aggregativeFunction.compute(
+                      population.get(k).getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
       double f2 =
-          aggregativeFunction.compute(
-              newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+              aggregativeFunction.compute(
+                      newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
       if (f2 < f1) {
         population.set(k, (S) newSolution.copy());

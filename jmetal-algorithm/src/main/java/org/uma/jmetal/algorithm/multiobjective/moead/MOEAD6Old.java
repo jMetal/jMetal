@@ -1,7 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
@@ -28,13 +27,12 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
+public class MOEAD6Old<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
   protected enum NeighborType {
     NEIGHBOR,
@@ -75,10 +73,8 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
   private Map<String, Object> algorithmStatusData;
   private Observable<Map<String, Object>> observable;
 
-  private Permutation permutation ;
-
   /** Constructor */
-  public MOEAD62(
+  public MOEAD6Old(
       Problem<S> problem,
       int populationSize,
       int neighborSize,
@@ -99,9 +95,7 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
-    permutation = new Permutation(populationSize);
-
-    this.weightVectorNeighborhood = new WeightVectorNeighborhood<S>(populationSize, neighborSize);
+    this.weightVectorNeighborhood = new WeightVectorNeighborhood<>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
     selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true) ;
@@ -189,13 +183,12 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
    */
   @Override
   protected List<S> selection(List<S> population) {
-
     currentSubProblemId = sequenceGenerator.getValue();
     sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
     List<S> matingPool;
-    if (neighborType.equals(MOEAD62.NeighborType.NEIGHBOR)) {
+    if (neighborType.equals(MOEAD6.NeighborType.NEIGHBOR)) {
       matingPool = selectionOperator
               .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblemId));
     } else {
@@ -228,6 +221,7 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     mutationOperator.execute(offspringPopulation.get(0));
 
     return offspringPopulation;
+    //return variation.variate(population, matingPool);
   }
 
   @Override
@@ -247,16 +241,6 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     return population ;
   }
 
-
-  protected int sourceOfNeighborsSize(int subProblem) {
-    if (neighborType == NeighborType.NEIGHBOR) {
-      return weightVectorNeighborhood.getNeighborhood()[subProblem].length;
-    } else {
-      return populationSize;
-    }
-  }
-
-
   protected NeighborType chooseNeighborType() {
     double rnd = JMetalRandom.getInstance().nextDouble();
     NeighborType neighborType;
@@ -273,21 +257,30 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
   }
 
-  protected List<S> updateCurrentSubProblemNeighborhood(
-          S newSolution,
-          List<S> population) {
+  protected List<S> updateCurrentSubProblemNeighborhood(S newSolution, List<S> population) {
+    IntegerPermutationGenerator randomPermutation =
+        new IntegerPermutationGenerator(
+            neighborType.equals(NeighborType.NEIGHBOR) ? neighborSize : populationSize);
 
-    int[] permutedNeighborsIndexes = generatePermutationOfhNeighbors(currentSubProblemId);
     int replacements = 0;
 
-    for (int i = 0; i < permutedNeighborsIndexes.length && !maxReplacementLimitAchieved(replacements); i++) {
-      int k = permutedNeighborsIndexes[i];
+    for (int i = 0;
+        i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
+        i++) {
+      int k ;
+      if (neighborType.equals(NeighborType.NEIGHBOR)) {
+        k = weightVectorNeighborhood.getNeighborhood()[currentSubProblemId][randomPermutation.getValue()];
+      } else {
+        k = randomPermutation.getValue() ;
+      }
+      randomPermutation.generateNext();
 
-      double f1 = aggregativeFunction.compute(population.get(k).getObjectives(),
-              weightVectorNeighborhood.getWeightVector()[k]);
-      double f2 = aggregativeFunction.compute(
-              newSolution.getObjectives(),
-              weightVectorNeighborhood.getWeightVector()[k]);
+      double f1 =
+          aggregativeFunction.compute(
+              population.get(k).getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+      double f2 =
+          aggregativeFunction.compute(
+              newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
       if (f2 < f1) {
         population.set(k, (S) newSolution.copy());
@@ -296,20 +289,6 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     }
     return population;
   }
-
-  protected int [] generatePermutationOfhNeighbors(int subProblem) {
-
-    int size = sourceOfNeighborsSize(subProblem);
-    int[] permutedArray = new int[size];
-    if (neighborType == NeighborType.NEIGHBOR) {
-      System.arraycopy(weightVectorNeighborhood.getNeighborhood()[subProblem],0, permutedArray,0,size);
-      MOEADUtils.shuffle(permutedArray);
-    } else {
-      MOEADUtils.randomPermutation(permutedArray, size);
-    }
-    return permutedArray;
-  }
-
 
   @Override
   public String getName() {
@@ -338,38 +317,16 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
     return evaluations;
   }
 
-  public MOEAD62<S> setEvaluation(Evaluation<S> evaluation) {
+  public MOEAD6Old<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
     return this;
   }
 
-  public MOEAD62<S> setInitialSolutionsCreation(
+  public MOEAD6Old<S> setInitialSolutionsCreation(
       InitialSolutionsCreation<S> initialSolutionsCreation) {
     this.initialSolutionsCreation = initialSolutionsCreation;
 
     return this;
-  }
-
-  protected static class Permutation {
-    private int[] permutation;
-    private int counter;
-
-    public Permutation(int size) {
-      permutation = new int[size];
-      MOEADUtils.randomPermutation(permutation, size);
-      counter = 0;
-    }
-
-    public int getNextElement() {
-      int next = permutation[counter];
-      counter++;
-      if (counter == permutation.length) {
-        MOEADUtils.randomPermutation(permutation, permutation.length);
-        counter = 0;
-      }
-
-      return next;
-    }
   }
 }
