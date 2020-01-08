@@ -67,18 +67,19 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
         new DifferentialCrossoverVariation(
             offspringPopulationSize, crossover, mutation, sequenceGenerator);
 
-    double neighborhoodSelectionProbability = 0.9 ;
-    int neighborhoodSize = 20 ;
+    double neighborhoodSelectionProbability = 0.9;
+    int neighborhoodSize = 20;
 
-    WeightVectorNeighborhood<DoubleSolution> neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize) ;
+    WeightVectorNeighborhood<DoubleSolution> neighborhood =
+        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
-            new PopulationAndNeighborhoodMatingPoolSelection<>(
-                    variation.getCrossover().getNumberOfRequiredParents(),
-                    sequenceGenerator,
-                    neighborhood,
-                    neighborhoodSelectionProbability,
-                    true);
+        new PopulationAndNeighborhoodMatingPoolSelection<>(
+            variation.getCrossover().getNumberOfRequiredParents(),
+            sequenceGenerator,
+            neighborhood,
+            neighborhoodSelectionProbability,
+            true);
 
     algorithm =
         new MOEADDE(
