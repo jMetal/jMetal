@@ -162,7 +162,37 @@ public class MOEADUtils {
     }
   }
 
-  private static <S extends Solution<?>> void moreThanTwoObjectivesCase(
+    public static void shuffle(int sequence []) {
+        JMetalRandom randomGenerator = JMetalRandom.getInstance() ;
+        int[] index = new int[sequence.length];
+        boolean[] flag = new boolean[sequence.length];
+        System.arraycopy(sequence,0,index,0,sequence.length);
+
+        for (int n = 0; n < sequence.length; n++) {
+            flag[n] = true;
+        }
+
+        int num = 0;
+        while (num < sequence.length) {
+            int start = randomGenerator.nextInt(0, sequence.length - 1);
+            while (true) {
+                if (flag[start]) {
+                    sequence[num] = index[start];
+                    flag[start] = false;
+                    num++;
+                    break;
+                }
+                if (start == (sequence.length - 1)) {
+                    start = 0;
+                } else {
+                    start++;
+                }
+            }
+        }
+
+    }
+
+    private static <S extends Solution<?>> void moreThanTwoObjectivesCase(
           List<S> solutionList,
           List<S> resultSolutionList,
           int newSolutionListSize) {

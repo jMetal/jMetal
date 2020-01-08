@@ -3,6 +3,7 @@ package org.uma.jmetal.example.multiobjective.moead;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD62;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -38,7 +39,7 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD6<DoubleSolution> algorithm;
+    MOEAD62<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
@@ -70,7 +71,7 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
-        new MOEAD6<DoubleSolution>(
+        new MOEAD62<DoubleSolution>(
             problem,
             100,
             20,
