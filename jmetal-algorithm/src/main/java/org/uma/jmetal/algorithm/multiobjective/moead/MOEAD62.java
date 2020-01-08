@@ -189,12 +189,14 @@ public class MOEAD62<S extends Solution<?>> extends AbstractEvolutionaryAlgorith
    */
   @Override
   protected List<S> selection(List<S> population) {
-    currentSubProblemId = permutation.getNextElement();
+
+    currentSubProblemId = sequenceGenerator.getValue();
+    sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
     List<S> matingPool;
-    if (neighborType.equals(NeighborType.NEIGHBOR)) {
-      matingPool = (List<S>)selectionOperator
+    if (neighborType.equals(MOEAD62.NeighborType.NEIGHBOR)) {
+      matingPool = selectionOperator
               .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblemId));
     } else {
       matingPool = selectionOperator.execute(population);

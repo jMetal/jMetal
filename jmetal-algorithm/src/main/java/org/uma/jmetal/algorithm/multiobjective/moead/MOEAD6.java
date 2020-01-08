@@ -188,47 +188,15 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
-    List<S> matingPool = new ArrayList<>();
-    int numberOfSolutionsToSelect = 2 ;
-    int selectedSolutionId ;
-    List<Integer> listOfSolutions = new ArrayList<>(numberOfSolutionsToSelect) ;
-
-    while (listOfSolutions.size() < numberOfSolutionsToSelect) {
-      if (neighborType.equals(NeighborType.NEIGHBOR)) {
-        int random = JMetalRandom.getInstance().nextInt(0, neighborSize - 1);
-        selectedSolutionId = weightVectorNeighborhood.getNeighborhood()[currentSubProblemId][random];
-      } else {
-        selectedSolutionId = JMetalRandom.getInstance().nextInt(0, populationSize - 1);
-      }
-      boolean flag = true;
-      for (Integer individualId : listOfSolutions) {
-        if (individualId == selectedSolutionId) {
-          flag = false;
-          break;
-        }
-      }
-
-      if (flag) {
-        listOfSolutions.add(selectedSolutionId);
-      }
-    }
-    /*
-    if (neighborType.equals(NeighborType.NEIGHBOR)) {
-      //matingPool =
-      //    selectionOperator.execute(
-      //        weightVectorNeighborhood.getNeighbors(population, currentSubProblem));
-      matingPool = (List<S>)selection.select((List<DoubleSolution>)weightVectorNeighborhood.getNeighbors(population, currentSubProblemId)) ;
+    List<S> matingPool;
+    if (neighborType.equals(MOEAD62.NeighborType.NEIGHBOR)) {
+      matingPool = selectionOperator
+              .execute(weightVectorNeighborhood.getNeighbors(population, currentSubProblemId));
     } else {
-      //matingPool = selectionOperator.execute(population);
-      matingPool = (List<S>)selection.select((List<DoubleSolution>)population) ;
+      matingPool = selectionOperator.execute(population);
     }
 
-    //matingPool.add(population.get(currentSubProblem));
-*/
-    for (Integer solutionId: listOfSolutions) {
-      matingPool.add(population.get(solutionId)) ;
-    }
-    matingPool.add(population.get(currentSubProblemId)) ;
+    matingPool.add(population.get(currentSubProblemId));
 
     return matingPool;
   }
