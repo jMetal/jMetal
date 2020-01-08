@@ -84,7 +84,6 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
         new MOEADDE(
             problem,
             populationSize,
-            20,
             2,
             new Tschebyscheff(),
             sequenceGenerator,

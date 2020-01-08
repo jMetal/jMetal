@@ -7,25 +7,20 @@ import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
-import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.neighborhood.Neighborhood.NeighborType ;
@@ -68,7 +63,6 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   public MOEADDE(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int neighborSize,
       int maximumNumberOfReplacedSolutions,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
@@ -245,7 +239,7 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
       DoubleSolution newSolution, List<DoubleSolution> population) {
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
-            neighborType.equals(NeighborType.NEIGHBOR) ? weightVectorNeighborhood.getNeighborSize() : populationSize);
+            neighborType.equals(NeighborType.NEIGHBOR) ? weightVectorNeighborhood.neighborhoodSize() : populationSize);
 
     int replacements = 0;
 
