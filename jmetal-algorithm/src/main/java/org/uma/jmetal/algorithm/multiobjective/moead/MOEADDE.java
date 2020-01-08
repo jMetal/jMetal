@@ -16,7 +16,6 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
+public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<DoubleSolution>>
     implements ObservableEntity {
   protected enum NeighborType {
     NEIGHBOR,
@@ -50,20 +49,20 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private AggregativeFunction aggregativeFunction;
   private SequenceGenerator<Integer> sequenceGenerator;
 
-  private WeightVectorNeighborhood<S> weightVectorNeighborhood;
+  private WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood;
 
-  private SelectionOperator<List<S>, List<S>> selectionOperator;
+  private SelectionOperator<List<DoubleSolution>, List<DoubleSolution>> selectionOperator;
   private DifferentialEvolutionCrossover crossoverOperator;
-  private MutationOperator<S> mutationOperator;
+  private MutationOperator<DoubleSolution> mutationOperator;
 
   private int currentSubProblemId;
   private NeighborType neighborType;
 
-  private InitialSolutionsCreation<S> initialSolutionsCreation;
+  private InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation;
   private Termination termination;
-  private Evaluation<S> evaluation;
-  private Replacement<S> replacement;
-  private Variation<S> variation;
+  private Evaluation<DoubleSolution> evaluation;
+  private Replacement<DoubleSolution> replacement;
+  private Variation<DoubleSolution> variation;
   private MatingPoolSelection<DoubleSolution> selection;
 
   private long startTime;
@@ -73,15 +72,16 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private Observable<Map<String, Object>> observable;
 
   /** Constructor */
-  public MOEAD6(
-      Problem<S> problem,
+  public MOEADDE(
+      Problem<DoubleSolution> problem,
       int populationSize,
       int neighborSize,
       double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
-      MutationOperator<S> mutationOperator,
+      DifferentialEvolutionCrossover crossoverOperator,
+      MutationOperator<DoubleSolution> mutationOperator,
       Termination termination) {
 
     this.populationSize = populationSize;
@@ -94,16 +94,12 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
-    this.weightVectorNeighborhood = new WeightVectorNeighborhood<S>(populationSize, neighborSize);
+    this.weightVectorNeighborhood = new WeightVectorNeighborhood<DoubleSolution>(populationSize, neighborSize);
 
     selectionOperator = new NaryRandomSelection<>(2);
     selection = new DifferentialEvolutionMatingPoolSelection(3, 2, true);
 
-    double cr = 1.0;
-    double f = 0.5;
-    this.crossoverOperator =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    this.crossoverOperator = crossoverOperator ;
     this.mutationOperator = mutationOperator;
 
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -136,7 +132,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected void initProgress() {
     evaluations = populationSize;
 
-    for (S solution : population) {
+    for (DoubleSolution solution : population) {
       aggregativeFunction.update(solution.getObjectives());
     }
 
@@ -165,12 +161,12 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   }
 
   @Override
-  protected List<S> createInitialPopulation() {
+  protected List<DoubleSolution> createInitialPopulation() {
     return initialSolutionsCreation.create();
   }
 
   @Override
-  protected List<S> evaluatePopulation(List<S> population) {
+  protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {
     return evaluation.evaluate(population, getProblem());
   }
 
@@ -182,13 +178,13 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    * @return The mating pool population
    */
   @Override
-  protected List<S> selection(List<S> population) {
+  protected List<DoubleSolution> selection(List<DoubleSolution> population) {
     currentSubProblemId = sequenceGenerator.getValue();
     sequenceGenerator.generateNext();
     neighborType = chooseNeighborType();
 
-    List<S> matingPool;
-    if (neighborType.equals(MOEAD6.NeighborType.NEIGHBOR)) {
+    List<DoubleSolution> matingPool;
+    if (neighborType.equals(MOEADDE.NeighborType.NEIGHBOR)) {
       matingPool =
           selectionOperator.execute(
               weightVectorNeighborhood.getNeighbors(population, currentSubProblemId));
@@ -214,31 +210,30 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
    * @return The new created offspring population
    */
   @Override
-  protected List<S> reproduction(List<S> matingPool) {
-    S currentSolution = population.get(currentSubProblemId);
+  protected List<DoubleSolution> reproduction(List<DoubleSolution> matingPool) {
+    DoubleSolution currentSolution = population.get(currentSubProblemId);
     crossoverOperator.setCurrentSolution((DoubleSolution) currentSolution);
 
-    List<S> offspringPopulation =
-        (List<S>) crossoverOperator.execute((List<DoubleSolution>) matingPool);
+    List<DoubleSolution> offspringPopulation = crossoverOperator.execute(matingPool);
     mutationOperator.execute(offspringPopulation.get(0));
 
     return offspringPopulation;
   }
 
   @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
+  protected List<DoubleSolution> replacement(List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
     // List<S> newPopulation = replacement.replace(population, offspringPopulation);
 
-    S newSolution = offspringPopulation.get(0);
+    DoubleSolution newSolution = offspringPopulation.get(0);
     aggregativeFunction.update(newSolution.getObjectives());
 
-    List<S> newPopulation = updateCurrentSubProblemNeighborhood(newSolution, population);
+    List<DoubleSolution> newPopulation = updateCurrentSubProblemNeighborhood(newSolution, population);
 
     return newPopulation;
   }
 
   @Override
-  public List<S> getResult() {
+  public List<DoubleSolution> getResult() {
     return population;
   }
 
@@ -258,11 +253,10 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
   }
 
-  protected List<S> updateCurrentSubProblemNeighborhood(S newSolution, List<S> population) {
-
+  protected List<DoubleSolution> updateCurrentSubProblemNeighborhood(DoubleSolution newSolution, List<DoubleSolution> population) {
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
-            neighborType.equals(MOEAD6Old.NeighborType.NEIGHBOR) ? neighborSize : populationSize);
+            neighborType.equals(MOEADDE.NeighborType.NEIGHBOR) ? neighborSize : populationSize);
 
     int replacements = 0;
 
@@ -270,7 +264,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
         i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
         i++) {
       int k;
-      if (neighborType.equals(MOEAD6Old.NeighborType.NEIGHBOR)) {
+      if (neighborType.equals(MOEADDE.NeighborType.NEIGHBOR)) {
         k =
             weightVectorNeighborhood
                 .getNeighborhood()[currentSubProblemId][randomPermutation.getValue()];
@@ -287,7 +281,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
               newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
       if (f2 < f1) {
-        population.set(k, (S) newSolution.copy());
+        population.set(k, (DoubleSolution) newSolution.copy());
         replacements++;
       }
     }
@@ -321,14 +315,14 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     return evaluations;
   }
 
-  public MOEAD6<S> setEvaluation(Evaluation<S> evaluation) {
+  public MOEADDE setEvaluation(Evaluation<DoubleSolution> evaluation) {
     this.evaluation = evaluation;
 
     return this;
   }
 
-  public MOEAD6<S> setInitialSolutionsCreation(
-      InitialSolutionsCreation<S> initialSolutionsCreation) {
+  public MOEADDE setInitialSolutionsCreation(
+      InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation) {
     this.initialSolutionsCreation = initialSolutionsCreation;
 
     return this;

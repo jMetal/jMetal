@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -10,6 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -32,24 +34,12 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD6<DoubleSolution> algorithm;
+    MOEADDE algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
-
-    /*
-         Problem<S> problem,
-     int populationSize,
-     int neighborSize,
-     double neighborhoodSelectionProbability,
-     int maximumNumberOfReplacedSolutions,
-     AggregativeFunction aggregativeFunction,
-     SequenceGenerator<Integer> sequenceGenerator,
-     MutationOperator<S> mutationOperator,
-     Termination termination
-    */
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -64,7 +54,7 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
-        new MOEAD6<DoubleSolution>(
+        new MOEADDE(
             problem,
             100,
             20,
@@ -72,22 +62,9 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
             2,
             new Tschebyscheff(),
             new IntegerPermutationGenerator(100),
+            crossover,
             mutation,
             new TerminationByEvaluations(150000));
-
-    /*
-    new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
-        .setCrossover(crossover)
-        .setMutation(mutation)
-        .setMaxEvaluations(150000)
-        .setPopulationSize(300)
-        .setResultPopulationSize(100)
-        .setNeighborhoodSelectionProbability(0.9)
-        .setMaximumNumberOfReplacedSolutions(2)
-        .setNeighborSize(20)
-        .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .build();
-    */
 
     algorithm.run();
 
