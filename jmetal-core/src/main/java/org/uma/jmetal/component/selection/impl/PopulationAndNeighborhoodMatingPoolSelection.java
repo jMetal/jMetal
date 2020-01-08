@@ -39,14 +39,15 @@ public class PopulationAndNeighborhoodMatingPoolSelection<S extends Solution<?>>
       int matingPoolSize,
       SequenceGenerator<Integer> solutionIndexGenerator,
       Neighborhood<S> neighborhood,
-      double neighborhoodSelectionProbability, boolean selectCurrentSolution) {
+      double neighborhoodSelectionProbability,
+      boolean selectCurrentSolution) {
     this.matingPoolSize = matingPoolSize;
     this.solutionIndexGenerator = solutionIndexGenerator;
     this.neighborhood = neighborhood;
     this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
     this.selectCurrentSolution = selectCurrentSolution ;
 
-    selectionOperator = new NaryRandomSelection<S>(selectCurrentSolution ? matingPoolSize : matingPoolSize - 1);
+    selectionOperator = new NaryRandomSelection<S>(selectCurrentSolution ? matingPoolSize - 1 : matingPoolSize);
   }
 
   public List<S> select(List<S> solutionList) {

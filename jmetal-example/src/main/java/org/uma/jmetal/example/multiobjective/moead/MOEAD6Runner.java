@@ -2,6 +2,7 @@ package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -16,6 +17,8 @@ import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
@@ -60,20 +63,34 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    DifferentialCrossoverVariation differentialCrossoverVariation =
+    DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
             offspringPopulationSize, crossover, mutation, sequenceGenerator);
+
+    double neighborhoodSelectionProbability = 0.9 ;
+    int neighborhoodSize = 20 ;
+
+    WeightVectorNeighborhood<DoubleSolution> neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize) ;
+
+    PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
+            new PopulationAndNeighborhoodMatingPoolSelection<>(
+                    variation.getCrossover().getNumberOfRequiredParents(),
+                    sequenceGenerator,
+                    neighborhood,
+                    neighborhoodSelectionProbability,
+                    true);
 
     algorithm =
         new MOEADDE(
             problem,
             populationSize,
             20,
-            0.9,
             2,
             new Tschebyscheff(),
             sequenceGenerator,
-            differentialCrossoverVariation,
+            neighborhood,
+            variation,
+            selection,
             new TerminationByEvaluations(150000));
 
     algorithm.run();

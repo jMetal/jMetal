@@ -8,6 +8,7 @@ import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCrea
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
@@ -19,7 +20,7 @@ import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
@@ -27,6 +28,7 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
+import org.uma.jmetal.util.neighborhood.Neighborhood.NeighborType ;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,27 +37,16 @@ import java.util.Map;
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<DoubleSolution>>
     implements ObservableEntity {
-  protected enum NeighborType {
-    NEIGHBOR,
-    POPULATION
-  }
 
   private int evaluations;
   private int populationSize;
   private int offspringPopulationSize;
-
-  private int neighborSize;
-  private double neighborhoodSelectionProbability;
   private int maximumNumberOfReplacedSolutions;
 
   private AggregativeFunction aggregativeFunction;
   private SequenceGenerator<Integer> sequenceGenerator;
 
   private WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood;
-
-  private SelectionOperator<List<DoubleSolution>, List<DoubleSolution>> selectionOperator;
-  private DifferentialEvolutionCrossover crossoverOperator;
-  private MutationOperator<DoubleSolution> mutationOperator;
 
   private int currentSubProblemId;
   private NeighborType neighborType;
@@ -78,18 +69,17 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
       Problem<DoubleSolution> problem,
       int populationSize,
       int neighborSize,
-      double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
+      WeightVectorNeighborhood<DoubleSolution> neighborhood,
       DifferentialCrossoverVariation variation,
+      PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
       Termination termination) {
 
     this.populationSize = populationSize;
     this.problem = problem;
 
-    this.neighborSize = neighborSize;
-    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
     this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
 
     this.offspringPopulationSize = 1;
@@ -97,19 +87,11 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     this.aggregativeFunction = aggregativeFunction;
     this.sequenceGenerator = sequenceGenerator;
 
-    this.weightVectorNeighborhood =
-        new WeightVectorNeighborhood<DoubleSolution>(populationSize, neighborSize);
+    this.weightVectorNeighborhood = neighborhood ;
 
     this.variation = variation;
 
-    selectionOperator =
-        new NaryRandomSelection<>(variation.getCrossover().getNumberOfRequiredParents() - 1);
-    selection =
-        new DifferentialEvolutionMatingPoolSelection(
-            variation.getMatingPoolSize(),
-            variation.getCrossover().getNumberOfRequiredParents(),
-            true,
-            sequenceGenerator);
+    this.selection = selection ;
 
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
@@ -186,6 +168,8 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   protected List<DoubleSolution> selection(List<DoubleSolution> population) {
 
     currentSubProblemId = sequenceGenerator.getValue();
+
+    /*
     neighborType = chooseNeighborType();
 
     List<DoubleSolution> matingPool;
@@ -207,6 +191,12 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
             + variation.getMatingPoolSize());
 
     return matingPool;
+     */
+
+    List<DoubleSolution> matingPool = selection.select(population) ;
+    neighborType = ((PopulationAndNeighborhoodMatingPoolSelection)selection).getNeighborType() ;
+
+    return matingPool ;
   }
 
   /**
@@ -247,18 +237,6 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
     return population;
   }
 
-  protected NeighborType chooseNeighborType() {
-    double rnd = JMetalRandom.getInstance().nextDouble();
-    NeighborType neighborType;
-
-    if (rnd < neighborhoodSelectionProbability) {
-      neighborType = NeighborType.NEIGHBOR;
-    } else {
-      neighborType = NeighborType.POPULATION;
-    }
-    return neighborType;
-  }
-
   protected boolean maxReplacementLimitAchieved(int numberOfReplaceSolutions) {
     return numberOfReplaceSolutions >= maximumNumberOfReplacedSolutions;
   }
@@ -267,7 +245,7 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
       DoubleSolution newSolution, List<DoubleSolution> population) {
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
-            neighborType.equals(MOEADDE.NeighborType.NEIGHBOR) ? neighborSize : populationSize);
+            neighborType.equals(NeighborType.NEIGHBOR) ? weightVectorNeighborhood.getNeighborSize() : populationSize);
 
     int replacements = 0;
 
@@ -275,7 +253,7 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
         i < randomPermutation.getSequenceLength() && !maxReplacementLimitAchieved(replacements);
         i++) {
       int k;
-      if (neighborType.equals(MOEADDE.NeighborType.NEIGHBOR)) {
+      if (neighborType.equals(NeighborType.NEIGHBOR)) {
         k =
             weightVectorNeighborhood
                 .getNeighborhood()[currentSubProblemId][randomPermutation.getValue()];
