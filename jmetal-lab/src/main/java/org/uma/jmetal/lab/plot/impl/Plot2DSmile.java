@@ -11,13 +11,19 @@ import java.awt.*;
 
 public class Plot2DSmile implements PlotFront {
   private double[][] matrix;
+  private String plotTitle;
 
   public Plot2DSmile(double[][] matrix) {
+    this(matrix, "Front") ;
+  }
+
+  public Plot2DSmile(double[][] matrix, String plotTitle) {
     Check.isNotNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
     //Check.that(matrix[0].length == 2, "The data matrix does not have two columns");
 
     this.matrix = matrix;
+    this.plotTitle = plotTitle ;
   }
 
   class LocalPanel extends JPanel {
@@ -27,7 +33,7 @@ public class Plot2DSmile implements PlotFront {
       double[][] data = matrix ;
 
       PlotCanvas canvas = ScatterPlot.plot(data);
-      canvas.setTitle("Front");
+      canvas.setTitle(plotTitle);
       add(canvas);
 
     }

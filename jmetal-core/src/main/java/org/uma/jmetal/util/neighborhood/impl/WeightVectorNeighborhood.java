@@ -40,13 +40,13 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
   }
 
   public WeightVectorNeighborhood(
-      int numberOfWeightVectors, int weightVectorSize, int neighborSize, String vectorFileName)
+      int numberOfWeightVectors, int weightVectorSize, int neighborhoodSize, String vectorFileName)
       throws FileNotFoundException {
     this.numberOfWeightVectors = numberOfWeightVectors;
     this.weightVectorSize = weightVectorSize;
-    this.neighborhoodSize = neighborSize;
+    this.neighborhoodSize = neighborhoodSize;
 
-    this.neighborhood = new int[numberOfWeightVectors][neighborSize];
+    this.neighborhood = new int[numberOfWeightVectors][neighborhoodSize];
     this.weightVector = new double[numberOfWeightVectors][weightVectorSize];
 
     readWeightsFromFile(vectorFileName);
