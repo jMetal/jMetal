@@ -162,8 +162,6 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
             + " instead of "
             + variation.getMatingPoolSize());
 
-    neighborType = ((PopulationAndNeighborhoodMatingPoolSelection) selection).getNeighborType();
-
     return matingPool;
   }
 
@@ -208,6 +206,8 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
 
   protected List<DoubleSolution> updateCurrentSubProblemNeighborhood(
       DoubleSolution newSolution, List<DoubleSolution> population) {
+    neighborType = ((PopulationAndNeighborhoodMatingPoolSelection) selection).getNeighborType();
+
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
             neighborType.equals(NeighborType.NEIGHBOR)
