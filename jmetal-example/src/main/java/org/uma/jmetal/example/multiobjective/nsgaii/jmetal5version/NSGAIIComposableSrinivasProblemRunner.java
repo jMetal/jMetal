@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
@@ -9,6 +9,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.ComposableDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -21,33 +22,33 @@ import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm to solve the
- * {@link org.uma.jmetal.problem.multiobjective.Schaffer} problem, which is defined dynamically by
+ * {@link org.uma.jmetal.problem.multiobjective.Srinivas} problem, which is defined dynamically by
  * using the {@link ComposableDoubleProblem} class.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIComposableSchafferProblemRunner extends AbstractAlgorithmRunner {
+public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
    * @throws FileNotFoundException
-   * Invoking command:
-    java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    ComposableDoubleProblem problem;
+    DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "referenceFronts/Schaffer.pf" ;
+    String referenceParetoFront = "referenceFronts/Srinivas.pf" ;
 
     problem = new ComposableDoubleProblem()
-        .setName("Schaffer")
-        .addVariable(-10, 10)
-        .addVariable(-10, 10)
-        .addFunction((x) -> x[0] * x[0])
-        .addFunction((x) -> (x[0] - 2.0) * (x[0] - 2.0));
+        .setName("Srinivas")
+        .addVariable(-20.0, 20.0)
+        .addVariable(-20.0, 20.0)
+        .addFunction((x) ->  2.0 + (x[0] - 2.0) * (x[0] - 2.0) + (x[1] - 1.0) * (x[1] - 1.0))
+        .addFunction((x) ->  9.0 * x[0] - (x[1] - 1.0) * (x[1] - 1.0))
+        .addConstraint((x) -> 1.0 - (x[0] * x[0] + x[1] * x[1]) / 225.0)
+        .addConstraint((x) -> (3.0 * x[1] - x[0]) / 10.0 - 1.0) ;
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;

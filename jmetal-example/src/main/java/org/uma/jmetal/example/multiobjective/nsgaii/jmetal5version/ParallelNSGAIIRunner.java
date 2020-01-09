@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;

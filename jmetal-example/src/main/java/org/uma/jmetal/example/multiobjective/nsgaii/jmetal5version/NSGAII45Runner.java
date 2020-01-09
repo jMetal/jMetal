@@ -1,8 +1,8 @@
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIMeasures;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAII45;
+import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -16,27 +16,26 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-import org.uma.jmetal.util.measure.MeasureListener;
-import org.uma.jmetal.util.measure.MeasureManager;
-import org.uma.jmetal.util.measure.impl.BasicMeasure;
-import org.uma.jmetal.util.measure.impl.DurationMeasure;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the NSGA-II algorithm (variant with measures)
+ * Class to configure and run the implementation of the NSGA-II algorithm included
+ * in {@link NSGAII45}
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner {
+public class NSGAII45Runner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
+   * @throws JMetalException
+   * @throws FileNotFoundException
    * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
+  java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAII45Runner problemName [referenceFront]
    */
-  public static void main(String[] args)
-      throws JMetalException, InterruptedException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -45,7 +44,9 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
     String referenceParetoFront = "" ;
 
     String problemName ;
-    if (args.length == 2) {
+    if (args.length == 1) {
+      problemName = args[0];
+    } else if (args.length == 2) {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
@@ -65,51 +66,20 @@ public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    int maxEvaluations = 25000 ;
-    int populationSize = 100 ;
+    algorithm = new NSGAII45<DoubleSolution>(problem, 25000, 100, crossover, mutation,
+            selection, new SequentialSolutionListEvaluator<DoubleSolution>()) ;
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(maxEvaluations)
-        .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
-        .build() ;
-
-    ((NSGAIIMeasures<DoubleSolution>)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
-
-    /* Measure management */
-    MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
-
-    DurationMeasure currentComputingTime =
-        (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
-
-    BasicMeasure<Double> hypervolumeMeasure =
-            (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("hypervolume");
-
-    hypervolumeMeasure.register(new Listener());
-    /* End of measure management */
-
-    Thread algorithmThread = new Thread(algorithm) ;
-    algorithmThread.start();
-
-    algorithmThread.join();
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
 
     List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = currentComputingTime.get() ;
+    long computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront) ;
-    }
-  }
-
-  private static class Listener implements MeasureListener<Double> {
-    private static int counter = 0 ;
-    @Override synchronized public void measureGenerated(Double value) {
-      if ((counter++ % 10 == 0)) {
-        System.out.println("Hypervolume: " + value) ;
-      }
     }
   }
 }

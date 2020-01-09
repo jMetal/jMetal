@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
@@ -16,20 +16,19 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
-import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class to configure and run the NSGA-II algorithm (variant with measures)
  */
-public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
+public class NSGAIIMeasuresWithHypervolumeRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException
@@ -46,9 +45,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     String referenceParetoFront = "" ;
 
     String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
+    if (args.length == 2) {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
@@ -66,8 +63,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     int maxEvaluations = 25000 ;
     int populationSize = 100 ;
@@ -78,37 +74,22 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
         .setVariant(NSGAIIBuilder.NSGAIIVariant.Measures)
         .build() ;
 
+    ((NSGAIIMeasures<DoubleSolution>)algorithm).setReferenceFront(new ArrayFront(referenceParetoFront));
+
     /* Measure management */
     MeasureManager measureManager = ((NSGAIIMeasures<DoubleSolution>)algorithm).getMeasureManager() ;
 
-    CountingMeasure currentEvalution =
-        (CountingMeasure) measureManager.<Long>getPullMeasure("currentEvaluation");
     DurationMeasure currentComputingTime =
         (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
-    BasicMeasure<Integer> nonDominatedSolutions =
-        (BasicMeasure<Integer>) measureManager.<Integer>getPullMeasure("numberOfNonDominatedSolutionsInPopulation");
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure =
-        (BasicMeasure<List<DoubleSolution>>) measureManager.<List<DoubleSolution>> getPushMeasure("currentPopulation");
-    CountingMeasure iteration2 =
-        (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+    BasicMeasure<Double> hypervolumeMeasure =
+            (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("hypervolume");
 
-    solutionListMeasure.register(new Listener());
-    iteration2.register(new Listener2());
+    hypervolumeMeasure.register(new Listener());
     /* End of measure management */
 
     Thread algorithmThread = new Thread(algorithm) ;
     algorithmThread.start();
-
-    /* Using the measures */
-    int i = 0 ;
-    while(currentEvalution.get() < maxEvaluations) {
-      TimeUnit.SECONDS.sleep(5);
-      System.out.println("Evaluations (" + i + ")                     : " + currentEvalution.get()) ;
-      System.out.println("Computing time (" + i + ")                  : " + currentComputingTime.get()) ;
-      System.out.println("Number of Nondominated solutions (" + i + "): " + nonDominatedSolutions.get()) ;
-      i++ ;
-    }
 
     algorithmThread.join();
 
@@ -121,25 +102,13 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront) ;
     }
-
-    System.exit(0) ;
   }
 
-  private static class Listener implements MeasureListener<List<DoubleSolution>> {
-    private int counter = 0 ;
-
-    @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
-      if ((counter % 10 == 0)) {
-        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0)) ;
-      }
-      counter ++ ;
-    }
-  }
-
-  private static class Listener2 implements MeasureListener<Long> {
-    @Override synchronized public void measureGenerated(Long value) {
-      if ((value % 50 == 0)) {
-        System.out.println("PUSH MEASURE. Iteration: " + value) ;
+  private static class Listener implements MeasureListener<Double> {
+    private static int counter = 0 ;
+    @Override synchronized public void measureGenerated(Double value) {
+      if ((counter++ % 10 == 0)) {
+        System.out.println("Hypervolume: " + value) ;
       }
     }
   }

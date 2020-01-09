@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.DNSGAII;

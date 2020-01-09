@@ -11,9 +11,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package org.uma.jmetal.example.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
+import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -29,9 +31,17 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.measure.impl.CountingMeasure;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +51,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @author Cristobal Barba <cbarba@lcc.uma.es>
  */
-public class RNSGAIIRunner extends AbstractAlgorithmRunner {
+public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -49,7 +59,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
    * Invoking command:
     java org.uma.jmetal.runner.multiobjective.nsgaii.RNSGAIIRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -83,22 +93,7 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
 
     List<Double> referencePoint = new ArrayList<>() ;
 
-    /*referencePoint.add(0.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(0.0) ;
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.2) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.2) ;*/
-    //Example fig 2 paper Deb
-  /*  referencePoint.add(0.2) ;
-    referencePoint.add(0.4) ;
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.4) ;*/
-    //Example fig 3 paper Deb
+    // Example fig 3 of Farina and Deb's paper
     referencePoint.add(0.1) ;
     referencePoint.add(0.6) ;
 
@@ -113,22 +108,6 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
 
     referencePoint.add(0.9) ;
     referencePoint.add(0.0) ;
-    /*referencePoint.add(0.1) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(1.0) ;
-    referencePoint.add(0.0) ;
-
-    referencePoint.add(0.5) ;
-    referencePoint.add(0.8);
-    referencePoint.add(0.8) ;
-    referencePoint.add(0.6) ;*/
-    //referencePoint.add(0.0) ;
-    //referencePoint.add(1.0);
-
-    //referencePoint.add(1.0) ;
-    //referencePoint.add(0.6);
-    //referencePoint.add(0.4) ;
-    //referencePoint.add(0.8);
 
     double epsilon= 0.0045;
 
@@ -138,17 +117,97 @@ public class RNSGAIIRunner extends AbstractAlgorithmRunner {
         .setPopulationSize(100)
         .build() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute() ;
+    /* Measure management */
+    MeasureManager measureManager = ((RNSGAII<DoubleSolution>) algorithm).getMeasureManager();
 
+    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
+            .<List<DoubleSolution>>getPushMeasure("currentPopulation");
+    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+
+    ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
+    chart.setFrontChart(0, 1, referenceParetoFront);
+    chart.setReferencePoint(convertReferencePointListToListOfLists(referencePoint, problem.getNumberOfObjectives()));
+    chart.initChart();
+
+    solutionListMeasure.register(new ChartListener(chart));
+    iterationMeasure.register(new IterationListener(chart));
+    /* End of measure management */
+
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+            .execute() ;
+
+    chart.saveChart("RNSGAII", BitmapEncoder.BitmapFormat.PNG);
     List<DoubleSolution> population = algorithm.getResult() ;
     long computingTime = algorithmRunner.getComputingTime() ;
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-    printFinalSolutionSet(population);
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+    new SolutionListOutput(population)
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .print();
+
+    System.exit(0);
+  }
+
+  private static List<List<Double>> convertReferencePointListToListOfLists(List<Double> referencePoints, int numberOfObjectives) {
+    List<List<Double>> referencePointList;
+    referencePointList = new ArrayList<>();
+
+    for (int i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
+      List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives) ;
+      for (int j = i; j < (i + numberOfObjectives); j++) {
+        newReferencePoint.add(referencePoints.get(j)) ;
+      }
+
+      referencePointList.add(newReferencePoint) ;
+    }
+
+    return referencePointList ;
+  }
+
+  private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
+    private ChartContainerWithReferencePoints chart;
+    private int iteration = 0;
+
+    public ChartListener(ChartContainerWithReferencePoints chart) {
+      this.chart = chart;
+      this.chart.getFrontChart().setTitle("Evaluation: " + this.iteration);
+    }
+
+    private void refreshChart(List<DoubleSolution> solutionList) {
+      if (this.chart != null) {
+        iteration++;
+        this.chart.getFrontChart().setTitle("Iteration: " + this.iteration);
+        this.chart.updateFrontCharts(solutionList);
+        this.chart.refreshCharts();
+
+        new SolutionListOutput(solutionList)
+                .setVarFileOutputContext(new DefaultFileOutputContext("VAR." + iteration + ".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("FUN." + iteration + ".tsv"))
+                .print();
+      }
+    }
+
+    @Override
+    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+      refreshChart(solutions);
+    }
+  }
+
+  private static class IterationListener implements MeasureListener<Long> {
+    ChartContainerWithReferencePoints chart;
+
+    public IterationListener(ChartContainerWithReferencePoints chart) {
+      this.chart = chart;
+      this.chart.getFrontChart().setTitle("Iteration: " + 0);
+    }
+
+    @Override
+    synchronized public void measureGenerated(Long iteration) {
+      if (this.chart != null) {
+        this.chart.getFrontChart().setTitle("Iteration: " + iteration);
+      }
     }
   }
 }
