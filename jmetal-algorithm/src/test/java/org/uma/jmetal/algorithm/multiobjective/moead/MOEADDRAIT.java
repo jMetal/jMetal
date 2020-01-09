@@ -12,6 +12,7 @@ import org.uma.jmetal.problem.multiobjective.lz09.LZ09F3;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 
 import java.util.List;
 

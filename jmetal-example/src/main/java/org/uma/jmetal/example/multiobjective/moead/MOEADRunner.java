@@ -1,7 +1,6 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
@@ -40,7 +39,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADDE algorithm;
+    MOEAD<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
@@ -92,7 +91,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
             maximumNumberOfReplacedSolutions);
 
     algorithm =
-        new MOEADDE(
+        new MOEAD<>(
             problem,
             populationSize,
             variation,
