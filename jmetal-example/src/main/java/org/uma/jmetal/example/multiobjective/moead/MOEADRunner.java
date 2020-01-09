@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
@@ -94,7 +95,8 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
         new MOEAD<>(
             problem,
             populationSize,
-            variation,
+                new RandomSolutionsCreation<>(problem, populationSize),
+    variation,
             selection,
             replacement,
             new TerminationByEvaluations(150000));

@@ -28,27 +28,28 @@ import java.util.Map;
 public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
 
-  private int evaluations;
-  private int populationSize;
-  private int offspringPopulationSize;
+  protected int evaluations;
+  protected int populationSize;
+  protected int offspringPopulationSize;
 
-  private InitialSolutionsCreation<S> initialSolutionsCreation;
-  private Termination termination;
-  private Evaluation<S> evaluation;
-  private Replacement<S> replacement;
-  private Variation<S> variation;
-  private MatingPoolSelection<S> selection;
+  protected InitialSolutionsCreation<S> initialSolutionsCreation;
+  protected Termination termination;
+  protected Evaluation<S> evaluation;
+  protected Replacement<S> replacement;
+  protected Variation<S> variation;
+  protected MatingPoolSelection<S> selection;
 
-  private long startTime;
-  private long totalComputingTime;
+  protected long startTime;
+  protected long totalComputingTime;
 
-  private Map<String, Object> algorithmStatusData;
-  private Observable<Map<String, Object>> observable;
+  protected Map<String, Object> algorithmStatusData;
+  protected Observable<Map<String, Object>> observable;
 
   /** Constructor */
   public MOEAD(
       Problem<S> problem,
       int populationSize,
+      InitialSolutionsCreation<S> initialSolutionsCreation,
       Variation<S> variation,
       PopulationAndNeighborhoodMatingPoolSelection<S> selection,
       Replacement<S> replacement,
@@ -61,7 +62,7 @@ public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<
 
     this.variation = variation;
     this.selection = selection;
-    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
+    this.initialSolutionsCreation = initialSolutionsCreation ;
     this.replacement = replacement ;
     this.termination = termination ;
     this.evaluation = new SequentialEvaluation<>();
