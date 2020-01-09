@@ -15,12 +15,12 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEStandardSettingsExample extends AbstractAlgorithmRunner {
+public class MOEADWithRealTimeChartExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -102,24 +102,14 @@ public class MOEADDEStandardSettingsExample extends AbstractAlgorithmRunner {
             replacement,
             new TerminationByEvaluations(150000));
 
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceParetoFront);
+
+    algorithm.getObservable().register(evaluationObserver);
+    algorithm.getObservable().register(runTimeChartObserver);
+
     algorithm.run();
-
-    List<DoubleSolution> population = algorithm.getResult();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
-
-    new SolutionListOutput(population)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-        .print();
-
-    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
-
-    if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
-    }
 
     System.exit(0);
   }

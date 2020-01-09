@@ -6,8 +6,6 @@ import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
-import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -20,7 +18,6 @@ import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -34,7 +31,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEWithChartExample extends AbstractAlgorithmRunner {
+public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -46,15 +43,16 @@ public class MOEADDEWithChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+    String referenceParetoFront = "referenceFronts/LZ09_F6.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
     int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> subProblemIdGenerator =
+        new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -73,7 +71,11 @@ public class MOEADDEWithChartExample extends AbstractAlgorithmRunner {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
+        new WeightVectorNeighborhood<>(
+            populationSize,
+            problem.getNumberOfObjectives(),
+            neighborhoodSize,
+            "/MOEAD_Weights/W3D_300.dat");
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
@@ -122,7 +124,6 @@ public class MOEADDEWithChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
-    plot.plot();
+    System.exit(0);
   }
 }

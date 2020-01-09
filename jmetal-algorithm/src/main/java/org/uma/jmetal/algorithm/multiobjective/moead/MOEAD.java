@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
@@ -15,16 +16,24 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/**
+ * Class implementing a generic MOEA/D algorithm.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
 
@@ -51,7 +60,7 @@ public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<
       int populationSize,
       InitialSolutionsCreation<S> initialSolutionsCreation,
       Variation<S> variation,
-      PopulationAndNeighborhoodMatingPoolSelection<S> selection,
+      MatingPoolSelection<S> selection,
       Replacement<S> replacement,
       Termination termination) {
 
@@ -70,6 +79,13 @@ public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<
     this.algorithmStatusData = new HashMap<>();
 
     this.observable = new DefaultObservable<>("MOEA/D algorithm");
+  }
+
+  /**
+   * Empty constructor that creates an empty instance. It is intended to allow the definition of different subclass
+   * constructors. It is up to the developer the correct creation of the algorithm components.
+   */
+  public MOEAD() {
   }
 
   @Override

@@ -6,6 +6,8 @@ import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.lab.plot.PlotFront;
+import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -18,9 +20,8 @@ import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
@@ -33,7 +34,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
+public class MOEADWithChartExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -102,15 +103,26 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
             replacement,
             new TerminationByEvaluations(150000));
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceParetoFront);
-
-    algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
-
     algorithm.run();
 
-    System.exit(0);
+    List<DoubleSolution> population = algorithm.getResult();
+    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
+
+    new SolutionListOutput(population)
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
+
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
+
+    if (!referenceParetoFront.equals("")) {
+      printQualityIndicators(population, referenceParetoFront);
+    }
+
+    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
+    plot.plot();
   }
 }

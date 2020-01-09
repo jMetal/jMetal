@@ -1,11 +1,11 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
-import org.uma.jmetal.component.termination.impl.TerminationByComputingTime;
-import org.uma.jmetal.component.termination.impl.TerminationByKeyboard;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -28,21 +28,16 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D-DE algorithm
+ * Class for configuring and running the MOEA/D-DE algorithm using class {@link MOEADDE} and the constructor taking
+ * the parameters used in the paper describing the algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEStoppingByKeyboardExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.moead.MOEADRunner problemName [referenceFront]
-   */
+public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner {
+
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD<DoubleSolution> algorithm;
-    MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
+    MOEADDE algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
@@ -50,56 +45,28 @@ public class MOEADDEStoppingByKeyboardExample extends AbstractAlgorithmRunner {
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
-    int offspringPopulationSize = 1;
-
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
-    crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
-
-    DifferentialCrossoverVariation variation =
-        new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
-
-    PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
-            variation.getCrossover().getNumberOfRequiredParents(),
-            subProblemIdGenerator,
-            neighborhood,
-            neighborhoodSelectionProbability,
-            true);
-
     int maximumNumberOfReplacedSolutions = 2;
+    int maximumNumberOfFunctionEvaluations = 150000;
+
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
-    MOEADReplacement replacement =
-        new MOEADReplacement(
-            selection,
-            neighborhood,
-            aggregativeFunction,
-            subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions);
 
     algorithm =
-        new MOEAD<>(
+        new MOEADDE(
             problem,
             populationSize,
-            new RandomSolutionsCreation<>(problem, populationSize),
-            variation,
-            selection,
-            replacement,
-            new TerminationByKeyboard());
+            maximumNumberOfFunctionEvaluations,
+            cr,
+            f,
+            aggregativeFunction,
+            neighborhoodSelectionProbability,
+            maximumNumberOfReplacedSolutions,
+            neighborhoodSize);
 
     algorithm.run();
 

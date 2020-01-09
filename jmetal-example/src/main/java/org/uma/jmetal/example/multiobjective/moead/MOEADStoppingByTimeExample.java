@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEStoppingBytimeExample extends AbstractAlgorithmRunner {
+public class MOEADStoppingByTimeExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
