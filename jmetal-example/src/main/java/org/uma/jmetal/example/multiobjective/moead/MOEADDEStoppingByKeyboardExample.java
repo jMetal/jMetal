@@ -4,7 +4,8 @@ import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
-import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.termination.impl.TerminationByComputingTime;
+import org.uma.jmetal.component.termination.impl.TerminationByKeyboard;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -15,11 +16,9 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
@@ -33,7 +32,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDEStandardSettingsRunner extends AbstractAlgorithmRunner {
+public class MOEADDEStoppingByKeyboardExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -100,7 +99,7 @@ public class MOEADDEStandardSettingsRunner extends AbstractAlgorithmRunner {
             variation,
             selection,
             replacement,
-            new TerminationByEvaluations(150000));
+            new TerminationByKeyboard());
 
     algorithm.run();
 
