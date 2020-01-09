@@ -27,6 +27,7 @@ public class PopulationAndNeighborhoodMatingPoolSelection<S extends Solution<?>>
     implements MatingPoolSelection<S> {
   private SelectionOperator<List<S>, List<S>> selectionOperator;
   private int matingPoolSize;
+
   private SequenceGenerator<Integer> solutionIndexGenerator;
   private Neighborhood<S> neighborhood;
 
@@ -79,5 +80,9 @@ public class PopulationAndNeighborhoodMatingPoolSelection<S extends Solution<?>>
 
   public Neighborhood.NeighborType getNeighborType() {
     return neighborType;
+  }
+
+  public SequenceGenerator<Integer> getSolutionIndexGenerator() {
+    return solutionIndexGenerator;
   }
 }
