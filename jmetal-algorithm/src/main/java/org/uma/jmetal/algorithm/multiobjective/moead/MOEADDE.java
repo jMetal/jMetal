@@ -1,6 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
@@ -11,7 +12,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class MOEADDE extends MOEAD<DoubleSolution> {
-  
+
   /** Constructor */
   public MOEADDE(
       Problem<DoubleSolution> problem,
@@ -21,7 +22,13 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
       PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
       MOEADReplacement replacement,
       Termination termination) {
-    super(problem, populationSize, initialSolutionsCreation, variation, selection, replacement, termination) ;
+    super(
+        problem,
+        populationSize,
+        initialSolutionsCreation,
+        variation,
+        selection,
+        replacement,
+        termination);
   }
-
 }

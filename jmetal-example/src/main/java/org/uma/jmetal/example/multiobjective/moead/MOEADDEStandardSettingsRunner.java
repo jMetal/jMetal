@@ -14,6 +14,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -28,11 +29,11 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D algorithm
+ * Class for configuring and running the MOEA/D-DE algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADRunner extends AbstractAlgorithmRunner {
+public class MOEADDEStandardSettingsRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -49,7 +50,7 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int populationSize = 100;
+    int populationSize = 300;
     int offspringPopulationSize = 1;
 
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
@@ -70,7 +71,6 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
-
     WeightVectorNeighborhood<DoubleSolution> neighborhood =
         new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
 
@@ -83,11 +83,12 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
             true);
 
     int maximumNumberOfReplacedSolutions = 2;
+    AggregativeFunction aggregativeFunction = new Tschebyscheff();
     MOEADReplacement replacement =
         new MOEADReplacement(
             selection,
             neighborhood,
-            new Tschebyscheff(),
+            aggregativeFunction,
             sequenceGenerator,
             maximumNumberOfReplacedSolutions);
 
@@ -95,8 +96,8 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
         new MOEAD<>(
             problem,
             populationSize,
-                new RandomSolutionsCreation<>(problem, populationSize),
-    variation,
+            new RandomSolutionsCreation<>(problem, populationSize),
+            variation,
             selection,
             replacement,
             new TerminationByEvaluations(150000));

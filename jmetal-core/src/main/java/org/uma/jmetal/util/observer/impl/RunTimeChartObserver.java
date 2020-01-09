@@ -21,6 +21,7 @@ import java.util.Map;
 public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map<String, Object>> {
   private GenericChartContainer<S> chart;
   private Integer evaluations ;
+  private int plotUpdateFrequency ;
 
   /**
    * Constructor
@@ -38,6 +39,11 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
    * @param referenceFrontName File name containing a reference front
    */
   public RunTimeChartObserver(String legend, int delay, String referenceFrontName) {
+    this(legend, delay, 1, referenceFrontName) ;
+  }
+
+  public RunTimeChartObserver(String legend, int delay, int plotUpdateFrequency, String referenceFrontName) {
+    this.plotUpdateFrequency = plotUpdateFrequency ;
     chart = new GenericChartContainer<S>(legend, delay) ;
     try {
       chart.setFrontChart(0, 1, referenceFrontName);
@@ -66,7 +72,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     List<S> population = (List<S>) data.get("POPULATION");
 
     if (evaluations!=null && population!=null) {
-      if (this.chart != null) {
+      if ((this.chart != null) && (evaluations%plotUpdateFrequency == 0)){
         this.chart.getFrontChart().setTitle("Evaluation: " + evaluations);
         this.chart.updateFrontCharts(population);
         this.chart.refreshCharts();
