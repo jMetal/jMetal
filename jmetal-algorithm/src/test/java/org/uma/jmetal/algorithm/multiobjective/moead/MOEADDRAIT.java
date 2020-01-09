@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;

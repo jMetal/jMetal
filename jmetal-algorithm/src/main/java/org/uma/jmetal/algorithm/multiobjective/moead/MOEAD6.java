@@ -259,7 +259,7 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   }
 
   protected List<S> updateCurrentSubProblemNeighborhood(S newSolution, List<S> population) {
-
+/*
     IntegerPermutationGenerator randomPermutation =
         new IntegerPermutationGenerator(
             neighborType.equals(MOEAD6Old.NeighborType.NEIGHBOR) ? neighborSize : populationSize);
@@ -291,6 +291,8 @@ public class MOEAD6<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
         replacements++;
       }
     }
+
+ */
     return population;
   }
 

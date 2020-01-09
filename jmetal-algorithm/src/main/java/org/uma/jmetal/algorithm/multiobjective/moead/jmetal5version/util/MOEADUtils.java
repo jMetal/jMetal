@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.moead.util;
+package org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;

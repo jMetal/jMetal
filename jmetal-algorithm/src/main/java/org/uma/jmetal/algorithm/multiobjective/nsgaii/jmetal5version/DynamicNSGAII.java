@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;

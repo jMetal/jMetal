@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;

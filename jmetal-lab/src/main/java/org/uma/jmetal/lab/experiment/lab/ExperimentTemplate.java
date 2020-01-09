@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment.lab;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;

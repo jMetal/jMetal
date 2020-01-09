@@ -1,9 +1,11 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
-import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
+import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -12,6 +14,15 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
+import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -29,23 +40,19 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
+    MOEADDE algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName;
-    String referenceParetoFront = "";
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0];
-      referenceParetoFront = args[1];
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-      referenceParetoFront = "referenceFronts/LZ09_F2.pf";
-    }
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+
+    int populationSize = 100;
+    int offspringPopulationSize = 1;
+
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -57,29 +64,61 @@ public class MOEADRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm =
-        new MOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
-            .setCrossover(crossover)
-            .setMutation(mutation)
-            .setMaxEvaluations(150000)
-            .setPopulationSize(300)
-            .setResultPopulationSize(100)
-            .setNeighborhoodSelectionProbability(0.9)
-            .setMaximumNumberOfReplacedSolutions(2)
-            .setNeighborSize(20)
-            .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-            .build();
+    DifferentialCrossoverVariation variation =
+        new DifferentialCrossoverVariation(
+            offspringPopulationSize, crossover, mutation, sequenceGenerator);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+    double neighborhoodSelectionProbability = 0.9;
+    int neighborhoodSize = 20;
+
+    WeightVectorNeighborhood<DoubleSolution> neighborhood =
+        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
+
+    PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
+        new PopulationAndNeighborhoodMatingPoolSelection<>(
+            variation.getCrossover().getNumberOfRequiredParents(),
+            sequenceGenerator,
+            neighborhood,
+            neighborhoodSelectionProbability,
+            true);
+
+    int maximumNumberOfReplacedSolutions = 2;
+    MOEADReplacement replacement =
+        new MOEADReplacement(
+            selection,
+            neighborhood,
+            new Tschebyscheff(),
+            sequenceGenerator,
+            maximumNumberOfReplacedSolutions);
+
+    algorithm =
+        new MOEADDE(
+            problem,
+            populationSize,
+            variation,
+            selection,
+            replacement,
+            new TerminationByEvaluations(150000));
+
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
-    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    new SolutionListOutput(population)
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
-    printFinalSolutionSet(population);
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
+
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
+
+    System.exit(0);
   }
 }

@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.lab.plot.PlotFront;
 import org.uma.jmetal.lab.plot.impl.Plot2DSmile;

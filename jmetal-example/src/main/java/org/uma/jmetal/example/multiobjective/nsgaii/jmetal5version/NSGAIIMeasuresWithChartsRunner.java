@@ -2,8 +2,8 @@ package org.uma.jmetal.example.multiobjective.nsgaii.jmetal5version;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAIIMeasures;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIMeasures;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;

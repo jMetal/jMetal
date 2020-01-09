@@ -1,8 +1,9 @@
-package org.uma.jmetal.example.multiobjective.moead;
+package org.uma.jmetal.example.multiobjective.moead.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder.Variant;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDRARunner extends AbstractAlgorithmRunner {
+public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -41,8 +42,8 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F7";
-      referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
+      referenceParetoFront = "referenceFronts/Tanaka.pf";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -58,16 +59,17 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
-        new MOEADBuilder(problem, MOEADBuilder.Variant.MOEADDRA)
+        new MOEADBuilder(problem, Variant.ConstraintMOEAD)
             .setCrossover(crossover)
             .setMutation(mutation)
-            .setMaxEvaluations(175000)
+            .setMaxEvaluations(150000)
             .setPopulationSize(300)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
+            .setDataDirectory("MOEAD_Weights")
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
