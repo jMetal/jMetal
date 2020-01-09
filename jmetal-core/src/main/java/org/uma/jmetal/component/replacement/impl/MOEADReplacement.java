@@ -27,8 +27,8 @@ public class MOEADReplacement implements Replacement<DoubleSolution> {
     this.matingPoolSelection = matingPoolSelection;
     this.weightVectorNeighborhood = weightVectorNeighborhood;
     this.aggregativeFunction = aggregativeFunction;
-    this.sequenceGenerator = sequenceGenerator ;
-    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions ;
+    this.sequenceGenerator = sequenceGenerator;
+    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
   }
 
   @Override
@@ -47,7 +47,8 @@ public class MOEADReplacement implements Replacement<DoubleSolution> {
     int replacements = 0;
 
     for (int i = 0;
-        i < randomPermutation.getSequenceLength() && (replacements < maximumNumberOfReplacedSolutions);
+        i < randomPermutation.getSequenceLength()
+            && (replacements < maximumNumberOfReplacedSolutions);
         i++) {
       int k;
       if (neighborType.equals(Neighborhood.NeighborType.NEIGHBOR)) {

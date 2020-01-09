@@ -37,14 +37,6 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   private int evaluations;
   private int populationSize;
   private int offspringPopulationSize;
-  private int maximumNumberOfReplacedSolutions;
-
-  private AggregativeFunction aggregativeFunction;
-  private SequenceGenerator<Integer> sequenceGenerator;
-
-  private WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood;
-
-  private NeighborType neighborType;
 
   private InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation;
   private Termination termination;
@@ -63,31 +55,21 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   public MOEADDE(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int maximumNumberOfReplacedSolutions,
-      AggregativeFunction aggregativeFunction,
-      SequenceGenerator<Integer> sequenceGenerator,
-      WeightVectorNeighborhood<DoubleSolution> neighborhood,
       DifferentialCrossoverVariation variation,
       PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
+      MOEADReplacement replacement,
       Termination termination) {
 
     this.populationSize = populationSize;
     this.problem = problem;
 
-    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
-
     this.offspringPopulationSize = 1;
-
-    this.aggregativeFunction = aggregativeFunction;
-    this.sequenceGenerator = sequenceGenerator;
-
-    this.weightVectorNeighborhood = neighborhood;
 
     this.variation = variation;
     this.selection = selection;
     this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
-    this.replacement = new MOEADReplacement(selection, weightVectorNeighborhood, aggregativeFunction, sequenceGenerator, maximumNumberOfReplacedSolutions);
-    this.termination = termination;
+    this.replacement = replacement ;
+    this.termination = termination ;
     this.evaluation = new SequentialEvaluation<>();
 
     this.algorithmStatusData = new HashMap<>();
@@ -106,10 +88,11 @@ public class MOEADDE extends AbstractEvolutionaryAlgorithm<DoubleSolution, List<
   protected void initProgress() {
     evaluations = populationSize;
 
+    /*
     for (DoubleSolution solution : population) {
       aggregativeFunction.update(solution.getObjectives());
     }
-
+*/
     algorithmStatusData.put("EVALUATIONS", evaluations);
     algorithmStatusData.put("POPULATION", population);
     algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);

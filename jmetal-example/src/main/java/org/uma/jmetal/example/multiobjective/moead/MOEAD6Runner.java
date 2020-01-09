@@ -2,6 +2,7 @@ package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD6;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
@@ -81,16 +82,22 @@ public class MOEAD6Runner extends AbstractAlgorithmRunner {
             neighborhoodSelectionProbability,
             true);
 
+    int maximumNumberOfReplacedSolutions = 2;
+    MOEADReplacement replacement =
+        new MOEADReplacement(
+            selection,
+            neighborhood,
+            new Tschebyscheff(),
+            sequenceGenerator,
+            maximumNumberOfReplacedSolutions);
+
     algorithm =
         new MOEADDE(
             problem,
             populationSize,
-            2,
-            new Tschebyscheff(),
-            sequenceGenerator,
-            neighborhood,
             variation,
             selection,
+            replacement,
             new TerminationByEvaluations(150000));
 
     algorithm.run();
