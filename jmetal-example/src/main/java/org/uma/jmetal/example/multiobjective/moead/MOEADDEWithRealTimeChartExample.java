@@ -53,7 +53,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     int populationSize = 300;
     int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -67,7 +67,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, sequenceGenerator);
+            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
@@ -77,7 +77,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
             variation.getCrossover().getNumberOfRequiredParents(),
-            sequenceGenerator,
+            subProblemIdGenerator,
             neighborhood,
             neighborhoodSelectionProbability,
             true);
@@ -89,7 +89,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
             selection,
             neighborhood,
             aggregativeFunction,
-            sequenceGenerator,
+            subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
     algorithm =
