@@ -14,6 +14,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class CrowdingDistance<S extends Solution<?>>
     extends GenericSolutionAttribute<S, Double> implements DensityEstimator<S>{
 

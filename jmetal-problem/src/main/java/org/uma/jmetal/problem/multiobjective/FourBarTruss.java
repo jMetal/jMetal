@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +45,7 @@ public class FourBarTruss extends AbstractDoubleProblem {
     upperLimit.add(upperLimit.get(0)) ;
     upperLimit.add(upperLimit.get(0)) ;
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /**
@@ -57,7 +56,7 @@ public class FourBarTruss extends AbstractDoubleProblem {
     double [] fx = new double[2] ;
     double [] x = new double[getNumberOfVariables()] ;
     for (int i = 0 ; i < getNumberOfVariables(); i++)
-    	x[i] = solution.getVariableValue(i) ;
+    	x[i] = solution.getVariable(i) ;
     
     fx[0] = l *(2*x[0]+ Math.sqrt(2.0)*x[1]+ Math.sqrt(x[2])+x[3]) ;
     fx[1] = (f * l / e)*(2/x[0] + 2*Math.sqrt(2)/x[1] - 2*Math.sqrt(2)/x[2] + 2/x[3]);

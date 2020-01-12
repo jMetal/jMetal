@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.RankingAndPreferenceSelection;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.NSGAII;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.RankingAndPreferenceSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;

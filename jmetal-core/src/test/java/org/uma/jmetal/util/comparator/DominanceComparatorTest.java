@@ -3,11 +3,11 @@ package org.uma.jmetal.util.comparator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -23,8 +23,7 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("Solution1 is null"));
+    exception.expect(NullParameterException.class);
 
     comparator = new DominanceComparator<Solution<?>>();
 
@@ -35,10 +34,9 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("Solution2 is null"));
+    exception.expect(NullParameterException.class);
 
-    comparator = new DominanceComparator<Solution<?>>(0);
+    comparator = new DominanceComparator<Solution<?>>();
 
     Solution<?> solution2 = mock(Solution.class);
 
@@ -47,9 +45,7 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSolutionsHaveNotTheSameNumberOfObjectives() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("Cannot compare because solution1 has 4 objectives "
-            + "and solution2 has 2"));
+    exception.expect(InvalidConditionException.class);
 
     comparator = new DominanceComparator<Solution<?>>();
 
@@ -81,12 +77,9 @@ public class DominanceComparatorTest {
   @Test
   public void shouldCompareReturnZeroIfTheTwoSolutionsHaveOneObjectiveWithTheSameValue() {
     @SuppressWarnings("unchecked")
-    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class);
 
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
-
-    when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
     when(solution1.getNumberOfObjectives()).thenReturn(1);
     when(solution2.getNumberOfObjectives()).thenReturn(1);
@@ -94,12 +87,10 @@ public class DominanceComparatorTest {
     when(solution1.getObjective(0)).thenReturn(4.0);
     when(solution2.getObjective(0)).thenReturn(4.0);
 
-    comparator = new DominanceComparator<Solution<?>>(violationComparator);
+    comparator = new DominanceComparator<Solution<?>>();
 
     assertEquals(0, comparator.compare(solution1, solution2));
 
-    verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getNumberOfObjectives();
     verify(solution1).getObjective(0);
     verify(solution2).getObjective(0);
   }
@@ -125,7 +116,6 @@ public class DominanceComparatorTest {
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getNumberOfObjectives();
     verify(solution1).getObjective(0);
     verify(solution2).getObjective(0);
   }
@@ -151,7 +141,6 @@ public class DominanceComparatorTest {
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getNumberOfObjectives();
     verify(solution1).getObjective(0);
     verify(solution2).getObjective(0);
   }
@@ -184,7 +173,6 @@ public class DominanceComparatorTest {
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(5)).getNumberOfObjectives();
     verify(solution1, times(3)).getObjective(anyInt());
     verify(solution2, times(3)).getObjective(anyInt());
   }
@@ -217,7 +205,6 @@ public class DominanceComparatorTest {
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(5)).getNumberOfObjectives();
     verify(solution1, times(3)).getObjective(anyInt());
     verify(solution2, times(3)).getObjective(anyInt());
   }
@@ -250,7 +237,6 @@ public class DominanceComparatorTest {
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(5)).getNumberOfObjectives();
     verify(solution1, times(3)).getObjective(anyInt());
     verify(solution2, times(3)).getObjective(anyInt());
   }
@@ -283,7 +269,6 @@ public class DominanceComparatorTest {
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(5)).getNumberOfObjectives();
     verify(solution1, times(3)).getObjective(anyInt());
     verify(solution2, times(3)).getObjective(anyInt());
   }

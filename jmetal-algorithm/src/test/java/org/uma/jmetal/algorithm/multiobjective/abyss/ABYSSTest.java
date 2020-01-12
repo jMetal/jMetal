@@ -3,18 +3,17 @@ package org.uma.jmetal.algorithm.multiobjective.abyss;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.algorithm.multiobjective.abyss.util.MarkAttribute;
-import org.uma.jmetal.operator.LocalSearchOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.localsearch.ArchiveMutationLocalSearch;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
+import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class ABYSSTest {
     problem = new MockProblem();
     archive = new CrowdingDistanceArchive<>(10) ;
     mutation = new PolynomialMutation(1.0, 20.0) ;
-    localSearch = new ArchiveMutationLocalSearch<>(2, mutation, archive, problem) ;
+    localSearch = new BasicLocalSearch<>(2, mutation, new DominanceComparator<>(), problem) ;
   }
 
   @Test
@@ -122,29 +121,23 @@ public class ABYSSTest {
     int numberOfSubRanges = 4;
     int referenceSet1Size = 4;
     int referenceSet2Size = 4;
-
     DoubleProblem problem = new MockProblem();
-
     abyss = new ABYSS(problem, 0, populationSize, referenceSet1Size, referenceSet2Size, 0, null,
         localSearch, null, numberOfSubRanges);
-
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
     List<List<DoubleSolution>> list = abyss.subsetGeneration();
-
     int expectedCombinations = 0;
     for (int i = 0; i < abyss.referenceSet1.size(); i++) {
       for (int j = i + 1; j < abyss.referenceSet1.size(); j++) {
         expectedCombinations++;
       }
     }
-
     for (int i = 0; i < abyss.referenceSet2.size(); i++) {
       for (int j = i + 1; j < abyss.referenceSet2.size(); j++) {
         expectedCombinations++;
       }
     }
-
     assertEquals(expectedCombinations, list.size()) ;
     for (List<DoubleSolution> pair : list) {
       assertEquals(2, pair.size()) ;
@@ -166,13 +159,12 @@ public class ABYSSTest {
     abyss.initializationPhase();
     abyss.referenceSetUpdate();
 
-    MarkAttribute marked = new MarkAttribute();
     for (DoubleSolution solution: abyss.referenceSet1) {
-      marked.setAttribute(solution, true);
+      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
     }
 
     for (DoubleSolution solution: abyss.referenceSet2) {
-      marked.setAttribute(solution, true);
+      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
     }
     List<List<DoubleSolution>> list = abyss.subsetGeneration();
 
@@ -248,20 +240,7 @@ public class ABYSSTest {
         upperLimit.add(4.0);
       }
 
-      setLowerLimit(lowerLimit);
-      setUpperLimit(upperLimit);
-    }
-
-    @Override public int getNumberOfVariables() {
-      return 3;
-    }
-
-    @Override public int getNumberOfObjectives() {
-      return 2;
-    }
-
-    @Override public int getNumberOfConstraints() {
-      return 0;
+      setVariableBounds(lowerLimit, upperLimit);
     }
 
     @Override public String getName() {
@@ -271,10 +250,6 @@ public class ABYSSTest {
     @Override public void evaluate(DoubleSolution solution) {
       solution.setObjective(0, randomGenerator.nextDouble());
       solution.setObjective(1, randomGenerator.nextDouble());
-    }
-
-    @Override public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(this);
     }
 
     @Override public Double getLowerBound(int index) {

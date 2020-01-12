@@ -1,9 +1,12 @@
 package org.uma.jmetal.operator.impl.mutation;
 
 import org.junit.Test;
-import org.uma.jmetal.problem.PermutationProblem;
-import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
+import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
+import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
+import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -12,6 +15,25 @@ import java.util.Random;
 import static org.junit.Assert.assertTrue;
 
 public class PermutationSwapMutationTest {
+
+	@Test (expected = NullParameterException.class)
+	public void shouldExecuteWithNullParameterThrowAnException() {
+		PermutationSwapMutation<Integer> mutation = new PermutationSwapMutation<>(0.1) ;
+
+		mutation.execute(null) ;
+	}
+
+	@Test (expected = InvalidProbabilityValueException.class)
+	public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
+		double mutationProbability = -0.1 ;
+		new PermutationSwapMutation<>(mutationProbability) ;
+	}
+
+	@Test (expected = InvalidProbabilityValueException.class)
+	public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
+		double mutationProbability = 1.1 ;
+		new PermutationSwapMutation<>(mutationProbability) ;
+	}
 
 	@Test
 	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {

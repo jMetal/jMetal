@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
 
 /**
@@ -12,16 +12,17 @@ import org.uma.jmetal.util.distance.Distance;
 public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution<Double>>
     implements Distance<S, S> {
 
+  private EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
+
   @Override
   public double getDistance(S solution1, S solution2) {
-    double distance = 0.0;
-
-    double diff;
-    for (int i = 0; i < solution1.getNumberOfVariables() ; i++){
-      diff = solution1.getVariableValue(i) - solution2.getVariableValue(i);
-      distance += Math.pow(diff,2.0);
+    double[] vector1 = new double[solution1.getNumberOfVariables()] ;
+    double[] vector2 = new double[solution1.getNumberOfVariables()] ;
+    for (int i = 0 ; i < solution1.getNumberOfVariables(); i++) {
+      vector1[i] = solution1.getVariable(i) ;
+      vector2[i] = solution2.getVariable(i) ;
     }
 
-    return Math.sqrt(distance);
+    return distance.getDistance(vector1, vector2) ;
   }
 }

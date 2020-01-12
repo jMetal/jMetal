@@ -3,16 +3,16 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder.Variant;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class ConstraintMOEADIT {
     double cr = 1.0;
     double f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
-        "rand/1/bin");
+            DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -45,8 +45,7 @@ public class ConstraintMOEADIT {
         .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory(
-            "/Users/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/MOEAD_Weights")
+        .setDataDirectory("MOEAD_Weights")
         .build();
 
     algorithm.run() ;
@@ -63,7 +62,7 @@ public class ConstraintMOEADIT {
     double cr = 1.0;
     double f = 0.5;
     CrossoverOperator<DoubleSolution> crossover = new DifferentialEvolutionCrossover(cr, f,
-        "rand/1/bin");
+            DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;

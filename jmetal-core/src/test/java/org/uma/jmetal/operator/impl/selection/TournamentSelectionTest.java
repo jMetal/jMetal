@@ -4,16 +4,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.selection.impl.TournamentSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
@@ -28,8 +29,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     TournamentSelection<Solution<?>> selection = new TournamentSelection<Solution<?>>(4) ;
     selection.execute(null) ;
@@ -37,8 +37,7 @@ public class TournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     TournamentSelection<DoubleSolution> selection = new TournamentSelection<DoubleSolution>(4) ;
     List<DoubleSolution> list = new ArrayList<>() ;

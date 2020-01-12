@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public interface DensityEstimator<S> extends SolutionAttribute<S, Double>{
   public void computeDensityEstimator(List<S> solutionSet) ;
 }

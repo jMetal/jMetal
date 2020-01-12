@@ -90,7 +90,7 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
 
     for (int i = 0; i < D; i++) {
       x[i] = this.randNormal(0, 1);
-      length += length + x[i] * x[i];
+      length = length + x[i] * x[i];
     }
 
     length = Math.sqrt(length);

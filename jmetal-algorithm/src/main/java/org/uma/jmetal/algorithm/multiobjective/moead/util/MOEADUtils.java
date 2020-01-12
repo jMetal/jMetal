@@ -135,7 +135,7 @@ public class MOEADUtils {
           int newSolutionListSize) {
 	  double[][] lambda = new double[newSolutionListSize][2] ;
 
-	  // Compute the weight vectors
+	  // Compute the mombi2-weights.weight vectors
     for (int i = 0; i < newSolutionListSize; i++) {
       double a = 1.0 * i / (newSolutionListSize - 1);
       lambda[i][0] = a;
@@ -145,12 +145,12 @@ public class MOEADUtils {
     IdealPoint idealPoint = new IdealPoint(2) ;
     solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
 
-    // Select the best solution for each weight vector
+    // Select the best solution for each mombi2-weights.weight vector
     for (int i = 0; i < newSolutionListSize; i++) {
       S currentBest = solutionList.get(0);
       double value = scalarizingFitnessFunction(currentBest, lambda[i], idealPoint);
       for (int j = 1; j < solutionList.size(); j++) {
-        double aux = scalarizingFitnessFunction(solutionList.get(j),lambda[i], idealPoint); // we are looking for the best for the weight i
+        double aux = scalarizingFitnessFunction(solutionList.get(j),lambda[i], idealPoint); // we are looking for the best for the mombi2-weights.weight i
         if (aux < value) { // solution in position j is better!
           value = aux;
           currentBest = solutionList.get(j);

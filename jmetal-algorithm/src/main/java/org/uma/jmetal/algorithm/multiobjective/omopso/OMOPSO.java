@@ -1,14 +1,15 @@
 package org.uma.jmetal.algorithm.multiobjective.omopso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
-import org.uma.jmetal.operator.impl.mutation.NonUniformMutation;
-import org.uma.jmetal.operator.impl.mutation.UniformMutation;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
+import org.uma.jmetal.operator.mutation.impl.UniformMutation;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
@@ -63,7 +64,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     localBest = new DoubleSolution[swarmSize];
     leaderArchive = new CrowdingDistanceArchive<DoubleSolution>(this.archiveSize);
-    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new DominanceComparator<DoubleSolution>(eta));
+    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new EpsilonDominanceComparator<DoubleSolution>(eta));
 
     dominanceComparator = new DominanceComparator<DoubleSolution>();
     crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
@@ -164,9 +165,9 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         //Computing the velocity of this particle
-        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.getVariableValue(var) -
-            particle.getVariableValue(var)) +
-            C2 * r2 * (bestGlobal.getVariableValue(var) - particle.getVariableValue(var));
+        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.getVariable(var) -
+            particle.getVariable(var)) +
+            C2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var));
       }
     }
   }
@@ -177,13 +178,13 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariableValue(var, particle.getVariableValue(var) + speed[i][var]);
-        if (particle.getVariableValue(var) < problem.getLowerBound(var)) {
-          particle.setVariableValue(var, problem.getLowerBound(var));
+        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
+        if (particle.getVariable(var) < problem.getLowerBound(var)) {
+          particle.setVariable(var, problem.getLowerBound(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle.getVariableValue(var) > problem.getUpperBound(var)) {
-          particle.setVariableValue(var, problem.getUpperBound(var));
+        if (particle.getVariable(var) > problem.getUpperBound(var)) {
+          particle.setVariable(var, problem.getUpperBound(var));
           speed[i][var] = speed[i][var] * -1.0;
         }
       }

@@ -3,7 +3,7 @@ package org.uma.jmetal.util.chartcontainer;
 import org.knowm.xchart.*;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
@@ -210,7 +210,7 @@ public class ChartContainer {
     private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
         double[] result = new double[solutionList.size()];
         for (int i = 0; i < solutionList.size(); i++) {
-            result[i] = solutionList.get(i).getVariableValue(variable);
+            result[i] = solutionList.get(i).getVariable(variable);
         }
         return result;
     }

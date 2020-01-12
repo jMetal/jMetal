@@ -1,9 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -116,7 +116,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   @Override public List<S> getResult() {
-    return SolutionListUtils.getNondominatedSolutions(archive);
+    return SolutionListUtils.getNonDominatedSolutions(archive);
   }
 
   /**

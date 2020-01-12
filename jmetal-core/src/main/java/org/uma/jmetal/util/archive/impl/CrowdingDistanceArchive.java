@@ -37,6 +37,7 @@ public class CrowdingDistanceArchive<S extends Solution<?>> extends AbstractBoun
   public Comparator<S> getComparator() {
     return crowdingDistanceComparator ;
   }
+
   @Override
   public void computeDensityEstimator() {
     crowdingDistance.computeDensityEstimator(getSolutionList());

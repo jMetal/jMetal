@@ -21,6 +21,7 @@ import java.util.*;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class DominanceRanking <S extends Solution<?>>
     extends GenericSolutionAttribute<S, Integer> implements Ranking<S> {
 
@@ -137,7 +138,7 @@ public class DominanceRanking <S extends Solution<?>>
   }
 
   @Override
-  public List<S> getSubfront(int rank) {
+  public List<S> getSubFront(int rank) {
     if (rank >= rankedSubPopulations.size()) {
       throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() -1)) ;
     }
@@ -145,7 +146,7 @@ public class DominanceRanking <S extends Solution<?>>
   }
 
   @Override
-  public int getNumberOfSubfronts() {
+  public int getNumberOfSubFronts() {
     return rankedSubPopulations.size();
   }
 }

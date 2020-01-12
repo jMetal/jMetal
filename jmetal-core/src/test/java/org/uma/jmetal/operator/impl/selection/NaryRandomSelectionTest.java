@@ -5,11 +5,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +32,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>() ;
     selection.execute(null) ;
@@ -38,8 +40,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     NaryRandomSelection<DoubleSolution> selection = new NaryRandomSelection<DoubleSolution>() ;
     List<DoubleSolution> list = new ArrayList<>() ;
@@ -67,7 +68,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
+    exception.expect(InvalidConditionException.class);
     exception.expectMessage(containsString("The solution list size (1) is less than " +
     "the number of requested solutions (2)"));
 
@@ -80,7 +81,7 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsTwoAndFourSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
+    exception.expect(InvalidConditionException.class);
     exception.expectMessage(containsString("The solution list size (2) is less than " +
         "the number of requested solutions (4)"));
 

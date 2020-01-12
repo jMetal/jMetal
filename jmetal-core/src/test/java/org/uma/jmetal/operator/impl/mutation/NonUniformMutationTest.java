@@ -1,12 +1,16 @@
 package org.uma.jmetal.operator.impl.mutation;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-import org.uma.jmetal.problem.DoubleProblem;
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertTrue;
@@ -16,31 +20,10 @@ public class NonUniformMutationTest {
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		@SuppressWarnings("serial")
-		DoubleProblem problem = new AbstractDoubleProblem() {
 
-			@Override
-			public void evaluate(DoubleSolution solution) {
-				// Do nothing
-			}
-			
-			@Override
-			public int getNumberOfVariables() {
-				return 100;
-			}
-			
-			@Override
-			public Double getLowerBound(int index) {
-				return 0.0;
-			}
-			
-			@Override
-			public Double getUpperBound(int index) {
-				return 1.0;
-			}
+		List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
 
-		};
-		DoubleSolution solution = problem.createSolution();
+		DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

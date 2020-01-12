@@ -1,9 +1,9 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.Benchmark;
 import org.uma.jmetal.problem.singleobjective.cec2005competitioncode.TestFunc;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
@@ -88,8 +88,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
       upperLimit.add(ulimit);
     }
 
-    setLowerLimit(lowerLimit);
-    setUpperLimit(upperLimit);
+    setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -100,7 +99,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariableValue(i) ;
+      x[i] = solution.getVariable(i) ;
     }
     double result;
     result = testFunction.f(x);

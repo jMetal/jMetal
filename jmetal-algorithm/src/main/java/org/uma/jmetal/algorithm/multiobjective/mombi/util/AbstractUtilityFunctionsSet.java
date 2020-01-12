@@ -50,7 +50,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	}
 	
 	/**
-	 * Returns the number of components for all weight vectors 
+	 * Returns the number of components for all weight vectors
 	 */
 	public int getVectorSize() {
 		return this.vectorSize;
@@ -88,7 +88,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	public abstract Double evaluate(S solution, int vector);
 
 	/**
-	 * Reads a set of weight vectors from a file. 
+	 * Reads a set of weight vectors from a file.
 	 * The expected format for the file is as follows.
 	 * The first line should start with at least the following three tokens
 	 * # <number_of_vectors> <number_of_obectives>
@@ -104,7 +104,7 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 */
 	public void loadWeightsFromFile(String filePath) {
     JMetalLogger.logger.info("FILE PATH: " + filePath); ;
-		InputStream in = getClass().getResourceAsStream("/" + filePath);
+		InputStream in = getClass().getClassLoader().getResourceAsStream(filePath);
 		InputStreamReader isr = new InputStreamReader(in);
 		BufferedReader buffer = new BufferedReader(isr);
 

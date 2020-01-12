@@ -1,14 +1,14 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.crossover.SBXCrossover;
-import org.uma.jmetal.operator.impl.mutation.PolynomialMutation;
-import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmBuilder;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
 

@@ -2,11 +2,11 @@ package org.uma.jmetal.algorithm.multiobjective.mochc;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.operator.CrossoverOperator;
-import org.uma.jmetal.operator.MutationOperator;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.problem.BinaryProblem;
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -84,7 +84,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   @Override
   public void run() {
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      size += problem.getNumberOfBits(i);
+      size += problem.getBitsFromVariable(i);
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
@@ -176,7 +176,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.getVariableValue(i), solutionTwo.getVariableValue(i));
+      distance += hammingDistance(solutionOne.getVariable(i), solutionTwo.getVariable(i));
     }
 
     return distance;

@@ -2,17 +2,13 @@ package org.uma.jmetal.algorithm.multiobjective.fame;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
-import org.uma.jmetal.operator.SelectionOperator;
-import org.uma.jmetal.operator.impl.selection.SpatialSpreadDeviationSelection;
-import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.SpatialSpreadDeviationSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.AlgorithmRunner;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -35,12 +31,12 @@ public class FAMEIT {
     int archiveSize=100 ;
     int maxEvaluations=25000;
 
-    algorithm = new FAME(problem,
+    algorithm = new FAME<>(problem,
             populationSize,
             archiveSize,
             maxEvaluations,
             selection,
-            new SequentialSolutionListEvaluator()) ;
+            new SequentialSolutionListEvaluator<>()) ;
 
     algorithm.run();
 
@@ -66,18 +62,18 @@ public class FAMEIT {
     int maxEvaluations = 25000;
 
     algorithm =
-        new FAME(
+        new FAME<>(
             problem,
             populationSize,
             archiveSize,
             maxEvaluations,
             selection,
-            new SequentialSolutionListEvaluator());
+            new SequentialSolutionListEvaluator<>());
 
     algorithm.run();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/referenceFronts/ZDT1.pf");
+        new PISAHypervolume<>("../referenceFronts/ZDT1.pf");
 
     // Rationale: the default problem is ZDT1, and GDE3, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.66

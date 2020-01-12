@@ -302,13 +302,13 @@ public class CMAESUtils {
                 + " " + c[biggerValue(i,j)][smallerValue(i,j)]
                 + " " + (cc - c[biggerValue(i,j)][smallerValue(i,j)]);
           JMetalLogger.logger.severe(
-              "CMAESUtils.checkEigenSystem: WARNING - imprecise experiment output detected " + s);
+              "CMAESUtils.checkEigenSystem: WARNING - imprecise org.uma.jmetal.experiment output detected " + s);
           ++res;
         }
         if (Math.abs(dd - (i == j ? 1 : 0)) > 1e-10) {
           s = i + " " + j + " " + dd;
           JMetalLogger.logger.severe("CMAESUtils.checkEigenSystem():" +
-                  " WARNING - imprecise experiment output detected (Q not orthog.) " + s);
+                  " WARNING - imprecise org.uma.jmetal.experiment output detected (Q not orthog.) " + s);
           ++res;
         }
       }
