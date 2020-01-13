@@ -6,6 +6,8 @@ import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.lab.plot.PlotFront;
+import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -18,7 +20,9 @@ import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
@@ -105,6 +109,10 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
             replacement,
             new TerminationByEvaluations(150000));
 
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+            new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceParetoFront);
+
+    algorithm.getObservable().register(runTimeChartObserver);
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
@@ -124,6 +132,7 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    System.exit(0);
+    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix(), problem.getName()) ;
+    plot.plot();
   }
 }
