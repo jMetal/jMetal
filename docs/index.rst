@@ -15,5 +15,6 @@ in the master branch of the repository as version 6.0-SNAPSHOT.
 
     installation.rst
     nsgaII.rst
+    moead.rst
     experimentation.rst
     autoconfiguration.rst
