@@ -61,4 +61,9 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
     }
     return permutation ;
   }
+
+  @Override
+  public int getSequenceLength() {
+    return size ;
+  }
 }

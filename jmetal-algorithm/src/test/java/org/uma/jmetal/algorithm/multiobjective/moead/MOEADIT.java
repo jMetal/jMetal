@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -12,6 +13,7 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 
 import java.io.FileNotFoundException;
 import java.util.List;

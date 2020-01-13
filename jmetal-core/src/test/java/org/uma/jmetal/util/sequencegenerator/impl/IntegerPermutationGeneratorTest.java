@@ -29,7 +29,7 @@ public class IntegerPermutationGeneratorTest {
 
   @Test
   public void shouldConstructorCreateANonNullObjectIfTheSizeValeIsCorrect() {
-    SequenceGenerator<Integer> sequenceGenerator = new IntegerSequenceGenerator(2);
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(2);
     assertNotNull(sequenceGenerator);
   }
 

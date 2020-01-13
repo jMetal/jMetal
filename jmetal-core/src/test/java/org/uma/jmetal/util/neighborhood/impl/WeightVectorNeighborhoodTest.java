@@ -20,7 +20,7 @@ public class WeightVectorNeighborhoodTest {
     WeightVectorNeighborhood<?> weightVectorNeighborhood = new WeightVectorNeighborhood<>(100, 20);
 
     assertEquals(100, weightVectorNeighborhood.getNumberOfWeightVectors());
-    assertEquals(20, weightVectorNeighborhood.getNeighborSize());
+    assertEquals(20, weightVectorNeighborhood.neighborhoodSize());
     assertEquals(2, weightVectorNeighborhood.getWeightVectorSize());
     assertEquals(0.0, weightVectorNeighborhood.getWeightVector()[0][0], EPSILON);
     assertEquals(1.0, weightVectorNeighborhood.getWeightVector()[0][1], EPSILON);
