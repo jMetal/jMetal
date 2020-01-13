@@ -10,7 +10,7 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
   private int size ;
 
   public IntegerPermutationGenerator(int size) {
-    Check.that(size > 0, "The " + size + " is not a positive number greater than zero");
+    Check.that(size > 0, "Size " + size + " is not a positive number greater than zero");
     this.size = size ;
     sequence = randomPermutation(size) ;
 
@@ -60,5 +60,10 @@ public class IntegerPermutationGenerator implements SequenceGenerator<Integer> {
       }
     }
     return permutation ;
+  }
+
+  @Override
+  public int getSequenceLength() {
+    return size ;
   }
 }

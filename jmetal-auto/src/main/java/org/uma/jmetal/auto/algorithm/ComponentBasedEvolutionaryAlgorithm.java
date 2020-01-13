@@ -81,6 +81,10 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
+    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+
+    observable.setChanged();
+    observable.notifyObservers(attributes);
   }
 
   @Override
@@ -89,6 +93,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
+    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
@@ -145,5 +150,9 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>  extends
 
   public long getTotalComputingTime() {
     return totalComputingTime ;
+  }
+
+  public long getCurrentComputingTime() {
+    return System.currentTimeMillis() - initTime;
   }
 }

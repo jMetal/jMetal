@@ -134,6 +134,9 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     algorithmStatusData.put("EVALUATIONS", evaluations);
     algorithmStatusData.put("POPULATION", population);
     algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
+
+    observable.setChanged();
+    observable.notifyObservers(algorithmStatusData);
   }
 
   @Override

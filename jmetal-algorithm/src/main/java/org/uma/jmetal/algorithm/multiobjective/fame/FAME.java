@@ -6,7 +6,7 @@ import com.fuzzylite.rule.RuleBlock;
 import com.fuzzylite.term.Triangle;
 import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.legacy.SteadyStateNSGAII;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
