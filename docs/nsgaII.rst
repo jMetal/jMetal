@@ -22,5 +22,5 @@ Examples of different configurations of NSGA-II are included in the `jmetal-exam
 * ``NSGAIIBinaryProblemExample``. NSGA-II configured to solved a binary encoded problem.
 * ``ParallelNSGAIIExample``. NSGA-II using a multithreaded evaluator, which evaluates the population in parallel using threads.
 
-The former implementation and variants of NSGA-II in jMetal 5.x are available in the `legacy <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/legacy>`_ directory of the NSGA-II examples package.  
+The former implementation and variants of NSGA-II in jMetal 5.x are available in the `jmetal5version <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/jmetal5version>`_ directory of the NSGA-II examples package.  
 

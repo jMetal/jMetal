@@ -52,6 +52,8 @@ Comments and suggestions are very welcome.
 Changelog
 ---------
 
+* [1/13/2020] `New implementation <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/moead>`_ of the MOEA/D algorithm based on a component-based scheme. A description of the implementation and examples of using it can be found in the `documentation <https://jmetal.readthedocs.io/en/latest/moead.html>`_.
+
 * [12/10/2019] Merge non dominated sorting algorithm (contributed by Javier Moreno), described in `"Merge Non-Dominated Sorting Algorithm for Many-Objective Optimization" <https://arxiv.org/abs/1809.06106>`_ . The code is included in (class `org.uma.jmetal.component.ranking.MergeNonDominatedSortRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/ranking/impl/MergeNonDominatedSortRanking.java>`_). An example of using this class in NSGA-II is contained in `NSGAIIWithMNDSRankingExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithExperimentalNDSAlgorithmExample.java>`_.
 
 * [12/02/2019] New implementation of NSGA-II (class `org.uma.jmetal.algorithm.multiobjective.nsgaii <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/nsgaii>`_). This class is documented `here <https://jmetal.readthedocs.io/en/latest/nsgaII.html>`_.
