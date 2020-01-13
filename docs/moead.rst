@@ -22,5 +22,5 @@ Examples of different configurations of MOEA/D are included in the `jmetal-examp
 * ``MOEAD3DProblemWithChartExample``. Example solving a three objective problem, plotting the current front (functions f1 and f2) in a 2D projection in real time, and the full front at the end of the computation.
 * ``MOEADDEDefaultConfigurationExample``. Example of using the MOEADD class.
 
-The former implementation and variants of MOEA/D in jMetal 5.x are available in the `legacy <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/moead/jmetal5version>`_ directory of the MOEA/D examples package.  
+The former implementation and variants of MOEA/D in jMetal 5.x are available in the `jmetal5version <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/moead/jmetal5version>`_ directory of the MOEA/D examples package.  
 
