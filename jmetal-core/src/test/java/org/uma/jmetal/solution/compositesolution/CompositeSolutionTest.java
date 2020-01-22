@@ -18,11 +18,22 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class CompositeSolutionTest {
-  @Test
-  public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfABinarySolution() {
-    BinarySolution solution = new DefaultBinarySolution(Arrays.asList(2, 2, 2), 3);
 
-    assertNotNull(new CompositeSolution(Arrays.asList(solution)));
+  @Test
+  public void shouldContructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
+
+  }
+
+  @Test (expected = Exception.class)
+  public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfABinarySolution() {
+    DoubleSolution doubleSolution =
+            new DefaultDoubleSolution(
+                    Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
+    IntegerSolution integerSolution =
+            new DefaultIntegerSolution(
+                    Arrays.asList(new MutablePair<>(2, 10)), 2, 0);
+
+    new CompositeSolution(Arrays.asList(doubleSolution, integerSolution)) ;
   }
 
   @Test
