@@ -45,10 +45,6 @@ public class IntegerDoubleSBXCrossover implements CrossoverOperator<IntegerDoubl
         Arrays.asList(
             parentSolutions.get(0).getDoubleSolution(), parentSolutions.get(1).getDoubleSolution());
 
-    IntegerDoubleSolution[] childrenSolutions = new IntegerDoubleSolution[2];
-    childrenSolutions[0] = (IntegerDoubleSolution) parentSolutions.get(0).copy();
-    childrenSolutions[1] = (IntegerDoubleSolution) parentSolutions.get(1).copy();
-
     List<IntegerSolution> integerChildrenSolutions =
         integerSBXCrossover.execute(integerParentSolutions);
     List<DoubleSolution> doubleChildrenSolutions =
