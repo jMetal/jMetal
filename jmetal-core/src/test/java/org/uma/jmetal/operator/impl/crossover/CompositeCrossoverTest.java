@@ -6,12 +6,8 @@ import org.uma.jmetal.operator.crossover.impl.CompositeCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 
@@ -20,7 +16,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CompositeCrossoverTest {
   @Test(expected = NullParameterException.class)
@@ -84,11 +81,13 @@ public class CompositeCrossoverTest {
     CompositeSolution solution1 =
         new CompositeSolution(
             Arrays.asList(
-                doubleProblem.createSolution(), new DefaultBinarySolution(Arrays.asList(20, 20), 2)));
+                doubleProblem.createSolution(),
+                new DefaultBinarySolution(Arrays.asList(20, 20), 2)));
     CompositeSolution solution2 =
         new CompositeSolution(
             Arrays.asList(
-                doubleProblem.createSolution(), new DefaultBinarySolution(Arrays.asList(20, 20), 2)));
+                doubleProblem.createSolution(),
+                new DefaultBinarySolution(Arrays.asList(20, 20), 2)));
 
     List<CompositeSolution> children = operator.execute(Arrays.asList(solution1, solution2));
 
