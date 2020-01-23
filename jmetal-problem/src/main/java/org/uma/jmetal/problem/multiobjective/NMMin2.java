@@ -21,6 +21,7 @@ import java.util.List;
  * Objective 2: minimizing the sum of the distances of every variable to value M
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
   private int valueN;
   private int valueM;

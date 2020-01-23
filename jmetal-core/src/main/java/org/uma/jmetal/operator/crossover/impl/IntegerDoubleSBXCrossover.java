@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class IntegerDoubleSBXCrossover implements CrossoverOperator<IntegerDoubleSolution> {
   private IntegerSBXCrossover integerSBXCrossover;
   private SBXCrossover doubleSBXCrossover;

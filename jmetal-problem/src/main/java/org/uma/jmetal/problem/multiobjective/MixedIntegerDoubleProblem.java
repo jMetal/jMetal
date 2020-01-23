@@ -6,8 +6,6 @@ import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.integerdoublesolution.IntegerDoubleSolution;
-import org.uma.jmetal.solution.integerdoublesolution.impl.DefaultIntegerDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 
@@ -24,18 +22,18 @@ import java.util.List;
  * Objective 2: minimizing the sum of the distances of every variable to value M
  */
 @SuppressWarnings("serial")
-public class NMMin2b extends AbstractGenericProblem<CompositeSolution> {
+public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeSolution> {
   private int valueN;
   private int valueM;
   private List<Pair<Integer, Integer>> integerBounds;
   private List<Pair<Double, Double>> doubleBounds;
 
-  public NMMin2b() {
+  public MixedIntegerDoubleProblem() {
     this(10, 10, 100, -100, -1000, +1000);
   }
 
   /** Constructor */
-  public NMMin2b(
+  public MixedIntegerDoubleProblem(
       int numberOfIntegerVariables,
       int numberOfDoubleVariables,
       int n,
@@ -46,7 +44,7 @@ public class NMMin2b extends AbstractGenericProblem<CompositeSolution> {
     valueM = m;
     setNumberOfVariables(2);
     setNumberOfObjectives(2);
-    setName("NMMin2");
+    setName("MixedIntegerDoubleProblem");
 
     integerBounds = new ArrayList<>(numberOfIntegerVariables);
     doubleBounds = new ArrayList<>(numberOfDoubleVariables);
