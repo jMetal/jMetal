@@ -91,6 +91,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /* Getters */
+  @Override
   public double getMutationProbability() {
     return mutationProbability;
   }

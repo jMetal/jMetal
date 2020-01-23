@@ -32,6 +32,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   }
 
   /* Getter */
+  @Override
   public double getMutationProbability() {
     return mutationProbability;
   }
