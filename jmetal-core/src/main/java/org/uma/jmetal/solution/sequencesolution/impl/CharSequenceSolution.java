@@ -1,18 +1,18 @@
-package org.uma.jmetal.solution.stringsolution.impl;
+package org.uma.jmetal.solution.sequencesolution.impl;
 
 import org.uma.jmetal.solution.AbstractSolution;
-import org.uma.jmetal.solution.stringsolution.SequenceSolution;
+import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines an implementation of solution representing sequences of chars
+ * Defines an implementation of solution representing sequences of chars belonging to an alphabet
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CharSequenceSolution extends AbstractSolution<Character> implements SequenceSolution<Character> {
-  public static final char[] CHARS =
+  public static final char[] ALPHABET =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890, .-;:_!\"#%&/()=?@${[]}".toCharArray() ;
 
   /** Constructor */
@@ -20,7 +20,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     super(stringLength, numberOfObjectives);
 
     for (int i = 0; i < stringLength; i++) {
-      setVariable(i, CHARS[JMetalRandom.getInstance().nextInt(0, stringLength)]);
+      setVariable(i, ALPHABET[JMetalRandom.getInstance().nextInt(0, stringLength)]);
     }
   }
 

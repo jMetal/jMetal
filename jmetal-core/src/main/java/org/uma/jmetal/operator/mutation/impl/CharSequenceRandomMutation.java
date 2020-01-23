@@ -1,12 +1,9 @@
 package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.solution.stringsolution.impl.CharSequenceSolution;
+import org.uma.jmetal.solution.sequencesolution.impl.CharSequenceSolution;
 import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
  * This class implements a swap mutation. The solution type of the solution must be Permutation.
@@ -51,7 +48,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {
         int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength-1);
         char newCharValue =
-                CharSequenceSolution.CHARS[JMetalRandom.getInstance().nextInt(0, sequenceLength-1)];
+                CharSequenceSolution.ALPHABET[JMetalRandom.getInstance().nextInt(0, CharSequenceSolution.ALPHABET.length-1)];
         solution.setVariable(positionToChange, newCharValue);
       }
     }
