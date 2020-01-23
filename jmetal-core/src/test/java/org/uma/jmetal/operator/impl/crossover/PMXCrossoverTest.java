@@ -34,7 +34,7 @@ public class PMXCrossoverTest {
 			}
 
 			@Override
-			public int getPermutationLength() {
+			public int getLength() {
 				return 10;
 			}
 

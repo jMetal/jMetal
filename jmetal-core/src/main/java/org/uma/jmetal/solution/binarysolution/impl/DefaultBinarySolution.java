@@ -43,6 +43,10 @@ public class DefaultBinarySolution
       setObjective(i, solution.getObjective(i)) ;
     }
 
+    for (int i = 0; i < getNumberOfConstraints(); i++) {
+      setConstraint(i, solution.getConstraint(i));
+    }
+
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
