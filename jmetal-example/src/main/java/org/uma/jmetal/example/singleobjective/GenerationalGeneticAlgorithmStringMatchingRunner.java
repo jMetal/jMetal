@@ -44,7 +44,7 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
 
     algorithm =
         new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
-            .setPopulationSize(100)
+            .setPopulationSize(50)
             .setMaxEvaluations(500000)
             .setSelectionOperator(selection)
             .build();
