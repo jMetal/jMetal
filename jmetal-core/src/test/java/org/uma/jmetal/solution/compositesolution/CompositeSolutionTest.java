@@ -1,19 +1,13 @@
 package org.uma.jmetal.solution.compositesolution;
 
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

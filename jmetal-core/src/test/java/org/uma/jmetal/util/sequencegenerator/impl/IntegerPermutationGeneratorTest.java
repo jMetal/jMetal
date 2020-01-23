@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
 import org.junit.jupiter.api.Test;
-
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
