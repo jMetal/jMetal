@@ -96,4 +96,25 @@ public class CompositeCrossoverTest {
     assertEquals(2, children.get(0).getNumberOfVariables());
     assertEquals(2, children.get(1).getNumberOfVariables());
   }
+
+  @Test (expected = ClassCastException.class)
+  public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatcTheCrossoverOperators() {
+    CompositeCrossover operator =
+            new CompositeCrossover(
+                    Arrays.asList(new SBXCrossover(1.0, 20.0), new SinglePointCrossover(1.0)));
+
+    DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
+    CompositeSolution solution1 =
+            new CompositeSolution(
+                    Arrays.asList(
+                            doubleProblem.createSolution(),
+                            doubleProblem.createSolution()));
+    CompositeSolution solution2 =
+            new CompositeSolution(
+                    Arrays.asList(
+                            doubleProblem.createSolution(),
+                            doubleProblem.createSolution()));
+
+    operator.execute(Arrays.asList(solution1, solution2));
+  }
 }

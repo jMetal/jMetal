@@ -87,4 +87,20 @@ public class CompositeMutationTest {
     assertNotNull(mutatedSolution);
     assertEquals(2, mutatedSolution.getNumberOfVariables());
   }
+
+  @Test (expected = ClassCastException.class)
+  public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheMutationOperators() {
+    CompositeMutation operator =
+            new CompositeMutation(
+                    Arrays.asList(new PolynomialMutation(1.0, 20.0), new BitFlipMutation(0.01)));
+
+    DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
+    CompositeSolution solution =
+            new CompositeSolution(
+                    Arrays.asList(
+                            doubleProblem.createSolution(),
+                            doubleProblem.createSolution())) ;
+
+    operator.execute(solution);
+  }
 }
