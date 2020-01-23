@@ -15,8 +15,12 @@ import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -58,6 +62,15 @@ public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRun
     algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();
+
+    new SolutionListOutput(algorithm.getResult())
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+            .print();
+
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
     System.exit(0);
   }
