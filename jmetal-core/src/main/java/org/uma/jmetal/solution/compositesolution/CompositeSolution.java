@@ -2,8 +2,6 @@ package org.uma.jmetal.solution.compositesolution;
 
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.checking.Check;
 
 import java.util.HashMap;
