@@ -16,7 +16,7 @@ import java.util.List;
  * but all the solutions in the list will need to have the same function and constraint violation
  * values.
  *
- * It is assumed that problems using instances of this class will properly manage the solution it contains.
+ * It is assumed that problems using instances of this class will properly manage the solutions it contains.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

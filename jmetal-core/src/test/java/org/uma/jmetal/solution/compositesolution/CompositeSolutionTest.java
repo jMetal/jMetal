@@ -14,12 +14,16 @@ import static org.junit.Assert.*;
 public class CompositeSolutionTest {
 
   @Test
-  public void shouldContructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
+  public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfASolution() {
+    DoubleSolution doubleSolution =
+            new DefaultDoubleSolution(
+                    Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
 
+    assertNotNull(new CompositeSolution(Arrays.asList(doubleSolution))) ;
   }
 
-  @Test (expected = Exception.class)
-  public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfABinarySolution() {
+  @Test(expected = Exception.class)
+  public void shouldContructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
     DoubleSolution doubleSolution =
             new DefaultDoubleSolution(
                     Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
