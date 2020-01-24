@@ -23,7 +23,7 @@ public class CompositeSolutionTest {
   }
 
   @Test(expected = Exception.class)
-  public void shouldContructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
+  public void shouldConstructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
     DoubleSolution doubleSolution =
             new DefaultDoubleSolution(
                     Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
