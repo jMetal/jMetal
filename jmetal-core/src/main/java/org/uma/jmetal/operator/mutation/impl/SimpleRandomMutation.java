@@ -32,6 +32,7 @@ public class SimpleRandomMutation implements MutationOperator<DoubleSolution> {
   }
 
   /* Getters */
+  @Override
   public double getMutationProbability() {
     return mutationProbability;
   }

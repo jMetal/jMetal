@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class IntegerDoubleSBXCrossover implements CrossoverOperator<IntegerDoubleSolution> {
   private IntegerSBXCrossover integerSBXCrossover;
   private SBXCrossover doubleSBXCrossover;
@@ -44,10 +45,6 @@ public class IntegerDoubleSBXCrossover implements CrossoverOperator<IntegerDoubl
     List<DoubleSolution> doubleParentSolutions =
         Arrays.asList(
             parentSolutions.get(0).getDoubleSolution(), parentSolutions.get(1).getDoubleSolution());
-
-    IntegerDoubleSolution[] childrenSolutions = new IntegerDoubleSolution[2];
-    childrenSolutions[0] = (IntegerDoubleSolution) parentSolutions.get(0).copy();
-    childrenSolutions[1] = (IntegerDoubleSolution) parentSolutions.get(1).copy();
 
     List<IntegerSolution> integerChildrenSolutions =
         integerSBXCrossover.execute(integerParentSolutions);

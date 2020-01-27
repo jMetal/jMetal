@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder.Variant;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -14,7 +15,6 @@ import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 
 import java.util.List;
 

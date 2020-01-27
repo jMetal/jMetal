@@ -68,6 +68,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
   }
 
   /* Getters */
+  @Override
   public double getMutationProbability() {
     return mutationProbability;
   }

@@ -2,17 +2,13 @@ package org.uma.jmetal.component.selection.impl;
 
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
-import org.uma.jmetal.operator.selection.impl.TournamentSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

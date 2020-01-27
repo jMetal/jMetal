@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version;
 
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.util.MOEADUtils ;
 
 import java.util.ArrayList;
 import java.util.List;

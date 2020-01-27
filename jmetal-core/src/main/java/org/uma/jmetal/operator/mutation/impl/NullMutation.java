@@ -16,4 +16,9 @@ public class NullMutation<S> implements MutationOperator<S> {
   public S execute(S source) {
     return source;
   }
+
+  @Override
+  public double getMutationProbability() {
+    return 1.0;
+  }
 }

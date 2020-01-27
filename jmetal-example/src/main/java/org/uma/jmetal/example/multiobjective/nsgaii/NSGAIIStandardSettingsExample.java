@@ -51,13 +51,13 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     Termination termination = new TerminationByEvaluations(25000);
 
     algorithm =
-        new NSGAII<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination);
+            new NSGAII<>(
+                    problem,
+                    populationSize,
+                    offspringPopulationSize,
+                    crossover,
+                    mutation,
+                    termination);
 
     algorithm.run();
 
@@ -66,9 +66,9 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-        .print();
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+            .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

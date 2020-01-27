@@ -9,6 +9,7 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public interface IntegerDoubleSolution extends Solution<Solution<?>> {
   IntegerSolution getIntegerSolution() ;
   DoubleSolution getDoubleSolution() ;

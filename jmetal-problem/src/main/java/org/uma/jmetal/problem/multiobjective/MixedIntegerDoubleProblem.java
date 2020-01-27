@@ -3,37 +3,37 @@ package org.uma.jmetal.problem.multiobjective;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.AbstractGenericProblem;
+import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.integerdoublesolution.IntegerDoubleSolution;
-import org.uma.jmetal.solution.integerdoublesolution.impl.DefaultIntegerDoubleSolution;
+import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Antonio J. Nebro on 03/07/14. Bi-objective problem for testing class {@link
- * DefaultIntegerDoubleSolution )}, e.g., a solution composed of an integer solution and a double
- * solution. It is assumed that the lower and upper bounds of the variables of both solutions are
- * the same.
+ * Bi-objective problem for testing class {@link CompositeSolution )}. This problem requires an encoding where a
+ * solution is composed of an integer solution and a double solution. For the sake of simplicity, it is assumed that
+ * the lower and upper bounds of the variables of both solutions are the same.
  *
  * Objective 1: minimizing the sum of the distances of every variable to value N
  * Objective 2: minimizing the sum of the distances of every variable to value M
  */
 @SuppressWarnings("serial")
-@Deprecated
-public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
+public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeSolution> {
   private int valueN;
   private int valueM;
   private List<Pair<Integer, Integer>> integerBounds;
   private List<Pair<Double, Double>> doubleBounds;
 
-  public NMMin2() {
+  public MixedIntegerDoubleProblem() {
     this(10, 10, 100, -100, -1000, +1000);
   }
 
   /** Constructor */
-  public NMMin2(
+  public MixedIntegerDoubleProblem(
       int numberOfIntegerVariables,
       int numberOfDoubleVariables,
       int n,
@@ -44,7 +44,7 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
     valueM = m;
     setNumberOfVariables(2);
     setNumberOfObjectives(2);
-    setName("NMMin2");
+    setName("MixedIntegerDoubleProblem");
 
     integerBounds = new ArrayList<>(numberOfIntegerVariables);
     doubleBounds = new ArrayList<>(numberOfDoubleVariables);
@@ -60,7 +60,7 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(IntegerDoubleSolution solution) {
+  public void evaluate(CompositeSolution solution) {
     int approximationToN;
     int approximationToM;
 
@@ -84,7 +84,9 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
   }
 
   @Override
-  public IntegerDoubleSolution createSolution() {
-    return new DefaultIntegerDoubleSolution(integerBounds, doubleBounds, 2);
+  public CompositeSolution createSolution() {
+    IntegerSolution integerSolution = new DefaultIntegerSolution(integerBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
+    DoubleSolution doubleSolution = new DefaultDoubleSolution(doubleBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
+    return new CompositeSolution(Arrays.asList(integerSolution, doubleSolution));
   }
 }
