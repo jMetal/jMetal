@@ -8,5 +8,5 @@ import org.uma.jmetal.solution.Solution;
  * @param <T>
  */
 public interface SequenceSolution<T> extends Solution<T> {
-    int getLength();
+  int getLength();
 }

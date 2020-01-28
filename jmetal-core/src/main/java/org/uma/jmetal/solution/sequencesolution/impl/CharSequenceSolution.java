@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Defines an implementation of solution representing sequences of chars belonging to an alphabet
+ * Defines an implementation of solution representing sequences of chars.
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CharSequenceSolution extends AbstractSolution<Character> implements SequenceSolution<Character> {
