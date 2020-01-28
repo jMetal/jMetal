@@ -12,6 +12,6 @@ public abstract class AbstractIntegerPermutationProblem
 
   @Override
   public PermutationSolution<Integer> createSolution() {
-    return new IntegerPermutationSolution(getPermutationLength(), getNumberOfObjectives()) ;
+    return new IntegerPermutationSolution(getLength(), getNumberOfObjectives()) ;
   }
 }

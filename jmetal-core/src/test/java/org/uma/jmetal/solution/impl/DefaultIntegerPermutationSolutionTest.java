@@ -58,7 +58,7 @@ public class DefaultIntegerPermutationSolutionTest {
 
 
     @Override
-    public int getPermutationLength() {
+    public int getLength() {
       return getNumberOfVariables();
     }
   }

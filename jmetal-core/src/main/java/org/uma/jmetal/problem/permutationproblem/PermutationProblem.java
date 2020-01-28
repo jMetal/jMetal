@@ -9,5 +9,5 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface PermutationProblem<S extends PermutationSolution<?>> extends Problem<S> {
-  int getPermutationLength() ;
+  int getLength() ;
 }
