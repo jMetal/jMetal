@@ -14,11 +14,13 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 @SuppressWarnings("serial")
 public class CharSequenceRandomMutation implements MutationOperator<CharSequenceSolution> {
   private double mutationProbability;
+  private final char[] alphabet;
 
   /** Constructor */
-  public CharSequenceRandomMutation(double mutationProbability) {
+  public CharSequenceRandomMutation(double mutationProbability, char[] alphabet) {
     Check.probabilityIsValid(mutationProbability);
     this.mutationProbability = mutationProbability;
+    this.alphabet = alphabet;
   }
 
   /* Getters */
@@ -44,11 +46,10 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
   public void doMutation(CharSequenceSolution solution) {
     int sequenceLength = solution.getNumberOfVariables();
 
-    for (int i = 0 ; i < sequenceLength; i++) {
+    for (int i = 0; i < sequenceLength; i++) {
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {
-        int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength-1);
-        char newCharValue =
-                CharSequenceSolution.ALPHABET[JMetalRandom.getInstance().nextInt(0, CharSequenceSolution.ALPHABET.length-1)];
+        int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength - 1);
+        char newCharValue = alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length - 1)];
         solution.setVariable(positionToChange, newCharValue);
       }
     }

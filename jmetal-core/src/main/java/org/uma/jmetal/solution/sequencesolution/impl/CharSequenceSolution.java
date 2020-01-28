@@ -12,15 +12,12 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CharSequenceSolution extends AbstractSolution<Character> implements SequenceSolution<Character> {
-  public static final char[] ALPHABET =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890, .-;:_!\"#%&/()=?@${[]}".toCharArray() ;
-
   /** Constructor */
   public CharSequenceSolution(int stringLength, int numberOfObjectives) {
     super(stringLength, numberOfObjectives);
 
     for (int i = 0; i < stringLength; i++) {
-      setVariable(i, ALPHABET[JMetalRandom.getInstance().nextInt(0, stringLength)]);
+      setVariable(i, ' ');
     }
   }
 

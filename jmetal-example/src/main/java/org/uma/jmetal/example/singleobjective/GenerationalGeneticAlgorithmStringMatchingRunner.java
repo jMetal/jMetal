@@ -38,14 +38,14 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
     crossover = new NullCrossover<>();
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    mutation = new CharSequenceRandomMutation(mutationProbability);
+    mutation = new CharSequenceRandomMutation(mutationProbability, problem.getAlphabet());
 
     selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
 
     algorithm =
         new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
             .setPopulationSize(50)
-            .setMaxEvaluations(500000)
+            .setMaxEvaluations(250000)
             .setSelectionOperator(selection)
             .build();
 
