@@ -98,7 +98,7 @@ public class CompositeCrossoverTest {
   }
 
   @Test (expected = ClassCastException.class)
-  public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatcTheCrossoverOperators() {
+  public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheCrossoverOperators() {
     CompositeCrossover operator =
             new CompositeCrossover(
                     Arrays.asList(new SBXCrossover(1.0, 20.0), new SinglePointCrossover(1.0)));

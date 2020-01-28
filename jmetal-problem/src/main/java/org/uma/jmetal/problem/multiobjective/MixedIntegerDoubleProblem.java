@@ -74,7 +74,7 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
     }
 
     List<Double> doubleVariables = ((DoubleSolution) solution.getVariable(1)).getVariables();
-    for (int i = 0; i < integerVariables.size(); i++) {
+    for (int i = 0; i < doubleVariables.size(); i++) {
       approximationToN += Math.abs(valueN - doubleVariables.get(i));
       approximationToM += Math.abs(valueM - doubleVariables.get(i));
     }
