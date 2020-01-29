@@ -53,7 +53,7 @@ public class PermutationSwapMutationTest {
 			}
 
 			@Override
-			public int getPermutationLength() {
+			public int getLength() {
 				return 5;
 			}
 			

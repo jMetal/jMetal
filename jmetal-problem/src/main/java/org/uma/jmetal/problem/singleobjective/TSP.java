@@ -121,7 +121,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
     return matrix;
   }
 
-  @Override public int getPermutationLength() {
+  @Override public int getLength() {
     return numberOfCities ;
   }
 }
