@@ -10,6 +10,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -32,8 +35,7 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method findBestSolution *** */
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
@@ -43,8 +45,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
@@ -55,8 +56,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The comparator is null"));
+    exception.expect(NullParameterException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
@@ -113,8 +113,7 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method findIndexOfBestSolution *** */
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
@@ -124,8 +123,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
@@ -136,8 +134,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The comparator is null"));
+    exception.expect(NullParameterException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
@@ -215,16 +212,14 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method selectNRandomDifferentSolutions *** */
   @Test
   public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     SolutionListUtils.selectNRandomDifferentSolutions(1, null);
   }
 
   @Test
   public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
 
@@ -242,10 +237,7 @@ public class SolutionListUtilsTest {
   @Test
   public void
       shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString(
-            "The solution list size (1) is less than " + "the number of requested solutions (2)"));
+    exception.expect(InvalidConditionException.class);
 
     List<Solution<?>> list = new ArrayList<>(1);
     list.add(mock(Solution.class));
@@ -256,10 +248,7 @@ public class SolutionListUtilsTest {
   @Test
   public void
       shouldelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsTwoAndFourSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString(
-            "The solution list size (2) is less than " + "the number of requested solutions (4)"));
+    exception.expect(InvalidConditionException.class);
 
     List<Solution<?>> list = new ArrayList<>(2);
     list.add(mock(Solution.class));
