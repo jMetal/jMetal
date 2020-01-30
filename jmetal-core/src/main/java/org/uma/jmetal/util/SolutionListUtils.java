@@ -4,8 +4,14 @@ import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
+import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.distance.Distance;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -124,16 +130,41 @@ public class SolutionListUtils {
    * @param minValues The minimum values of the objectives
    * @return the normalized list of non-dominated solutions
    */
-  public static List<? extends Solution<?>> normalize(
-      List<? extends Solution<?>> solutions, double[] minValues, double[] maxValues) {
-    List<Solution<?>> normalizedSolutions = new ArrayList<>(solutions.size());
+  public static <S extends Solution<?>> List<S> normalizeSolutionList(
+      List<S> solutions, double[] minValues, double[] maxValues) {
+    List<S> normalizedSolutions = new ArrayList<>(solutions.size());
 
-    for (Solution<?> solution : solutions) {
+    for (S solution : solutions) {
       normalizedSolutions.add(SolutionUtils.normalize(solution, minValues, maxValues));
     }
 
     return normalizedSolutions;
   }
+
+  /**
+   * This method receives a list of non-dominated solutions and maximum and minimum values of the
+   * objectives, and returns a normalized set of solutions.
+   *
+   * @param solutions A list of non-dominated solutions
+   * @return the normalized list of non-dominated solutions
+   */
+  public static <S extends Solution<?>> List<S> normalizeSolutionList(List<S> solutions) {
+    Check.isNotNull(solutions);
+    Check.collectionIsNotEmpty(solutions);
+
+    double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
+    double[] maxValues = new double[solutions.get(0).getNumberOfObjectives()];
+
+   for (int i = 0; i < minValues.length; i++) {
+     int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i)) ;
+     int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i)) ;
+     minValues[i] = solutions.get(best).getObjective(i) ;
+     maxValues[i] = solutions.get(worst).getObjective(i) ;
+   }
+
+    return normalizeSolutionList(solutions, minValues, maxValues);
+  }
+
 
   /**
    * This method receives a normalized list of non-dominated solutions and return the inverted one.
@@ -374,5 +405,50 @@ public class SolutionListUtils {
       result[i] = solutionList.get(i).getObjective(objective);
     }
     return result;
+  }
+
+  /**
+   * Notes:
+   *  1.- the original solution list is modified
+   * @param originalSolutionList
+   * @param finalListSize
+   * @param <S>
+   * @return
+   */
+  public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
+      List<S> originalSolutionList, int finalListSize) {
+    Check.isNotNull(originalSolutionList);
+    Check.collectionIsNotEmpty(originalSolutionList);
+
+    List<S> solutions = new ArrayList<>() ;
+    // STEP 1. Normalize the objectives values of the solution list
+    solutions.addAll(normalizeSolutionList(originalSolutionList)) ;
+
+    // STEP 2. Find the solution having the best objective value, being the objective randomly selected
+    int randomObjective =
+        JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
+
+    int bestSolutionIndex = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective)) ;
+
+    //  STEP 3. Add the solution to the result list and remove it from the original list
+    List<S> resultSolutions = new ArrayList<>(finalListSize);
+    resultSolutions.add(solutions.get(bestSolutionIndex)) ;
+    solutions.remove(bestSolutionIndex) ;
+
+    // STEP 4. Find the solution having the largest distance to the result solutions
+    Distance<S, List<S>> distance =
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
+    while (resultSolutions.size() < finalListSize) {
+      for (S solution : solutions) {
+        solution.setAttribute("DISTANCE", distance.getDistance(solution, resultSolutions));
+      }
+      int largestDistanceSolutionIndex =
+          findIndexOfBestSolution(
+              solutions, new DoubleValueAttributeComparator<>("DISTANCE", AttributeComparator.Ordering.DESCENDING)) ;
+      resultSolutions.add(solutions.get(largestDistanceSolutionIndex)) ;
+      solutions.remove(largestDistanceSolutionIndex) ;
+    }
+
+    return resultSolutions;
   }
 }
