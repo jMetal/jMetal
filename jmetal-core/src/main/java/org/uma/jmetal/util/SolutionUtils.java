@@ -151,8 +151,7 @@ public class SolutionUtils {
    * @param maxValues maximum value for each objective
    * @return normalized solution
    */
-  public static Solution<?> normalize(
-      Solution<?> solution, double[] minValues, double[] maxValues) {
+  public static <S extends Solution<?>> S normalize(S solution, double[] minValues, double[] maxValues) {
 
     if (solution == null) {
       throw new JMetalException("The solution should not be null");
@@ -175,7 +174,7 @@ public class SolutionUtils {
           "The number of objectives should be the same to min and max length");
     }
 
-    Solution<?> copy = (Solution<?>) solution.copy();
+    S copy = (S) solution.copy();
 
     for (int i = 0; i < copy.getNumberOfObjectives(); i++) {
       copy.setObjective(
