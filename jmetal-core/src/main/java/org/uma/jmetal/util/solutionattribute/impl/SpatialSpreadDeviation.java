@@ -76,7 +76,7 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
       front.get(size - 1).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
     }
     double[][] distance =
-        SolutionListUtils.distanceMatrix_normalize(front, objetiveMaxn, objetiveMinn);
+        SolutionListUtils.normializedDistanceMatrix(front, objetiveMaxn, objetiveMinn);
 
     double dminn, dmaxx;
     dminn = Double.MAX_VALUE;
