@@ -155,16 +155,15 @@ public class SolutionListUtils {
     double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
     double[] maxValues = new double[solutions.get(0).getNumberOfObjectives()];
 
-   for (int i = 0; i < minValues.length; i++) {
-     int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i)) ;
-     int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i)) ;
-     minValues[i] = solutions.get(best).getObjective(i) ;
-     maxValues[i] = solutions.get(worst).getObjective(i) ;
-   }
+    for (int i = 0; i < minValues.length; i++) {
+      int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
+      int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
+      minValues[i] = solutions.get(best).getObjective(i);
+      maxValues[i] = solutions.get(worst).getObjective(i);
+    }
 
     return normalizeSolutionList(solutions, minValues, maxValues);
   }
-
 
   /**
    * This method receives a normalized list of non-dominated solutions and return the inverted one.
@@ -408,8 +407,8 @@ public class SolutionListUtils {
   }
 
   /**
-   * Method implements a version of the distance-based subset selection algorith described in: H. K.
-   * Singh, K. S. Bhattacharjee, and T. Ray, ‘Distance-based subset selection for benchmarking in
+   * Method implements a version of the distance-based subset selection algorithm described in: H.
+   * K. Singh, K. S. Bhattacharjee, and T. Ray, ‘Distance-based subset selection for benchmarking in
    * evolutionary multi/many-objective optimization,’ IEEE Trans. on Evolutionary Computation,
    * 23(5), 904-912, (2019). DOI: https://doi.org/10.1109/TEVC.2018.2883094
    *
@@ -423,33 +422,38 @@ public class SolutionListUtils {
     Check.isNotNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
-    List<S> solutions = new ArrayList<>() ;
+    List<S> solutions = new ArrayList<>();
     // STEP 1. Normalize the objectives values of the solution list
-    solutions.addAll(normalizeSolutionList(originalSolutionList)) ;
+    solutions.addAll(normalizeSolutionList(originalSolutionList));
 
-    // STEP 2. Find the solution having the best objective value, being the objective randomly selected
+    // STEP 2. Find the solution having the best objective value, being the objective randomly
+    // selected
     int randomObjective =
         JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
 
-    int bestSolutionIndex = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective)) ;
+    int bestSolutionIndex =
+        findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
 
     //  STEP 3. Add the solution to the result list and remove it from the original list
     List<S> resultSolutions = new ArrayList<>(finalListSize);
-    resultSolutions.add(solutions.get(bestSolutionIndex)) ;
-    solutions.remove(bestSolutionIndex) ;
+    resultSolutions.add(solutions.get(bestSolutionIndex));
+    solutions.remove(bestSolutionIndex);
 
     // STEP 4. Find the solution having the largest distance to the result solutions
     Distance<S, List<S>> distance =
-            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
+        new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (resultSolutions.size() < finalListSize) {
       for (S solution : solutions) {
-        solution.setAttribute("DISTANCE", distance.getDistance(solution, resultSolutions));
+        solution.setAttribute(
+            "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, resultSolutions));
       }
       int largestDistanceSolutionIndex =
           findIndexOfBestSolution(
-              solutions, new DoubleValueAttributeComparator<>("DISTANCE", AttributeComparator.Ordering.DESCENDING)) ;
-      resultSolutions.add(solutions.get(largestDistanceSolutionIndex)) ;
-      solutions.remove(largestDistanceSolutionIndex) ;
+              solutions,
+              new DoubleValueAttributeComparator<>(
+                  "SUBSET_SELECTION_DISTANCE", AttributeComparator.Ordering.DESCENDING));
+      resultSolutions.add(solutions.get(largestDistanceSolutionIndex));
+      solutions.remove(largestDistanceSolutionIndex);
     }
 
     return resultSolutions;
