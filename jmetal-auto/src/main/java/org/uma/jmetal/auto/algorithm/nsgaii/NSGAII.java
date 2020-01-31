@@ -24,6 +24,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
@@ -38,7 +39,7 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
  */
 public class NSGAII {
   public static void main(String[] args) {
-    DoubleProblem problem = new DTLZ2();
+    DoubleProblem problem = new ZDT1();
     String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
     //JMetalRandom.getInstance().setSeed(1);
