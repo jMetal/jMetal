@@ -107,6 +107,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
     population = createInitialPopulation.create();
     population = evaluation.evaluate(population);
+    updateArchive(population);
     initProgress();
     while (!termination.isMet(attributes)) {
       List<S> matingPopulation = selection.select(population);
