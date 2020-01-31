@@ -408,10 +408,13 @@ public class SolutionListUtils {
   }
 
   /**
-   * Notes:
-   *  1.- the original solution list is modified
+   * Method implements a version of the distance-based subset selection algorith described in: H. K.
+   * Singh, K. S. Bhattacharjee, and T. Ray, ‘Distance-based subset selection for benchmarking in
+   * evolutionary multi/many-objective optimization,’ IEEE Trans. on Evolutionary Computation,
+   * 23(5), 904-912, (2019). DOI: https://doi.org/10.1109/TEVC.2018.2883094
+   *
    * @param originalSolutionList
-   * @param finalListSize
+   * @param finalListSize The size of the result list
    * @param <S>
    * @return
    */
