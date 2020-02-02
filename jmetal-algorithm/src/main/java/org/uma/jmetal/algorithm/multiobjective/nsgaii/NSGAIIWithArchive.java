@@ -11,7 +11,12 @@ import org.uma.jmetal.util.archive.Archive;
 
 import java.util.List;
 
-/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+/**
+ * Variant of NSGA-II using an external archive. The archive is updated with the evaluated solutions and the solution
+ * list it contains is returned as algorithm result.
+ *
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
 public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
   private Archive<S> archive;
 
