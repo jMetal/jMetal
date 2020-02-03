@@ -26,6 +26,14 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   public WFGHypervolume() {}
 
   /**
+   * Constructor with reference point
+   * @param referencePoint
+   */
+  public WFGHypervolume(double[] referencePoint) {
+    super(referencePoint) ;
+  }
+
+  /**
    * Constructor
    *
    * @param referenceParetoFrontFile
@@ -63,7 +71,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }
 
-  static class ComparadorGreater implements Comparator {
+  static class ComparatorGreater implements Comparator {
 
     @Override
     public int compare(Object o1, Object o2) {
@@ -502,7 +510,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         ps.points,
         0,
         ps.nPoints,
-        new ComparadorGreater()); // ASI FUNCIONO EXCELENTE NO MOVER!!! Arrays.sort(ps.points, 0,
+        new ComparatorGreater()); // ASI FUNCIONO EXCELENTE NO MOVER!!! Arrays.sort(ps.points, 0,
                                   // ps.nPoints , new ComparadorGreater());
 
     // n = 2 implies that safe = 0
