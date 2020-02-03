@@ -103,11 +103,10 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   public void run() {
-    initializeAttributes() ;
+    initTime = System.currentTimeMillis() ;
 
     population = createInitialPopulation.create();
     population = evaluation.evaluate(population);
-    updateArchive(population);
     initProgress();
     while (!termination.isMet(attributes)) {
       List<S> matingPopulation = selection.select(population);
@@ -118,11 +117,10 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       population = replacement.replace(population, offspringPopulation);
       updateProgress();
     }
+
+    totalComputingTime = System.currentTimeMillis() - initTime ;
   }
 
-  private void initializeAttributes() {
-    initTime = System.currentTimeMillis() ;
-  }
 
   private void updateArchive(List<S> population) {
     if (externalArchive != null) {

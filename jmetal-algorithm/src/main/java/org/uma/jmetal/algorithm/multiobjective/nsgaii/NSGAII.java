@@ -43,14 +43,14 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected CrossoverOperator<S> crossoverOperator;
   protected MutationOperator<S> mutationOperator;
 
-  private Map<String, Object> algorithmStatusData;
+  protected Map<String, Object> algorithmStatusData;
 
-  private InitialSolutionsCreation<S> initialSolutionsCreation;
-  private Termination termination;
-  private Evaluation<S> evaluation ;
-  private Replacement<S> replacement;
-  private Variation<S> variation;
-  private MatingPoolSelection<S> selection;
+  protected InitialSolutionsCreation<S> initialSolutionsCreation;
+  protected Termination termination;
+  protected Evaluation<S> evaluation ;
+  protected Replacement<S> replacement;
+  protected Variation<S> variation;
+  protected MatingPoolSelection<S> selection;
 
   private long startTime;
   private long totalComputingTime;
