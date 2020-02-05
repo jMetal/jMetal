@@ -24,10 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class implementing a generic MOEA/D algorithm.
+ * Class implementing a generic MOEA/D algorithm using an external archive. The archive is updated
+ * with the evaluated solutions and the solution * list it contains is returned as algorithm
+ * result.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S>{
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
+public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
   private Archive<S> archive ;
 
   /** Constructor */
@@ -48,8 +51,16 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S>{
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    return evaluation.evaluate(population, getProblem());
+    List<S> evaluatedSolutionList = super.evaluatePopulation(population);
+    for (S solution : evaluatedSolutionList) {
+      archive.add(solution);
+    }
+
+    return evaluatedSolutionList;
   }
 
-
+  @Override
+  public List<S> getResult() {
+    return archive.getSolutionList();
+  }
 }
