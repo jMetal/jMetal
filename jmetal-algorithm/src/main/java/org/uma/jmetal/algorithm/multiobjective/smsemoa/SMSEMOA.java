@@ -7,6 +7,7 @@ import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -25,21 +26,16 @@ public class SMSEMOA<S extends Solution<?>> extends NSGAII<S> {
       int populationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      Termination termination, HypervolumeContributionDensityEstimator<S> densityEstimator,
-            Ranking<S> ranking) {
+      Termination termination,
+      HypervolumeContributionDensityEstimator<S> densityEstimator,
+      Ranking<S> ranking) {
     super(problem, populationSize, 1, crossoverOperator, mutationOperator, termination, ranking);
 
     this.replacement =
-            new RankingAndDensityEstimatorReplacement<>(
-                    ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+        new RankingAndDensityEstimatorReplacement<>(
+            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
 
-    this.selection =
-            new NaryTournamentMatingPoolSelection<>(
-                    2,
-                    variation.getMatingPoolSize(),
-                    new MultiComparator<>(
-                            Arrays.asList(
-                                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+    this.selection = new RandomMatingPoolSelection<>(variation.getMatingPoolSize());
   }
 
   /** Constructor */
@@ -48,43 +44,18 @@ public class SMSEMOA<S extends Solution<?>> extends NSGAII<S> {
       int populationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      Termination termination, HypervolumeContributionDensityEstimator<S> densityEstimator) {
+      Termination termination,
+      HypervolumeContributionDensityEstimator<S> densityEstimator) {
     this(
         problem,
         populationSize,
         crossoverOperator,
         mutationOperator,
-        termination,densityEstimator,
+        termination,
+        densityEstimator,
         new FastNonDominatedSortRanking<>());
   }
 
-  /*
-  @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> jointPopulation = new ArrayList<>();
-    jointPopulation.addAll(population);
-    jointPopulation.addAll(offspringPopulation);
-
-    Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
-    ranking.computeRanking(population) ;
-    List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
-
-    lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
-
-    List<S> resultPopulation = new ArrayList<>() ;
-    for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
-      for (S solution : ranking.getSubFront(i)) {
-        resultPopulation.add(solution);
-      }
-    }
-
-    for (int i = 0; i < lastSubfront.size()-1; i++) {
-      resultPopulation.add(lastSubfront.get(i)) ;
-    }
-
-    return resultPopulation ;
-  }
-*/
   @Override
   public String getName() {
     return "SMS-EMOA";

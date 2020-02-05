@@ -49,7 +49,7 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
       referenceParetoFront = "referenceFronts/ZDT1.pf" ;
     }
 
@@ -71,8 +71,8 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(50000)
-        .setPopulationSize(200)
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
         .setHypervolumeImplementation(hypervolume)
         .build() ;
 

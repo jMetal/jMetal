@@ -33,10 +33,10 @@ public class SMSEMOAExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    JMetalRandom.getInstance().setSeed(1);
-
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     String referenceParetoFront = "referenceFronts/ZDT1.pf";
+
+    JMetalRandom.getInstance().setSeed(1);
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
