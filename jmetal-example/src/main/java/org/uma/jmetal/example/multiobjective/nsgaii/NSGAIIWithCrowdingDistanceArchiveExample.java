@@ -55,7 +55,6 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
 
     Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize) ;
 
-
     algorithm =
             new NSGAIIWithArchive<>(
                     problem,
