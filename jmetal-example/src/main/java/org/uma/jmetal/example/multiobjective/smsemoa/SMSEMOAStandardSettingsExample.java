@@ -1,7 +1,9 @@
-package org.uma.jmetal.example.multiobjective.smsemoa ;
+package org.uma.jmetal.example.multiobjective.smsemoa;
 
 import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOA;
 import org.uma.jmetal.component.densityestimator.impl.HypervolumeContributionDensityEstimator;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -9,6 +11,7 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
@@ -16,6 +19,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
@@ -26,15 +31,15 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMSEMOAExample extends AbstractAlgorithmRunner {
+public class SMSEMOAStandardSettingsExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     SMSEMOA<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "referenceFronts/ZDT1.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String referenceParetoFront = "referenceFronts/ZDT4.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -50,12 +55,19 @@ public class SMSEMOAExample extends AbstractAlgorithmRunner {
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    double[] referencePoint = new double[] {1.0, 1.0};
-    HypervolumeContributionDensityEstimator<DoubleSolution> densityEstimator =
-        new HypervolumeContributionDensityEstimator<DoubleSolution>(referencePoint);
+    double[] referencePoint = new double[] {1.1, 1.1, 1.1};
+
+    Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
 
     algorithm =
-        new SMSEMOA<>(problem, populationSize, crossover, mutation, termination, densityEstimator);
+        new SMSEMOA<>(
+            problem,
+            populationSize,
+            crossover,
+            mutation,
+            termination,
+            new PISAHypervolume<>(referencePoint),
+            ranking);
 
     algorithm.run();
 
