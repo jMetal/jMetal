@@ -27,7 +27,7 @@ public abstract class Hypervolume<S> extends GenericIndicator<S> {
   public Hypervolume(double[] referencePoint) {
     Front referenceFront = new ArrayFront(referencePoint.length, referencePoint.length);
     for (int i = 0; i < referencePoint.length; i++) {
-      Point point = new ArrayPoint(2);
+      Point point = new ArrayPoint(referencePoint.length);
       for (int j = 0; j < referencePoint.length; j++) {
         if (j == i) {
           double v = referencePoint[i] ;
