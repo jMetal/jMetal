@@ -2,6 +2,8 @@ package org.uma.jmetal.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
+import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -53,6 +55,8 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
 
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
+    Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
+
     algorithm =
         new NSGAIIWithArchive<>(
             problem,
@@ -61,6 +65,7 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
             crossover,
             mutation,
             termination,
+            ranking,
             archive);
 
     algorithm.run();
