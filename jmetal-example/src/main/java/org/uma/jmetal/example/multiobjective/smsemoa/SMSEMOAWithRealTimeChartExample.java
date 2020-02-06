@@ -59,18 +59,11 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
 
     algorithm =
-        new SMSEMOA<>(
-            problem,
-            populationSize,
-            crossover,
-            mutation,
-            termination,
-            new PISAHypervolume<>(referencePoint),
-            ranking);
+        new SMSEMOA<>(problem, populationSize, crossover, mutation, termination, new PISAHypervolume<>(referencePoint), ranking);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("SMS-EMOA", 80, 500, referenceParetoFront);
+            new RunTimeChartObserver<>("SMS-EMOA", 80, 500, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
@@ -93,5 +86,7 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
+
+    System.exit(0);
   }
 }
