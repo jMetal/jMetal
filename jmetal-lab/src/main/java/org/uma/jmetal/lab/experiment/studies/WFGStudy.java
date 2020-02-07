@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;

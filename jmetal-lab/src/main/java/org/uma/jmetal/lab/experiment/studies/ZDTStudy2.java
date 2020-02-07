@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.*;

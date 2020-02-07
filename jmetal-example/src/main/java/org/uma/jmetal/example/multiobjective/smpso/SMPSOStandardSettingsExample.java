@@ -1,7 +1,10 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
+import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -13,6 +16,9 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
@@ -21,7 +27,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMPSORunner extends AbstractAlgorithmRunner {
+public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
@@ -36,45 +42,39 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String referenceParetoFront = "" ;
-
-    String problemName ;
-    if (args.length == 1) {
-      problemName = args[0];
-    } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
-    } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "referenceFronts/ZDT1.pf" ;
-    }
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String referenceParetoFront = "referenceFronts/ZDT4.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    int swarmSize = 100 ;
+    BoundedArchive<DoubleSolution> leadersArchive = new CrowdingDistanceArchive<DoubleSolution>(swarmSize) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm = new SMPSOBuilder(problem, archive)
-        .setMutation(mutation)
-        .setMaxIterations(250)
-        .setSwarmSize(100)
-        .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
-        .build();
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-        .execute();
+    algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, 250, evaluation) ;
+
+    algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
-    long computingTime = algorithmRunner.getComputingTime();
+    //JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
+    //JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
-    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+    new SolutionListOutput(population)
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+            .print();
 
-    printFinalSolutionSet(population);
+    JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
+    JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
+    JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
+
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }
