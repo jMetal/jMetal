@@ -1,10 +1,14 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
+import com.fuzzylite.term.Term;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.termination.Termination;
+import org.uma.jmetal.component.termination.impl.TerminationByComputingTime;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -28,18 +32,9 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments. The first (optional) argument specifies
-   *             the problem to solve.
-   * @throws org.uma.jmetal.util.JMetalException
-   * @throws java.io.IOException
-   * @throws SecurityException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.smpso.SMPSORunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
+    SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
@@ -55,14 +50,15 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
+    Termination termination = new TerminationByEvaluations(25000) ;
 
-    algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, 250, evaluation) ;
+    algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
-    //JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    //JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
+    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

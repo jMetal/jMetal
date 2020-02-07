@@ -43,8 +43,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected CrossoverOperator<S> crossoverOperator;
   protected MutationOperator<S> mutationOperator;
 
-  protected Map<String, Object> algorithmStatusData;
-
   protected InitialSolutionsCreation<S> initialSolutionsCreation;
   protected Termination termination;
   protected Evaluation<S> evaluation ;
@@ -55,6 +53,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   private long startTime;
   private long totalComputingTime;
 
+  protected Map<String, Object> algorithmStatusData;
   private Observable<Map<String, Object>> observable;
 
   /** Constructor */

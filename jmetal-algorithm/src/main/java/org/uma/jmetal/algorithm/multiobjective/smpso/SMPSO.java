@@ -2,18 +2,19 @@ package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observable.ObservableEntity;
+import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class implements the SMPSO algorithm described in: SMPSO: A new PSO-based metaheuristic for
@@ -22,7 +23,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> {
+public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> implements ObservableEntity {
   private DoubleProblem problem;
 
   private double c1Max;
@@ -39,8 +40,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private double changeVelocity2;
 
   private int swarmSize;
-  private int maxIterations;
-  private int iterations;
+  private int evaluations ;
 
   private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
   private double[][] speed;
@@ -56,20 +56,25 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   private double deltaMin[];
 
   protected Evaluation<DoubleSolution> evaluation;
+  protected Termination termination;
+
+  private long startTime;
+  private long totalComputingTime;
+
+  protected Map<String, Object> algorithmStatusData;
+  private Observable<Map<String, Object>> observable;
 
   public SMPSO(
       DoubleProblem problem,
       int swarmSize,
       BoundedArchive<DoubleSolution> leaders,
       MutationOperator<DoubleSolution> mutationOperator,
-      int maxIterations,
-      Evaluation<DoubleSolution> evaluation) {
+      Evaluation<DoubleSolution> evaluation, Termination termination) {
     this(
         problem,
         swarmSize,
         leaders,
         mutationOperator,
-        maxIterations,
         0.0,
         1.0,
         0.0,
@@ -82,7 +87,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
         0.1,
         -1,
         -1,
-        evaluation);
+        evaluation, termination);
   }
 
   /** Constructor */
@@ -91,7 +96,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       int swarmSize,
       BoundedArchive<DoubleSolution> leaders,
       MutationOperator<DoubleSolution> mutationOperator,
-      int maxIterations,
       double r1Min,
       double r1Max,
       double r2Min,
@@ -104,12 +108,13 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       double weightMax,
       double changeVelocity1,
       double changeVelocity2,
-      Evaluation<DoubleSolution> evaluation) {
+      Evaluation<DoubleSolution> evaluation, Termination termination) {
     this.problem = problem;
     this.swarmSize = swarmSize;
     this.leaders = leaders;
     this.mutation = mutationOperator;
-    this.maxIterations = maxIterations;
+
+    this.evaluations = 0 ;
 
     this.r1Max = r1Max;
     this.r1Min = r1Min;
@@ -125,7 +130,9 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     this.changeVelocity2 = changeVelocity2;
 
     randomGenerator = JMetalRandom.getInstance();
+
     this.evaluation = evaluation;
+    this.termination = termination ;
 
     dominanceComparator = new DominanceComparator<DoubleSolution>();
     localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
@@ -137,6 +144,16 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       deltaMax[i] = (problem.getUpperBound(i) - problem.getLowerBound(i)) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
+
+    algorithmStatusData = new HashMap<>() ;
+    observable = new DefaultObservable<>("SMPSO observable") ;
+  }
+
+  @Override
+  public void run() {
+    startTime = System.currentTimeMillis();
+    super.run();
+    totalComputingTime = System.currentTimeMillis() - startTime;
   }
 
   protected void updateLeadersDensityEstimator() {
@@ -145,19 +162,35 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected void initProgress() {
-    iterations = 1;
+    evaluations = swarmSize ;
     updateLeadersDensityEstimator();
+
+    algorithmStatusData.put("EVALUATIONS", evaluations);
+    algorithmStatusData.put("SWARM", getSwarm());
+    algorithmStatusData.put("LEADERS_ARCHIVE", leaders) ;
+    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
+
+    observable.setChanged();
+    observable.notifyObservers(algorithmStatusData);
   }
 
   @Override
   protected void updateProgress() {
-    iterations += 1;
+    evaluations += swarmSize ;
     updateLeadersDensityEstimator();
+
+    algorithmStatusData.put("EVALUATIONS", evaluations);
+    algorithmStatusData.put("SWARM", getSwarm());
+    algorithmStatusData.put("LEADERS_ARCHIVE", leaders) ;
+    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
+
+    observable.setChanged();
+    observable.notifyObservers(algorithmStatusData);
   }
 
   @Override
   protected boolean isStoppingConditionReached() {
-    return iterations >= maxIterations;
+    return termination.isMet(algorithmStatusData);
   }
 
   @Override
@@ -224,7 +257,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
         speed[i][var] =
             velocityConstriction(
                 constrictionCoefficient(c1, c2)
-                    * (inertiaWeight(iterations, maxIterations, wmax, wmin) * speed[i][var]
+                    * (weightMax * speed[i][var]
                         + c1 * r1 * (bestParticle.getVariable(var) - particle.getVariable(var))
                         + c2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var))),
                 deltaMax,
@@ -331,10 +364,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     }
   }
 
-  private double inertiaWeight(int iter, int miter, double wma, double wmin) {
-    return wma;
-  }
-
   @Override
   public String getName() {
     return "SMPSO";
@@ -345,21 +374,21 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     return "Speed contrained Multiobjective PSO";
   }
 
+  @Override
+  public Observable<Map<String, Object>> getObservable() {
+    return observable;
+  }
+
+  public long getTotalComputingTime() {
+    return totalComputingTime;
+  }
+
   /* Getters */
   public int getSwarmSize() {
     return swarmSize;
   }
 
-  public int getMaxIterations() {
-    return maxIterations;
-  }
-
-  public int getIterations() {
-    return iterations;
-  }
-
-  /* Setters */
-  public void setIterations(int iterations) {
-    this.iterations = iterations;
+  public int getEvaluations() {
+    return evaluations;
   }
 }
