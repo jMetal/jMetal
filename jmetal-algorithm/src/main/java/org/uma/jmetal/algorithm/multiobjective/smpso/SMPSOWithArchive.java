@@ -5,6 +5,7 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -25,6 +26,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class SMPSOWithArchive extends SMPSO {
   private Archive<DoubleSolution> archive;
+  private int numberOfSolutionsToTakeFromTheArchive ;
 
   public SMPSOWithArchive(
       DoubleProblem problem,
@@ -33,8 +35,8 @@ public class SMPSOWithArchive extends SMPSO {
       MutationOperator<DoubleSolution> mutationOperator,
       Evaluation<DoubleSolution> evaluation,
       Termination termination,
-      Archive<DoubleSolution> archive) {
-    super(
+      Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive) {
+    this(
         problem,
         swarmSize,
         leaders,
@@ -52,8 +54,7 @@ public class SMPSOWithArchive extends SMPSO {
         -1,
         -1,
         evaluation,
-        termination);
-    this.archive = archive;
+        termination, archive, numberOfSolutionsToTakeFromTheArchive);
   }
 
   /** Constructor */
@@ -76,7 +77,7 @@ public class SMPSOWithArchive extends SMPSO {
       double changeVelocity2,
       Evaluation<DoubleSolution> evaluation,
       Termination termination,
-      Archive<DoubleSolution> archive) {
+      Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive ) {
     super(
         problem,
         swarmSize,
@@ -96,6 +97,8 @@ public class SMPSOWithArchive extends SMPSO {
         changeVelocity2,
         evaluation,
         termination);
+    this.archive = archive ;
+    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
   }
 
   @Override
@@ -117,8 +120,11 @@ public class SMPSOWithArchive extends SMPSO {
 
   @Override
   public List<DoubleSolution> getResult() {
-    System.out.println(archive.getSolutionList().size()) ;
+    return SolutionListUtils.distanceBasedSubsetSelection(
+            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+  }
 
-    return archive.getSolutionList();
+  public Archive<DoubleSolution> getArchive() {
+    return archive;
   }
 }

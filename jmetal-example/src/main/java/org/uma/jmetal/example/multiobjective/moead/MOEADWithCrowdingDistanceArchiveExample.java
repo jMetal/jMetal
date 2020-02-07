@@ -105,11 +105,12 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
             selection,
             replacement,
             new TerminationByEvaluations(150000),
-            archive);
+            archive, 100);
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
+
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 

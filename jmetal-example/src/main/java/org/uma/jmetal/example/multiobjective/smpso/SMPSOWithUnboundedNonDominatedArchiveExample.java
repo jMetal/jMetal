@@ -52,12 +52,12 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>() ;
 
-    algorithm = new SMPSOWithArchive(problem, swarmSize, leadersArchive, mutation, evaluation, termination, externalArchive) ;
+    algorithm = new SMPSOWithArchive(problem, swarmSize, leadersArchive, mutation, evaluation, termination, externalArchive, swarmSize) ;
 
     algorithm.run();
 
-    List<DoubleSolution> population =
-            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), swarmSize);
+    List<DoubleSolution> population = algorithm.getResult() ;
+
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
