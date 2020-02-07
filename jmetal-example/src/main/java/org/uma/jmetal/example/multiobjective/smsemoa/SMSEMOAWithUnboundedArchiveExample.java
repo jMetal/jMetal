@@ -55,10 +55,6 @@ public class SMSEMOAWithUnboundedArchiveExample extends AbstractAlgorithmRunner 
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    double[] referencePoint = new double[] {1.1, 1.1, 1.1};
-
-    Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
-
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
     algorithm =
@@ -68,8 +64,6 @@ public class SMSEMOAWithUnboundedArchiveExample extends AbstractAlgorithmRunner 
             crossover,
             mutation,
             termination,
-            new PISAHypervolume<>(referencePoint),
-            ranking,
             archive);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);

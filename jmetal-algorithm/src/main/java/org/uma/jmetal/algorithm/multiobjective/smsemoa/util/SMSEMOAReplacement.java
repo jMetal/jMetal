@@ -33,7 +33,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
-    lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront) ;
+    lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
 
     List<S> resultPopulation = new ArrayList<>() ;
     for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {

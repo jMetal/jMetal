@@ -54,12 +54,8 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    double[] referencePoint = new double[] {1.1, 1.1, 1.1};
-
-    Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
-
     algorithm =
-        new SMSEMOA<>(problem, populationSize, crossover, mutation, termination, new PISAHypervolume<>(referencePoint), ranking);
+        new SMSEMOA<>(problem, populationSize, crossover, mutation, termination);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
