@@ -1,9 +1,7 @@
-package org.uma.jmetal.algorithm.multiobjective.moead;
+package org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -137,8 +135,6 @@ public class MOEADIT {
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.35
     double hv = hypervolume.evaluate(population);
-
-    System.out.println(hv) ;
 
     assertTrue(hv > 0.35);
 
