@@ -129,7 +129,8 @@ public class PPSN2020Study {
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
             termination,
-            archive);
+            archive,
+            100);
 
     return algorithm;
   }
@@ -179,7 +180,8 @@ public class PPSN2020Study {
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
             evaluation,
             termination,
-            externalArchive);
+            externalArchive,
+            100);
 
     return algorithm;
   }

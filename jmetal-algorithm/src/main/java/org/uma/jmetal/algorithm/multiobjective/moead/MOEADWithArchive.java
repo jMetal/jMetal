@@ -26,14 +26,14 @@ import java.util.Map;
 
 /**
  * Class implementing a generic MOEA/D algorithm using an external archive. The archive is updated
- * with the evaluated solutions and the solution * list it contains is returned as algorithm
- * result.
+ * with the evaluated solutions and the a subset of solution list it contains is returned as
+ * algorithm result.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
-  private Archive<S> archive ;
-  private int numberOfSolutionsToTakeFromTheArchive ;
+  private Archive<S> archive;
+  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public MOEADWithArchive(
@@ -44,12 +44,20 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
       MatingPoolSelection<S> selection,
       Replacement<S> replacement,
       Termination termination,
-      Archive<S> archive, int numberOfSolutionsToTakeFromTheArchive ) {
+      Archive<S> archive,
+      int numberOfSolutionsToTakeFromTheArchive) {
 
-    super(problem, populationSize, initialSolutionsCreation, variation, selection, replacement, termination) ;
+    super(
+        problem,
+        populationSize,
+        initialSolutionsCreation,
+        variation,
+        selection,
+        replacement,
+        termination);
 
-    this.archive = archive ;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
+    this.archive = archive;
+    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   @Override
@@ -65,10 +73,10 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
   @Override
   public List<S> getResult() {
     return SolutionListUtils.distanceBasedSubsetSelection(
-            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
   }
 
   public Archive<S> getArchive() {
-    return archive ;
+    return archive;
   }
 }

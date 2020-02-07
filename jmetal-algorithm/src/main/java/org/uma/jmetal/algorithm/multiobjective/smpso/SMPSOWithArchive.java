@@ -18,8 +18,8 @@ import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import java.util.*;
 
 /**
- * This class implements the SMPSO algorithm described in: SMPSO: A new PSO-based metaheuristic for
- * multi-objective optimization MCDM 2009. DOI: http://dx.doi.org/10.1109/MCDM.2009.4938830
+ * Variant of SMPSO using an external archive. The archive is updated with the evaluated solutions
+ * and a subset of the solution list it contains is returned as algorithm result.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

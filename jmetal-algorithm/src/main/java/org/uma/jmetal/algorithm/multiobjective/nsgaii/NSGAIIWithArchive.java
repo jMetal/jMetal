@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Variant of NSGA-II using an external archive. The archive is updated with the evaluated solutions
- * and the solution list it contains is returned as algorithm result.
+ * and a subset of the solution list it contains is returned as algorithm result.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
