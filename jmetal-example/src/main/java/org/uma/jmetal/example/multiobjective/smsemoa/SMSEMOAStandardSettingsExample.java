@@ -42,7 +42,7 @@ public class SMSEMOAStandardSettingsExample extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

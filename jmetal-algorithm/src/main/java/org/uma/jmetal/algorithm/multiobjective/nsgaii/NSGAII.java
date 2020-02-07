@@ -197,9 +197,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> newPopulation = replacement.replace(population, offspringPopulation);
-
-    return newPopulation;
+    return replacement.replace(population, offspringPopulation);
   }
 
   @Override

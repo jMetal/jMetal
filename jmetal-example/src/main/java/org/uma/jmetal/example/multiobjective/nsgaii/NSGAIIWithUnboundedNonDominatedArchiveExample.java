@@ -35,8 +35,8 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
+    String referenceParetoFront = "referenceFronts/DTLZ4.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
