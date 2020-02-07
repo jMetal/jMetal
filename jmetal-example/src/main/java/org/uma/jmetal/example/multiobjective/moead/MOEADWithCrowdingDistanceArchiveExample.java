@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADWithArchive;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
@@ -16,6 +17,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
@@ -31,7 +34,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
+public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -39,7 +42,7 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD<DoubleSolution> algorithm;
+    MOEADWithArchive<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
@@ -49,8 +52,10 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
+    int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> subProblemIdGenerator =
+        new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -64,7 +69,7 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
 
     DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
-            1, crossover, mutation, subProblemIdGenerator);
+            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
@@ -89,15 +94,18 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize);
+
     algorithm =
-        new MOEAD<>(
+        new MOEADWithArchive<>(
             problem,
             populationSize,
             new RandomSolutionsCreation<>(problem, populationSize),
             variation,
             selection,
             replacement,
-            new TerminationByEvaluations(150000));
+            new TerminationByEvaluations(150000),
+            archive);
 
     algorithm.run();
 

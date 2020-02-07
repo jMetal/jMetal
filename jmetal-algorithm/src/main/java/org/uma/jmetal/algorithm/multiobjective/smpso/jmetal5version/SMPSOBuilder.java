@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.smpso;
+package org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version;
 
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;

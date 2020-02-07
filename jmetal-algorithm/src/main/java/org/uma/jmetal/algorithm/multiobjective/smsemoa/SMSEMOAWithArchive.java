@@ -2,12 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.smsemoa.util.SMSEMOAReplacement;
-import org.uma.jmetal.component.densityestimator.impl.HypervolumeContributionDensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.component.replacement.Replacement;
-import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -16,37 +12,52 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.archive.Archive;
 
-import java.util.*;
+import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class SMSEMOA<S extends Solution<?>> extends NSGAII<S> {
+public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
+  private Archive<S> archive;
 
   /** Constructor */
-  public SMSEMOA(
+  public SMSEMOAWithArchive(
       Problem<S> problem,
       int populationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
       Hypervolume<S> hypervolume,
-      Ranking<S> ranking) {
-    super(problem, populationSize, 1, crossoverOperator, mutationOperator, termination, ranking);
-
-    this.replacement =
-        new SMSEMOAReplacement<>(ranking, hypervolume);
-
-    this.selection = new RandomMatingPoolSelection<>(variation.getMatingPoolSize());
+      Ranking<S> ranking,
+      Archive<S> archive) {
+    super(
+        problem,
+        populationSize,
+        crossoverOperator,
+        mutationOperator,
+        termination,
+        hypervolume,
+        ranking);
+    this.archive = archive;
   }
 
-  /** Constructor */
-  public SMSEMOA(
+  /**
+   * Constructor
+   *
+   * @param problem
+   * @param populationSize
+   * @param crossoverOperator
+   * @param mutationOperator
+   * @param termination
+   * @param archive
+   */
+  public SMSEMOAWithArchive(
       Problem<S> problem,
       int populationSize,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
-      Termination termination) {
+      Termination termination,
+      Archive<S> archive) {
     this(
         problem,
         populationSize,
@@ -54,16 +65,22 @@ public class SMSEMOA<S extends Solution<?>> extends NSGAII<S> {
         mutationOperator,
         termination,
         new PISAHypervolume<>(),
-        new FastNonDominatedSortRanking<>());
+        new FastNonDominatedSortRanking<>(),
+        archive);
   }
 
   @Override
-  public String getName() {
-    return "SMS-EMOA";
+  protected List<S> evaluatePopulation(List<S> solutionList) {
+    List<S> evaluatedSolutionList = super.evaluatePopulation(solutionList);
+    for (S solution : evaluatedSolutionList) {
+      archive.add(solution);
+    }
+
+    return evaluatedSolutionList;
   }
 
   @Override
-  public String getDescription() {
-    return "SMS-EMOA";
+  public List<S> getResult() {
+    return archive.getSolutionList();
   }
 }

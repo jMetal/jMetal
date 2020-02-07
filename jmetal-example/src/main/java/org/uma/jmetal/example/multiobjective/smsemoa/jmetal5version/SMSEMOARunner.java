@@ -1,7 +1,7 @@
-package org.uma.jmetal.example.multiobjective;
+package org.uma.jmetal.example.multiobjective.smsemoa.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOABuilder;
+import org.uma.jmetal.algorithm.multiobjective.smsemoa.jmetal5version.SMSEMOABuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -17,6 +17,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -71,8 +72,8 @@ public class SMSEMOARunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMSEMOABuilder<DoubleSolution>(problem, crossover, mutation)
         .setSelectionOperator(selection)
-        .setMaxEvaluations(50000)
-        .setPopulationSize(200)
+        .setMaxEvaluations(25000)
+        .setPopulationSize(100)
         .setHypervolumeImplementation(hypervolume)
         .build() ;
 

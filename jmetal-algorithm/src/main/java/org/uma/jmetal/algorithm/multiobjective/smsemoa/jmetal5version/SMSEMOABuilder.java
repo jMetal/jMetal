@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.smsemoa;
+package org.uma.jmetal.algorithm.multiobjective.smsemoa.jmetal5version;
 
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;

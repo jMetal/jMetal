@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADWithArchive;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.util.MOEADUtils;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
@@ -14,8 +15,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
@@ -31,7 +35,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
+public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -39,18 +43,20 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD<DoubleSolution> algorithm;
+    MOEADWithArchive<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
+    int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> subProblemIdGenerator =
+        new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -64,12 +70,17 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
 
     DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
-            1, crossover, mutation, subProblemIdGenerator);
+            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
+            new WeightVectorNeighborhood<>(
+                    populationSize,
+                    problem.getNumberOfObjectives(),
+                    neighborhoodSize,
+                    "/MOEAD_Weights/W3D_300.dat");
+
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
@@ -89,19 +100,25 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
+    Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
+
     algorithm =
-        new MOEAD<>(
+        new MOEADWithArchive<>(
             problem,
             populationSize,
             new RandomSolutionsCreation<>(problem, populationSize),
             variation,
             selection,
             replacement,
-            new TerminationByEvaluations(150000));
+            new TerminationByEvaluations(50000),
+            archive);
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population =
+            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100) ;
+            //MOEADUtils.getSubsetOfEvenlyDistributedSolutions(algorithm.getResult(), 100) ;
+
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 

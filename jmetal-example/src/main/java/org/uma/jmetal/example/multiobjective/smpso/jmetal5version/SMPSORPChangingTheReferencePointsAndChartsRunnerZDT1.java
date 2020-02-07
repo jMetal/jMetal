@@ -1,12 +1,12 @@
-package org.uma.jmetal.example.multiobjective.smpso;
+package org.uma.jmetal.example.multiobjective.smpso.jmetal5version;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSORP;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.ebes.Ebes;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class SMPSORPChangingTheReferencePointsAndChartsRunner {
+public class SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1 {
 
   /**
    * Program to run the SMPSORP algorithm allowing to change a reference point interactively.
@@ -46,7 +46,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     MutationOperator<DoubleSolution> mutation;
     String referenceParetoFront ;
 
-    problem = new Ebes("ebes/Mobile_Bridge_25N_35B_8G_16OrdZXY.ebe", new String[]{"W", "D"}) ;
+    problem = new ZDT1() ;
     referenceParetoFront = null ;
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
@@ -57,7 +57,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxIterations = 2500;
+    int maxIterations = 2500000;
     int swarmSize = 100;
 
     List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
