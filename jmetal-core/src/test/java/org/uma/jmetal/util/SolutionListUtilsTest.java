@@ -10,12 +10,14 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 import java.util.*;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -32,8 +34,7 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method findBestSolution *** */
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
@@ -43,8 +44,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
@@ -55,8 +55,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The comparator is null"));
+    exception.expect(NullParameterException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
@@ -113,8 +112,7 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method findIndexOfBestSolution *** */
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<Solution<?>> comparator = mock(Comparator.class);
@@ -124,8 +122,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     @SuppressWarnings("unchecked")
     Comparator<DoubleSolution> comparator = mock(Comparator.class);
@@ -136,8 +133,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldFindIndexOfBestSolutionRaiseAnExceptionIfTheComparatorIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The comparator is null"));
+    exception.expect(NullParameterException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
     list.add(mock(DoubleSolution.class));
@@ -215,16 +211,14 @@ public class SolutionListUtilsTest {
   /** *** Unit tests to method selectNRandomDifferentSolutions *** */
   @Test
   public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
+    exception.expect(NullParameterException.class);
 
     SolutionListUtils.selectNRandomDifferentSolutions(1, null);
   }
 
   @Test
   public void shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
+    exception.expect(EmptyCollectionException.class);
 
     List<DoubleSolution> list = new ArrayList<>();
 
@@ -242,10 +236,7 @@ public class SolutionListUtilsTest {
   @Test
   public void
       shouldSelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString(
-            "The solution list size (1) is less than " + "the number of requested solutions (2)"));
+    exception.expect(InvalidConditionException.class);
 
     List<Solution<?>> list = new ArrayList<>(1);
     list.add(mock(Solution.class));
@@ -256,10 +247,7 @@ public class SolutionListUtilsTest {
   @Test
   public void
       shouldelectNRandomDifferentSolutionsRaiseAnExceptionIfTheListSizeIsTwoAndFourSolutionsAreRequested() {
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString(
-            "The solution list size (2) is less than " + "the number of requested solutions (4)"));
+    exception.expect(InvalidConditionException.class);
 
     List<Solution<?>> list = new ArrayList<>(2);
     list.add(mock(Solution.class));
@@ -449,7 +437,7 @@ public class SolutionListUtilsTest {
     double[] maxValue = new double[] {20, 20};
 
     List<DoubleSolution> normalizedSolutions =
-        (List<DoubleSolution>) SolutionListUtils.normalize(solutions, minValue, maxValue);
+        (List<DoubleSolution>) SolutionListUtils.normalizeSolutionList(solutions, minValue, maxValue);
 
     assertNotSame(normalizedSolutions, solutions);
     assertEquals(1.0, normalizedSolutions.get(0).getObjective(0), EPSILON);
@@ -496,6 +484,59 @@ public class SolutionListUtilsTest {
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4);
     assertEquals(0.5, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);
+  }
+
+  @Test
+  public void shouldNormalizeSolutionListWorkProperly() {
+    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DoubleSolution s1 = problem.createSolution();
+    s1.setObjective(0, 0.0);
+    s1.setObjective(1, 2.0);
+    DoubleSolution s2 = problem.createSolution();
+    s2.setObjective(0, 1.25);
+    s2.setObjective(1, 2.75);
+    DoubleSolution s3 = problem.createSolution();
+    s3.setObjective(0, 2.5);
+    s3.setObjective(1, 2.5);
+    DoubleSolution s4 = problem.createSolution();
+    s4.setObjective(0, 3.75);
+    s4.setObjective(1, 2.25);
+    DoubleSolution s5 = problem.createSolution();
+    s5.setObjective(0, 4.0);
+    s5.setObjective(1, 3.0);
+
+    List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4, s5);
+    List<DoubleSolution> normalizedSolutionList = SolutionListUtils.normalizeSolutionList(solutionList) ;
+    assertEquals(solutionList.size(), normalizedSolutionList.size());
+    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(0), EPSILON);
+    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(1), EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(0), EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(1), EPSILON);
+  }
+
+  @Test
+  public void shouldDistanceBasedSubsetSelectionWorkProperly() {
+    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DoubleSolution s1 = problem.createSolution();
+    s1.setObjective(0, 0.0);
+    s1.setObjective(1, 3.0);
+    DoubleSolution s2 = problem.createSolution();
+    s2.setObjective(0, 0.25);
+    s2.setObjective(1, 2.75);
+    DoubleSolution s3 = problem.createSolution();
+    s3.setObjective(0, 0.5);
+    s3.setObjective(1, 2.5);
+    DoubleSolution s4 = problem.createSolution();
+    s4.setObjective(0, 0.75);
+    s4.setObjective(1, 2.25);
+    DoubleSolution s5 = problem.createSolution();
+    s5.setObjective(0, 1.0);
+    s5.setObjective(1, 2.0);
+
+    List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4, s5);
+
+    List<DoubleSolution> resultList = SolutionListUtils.distanceBasedSubsetSelection(solutionList, 3) ;
+    assertEquals(3, resultList.size());
   }
 
   /** TODO */

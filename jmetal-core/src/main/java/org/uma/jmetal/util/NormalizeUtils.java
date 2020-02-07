@@ -1,5 +1,7 @@
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.util.checking.Check;
+
 /**
  * Class responsible for normalizing values
  *
@@ -34,9 +36,7 @@ public class NormalizeUtils {
   public static double normalize(
       double value, double minRangeValue, double maxRangeValue, double min, double max) {
 
-    if (max == min) {
-      throw new JMetalException("The max minus min should not be zero");
-    }
+    Check.that(max != min, "The max minus min should not be zero");
 
     return minRangeValue + (((value - min) * (maxRangeValue - minRangeValue)) / (max - min));
   }

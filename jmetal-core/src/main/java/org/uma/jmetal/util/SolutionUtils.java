@@ -75,7 +75,7 @@ public class SolutionUtils {
     return Math.sqrt(distance);
   }
 
-  static <S extends Solution<?>> double distanceBetweenObjectives_normalize(
+  static <S extends Solution<?>> double normalizedDistanceBetweenObjectives(
       S firstSolution, S secondSolution, double maxs[], double mins[]) {
 
     double diff;
@@ -86,8 +86,7 @@ public class SolutionUtils {
           (firstSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]))
               - (secondSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]));
       distance += Math.pow(diff, 2.0);
-      // distance += Math.abs(diff);//<----- solo pa ver que carajos pasa
-    } // for
+    }
 
     return Math.sqrt(distance);
   }
@@ -152,8 +151,7 @@ public class SolutionUtils {
    * @param maxValues maximum value for each objective
    * @return normalized solution
    */
-  public static Solution<?> normalize(
-      Solution<?> solution, double[] minValues, double[] maxValues) {
+  public static <S extends Solution<?>> S normalize(S solution, double[] minValues, double[] maxValues) {
 
     if (solution == null) {
       throw new JMetalException("The solution should not be null");
@@ -176,7 +174,7 @@ public class SolutionUtils {
           "The number of objectives should be the same to min and max length");
     }
 
-    Solution<?> copy = (Solution<?>) solution.copy();
+    S copy = (S) solution.copy();
 
     for (int i = 0; i < copy.getNumberOfObjectives(); i++) {
       copy.setObjective(
