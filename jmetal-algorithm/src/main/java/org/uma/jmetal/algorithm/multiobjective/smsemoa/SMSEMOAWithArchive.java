@@ -18,7 +18,7 @@ import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
-  private Archive<S> archive ;
+  private Archive<S> archive;
 
   /** Constructor */
   public SMSEMOAWithArchive(
@@ -30,8 +30,43 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
       Hypervolume<S> hypervolume,
       Ranking<S> ranking,
       Archive<S> archive) {
-    super(problem, populationSize, crossoverOperator, mutationOperator, termination, hypervolume, ranking);
-    this.archive = archive ;
+    super(
+        problem,
+        populationSize,
+        crossoverOperator,
+        mutationOperator,
+        termination,
+        hypervolume,
+        ranking);
+    this.archive = archive;
+  }
+
+  /**
+   * Constructor
+   *
+   * @param problem
+   * @param populationSize
+   * @param crossoverOperator
+   * @param mutationOperator
+   * @param termination
+   * @param archive
+   */
+  public SMSEMOAWithArchive(
+      Problem<S> problem,
+      int populationSize,
+      CrossoverOperator<S> crossoverOperator,
+      MutationOperator<S> mutationOperator,
+      Termination termination,
+      Archive<S> archive) {
+    this(
+        problem,
+        populationSize,
+        crossoverOperator,
+        mutationOperator,
+        termination,
+        new PISAHypervolume<>(),
+        new FastNonDominatedSortRanking<>(),
+        archive);
   }
 
   @Override

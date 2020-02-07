@@ -1,7 +1,7 @@
-package org.uma.jmetal.example.multiobjective.smpso;
+package org.uma.jmetal.example.multiobjective.smpso.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSORP;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -20,14 +20,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SMPSORPWithOneReferencePointRunner {
+public class SMPSORPWithMultipleReferencePointsRunner {
   /**
-   * Program to run the SMPSORP algorithm with one reference point. SMPSORP is described in
-   *  "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
-   *  * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
-   *  * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
-   *  * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
-   *  * pp. 298-310. 2018
+   * Program to run the SMPSORP algorithm with two reference points. SMPSORP is described in "Extending
+   * the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
+   * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
+   * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
+   * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
+   *  pp. 298-310. 2018"
    *
    * @author Antonio J. Nebro
    */
@@ -40,13 +40,14 @@ public class SMPSORPWithOneReferencePointRunner {
     if (args.length == 1) {
       problemName = args[0];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
     }
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
     referencePoints.add(Arrays.asList(0.2, 0.8));
+    referencePoints.add(Arrays.asList(0.7, 0.4));
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -89,6 +90,13 @@ public class SMPSORPWithOneReferencePointRunner {
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
             .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
+
+    for (int i = 0; i < archivesWithReferencePoints.size(); i++) {
+      new SolutionListOutput(archivesWithReferencePoints.get(i).getSolutionList())
+              .setVarFileOutputContext(new DefaultFileOutputContext("VAR" + i + ".tsv"))
+              .setFunFileOutputContext(new DefaultFileOutputContext("FUN" + i + ".tsv"))
+              .print();
+    }
 
     System.exit(0);
   }

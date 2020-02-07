@@ -3,6 +3,7 @@ package org.uma.jmetal.example.multiobjective.smsemoa;
 import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOA;
 import org.uma.jmetal.component.densityestimator.impl.HypervolumeContributionDensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
+import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
@@ -38,10 +39,10 @@ public class SMSEMOAStandardSettingsExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "referenceFronts/ZDT4.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -55,19 +56,13 @@ public class SMSEMOAStandardSettingsExample extends AbstractAlgorithmRunner {
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    double[] referencePoint = new double[] {1.1, 1.1, 1.1};
-
-    Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
-
     algorithm =
         new SMSEMOA<>(
             problem,
             populationSize,
             crossover,
             mutation,
-            termination,
-            new PISAHypervolume<>(referencePoint),
-            ranking);
+            termination);
 
     algorithm.run();
 

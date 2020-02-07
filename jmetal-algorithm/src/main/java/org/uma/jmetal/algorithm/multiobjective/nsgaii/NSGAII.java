@@ -35,15 +35,13 @@ import java.util.Map;
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
     implements ObservableEntity {
-  private int evaluations;
-  private int populationSize;
-  private int offspringPopulationSize;
+  protected int evaluations;
+  protected int populationSize;
+  protected int offspringPopulationSize;
 
   protected SelectionOperator<List<S>, S> selectionOperator;
   protected CrossoverOperator<S> crossoverOperator;
   protected MutationOperator<S> mutationOperator;
-
-  protected Map<String, Object> algorithmStatusData;
 
   protected InitialSolutionsCreation<S> initialSolutionsCreation;
   protected Termination termination;
@@ -52,10 +50,11 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
   protected Variation<S> variation;
   protected MatingPoolSelection<S> selection;
 
-  private long startTime;
-  private long totalComputingTime;
+  protected long startTime;
+  protected long totalComputingTime;
 
-  private Observable<Map<String, Object>> observable;
+  protected Map<String, Object> algorithmStatusData;
+  protected Observable<Map<String, Object>> observable;
 
   /** Constructor */
   public NSGAII(
@@ -197,9 +196,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    List<S> newPopulation = replacement.replace(population, offspringPopulation);
-
-    return newPopulation;
+    return replacement.replace(population, offspringPopulation);
   }
 
   @Override

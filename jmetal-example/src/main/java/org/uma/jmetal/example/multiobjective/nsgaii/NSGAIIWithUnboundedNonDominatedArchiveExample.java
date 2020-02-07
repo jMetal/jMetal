@@ -35,8 +35,8 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
+    String referenceParetoFront = "referenceFronts/DTLZ4.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -71,7 +71,7 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     algorithm.run();
 
     List<DoubleSolution> population =
-        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), populationSize);
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
