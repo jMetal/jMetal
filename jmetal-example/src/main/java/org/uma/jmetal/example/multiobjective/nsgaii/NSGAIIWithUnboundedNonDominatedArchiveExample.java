@@ -66,12 +66,12 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
             mutation,
             termination,
             ranking,
-            archive);
+            archive,
+            populationSize);
 
     algorithm.run();
 
-    List<DoubleSolution> population =
-        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), populationSize);
+    List<DoubleSolution> population = algorithm.getResult();
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());

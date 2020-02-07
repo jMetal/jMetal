@@ -13,6 +13,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.observable.Observable;
@@ -32,6 +33,7 @@ import java.util.Map;
  */
 public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
   private Archive<S> archive ;
+  private int numberOfSolutionsToTakeFromTheArchive ;
 
   /** Constructor */
   public MOEADWithArchive(
@@ -42,11 +44,12 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
       MatingPoolSelection<S> selection,
       Replacement<S> replacement,
       Termination termination,
-      Archive<S> archive) {
+      Archive<S> archive, int numberOfSolutionsToTakeFromTheArchive ) {
 
     super(problem, populationSize, initialSolutionsCreation, variation, selection, replacement, termination) ;
 
     this.archive = archive ;
+    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
   }
 
   @Override
@@ -61,6 +64,11 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return SolutionListUtils.distanceBasedSubsetSelection(
+            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+  }
+
+  public Archive<S> getArchive() {
+    return archive ;
   }
 }

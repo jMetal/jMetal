@@ -7,18 +7,20 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 
 import java.util.List;
 
 /**
- * Variant of NSGA-II using an external archive. The archive is updated with the evaluated solutions and the solution
- * list it contains is returned as algorithm result.
+ * Variant of NSGA-II using an external archive. The archive is updated with the evaluated solutions
+ * and the solution list it contains is returned as algorithm result.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
   private Archive<S> archive;
+  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public NSGAIIWithArchive(
@@ -29,7 +31,8 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
       MutationOperator<S> mutationOperator,
       Termination termination,
       Ranking<S> ranking,
-      Archive<S> archive) {
+      Archive<S> archive,
+      int numberOfSolutionsToTakeFromTheArchive) {
     super(
         problem,
         populationSize,
@@ -40,6 +43,7 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
         ranking);
 
     this.archive = archive;
+    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   /** Constructor */
@@ -50,7 +54,8 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
-      Archive<S> archive) {
+      Archive<S> archive,
+      int numberOfSolutionsToTakeFromTheArchive) {
     this(
         problem,
         populationSize,
@@ -59,7 +64,8 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
         mutationOperator,
         termination,
         new FastNonDominatedSortRanking<>(),
-        archive);
+        archive,
+        numberOfSolutionsToTakeFromTheArchive);
   }
 
   @Override
@@ -74,6 +80,11 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return SolutionListUtils.distanceBasedSubsetSelection(
+        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+  }
+
+  public Archive<S> getArchive() {
+    return archive;
   }
 }

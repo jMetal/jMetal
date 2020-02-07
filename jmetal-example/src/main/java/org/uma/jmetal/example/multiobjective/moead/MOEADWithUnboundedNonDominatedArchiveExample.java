@@ -111,12 +111,11 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
             selection,
             replacement,
             new TerminationByEvaluations(50000),
-            archive);
+            archive, 100);
 
     algorithm.run();
 
-    List<DoubleSolution> population =
-            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100) ;
+    List<DoubleSolution> population = algorithm.getResult() ;
             //MOEADUtils.getSubsetOfEvenlyDistributedSolutions(algorithm.getResult(), 100) ;
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");

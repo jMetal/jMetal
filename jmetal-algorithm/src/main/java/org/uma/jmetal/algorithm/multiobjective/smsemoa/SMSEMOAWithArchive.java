@@ -12,6 +12,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
   private Archive<S> archive;
+  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public SMSEMOAWithArchive(
@@ -29,7 +31,8 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
       Termination termination,
       Hypervolume<S> hypervolume,
       Ranking<S> ranking,
-      Archive<S> archive) {
+      Archive<S> archive,
+      int numberOfSolutionsToTakeFromTheArchive) {
     super(
         problem,
         populationSize,
@@ -39,6 +42,7 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
         hypervolume,
         ranking);
     this.archive = archive;
+    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   /**
@@ -57,7 +61,8 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
-      Archive<S> archive) {
+      Archive<S> archive,
+      int numberOfSolutionsToTakeFromTheArchive) {
     this(
         problem,
         populationSize,
@@ -66,7 +71,8 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
         termination,
         new PISAHypervolume<>(),
         new FastNonDominatedSortRanking<>(),
-        archive);
+        archive,
+        numberOfSolutionsToTakeFromTheArchive);
   }
 
   @Override
@@ -81,6 +87,11 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
 
   @Override
   public List<S> getResult() {
-    return archive.getSolutionList();
+    return SolutionListUtils.distanceBasedSubsetSelection(
+        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+  }
+
+  public Archive<S> getArchive() {
+    return archive;
   }
 }
