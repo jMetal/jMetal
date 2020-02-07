@@ -1,15 +1,12 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
-import com.fuzzylite.term.Term;
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
-import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOWithArchive;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.termination.impl.TerminationByComputingTime;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.component.termination.impl.TerminationByKeyboard;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -17,9 +14,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -31,14 +30,14 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
+public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    SMPSO algorithm;
+    SMPSOWithArchive algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
-    String referenceParetoFront = "referenceFronts/DTLZ3.3D.pf" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7";
+    String referenceParetoFront = "referenceFronts/DTLZ7.3D.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -50,13 +49,16 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
-    Termination termination = new TerminationByEvaluations(25000) ;
+    Termination termination = new TerminationByKeyboard(25000) ;
 
-    algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
+    Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>() ;
+
+    algorithm = new SMPSOWithArchive(problem, swarmSize, leadersArchive, mutation, evaluation, termination, externalArchive) ;
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population =
+            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), swarmSize);
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 

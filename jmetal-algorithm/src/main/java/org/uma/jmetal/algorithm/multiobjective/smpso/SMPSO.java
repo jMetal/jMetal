@@ -24,45 +24,45 @@ import java.util.*;
  */
 @SuppressWarnings("serial")
 public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, List<DoubleSolution>> implements ObservableEntity {
-  private DoubleProblem problem;
+  protected DoubleProblem problem;
 
-  private double c1Max;
-  private double c1Min;
-  private double c2Max;
-  private double c2Min;
-  private double r1Max;
-  private double r1Min;
-  private double r2Max;
-  private double r2Min;
-  private double weightMax;
-  private double weightMin;
-  private double changeVelocity1;
-  private double changeVelocity2;
+  protected double c1Max;
+  protected double c1Min;
+  protected double c2Max;
+  protected double c2Min;
+  protected double r1Max;
+  protected double r1Min;
+  protected double r2Max;
+  protected double r2Min;
+  protected double weightMax;
+  protected double weightMin;
+  protected double changeVelocity1;
+  protected double changeVelocity2;
 
-  private int swarmSize;
-  private int evaluations ;
+  protected int swarmSize;
+  protected int evaluations ;
 
-  private GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
-  private double[][] speed;
+  protected GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest;
+  protected double[][] speed;
 
-  private JMetalRandom randomGenerator;
+  protected JMetalRandom randomGenerator;
 
-  private BoundedArchive<DoubleSolution> leaders;
-  private Comparator<DoubleSolution> dominanceComparator;
+  protected BoundedArchive<DoubleSolution> leaders;
+  protected Comparator<DoubleSolution> dominanceComparator;
 
-  private MutationOperator<DoubleSolution> mutation;
+  protected MutationOperator<DoubleSolution> mutation;
 
-  private double deltaMax[];
-  private double deltaMin[];
+  protected double deltaMax[];
+  protected double deltaMin[];
 
   protected Evaluation<DoubleSolution> evaluation;
   protected Termination termination;
 
-  private long startTime;
-  private long totalComputingTime;
+  protected long startTime;
+  protected long totalComputingTime;
 
   protected Map<String, Object> algorithmStatusData;
-  private Observable<Map<String, Object>> observable;
+  protected Observable<Map<String, Object>> observable;
 
   public SMPSO(
       DoubleProblem problem,
