@@ -63,7 +63,8 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
                     crossover,
                     mutation,
                     termination,
-                    archive);
+                    archive,
+                    populationSize);
 
     algorithm.run();
 
