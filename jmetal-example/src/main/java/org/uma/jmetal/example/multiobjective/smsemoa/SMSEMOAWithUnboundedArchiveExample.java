@@ -59,12 +59,7 @@ public class SMSEMOAWithUnboundedArchiveExample extends AbstractAlgorithmRunner 
 
     algorithm =
         new SMSEMOAWithArchive<>(
-            problem,
-            populationSize,
-            crossover,
-            mutation,
-            termination,
-            archive, populationSize);
+            problem, populationSize, crossover, mutation, termination, archive, populationSize);
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
 
@@ -72,7 +67,7 @@ public class SMSEMOAWithUnboundedArchiveExample extends AbstractAlgorithmRunner 
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
+    List<DoubleSolution> population = algorithm.getResult();
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
