@@ -17,7 +17,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
 
-/** Created by Antonio J. Nebro on 04/10/14. Modified by Juanjo 13/03/15 */
+/** @author Antonio J. Nebro */
 public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
