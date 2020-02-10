@@ -7,6 +7,8 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOWithArchive;
+import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOA;
+import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOAWithArchive;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.termination.Termination;
@@ -38,8 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class PPSN2020Study {
-  private static final int INDEPENDENT_RUNS = 5;
+public class PPSN20203DStudy {
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -96,7 +98,7 @@ public class PPSN2020Study {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new NSGAII<>(
@@ -121,7 +123,7 @@ public class PPSN2020Study {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
@@ -139,6 +141,53 @@ public class PPSN2020Study {
     return algorithm;
   }
 
+  public static Algorithm<List<DoubleSolution>> createSMSEMOA(Problem<DoubleSolution> problem) {
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+
+    int populationSize = 100;
+
+    Termination termination = new TerminationByEvaluations(50000);
+
+    Algorithm<List<DoubleSolution>> algorithm =
+        new SMSEMOA<>(
+            problem,
+            populationSize,
+            new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
+            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            termination);
+
+    return algorithm;
+  }
+
+  public static Algorithm<List<DoubleSolution>> createSMSEMOAWithArchive(
+      Problem<DoubleSolution> problem) {
+    double crossoverProbability = 0.9;
+    double crossoverDistributionIndex = 20.0;
+
+    double mutationProbability = 1.0 / problem.getNumberOfVariables();
+    double mutationDistributionIndex = 20.0;
+
+    int populationSize = 100;
+
+    Termination termination = new TerminationByEvaluations(50000);
+
+    Algorithm<List<DoubleSolution>> algorithm =
+        new SMSEMOAWithArchive<>(
+            problem,
+            populationSize,
+            new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
+            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            termination,
+            new NonDominatedSolutionListArchive<>(),
+            100);
+
+    return algorithm;
+  }
+
   public static Algorithm<List<DoubleSolution>> createSMPSO(Problem<DoubleSolution> problem) {
     int swarmSize = 100;
     BoundedArchive<DoubleSolution> leadersArchive =
@@ -148,7 +197,7 @@ public class PPSN2020Study {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new SMPSO(
@@ -171,7 +220,7 @@ public class PPSN2020Study {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 25000;
+    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -187,11 +236,11 @@ public class PPSN2020Study {
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "MOEAD_Weights");
-
     return algorithm;
   }
 
-  public static Algorithm<List<DoubleSolution>> createMOEADDEWithArchive(Problem<DoubleSolution> problem) {
+  public static Algorithm<List<DoubleSolution>> createMOEADDEWithArchive(
+      Problem<DoubleSolution> problem) {
     int populationSize = 300;
 
     double cr = 1.0;
@@ -200,7 +249,7 @@ public class PPSN2020Study {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 25000;
+    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -218,7 +267,6 @@ public class PPSN2020Study {
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "MOEAD_Weights", externalArchive, 100);
-
     return algorithm;
   }
 
@@ -232,7 +280,7 @@ public class PPSN2020Study {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
@@ -273,20 +321,29 @@ public class PPSN2020Study {
                 run));
         algorithms.add(
             new ExperimentAlgorithm<>(
-                createSMPSO(problemList.get(i).getProblem()), "SMPSO", problemList.get(i), run));
+                createMOEADDE(problemList.get(i).getProblem()), "MOEAD", problemList.get(i), run));
         algorithms.add(
             new ExperimentAlgorithm<>(
-                createSMPSOWithExternalArchive(problemList.get(i).getProblem()),
-                "SMPSOA",
+                createMOEADDEWithArchive(problemList.get(i).getProblem()),
+                "MOEADA",
                 problemList.get(i),
                 run));
         algorithms.add(
                 new ExperimentAlgorithm<>(
-                        createMOEADDE(problemList.get(i).getProblem()), "MOEAD", problemList.get(i), run));
+                        createSMPSO(problemList.get(i).getProblem()), "SMPSO", problemList.get(i), run));
         algorithms.add(
                 new ExperimentAlgorithm<>(
-                        createMOEADDEWithArchive(problemList.get(i).getProblem()),
-                        "MOEADA",
+                        createSMPSOWithExternalArchive(problemList.get(i).getProblem()),
+                        "SMPSOA",
+                        problemList.get(i),
+                        run));
+        algorithms.add(
+                new ExperimentAlgorithm<>(
+                        createSMSEMOA(problemList.get(i).getProblem()), "SMSEMOA", problemList.get(i), run));
+        algorithms.add(
+                new ExperimentAlgorithm<>(
+                        createSMSEMOAWithArchive(problemList.get(i).getProblem()),
+                        "SMPSOAA",
                         problemList.get(i),
                         run));
       }
