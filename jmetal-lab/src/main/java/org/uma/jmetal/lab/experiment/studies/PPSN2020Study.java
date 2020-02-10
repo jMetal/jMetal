@@ -186,7 +186,7 @@ public class PPSN2020Study {
                     neighborhoodSelectionProbability,
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
-                    "MOEAD_WEIGHTS");
+                    "MOEAD_Weights");
 
     return algorithm;
   }
@@ -217,7 +217,7 @@ public class PPSN2020Study {
                     neighborhoodSelectionProbability,
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
-                    "MOEAD_WEIGHTS", externalArchive, 100);
+                    "MOEAD_Weights", externalArchive, 100);
 
     return algorithm;
   }
