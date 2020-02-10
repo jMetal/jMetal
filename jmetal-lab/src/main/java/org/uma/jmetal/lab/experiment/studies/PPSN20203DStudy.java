@@ -3,7 +3,6 @@ package org.uma.jmetal.lab.experiment.studies;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDEWithArchive;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADD;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
@@ -52,13 +51,13 @@ public class PPSN20203DStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new DTLZ1()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ2()).changeReferenceFrontTo("DTLZ2.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ3()).changeReferenceFrontTo("DTLZ3.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ4()).changeReferenceFrontTo("DTLZ4.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ5()).changeReferenceFrontTo("DTLZ5.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ6()).changeReferenceFrontTo("DTLZ6.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ7()).changeReferenceFrontTo("DTLZ7.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ1()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ2()).setReferenceFront("DTLZ2.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ3()).setReferenceFront("DTLZ3.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ4()).setReferenceFront("DTLZ4.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ5()).setReferenceFront("DTLZ5.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ6.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ7.3D.pf"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
