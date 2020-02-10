@@ -35,7 +35,7 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     SMPSOWithArchive algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ";
     String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -48,7 +48,7 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
-    Termination termination = new TerminationByEvaluations(25000) ;
+    Termination termination = new TerminationByEvaluations(50000) ;
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>() ;
 
@@ -62,8 +62,8 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
             .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

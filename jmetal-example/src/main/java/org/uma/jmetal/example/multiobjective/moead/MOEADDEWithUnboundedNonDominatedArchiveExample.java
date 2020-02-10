@@ -45,7 +45,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     DoubleProblem problem;
     MOEADDE algorithm;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     String referenceParetoFront = "referenceFronts/LZ09_F6.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -58,7 +58,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 150000;
+    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -88,8 +88,8 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
         .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

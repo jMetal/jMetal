@@ -32,8 +32,8 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "referenceFronts/ZDT1.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -48,7 +48,7 @@ public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     algorithm =
             new NSGAII<>(

@@ -31,12 +31,12 @@ import java.util.List;
 public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    NSGAII<DoubleSolution> algorithm;
+    NSGAIIWithArchive<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4";
-    String referenceParetoFront = "referenceFronts/DTLZ4.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
+    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -77,9 +77,19 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-        .print();
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
+            .print();
+
+    new SolutionListOutput(algorithm.getPopulation())
+            .setVarFileOutputContext(new DefaultFileOutputContext("POPVAR.csv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("POPFUN.csv"))
+            .print();
+
+    new SolutionListOutput(algorithm.getArchive().getSolutionList())
+            .setVarFileOutputContext(new DefaultFileOutputContext("ARCVAR.csv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("ARCFUN.csv"))
+            .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

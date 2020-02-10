@@ -76,7 +76,7 @@ public class PPSN20203DStudy {
                     new InvertedGenerationalDistance<DoubleSolution>(),
                     new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
-            .setNumberOfCores(8)
+            .setNumberOfCores(32)
             .build();
 
     new ExecuteAlgorithms<>(experiment).run();
