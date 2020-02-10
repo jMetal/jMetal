@@ -422,6 +422,10 @@ public class SolutionListUtils {
     Check.isNotNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
+    if (originalSolutionList.size() < finalListSize) {
+      return originalSolutionList ;
+    }
+
     List<S> solutions = new ArrayList<>();
     // STEP 1. Normalize the objectives values of the solution list
     solutions.addAll(normalizeSolutionList(originalSolutionList));

@@ -1,6 +1,8 @@
 package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDEWithArchive;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
@@ -23,6 +25,8 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -79,7 +83,7 @@ public class PPSN2020Study {
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }
 
   public static Algorithm<List<DoubleSolution>> createNSGAII(Problem<DoubleSolution> problem) {
@@ -158,6 +162,66 @@ public class PPSN2020Study {
     return algorithm;
   }
 
+  public static Algorithm<List<DoubleSolution>> createMOEADDE(Problem<DoubleSolution> problem) {
+    int populationSize = 300;
+
+    double cr = 1.0;
+    double f = 0.5;
+
+    double neighborhoodSelectionProbability = 0.9;
+    int neighborhoodSize = 20;
+    int maximumNumberOfReplacedSolutions = 2;
+    int maximumNumberOfFunctionEvaluations = 25000;
+
+    AggregativeFunction aggregativeFunction = new Tschebyscheff();
+
+    Algorithm<List<DoubleSolution>> algorithm =
+            new MOEADDE(
+                    problem,
+                    populationSize,
+                    maximumNumberOfFunctionEvaluations,
+                    cr,
+                    f,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "MOEAD_WEIGHTS");
+
+    return algorithm;
+  }
+
+  public static Algorithm<List<DoubleSolution>> createMOEADDEWithArchive(Problem<DoubleSolution> problem) {
+    int populationSize = 300;
+
+    double cr = 1.0;
+    double f = 0.5;
+
+    double neighborhoodSelectionProbability = 0.9;
+    int neighborhoodSize = 20;
+    int maximumNumberOfReplacedSolutions = 2;
+    int maximumNumberOfFunctionEvaluations = 25000;
+
+    AggregativeFunction aggregativeFunction = new Tschebyscheff();
+
+    Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
+
+    Algorithm<List<DoubleSolution>> algorithm =
+            new MOEADDEWithArchive(
+                    problem,
+                    populationSize,
+                    maximumNumberOfFunctionEvaluations,
+                    cr,
+                    f,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "MOEAD_WEIGHTS", externalArchive, 100);
+
+    return algorithm;
+  }
+
   public static Algorithm<List<DoubleSolution>> createSMPSOWithExternalArchive(
       Problem<DoubleSolution> problem) {
     int swarmSize = 100;
@@ -216,6 +280,15 @@ public class PPSN2020Study {
                 "SMPSOA",
                 problemList.get(i),
                 run));
+        algorithms.add(
+                new ExperimentAlgorithm<>(
+                        createMOEADDE(problemList.get(i).getProblem()), "MOEAD", problemList.get(i), run));
+        algorithms.add(
+                new ExperimentAlgorithm<>(
+                        createMOEADDEWithArchive(problemList.get(i).getProblem()),
+                        "MOEADA",
+                        problemList.get(i),
+                        run));
       }
     }
     return algorithms;
