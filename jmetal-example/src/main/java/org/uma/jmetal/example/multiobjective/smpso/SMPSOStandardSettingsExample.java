@@ -37,8 +37,8 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "referenceFronts/ZDT4.pf" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -50,7 +50,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
-    Termination termination = new TerminationByEvaluations(25000) ;
+    Termination termination = new TerminationByEvaluations(50000) ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
 
@@ -61,8 +61,8 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
             .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

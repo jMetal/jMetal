@@ -426,9 +426,16 @@ public class SolutionListUtils {
       return originalSolutionList ;
     }
 
+    for (int i = 0 ; i < originalSolutionList.size(); i++) {
+      originalSolutionList.get(i).setAttribute("INDEX_", i);
+    }
+
     List<S> solutions = new ArrayList<>();
     // STEP 1. Normalize the objectives values of the solution list
     solutions.addAll(normalizeSolutionList(originalSolutionList));
+
+
+
 
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
@@ -460,6 +467,11 @@ public class SolutionListUtils {
       solutions.remove(largestDistanceSolutionIndex);
     }
 
-    return resultSolutions;
+    List<S> result = new ArrayList<>() ;
+    for (S solution: resultSolutions) {
+      result.add(originalSolutionList.get((int)solution.getAttribute("INDEX_"))) ;
+    }
+
+    return result;
   }
 }

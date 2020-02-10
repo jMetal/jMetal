@@ -76,7 +76,7 @@ public class PPSN20203DStudy {
                     new InvertedGenerationalDistance<DoubleSolution>(),
                     new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
-            .setNumberOfCores(8)
+            .setNumberOfCores(32)
             .build();
 
     new ExecuteAlgorithms<>(experiment).run();
@@ -337,15 +337,18 @@ public class PPSN20203DStudy {
                         "SMPSOA",
                         problemList.get(i),
                         run));
+        /*
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createSMSEMOA(problemList.get(i).getProblem()), "SMSEMOA", problemList.get(i), run));
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createSMSEMOAWithArchive(problemList.get(i).getProblem()),
-                        "SMPSOAA",
+                        "SMSEMOAA",
                         problemList.get(i),
                         run));
+
+         */
       }
     }
     return algorithms;
