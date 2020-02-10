@@ -3,6 +3,7 @@ package org.uma.jmetal.lab.experiment.studies;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDEWithArchive;
+import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADD;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
@@ -27,6 +28,7 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
@@ -224,18 +226,50 @@ public class PPSN20203DStudy {
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
+    class MOEADLocal extends MOEADDE {
+      public MOEADLocal(
+          Problem<DoubleSolution> problem,
+          int populationSize,
+          int maxNumberOfEvaluations,
+          double cr,
+          double f,
+          AggregativeFunction aggregativeFunction,
+          double neighborhoodSelectionProbability,
+          int maximumNumberOfReplacedSolutions,
+          int neighborhoodSize,
+          String weightVectorDirectory) {
+        super(
+            problem,
+            populationSize,
+            maxNumberOfEvaluations,
+            cr,
+            f,
+            aggregativeFunction,
+            neighborhoodSelectionProbability,
+            maximumNumberOfReplacedSolutions,
+            neighborhoodSize,
+            weightVectorDirectory);
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        return SolutionListUtils.distanceBasedSubsetSelection(super.getResult(), 100) ;
+      }
+    }
+
     Algorithm<List<DoubleSolution>> algorithm =
-            new MOEADDE(
-                    problem,
-                    populationSize,
-                    maximumNumberOfFunctionEvaluations,
-                    cr,
-                    f,
-                    aggregativeFunction,
-                    neighborhoodSelectionProbability,
-                    maximumNumberOfReplacedSolutions,
-                    neighborhoodSize,
-                    "MOEAD_Weights");
+        new MOEADLocal(
+            problem,
+            populationSize,
+            maximumNumberOfFunctionEvaluations,
+            cr,
+            f,
+            aggregativeFunction,
+            neighborhoodSelectionProbability,
+            maximumNumberOfReplacedSolutions,
+            neighborhoodSize,
+            "MOEAD_Weights");
+
     return algorithm;
   }
 
@@ -256,17 +290,19 @@ public class PPSN20203DStudy {
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
     Algorithm<List<DoubleSolution>> algorithm =
-            new MOEADDEWithArchive(
-                    problem,
-                    populationSize,
-                    maximumNumberOfFunctionEvaluations,
-                    cr,
-                    f,
-                    aggregativeFunction,
-                    neighborhoodSelectionProbability,
-                    maximumNumberOfReplacedSolutions,
-                    neighborhoodSize,
-                    "MOEAD_Weights", externalArchive, 100);
+        new MOEADDEWithArchive(
+            problem,
+            populationSize,
+            maximumNumberOfFunctionEvaluations,
+            cr,
+            f,
+            aggregativeFunction,
+            neighborhoodSelectionProbability,
+            maximumNumberOfReplacedSolutions,
+            neighborhoodSize,
+            "MOEAD_Weights",
+            externalArchive,
+            100);
     return algorithm;
   }
 
@@ -329,14 +365,14 @@ public class PPSN20203DStudy {
                 problemList.get(i),
                 run));
         algorithms.add(
-                new ExperimentAlgorithm<>(
-                        createSMPSO(problemList.get(i).getProblem()), "SMPSO", problemList.get(i), run));
+            new ExperimentAlgorithm<>(
+                createSMPSO(problemList.get(i).getProblem()), "SMPSO", problemList.get(i), run));
         algorithms.add(
-                new ExperimentAlgorithm<>(
-                        createSMPSOWithExternalArchive(problemList.get(i).getProblem()),
-                        "SMPSOA",
-                        problemList.get(i),
-                        run));
+            new ExperimentAlgorithm<>(
+                createSMPSOWithExternalArchive(problemList.get(i).getProblem()),
+                "SMPSOA",
+                problemList.get(i),
+                run));
         /*
         algorithms.add(
                 new ExperimentAlgorithm<>(
