@@ -225,18 +225,17 @@ public class PPSN20203DStudy {
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     Algorithm<List<DoubleSolution>> algorithm =
-        new MOEADDE(
-            problem,
-            populationSize,
-            maximumNumberOfFunctionEvaluations,
-            cr,
-            f,
-            aggregativeFunction,
-            neighborhoodSelectionProbability,
-            maximumNumberOfReplacedSolutions,
-            neighborhoodSize,
-            "MOEAD_WEIGHTS");
-
+            new MOEADDE(
+                    problem,
+                    populationSize,
+                    maximumNumberOfFunctionEvaluations,
+                    cr,
+                    f,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "MOEAD_Weights");
     return algorithm;
   }
 
@@ -257,20 +256,17 @@ public class PPSN20203DStudy {
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
     Algorithm<List<DoubleSolution>> algorithm =
-        new MOEADDEWithArchive(
-            problem,
-            populationSize,
-            maximumNumberOfFunctionEvaluations,
-            cr,
-            f,
-            aggregativeFunction,
-            neighborhoodSelectionProbability,
-            maximumNumberOfReplacedSolutions,
-            neighborhoodSize,
-            "MOEAD_WEIGHTS",
-            externalArchive,
-            100);
-
+            new MOEADDEWithArchive(
+                    problem,
+                    populationSize,
+                    maximumNumberOfFunctionEvaluations,
+                    cr,
+                    f,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "MOEAD_Weights", externalArchive, 100);
     return algorithm;
   }
 

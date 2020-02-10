@@ -55,7 +55,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_WEIGHTS");
+            "MOEAD_Weights");
 
     algorithm.run();
 
