@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
   private Archive<S> archive;
-  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public NSGAIIWithArchive(
@@ -31,8 +30,7 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
       MutationOperator<S> mutationOperator,
       Termination termination,
       Ranking<S> ranking,
-      Archive<S> archive,
-      int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<S> archive) {
     super(
         problem,
         populationSize,
@@ -43,7 +41,6 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
         ranking);
 
     this.archive = archive;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   /** Constructor */
@@ -54,8 +51,7 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
-      Archive<S> archive,
-      int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<S> archive) {
     this(
         problem,
         populationSize,
@@ -64,8 +60,7 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
         mutationOperator,
         termination,
         new FastNonDominatedSortRanking<>(),
-        archive,
-        numberOfSolutionsToTakeFromTheArchive);
+        archive);
   }
 
   @Override
@@ -80,11 +75,14 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList() ;
   }
 
   public Archive<S> getArchive() {
     return archive;
+  }
+
+  public List<S> getPopulation() {
+    return population ;
   }
 }

@@ -72,11 +72,14 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList() ;
   }
 
   public Archive<S> getArchive() {
     return archive;
+  }
+
+  public List<S> getPopulation() {
+    return population ;
   }
 }

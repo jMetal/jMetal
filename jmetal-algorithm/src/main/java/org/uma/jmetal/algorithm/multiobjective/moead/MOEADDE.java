@@ -139,6 +139,6 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
 
     this.algorithmStatusData = new HashMap<>();
 
-    this.observable = new DefaultObservable<>("MOEA/D algorithm");
+    this.observable = new DefaultObservable<>("MOEA/D-DE algorithm");
   }
 }

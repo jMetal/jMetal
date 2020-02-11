@@ -26,7 +26,6 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class SMPSOWithArchive extends SMPSO {
   private Archive<DoubleSolution> archive;
-  private int numberOfSolutionsToTakeFromTheArchive ;
 
   public SMPSOWithArchive(
       DoubleProblem problem,
@@ -35,7 +34,7 @@ public class SMPSOWithArchive extends SMPSO {
       MutationOperator<DoubleSolution> mutationOperator,
       Evaluation<DoubleSolution> evaluation,
       Termination termination,
-      Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<DoubleSolution> archive) {
     this(
         problem,
         swarmSize,
@@ -54,7 +53,8 @@ public class SMPSOWithArchive extends SMPSO {
         -1,
         -1,
         evaluation,
-        termination, archive, numberOfSolutionsToTakeFromTheArchive);
+        termination,
+        archive);
   }
 
   /** Constructor */
@@ -77,7 +77,7 @@ public class SMPSOWithArchive extends SMPSO {
       double changeVelocity2,
       Evaluation<DoubleSolution> evaluation,
       Termination termination,
-      Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive ) {
+      Archive<DoubleSolution> archive) {
     super(
         problem,
         swarmSize,
@@ -97,8 +97,7 @@ public class SMPSOWithArchive extends SMPSO {
         changeVelocity2,
         evaluation,
         termination);
-    this.archive = archive ;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
+    this.archive = archive;
   }
 
   @Override
@@ -111,20 +110,22 @@ public class SMPSOWithArchive extends SMPSO {
 
   @Override
   protected void updateLeaders(List<DoubleSolution> swarm) {
-    super.updateLeaders(swarm) ;
+    super.updateLeaders(swarm);
     for (DoubleSolution particle : swarm) {
       archive.add((DoubleSolution) particle.copy());
     }
   }
 
-
   @Override
   public List<DoubleSolution> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList();
   }
 
   public Archive<DoubleSolution> getArchive() {
     return archive;
+  }
+
+  public List<DoubleSolution> getPopulation() {
+    return getSwarm();
   }
 }

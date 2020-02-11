@@ -32,7 +32,6 @@ import java.util.List;
  */
 public class MOEADDEWithArchive extends MOEADDE {
   private Archive<DoubleSolution> archive;
-  private int numberOfSolutionsToTakeFromTheArchive;
 
   /**
    * Constructor with the parameters used in the paper describing MOEA/D-DE.
@@ -56,11 +55,21 @@ public class MOEADDEWithArchive extends MOEADDE {
       double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       int neighborhoodSize,
-      String weightVectorDirectory, Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive) {
-    super(problem, populationSize, maxNumberOfEvaluations, cr, f, aggregativeFunction, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborhoodSize, weightVectorDirectory) ;
+      String weightVectorDirectory,
+      Archive<DoubleSolution> archive) {
+    super(
+        problem,
+        populationSize,
+        maxNumberOfEvaluations,
+        cr,
+        f,
+        aggregativeFunction,
+        neighborhoodSelectionProbability,
+        maximumNumberOfReplacedSolutions,
+        neighborhoodSize,
+        weightVectorDirectory);
 
-    this.archive = archive ;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
+    this.archive = archive;
   }
 
   @Override
@@ -75,11 +84,14 @@ public class MOEADDEWithArchive extends MOEADDE {
 
   @Override
   public List<DoubleSolution> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList();
   }
 
   public Archive<DoubleSolution> getArchive() {
     return archive;
+  }
+
+  public List<DoubleSolution> getPopulation() {
+    return population;
   }
 }
