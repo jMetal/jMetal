@@ -83,9 +83,9 @@ public class ABYSSConstrainedProblemIT {
 
     /*
     Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings, should
-    return more than 98 solutions
+    return more than 90 solutions
     */
-    assertTrue(population.size() >= 98);
+    assertTrue(population.size() >= 90);
   }
 
   @Test
