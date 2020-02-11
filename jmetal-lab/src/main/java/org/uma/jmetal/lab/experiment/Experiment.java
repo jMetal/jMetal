@@ -100,7 +100,6 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
    * This method remove duplicated algorithms and leave only an instance of each one.
    */
   public void removeDuplicatedAlgorithms() {
-    List<ExperimentAlgorithm<S, Result>> algorithmList = new ArrayList<>() ;
     HashSet<String> algorithmTagList = new HashSet<>() ;
 
 

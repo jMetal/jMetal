@@ -206,11 +206,4 @@ public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<
 
     return this;
   }
-
-  public MOEAD setInitialSolutionsCreation(
-      InitialSolutionsCreation<S> initialSolutionsCreation) {
-    this.initialSolutionsCreation = initialSolutionsCreation;
-
-    return this;
-  }
 }

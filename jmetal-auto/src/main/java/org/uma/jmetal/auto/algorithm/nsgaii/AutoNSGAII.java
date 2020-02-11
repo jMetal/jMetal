@@ -192,7 +192,7 @@ public class AutoNSGAII {
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii =
-        new EvolutionaryAlgorithm(
+        new EvolutionaryAlgorithm<>(
             "NSGA-II",
             evaluation,
             initialSolutionsCreation,
@@ -206,6 +206,6 @@ public class AutoNSGAII {
   }
 
   public static void print(List<Parameter<?>> parameterList) {
-    parameterList.forEach(item -> System.out.println(item));
+    parameterList.forEach(System.out::println);
   }
 }

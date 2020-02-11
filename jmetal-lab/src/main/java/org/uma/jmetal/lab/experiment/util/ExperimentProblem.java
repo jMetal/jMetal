@@ -23,7 +23,7 @@ public class ExperimentProblem<S extends Solution<?>> {
     this(problem,problem.getName());
   }
 
-  public ExperimentProblem<S> changeReferenceFrontTo(String referenceFront) {
+  public ExperimentProblem<S> setReferenceFront(String referenceFront) {
     this.referenceFront = referenceFront;
     return this;
   }

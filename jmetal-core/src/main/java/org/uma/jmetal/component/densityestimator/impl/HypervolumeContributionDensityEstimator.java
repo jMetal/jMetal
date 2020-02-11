@@ -6,6 +6,8 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
+import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,13 +23,18 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
 
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator ;
-  private List<S> referenceFront ;
-  private Hypervolume<S> hypervolume = new PISAHypervolume<>();
+  private Hypervolume<S> hypervolume ;
 
   public HypervolumeContributionDensityEstimator(List<S> referenceFront) {
     solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
-    this.referenceFront = referenceFront ;
+    hypervolume = new PISAHypervolume<>(new ArrayFront(referenceFront)) ;
   }
+
+  public HypervolumeContributionDensityEstimator(double[] referencePoint) {
+    solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
+    hypervolume = new PISAHypervolume<>(referencePoint) ;
+  }
+
   /**
    * Assigns the hv contribution to all population in a <code>SolutionSet</code>.
    *
@@ -42,7 +49,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
       return;
     }
 
-    hypervolume.computeHypervolumeContribution(solutionList, referenceFront) ;
+    hypervolume.computeHypervolumeContribution(solutionList) ;
   }
 
   @Override

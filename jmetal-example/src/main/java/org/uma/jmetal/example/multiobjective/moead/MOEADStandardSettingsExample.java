@@ -49,7 +49,6 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
-    int offspringPopulationSize = 1;
 
     SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
@@ -65,7 +64,7 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
 
     DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
+            1, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;

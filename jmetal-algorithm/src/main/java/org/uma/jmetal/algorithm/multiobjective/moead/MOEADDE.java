@@ -18,13 +18,15 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
- * This class is intended to provide an implementation of the MOEA/D-DE algorithm including a constructor with the
- * typical parameters.
+ * This class is intended to provide an implementation of the MOEA/D-DE algorithm including a
+ * constructor with the typical parameters.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es> */
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
 public class MOEADDE extends MOEAD<DoubleSolution> {
 
   /** Constructor */
@@ -58,63 +60,85 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
    * @param maximumNumberOfReplacedSolutions
    * @param neighborhoodSize
    */
-  public MOEADDE(Problem<DoubleSolution> problem,
-                 int populationSize,
-                 int maxNumberOfEvaluations,
-                 double cr,
-                 double f,
-                 AggregativeFunction aggregativeFunction,
-                 double neighborhoodSelectionProbability,
-                 int maximumNumberOfReplacedSolutions,
-                 int neighborhoodSize) {
-    this.problem = problem ;
-    this.populationSize = populationSize ;
+  public MOEADDE(
+      Problem<DoubleSolution> problem,
+      int populationSize,
+      int maxNumberOfEvaluations,
+      double cr,
+      double f,
+      AggregativeFunction aggregativeFunction,
+      double neighborhoodSelectionProbability,
+      int maximumNumberOfReplacedSolutions,
+      int neighborhoodSize,
+      String weightVectorDirectory) {
+    this.problem = problem;
+    this.populationSize = populationSize;
 
-    this.offspringPopulationSize = 1 ;
+    this.offspringPopulationSize = 1;
 
     SequenceGenerator<Integer> subProblemIdGenerator =
-            new IntegerPermutationGenerator(populationSize);
+        new IntegerPermutationGenerator(populationSize);
 
-    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize) ;
+    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
 
     DifferentialEvolutionCrossover crossover =
-            new DifferentialEvolutionCrossover(
-                    cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+        new DifferentialEvolutionCrossover(
+            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    PolynomialMutation mutation =
+        new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     this.variation =
-            new DifferentialCrossoverVariation(
-                    offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
+        new DifferentialCrossoverVariation(
+            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
+    WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;
+    if (problem.getNumberOfObjectives() == 2) {
+      neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
+    } else {
+      try {
+        neighborhood =
             new WeightVectorNeighborhood<>(
-                    populationSize,
-                    neighborhoodSize);
+                populationSize,
+                problem.getNumberOfObjectives(),
+                neighborhoodSize,
+                 weightVectorDirectory
+                    + "/W"
+                    + problem.getNumberOfObjectives()
+                    + "D_"
+                    + populationSize
+                    + ".dat");
+      } catch (FileNotFoundException exception) {
+        exception.printStackTrace();
+      }
+    }
 
     this.selection =
-            new PopulationAndNeighborhoodMatingPoolSelection<>(
-                    ((DifferentialCrossoverVariation)variation).getCrossover().getNumberOfRequiredParents(),
-                    subProblemIdGenerator,
-                    neighborhood,
-                    neighborhoodSelectionProbability,
-                    true);
+        new PopulationAndNeighborhoodMatingPoolSelection<>(
+            ((DifferentialCrossoverVariation) variation)
+                .getCrossover()
+                .getNumberOfRequiredParents(),
+            subProblemIdGenerator,
+            neighborhood,
+            neighborhoodSelectionProbability,
+            true);
 
     this.replacement =
-            new MOEADReplacement(
-                    (PopulationAndNeighborhoodMatingPoolSelection)selection,
-                    neighborhood,
-                    aggregativeFunction,
-                    subProblemIdGenerator,
-                    maximumNumberOfReplacedSolutions);
+        new MOEADReplacement(
+            (PopulationAndNeighborhoodMatingPoolSelection) selection,
+            neighborhood,
+            aggregativeFunction,
+            subProblemIdGenerator,
+            maximumNumberOfReplacedSolutions);
 
-    this.termination = new TerminationByEvaluations(maxNumberOfEvaluations) ;
+    this.termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     this.evaluation = new SequentialEvaluation<>();
 
     this.algorithmStatusData = new HashMap<>();
+
     this.observable = new DefaultObservable<>("MOEA/D algorithm");
   }
 }

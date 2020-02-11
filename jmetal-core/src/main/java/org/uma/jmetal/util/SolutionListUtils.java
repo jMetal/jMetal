@@ -17,7 +17,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
 
-/** Created by Antonio J. Nebro on 04/10/14. Modified by Juanjo 13/03/15 */
+/** @author Antonio J. Nebro */
 public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
@@ -422,8 +422,16 @@ public class SolutionListUtils {
     Check.isNotNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
-    List<S> solutions = new ArrayList<>();
+    if (originalSolutionList.size() < finalListSize) {
+      return originalSolutionList;
+    }
+
+    for (int i = 0; i < originalSolutionList.size(); i++) {
+      originalSolutionList.get(i).setAttribute("INDEX_", i);
+    }
+
     // STEP 1. Normalize the objectives values of the solution list
+    List<S> solutions = new ArrayList<>();
     solutions.addAll(normalizeSolutionList(originalSolutionList));
 
     // STEP 2. Find the solution having the best objective value, being the objective randomly
@@ -434,28 +442,33 @@ public class SolutionListUtils {
     int bestSolutionIndex =
         findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
 
-    //  STEP 3. Add the solution to the result list and remove it from the original list
-    List<S> resultSolutions = new ArrayList<>(finalListSize);
-    resultSolutions.add(solutions.get(bestSolutionIndex));
+    //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
+    List<S> selectedSolutions = new ArrayList<>(finalListSize);
+    selectedSolutions.add(solutions.get(bestSolutionIndex));
     solutions.remove(bestSolutionIndex);
 
-    // STEP 4. Find the solution having the largest distance to the result solutions
+    // STEP 4. Find the solution having the largest distance to the selected solutions
     Distance<S, List<S>> distance =
         new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
-    while (resultSolutions.size() < finalListSize) {
+    while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
         solution.setAttribute(
-            "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, resultSolutions));
+            "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =
           findIndexOfBestSolution(
               solutions,
               new DoubleValueAttributeComparator<>(
                   "SUBSET_SELECTION_DISTANCE", AttributeComparator.Ordering.DESCENDING));
-      resultSolutions.add(solutions.get(largestDistanceSolutionIndex));
+      selectedSolutions.add(solutions.get(largestDistanceSolutionIndex));
       solutions.remove(largestDistanceSolutionIndex);
     }
 
-    return resultSolutions;
+    List<S> resultList = new ArrayList<>();
+    for (S solution : selectedSolutions) {
+      resultList.add(originalSolutionList.get((int) solution.getAttribute("INDEX_")));
+    }
+
+    return resultList;
   }
 }

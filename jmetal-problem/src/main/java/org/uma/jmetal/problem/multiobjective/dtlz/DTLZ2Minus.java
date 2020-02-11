@@ -15,7 +15,7 @@ public class DTLZ2Minus extends DTLZ2 {
   }
 
   /**
-   * Creates a DTLZ2 problem instance
+   * Creates a DTLZ2Minus problem instance
    *
    * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
