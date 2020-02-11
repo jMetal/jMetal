@@ -64,6 +64,9 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     double [][] matrix = null;
 
     InputStream in = getClass().getResourceAsStream(file);
+    if (in == null) {
+      in = new FileInputStream(file) ;
+    }
     InputStreamReader isr = new InputStreamReader(in);
     BufferedReader br = new BufferedReader(isr);
 

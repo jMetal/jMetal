@@ -97,7 +97,7 @@ public class NSGAIIIT {
 
     List<DoubleSolution> population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "../referenceFronts/ConstrEx.pf" ;
+    String referenceFrontFileName = "../resources/referenceFronts/ConstrEx.pf" ;
 
     Front referenceFront = new ArrayFront(referenceFrontFileName);
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;

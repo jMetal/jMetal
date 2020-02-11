@@ -23,12 +23,11 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
 public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.DMOPSORunner
-   *                           problemName [referenceFront]
+   * @throws SecurityException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.DMOPSORunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
@@ -44,25 +43,46 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "referenceFronts/ZDT1.pf";
+      referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    algorithm = new DMOPSOMeasures(problem, 100, 150, 0.0, 0.1, 0.0, 1.0, 1.5, 2.5, 1.5, 2.5, 0.1, 0.4, -1.0, -1.0,
-            FunctionType.TCHE, "MOEAD_Weights", 2);
+    algorithm =
+        new DMOPSOMeasures(
+            problem,
+            100,
+            150,
+            0.0,
+            0.1,
+            0.0,
+            1.0,
+            1.5,
+            2.5,
+            1.5,
+            2.5,
+            0.1,
+            0.4,
+            -1.0,
+            -1.0,
+            FunctionType.TCHE,
+            "MOEAD_Weights",
+            2);
 
     algorithm.setReferenceFront(new ArrayFront(referenceParetoFront));
 
-        /* Measure management */
+    /* Measure management */
     MeasureManager measureManager = ((DMOPSOMeasures) algorithm).getMeasureManager();
 
-    BasicMeasure<List<DoubleSolution>> solutionListMeasure = (BasicMeasure<List<DoubleSolution>>) measureManager
-            .<List<DoubleSolution>>getPushMeasure("currentPopulation");
-    CountingMeasure iterationMeasure = (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
-    BasicMeasure<Double> hypervolumeMeasure = (BasicMeasure<Double>) measureManager
-            .<Double>getPushMeasure("hypervolume");
-    BasicMeasure<Double> epsilonMeasure = (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("epsilon");
+    BasicMeasure<List<DoubleSolution>> solutionListMeasure =
+        (BasicMeasure<List<DoubleSolution>>)
+            measureManager.<List<DoubleSolution>>getPushMeasure("currentPopulation");
+    CountingMeasure iterationMeasure =
+        (CountingMeasure) measureManager.<Long>getPushMeasure("currentEvaluation");
+    BasicMeasure<Double> hypervolumeMeasure =
+        (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("hypervolume");
+    BasicMeasure<Double> epsilonMeasure =
+        (BasicMeasure<Double>) measureManager.<Double>getPushMeasure("epsilon");
 
     ChartContainer chart = new ChartContainer(algorithm.getName(), 200);
     chart.setFrontChart(0, 1, referenceParetoFront);
@@ -76,7 +96,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
     hypervolumeMeasure.register(new IndicatorListener("Hypervolume", chart));
     epsilonMeasure.register(new IndicatorListener("Epsilon", chart));
 
-        /* End of measure management */
+    /* End of measure management */
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
     chart.saveChart("./chart", BitmapFormat.PNG);
@@ -90,7 +110,6 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
-
   }
 
   private static class ChartListener implements MeasureListener<List<DoubleSolution>> {
@@ -112,7 +131,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(List<DoubleSolution> solutions) {
+    public synchronized void measureGenerated(List<DoubleSolution> solutions) {
       refreshChart(solutions);
     }
   }
@@ -126,7 +145,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(Long iteration) {
+    public synchronized void measureGenerated(Long iteration) {
       if (this.chart != null) {
         this.chart.getFrontChart().setTitle("Iteration: " + iteration);
       }
@@ -143,7 +162,7 @@ public class DMOPSOMeasuresRunner extends AbstractAlgorithmRunner {
     }
 
     @Override
-    synchronized public void measureGenerated(Double value) {
+    public synchronized void measureGenerated(Double value) {
       if (this.chart != null) {
         this.chart.updateIndicatorChart(this.indicator, value);
         this.chart.refreshCharts(0);

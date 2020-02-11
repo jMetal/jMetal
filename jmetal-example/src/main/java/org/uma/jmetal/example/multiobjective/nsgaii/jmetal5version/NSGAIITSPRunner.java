@@ -45,7 +45,7 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
     MutationOperator<PermutationSolution<Integer>> mutation;
     SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+    problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
     crossover = new PMXCrossover(0.9);
 

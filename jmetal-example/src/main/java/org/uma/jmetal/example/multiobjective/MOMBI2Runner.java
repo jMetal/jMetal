@@ -53,7 +53,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
+      referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -78,7 +78,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
             mutation,
             selection,
             new SequentialSolutionListEvaluator<DoubleSolution>(),
-            "mombi2-weights/weight/weight_03D_12.sld");
+            "resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();

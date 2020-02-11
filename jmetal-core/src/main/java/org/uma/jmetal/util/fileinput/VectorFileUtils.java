@@ -13,7 +13,7 @@ import java.util.List;
  * created at 3:49 pm, 2019/1/29 the common util to read reference vectors/reference points/uniform
  * weight vectors from file
  *
- * <p>Modified by Antonio J. Nebro on 8/03/2019
+ * Modified by Antonio J. Nebro on 8/03/2019
  *
  * @author sunhaoran
  */
@@ -28,7 +28,6 @@ public class VectorFileUtils {
     String path = filePath ;
 
     URL url = VectorFileUtils.class.getClassLoader().getResource(filePath);
-    System.out.println(url) ;
     if (url != null) {
       try {
         path = Paths.get(url.toURI()).toString();

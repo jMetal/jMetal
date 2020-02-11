@@ -47,7 +47,7 @@ public class ConstraintMOEADIT {
         .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory("MOEAD_Weights")
+        .setDataDirectory("../resources/weightVectorFiles/moead")
         .build();
 
     algorithm.run() ;
@@ -82,7 +82,7 @@ public class ConstraintMOEADIT {
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
         .setDataDirectory(
-            "/Users/ajnebro/Softw/jMetal/jMetal/jmetal-core/src/main/resources/MOEAD_Weights")
+            "../resources/weightVectorFiles/moead")
         .build();
 
     algorithm.run();
@@ -90,7 +90,7 @@ public class ConstraintMOEADIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/pareto_fronts/Tanaka.pf");
+        new PISAHypervolume<>("../resources/referenceFronts/Tanaka.pf");
 
     // Rationale: the default problem is Tanaka", and the constraint MOEA/D algoritm,
     // configured with standard settings, should return find a front with a hypervolume value higher

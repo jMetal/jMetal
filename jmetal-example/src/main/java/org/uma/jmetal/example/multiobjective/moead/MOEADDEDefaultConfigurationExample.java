@@ -28,7 +28,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
     MOEADDE algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
