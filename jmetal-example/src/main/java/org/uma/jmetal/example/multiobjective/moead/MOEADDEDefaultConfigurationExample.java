@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -48,14 +49,14 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "resources/weightVectorFiles/moead");
+            "resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
