@@ -16,6 +16,7 @@ import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.*;
+import org.uma.jmetal.lab.experiment.util.AlgorithmReturningASubSetOfSolutions;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -45,6 +46,7 @@ public class PPSN20203DStudy {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
+
     if (args.length != 1) {
       throw new JMetalException("Missing argument: experimentBaseDirectory");
     }
@@ -91,42 +93,11 @@ public class PPSN20203DStudy {
 
   public static Algorithm<List<DoubleSolution>> createAlgorithmToSelectPartOfTheResultSolutionList(
       Algorithm<List<DoubleSolution>> algorithm, int numberOfReturnedSolutions) {
-    class AlgorithmWithArchive implements Algorithm<List<DoubleSolution>> {
-      private Algorithm<List<DoubleSolution>> algorithm;
-      private int numberOfSolutionsToReturn;
 
-      public AlgorithmWithArchive(
-          Algorithm<List<DoubleSolution>> algorithm, int numberOfSolutionsToReturn) {
-        this.algorithm = algorithm;
-        this.numberOfSolutionsToReturn = numberOfSolutionsToReturn;
-      }
+    AlgorithmReturningASubSetOfSolutions algorithmReturningASubSetOfSolutions =
+        new AlgorithmReturningASubSetOfSolutions(algorithm, numberOfReturnedSolutions);
 
-      @Override
-      public void run() {
-        algorithm.run();
-      }
-
-      @Override
-      public List<DoubleSolution> getResult() {
-        return SolutionListUtils.distanceBasedSubsetSelection(
-            algorithm.getResult(), numberOfSolutionsToReturn);
-      }
-
-      @Override
-      public String getName() {
-        return algorithm.getName();
-      }
-
-      @Override
-      public String getDescription() {
-        return algorithm.getDescription();
-      }
-    }
-
-    AlgorithmWithArchive algorithmWithArchive =
-        new AlgorithmWithArchive(algorithm, numberOfReturnedSolutions);
-
-    return algorithmWithArchive;
+    return algorithmReturningASubSetOfSolutions;
   }
 
   public static Algorithm<List<DoubleSolution>> createNSGAII(Problem<DoubleSolution> problem) {
