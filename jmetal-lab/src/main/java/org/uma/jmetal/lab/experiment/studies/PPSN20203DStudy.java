@@ -94,10 +94,7 @@ public class PPSN20203DStudy {
   public static Algorithm<List<DoubleSolution>> createAlgorithmToSelectPartOfTheResultSolutionList(
       Algorithm<List<DoubleSolution>> algorithm, int numberOfReturnedSolutions) {
 
-    AlgorithmReturningASubSetOfSolutions algorithmReturningASubSetOfSolutions =
-        new AlgorithmReturningASubSetOfSolutions(algorithm, numberOfReturnedSolutions);
-
-    return algorithmReturningASubSetOfSolutions;
+    return new AlgorithmReturningASubSetOfSolutions<>(algorithm, numberOfReturnedSolutions);
   }
 
   public static Algorithm<List<DoubleSolution>> createNSGAII(Problem<DoubleSolution> problem) {
