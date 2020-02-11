@@ -70,7 +70,6 @@ public class PPSN20205DStudy {
     problemList.add(new ExperimentProblem<>(new MaF14(60, 5)).setReferenceFront("MaF14PF_M5.txt"));
     problemList.add(new ExperimentProblem<>(new MaF15(60, 5)).setReferenceFront("MaF15PF_M5.txt"));
 
-
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
@@ -81,7 +80,7 @@ public class PPSN20205DStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("referenceFronts")
+            .setReferenceFrontDirectory("resources/referenceFronts")
             .setIndicatorList(
                 Arrays.asList(
                     new Epsilon<DoubleSolution>(),
@@ -101,6 +100,46 @@ public class PPSN20205DStudy {
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }
 
+  public static Algorithm<List<DoubleSolution>> createAlgorithmWithArchive(
+      Algorithm<List<DoubleSolution>> algorithm, int numberOfReturnedSolutions) {
+    class AlgorithmWithArchive implements Algorithm<List<DoubleSolution>> {
+      private Algorithm<List<DoubleSolution>> algorithm;
+      private int numberOfSolutionsToReturn;
+
+      public AlgorithmWithArchive(
+          Algorithm<List<DoubleSolution>> algorithm, int numberOfSolutionsToReturn) {
+        this.algorithm = algorithm;
+        this.numberOfSolutionsToReturn = numberOfSolutionsToReturn;
+      }
+
+      @Override
+      public void run() {
+        algorithm.run();
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        return SolutionListUtils.distanceBasedSubsetSelection(
+            algorithm.getResult(), numberOfSolutionsToReturn);
+      }
+
+      @Override
+      public String getName() {
+        return algorithm.getName();
+      }
+
+      @Override
+      public String getDescription() {
+        return algorithm.getDescription();
+      }
+    }
+
+    AlgorithmWithArchive algorithmWithArchive =
+        new AlgorithmWithArchive(algorithm, numberOfReturnedSolutions);
+
+    return algorithmWithArchive;
+  }
+
   public static Algorithm<List<DoubleSolution>> createNSGAII(Problem<DoubleSolution> problem) {
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -111,7 +150,7 @@ public class PPSN20205DStudy {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new NSGAII<>(
@@ -136,7 +175,7 @@ public class PPSN20205DStudy {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
@@ -148,8 +187,7 @@ public class PPSN20205DStudy {
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
             termination,
-            archive,
-            100);
+            archive);
 
     return algorithm;
   }
@@ -163,7 +201,7 @@ public class PPSN20205DStudy {
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new SMSEMOA<>(
@@ -186,7 +224,7 @@ public class PPSN20205DStudy {
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new SMSEMOAWithArchive<>(
@@ -195,8 +233,7 @@ public class PPSN20205DStudy {
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
             termination,
-            new NonDominatedSolutionListArchive<>(),
-            100);
+            new NonDominatedSolutionListArchive<>());
 
     return algorithm;
   }
@@ -210,7 +247,7 @@ public class PPSN20205DStudy {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Algorithm<List<DoubleSolution>> algorithm =
         new SMPSO(
@@ -237,49 +274,18 @@ public class PPSN20205DStudy {
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
-    class MOEADLocal extends MOEADDE {
-      public MOEADLocal(
-          Problem<DoubleSolution> problem,
-          int populationSize,
-          int maxNumberOfEvaluations,
-          double cr,
-          double f,
-          AggregativeFunction aggregativeFunction,
-          double neighborhoodSelectionProbability,
-          int maximumNumberOfReplacedSolutions,
-          int neighborhoodSize,
-          String weightVectorDirectory) {
-        super(
-            problem,
-            populationSize,
-            maxNumberOfEvaluations,
-            cr,
-            f,
-            aggregativeFunction,
-            neighborhoodSelectionProbability,
-            maximumNumberOfReplacedSolutions,
-            neighborhoodSize,
-            weightVectorDirectory);
-      }
-
-      @Override
-      public List<DoubleSolution> getResult() {
-        return SolutionListUtils.distanceBasedSubsetSelection(super.getResult(), 100) ;
-      }
-    }
-
     Algorithm<List<DoubleSolution>> algorithm =
-        new MOEADLocal(
+        new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_Weights");
+            "resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     return algorithm;
   }
@@ -294,7 +300,7 @@ public class PPSN20205DStudy {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 100000;
+    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -304,16 +310,15 @@ public class PPSN20205DStudy {
         new MOEADDEWithArchive(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_Weights",
+            "resources/weightVectorFiles/moead",
             externalArchive,
-            100);
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
     return algorithm;
   }
 
@@ -327,7 +332,7 @@ public class PPSN20205DStudy {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(100000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
@@ -339,8 +344,7 @@ public class PPSN20205DStudy {
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
             evaluation,
             termination,
-            externalArchive,
-            100);
+            externalArchive);
 
     return algorithm;
   }
@@ -362,7 +366,8 @@ public class PPSN20205DStudy {
                 createNSGAII(problemList.get(i).getProblem()), "NSGAII", problemList.get(i), run));
         algorithms.add(
             new ExperimentAlgorithm<>(
-                createNSGAIIWithArchive(problemList.get(i).getProblem()),
+                createAlgorithmWithArchive(
+                    createNSGAIIWithArchive(problemList.get(i).getProblem()), 100),
                 "NSGAIIA",
                 problemList.get(i),
                 run));
@@ -371,7 +376,8 @@ public class PPSN20205DStudy {
                 createMOEADDE(problemList.get(i).getProblem()), "MOEAD", problemList.get(i), run));
         algorithms.add(
             new ExperimentAlgorithm<>(
-                createMOEADDEWithArchive(problemList.get(i).getProblem()),
+                createAlgorithmWithArchive(
+                    createMOEADDEWithArchive(problemList.get(i).getProblem()), 100),
                 "MOEADA",
                 problemList.get(i),
                 run));
@@ -380,7 +386,8 @@ public class PPSN20205DStudy {
                 createSMPSO(problemList.get(i).getProblem()), "SMPSO", problemList.get(i), run));
         algorithms.add(
             new ExperimentAlgorithm<>(
-                createSMPSOWithExternalArchive(problemList.get(i).getProblem()),
+                createAlgorithmWithArchive(
+                    createSMPSOWithExternalArchive(problemList.get(i).getProblem()), 100),
                 "SMPSOA",
                 problemList.get(i),
                 run));
