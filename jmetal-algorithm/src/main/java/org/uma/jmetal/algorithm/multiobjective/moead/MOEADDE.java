@@ -53,24 +53,24 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
    *
    * @param problem
    * @param populationSize
-   * @param maxNumberOfEvaluations
    * @param f
    * @param cr
    * @param neighborhoodSelectionProbability
    * @param maximumNumberOfReplacedSolutions
    * @param neighborhoodSize
+   * @param termination
    */
   public MOEADDE(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int maxNumberOfEvaluations,
       double cr,
       double f,
       AggregativeFunction aggregativeFunction,
       double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       int neighborhoodSize,
-      String weightVectorDirectory) {
+      String weightVectorDirectory,
+      Termination termination) {
     this.problem = problem;
     this.populationSize = populationSize;
 
@@ -133,7 +133,7 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
-    this.termination = new TerminationByEvaluations(maxNumberOfEvaluations);
+    this.termination = termination ;
 
     this.evaluation = new SequentialEvaluation<>();
 

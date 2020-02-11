@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -46,14 +47,14 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "../resources/weightVectorFiles/moead");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
@@ -83,14 +84,14 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "../resources/weightVectorFiles/moead");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
@@ -127,14 +128,14 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "../resources/weightVectorFiles/moead");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 

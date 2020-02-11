@@ -38,17 +38,16 @@ public class MOEADDEWithArchive extends MOEADDE {
    *
    * @param problem
    * @param populationSize
-   * @param maxNumberOfEvaluations
    * @param f
    * @param cr
    * @param neighborhoodSelectionProbability
    * @param maximumNumberOfReplacedSolutions
    * @param neighborhoodSize
+   * @param termination
    */
   public MOEADDEWithArchive(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int maxNumberOfEvaluations,
       double cr,
       double f,
       AggregativeFunction aggregativeFunction,
@@ -56,18 +55,19 @@ public class MOEADDEWithArchive extends MOEADDE {
       int maximumNumberOfReplacedSolutions,
       int neighborhoodSize,
       String weightVectorDirectory,
-      Archive<DoubleSolution> archive) {
+      Archive<DoubleSolution> archive,
+      Termination termination) {
     super(
         problem,
         populationSize,
-        maxNumberOfEvaluations,
         cr,
         f,
         aggregativeFunction,
         neighborhoodSelectionProbability,
         maximumNumberOfReplacedSolutions,
         neighborhoodSize,
-        weightVectorDirectory);
+        weightVectorDirectory,
+        termination);
 
     this.archive = archive;
   }
