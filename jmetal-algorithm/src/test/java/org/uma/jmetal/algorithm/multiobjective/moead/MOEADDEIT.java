@@ -134,14 +134,14 @@ public class MOEADDEIT {
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_WEIGHTS");
+            "../resources/weightVectorFiles/moead");
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/pareto_fronts/LZ09_F6.pf");
+        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F6.pf");
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings,
     // should
