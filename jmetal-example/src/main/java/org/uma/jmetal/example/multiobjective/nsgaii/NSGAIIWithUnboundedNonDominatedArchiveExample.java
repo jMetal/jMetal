@@ -36,7 +36,7 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
-    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -76,18 +76,18 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv",","))
             .print();
 
     new SolutionListOutput(algorithm.getPopulation())
-            .setVarFileOutputContext(new DefaultFileOutputContext("POPVAR.csv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("POPFUN.csv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("POPVAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("POPFUN.csv", ","))
             .print();
 
     new SolutionListOutput(algorithm.getArchive().getSolutionList())
-            .setVarFileOutputContext(new DefaultFileOutputContext("ARCVAR.csv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("ARCFUN.csv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("ARCVAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("ARCFUN.csv", ","))
             .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
