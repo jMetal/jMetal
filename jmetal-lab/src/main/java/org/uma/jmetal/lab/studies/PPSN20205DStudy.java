@@ -88,7 +88,7 @@ public class PPSN20205DStudy {
                     new InvertedGenerationalDistance<DoubleSolution>(),
                     new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
-            .setNumberOfCores(32)
+            .setNumberOfCores(8)
             .build();
 
     new ExecuteAlgorithms<>(experiment).run();
@@ -113,7 +113,7 @@ public class PPSN20205DStudy {
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
 
-    int populationSize = 100;
+    int populationSize = 240;
     int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
@@ -138,7 +138,7 @@ public class PPSN20205DStudy {
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
 
-    int populationSize = 100;
+    int populationSize = 240;
     int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
@@ -205,7 +205,7 @@ public class PPSN20205DStudy {
   }
 
   public static Algorithm<List<DoubleSolution>> createSMPSO(Problem<DoubleSolution> problem) {
-    int swarmSize = 100;
+    int swarmSize = 240;
     BoundedArchive<DoubleSolution> leadersArchive =
             new CrowdingDistanceArchive<DoubleSolution>(swarmSize);
 
@@ -228,7 +228,7 @@ public class PPSN20205DStudy {
   }
 
   public static Algorithm<List<DoubleSolution>> createMOEADDE(Problem<DoubleSolution> problem) {
-    int populationSize = 300;
+    int populationSize = 495;
 
     double cr = 1.0;
     double f = 0.5;
@@ -236,7 +236,6 @@ public class PPSN20205DStudy {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -251,14 +250,14 @@ public class PPSN20205DStudy {
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "resources/weightVectorFiles/moead",
-                    new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
+                    new TerminationByEvaluations(MAX_EVALUATIONS));
 
     return algorithm;
   }
 
   public static Algorithm<List<DoubleSolution>> createMOEADDEWithArchive(
           Problem<DoubleSolution> problem) {
-    int populationSize = 300;
+    int populationSize = 495;
 
     double cr = 1.0;
     double f = 0.5;
@@ -289,7 +288,7 @@ public class PPSN20205DStudy {
 
   public static Algorithm<List<DoubleSolution>> createSMPSOWithExternalArchive(
           Problem<DoubleSolution> problem) {
-    int swarmSize = 100;
+    int swarmSize = 240;
     BoundedArchive<DoubleSolution> leadersArchive =
             new CrowdingDistanceArchive<DoubleSolution>(swarmSize);
 
@@ -332,21 +331,21 @@ public class PPSN20205DStudy {
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createAlgorithmToSelectPartOfTheResultSolutionList(
-                                createNSGAIIWithArchive(problemList.get(i).getProblem()), 100),
+                                createNSGAIIWithArchive(problemList.get(i).getProblem()), 240),
                         "NSGAIIA",
                         problemList.get(i),
                         run));
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createAlgorithmToSelectPartOfTheResultSolutionList(
-                                createMOEADDE(problemList.get(i).getProblem()), 100),
+                                createMOEADDE(problemList.get(i).getProblem()), 240),
                         "MOEAD",
                         problemList.get(i),
                         run));
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createAlgorithmToSelectPartOfTheResultSolutionList(
-                                createMOEADDEWithArchive(problemList.get(i).getProblem()), 100),
+                                createMOEADDEWithArchive(problemList.get(i).getProblem()), 240),
                         "MOEADA",
                         problemList.get(i),
                         run));
@@ -356,7 +355,7 @@ public class PPSN20205DStudy {
         algorithms.add(
                 new ExperimentAlgorithm<>(
                         createAlgorithmToSelectPartOfTheResultSolutionList(
-                                createSMPSOWithExternalArchive(problemList.get(i).getProblem()), 100),
+                                createSMPSOWithExternalArchive(problemList.get(i).getProblem()), 240),
                         "SMPSOA",
                         problemList.get(i),
                         run));
