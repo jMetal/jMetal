@@ -5,7 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
 
-public class ArchiveBasedAlgorithmsEnsemble implements Algorithm<List<DoubleSolution>> {
+public class AlgorithmsEnsemble implements Algorithm<List<DoubleSolution>> {
     @Override
     public void run() {
 
