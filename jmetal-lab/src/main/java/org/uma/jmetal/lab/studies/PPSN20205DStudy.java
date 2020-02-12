@@ -44,8 +44,8 @@ import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class PPSN20205DStudy {
-
   private static final int INDEPENDENT_RUNS = 20;
+  private static final int MAX_EVALUATIONS = 100000 ;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -116,7 +116,7 @@ public class PPSN20205DStudy {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Algorithm<List<DoubleSolution>> algorithm =
             new NSGAII<>(
@@ -141,7 +141,7 @@ public class PPSN20205DStudy {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
@@ -167,7 +167,7 @@ public class PPSN20205DStudy {
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Algorithm<List<DoubleSolution>> algorithm =
             new SMSEMOA<>(
@@ -190,7 +190,7 @@ public class PPSN20205DStudy {
 
     int populationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Algorithm<List<DoubleSolution>> algorithm =
             new SMSEMOAWithArchive<>(
@@ -213,7 +213,7 @@ public class PPSN20205DStudy {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Algorithm<List<DoubleSolution>> algorithm =
             new SMPSO(
@@ -266,7 +266,6 @@ public class PPSN20205DStudy {
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     int maximumNumberOfReplacedSolutions = 2;
-    int maximumNumberOfFunctionEvaluations = 50000;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
@@ -284,7 +283,7 @@ public class PPSN20205DStudy {
                     neighborhoodSize,
                     "resources/weightVectorFiles/moead",
                     externalArchive,
-                    new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
+                    new TerminationByEvaluations(MAX_EVALUATIONS));
     return algorithm;
   }
 
@@ -298,7 +297,7 @@ public class PPSN20205DStudy {
     double mutationDistributionIndex = 20.0;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(MAX_EVALUATIONS);
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
