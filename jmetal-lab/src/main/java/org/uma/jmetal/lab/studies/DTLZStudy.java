@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.experiment.studies;
+package org.uma.jmetal.lab.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;

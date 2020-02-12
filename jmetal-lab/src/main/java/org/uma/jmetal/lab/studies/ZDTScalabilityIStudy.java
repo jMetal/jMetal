@@ -1,7 +1,9 @@
-package org.uma.jmetal.lab.experiment.studies;
+package org.uma.jmetal.lab.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.*;
@@ -10,11 +12,14 @@ import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,11 +27,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Example of experimental study based on solving the ZDT problems with four versions of NSGA-II,
- * each of them applying a different crossover probability (from 0.7 to 1.0).
+ * Example of experimental study based on solving the ZDT1 problem but using five different number
+ * of variables. This can be interesting to study the behaviour of the algorithms when solving an
+ * scalable problem (in the number of variables). The used algorithms are NSGA-II, SPEA2 and SMPSO.
  * <p>
- * This org.uma.jmetal.experiment assumes that the reference Pareto front are not known, so the names of files
- * containing them and the directory where they are located must be specified.
+ * This org.uma.jmetal.experiment assumes that the reference Pareto front is of problem ZDT1 is known and that
+ * there is a file called ZDT1.pf containing it.
  * <p>
  * Six quality indicators are used for performance assessment.
  * <p>
@@ -38,9 +44,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIStudy2 {
+public class ZDTScalabilityIStudy {
 
-  private static final int INDEPENDENT_RUNS = 20;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -49,23 +55,22 @@ public class NSGAIIStudy2 {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new ZDT1()));
-    problemList.add(new ExperimentProblem<>(new ZDT2()));
-    problemList.add(new ExperimentProblem<>(new ZDT3()));
-    problemList.add(new ExperimentProblem<>(new ZDT4()));
-    problemList.add(new ExperimentProblem<>(new ZDT6()));
-
+    problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(20), "ZDT120"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
+    problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("NSGAIIStudy2")
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTScalabilityStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
-                    .setReferenceFrontDirectory(experimentBaseDirectory + "/NSGAIIStudy2/referenceFronts")
+                    .setReferenceFrontDirectory("/pareto_fronts")
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
@@ -78,7 +83,6 @@ public class NSGAIIStudy2 {
                     .build();
 
     new ExecuteAlgorithms<>(experiment).run();
-    new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
@@ -98,52 +102,40 @@ public class NSGAIIStudy2 {
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
-                problemList.get(i).getProblem(),
-                new SBXCrossover(1.0, 5),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
-                        10.0),
-                100)
-                .setMaxEvaluations(25000)
+        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+        double mutationDistributionIndex = 20.0;
+        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+                (DoubleProblem) problemList.get(i).getProblem(),
+                new CrowdingDistanceArchive<DoubleSolution>(100))
+                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+                .setMaxIterations(250)
+                .setSwarmSize(100)
+                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                         20.0),
                 100)
-                .setMaxEvaluations(25000)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
-                problemList.get(i).getProblem(), new SBXCrossover(1.0, 40.0),
+        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
+                problemList.get(i).getProblem(),
+                new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
-                        40.0),
-                100)
-                .setMaxEvaluations(25000)
+                        20.0))
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i), run));
-      }
-
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
-                problemList.get(i).getProblem(), new SBXCrossover(1.0, 80.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
-                        80.0),
-                100)
-                .setMaxEvaluations(25000)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
     }
     return algorithms;
   }
-
 }
