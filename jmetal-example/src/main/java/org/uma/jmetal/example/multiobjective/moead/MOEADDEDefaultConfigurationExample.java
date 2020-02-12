@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -28,7 +29,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
     MOEADDE algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-    String referenceParetoFront = "referenceFronts/LZ09_F6.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F6.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -48,14 +49,14 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_Weights");
+            "resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 

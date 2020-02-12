@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -46,14 +47,14 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_WEIGHTS");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
@@ -83,21 +84,21 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_WEIGHTS");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/pareto_fronts/LZ09_F2.pf");
+        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
 
     // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings,
     // should
@@ -127,21 +128,21 @@ public class MOEADDEIT {
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "MOEAD_WEIGHTS");
+            "../resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/pareto_fronts/LZ09_F6.pf");
+        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F6.pf");
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings,
     // should

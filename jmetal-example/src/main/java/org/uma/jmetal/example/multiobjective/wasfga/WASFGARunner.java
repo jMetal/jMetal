@@ -49,7 +49,7 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
     List<Double> referencePoint = null;
 
     // problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
-    problem = new MultiobjectiveTSP("/tspInstances/kroA100.tsp", "/tspInstances/kroB100.tsp");
+    problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
     referencePoint = new ArrayList<>();
     referencePoint.add(0.0);

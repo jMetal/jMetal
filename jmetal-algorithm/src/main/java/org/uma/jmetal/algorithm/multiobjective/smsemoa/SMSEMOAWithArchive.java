@@ -20,7 +20,6 @@ import java.util.List;
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
   private Archive<S> archive;
-  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public SMSEMOAWithArchive(
@@ -31,8 +30,7 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
       Termination termination,
       Hypervolume<S> hypervolume,
       Ranking<S> ranking,
-      Archive<S> archive,
-      int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<S> archive) {
     super(
         problem,
         populationSize,
@@ -42,7 +40,6 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
         hypervolume,
         ranking);
     this.archive = archive;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   /**
@@ -61,8 +58,7 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination,
-      Archive<S> archive,
-      int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<S> archive) {
     this(
         problem,
         populationSize,
@@ -71,8 +67,7 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
         termination,
         new PISAHypervolume<>(),
         new FastNonDominatedSortRanking<>(),
-        archive,
-        numberOfSolutionsToTakeFromTheArchive);
+        archive);
   }
 
   @Override
@@ -87,11 +82,14 @@ public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
 
   @Override
   public List<S> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-        archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList() ;
   }
 
   public Archive<S> getArchive() {
     return archive;
+  }
+
+  public List<S> getPopulation() {
+    return population ;
   }
 }

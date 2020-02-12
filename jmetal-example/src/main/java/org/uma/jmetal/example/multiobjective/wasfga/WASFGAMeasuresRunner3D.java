@@ -51,7 +51,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-      referenceParetoFront = "referenceFronts/DTLZ2.3D.pf" ;
+      referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -82,7 +82,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
 						new SequentialSolutionListEvaluator<DoubleSolution>(),
 						epsilon,
 						referencePoint,
-		"MOEAD_Weights/W3D_100.dat") ;
+		"resources/weightVectorFiles/moead/W3D_100.dat") ;
 
     
     /* Measure management */

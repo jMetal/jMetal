@@ -83,9 +83,9 @@ public class ABYSSConstrainedProblemIT {
 
     /*
     Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings, should
-    return more than 98 solutions
+    return more than 90 solutions
     */
-    assertTrue(population.size() >= 98);
+    assertTrue(population.size() >= 90);
   }
 
   @Test
@@ -113,11 +113,10 @@ public class ABYSSConstrainedProblemIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../referenceFronts/ZDT1.pf");
+        new PISAHypervolume<>("../resources/referenceFronts/ZDT1.pf");
 
     // Rationale: the default problem is Tanaka, and AbYSS, configured with standard settings,
-    // should
-    // return find a front with a hypervolume value higher than 0.22
+    // should return find a front with a hypervolume value higher than 0.22
 
     double hv = hypervolume.evaluate(population);
 

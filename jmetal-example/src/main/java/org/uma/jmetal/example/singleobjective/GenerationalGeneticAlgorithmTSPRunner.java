@@ -36,7 +36,7 @@ public class GenerationalGeneticAlgorithmTSPRunner {
     MutationOperator<PermutationSolution<Integer>> mutation;
     SelectionOperator<List<PermutationSolution<Integer>>, PermutationSolution<Integer>> selection;
 
-    problem = new TSP("/tspInstances/kroA100.tsp");
+    problem = new TSP("resources/tspInstances/kroA100.tsp");
 
     crossover = new PMXCrossover(0.9) ;
 

@@ -418,11 +418,11 @@ public class SolutionListUtils {
    * @return
    */
   public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
-      List<S> originalSolutionList, int finalListSize) {
+          List<S> originalSolutionList, int finalListSize) {
     Check.isNotNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
-    if (originalSolutionList.size() < finalListSize) {
+    if (originalSolutionList.size() <= finalListSize) {
       return originalSolutionList;
     }
 
@@ -437,10 +437,10 @@ public class SolutionListUtils {
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
     int randomObjective =
-        JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
+            JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
 
     int bestSolutionIndex =
-        findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
+            findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
 
     //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
     List<S> selectedSolutions = new ArrayList<>(finalListSize);
@@ -449,17 +449,17 @@ public class SolutionListUtils {
 
     // STEP 4. Find the solution having the largest distance to the selected solutions
     Distance<S, List<S>> distance =
-        new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
         solution.setAttribute(
-            "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, selectedSolutions));
+                "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =
-          findIndexOfBestSolution(
-              solutions,
-              new DoubleValueAttributeComparator<>(
-                  "SUBSET_SELECTION_DISTANCE", AttributeComparator.Ordering.DESCENDING));
+              findIndexOfBestSolution(
+                      solutions,
+                      new DoubleValueAttributeComparator<>(
+                              "SUBSET_SELECTION_DISTANCE", AttributeComparator.Ordering.DESCENDING));
       selectedSolutions.add(solutions.get(largestDistanceSolutionIndex));
       solutions.remove(largestDistanceSolutionIndex);
     }

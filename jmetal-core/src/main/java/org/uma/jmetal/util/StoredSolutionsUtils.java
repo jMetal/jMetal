@@ -30,8 +30,6 @@ public class StoredSolutionsUtils {
       throw new JMetalException(e);
     }
 
-    //DummyProblem dummyProblem = new DummyProblem(numberOfObjectives);
-
     List<PointSolution> solutions = lines
       .map(line -> {
         String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
@@ -60,7 +58,7 @@ public class StoredSolutionsUtils {
           bufferedWriter.write((String) s.getAttribute(SolutionTextRepresentation.getAttribute()));
           bufferedWriter.newLine();
         } else {
-          throw new JMetalException("Formated text representation of the solution not stored as attribute");
+          throw new JMetalException("Formatted text representation of the solution not stored as attribute");
         }
       }
       bufferedWriter.close();

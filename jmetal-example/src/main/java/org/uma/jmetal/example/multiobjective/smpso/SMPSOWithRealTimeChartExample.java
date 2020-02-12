@@ -34,7 +34,7 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "referenceFronts/ZDT4.pf" ;
+    String referenceParetoFront = "resources/referenceFronts/ZDT4.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

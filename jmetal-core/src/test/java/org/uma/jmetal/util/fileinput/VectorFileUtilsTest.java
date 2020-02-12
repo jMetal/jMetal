@@ -12,7 +12,7 @@ public class VectorFileUtilsTest {
   @Test
   public void shouldReadVectorsWorkwithAWeightVectorFileLocatedInTheResourceFolder() {
     double[][] referenceVectors =
-        VectorFileUtils.readVectors("MOEAD_Weights/W3D_300.dat");
+        VectorFileUtils.readVectors("../resources/weightVectorFiles/moead/W3D_300.dat");
     Assert.assertNotNull(referenceVectors);
     Assert.assertEquals(300, referenceVectors.length);
     Assert.assertEquals(3, referenceVectors[0].length);

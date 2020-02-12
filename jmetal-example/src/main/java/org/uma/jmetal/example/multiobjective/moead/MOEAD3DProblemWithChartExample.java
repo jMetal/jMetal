@@ -48,7 +48,7 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-    String referenceParetoFront = "referenceFronts/LZ09_F6.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F6.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -79,7 +79,7 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
             populationSize,
             problem.getNumberOfObjectives(),
             neighborhoodSize,
-            "/MOEAD_Weights/W3D_300.dat");
+            "resources/weightVectorsFiles/moead/W3D_300.dat");
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(

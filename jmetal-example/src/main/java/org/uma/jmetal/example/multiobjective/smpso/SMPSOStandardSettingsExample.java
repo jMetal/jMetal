@@ -38,7 +38,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "referenceFronts/DTLZ1.3D.pf" ;
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

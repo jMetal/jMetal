@@ -32,35 +32,44 @@ import java.util.List;
  */
 public class MOEADDEWithArchive extends MOEADDE {
   private Archive<DoubleSolution> archive;
-  private int numberOfSolutionsToTakeFromTheArchive;
 
   /**
    * Constructor with the parameters used in the paper describing MOEA/D-DE.
    *
    * @param problem
    * @param populationSize
-   * @param maxNumberOfEvaluations
    * @param f
    * @param cr
    * @param neighborhoodSelectionProbability
    * @param maximumNumberOfReplacedSolutions
    * @param neighborhoodSize
+   * @param termination
    */
   public MOEADDEWithArchive(
       Problem<DoubleSolution> problem,
       int populationSize,
-      int maxNumberOfEvaluations,
       double cr,
       double f,
       AggregativeFunction aggregativeFunction,
       double neighborhoodSelectionProbability,
       int maximumNumberOfReplacedSolutions,
       int neighborhoodSize,
-      String weightVectorDirectory, Archive<DoubleSolution> archive, int numberOfSolutionsToTakeFromTheArchive) {
-    super(problem, populationSize, maxNumberOfEvaluations, cr, f, aggregativeFunction, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions, neighborhoodSize, weightVectorDirectory) ;
+      String weightVectorDirectory,
+      Archive<DoubleSolution> archive,
+      Termination termination) {
+    super(
+        problem,
+        populationSize,
+        cr,
+        f,
+        aggregativeFunction,
+        neighborhoodSelectionProbability,
+        maximumNumberOfReplacedSolutions,
+        neighborhoodSize,
+        weightVectorDirectory,
+        termination);
 
-    this.archive = archive ;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive ;
+    this.archive = archive;
   }
 
   @Override
@@ -75,11 +84,14 @@ public class MOEADDEWithArchive extends MOEADDE {
 
   @Override
   public List<DoubleSolution> getResult() {
-    return SolutionListUtils.distanceBasedSubsetSelection(
-            archive.getSolutionList(), numberOfSolutionsToTakeFromTheArchive);
+    return archive.getSolutionList();
   }
 
   public Archive<DoubleSolution> getArchive() {
     return archive;
+  }
+
+  public List<DoubleSolution> getPopulation() {
+    return population;
   }
 }

@@ -51,6 +51,7 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [2/11/2020] All the files containing Pareto front approximations and weight vectors have been moved to the ``resources`` folder, located in root project directory.
 
 * [2/06/2020] `New implementation <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/smsemoa>`_ of the SMS-EMOA algorithm based on a component-based scheme.
 

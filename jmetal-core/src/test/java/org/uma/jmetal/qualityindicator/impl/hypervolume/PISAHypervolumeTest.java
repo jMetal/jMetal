@@ -40,7 +40,7 @@ public class PISAHypervolumeTest {
     referenceFront.setPoint(0, new ArrayPoint(new double[]{1.0, 0.0}));
     referenceFront.setPoint(0, new ArrayPoint(new double[]{0.0, 1.0}));
 
-    Front storeFront = new ArrayFront("../referenceFronts/ZDT1.pf") ;
+    Front storeFront = new ArrayFront("../resources/referenceFronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
 
@@ -60,7 +60,7 @@ public class PISAHypervolumeTest {
 
   @Test
   public void shouldEvaluateWorkProperlyCase2() throws FileNotFoundException {
-    Front storeFront = new ArrayFront("../referenceFronts/ZDT1.pf") ;
+    Front storeFront = new ArrayFront("../resources/referenceFronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
 

@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AutoNSGAIITest {
   @Test
+  @Ignore
   public void shouldNSGAIIWithStandardSettingsSolveTheZDT1Problem() {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
@@ -42,6 +44,7 @@ public class AutoNSGAIITest {
   }
 
   @Test
+  @Ignore
   public void shouldNSGAIIWithAnExternalArchiveSolveTheZDT4Problem() {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
