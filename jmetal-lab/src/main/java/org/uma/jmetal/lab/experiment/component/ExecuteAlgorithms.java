@@ -40,10 +40,29 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
         "java.util.concurrent.ForkJoinPool.common.parallelism",
         "" + this.experiment.getNumberOfCores());
 
-    experiment
-        .getAlgorithmList()
-        .parallelStream()
-        .forEach(algorithm -> algorithm.runAlgorithm(experiment));
+    int retryCounter = 0 ;
+    int maxRetries = 5 ;
+    boolean computationNotFinished = true ;
+
+    while (computationNotFinished && (retryCounter < maxRetries)) {
+      List<ExperimentAlgorithm<?, ?>> unfinishedAlgorithmList = checkTaskStatus() ;
+      if (unfinishedAlgorithmList.size() == 0) {
+        computationNotFinished = false ;
+      } else {
+        JMetalLogger.logger.info(
+            "ExecuteAlgorithms: there are " + unfinishedAlgorithmList.size() + " runs pending");
+        unfinishedAlgorithmList
+            .parallelStream()
+            .forEach(algorithm -> algorithm.runAlgorithm(experiment));
+        retryCounter++;
+      }
+    }
+
+    if (computationNotFinished) {
+      JMetalLogger.logger.severe("There are unfinished tasks after " + maxRetries + " tries");
+    } else {
+      JMetalLogger.logger.info("Algorithm runs finished. Number of tries: " + retryCounter);
+    }
   }
 
   public List<ExperimentAlgorithm<?, ?>> checkTaskStatus() {
@@ -68,7 +87,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     return unfinishedAlgorithmList;
   }
 
-  public void rerunMissingExecutions(List<ExperimentAlgorithm<?, ?>> experimentAlgorithms) {
+  public void runMissingExecutions(List<ExperimentAlgorithm<?, ?>> experimentAlgorithms) {
     experimentAlgorithms.parallelStream().forEach(algorithm -> algorithm.runAlgorithm(experiment));
   }
 
