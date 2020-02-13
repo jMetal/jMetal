@@ -41,7 +41,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy {
-  private static final int INDEPENDENT_RUNS = 20;
+  private static final int INDEPENDENT_RUNS = 2;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -66,7 +66,7 @@ public class NSGAIIStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("resources/referenceFronts")
+            .setReferenceFrontDirectory("resources/referenceFrontsCSV")
             .setIndicatorList(
                 Arrays.asList(
                     new Epsilon<DoubleSolution>(),
