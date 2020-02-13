@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.ensemble;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.checking.Check;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<S>> {
   private List<Algorithm<List<S>>> algorithmList;
   private Archive<S> archive;
-  private long totalComputingTime ;
+  private long totalComputingTime;
 
   public AlgorithmEnsemble(List<Algorithm<List<S>>> algorithmList, Archive<S> archive) {
     Check.isNotNull(algorithmList);
@@ -25,10 +26,15 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
 
   @Override
   public void run() {
-    long startComputingTime = System.currentTimeMillis() ;
+    long startComputingTime = System.currentTimeMillis();
     List<S> bagOfSolutions = new ArrayList<>();
     for (Algorithm<List<S>> algorithm : algorithmList) {
       algorithm.run();
+      JMetalLogger.logger.info(
+          "Algorithm "
+              + algorithm.getName()
+              + " finished. "
+              + (System.currentTimeMillis() - startComputingTime));
       for (S solution : algorithm.getResult()) {
         solution.setAttribute("ALGORITHM_NAME", algorithm.getName());
       }
@@ -39,7 +45,7 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
       archive.add(solution);
     }
 
-    totalComputingTime = System.currentTimeMillis() - startComputingTime ;
+    totalComputingTime = System.currentTimeMillis() - startComputingTime;
   }
 
   @Override
@@ -61,7 +67,7 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
   }
 
   public long getTotalComputingTime() {
-    return totalComputingTime ;
+    return totalComputingTime;
   }
 
   @Override
