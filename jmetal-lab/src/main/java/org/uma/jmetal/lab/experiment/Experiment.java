@@ -12,36 +12,36 @@ import java.util.List;
 /**
  * Class for describing the configuration of a jMetal org.uma.jmetal.experiment.
  *
- * Created by Antonio J. Nebro on 17/07/14.
+ * <p>Created by Antonio J. Nebro on 17/07/14.
  */
 public class Experiment<S extends Solution<?>, Result extends List<S>> {
-	private String experimentName;
-	private List<ExperimentAlgorithm<S, Result>> algorithmList;
-	private List<ExperimentProblem<S>> problemList;
-	private String experimentBaseDirectory;
+  private String experimentName;
+  private List<ExperimentAlgorithm<S, Result>> algorithmList;
+  private List<ExperimentProblem<S>> problemList;
+  private String experimentBaseDirectory;
 
-	private String outputParetoFrontFileName;
-	private String outputParetoSetFileName;
-	private int independentRuns;
+  private String outputParetoFrontFileName;
+  private String outputParetoSetFileName;
+  private int independentRuns;
 
   private String referenceFrontDirectory;
 
-  private List<GenericIndicator<S>> indicatorList ;
+  private List<GenericIndicator<S>> indicatorList;
 
-  private int numberOfCores ;
+  private int numberOfCores;
 
-	/** Constructor */
-	public Experiment(ExperimentBuilder<S, Result> builder) {
-		this.experimentName = builder.getExperimentName() ;
-    this.experimentBaseDirectory = builder.getExperimentBaseDirectory() ;
-    this.algorithmList = builder.getAlgorithmList() ;
-    this.problemList = builder.getProblemList() ;
-    this.independentRuns = builder.getIndependentRuns() ;
-    this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName() ;
-    this.outputParetoSetFileName = builder.getOutputParetoSetFileName() ;
-    this.numberOfCores = builder.getNumberOfCores() ;
-    this.referenceFrontDirectory = builder.getReferenceFrontDirectory() ;
-    this.indicatorList = builder.getIndicatorList() ;
+  /** Constructor */
+  public Experiment(ExperimentBuilder<S, Result> builder) {
+    this.experimentName = builder.getExperimentName();
+    this.experimentBaseDirectory = builder.getExperimentBaseDirectory();
+    this.algorithmList = builder.getAlgorithmList();
+    this.problemList = builder.getProblemList();
+    this.independentRuns = builder.getIndependentRuns();
+    this.outputParetoFrontFileName = builder.getOutputParetoFrontFileName();
+    this.outputParetoSetFileName = builder.getOutputParetoSetFileName();
+    this.numberOfCores = builder.getNumberOfCores();
+    this.referenceFrontDirectory = builder.getReferenceFrontDirectory();
+    this.indicatorList = builder.getIndicatorList();
   }
 
   /* Getters */
@@ -74,7 +74,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
   }
 
   public int getNumberOfCores() {
-    return numberOfCores ;
+    return numberOfCores;
   }
 
   public String getReferenceFrontDirectory() {
@@ -87,22 +87,21 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
 
   /* Setters */
   public void setReferenceFrontDirectory(String referenceFrontDirectory) {
-    this.referenceFrontDirectory = referenceFrontDirectory ;
+    this.referenceFrontDirectory = referenceFrontDirectory;
   }
 
   public void setAlgorithmList(List<ExperimentAlgorithm<S, Result>> algorithmList) {
-    this.algorithmList = algorithmList ;
+    this.algorithmList = algorithmList;
   }
 
   /**
    * The list of algorithms contain an algorithm instance per problem. This is not convenient for
-   * calculating statistical data, because a same algorithm will appear many times.
-   * This method remove duplicated algorithms and leave only an instance of each one.
+   * calculating statistical data, because a same algorithm will appear many times. This method
+   * remove duplicated algorithms and leave only an instance of each one.
    */
   public void removeDuplicatedAlgorithms() {
-    HashSet<String> algorithmTagList = new HashSet<>() ;
+    HashSet<String> algorithmTagList = new HashSet<>();
 
-
-    getAlgorithmList().removeIf(alg -> !algorithmTagList.add(alg.getAlgorithmTag())) ;
+    getAlgorithmList().removeIf(alg -> !algorithmTagList.add(alg.getAlgorithmTag()));
   }
 }
