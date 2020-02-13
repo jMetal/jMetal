@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
@@ -56,13 +56,13 @@ public class DTLZStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new DTLZ1()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ2()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ3()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ4()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ5()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ6()).changeReferenceFrontTo("DTLZ1.3D.pf"));
-    problemList.add(new ExperimentProblem<>(new DTLZ7()).changeReferenceFrontTo("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ1()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ2()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ3()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ4()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ5()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ1.3D.pf"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);

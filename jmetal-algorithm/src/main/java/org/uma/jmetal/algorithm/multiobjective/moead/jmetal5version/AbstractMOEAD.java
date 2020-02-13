@@ -13,6 +13,7 @@ import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -112,13 +113,16 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
         //       String path =
         // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
         // ();
-        JMetalLogger.logger.info("FILE PATH: " + dataDirectory + "/" + dataFileName); ;
+        String path = "/" + dataDirectory + "/" + dataFileName ;
 
-        InputStream in =
+        InputStream inputStream =
             getClass()
                 .getClassLoader()
-                .getResourceAsStream(dataDirectory + "/" + dataFileName);
-        InputStreamReader isr = new InputStreamReader(in);
+                .getResourceAsStream(path);
+        if (inputStream == null) {
+          inputStream = new FileInputStream(dataDirectory + "/" + dataFileName);
+        }
+        InputStreamReader isr = new InputStreamReader(inputStream);
         BufferedReader br = new BufferedReader(isr);
 
         int i = 0;

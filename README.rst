@@ -51,6 +51,9 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [2/11/2020] All the files containing Pareto front approximations and weight vectors have been moved to the ``resources`` folder, located in root project directory.
+
+* [2/06/2020] `New implementation <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/smsemoa>`_ of the SMS-EMOA algorithm based on a component-based scheme.
 
 * [1/23/2020] A solution encoding for defining solution having mixed internal representations has been developed using class `CompositeSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java>`_. This class acts as solution container, so their variables are solutions of any kind. Variation operators for this class have been developed (classes `CompositeCrossover <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/operator/crossover/impl/CompositeCrossover.java>`_ and `CompositeMutation <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/operator/mutation/impl/CompositeMutation.java>`_). An example of configuring and running NSGA-II to solve a problem using this encoding is available in class `NSGAIIWithMixedSolutionEncodingExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithMixedSolutionEncodingExample.java>`_.  Any feedback about this new feature is welcome.
 

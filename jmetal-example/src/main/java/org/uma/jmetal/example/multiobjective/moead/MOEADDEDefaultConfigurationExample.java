@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -16,8 +17,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D-DE algorithm using class {@link MOEADDE} and the constructor taking
- * the parameters used in the paper describing the algorithm.
+ * Class for configuring and running the MOEA/D-DE algorithm using class {@link MOEADDE} and the
+ * constructor taking the parameters used in the paper describing the algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -27,8 +28,8 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
     DoubleProblem problem;
     MOEADDE algorithm;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F6.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -48,13 +49,14 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
         new MOEADDE(
             problem,
             populationSize,
-            maximumNumberOfFunctionEvaluations,
             cr,
             f,
             aggregativeFunction,
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
-            neighborhoodSize);
+            neighborhoodSize,
+            "resources/weightVectorFiles/moead",
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
 
     algorithm.run();
 

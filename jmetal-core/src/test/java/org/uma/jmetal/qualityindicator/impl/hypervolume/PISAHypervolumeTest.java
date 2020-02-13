@@ -16,6 +16,20 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class PISAHypervolumeTest {
+  private final double EPSILON = 0.00000001 ;
+  @Test
+  public void shouldConstructorWithReferencePointCreateAValidInstance() {
+    PISAHypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>(new double[]{1.0, 1.0}) ;
+
+    Front referenceFront = hypervolume.getReferenceParetoFront() ;
+    assertEquals(2, referenceFront.getNumberOfPoints());
+    assertEquals(2,referenceFront.getPointDimensions());
+    assertEquals(1.0, hypervolume.getReferenceParetoFront().getPoint(0).getValue(0), EPSILON);
+    assertEquals(0.0, hypervolume.getReferenceParetoFront().getPoint(0).getValue(1), EPSILON);
+    assertEquals(0.0, hypervolume.getReferenceParetoFront().getPoint(1).getValue(0), EPSILON);
+    assertEquals(1.0, hypervolume.getReferenceParetoFront().getPoint(1).getValue(1), EPSILON);
+   }
+
   /**
    * CASE 1: solution set -> front obtained from the ZDT1.rf file. Reference front: [0,1], [1,0]
    * @throws FileNotFoundException
@@ -26,7 +40,7 @@ public class PISAHypervolumeTest {
     referenceFront.setPoint(0, new ArrayPoint(new double[]{1.0, 0.0}));
     referenceFront.setPoint(0, new ArrayPoint(new double[]{0.0, 1.0}));
 
-    Front storeFront = new ArrayFront("../referenceFronts/ZDT1.pf") ;
+    Front storeFront = new ArrayFront("../resources/referenceFronts/ZDT1.pf") ;
 
     DoubleProblem problem = new MockDoubleProblem(2) ;
 
@@ -39,6 +53,26 @@ public class PISAHypervolumeTest {
     }
 
     Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<>(referenceFront) ;
+    double result = hypervolume.evaluate(frontToEvaluate) ;
+
+    assertEquals(0.6661, result, 0.0001) ;
+  }
+
+  @Test
+  public void shouldEvaluateWorkProperlyCase2() throws FileNotFoundException {
+    Front storeFront = new ArrayFront("../resources/referenceFronts/ZDT1.pf") ;
+
+    DoubleProblem problem = new MockDoubleProblem(2) ;
+
+    List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
+    for (int i = 0 ; i < storeFront.getNumberOfPoints(); i++) {
+      DoubleSolution solution = problem.createSolution() ;
+      solution.setObjective(0, storeFront.getPoint(i).getValue(0));
+      solution.setObjective(1, storeFront.getPoint(i).getValue(1));
+      frontToEvaluate.add(solution) ;
+    }
+
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(new double[]{1.1, 1.1}) ;
     double result = hypervolume.evaluate(frontToEvaluate) ;
 
     assertEquals(0.6661, result, 0.0001) ;

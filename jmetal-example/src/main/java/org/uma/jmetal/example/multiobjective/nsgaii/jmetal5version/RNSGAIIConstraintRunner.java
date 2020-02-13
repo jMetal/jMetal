@@ -65,7 +65,7 @@ public class RNSGAIIConstraintRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Srinivas";
-      referenceParetoFront = "referenceFronts/Srinivas.pf" ;
+      referenceParetoFront = "resources/referenceFronts/Srinivas.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);

@@ -13,20 +13,16 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ajnebro on 3/11/15.
- */
+/** Created by ajnebro on 3/11/15. */
 public class GDE3TestIT {
   Algorithm<List<DoubleSolution>> algorithm;
 
   @Test
-  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    DoubleProblem problem = new ZDT1() ;
+  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
+      throws Exception {
+    DoubleProblem problem = new ZDT1();
     JMetalRandom.getInstance().setSeed(1446505566148L);
-    algorithm = new GDE3Builder(problem)
-            .setMaxEvaluations(25000)
-            .setPopulationSize(100)
-            .build() ;
+    algorithm = new GDE3Builder(problem).setMaxEvaluations(25000).setPopulationSize(100).build();
 
     algorithm.run();
 
@@ -36,30 +32,28 @@ public class GDE3TestIT {
     Rationale: the default problem is ZDT4, and GDE3, configured with standard settings, should
     return 100 solutions
     */
-    assertTrue(population.size() >= 99) ;
+    assertTrue(population.size() >= 99);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    DoubleProblem problem = new ZDT1() ;
+    DoubleProblem problem = new ZDT1();
 
     JMetalRandom.getInstance().setSeed(1446505566148L);
-    algorithm = new GDE3Builder(problem)
-            .setMaxEvaluations(25000)
-            .setPopulationSize(100)
-            .build() ;
+    algorithm = new GDE3Builder(problem).setMaxEvaluations(25000).setPopulationSize(100).build();
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("../referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
+        new PISAHypervolume<>("../resources/referenceFronts/ZDT4.pf");
 
     // Rationale: the default problem is ZDT1, and GDE3, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.66
 
-    double hv = (Double)hypervolume.evaluate(population) ;
+    double hv = (Double) hypervolume.evaluate(population);
 
-    assertTrue(hv > 0.66) ;
+    assertTrue(hv > 0.66);
   }
 }

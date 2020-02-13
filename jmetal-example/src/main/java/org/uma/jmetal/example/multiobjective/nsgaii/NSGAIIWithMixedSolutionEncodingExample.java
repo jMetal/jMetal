@@ -33,7 +33,8 @@ import java.util.Arrays;
  */
 public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<CompositeSolution> problem = new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
+    Problem<CompositeSolution> problem =
+        new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
 
     CompositeCrossover crossover =
         new CompositeCrossover(
@@ -64,9 +65,9 @@ public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRun
     algorithm.run();
 
     new SolutionListOutput(algorithm.getResult())
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

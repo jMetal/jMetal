@@ -6,6 +6,7 @@ import org.uma.jmetal.lab.experiment.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -46,11 +47,11 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     rOutput = new File(rDirectoryName);
     if (!rOutput.exists()) {
       new File(rDirectoryName).mkdirs();
-      System.out.println("Creating " + rDirectoryName + " directory");
+      JMetalLogger.logger.info("GenerateWilcoxonTestTablesWithR. Creating " + rDirectoryName + " directory");
     }
     for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
-      String latexFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".tex";
+      String latexFileName = indicator.getName() + ".Wilcoxon" + ".tex";
 
       printHeaderLatexCommands(rFileName, latexFileName);
       printTableHeader(indicator, rFileName, latexFileName);
@@ -67,7 +68,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     String output = "write(\"\", \"" + latexFileName + "\",append=FALSE)";
     os.write(output + "\n");
 
-    String dataDirectory = experiment.getExperimentBaseDirectory() + "/data";
+    String dataDirectory = ".." + "/data";
     os.write("resultDirectory<-\"" + dataDirectory + "\"" + "\n");
     output = "latexHeader <- function() {" + "\n" +
         "  write(\"\\\\documentclass{article}\", \"" + latexFileName + APPEND_STRING +
@@ -110,7 +111,8 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
         "  write(\"\\\\begin{table}\", \"" + latexFileName + APPEND_STRING +
         latexTableCaption + "\n" +
         latexTableLabel + "\n" +
-        "  write(\"\\\\centering\", \"" + latexFileName + APPEND_STRING +
+            "  write(\"\\\\centering\", \"" + latexFileName + APPEND_STRING +
+            "  write(\"\\\\setlength\\\\tabcolsep{1pt}\", \"" + latexFileName + APPEND_STRING +
         "  write(\"\\\\begin{scriptsize}\", \"" + latexFileName + APPEND_STRING +
         //"  write(\"\\\\begin{tabular}{" + latexTabularAlignment + "}\", \"" + texFile + "\", append=TRUE)" + "\n" +
         "  write(\"\\\\begin{tabular}{\", \"" + latexFileName + APPEND_STRING +
@@ -265,7 +267,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     latexTabularAlignment = "| l | ";
     latexTableFirstLine = "\\\\hline \\\\multicolumn{1}{|c|}{}";
     for (int i = 1; i < experiment.getAlgorithmList().size(); i++) {
-      latexTabularAlignment += StringUtils.repeat("p{0.15cm }", experiment.getProblemList().size());
+      latexTabularAlignment += StringUtils.repeat("c", experiment.getProblemList().size());
       latexTableFirstLine += " & \\\\multicolumn{" + experiment.getProblemList().size() + "}{c|}{" + experiment.getAlgorithmList().get(i).getAlgorithmTag()+"}";
       latexTabularAlignment += " | " ;
     }

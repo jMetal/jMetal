@@ -15,7 +15,7 @@ public class DTLZ2Minus extends DTLZ2 {
   }
 
   /**
-   * Creates a DTLZ2 problem instance
+   * Creates a DTLZ2Minus problem instance
    *
    * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
@@ -26,7 +26,9 @@ public class DTLZ2Minus extends DTLZ2 {
   }
 
   /** Evaluate() method */
+  @Override
   public void evaluate(DoubleSolution solution) {
+    super.evaluate(solution);
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       solution.setObjective(i, -1.0 * solution.getObjective(i));
     }

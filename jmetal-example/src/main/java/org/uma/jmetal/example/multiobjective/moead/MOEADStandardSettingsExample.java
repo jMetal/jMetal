@@ -44,12 +44,11 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
-    int offspringPopulationSize = 1;
 
     SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
@@ -65,7 +64,7 @@ public class MOEADStandardSettingsExample extends AbstractAlgorithmRunner {
 
     DifferentialCrossoverVariation variation =
         new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
+            1, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;

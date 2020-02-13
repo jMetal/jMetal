@@ -74,7 +74,7 @@ public class MOMBIRunner extends AbstractAlgorithmRunner {
             mutation,
             selection,
             new SequentialSolutionListEvaluator<DoubleSolution>(),
-            "mombi2-weights/weight/weight_02D_152.sld");
+            "resources/weightVectorFiles/mombi2/weight_02D_152.sld");
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();

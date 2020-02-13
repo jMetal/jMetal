@@ -3,6 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.smpso;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -18,19 +19,19 @@ import static org.junit.Assert.assertTrue;
 
 public class SMPSOhv2IT {
   private Algorithm<List<DoubleSolution>> algorithm;
-  private BoundedArchive<DoubleSolution> archive ;
+  private BoundedArchive<DoubleSolution> archive;
 
   @Before
   public void setup() {
-    archive = new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>()) ;
+    archive = new HypervolumeArchive<DoubleSolution>(100, new WFGHypervolume<DoubleSolution>());
   }
 
-
   @Test
-  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() throws Exception {
-    DoubleProblem problem = new ZDT4() ;
+  public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem()
+      throws Exception {
+    DoubleProblem problem = new ZDT4();
 
-    algorithm = new SMPSOBuilder(problem, archive).build() ;
+    algorithm = new SMPSOBuilder(problem, archive).build();
 
     algorithm.run();
 
@@ -40,26 +41,27 @@ public class SMPSOhv2IT {
     Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     return 100 solutions
     */
-    assertTrue(population.size() >= 98) ;
+    assertTrue(population.size() >= 98);
   }
 
   @Test
   public void shouldTheHypervolumeHaveAMininumValue() throws Exception {
-    DoubleProblem problem = new ZDT4() ;
+    DoubleProblem problem = new ZDT4();
 
-    algorithm = new SMPSOBuilder(problem, archive).build() ;
+    algorithm = new SMPSOBuilder(problem, archive).build();
 
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume = new PISAHypervolume<>("../referenceFronts/ZDT4.pf") ;
+    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
+        new PISAHypervolume<>("../resources/referenceFronts/ZDT4.pf");
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = (Double)hypervolume.evaluate(population) ;
+    double hv = (Double) hypervolume.evaluate(population);
 
-    assertTrue(hv > 0.65) ;
+    assertTrue(hv > 0.65);
   }
 }

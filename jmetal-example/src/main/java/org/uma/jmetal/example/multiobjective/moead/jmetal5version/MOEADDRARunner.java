@@ -62,11 +62,12 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
             .setCrossover(crossover)
             .setMutation(mutation)
             .setMaxEvaluations(175000)
-            .setPopulationSize(300)
+            .setPopulationSize(600)
             .setResultPopulationSize(100)
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
+            .setDataDirectory("MOEAD_Weights")
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
             .build();
 

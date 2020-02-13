@@ -41,7 +41,7 @@ public class MOEADWithRealTimeChartExample extends AbstractAlgorithmRunner {
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -99,7 +99,7 @@ public class MOEADWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 1000, referenceParetoFront);
+        new RunTimeChartObserver<>("MOEA/D", 80, 1000, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);

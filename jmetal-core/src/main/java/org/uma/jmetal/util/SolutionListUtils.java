@@ -17,7 +17,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
 
-/** Created by Antonio J. Nebro on 04/10/14. Modified by Juanjo 13/03/15 */
+/** @author Antonio J. Nebro */
 public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
@@ -155,16 +155,15 @@ public class SolutionListUtils {
     double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
     double[] maxValues = new double[solutions.get(0).getNumberOfObjectives()];
 
-   for (int i = 0; i < minValues.length; i++) {
-     int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i)) ;
-     int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i)) ;
-     minValues[i] = solutions.get(best).getObjective(i) ;
-     maxValues[i] = solutions.get(worst).getObjective(i) ;
-   }
+    for (int i = 0; i < minValues.length; i++) {
+      int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
+      int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
+      minValues[i] = solutions.get(best).getObjective(i);
+      maxValues[i] = solutions.get(worst).getObjective(i);
+    }
 
     return normalizeSolutionList(solutions, minValues, maxValues);
   }
-
 
   /**
    * This method receives a normalized list of non-dominated solutions and return the inverted one.
@@ -408,47 +407,68 @@ public class SolutionListUtils {
   }
 
   /**
-   * Notes:
-   *  1.- the original solution list is modified
+   * Method implements a version of the distance-based subset selection algorithm described in: H.
+   * K. Singh, K. S. Bhattacharjee, and T. Ray, ‘Distance-based subset selection for benchmarking in
+   * evolutionary multi/many-objective optimization,’ IEEE Trans. on Evolutionary Computation,
+   * 23(5), 904-912, (2019). DOI: https://doi.org/10.1109/TEVC.2018.2883094
+   *
    * @param originalSolutionList
-   * @param finalListSize
+   * @param finalListSize The size of the result list
    * @param <S>
    * @return
    */
   public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
-      List<S> originalSolutionList, int finalListSize) {
+          List<S> originalSolutionList, int finalListSize) {
     Check.isNotNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
-    List<S> solutions = new ArrayList<>() ;
-    // STEP 1. Normalize the objectives values of the solution list
-    solutions.addAll(normalizeSolutionList(originalSolutionList)) ;
-
-    // STEP 2. Find the solution having the best objective value, being the objective randomly selected
-    int randomObjective =
-        JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
-
-    int bestSolutionIndex = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective)) ;
-
-    //  STEP 3. Add the solution to the result list and remove it from the original list
-    List<S> resultSolutions = new ArrayList<>(finalListSize);
-    resultSolutions.add(solutions.get(bestSolutionIndex)) ;
-    solutions.remove(bestSolutionIndex) ;
-
-    // STEP 4. Find the solution having the largest distance to the result solutions
-    Distance<S, List<S>> distance =
-            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
-    while (resultSolutions.size() < finalListSize) {
-      for (S solution : solutions) {
-        solution.setAttribute("DISTANCE", distance.getDistance(solution, resultSolutions));
-      }
-      int largestDistanceSolutionIndex =
-          findIndexOfBestSolution(
-              solutions, new DoubleValueAttributeComparator<>("DISTANCE", AttributeComparator.Ordering.DESCENDING)) ;
-      resultSolutions.add(solutions.get(largestDistanceSolutionIndex)) ;
-      solutions.remove(largestDistanceSolutionIndex) ;
+    if (originalSolutionList.size() <= finalListSize) {
+      return originalSolutionList;
     }
 
-    return resultSolutions;
+    for (int i = 0; i < originalSolutionList.size(); i++) {
+      originalSolutionList.get(i).setAttribute("INDEX_", i);
+    }
+
+    // STEP 1. Normalize the objectives values of the solution list
+    List<S> solutions = new ArrayList<>();
+    solutions.addAll(normalizeSolutionList(originalSolutionList));
+
+    // STEP 2. Find the solution having the best objective value, being the objective randomly
+    // selected
+    int randomObjective =
+            JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
+
+    int bestSolutionIndex =
+            findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
+
+    //  STEP 3. Add the solution to the current list of selected solutions and remove it from the original list
+    List<S> selectedSolutions = new ArrayList<>(finalListSize);
+    selectedSolutions.add(solutions.get(bestSolutionIndex));
+    solutions.remove(bestSolutionIndex);
+
+    // STEP 4. Find the solution having the largest distance to the selected solutions
+    Distance<S, List<S>> distance =
+            new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
+    while (selectedSolutions.size() < finalListSize) {
+      for (S solution : solutions) {
+        solution.setAttribute(
+                "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, selectedSolutions));
+      }
+      int largestDistanceSolutionIndex =
+              findIndexOfBestSolution(
+                      solutions,
+                      new DoubleValueAttributeComparator<>(
+                              "SUBSET_SELECTION_DISTANCE", AttributeComparator.Ordering.DESCENDING));
+      selectedSolutions.add(solutions.get(largestDistanceSolutionIndex));
+      solutions.remove(largestDistanceSolutionIndex);
+    }
+
+    List<S> resultList = new ArrayList<>();
+    for (S solution : selectedSolutions) {
+      resultList.add(originalSolutionList.get((int) solution.getAttribute("INDEX_")));
+    }
+
+    return resultList;
   }
 }

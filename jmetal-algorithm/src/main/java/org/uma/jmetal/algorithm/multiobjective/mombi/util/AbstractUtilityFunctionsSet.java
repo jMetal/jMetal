@@ -102,9 +102,15 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 *
 	 * @param filePath The path in the file system of the file containing the weight vectors
 	 */
-	public void loadWeightsFromFile(String filePath) {
-    JMetalLogger.logger.info("FILE PATH: " + filePath); ;
+	public void loadWeightsFromFile(String filePath)  {
 		InputStream in = getClass().getClassLoader().getResourceAsStream(filePath);
+		if (in == null) {
+			try {
+				in = new FileInputStream(filePath) ;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 		InputStreamReader isr = new InputStreamReader(in);
 		BufferedReader buffer = new BufferedReader(isr);
 

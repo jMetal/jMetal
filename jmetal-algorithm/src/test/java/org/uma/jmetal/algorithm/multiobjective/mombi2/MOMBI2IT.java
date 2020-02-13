@@ -45,7 +45,7 @@ public class MOMBI2IT {
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-        "mombi2-weights/weight/weight_03D_12.sld");
+        "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult() ;
@@ -80,7 +80,7 @@ public class MOMBI2IT {
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
-        "mombi2-weights/weight/weight_03D_12.sld");
+        "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
     List<DoubleSolution> population = algorithm.getResult() ;
@@ -90,7 +90,7 @@ public class MOMBI2IT {
     settings, should return 100 solutions
     */
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("/pareto_fronts/DTLZ1.3D.pf") ;
+        new PISAHypervolume<>("../resources/referenceFronts/DTLZ1.3D.pf") ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96

@@ -14,6 +14,8 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   private DensityEstimator<S> densityEstimator;
   private RemovalPolicy removalPolicy ;
 
+  int c = 0 ;
+
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
     this(ranking, densityEstimator, RemovalPolicy.sequential) ;
@@ -32,8 +34,8 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     jointPopulation.addAll(offspringList);
 
     List<S> resultList ;
-
     ranking.computeRanking(jointPopulation);
+
     if (removalPolicy == RemovalPolicy.oneShot) {
       resultList = oneShotTruncation(0, solutionList.size());
     } else {
@@ -41,6 +43,29 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     }
     return resultList;
   }
+
+  private List<S> oneShotTruncation(int sizeOfTheResultingSolutionList) {
+    int currentRank = 0 ;
+
+    List<S> resultList = new ArrayList<>();
+    while (resultList.size() < sizeOfTheResultingSolutionList) {
+      if (ranking.getSubFront(currentRank).size() < (sizeOfTheResultingSolutionList - resultList.size())) {
+        resultList.addAll(ranking.getSubFront(currentRank)) ;
+        currentRank ++ ;
+      } else {
+        densityEstimator.computeDensityEstimator(ranking.getSubFront(currentRank));
+        densityEstimator.sort(ranking.getSubFront(currentRank)) ;
+        int i = 0 ;
+        while (resultList.size() < sizeOfTheResultingSolutionList) {
+          resultList.add(ranking.getSubFront(currentRank).get(i)) ;
+          i++ ;
+        }
+      }
+    }
+
+    return resultList ;
+  }
+
 
   private List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
@@ -65,6 +90,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
 
     return resultList;
   }
+
 
   private List<S> sequentialTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);

@@ -2,6 +2,7 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
@@ -31,26 +32,20 @@ public abstract class GenericIndicator<S>
   }
 
   public GenericIndicator(Front referenceParetoFront) {
-    if (referenceParetoFront == null) {
-      throw new NullParetoFrontException();
-    }
+   Check.isNotNull(referenceParetoFront);
 
     this.referenceParetoFront = referenceParetoFront ;
   }
 
   public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
-    if (referenceParetoFrontFile == null) {
-      throw new NullParetoFrontException();
-    }
+    Check.isNotNull(referenceParetoFrontFile);
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 
-  public void setReferenceParetoFront(Front referenceFront) throws FileNotFoundException {
-    if (referenceFront == null) {
-      throw new NullParetoFrontException();
-    }
+  public void setReferenceParetoFront(Front referenceFront) {
+    Check.isNotNull(referenceFront);
 
     referenceParetoFront = referenceFront ;
   }
@@ -60,10 +55,8 @@ public abstract class GenericIndicator<S>
    * @return
    */
   public abstract boolean isTheLowerTheIndicatorValueTheBetter() ;
-  
-  private static class NullParetoFrontException extends JMetalException {
-    public NullParetoFrontException() {
-      super("The reference pareto front is null");
-    }
+
+  public Front getReferenceParetoFront() {
+    return referenceParetoFront ;
   }
 }
