@@ -49,8 +49,8 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
       }
     }
 
-    String funFile = outputDirectoryName + "/FUN" + runId + ".tsv";
-    String varFile = outputDirectoryName + "/VAR" + runId + ".tsv";
+    String funFile = outputDirectoryName + "/" + experimentData.getOutputParetoFrontFileName() + runId + ".tsv";
+    String varFile = outputDirectoryName + "/" + experimentData.getOutputParetoSetFileName() + runId + ".tsv";
     JMetalLogger.logger.info(
         " Running algorithm: "
             + algorithmTag

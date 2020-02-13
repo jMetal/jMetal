@@ -66,7 +66,7 @@ public class NSGAIIStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("/resources/referenceFronts")
+            .setReferenceFrontDirectory("resources/referenceFronts")
             .setIndicatorList(
                 Arrays.asList(
                     new Epsilon<DoubleSolution>(),
