@@ -75,9 +75,9 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
               + algorithm.getAlgorithmTag()
               + "/"
               + algorithm.getProblemTag()
-              + "/FUN"
+              + "/" + experiment.getOutputParetoFrontFileName()
               + algorithm.getRunId()
-              + ".tsv";
+              + ".dat";
       File file = new File(resultFileName);
       if (!file.exists()) {
         unfinishedAlgorithmList.add(algorithm);

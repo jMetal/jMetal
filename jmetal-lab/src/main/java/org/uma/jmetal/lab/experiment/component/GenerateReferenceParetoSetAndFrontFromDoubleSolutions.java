@@ -94,27 +94,27 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".rf"
+                  algorithm.getAlgorithmTag() + ".rf", ","
           );
       new SolutionListOutput(solutionsPerAlgorithm)
           .printVariablesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".rs"
+                  algorithm.getAlgorithmTag() + ".rs", ","
           );
     }
   }
 
   private void writeReferenceFrontFile(
-      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) {
     String referenceFrontFileName = outputDirectoryName + "/" + problem.getReferenceFront() ;
 
-    new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName);
+    new SolutionListOutput(nonDominatedSolutions).printObjectivesToFile(referenceFrontFileName, ",");
   }
 
   private void writeReferenceSetFile(
-      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
+      String outputDirectoryName, ExperimentProblem<?> problem, List<DummyDoubleSolution> nonDominatedSolutions) {
     String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".ps" ;
-    new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName);
+    new SolutionListOutput(nonDominatedSolutions).printVariablesToFile(referenceSetFileName, ",");
   }
 
   /**

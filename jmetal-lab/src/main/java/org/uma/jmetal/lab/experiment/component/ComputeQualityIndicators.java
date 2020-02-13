@@ -78,9 +78,9 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           indicator.setReferenceParetoFront(normalizedReferenceFront);
           for (int run = 0; run < experiment.getIndependentRuns(); run++) {
             String frontFileName = problemDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + run + ".tsv";
+                experiment.getOutputParetoFrontFileName() + run + ".dat";
 
-            Front front = new ArrayFront(frontFileName);
+            Front front = new ArrayFront(frontFileName, ",");
             Front normalizedFront = frontNormalizer.normalize(front);
             List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
             Double indicatorValue = (Double) indicator.evaluate((List<S>) normalizedPopulation);

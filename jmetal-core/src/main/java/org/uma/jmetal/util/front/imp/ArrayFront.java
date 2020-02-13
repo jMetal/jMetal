@@ -3,6 +3,7 @@ package org.uma.jmetal.util.front.imp;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
@@ -83,13 +84,7 @@ public class ArrayFront implements Front {
     }
   }
 
-  /**
-   * Constructor
-   *
-   * @param fileName File containing the data. Each line of the file is a list of objective values
-   * @throws FileNotFoundException
-   */
-  public ArrayFront(String fileName) throws FileNotFoundException {
+  public ArrayFront(String fileName, String separator) throws FileNotFoundException {
     this();
 
     InputStream inputStream = createInputStream(fileName);
@@ -98,32 +93,32 @@ public class ArrayFront implements Front {
 
     List<Point> list = new ArrayList<>();
     int numberOfObjectives = 0;
-    String aux;
+    String line;
     try {
-      aux = br.readLine();
+      line = br.readLine();
 
-      while (aux != null) {
-        StringTokenizer tokenizer = new StringTokenizer(aux);
-        int i = 0;
+      while (line != null) {
+        String[] stringValues = line.split(separator);
+        double[] values = new double[stringValues.length];
+        for (int i = 0; i < stringValues.length; i++) {
+          values[i] = Double.valueOf(stringValues[i]);
+        }
+
         if (numberOfObjectives == 0) {
-          numberOfObjectives = tokenizer.countTokens();
-        } else if (numberOfObjectives != tokenizer.countTokens()) {
-          throw new JMetalException(
-              "Invalid number of points read. "
-                  + "Expected: "
-                  + numberOfObjectives
-                  + ", received: "
-                  + tokenizer.countTokens());
+          numberOfObjectives = stringValues.length;
+        } else {
+          Check.that(
+              numberOfObjectives == stringValues.length,
+              "\"Invalid number of points read. \"\n"
+                  + "                  + \"Expected: \"\n"
+                  + "                  + numberOfObjectives\n"
+                  + "                  + \", received: \"\n"
+                  + "                  + values.length");
         }
 
-        Point point = new ArrayPoint(numberOfObjectives);
-        while (tokenizer.hasMoreTokens()) {
-          double value = new Double(tokenizer.nextToken());
-          point.setValue(i, value);
-          i++;
-        }
+        Point point = new ArrayPoint(values);
         list.add(point);
-        aux = br.readLine();
+        line = br.readLine();
       }
       br.close();
     } catch (IOException e) {
@@ -143,6 +138,16 @@ public class ArrayFront implements Front {
     for (int i = 0; i < numberOfPoints; i++) {
       points[i] = list.get(i);
     }
+  }
+
+  /**
+   * Constructor
+   *
+   * @param fileName File containing the data. Each line of the file is a list of objective values
+   * @throws FileNotFoundException
+   */
+  public ArrayFront(String fileName) throws FileNotFoundException {
+    this(fileName, "\\s+");
   }
 
   public InputStream createInputStream(String fileName) throws FileNotFoundException {
