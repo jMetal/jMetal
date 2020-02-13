@@ -68,7 +68,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
           JMetalLogger.logger.info("RF: " + referenceFrontName);
 
-          Front referenceFront = new ArrayFront(referenceFrontName);
+          Front referenceFront = new ArrayFront(referenceFrontName, ",");
 
           FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
           Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
@@ -148,23 +148,23 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
           String outputDirectory = algorithmDirectory + "/" + problem.getTag() ;
 
-          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.tsv" ;
-          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.tsv" ;
-          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.tsv" ;
-          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.tsv" ;
+          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.dat" ;
+          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.dat" ;
+          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.dat" ;
+          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.dat" ;
           if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
             String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".tsv";
+                experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".dat";
             String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".tsv";
+                experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".dat";
 
             Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
             Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
           } else {
             String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(list.size()-1).getRight() + ".tsv";
+                experiment.getOutputParetoFrontFileName() + list.get(list.size()-1).getRight() + ".dat";
             String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(list.size()-1).getRight() + ".tsv";
+                experiment.getOutputParetoSetFileName() + list.get(list.size()-1).getRight() + ".dat";
 
             Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
             Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
@@ -172,9 +172,9 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
           int medianIndex = list.size() / 2 ;
           String medianFunFile = outputDirectory + "/" +
-              experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".tsv";
+              experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".dat";
           String medianVarFile = outputDirectory + "/" +
-              experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".tsv";
+              experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".dat";
 
           Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING) ;
           Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING) ;
