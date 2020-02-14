@@ -18,6 +18,7 @@ import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.PointSolution;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -76,6 +78,29 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           String qualityIndicatorFile = problemDirectory + "/" + indicator.getName();
 
           indicator.setReferenceParetoFront(normalizedReferenceFront);
+
+          double[] indicatorValues = new double[experiment.getIndependentRuns()] ;
+          IntStream.range(0, experiment.getIndependentRuns()).forEach(run -> {
+            String frontFileName = problemDirectory + "/" +
+                    experiment.getOutputParetoFrontFileName() + run + ".dat";
+            Front front = null;
+            try {
+              front = new ArrayFront(frontFileName, ",");
+            } catch (FileNotFoundException e) {
+              e.printStackTrace();
+            }
+            Front normalizedFront = frontNormalizer.normalize(front);
+            List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
+            Double indicatorValue = (Double) indicator.evaluate((List<S>) normalizedPopulation);
+            JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
+            indicatorValues[run] = indicatorValue ;
+          });
+
+          for (int i = 0; i < indicatorValues.length; i++) {
+            writeQualityIndicatorValueToFile(indicatorValues[i], qualityIndicatorFile);
+          }
+
+          /*
           for (int run = 0; run < experiment.getIndependentRuns(); run++) {
             String frontFileName = problemDirectory + "/" +
                 experiment.getOutputParetoFrontFileName() + run + ".dat";
@@ -88,6 +113,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
           }
+           */
         }
       }
     }
