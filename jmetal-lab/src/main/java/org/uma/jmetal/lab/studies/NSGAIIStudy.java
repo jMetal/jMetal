@@ -41,7 +41,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIStudy {
-  private static final int INDEPENDENT_RUNS = 2;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -79,13 +79,11 @@ public class NSGAIIStudy {
             .setNumberOfCores(8)
             .build();
 
-    //new ExecuteAlgorithms<>(experiment).run();
-
-    //new ComputeQualityIndicators<>(experiment).run();
-
-    //new GenerateLatexTablesWithStatistics(experiment).run();
+    new ExecuteAlgorithms<>(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run();
+    new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    //new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 

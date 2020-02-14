@@ -55,21 +55,21 @@ public class PPSN20205DStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new MaF01(12, 5)).setReferenceFront("MaF01PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF02(12, 5)).setReferenceFront("MaF02PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF03(12, 5)).setReferenceFront("MaF03PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF04(12, 5)).setReferenceFront("MaF04PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF05(12, 5)).setReferenceFront("MaF05PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF06(12, 5)).setReferenceFront("MaF06PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF07(12, 5)).setReferenceFront("MaF07PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF08(2, 5)).setReferenceFront("MaF08PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF09(2, 5)).setReferenceFront("MaF09PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF10(12, 5)).setReferenceFront("MaF10PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF11(12, 5)).setReferenceFront("MaF11PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF12(12, 5)).setReferenceFront("MaF12PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF13(5, 5)).setReferenceFront("MaF13PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF14(60, 5)).setReferenceFront("MaF14PF_M5.txt"));
-    problemList.add(new ExperimentProblem<>(new MaF15(60, 5)).setReferenceFront("MaF15PF_M5.txt"));
+    problemList.add(new ExperimentProblem<>(new MaF01(12, 5)).setReferenceFront("MaF01.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF02(12, 5)).setReferenceFront("MaF02.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF03(12, 5)).setReferenceFront("MaF03.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF04(12, 5)).setReferenceFront("MaF04.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF05(12, 5)).setReferenceFront("MaF05.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF06(12, 5)).setReferenceFront("MaF06.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF07(12, 5)).setReferenceFront("MaF07.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF08(2, 5)).setReferenceFront("MaF08.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF09(2, 5)).setReferenceFront("MaF09.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF10(12, 5)).setReferenceFront("MaF10.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF11(12, 5)).setReferenceFront("MaF11.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF12(12, 5)).setReferenceFront("MaF12.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF13(5, 5)).setReferenceFront("MaF13.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF14(60, 5)).setReferenceFront("MaF14.5D.pf"));
+    problemList.add(new ExperimentProblem<>(new MaF15(60, 5)).setReferenceFront("MaF15.5D.pf"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
@@ -81,7 +81,7 @@ public class PPSN20205DStudy {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory("resources/referenceFronts")
+            .setReferenceFrontDirectory("resources/referenceFrontsCSV")
             .setIndicatorList(
                 Arrays.asList(
                     new Epsilon<DoubleSolution>(),
@@ -92,7 +92,7 @@ public class PPSN20205DStudy {
             .setNumberOfCores(8)
             .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
 
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
@@ -358,6 +358,13 @@ public class PPSN20205DStudy {
                         createAlgorithmToSelectPartOfTheResultSolutionList(
                                 createSMPSOWithExternalArchive(problemList.get(i).getProblem()), 240),
                         "SMPSOA",
+                        problemList.get(i),
+                        run));
+        algorithms.add(
+                new ExperimentAlgorithm<>(
+                        createAlgorithmToSelectPartOfTheResultSolutionList(
+                                createSMPSOWithExternalArchive(problemList.get(i).getProblem()), 240),
+                        "CVEA3",
                         problemList.get(i),
                         run));
         /*

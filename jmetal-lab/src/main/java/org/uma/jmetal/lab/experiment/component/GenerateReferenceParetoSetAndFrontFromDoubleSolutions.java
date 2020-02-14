@@ -80,7 +80,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
 
   private void writeFilesWithTheSolutionsContributedByEachAlgorithm(
       String outputDirectoryName, ExperimentProblem<?> problem,
-      List<DummyDoubleSolution> nonDominatedSolutions) throws IOException {
+      List<DummyDoubleSolution> nonDominatedSolutions)  {
     GenericSolutionAttribute<DoubleSolution, String> solutionAttribute = new GenericSolutionAttribute<DoubleSolution, String>()  ;
 
     for (ExperimentAlgorithm<?,?> algorithm : experiment.getAlgorithmList()) {
@@ -135,19 +135,22 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
                                                         .collect(Collectors.toCollection(ArrayList::new))) {
       String problemDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
           algorithm.getAlgorithmTag() + "/" + problem.getTag() ;
+      System.out.println(problem.getTag()) ;
 
       String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
-          algorithm.getRunId() + ".tsv";
+          algorithm.getRunId() + ".dat";
       String paretoSetFileName = problemDirectory + "/" + experiment.getOutputParetoSetFileName() +
-          algorithm.getRunId() + ".tsv";
-      Front frontWithObjectiveValues = new ArrayFront(frontFileName) ;
-      Front frontWithVariableValues = new ArrayFront(paretoSetFileName) ;
+          algorithm.getRunId() + ".dat";
+      Front frontWithObjectiveValues = new ArrayFront(frontFileName, ",") ;
+      Front frontWithVariableValues = new ArrayFront(paretoSetFileName, ",") ;
       List<DummyDoubleSolution> solutionList =
           createSolutionListFrontFiles(algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues) ;
       for (DummyDoubleSolution solution : solutionList) {
         nonDominatedSolutionArchive.add(solution) ;
       }
     }
+
+
 
     return nonDominatedSolutionArchive.getSolutionList() ;
   }
