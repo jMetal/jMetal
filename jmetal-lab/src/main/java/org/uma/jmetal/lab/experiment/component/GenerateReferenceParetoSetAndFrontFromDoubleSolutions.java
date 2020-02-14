@@ -63,12 +63,8 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     String outputDirectoryName = experiment.getReferenceFrontDirectory() ;
     createOutputDirectory(outputDirectoryName) ;
 
-    List<String> referenceFrontFileNames = new LinkedList<>() ;
-
     for (ExperimentProblem<?> problem : experiment.getProblemList()) {
       List<DummyDoubleSolution> nonDominatedSolutions = getNonDominatedSolutions(problem) ;
-
-      referenceFrontFileNames.add(problem.getReferenceFront());
 
       writeReferenceFrontFile(outputDirectoryName, problem, nonDominatedSolutions) ;
       writeReferenceSetFile(outputDirectoryName, problem, nonDominatedSolutions) ;
