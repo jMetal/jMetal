@@ -19,3 +19,4 @@ in the master branch of the repository as version 6.0-SNAPSHOT.
     encodings.rst
     experimentation.rst
     autoconfiguration.rst
+    mnds.rst
