@@ -16,6 +16,7 @@ in the master branch of the repository as version 6.0-SNAPSHOT.
     installation.rst
     encodings.rst
     problems.rst
+    constraints.rst
     nsgaII.rst
     moead.rst
     experimentation.rst

@@ -1,7 +1,7 @@
 .. _problems:
 
 Problems
-==================
+========
 
 :Author: Antonio J. Nebro
 :Version: Draft
