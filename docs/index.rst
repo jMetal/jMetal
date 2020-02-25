@@ -14,9 +14,10 @@ in the master branch of the repository as version 6.0-SNAPSHOT.
     :caption: Index:
 
     installation.rst
+    encodings.rst
+    problems.rst
     nsgaII.rst
     moead.rst
-    encodings.rst
     experimentation.rst
     autoconfiguration.rst
     mnds.rst

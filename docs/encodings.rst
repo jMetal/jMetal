@@ -41,7 +41,7 @@ The base class of all the solution encodings in jMetal 6.0 is the `Solution <htt
       Map<Object, Object> getAttributes();
     }
 
-Any solution contains a list of decision variables, an array of objective values, and array of constraint values (i.e., the constraint violation degree per each of the problem side constraints), and a map of attributes (e.g., to assign properties such as ranking, strength, etc., which are usually algorithm dependant). 
+Any solution contains a list of decision variables, an array of objective values, and array of constraint values (i.e., the constraint violation degree per each of the problem side constraints), and a map of attributes (e.g., to assign properties such as ranking, strength, etc., which are usually algorithm dependant). The variable values are assigned when a solution is created (typically, when invoking the `createSolution()` method of a problem), whereas the objective and constraint values are set when evaluating a solution. 
 
 jMetal 6.0 provides currently the following interfaces representing encodings (all of them extending `Solution`):
 
