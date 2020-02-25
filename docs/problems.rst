@@ -7,11 +7,8 @@ Problems
 :Version: Draft
 :Date: 2020-2-25
 
-All the problems in jMetal implement the `Problem` interface:
+All the problems in jMetal implement the `Problem` <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/problem/Problem.java>`_ interface:
 
-
-
-The base class of all the solution encodings in jMetal 6.0 is the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface:
 
 .. code-block:: java
 
