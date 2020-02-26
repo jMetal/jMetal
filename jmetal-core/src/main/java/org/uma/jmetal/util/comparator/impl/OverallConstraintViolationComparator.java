@@ -18,8 +18,10 @@ public class OverallConstraintViolationComparator<S extends Solution<?>>
    *
    * @param solution1 Object representing the first <code>Solution</code>.
    * @param solution2 Object representing the second <code>Solution</code>.
-   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
-   * respectively.
+   * @return -1 if the overall constraint violation degree of solution1 is higher than the one of solution2, 1 in
+   * the opposite case, and 0 if they have the same value (this case applies when the two compared solutions
+   * have no constraints). Note that the violation degree is a negative number, so when comparing to two solutions,
+   * the higher the value the better.
    */
   public int compare(S solution1, S solution2) {
     double violationDegreeSolution1 ;
