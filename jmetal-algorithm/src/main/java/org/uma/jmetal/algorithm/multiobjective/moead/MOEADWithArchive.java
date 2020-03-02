@@ -33,7 +33,6 @@ import java.util.Map;
  */
 public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
   private Archive<S> archive;
-  private int numberOfSolutionsToTakeFromTheArchive;
 
   /** Constructor */
   public MOEADWithArchive(
@@ -44,8 +43,7 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
       MatingPoolSelection<S> selection,
       Replacement<S> replacement,
       Termination termination,
-      Archive<S> archive,
-      int numberOfSolutionsToTakeFromTheArchive) {
+      Archive<S> archive) {
 
     super(
         problem,
@@ -57,7 +55,6 @@ public class MOEADWithArchive<S extends Solution<?>> extends MOEAD<S> {
         termination);
 
     this.archive = archive;
-    this.numberOfSolutionsToTakeFromTheArchive = numberOfSolutionsToTakeFromTheArchive;
   }
 
   @Override

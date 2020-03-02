@@ -48,7 +48,7 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -79,7 +79,7 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
                     populationSize,
                     problem.getNumberOfObjectives(),
                     neighborhoodSize,
-                    "/MOEAD_Weights/W3D_300.dat");
+                    "resources/weightVectorFiles/moead");
 
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
@@ -111,12 +111,12 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
             selection,
             replacement,
             new TerminationByEvaluations(50000),
-            archive, 100);
+            archive);
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-            //MOEADUtils.getSubsetOfEvenlyDistributedSolutions(algorithm.getResult(), 100) ;
+    List<DoubleSolution> population =
+            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100) ;
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
