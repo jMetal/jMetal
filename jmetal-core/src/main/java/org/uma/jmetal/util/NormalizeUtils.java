@@ -36,7 +36,20 @@ public class NormalizeUtils {
   public static double normalize(
       double value, double minRangeValue, double maxRangeValue, double min, double max) {
 
-    Check.that(max != min, "The max minus min should not be zero");
+    // if ((min == 0) && (max == 0)) {
+    //  return 0.0 ;
+    // }
+    Check.that(
+        max != min,
+        "The max minus min should not be zero. "
+            + "MinRangeValue = "
+            + minRangeValue
+            + ". MaxRangeValue = "
+            + maxRangeValue
+            + "Max = "
+            + max
+            + ". Min = "
+            + min);
 
     return minRangeValue + (((value - min) * (maxRangeValue - minRangeValue)) / (max - min));
   }

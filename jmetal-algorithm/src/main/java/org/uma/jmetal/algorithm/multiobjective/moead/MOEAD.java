@@ -176,12 +176,12 @@ public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<
 
   @Override
   public String getName() {
-    return "MOEA/D";
+    return "MOEAD";
   }
 
   @Override
   public String getDescription() {
-    return "MOEA/D";
+    return "MOEAD";
   }
 
   public Map<String, Object> getAlgorithmStatusData() {

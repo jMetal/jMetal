@@ -59,8 +59,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
         for (int i = 0; i < experiment.getIndependentRuns(); i++) {
           String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
-              i + ".tsv";
-          Front front = new ArrayFront(frontFileName) ;
+              i + ".dat";
+          Front front = new ArrayFront(frontFileName, ",") ;
           List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
           GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
@@ -70,7 +70,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".dat" ;
       referenceFrontFileNames.add(problem.getTag() + ".pf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
@@ -108,7 +108,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".pf"
+                  algorithm.getAlgorithmTag() + ".dat"
           );
     }
   }
