@@ -47,7 +47,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     MOEADDE algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "referenceFronts/LZ09_F6.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -87,8 +87,8 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());

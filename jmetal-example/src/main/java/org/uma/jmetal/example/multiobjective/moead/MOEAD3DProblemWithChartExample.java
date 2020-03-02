@@ -79,7 +79,7 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
             populationSize,
             problem.getNumberOfObjectives(),
             neighborhoodSize,
-            "resources/weightVectorsFiles/moead/W3D_300.dat");
+            "resources/weightVectorsFiles/moead");
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(

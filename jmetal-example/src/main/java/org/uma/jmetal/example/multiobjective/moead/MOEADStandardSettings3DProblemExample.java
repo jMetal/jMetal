@@ -73,7 +73,7 @@ public class MOEADStandardSettings3DProblemExample extends AbstractAlgorithmRunn
             populationSize,
             problem.getNumberOfObjectives(),
             neighborhoodSize,
-            "resources/weightVectorFiles/moead/W3D_300.dat");
+            "resources/weightVectorFiles/moead");
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
