@@ -1,10 +1,8 @@
-package org.uma.jmetal.util.front.imp;
+package org.uma.jmetal.util.front.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;

@@ -47,7 +47,7 @@ public class ConstraintMOEADIT {
         .setMaximumNumberOfReplacedSolutions(2)
         .setNeighborSize(20)
         .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-        .setDataDirectory("../resources/weightVectorFiles/moead")
+        .setDataDirectory("../../resources/weightVectorFiles/moead")
         .build();
 
     algorithm.run() ;

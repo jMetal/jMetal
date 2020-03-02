@@ -104,12 +104,7 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
                 populationSize,
                 problem.getNumberOfObjectives(),
                 neighborhoodSize,
-                 weightVectorDirectory
-                    + "/W"
-                    + problem.getNumberOfObjectives()
-                    + "D_"
-                    + populationSize
-                    + ".dat");
+                 weightVectorDirectory);
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }

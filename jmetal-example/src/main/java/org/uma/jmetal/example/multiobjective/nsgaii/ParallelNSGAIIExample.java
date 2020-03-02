@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.evaluation.impl.MultithreadedEvaluation;
 import org.uma.jmetal.component.termination.Termination;
@@ -32,7 +33,7 @@ import java.util.List;
 public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    NSGAII<DoubleSolution> algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
@@ -58,7 +59,7 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
     algorithm =
         new NSGAII<>(
                 problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
-            .setEvaluation(new MultithreadedEvaluation<>(8));
+                .setEvaluation(new MultithreadedEvaluation<>(8));
 
     algorithm.run();
 

@@ -11,7 +11,6 @@ import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOA;
 import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOAWithArchive;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.experiment.Experiment;

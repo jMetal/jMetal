@@ -98,7 +98,7 @@ public class MOEADDEIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
+            new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
 
     // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings,
     // should

@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.evaluation.Evaluation;
@@ -14,47 +14,37 @@ import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorRepla
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
-    implements ObservableEntity {
-  protected int evaluations;
-  protected int populationSize;
-  protected int offspringPopulationSize;
-
-  protected SelectionOperator<List<S>, S> selectionOperator;
-  protected CrossoverOperator<S> crossoverOperator;
-  protected MutationOperator<S> mutationOperator;
-
-  protected InitialSolutionsCreation<S> initialSolutionsCreation;
-  protected Termination termination;
-  protected Evaluation<S> evaluation ;
-  protected Replacement<S> replacement;
-  protected Variation<S> variation;
-  protected MatingPoolSelection<S> selection;
-
-  protected long startTime;
-  protected long totalComputingTime;
-
-  protected Map<String, Object> algorithmStatusData;
-  protected Observable<Map<String, Object>> observable;
+public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
+  public NSGAII(
+      Problem<S> problem,
+      Evaluation<S> evaluation,
+      InitialSolutionsCreation<S> initialPopulationCreation,
+      Termination termination,
+      MatingPoolSelection<S> selection,
+      CrossoverAndMutationVariation<S> variation,
+      RankingAndDensityEstimatorReplacement<S> replacement) {
+    super(
+        "NSGA-II",
+        problem,
+        evaluation,
+        initialPopulationCreation,
+        termination,
+        selection,
+        variation,
+        replacement);
+  }
 
   /** Constructor */
   public NSGAII(
@@ -65,16 +55,14 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
       MutationOperator<S> mutationOperator,
       Termination termination,
       Ranking<S> ranking) {
-
-    this.populationSize = populationSize;
-    this.problem = problem;
-
-    this.crossoverOperator = crossoverOperator;
-    this.mutationOperator = mutationOperator;
-
-    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
+    this.name = "NSGA-II" ;
+    this.problem = problem ;
+    this.observable = new DefaultObservable<>(name);
+    this.attributes = new HashMap<>();
 
     DensityEstimator<S> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+
+    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
@@ -95,11 +83,6 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
     this.termination = termination;
 
     this.evaluation = new SequentialEvaluation<>();
-    this.offspringPopulationSize = offspringPopulationSize;
-
-    this.algorithmStatusData = new HashMap<>();
-
-    this.observable = new DefaultObservable<>("NSGAII algorithm");
   }
 
   /** Constructor */
@@ -118,129 +101,5 @@ public class NSGAII<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm
         mutationOperator,
         termination,
         new FastNonDominatedSortRanking<>());
-  }
-
-  @Override
-  public void run() {
-    startTime = System.currentTimeMillis();
-    super.run();
-    totalComputingTime = System.currentTimeMillis() - startTime;
-  }
-
-  @Override
-  protected void initProgress() {
-    evaluations = populationSize;
-
-    algorithmStatusData.put("EVALUATIONS", evaluations);
-    algorithmStatusData.put("POPULATION", population);
-    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
-
-    observable.setChanged();
-    observable.notifyObservers(algorithmStatusData);
-  }
-
-  @Override
-  protected void updateProgress() {
-    evaluations += offspringPopulationSize;
-    algorithmStatusData.put("EVALUATIONS", evaluations);
-    algorithmStatusData.put("POPULATION", population);
-    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
-
-    observable.setChanged();
-    observable.notifyObservers(algorithmStatusData);
-  }
-
-  @Override
-  protected boolean isStoppingConditionReached() {
-    return termination.isMet(algorithmStatusData);
-  }
-
-  @Override
-  protected List<S> createInitialPopulation() {
-    return initialSolutionsCreation.create();
-  }
-
-  @Override
-  protected List<S> evaluatePopulation(List<S> population) {
-    return  evaluation.evaluate(population, getProblem());
-  }
-
-  /**
-   * This method iteratively applies a {@link SelectionOperator} to the population to fill the
-   * mating pool population.
-   *
-   * @param population
-   * @return The mating pool population
-   */
-  @Override
-  protected List<S> selection(List<S> population) {
-    return this.selection.select(population);
-  }
-
-  /**
-   * This methods iteratively applies a {@link CrossoverOperator} a {@link MutationOperator} to the
-   * population to create the offspring population. The population size must be divisible by the
-   * number of parents required by the {@link CrossoverOperator}; this way, the needed parents are
-   * taken sequentially from the population.
-   *
-   * <p>The number of solutions returned by the {@link CrossoverOperator} must be equal to the
-   * offspringPopulationSize state variable
-   *
-   * @param matingPool
-   * @return The new created offspring population
-   */
-  @Override
-  protected List<S> reproduction(List<S> matingPool) {
-    return variation.variate(population, matingPool);
-  }
-
-  @Override
-  protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    return replacement.replace(population, offspringPopulation);
-  }
-
-  @Override
-  public List<S> getResult() {
-    return SolutionListUtils.getNonDominatedSolutions(getPopulation());
-  }
-
-  @Override
-  public String getName() {
-    return "NSGAII";
-  }
-
-  @Override
-  public String getDescription() {
-    return "Nondominated Sorting Genetic Algorithm version II";
-  }
-
-  public Map<String, Object> getAlgorithmStatusData() {
-    return algorithmStatusData;
-  }
-
-  @Override
-  public Observable<Map<String, Object>> getObservable() {
-    return observable;
-  }
-
-  public long getTotalComputingTime() {
-    return totalComputingTime;
-  }
-
-  public long getEvaluations() {
-    return evaluations;
-  }
-
-  public NSGAII<S> setEvaluation(Evaluation<S> evaluation) {
-    this.evaluation = evaluation ;
-
-    return this;
-  }
-
-  public NSGAII<S> setInitialSolutionsCreation(
-      InitialSolutionsCreation<S> initialSolutionsCreation) {
-    this.initialSolutionsCreation = initialSolutionsCreation;
-
-    return this;
   }
 }
