@@ -47,7 +47,7 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
     DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -94,7 +94,7 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize);
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100);
 
     algorithm =
         new MOEADWithArchive<>(
@@ -105,7 +105,7 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
             selection,
             replacement,
             new TerminationByEvaluations(150000),
-            archive, 100);
+            archive);
 
     algorithm.run();
 
