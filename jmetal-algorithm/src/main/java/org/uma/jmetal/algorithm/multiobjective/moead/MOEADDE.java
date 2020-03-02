@@ -24,8 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
- * This class is intended to provide an implementation of the MOEA/D-DE algorithm including a
- * constructor with the typical parameters.
+ * This class is intended to provide an implementation of the MOEA/D-DE algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -127,7 +126,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
             true);
 
     this.replacement =
-        new MOEADReplacement(
+        new MOEADReplacement<DoubleSolution>(
             (PopulationAndNeighborhoodMatingPoolSelection) selection,
             neighborhood,
             aggregativeFunction,

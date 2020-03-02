@@ -25,8 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class is intended to provide an implementation of the MOEA/D-DE algorithm including a
- * constructor with the typical parameters.
+ * This class is intended to provide an implementation of the MOEA/D-DE algorithm using an external
+ * archive. The archive is updated * with the evaluated solutions and the a subset of solution list
+ * it contains is returned as * algorithm result. *
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

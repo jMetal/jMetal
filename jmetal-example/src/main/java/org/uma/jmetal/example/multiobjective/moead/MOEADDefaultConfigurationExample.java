@@ -1,14 +1,8 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD1;
-import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
-import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -19,7 +13,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
-import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
@@ -31,11 +24,11 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the MOEA/D-DE algorithm
+ * Class for configuring and running the MOEA/D algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEAD1StandardSettingsExample extends AbstractAlgorithmRunner {
+public class MOEADDefaultConfigurationExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -43,7 +36,7 @@ public class MOEAD1StandardSettingsExample extends AbstractAlgorithmRunner {
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD1<DoubleSolution> algorithm;
+    MOEAD<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
@@ -72,7 +65,7 @@ public class MOEAD1StandardSettingsExample extends AbstractAlgorithmRunner {
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
     algorithm =
-        new MOEAD1<DoubleSolution>(
+        new MOEAD<DoubleSolution>(
             problem,
             populationSize,
             mutation,

@@ -7,7 +7,9 @@ import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -16,6 +18,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -42,70 +45,41 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADWithArchive<DoubleSolution> algorithm;
+    MOEAD<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
+    CrossoverOperator<DoubleSolution> crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
-    int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> subProblemIdGenerator =
-        new IntegerPermutationGenerator(populationSize);
-
-    double cr = 1.0;
-    double f = 0.5;
-    crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    crossover = new SBXCrossover(1.0, 20.0);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    DifferentialCrossoverVariation variation =
-        new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
-
-    double neighborhoodSelectionProbability = 0.9;
+    double neighborhoodSelectionProbability = 1.0;
     int neighborhoodSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
-
-    PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
-            variation.getCrossover().getNumberOfRequiredParents(),
-            subProblemIdGenerator,
-            neighborhood,
-            neighborhoodSelectionProbability,
-            true);
 
     int maximumNumberOfReplacedSolutions = 2;
-    AggregativeFunction aggregativeFunction = new Tschebyscheff();
-    MOEADReplacement replacement =
-        new MOEADReplacement(
-            selection,
-            neighborhood,
-            aggregativeFunction,
-            subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions);
-
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100);
+    AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
     algorithm =
-        new MOEADWithArchive<>(
-            problem,
-            populationSize,
-            new RandomSolutionsCreation<>(problem, populationSize),
-            variation,
-            selection,
-            replacement,
-            new TerminationByEvaluations(150000),
-            archive);
+            new MOEAD<>(
+                    problem,
+                    populationSize,
+                    mutation,
+                    crossover,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "resources/weightVectorFiles/moead",
+                    new TerminationByEvaluations(50000));
 
     algorithm.run();
 

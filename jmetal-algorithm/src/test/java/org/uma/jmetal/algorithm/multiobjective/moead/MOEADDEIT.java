@@ -100,9 +100,8 @@ public class MOEADDEIT {
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
             new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
 
-    // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings,
-    // should
-    // return find a front with a hypervolume value higher than 0.96
+    // Rationale: the default problem is LZ09F2", and MOEA/D-DE, configured with standard settings,
+    // should return find a front with a hypervolume value higher than 0.95
     double hv = hypervolume.evaluate(population);
 
     assertTrue(hv > 0.65);

@@ -1,6 +1,6 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD1;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -15,10 +15,7 @@ import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -28,7 +25,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEAD1StandardSettings3DProblemExample extends AbstractAlgorithmRunner {
+public class MOEADDefaultConfiguration3DProblemExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -36,18 +33,16 @@ public class MOEAD1StandardSettings3DProblemExample extends AbstractAlgorithmRun
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD1<DoubleSolution> algorithm;
+    MOEAD<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int populationSize = 100;
-
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
+    int populationSize = 300;
 
     crossover = new SBXCrossover(1.0, 20.0);
 
@@ -55,17 +50,14 @@ public class MOEAD1StandardSettings3DProblemExample extends AbstractAlgorithmRun
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-
-    double neighborhoodSelectionProbability = 0.9;
+    double neighborhoodSelectionProbability = 1.0;
     int neighborhoodSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
 
     int maximumNumberOfReplacedSolutions = 2;
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
     algorithm =
-        new MOEAD1<>(
+        new MOEAD<>(
             problem,
             populationSize,
             mutation,
@@ -74,7 +66,7 @@ public class MOEAD1StandardSettings3DProblemExample extends AbstractAlgorithmRun
             neighborhoodSelectionProbability,
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
-            "resources/weightVectorsFiles/moead",
+            "resources/weightVectorFiles/moead",
             new TerminationByEvaluations(50000));
 
     algorithm.run();

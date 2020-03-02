@@ -1,13 +1,12 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
-import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -17,20 +16,20 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
-import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the MOEA/D-DE algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADStandardSettings3DProblemExample extends AbstractAlgorithmRunner {
+public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -38,19 +37,19 @@ public class MOEADStandardSettings3DProblemExample extends AbstractAlgorithmRunn
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD<DoubleSolution> algorithm;
+    MOEADDE algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
     int offspringPopulationSize = 1;
 
-    SequenceGenerator<Integer> subProblemIdGenerator =
-        new IntegerPermutationGenerator(populationSize);
+    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
@@ -69,11 +68,7 @@ public class MOEADStandardSettings3DProblemExample extends AbstractAlgorithmRunn
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
     WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(
-            populationSize,
-            problem.getNumberOfObjectives(),
-            neighborhoodSize,
-            "resources/weightVectorFiles/moead");
+        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
 
     PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
@@ -94,20 +89,27 @@ public class MOEADStandardSettings3DProblemExample extends AbstractAlgorithmRunn
             maximumNumberOfReplacedSolutions);
 
     algorithm =
-        new MOEAD<>(
-            problem,
-            populationSize,
-            new RandomSolutionsCreation<>(problem, populationSize),
-            variation,
-            selection,
-            replacement,
-            new TerminationByEvaluations(150000));
+            new MOEADDE(
+                    problem,
+                    populationSize,
+                    cr,
+                    f,
+                    aggregativeFunction,
+                    neighborhoodSelectionProbability,
+                    maximumNumberOfReplacedSolutions,
+                    neighborhoodSize,
+                    "resources/weightVectorFiles/moead",
+                    new TerminationByEvaluations(1500000));
+
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("MOEA/D", 80, 1000, referenceParetoFront);
+
+    algorithm.getObservable().register(evaluationObserver);
+    algorithm.getObservable().register(runTimeChartObserver);
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
-
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix(), problem.getName()) ;
-    plot.plot();
+    System.exit(0);
   }
 }
