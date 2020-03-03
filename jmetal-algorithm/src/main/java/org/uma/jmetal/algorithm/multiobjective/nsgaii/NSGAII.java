@@ -27,6 +27,18 @@ import java.util.HashMap;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
+
+  /**
+   * Constructor
+   *
+   * @param problem
+   * @param evaluation
+   * @param initialPopulationCreation
+   * @param termination
+   * @param selection
+   * @param variation
+   * @param replacement
+   */
   public NSGAII(
       Problem<S> problem,
       Evaluation<S> evaluation,

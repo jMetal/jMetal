@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIStandardSettingsExample extends AbstractAlgorithmRunner {
+public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
