@@ -42,7 +42,7 @@ public class MOEADDefaultConfiguration3DProblemExample extends AbstractAlgorithm
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int populationSize = 300;
+    int populationSize = 91;
 
     crossover = new SBXCrossover(1.0, 20.0);
 
