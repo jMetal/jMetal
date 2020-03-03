@@ -47,8 +47,6 @@ public class MOEADDefaultConfigurationExample extends AbstractAlgorithmRunner {
 
     int populationSize = 100;
 
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
-
     crossover = new SBXCrossover(1.0, 20.0);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
@@ -58,10 +56,9 @@ public class MOEADDefaultConfigurationExample extends AbstractAlgorithmRunner {
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
 
     int maximumNumberOfReplacedSolutions = 2;
+
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
     algorithm =

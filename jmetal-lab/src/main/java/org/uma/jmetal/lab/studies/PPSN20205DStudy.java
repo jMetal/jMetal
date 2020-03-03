@@ -281,8 +281,8 @@ public class PPSN20205DStudy {
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "resources/weightVectorFiles/moead",
-                    externalArchive,
-                    new TerminationByEvaluations(MAX_EVALUATIONS));
+                    new TerminationByEvaluations(MAX_EVALUATIONS),
+                    externalArchive);
     return algorithm;
   }
 

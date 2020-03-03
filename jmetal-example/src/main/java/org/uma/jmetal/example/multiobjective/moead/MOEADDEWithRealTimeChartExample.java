@@ -47,46 +47,15 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
-    int offspringPopulationSize = 1;
-
-    SequenceGenerator<Integer> subProblemIdGenerator = new IntegerPermutationGenerator(populationSize);
 
     double cr = 1.0;
     double f = 0.5;
-    crossover =
-        new DifferentialEvolutionCrossover(
-            cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
-
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
-
-    DifferentialCrossoverVariation variation =
-        new DifferentialCrossoverVariation(
-            offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
-    WeightVectorNeighborhood<DoubleSolution> neighborhood =
-        new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
-
-    PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
-            variation.getCrossover().getNumberOfRequiredParents(),
-            subProblemIdGenerator,
-            neighborhood,
-            neighborhoodSelectionProbability,
-            true);
 
     int maximumNumberOfReplacedSolutions = 2;
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
-    MOEADReplacement replacement =
-        new MOEADReplacement(
-            selection,
-            neighborhood,
-            aggregativeFunction,
-            subProblemIdGenerator,
-            maximumNumberOfReplacedSolutions);
 
     algorithm =
             new MOEADDE(

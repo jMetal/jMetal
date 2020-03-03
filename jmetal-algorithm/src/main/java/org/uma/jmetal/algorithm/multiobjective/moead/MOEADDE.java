@@ -40,7 +40,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
         DifferentialCrossoverVariation variation,
         MOEADReplacement replacement) {
         super(
-        "MOEAD",
+        "MOEAD-DE",
         problem,
         evaluation,
         initialPopulationCreation,

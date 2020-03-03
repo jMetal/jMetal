@@ -56,8 +56,8 @@ public class MOEADDEWithArchive extends MOEADDE {
       int maximumNumberOfReplacedSolutions,
       int neighborhoodSize,
       String weightVectorDirectory,
-      Archive<DoubleSolution> archive,
-      Termination termination) {
+      Termination termination,
+      Archive<DoubleSolution> archive) {
     super(
         problem,
         populationSize,

@@ -76,7 +76,8 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
             "resources/weightVectorFiles/moead",
-            archive, new TerminationByEvaluations(maximumNumberOfFunctionEvaluations));
+            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations),
+                archive);
 
     algorithm.run();
 

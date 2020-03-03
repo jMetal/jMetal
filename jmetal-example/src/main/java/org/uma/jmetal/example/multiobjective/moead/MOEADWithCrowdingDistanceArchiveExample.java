@@ -45,12 +45,12 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEAD<DoubleSolution> algorithm;
+    MOEADWithArchive<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -68,8 +68,10 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
     int maximumNumberOfReplacedSolutions = 2;
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100) ;
+
     algorithm =
-            new MOEAD<>(
+            new MOEADWithArchive<>(
                     problem,
                     populationSize,
                     mutation,
@@ -79,7 +81,8 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "resources/weightVectorFiles/moead",
-                    new TerminationByEvaluations(50000));
+                    new TerminationByEvaluations(50000),
+                    archive);
 
     algorithm.run();
 

@@ -66,6 +66,7 @@ public class MOEADWithChartExample extends AbstractAlgorithmRunner {
     int neighborhoodSize = 20;
 
     int maximumNumberOfReplacedSolutions = 2;
+
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
     algorithm =

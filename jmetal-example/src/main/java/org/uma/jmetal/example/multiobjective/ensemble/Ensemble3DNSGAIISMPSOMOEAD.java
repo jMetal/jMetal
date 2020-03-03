@@ -105,8 +105,8 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
             "resources/weightVectorFiles/moead",
-            externalArchive,
-            termination);
+            termination,
+                archive);
 
     List<Algorithm<List<DoubleSolution>>> algorithmList = new ArrayList<>();
     algorithmList.add(nsgaII);
