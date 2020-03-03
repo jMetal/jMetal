@@ -1,27 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
-import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.List;
 
 /**

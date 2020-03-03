@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
@@ -8,7 +7,6 @@ import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
-import org.uma.jmetal.operator.mutation.impl.CompositeMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.observable.Observable;
