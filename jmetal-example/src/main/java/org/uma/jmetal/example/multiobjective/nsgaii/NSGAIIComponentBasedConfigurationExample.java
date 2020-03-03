@@ -54,7 +54,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = 1;
     int maxNumberOfEvaluations = 25000;
 
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
