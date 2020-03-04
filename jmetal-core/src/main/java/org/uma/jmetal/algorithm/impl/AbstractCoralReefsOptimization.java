@@ -290,10 +290,7 @@ public abstract class AbstractCoralReefsOptimization<S, R>
 
 			Collections.sort(population, comparator);
 
-			budders = new ArrayList<S>((int) (Fa * population.size()));
-			for (int i = 0; i < budders.size(); i++) {
-				budders.add(population.get(i));
-			}
+			budders = new ArrayList<S>(population.subList(0, (int) Fa * population.size()));
 
 			population = larvaeSettlementPhase(budders, population, coordinates);
 
