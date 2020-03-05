@@ -2,7 +2,7 @@ package org.uma.jmetal.component.replacement.impl;
 
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
@@ -11,16 +11,16 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 import java.util.List;
 
-public class MOEADReplacement implements Replacement<DoubleSolution> {
-  private final PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> matingPoolSelection;
-  private final WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood;
+public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
+  private final PopulationAndNeighborhoodMatingPoolSelection<S> matingPoolSelection;
+  private final WeightVectorNeighborhood<S> weightVectorNeighborhood;
   private final AggregativeFunction aggregativeFunction;
   private final SequenceGenerator<Integer> sequenceGenerator;
   private final int maximumNumberOfReplacedSolutions;
 
   public MOEADReplacement(
-      PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> matingPoolSelection,
-      WeightVectorNeighborhood<DoubleSolution> weightVectorNeighborhood,
+      PopulationAndNeighborhoodMatingPoolSelection<S> matingPoolSelection,
+      WeightVectorNeighborhood<S> weightVectorNeighborhood,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,
       int maximumNumberOfReplacedSolutions) {
@@ -32,9 +32,9 @@ public class MOEADReplacement implements Replacement<DoubleSolution> {
   }
 
   @Override
-  public List<DoubleSolution> replace(
-      List<DoubleSolution> population, List<DoubleSolution> offspringPopulation) {
-    DoubleSolution newSolution = offspringPopulation.get(0);
+  public List<S> replace(
+      List<S> population, List<S> offspringPopulation) {
+    S newSolution = offspringPopulation.get(0);
     aggregativeFunction.update(newSolution.getObjectives());
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
@@ -68,7 +68,7 @@ public class MOEADReplacement implements Replacement<DoubleSolution> {
               newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
       if (f2 < f1) {
-        population.set(k, (DoubleSolution) newSolution.copy());
+        population.set(k, (S) newSolution.copy());
         replacements++;
       }
     }

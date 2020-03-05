@@ -7,7 +7,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
@@ -15,7 +15,6 @@ import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 import java.io.FileNotFoundException;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 
 /**

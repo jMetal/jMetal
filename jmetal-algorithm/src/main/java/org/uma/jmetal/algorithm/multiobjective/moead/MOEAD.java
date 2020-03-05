@@ -1,209 +1,130 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.component.replacement.Replacement;
-import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
+import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.variation.Variation;
+import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observable.ObservableEntity;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
- * Class implementing a generic MOEA/D algorithm.
+ * This class is intended to provide an implementation of the MOEA/D algorithm.
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es> */
-public class MOEAD<S extends Solution<?>> extends AbstractEvolutionaryAlgorithm<S, List<S>>
-    implements ObservableEntity {
-
-  protected int evaluations;
-  protected int populationSize;
-  protected int offspringPopulationSize;
-
-  protected InitialSolutionsCreation<S> initialSolutionsCreation;
-  protected Termination termination;
-  protected Evaluation<S> evaluation;
-  protected Replacement<S> replacement;
-  protected Variation<S> variation;
-  protected MatingPoolSelection<S> selection;
-
-  protected long startTime;
-  protected long totalComputingTime;
-
-  protected Map<String, Object> algorithmStatusData;
-  protected Observable<Map<String, Object>> observable;
+ * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ */
+public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
   /** Constructor */
   public MOEAD(
       Problem<S> problem,
+      Evaluation<S> evaluation,
+      InitialSolutionsCreation<S> initialPopulationCreation,
+      Termination termination,
+      RandomMatingPoolSelection<S> selection,
+      CrossoverAndMutationVariation<S> variation,
+      MOEADReplacement<S> replacement) {
+    super(
+        "MOEAD",
+        problem,
+        evaluation,
+        initialPopulationCreation,
+        termination,
+        selection,
+        variation,
+        replacement);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param problem
+   * @param populationSize
+   * @param mutationOperator
+   * @param crossoverOperator
+   * @param aggregativeFunction
+   * @param neighborhoodSelectionProbability
+   * @param maximumNumberOfReplacedSolutions
+   * @param neighborhoodSize
+   * @param weightVectorDirectory
+   * @param termination
+   */
+  public MOEAD(
+      Problem<S> problem,
       int populationSize,
-      InitialSolutionsCreation<S> initialSolutionsCreation,
-      Variation<S> variation,
-      MatingPoolSelection<S> selection,
-      Replacement<S> replacement,
+      MutationOperator<S> mutationOperator,
+      CrossoverOperator<S> crossoverOperator,
+      AggregativeFunction aggregativeFunction,
+      double neighborhoodSelectionProbability,
+      int maximumNumberOfReplacedSolutions,
+      int neighborhoodSize,
+      String weightVectorDirectory,
       Termination termination) {
-
-    this.populationSize = populationSize;
+    this.name = "MOEAD";
     this.problem = problem;
+    this.observable = new DefaultObservable<>(name);
+    this.attributes = new HashMap<>();
 
-    this.offspringPopulationSize = 1;
+    SequenceGenerator<Integer> subProblemIdGenerator =
+        new IntegerPermutationGenerator(populationSize);
 
-    this.variation = variation;
-    this.selection = selection;
-    this.initialSolutionsCreation = initialSolutionsCreation ;
-    this.replacement = replacement ;
-    this.termination = termination ;
+    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
+
+    int offspringPopulationSize = 1;
+    this.variation =
+        new CrossoverAndMutationVariation<>(
+            offspringPopulationSize, crossoverOperator, mutationOperator);
+
+    WeightVectorNeighborhood<S> neighborhood = null;
+
+    if (problem.getNumberOfObjectives() == 2) {
+      neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
+    } else {
+      try {
+        neighborhood =
+            new WeightVectorNeighborhood<>(
+                populationSize,
+                problem.getNumberOfObjectives(),
+                neighborhoodSize,
+                weightVectorDirectory);
+      } catch (FileNotFoundException exception) {
+        exception.printStackTrace();
+      }
+    }
+
+    this.selection =
+        new PopulationAndNeighborhoodMatingPoolSelection<S>(
+            variation.getMatingPoolSize(),
+            subProblemIdGenerator,
+            neighborhood,
+            neighborhoodSelectionProbability,
+            true);
+
+    this.replacement =
+        new MOEADReplacement<S>(
+            (PopulationAndNeighborhoodMatingPoolSelection) selection,
+            neighborhood,
+            aggregativeFunction,
+            subProblemIdGenerator,
+            maximumNumberOfReplacedSolutions);
+
+    this.termination = termination;
+
     this.evaluation = new SequentialEvaluation<>();
-
-    this.algorithmStatusData = new HashMap<>();
-
-    this.observable = new DefaultObservable<>("MOEA/D algorithm");
-  }
-
-  /**
-   * Empty constructor that creates an empty instance. It is intended to allow the definition of different subclass
-   * constructors. It is up to the developer the correct creation of the algorithm components.
-   */
-  public MOEAD() {
-  }
-
-  @Override
-  public void run() {
-    startTime = System.currentTimeMillis();
-    super.run();
-    totalComputingTime = System.currentTimeMillis() - startTime;
-  }
-
-  @Override
-  protected void initProgress() {
-    evaluations = populationSize;
-
-    algorithmStatusData.put("EVALUATIONS", evaluations);
-    algorithmStatusData.put("POPULATION", population);
-    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
-
-    observable.setChanged();
-    observable.notifyObservers(algorithmStatusData);
-  }
-
-  @Override
-  protected void updateProgress() {
-    evaluations += offspringPopulationSize;
-    algorithmStatusData.put("EVALUATIONS", evaluations);
-    algorithmStatusData.put("POPULATION", population);
-    algorithmStatusData.put("COMPUTING_TIME", System.currentTimeMillis() - startTime);
-
-    observable.setChanged();
-    observable.notifyObservers(algorithmStatusData);
-  }
-
-  @Override
-  protected boolean isStoppingConditionReached() {
-    return termination.isMet(algorithmStatusData);
-  }
-
-  @Override
-  protected List<S> createInitialPopulation() {
-    return initialSolutionsCreation.create();
-  }
-
-  @Override
-  protected List<S> evaluatePopulation(List<S> population) {
-    return evaluation.evaluate(population, getProblem());
-  }
-
-  /**
-   * This method iteratively applies a {@link SelectionOperator} to the population to fill the
-   * mating pool population.
-   *
-   * @param population
-   * @return The mating pool population
-   */
-  @Override
-  protected List<S> selection(List<S> population) {
-    List<S> matingPool = selection.select(population);
-
-    Check.that(
-        matingPool.size() == variation.getMatingPoolSize(),
-        "The mating pool size is "
-            + matingPool.size()
-            + " instead of "
-            + variation.getMatingPoolSize());
-
-    return matingPool;
-  }
-
-  /**
-   * This methods iteratively applies a {@link CrossoverOperator} a {@link MutationOperator} to the
-   * population to create the offspring population. The population size must be divisible by the
-   * number of parents required by the {@link CrossoverOperator}; this way, the needed parents are
-   * taken sequentially from the population.
-   *
-   * <p>The number of solutions returned by the {@link CrossoverOperator} must be equal to the
-   * offspringPopulationSize state variable
-   *
-   * @param matingPool
-   * @return The new created offspring population
-   */
-  @Override
-  protected List<S> reproduction(List<S> matingPool) {
-    return variation.variate(population, matingPool);
-  }
-
-  @Override
-  protected List<S> replacement(
-      List<S> population, List<S> offspringPopulation) {
-    return replacement.replace(population, offspringPopulation) ;
-  }
-
-  @Override
-  public List<S> getResult() {
-    return population;
-  }
-
-  @Override
-  public String getName() {
-    return "MOEAD";
-  }
-
-  @Override
-  public String getDescription() {
-    return "MOEAD";
-  }
-
-  public Map<String, Object> getAlgorithmStatusData() {
-    return algorithmStatusData;
-  }
-
-  @Override
-  public Observable<Map<String, Object>> getObservable() {
-    return observable;
-  }
-
-  public long getTotalComputingTime() {
-    return totalComputingTime;
-  }
-
-  public long getEvaluations() {
-    return evaluations;
-  }
-
-  public MOEAD setEvaluation(Evaluation<S> evaluation) {
-    this.evaluation = evaluation;
-
-    return this;
   }
 }

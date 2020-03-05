@@ -1,6 +1,5 @@
 package org.uma.jmetal.lab.experiment.component;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;

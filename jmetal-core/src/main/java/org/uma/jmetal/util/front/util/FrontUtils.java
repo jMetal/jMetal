@@ -2,7 +2,7 @@ package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.util.distance.EuclideanDistance;

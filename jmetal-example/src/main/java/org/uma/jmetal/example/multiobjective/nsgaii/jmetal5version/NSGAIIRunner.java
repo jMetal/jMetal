@@ -18,7 +18,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 
 import java.io.FileNotFoundException;
 import java.util.List;

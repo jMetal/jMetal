@@ -1,12 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
-import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -22,31 +23,32 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
- * This class is intended to provide an implementation of the MOEA/D-DE algorithm including a
- * constructor with the typical parameters.
+ * This class is intended to provide an implementation of the MOEA/D-DE algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDE extends MOEAD<DoubleSolution> {
+public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution> {
 
   /** Constructor */
   public MOEADDE(
-      Problem<DoubleSolution> problem,
-      int populationSize,
-      InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation,
-      DifferentialCrossoverVariation variation,
-      PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
-      MOEADReplacement replacement,
-      Termination termination) {
-    super(
+        Problem<DoubleSolution> problem,
+        Evaluation<DoubleSolution> evaluation,
+        InitialSolutionsCreation<DoubleSolution> initialPopulationCreation,
+        Termination termination,
+        PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
+        DifferentialCrossoverVariation variation,
+        MOEADReplacement replacement) {
+        super(
+        "MOEAD-DE",
         problem,
-        populationSize,
-        initialSolutionsCreation,
-        variation,
+        evaluation,
+        initialPopulationCreation,
+        termination,
         selection,
-        replacement,
-        termination);
-  }
+        variation,
+        replacement);
+        }
+
 
   /**
    * Constructor with the parameters used in the paper describing MOEA/D-DE.
@@ -71,15 +73,16 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
       int neighborhoodSize,
       String weightVectorDirectory,
       Termination termination) {
-    this.problem = problem;
-    this.populationSize = populationSize;
+    this.name = "MOEAD-DE" ;
+    this.problem = problem ;
+    this.observable = new DefaultObservable<>(name);
+    this.attributes = new HashMap<>();
 
-    this.offspringPopulationSize = 1;
 
     SequenceGenerator<Integer> subProblemIdGenerator =
         new IntegerPermutationGenerator(populationSize);
 
-    this.initialSolutionsCreation = new RandomSolutionsCreation<>(problem, populationSize);
+    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     DifferentialEvolutionCrossover crossover =
         new DifferentialEvolutionCrossover(
@@ -90,6 +93,7 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
     PolynomialMutation mutation =
         new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
+    int offspringPopulationSize = 1;
     this.variation =
         new DifferentialCrossoverVariation(
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
@@ -104,12 +108,7 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
                 populationSize,
                 problem.getNumberOfObjectives(),
                 neighborhoodSize,
-                 weightVectorDirectory
-                    + "/W"
-                    + problem.getNumberOfObjectives()
-                    + "D_"
-                    + populationSize
-                    + ".dat");
+                 weightVectorDirectory);
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }
@@ -126,7 +125,7 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
             true);
 
     this.replacement =
-        new MOEADReplacement(
+        new MOEADReplacement<DoubleSolution>(
             (PopulationAndNeighborhoodMatingPoolSelection) selection,
             neighborhood,
             aggregativeFunction,
@@ -135,10 +134,6 @@ public class MOEADDE extends MOEAD<DoubleSolution> {
 
     this.termination = termination ;
 
-    this.evaluation = new SequentialEvaluation<>();
-
-    this.algorithmStatusData = new HashMap<>();
-
-    this.observable = new DefaultObservable<>("MOEA/D-DE algorithm");
+    this.evaluation = new SequentialEvaluation<>() ;
   }
 }

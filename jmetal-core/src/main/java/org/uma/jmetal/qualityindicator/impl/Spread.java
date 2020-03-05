@@ -2,7 +2,7 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
 import org.uma.jmetal.util.point.util.distance.PointDistance;

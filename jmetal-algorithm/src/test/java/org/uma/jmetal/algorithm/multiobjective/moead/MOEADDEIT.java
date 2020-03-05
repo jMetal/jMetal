@@ -2,13 +2,7 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.MOEADBuilder;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F6;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
@@ -98,11 +92,10 @@ public class MOEADDEIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
+            new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
 
-    // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings,
-    // should
-    // return find a front with a hypervolume value higher than 0.96
+    // Rationale: the default problem is LZ09F2", and MOEA/D-DE, configured with standard settings,
+    // should return find a front with a hypervolume value higher than 0.95
     double hv = hypervolume.evaluate(population);
 
     assertTrue(hv > 0.65);

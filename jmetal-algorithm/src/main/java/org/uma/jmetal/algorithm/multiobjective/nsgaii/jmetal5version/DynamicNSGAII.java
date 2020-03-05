@@ -9,7 +9,7 @@ import org.uma.jmetal.qualityindicator.impl.CoverageFront;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;

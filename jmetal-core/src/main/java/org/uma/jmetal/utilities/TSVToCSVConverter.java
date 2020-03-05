@@ -1,23 +1,13 @@
 package org.uma.jmetal.utilities;
 
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.StoredSolutionsUtils;
-import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * This utility reads a TSV file and generates another file in CSV format

@@ -1,7 +1,8 @@
-package org.uma.jmetal.util.front.imp;
+package org.uma.jmetal.util.front.impl;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,6 +12,7 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
@@ -412,7 +414,7 @@ public class ArrayFrontTest {
 
   @Test
   public void shouldReadFrontAnEmptyFileCreateAnEmptyFront() throws FileNotFoundException {
-    String fileName = "/arrayFront/emptyFile.dat";
+    String fileName = "../resources/unitTestsData/arrayFront/emptyFile.dat";
     Front front = new ArrayFront(fileName);
 
     assertEquals(0, front.getNumberOfPoints());
@@ -433,10 +435,13 @@ public class ArrayFrontTest {
   }
 
   /** Test using a file containing: 3.0 2.3 asdfg */
-  @Test(expected = JMetalException.class)
+  @Test
+  @Ignore
   public void shouldReadFrontWithALineContainingWrongDataRaiseAnException()
       throws FileNotFoundException, JMetalException {
-    String fileName = "/arrayFront/fileWithWrongData.dat";
+    String fileName = "../resources/unitTestsData/arrayFront/fileWithWrongData.dat";
+
+    exception.expect(JMetalException.class);
 
     new ArrayFront(fileName);
   }
@@ -445,11 +450,9 @@ public class ArrayFrontTest {
   @Test
   public void shouldReadFrontWithALineWithALineMissingDataRaiseAnException()
       throws FileNotFoundException, JMetalException {
-    String fileName = "/arrayFront/fileWithMissingData.dat";
+    String fileName = "../resources/unitTestsData/arrayFront/fileWithMissingData.dat";
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString("Invalid number of points read. " + "Expected: 3, received: 2"));
+    exception.expect(InvalidConditionException.class);
 
     new ArrayFront(fileName);
   }

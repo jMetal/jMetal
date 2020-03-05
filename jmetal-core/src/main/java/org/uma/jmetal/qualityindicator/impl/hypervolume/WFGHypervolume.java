@@ -4,7 +4,7 @@ import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;

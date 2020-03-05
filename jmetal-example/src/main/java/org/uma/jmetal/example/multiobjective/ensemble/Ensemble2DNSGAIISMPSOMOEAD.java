@@ -16,7 +16,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
@@ -104,8 +103,8 @@ public class Ensemble2DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
             maximumNumberOfReplacedSolutions,
             neighborhoodSize,
             "resources/weightVectorFiles/moead",
-            externalArchive,
-            termination);
+            termination,
+            archive);
 
     List<Algorithm<List<DoubleSolution>>> algorithmList = new ArrayList<>();
     algorithmList.add(nsgaII);
@@ -117,7 +116,7 @@ public class Ensemble2DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
 
     algorithmEnsemble.run();
 
-    List<DoubleSolution> population = algorithmEnsemble.getResult() ;
+    List<DoubleSolution> population = algorithmEnsemble.getResult();
     JMetalLogger.logger.info(
         "Total execution time : " + algorithmEnsemble.getTotalComputingTime() + "ms");
 

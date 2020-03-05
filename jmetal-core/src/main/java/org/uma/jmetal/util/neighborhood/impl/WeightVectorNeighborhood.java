@@ -58,7 +58,6 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
   }
 
   private void readWeightsFromFile(String vectorFileName) throws FileNotFoundException {
-    // try {
     InputStream inputStream;
     inputStream = getClass().getResourceAsStream(vectorFileName);
     if (null == inputStream) {

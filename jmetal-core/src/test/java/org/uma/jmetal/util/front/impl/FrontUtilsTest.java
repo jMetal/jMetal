@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.front.imp;
+package org.uma.jmetal.util.front.impl;
 
 import org.junit.Rule;
 import org.junit.Test;
