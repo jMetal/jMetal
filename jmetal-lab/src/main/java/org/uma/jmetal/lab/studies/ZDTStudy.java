@@ -7,7 +7,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuild
 import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.lab.experiment.component.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -87,14 +87,14 @@ public class ZDTStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    //new ExecuteAlgorithms<>(org.uma.jmetal.experiment).run();
-    new ComputeQualityIndicators<>(experiment).run();
-    /*
-    new GenerateLatexTablesWithStatistics(org.uma.jmetal.experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(org.uma.jmetal.experiment).run();
-    new GenerateFriedmanTestTables<>(org.uma.jmetal.experiment).run();
-    new GenerateBoxplotsWithR<>(org.uma.jmetal.experiment).setRows(2).setColumns(3).run();
-    */
+    new ExecuteAlgorithms<>(experiment).run();
+    new ComputeQualityIndicators<>(experiment).run() ;
+    new GenerateLatexTablesWithStatistics(experiment).run();
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+    new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+
+
   }
 
   /**
