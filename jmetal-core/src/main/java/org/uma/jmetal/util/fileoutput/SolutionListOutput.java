@@ -137,16 +137,27 @@ public class SolutionListOutput {
   /*
    * Wrappers for printing with default configuration
    */
-  public void printObjectivesToFile(String fileName) throws IOException {
+  public void printObjectivesToFile(String fileName) {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList);
   }
 
-  public void printObjectivesToFile(String fileName, List<Boolean> minimizeObjective)
-      throws IOException {
+  public void printObjectivesToFile(String fileName, String separator) {
+    printObjectivesToFile(new DefaultFileOutputContext(fileName, separator), solutionList);
+  }
+
+  public void printObjectivesToFile(String fileName, List<Boolean> minimizeObjective) {
     printObjectivesToFile(new DefaultFileOutputContext(fileName), solutionList, minimizeObjective);
   }
 
-  public void printVariablesToFile(String fileName) throws IOException {
+  public void printObjectivesToFile(String fileName, List<Boolean> minimizeObjective, String separator) {
+    printObjectivesToFile(new DefaultFileOutputContext(fileName, separator), solutionList, minimizeObjective);
+  }
+
+  public void printVariablesToFile(String fileName) {
     printVariablesToFile(new DefaultFileOutputContext(fileName), solutionList);
+  }
+
+  public void printVariablesToFile(String fileName, String separator) {
+    printVariablesToFile(new DefaultFileOutputContext(fileName, separator), solutionList);
   }
 }

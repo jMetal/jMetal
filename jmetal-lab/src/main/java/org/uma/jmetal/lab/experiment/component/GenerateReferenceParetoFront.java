@@ -8,7 +8,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
@@ -59,8 +59,8 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
         for (int i = 0; i < experiment.getIndependentRuns(); i++) {
           String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
-              i + ".tsv";
-          Front front = new ArrayFront(frontFileName) ;
+              i + ".dat";
+          Front front = new ArrayFront(frontFileName, ",") ;
           List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
           GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
@@ -70,7 +70,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".pf" ;
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".dat" ;
       referenceFrontFileNames.add(problem.getTag() + ".pf");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
           .printObjectivesToFile(referenceSetFileName);
@@ -108,7 +108,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".pf"
+                  algorithm.getAlgorithmTag() + ".dat"
           );
     }
   }

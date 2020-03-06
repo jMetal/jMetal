@@ -1,6 +1,5 @@
 package org.uma.jmetal.lab.experiment.component;
 
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -75,9 +74,9 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
               + algorithm.getAlgorithmTag()
               + "/"
               + algorithm.getProblemTag()
-              + "/FUN"
+              + "/" + experiment.getOutputParetoFrontFileName()
               + algorithm.getRunId()
-              + ".tsv";
+              + ".dat";
       File file = new File(resultFileName);
       if (!file.exists()) {
         unfinishedAlgorithmList.add(algorithm);

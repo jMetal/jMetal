@@ -3,7 +3,7 @@ package org.uma.jmetal.util.chartcontainer;
 import org.knowm.xchart.*;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.awt.*;

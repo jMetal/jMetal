@@ -6,16 +6,18 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
-import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 /** @author Antonio J. Nebro */
 public class SolutionListUtils {
@@ -426,6 +428,13 @@ public class SolutionListUtils {
       return originalSolutionList;
     }
 
+    if (originalSolutionList.get(0).getNumberOfObjectives() == 2) {
+      Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize) ;
+      originalSolutionList.forEach(solution -> archive.add(solution));
+
+      return archive.getSolutionList() ;
+    }
+
     for (int i = 0; i < originalSolutionList.size(); i++) {
       originalSolutionList.get(i).setAttribute("INDEX_", i);
     }
@@ -470,5 +479,19 @@ public class SolutionListUtils {
     }
 
     return resultList;
+  }
+
+  /**
+   * Given a list of solutions, returns a matrix with the objective values of all the solutions
+   * @param solutionList
+   * @param <S>
+   * @return
+   */
+  public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(List<S> solutionList) {
+    double[][] matrix = new double[solutionList.size()][] ;
+
+    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).getObjectives()) ;
+
+    return matrix ;
   }
 }
