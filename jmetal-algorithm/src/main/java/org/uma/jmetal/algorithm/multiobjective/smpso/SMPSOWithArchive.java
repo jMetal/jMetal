@@ -5,17 +5,10 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observable.ObservableEntity;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Variant of SMPSO using an external archive. The archive is updated with the evaluated solutions

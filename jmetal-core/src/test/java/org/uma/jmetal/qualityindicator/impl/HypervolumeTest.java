@@ -5,12 +5,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.imp.ArrayFront;
-
-import static org.hamcrest.CoreMatchers.containsString;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 
 /**
  * @author Antonio J. Nebro

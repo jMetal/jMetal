@@ -4,9 +4,13 @@ import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
+import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.NormalizeUtils;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,14 +26,20 @@ import java.util.List;
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator;
-  private Distance<S, S> distance = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
+  private Distance<double[], double[]> distance = new EuclideanDistanceBetweenVectors();
   private int k;
   private double[][] distanceMatrix;
+  private boolean normalize ;
 
   public KnnDensityEstimator(int k) {
+    this(k, false) ;
+  }
+
+  public KnnDensityEstimator(int k, boolean normalize) {
     this.k = k;
     solutionComparator =
-        new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING);
+            new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING);
+    this.normalize = normalize ;
   }
 
   /**
@@ -48,12 +58,22 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
 
     /* Compute the distance matrix */
     distanceMatrix = new double[solutionList.size()][solutionList.size()];
-    for (int i = 0; i < solutionList.size(); i++) {
-      distanceMatrix[i][i] = 0;
 
+    double[][] solutionMatrix = null;
+    if (normalize) {
+      try {
+        solutionMatrix = NormalizeUtils.normalize(SolutionListUtils.getMatrixWithObjectiveValues(solutionList));
+      } catch (JMetalException e) {
+        e.printStackTrace();
+      }
+    } else {
+      solutionMatrix = SolutionListUtils.getMatrixWithObjectiveValues(solutionList);
+    }
+
+    for (int i = 0; i < solutionList.size(); i++) {
       for (int j = i + 1; j < solutionList.size(); j++) {
-        distanceMatrix[i][j] =
-            distanceMatrix[j][i] = distance.getDistance(solutionList.get(i), solutionList.get(j));
+        distanceMatrix[i][j] = distance.getDistance(solutionMatrix[i], solutionMatrix[j]) ;
+        distanceMatrix[j][i] = distanceMatrix[i][j] ;
       }
     }
 

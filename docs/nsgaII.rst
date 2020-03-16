@@ -9,9 +9,9 @@ The implementation of NSGA-II in jMetal 6 (contained in class `org.uma.jmetal.al
 * The stopping condition is defined with a `Termination <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/termination/Termination.java>`_ object. This way, different stopping conditions can be defined: maximum number of evaluations, maximum computing time, or when a keyboard key is pressed.
 * Different ranking implementations can be used. This allows, for example, to incorporate a preferente articulation mechanism in NSGA-II by using the concept of g-dominance.
 
-Examples of different configurations of NSGA-II are included in the `jmetal-example <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii>`_ package. Currently, the following examples are provided:
+Examples of different configurations of NSGA-II are included in the `jmetal-example <https://github.com/jMetal/jMetal/tree/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii>`_ package. The examples include:
 
-* ``NSGAIIStandardSettingsExample``. NSGA-II with default settings. 
+* ``NSGAIIDefaultConfiguratoinExample``. NSGA-II with default settings for solving bi-objective benchmark problems.
 * ``NSGAIISteadyStateExample``. Steady-stater NSGA-II.
 * ``NSGAIIStoppingByTimeExample``. NSGA-II stopping by fixing a maximum computing time.
 * ``NSGAIIStoppingByKeyboardExample``. NSGA-II stopping when the user presses any key.

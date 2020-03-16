@@ -2,7 +2,6 @@ package org.uma.jmetal.solution.sequencesolution.impl;
 
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.Map;

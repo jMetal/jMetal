@@ -1,13 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.component.ranking.Ranking;
-import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class NSGAIIWithArchive<S extends Solution<?>> extends NSGAII<S> {
         crossoverOperator,
         mutationOperator,
         termination,
-        new FastNonDominatedSortRanking<>(),
+        new MergeNonDominatedSortRanking<>(),
         archive);
   }
 

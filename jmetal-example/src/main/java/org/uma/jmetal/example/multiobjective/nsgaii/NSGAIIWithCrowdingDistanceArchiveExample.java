@@ -1,6 +1,5 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
@@ -31,12 +30,12 @@ import java.util.List;
 public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    NSGAII<DoubleSolution> algorithm;
+    NSGAIIWithArchive<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "referenceFronts/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
