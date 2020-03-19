@@ -62,7 +62,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   @Override protected void initProgress() {
-    evaluations = 0;
+    evaluations = 1;
   }
 
   @Override protected void updateProgress() {
