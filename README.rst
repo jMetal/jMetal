@@ -14,6 +14,8 @@ After five years working with jMetal 5, a new major release, jMetal 6, is under 
 
 A summary of the features of jMetal 6.0 are listed next:
 
+* jMetal 6 requires Java 11. 
+
 * Use of Sphinx for the documentation. In jMetal 5 the documentation is based on Markdown files; it is not complete and some parts are outdated (this documentation is still available: https://github.com/jMetal/jMetalDocumentation). The documentation of jMetal 6 is being elaborated here: https://jmetal.readthedocs.io/en/latest/.
 
 * Support for automatic configuration of metaheuristics. We include a sub-project called ``jmetal-auto``, which currently contains a version of NSGA-II that can be fully auto tuned using ``irace``, as is described in the paper "Automatic Configuration of NSGA-II with jMetal and irace", presented at GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832).
@@ -51,6 +53,11 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+
+* [3/19/2020] New quality indicator: `RelativeHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/RelativeHypervolume.java>`_.
+
+* [3/19/2020] The jMetal 6 project is changed to use Java 11.
+
 * [2/11/2020] All the files containing Pareto front approximations and weight vectors have been moved to the ``resources`` folder, located in root project directory.
 
 * [2/06/2020] `New implementation <https://github.com/jMetal/jMetal/tree/master/jmetal-algorithm/src/main/java/org/uma/jmetal/algorithm/multiobjective/smsemoa>`_ of the SMS-EMOA algorithm based on a component-based scheme.
