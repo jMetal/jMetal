@@ -11,7 +11,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Srinivas;
 import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
@@ -88,7 +88,7 @@ public class ConstraintMOEADIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFronts/Tanaka.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/Tanaka.pf");
 
     // Rationale: the default problem is Tanaka", and the constraint MOEA/D algoritm,
     // configured with standard settings, should return find a front with a hypervolume value higher

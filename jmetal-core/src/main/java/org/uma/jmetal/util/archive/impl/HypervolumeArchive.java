@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.archive.impl;
 
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;

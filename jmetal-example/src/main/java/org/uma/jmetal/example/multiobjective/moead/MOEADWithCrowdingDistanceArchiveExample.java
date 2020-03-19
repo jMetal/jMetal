@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADWithArchive;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -35,7 +36,7 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADWithArchive<DoubleSolution> algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
@@ -58,21 +59,21 @@ public class MOEADWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRu
     int maximumNumberOfReplacedSolutions = 2;
     AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection();
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100);
 
     algorithm =
-            new MOEADWithArchive<>(
-                    problem,
-                    populationSize,
-                    mutation,
-                    crossover,
-                    aggregativeFunction,
-                    neighborhoodSelectionProbability,
-                    maximumNumberOfReplacedSolutions,
-                    neighborhoodSize,
-                    "resources/weightVectorFiles/moead",
-                    new TerminationByEvaluations(50000),
-                    archive);
+        new MOEAD<>(
+                problem,
+                populationSize,
+                mutation,
+                crossover,
+                aggregativeFunction,
+                neighborhoodSelectionProbability,
+                maximumNumberOfReplacedSolutions,
+                neighborhoodSize,
+                "resources/weightVectorFiles/moead",
+                new TerminationByEvaluations(50000))
+            .withArchive(archive);
 
     algorithm.run();
 

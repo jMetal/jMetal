@@ -7,6 +7,6 @@ public class SequentialEvaluationTest extends EvaluationTestCases<DoubleSolution
 
   public SequentialEvaluationTest() {
     this.problem = new DummyDoubleProblem() ;
-    this.evaluation = new SequentialEvaluation<>() ;
+    this.evaluation = new SequentialEvaluation<>(problem) ;
   }
 }

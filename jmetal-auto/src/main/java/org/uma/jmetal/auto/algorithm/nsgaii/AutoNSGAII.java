@@ -1,26 +1,26 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.component.evaluation.Evaluation;
-import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
-import org.uma.jmetal.auto.component.replacement.Replacement;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
-import org.uma.jmetal.auto.component.termination.Termination;
-import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.auto.component.variation.Variation;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;
 import org.uma.jmetal.auto.parameter.catalogue.*;
-import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.component.replacement.Replacement;
+import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.component.termination.Termination;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.Preference;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class to configure NSGA-II with an argument string using class {@link EvolutionaryAlgorithm}
+ *
+ * @autor Antonio J. Nebro
+ */
 public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
@@ -160,6 +165,7 @@ public class AutoNSGAII {
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
     Archive<DoubleSolution> archive = null;
+
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
       archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());

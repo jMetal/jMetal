@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -30,7 +31,7 @@ import java.util.List;
 public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    NSGAIIWithArchive<DoubleSolution> algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
@@ -52,17 +53,12 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize) ;
+    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize);
 
     algorithm =
-            new NSGAIIWithArchive<>(
-                    problem,
-                    populationSize,
-                    offspringPopulationSize,
-                    crossover,
-                    mutation,
-                    termination,
-                    archive);
+        new NSGAII<>(
+                problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
+            .withArchive(archive);
 
     algorithm.run();
 
@@ -71,9 +67,9 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

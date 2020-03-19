@@ -6,7 +6,7 @@ import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F6;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
@@ -92,7 +92,7 @@ public class MOEADDEIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-            new PISAHypervolume<>("../resources/referenceFronts/LZ09_F2.pf");
+            new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F2.pf");
 
     // Rationale: the default problem is LZ09F2", and MOEA/D-DE, configured with standard settings,
     // should return find a front with a hypervolume value higher than 0.95
@@ -135,7 +135,7 @@ public class MOEADDEIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F6.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F6.pf");
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings,
     // should

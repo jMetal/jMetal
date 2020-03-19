@@ -48,7 +48,7 @@ public class SMPSOWithPlotliChartExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(25000) ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;

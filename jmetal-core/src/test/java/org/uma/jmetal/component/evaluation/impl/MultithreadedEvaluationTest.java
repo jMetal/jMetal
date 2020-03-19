@@ -7,6 +7,6 @@ public class MultithreadedEvaluationTest extends EvaluationTestCases<DoubleSolut
 
   public MultithreadedEvaluationTest() {
     this.problem = new DummyDoubleProblem() ;
-    this.evaluation = new MultithreadedEvaluation<>(8) ;
+    this.evaluation = new MultithreadedEvaluation<>(8, problem) ;
   }
 }

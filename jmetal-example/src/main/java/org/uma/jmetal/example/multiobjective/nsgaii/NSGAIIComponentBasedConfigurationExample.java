@@ -15,7 +15,6 @@ import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -23,8 +22,6 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -48,13 +45,13 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = 100 ;
     int maxNumberOfEvaluations = 25000;
 
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
@@ -90,11 +87,10 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     algorithm =
         new NSGAII<>(
-            problem,
             evaluation,
             initialSolutionsCreation,
             termination,

@@ -9,7 +9,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F3;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
@@ -87,7 +87,7 @@ public class MOEADDRAIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFronts/LZ09_F3.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F3.pf");
 
     // Rationale: the default problem is LZ09F", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96

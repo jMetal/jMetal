@@ -1,24 +1,23 @@
-algorithmResult                          "--algorithmResult "                     c       (externalArchive,population)
-populationSize                           "--populationSize "                      o       (100)                          
-populationSizeWithArchive                "--populationSizeWithArchive "           o       (10,20,50,100,200)         | algorithmResult %in% c("externalArchive")
+populationSize                           "--populationSize "                      o       (100)
 #
-maximumNumberOfEvaluations               "--maximumNumberOfEvaluations "          c       (25000)
-createInitialSolutions                   "--createInitialSolutions "              c       (random,latinHypercubeSampling,scatterSearch)
+algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)
+populationSizeWithArchive                "--populationSizeWithArchive "           o       (10, 20, 50, 100, 200)         | algorithmResult %in% c("externalArchive")
+#
+createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)
 #
 variation                                "--variation "                           c       (crossoverAndMutationVariation)
-offspringPopulationSize                  "--offspringPopulationSize "             o       (1,10,50,100)               
-crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)               
-crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
-crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA")
+offspringPopulationSize                  "--offspringPopulationSize "             o       (1, 10, 50, 100, 200, 400)     | variation %in% c("crossoverAndMutationVariation")
+crossover                                "--crossover "                           c       (SBX, BLX_ALPHA)               | variation %in% c("crossoverAndMutationVariation")
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX, BLX_ALPHA")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX, BLX_ALPHA")
 sbxDistributionIndex                     "--sbxDistributionIndex "                r       (5.0, 400.0)                   | crossover %in% c("SBX")
 blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
-mutation                                 "--mutation "                            c       (uniform, polynomial)          
-mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("uniform","polynomial")
-mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial")
+mutation                                 "--mutation "                            c       (uniform, polynomial)          | variation %in% c("crossoverAndMutationVariation")
+mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("uniform, polynomial")
+mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform, polynomial")
 polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
 #
 selection                                "--selection "                           c       (tournament, random)
 selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
 #
-
