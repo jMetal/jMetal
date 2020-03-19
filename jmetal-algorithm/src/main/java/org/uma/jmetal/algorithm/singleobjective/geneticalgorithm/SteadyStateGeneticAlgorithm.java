@@ -92,7 +92,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   }
 
   @Override public void initProgress() {
-    evaluations = 1;
+    evaluations = getMaxPopulationSize();
   }
 
   @Override public void updateProgress() {
