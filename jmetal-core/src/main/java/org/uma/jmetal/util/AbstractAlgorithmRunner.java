@@ -1,7 +1,7 @@
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -58,6 +58,10 @@ public abstract class AbstractAlgorithmRunner {
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "Hypervolume     : " +
         new PISAHypervolume<S>(referenceFront).evaluate(population) + "\n";
+    outputString += "Relative Hypervolume (N) : " +
+            new RelativeHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+    outputString += "Relative Hypervolume     : " +
+            new RelativeHypervolume<S>(referenceFront).evaluate(population) + "\n";
     outputString += "Epsilon (N)     : " +
         new Epsilon<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
         "\n" ;

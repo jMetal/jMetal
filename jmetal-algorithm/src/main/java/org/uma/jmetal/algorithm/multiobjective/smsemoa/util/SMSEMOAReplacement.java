@@ -2,8 +2,8 @@ package org.uma.jmetal.algorithm.multiobjective.smsemoa.util;
 
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.replacement.Replacement;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.ArrayList;

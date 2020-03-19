@@ -17,7 +17,7 @@
 # Exit with 0 if no error, with 1 in case of error
 ###############################################################################
 EXE=java
-FIXED_PARAMS="-jar ../jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar"
+FIXED_PARAMS="-jar ../jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar org.uma.jmetal.auto.irace.AutoNSGAIIirace"
 
 CONFIG_ID=$1
 INSTANCE_ID=$2

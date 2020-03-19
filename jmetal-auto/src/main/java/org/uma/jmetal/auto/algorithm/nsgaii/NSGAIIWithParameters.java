@@ -8,7 +8,7 @@ import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 /**
- * Class configuring NSGA-II using arguments in the form <key, value> and the {@link AutoNSGAII}
+ * Class configuring NSGA-II using arguments in the form <key, value> and the {@link AutoNSGAIIv2}
  * class.
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
@@ -42,15 +42,15 @@ public class NSGAIIWithParameters {
     AutoNSGAII NSGAII = new AutoNSGAII();
     NSGAII.parseAndCheckParameters(parameters);
 
-    NSGAII.print(NSGAII.fixedParameterList);
-    NSGAII.print(NSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(NSGAII.fixedParameterList);
+    AutoNSGAII.print(NSGAII.autoConfigurableParameterList);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "/pareto_fronts/ZDT1.pf");
+            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.pf");
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);
@@ -62,8 +62,8 @@ public class NSGAIIWithParameters {
     System.out.println("Total computing time: " + nsgaII.getTotalComputingTime()) ;
 
     new SolutionListOutput(nsgaII.getResult())
-        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
   }
 }

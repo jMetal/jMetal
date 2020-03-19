@@ -53,9 +53,7 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
   public abstract void prune();
 
   public Archive<S> join(Archive<S> archive) {
-    for (S solution : archive.getSolutionList()) {
-      this.add(solution);
-    }
+    archive.getSolutionList().forEach(this::add);
 
     return archive;
   }

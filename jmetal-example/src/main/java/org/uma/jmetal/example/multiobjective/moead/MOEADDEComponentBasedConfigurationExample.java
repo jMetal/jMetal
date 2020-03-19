@@ -88,11 +88,10 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
             subProblemIdGenerator,
             maximumNumberOfReplacedSolutions);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     algorithm =
         new MOEADDE(
-            problem,
             evaluation,
             new RandomSolutionsCreation<>(problem, populationSize),
             new TerminationByEvaluations(150000),

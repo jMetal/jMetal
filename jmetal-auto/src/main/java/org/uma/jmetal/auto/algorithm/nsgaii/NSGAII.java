@@ -1,24 +1,23 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.auto.component.evaluation.Evaluation;
-import org.uma.jmetal.auto.component.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.auto.component.replacement.Replacement;
-import org.uma.jmetal.auto.component.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
-import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
-import org.uma.jmetal.auto.component.termination.Termination;
-import org.uma.jmetal.auto.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.auto.component.variation.Variation;
-import org.uma.jmetal.auto.component.variation.impl.CrossoverAndMutationVariation;
-import org.uma.jmetal.auto.util.preference.Preference;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
+import org.uma.jmetal.component.replacement.Replacement;
+import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.termination.Termination;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.component.variation.Variation;
+import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -28,9 +27,11 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
+import org.uma.jmetal.util.Preference;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 
 /**
  * Class to configure and run the NSGA-II using the {@link EvolutionaryAlgorithm} class.
@@ -40,8 +41,6 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 public class NSGAII {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
-
-    //JMetalRandom.getInstance().setSeed(1);
 
     int populationSize = 100;
     int offspringPopulationSize = 100;
@@ -60,7 +59,7 @@ public class NSGAII {
         new PolynomialMutation(
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
-    Variation<DoubleSolution> variation =
+    CrossoverAndMutationVariation<DoubleSolution> variation =
             new CrossoverAndMutationVariation<>(offspringPopulationSize, crossover, mutation);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
@@ -95,7 +94,7 @@ public class NSGAII {
             replacement
         );
 
-    //EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     //RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         //new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     //ExternalArchiveObserver<DoubleSolution> boundedArchiveObserver =

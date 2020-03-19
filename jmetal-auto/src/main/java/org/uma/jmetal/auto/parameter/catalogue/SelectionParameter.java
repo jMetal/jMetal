@@ -1,14 +1,14 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.component.selection.MatingPoolSelection;
-import org.uma.jmetal.auto.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
-import org.uma.jmetal.auto.component.selection.impl.NaryTournamentMatingPoolSelection;
-import org.uma.jmetal.auto.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;
@@ -69,9 +69,6 @@ public class SelectionParameter extends CategoricalParameter<String> {
         break ;
       case "random":
         result = new RandomMatingPoolSelection<>(matingPoolSize);
-        break ;
-      case "differentialEvolutionSelection":
-        result = new DifferentialEvolutionMatingPoolSelection(matingPoolSize) ;
         break ;
       default:
         throw new RuntimeException("Selection component unknown: " + getValue()) ;

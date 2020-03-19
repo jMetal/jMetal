@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.component.termination.Termination;
@@ -29,12 +30,12 @@ import java.util.List;
 public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    NSGAIIWithArchive<DoubleSolution> algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1" ;
-    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -56,37 +57,38 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
 
     algorithm =
-        new NSGAIIWithArchive<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            crossover,
-            mutation,
-            termination,
-            ranking,
-            archive);
+        new NSGAII<>(
+                problem,
+                populationSize,
+                offspringPopulationSize,
+                crossover,
+                mutation,
+                termination,
+                ranking)
+            .withArchive(archive);
 
     algorithm.run();
 
-    List<DoubleSolution> population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+    List<DoubleSolution> population =
+        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv",","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
 
     new SolutionListOutput(algorithm.getPopulation())
-            .setVarFileOutputContext(new DefaultFileOutputContext("POPVAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("POPFUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("POPVAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("POPFUN.csv", ","))
+        .print();
 
     new SolutionListOutput(algorithm.getArchive().getSolutionList())
-            .setVarFileOutputContext(new DefaultFileOutputContext("ARCVAR.csv", ","))
-            .setFunFileOutputContext(new DefaultFileOutputContext("ARCFUN.csv", ","))
-            .print();
+        .setVarFileOutputContext(new DefaultFileOutputContext("ARCVAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("ARCFUN.csv", ","))
+        .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");

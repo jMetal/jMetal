@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDEWithArchive;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -33,7 +33,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADDE algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
@@ -55,22 +55,23 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
     algorithm =
-        new MOEADDEWithArchive(
-            problem,
-            populationSize,
-            cr,
-            f,
-            aggregativeFunction,
-            neighborhoodSelectionProbability,
-            maximumNumberOfReplacedSolutions,
-            neighborhoodSize,
-            "resources/weightVectorFiles/moead",
-            new TerminationByEvaluations(maximumNumberOfFunctionEvaluations),
-                archive);
+        new MOEADDE(
+                problem,
+                populationSize,
+                cr,
+                f,
+                aggregativeFunction,
+                neighborhoodSelectionProbability,
+                maximumNumberOfReplacedSolutions,
+                neighborhoodSize,
+                "resources/weightVectorFiles/moead",
+                new TerminationByEvaluations(maximumNumberOfFunctionEvaluations))
+            .withArchive(archive);
 
     algorithm.run();
 
-    List<DoubleSolution> population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+    List<DoubleSolution> population =
+        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());

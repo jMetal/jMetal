@@ -31,7 +31,6 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
   /** Constructor */
   public MOEADDE(
-        Problem<DoubleSolution> problem,
         Evaluation<DoubleSolution> evaluation,
         InitialSolutionsCreation<DoubleSolution> initialPopulationCreation,
         Termination termination,
@@ -40,7 +39,6 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
         MOEADReplacement replacement) {
         super(
         "MOEAD-DE",
-        problem,
         evaluation,
         initialPopulationCreation,
         termination,
@@ -77,7 +75,6 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     this.problem = problem ;
     this.observable = new DefaultObservable<>(name);
     this.attributes = new HashMap<>();
-
 
     SequenceGenerator<Integer> subProblemIdGenerator =
         new IntegerPermutationGenerator(populationSize);
@@ -134,6 +131,8 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     this.termination = termination ;
 
-    this.evaluation = new SequentialEvaluation<>() ;
+    this.evaluation = new SequentialEvaluation<>(problem) ;
+
+    this.archive = null ;
   }
 }

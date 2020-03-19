@@ -21,7 +21,7 @@ public abstract class EvaluationTestCases<S extends Solution<?>> {
   public void shouldACallToEvaluateComputeTheRightNumberOfEvaluationsCase1() {
     List<S> solutions = new ArrayList<>();
 
-    evaluation.evaluate(solutions, problem);
+    evaluation.evaluate(solutions);
 
     assertEquals(0, evaluation.getComputedEvaluations());
   }
@@ -32,7 +32,7 @@ public abstract class EvaluationTestCases<S extends Solution<?>> {
     List<S> solutions = new ArrayList<>();
     solutions.add(problem.createSolution());
 
-    evaluation.evaluate(solutions, problem);
+    evaluation.evaluate(solutions);
 
     assertEquals(1, evaluation.getComputedEvaluations());
   }
@@ -43,8 +43,8 @@ public abstract class EvaluationTestCases<S extends Solution<?>> {
     List<S> solutions = new ArrayList<>();
     IntStream.range(0, 20).forEach(i -> solutions.add(problem.createSolution()));
 
-    evaluation.evaluate(solutions, problem);
-    evaluation.evaluate(solutions, problem);
+    evaluation.evaluate(solutions);
+    evaluation.evaluate(solutions);
 
     assertEquals(40, evaluation.getComputedEvaluations());
   }

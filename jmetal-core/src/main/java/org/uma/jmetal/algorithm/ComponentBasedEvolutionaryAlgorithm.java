@@ -9,12 +9,14 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Class representing an evolutionary algorithm. It implements the {@link Algorithm} interface by
@@ -44,12 +46,11 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
   protected Observable<Map<String, Object>> observable;
 
   protected String name;
-
+  protected Archive<S> archive ;
   /**
    * Constructor
    *
    * @param name
-   * @param problem
    * @param evaluation
    * @param initialPopulationCreation
    * @param termination
@@ -59,7 +60,6 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
    */
   public ComponentBasedEvolutionaryAlgorithm(
       String name,
-      Problem<S> problem,
       Evaluation<S> evaluation,
       InitialSolutionsCreation<S> initialPopulationCreation,
       Termination termination,
@@ -67,7 +67,6 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
       Variation<S> variation,
       Replacement<S> replacement) {
     this.name = name;
-    this.problem = problem;
 
     this.evaluation = evaluation;
     this.createInitialPopulation = initialPopulationCreation;
@@ -78,6 +77,8 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
 
     this.observable = new DefaultObservable<>(name);
     this.attributes = new HashMap<>();
+
+    this.archive = null ;
   }
 
   /**
@@ -130,7 +131,12 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
 
   @Override
   protected List<S> evaluatePopulation(List<S> population) {
-    return evaluation.evaluate(population, problem);
+    var solutionList = evaluation.evaluate(population) ;
+    if (null != archive) {
+      solutionList.forEach(archive::add);
+    }
+
+    return solutionList ;
   }
 
   @Override
@@ -150,7 +156,13 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
 
   @Override
   public List<S> getResult() {
-    return population;
+    List<S> result ;
+    if (null != archive) {
+      result = archive.getSolutionList() ;
+    } else {
+      result = population ;
+    }
+    return result;
   }
 
   @Override
@@ -165,6 +177,16 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
 
   public int getEvaluations() {
     return evaluations;
+  }
+
+  public Archive<S> getArchive() {
+    return archive ;
+  }
+
+  public ComponentBasedEvolutionaryAlgorithm<S> withArchive(Archive<S> archive) {
+    this.archive = archive ;
+
+    return this ;
   }
 
   public ComponentBasedEvolutionaryAlgorithm<S> setEvaluation(Evaluation<S> evaluation) {

@@ -210,7 +210,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
 
   @Override
   protected List<DoubleSolution> evaluateSwarm(List<DoubleSolution> swarm) {
-    return evaluation.evaluate(swarm, problem);
+    return evaluation.evaluate(swarm);
   }
 
   @Override

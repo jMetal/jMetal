@@ -31,7 +31,6 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
   /**
    * Constructor
    *
-   * @param problem
    * @param evaluation
    * @param initialPopulationCreation
    * @param termination
@@ -40,7 +39,6 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
    * @param replacement
    */
   public NSGAII(
-      Problem<S> problem,
       Evaluation<S> evaluation,
       InitialSolutionsCreation<S> initialPopulationCreation,
       Termination termination,
@@ -49,7 +47,6 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
       RankingAndDensityEstimatorReplacement<S> replacement) {
     super(
         "NSGA-II",
-        problem,
         evaluation,
         initialPopulationCreation,
         termination,
@@ -67,8 +64,8 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
       MutationOperator<S> mutationOperator,
       Termination termination,
       Ranking<S> ranking) {
-    this.name = "NSGA-II" ;
-    this.problem = problem ;
+    this.name = "NSGA-II";
+    this.problem = problem;
     this.observable = new DefaultObservable<>(name);
     this.attributes = new HashMap<>();
 
@@ -94,7 +91,9 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
 
     this.termination = termination;
 
-    this.evaluation = new SequentialEvaluation<>();
+    this.evaluation = new SequentialEvaluation<>(problem);
+
+    this.archive = null;
   }
 
   /** Constructor */

@@ -43,7 +43,7 @@ public class SMPSOStoppingByKeyboardExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByKeyboard() ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;

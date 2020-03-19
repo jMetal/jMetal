@@ -4,6 +4,7 @@ import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.Preference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +13,25 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     implements Replacement<S> {
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
-  private RemovalPolicy removalPolicy ;
-
-  int c = 0 ;
+  private RemovalPolicy removalPolicy;
 
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
-    this(ranking, densityEstimator, RemovalPolicy.sequential) ;
+    this(ranking, densityEstimator, RemovalPolicy.sequential);
   }
 
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator, RemovalPolicy removalPolicy) {
     this.ranking = ranking;
     this.densityEstimator = densityEstimator;
-    this.removalPolicy = removalPolicy ;
+    this.removalPolicy = removalPolicy;
+  }
+
+  public RankingAndDensityEstimatorReplacement(
+      Preference<S> preference, RemovalPolicy removalPolicy) {
+    this.ranking = preference.getRanking();
+    this.densityEstimator = preference.getDensityEstimator();
+    this.removalPolicy = removalPolicy;
   }
 
   public List<S> replace(List<S> solutionList, List<S> offspringList) {
@@ -33,39 +39,39 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
-    List<S> resultList ;
+    List<S> resultList;
     ranking.computeRanking(jointPopulation);
 
     if (removalPolicy == RemovalPolicy.oneShot) {
       resultList = oneShotTruncation(0, solutionList.size());
     } else {
-      resultList = sequentialTruncation( 0, solutionList.size()) ;
+      resultList = sequentialTruncation(0, solutionList.size());
     }
     return resultList;
   }
 
   private List<S> oneShotTruncation(int sizeOfTheResultingSolutionList) {
-    int currentRank = 0 ;
+    int currentRank = 0;
 
     List<S> resultList = new ArrayList<>();
     while (resultList.size() < sizeOfTheResultingSolutionList) {
-      if (ranking.getSubFront(currentRank).size() < (sizeOfTheResultingSolutionList - resultList.size())) {
-        resultList.addAll(ranking.getSubFront(currentRank)) ;
-        currentRank ++ ;
+      if (ranking.getSubFront(currentRank).size()
+          < (sizeOfTheResultingSolutionList - resultList.size())) {
+        resultList.addAll(ranking.getSubFront(currentRank));
+        currentRank++;
       } else {
         densityEstimator.computeDensityEstimator(ranking.getSubFront(currentRank));
-        densityEstimator.sort(ranking.getSubFront(currentRank)) ;
-        int i = 0 ;
+        densityEstimator.sort(ranking.getSubFront(currentRank));
+        int i = 0;
         while (resultList.size() < sizeOfTheResultingSolutionList) {
-          resultList.add(ranking.getSubFront(currentRank).get(i)) ;
-          i++ ;
+          resultList.add(ranking.getSubFront(currentRank).get(i));
+          i++;
         }
       }
     }
 
-    return resultList ;
+    return resultList;
   }
-
 
   private List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
@@ -77,8 +83,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
       resultList.addAll(ranking.getSubFront(rankingId));
       resultList.addAll(
           oneShotTruncation(
-              rankingId + 1,
-              sizeOfTheResultingSolutionList - currentRankSolutions.size()));
+              rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
       densityEstimator.sort(currentRankSolutions);
       int i = 0;
@@ -91,7 +96,6 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     return resultList;
   }
 
-
   private List<S> sequentialTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.computeDensityEstimator(currentRankSolutions);
@@ -102,15 +106,13 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
       resultList.addAll(ranking.getSubFront(rankingId));
       resultList.addAll(
           sequentialTruncation(
-              rankingId + 1,
-              sizeOfTheResultingSolutionList - currentRankSolutions.size()));
+              rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      for (S solution : currentRankSolutions)
-        resultList.add(solution) ;
+      for (S solution : currentRankSolutions) resultList.add(solution);
       while (resultList.size() > sizeOfTheResultingSolutionList) {
         densityEstimator.sort(resultList);
 
-        resultList.remove(resultList.size()-1) ;
+        resultList.remove(resultList.size() - 1);
         densityEstimator.computeDensityEstimator(resultList);
       }
     }

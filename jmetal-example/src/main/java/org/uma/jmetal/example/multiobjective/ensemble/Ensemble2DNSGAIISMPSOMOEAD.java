@@ -2,8 +2,8 @@ package org.uma.jmetal.example.multiobjective.ensemble;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.ensemble.AlgorithmEnsemble;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDEWithArchive;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIWithArchive;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOWithArchive;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
@@ -56,20 +56,20 @@ public class Ensemble2DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
     Termination termination = new TerminationByEvaluations(150000);
 
     Algorithm<List<DoubleSolution>> nsgaII =
-        new NSGAIIWithArchive<>(
-            problem,
-            populationSize,
-            offspringPopulationSize,
-            new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
-            termination,
-            new NonDominatedSolutionListArchive<>());
+        new NSGAII<>(
+                problem,
+                populationSize,
+                offspringPopulationSize,
+                new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
+                new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+                termination)
+            .withArchive(new NonDominatedSolutionListArchive<>());
 
     int swarmSize = 100;
     BoundedArchive<DoubleSolution> leadersArchive =
         new CrowdingDistanceArchive<DoubleSolution>(swarmSize);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     Algorithm<List<DoubleSolution>> smpso =
         new SMPSOWithArchive(
@@ -93,18 +93,18 @@ public class Ensemble2DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
     Algorithm<List<DoubleSolution>> moead =
-        new MOEADDEWithArchive(
-            problem,
-            300,
-            cr,
-            f,
-            aggregativeFunction,
-            neighborhoodSelectionProbability,
-            maximumNumberOfReplacedSolutions,
-            neighborhoodSize,
-            "resources/weightVectorFiles/moead",
-            termination,
-            archive);
+        new MOEADDE(
+                problem,
+                300,
+                cr,
+                f,
+                aggregativeFunction,
+                neighborhoodSelectionProbability,
+                maximumNumberOfReplacedSolutions,
+                neighborhoodSize,
+                "resources/weightVectorFiles/moead",
+                termination)
+            .withArchive(archive);
 
     List<Algorithm<List<DoubleSolution>>> algorithmList = new ArrayList<>();
     algorithmList.add(nsgaII);

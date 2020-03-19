@@ -1,6 +1,7 @@
 package org.uma.jmetal.example.multiobjective.moead;
 
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADWithArchive;
+import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -36,16 +37,16 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
    */
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADWithArchive<DoubleSolution> algorithm;
+    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int populationSize = 300;
+    int populationSize = 91;
 
     crossover = new SBXCrossover(1.0, 20.0);
 
@@ -62,23 +63,23 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
     algorithm =
-            new MOEADWithArchive<>(
-                    problem,
-                    populationSize,
-                    mutation,
-                    crossover,
-                    aggregativeFunction,
-                    neighborhoodSelectionProbability,
-                    maximumNumberOfReplacedSolutions,
-                    neighborhoodSize,
-                    "resources/weightVectorFiles/moead",
-                    new TerminationByEvaluations(50000),
-                    archive);
+        new MOEAD<>(
+                problem,
+                populationSize,
+                mutation,
+                crossover,
+                aggregativeFunction,
+                neighborhoodSelectionProbability,
+                maximumNumberOfReplacedSolutions,
+                neighborhoodSize,
+                "resources/weightVectorFiles/moead",
+                new TerminationByEvaluations(50000))
+            .withArchive(archive);
 
     algorithm.run();
 
     List<DoubleSolution> population =
-            SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100) ;
+        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());

@@ -1,10 +1,10 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
-import org.uma.jmetal.auto.component.initialsolutionscreation.InitialSolutionsCreation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.auto.component.initialsolutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.LatinHypercubeSamplingSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.component.initialsolutioncreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 

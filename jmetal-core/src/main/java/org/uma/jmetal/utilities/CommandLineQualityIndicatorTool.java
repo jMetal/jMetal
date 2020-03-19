@@ -1,8 +1,8 @@
 package org.uma.jmetal.utilities;
 
-import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
@@ -137,6 +137,7 @@ public class CommandLineQualityIndicatorTool {
     List<QualityIndicator<List<PointSolution>, Double>> list = new ArrayList<>() ;
     list.add(new Epsilon<PointSolution>(referenceFront)) ;
     list.add(new PISAHypervolume<PointSolution>(referenceFront)) ;
+    list.add(new RelativeHypervolume<>(referenceFront)) ;
     list.add(new GenerationalDistance<PointSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistance<PointSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistancePlus<PointSolution>(referenceFront)) ;

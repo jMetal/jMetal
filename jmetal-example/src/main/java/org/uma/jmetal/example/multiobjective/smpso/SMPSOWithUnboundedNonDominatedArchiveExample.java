@@ -46,7 +46,7 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>() ;
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(50000) ;
 
     Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>() ;

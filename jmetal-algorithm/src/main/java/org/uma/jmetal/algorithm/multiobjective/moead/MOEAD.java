@@ -32,7 +32,6 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
 
   /** Constructor */
   public MOEAD(
-      Problem<S> problem,
       Evaluation<S> evaluation,
       InitialSolutionsCreation<S> initialPopulationCreation,
       Termination termination,
@@ -41,7 +40,6 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
       MOEADReplacement<S> replacement) {
     super(
         "MOEAD",
-        problem,
         evaluation,
         initialPopulationCreation,
         termination,
@@ -125,6 +123,8 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
 
     this.termination = termination;
 
-    this.evaluation = new SequentialEvaluation<>();
+    this.evaluation = new SequentialEvaluation<>(problem);
+
+    this.archive = null ;
   }
 }

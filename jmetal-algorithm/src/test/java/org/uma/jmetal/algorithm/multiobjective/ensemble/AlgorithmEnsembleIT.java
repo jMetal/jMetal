@@ -143,7 +143,7 @@ public class AlgorithmEnsembleIT {
     BoundedArchive<DoubleSolution> leadersArchive =
         new CrowdingDistanceArchive<DoubleSolution>(swarmSize);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>();
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     Algorithm<List<DoubleSolution>> smpso =
         new SMPSO(
