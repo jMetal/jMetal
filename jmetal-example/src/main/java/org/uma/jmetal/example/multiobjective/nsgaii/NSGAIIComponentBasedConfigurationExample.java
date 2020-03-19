@@ -46,7 +46,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
     NSGAII<DoubleSolution> algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
