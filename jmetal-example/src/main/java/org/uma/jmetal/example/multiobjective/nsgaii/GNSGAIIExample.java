@@ -37,7 +37,7 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -72,7 +72,7 @@ public class GNSGAIIExample extends AbstractAlgorithmRunner {
         new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
     algorithm.getObservable().register(runTimeChartObserver);
 
-    runTimeChartObserver.setReferencePointList(Arrays.asList(referencePoint));
+    runTimeChartObserver.setReferencePointList(List.of(referencePoint));
 
     algorithm.run();
 

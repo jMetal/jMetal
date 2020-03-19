@@ -65,7 +65,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "" ;
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf" ;
 
     String problemName ;
     if (args.length == 1) {
@@ -75,7 +75,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFronts/ZDT1.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);

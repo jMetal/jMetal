@@ -43,7 +43,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
-      referenceParetoFront = "resources/referenceFronts/Kursawe.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.pf" ;
     }
 
     problem = ProblemUtils.loadProblem(problemName);

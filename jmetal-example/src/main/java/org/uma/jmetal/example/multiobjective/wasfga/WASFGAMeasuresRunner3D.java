@@ -51,7 +51,7 @@ public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-      referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
