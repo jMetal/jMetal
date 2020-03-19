@@ -41,7 +41,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
   }
 
   @Override protected void initProgress() {
-    evaluations = 1;
+    evaluations = mu;
   }
 
   @Override protected void updateProgress() {
