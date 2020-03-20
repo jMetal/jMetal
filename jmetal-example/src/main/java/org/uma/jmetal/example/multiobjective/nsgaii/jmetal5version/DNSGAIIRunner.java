@@ -31,7 +31,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 
-    String referenceParetoFront = "referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf";
 
     // problem
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
@@ -58,7 +58,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
             .setSelectionOperator(selection).build();
 
     // reference vectors
-    double[][] referenceVectors = VectorFileUtils.readVectors("MOEAD_Weights/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
+    double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
     ((DNSGAII<DoubleSolution>) algorithm).setReferenceVectors(referenceVectors);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

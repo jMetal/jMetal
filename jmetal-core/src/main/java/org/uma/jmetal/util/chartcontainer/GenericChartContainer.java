@@ -22,7 +22,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   private Map<String, XYChart> charts;
   private XYChart frontChart;
   private XYChart varChart;
-  private SwingWrapper<XYChart> sw;
+  private SwingWrapper<XYChart> swingWrapper;
   private String name;
   private int delay;
   private int objective1;
@@ -75,7 +75,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     double[] xData = new double[] {0};
     double[] yData = new double[] {0};
     XYSeries frontChartSeries = this.frontChart.addSeries(this.name, xData, yData);
-    frontChartSeries.setMarkerColor(Color.blue);
+    frontChartSeries.setMarkerColor(Color.RED);
 
     this.charts.put("Front", this.frontChart);
   }
@@ -90,7 +90,7 @@ public class GenericChartContainer<S extends Solution<?>> {
       XYSeries referencePointSeries =
           this.frontChart.addSeries(
               referencePointName.get(i), new double[] {rp1}, new double[] {rp2});
-      referencePointSeries.setMarkerColor(Color.green);
+      referencePointSeries.setMarkerColor(java.awt.Color.green);
     }
   }
 
@@ -133,8 +133,9 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   public void initChart() {
-    this.sw = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
-    this.sw.displayChartMatrix(this.name);
+    this.swingWrapper = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
+    //this.swingWrapper.displayChartMatrix(this.name);
+    this.swingWrapper.displayChartMatrix().setTitle(this.name);
   }
 
   public void updateFrontCharts(List<S> solutionList) {
@@ -211,7 +212,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   public void repaint() {
     try {
       for (int i = 0; i < this.charts.values().size(); i++) {
-        this.sw.repaintChart(i);
+        this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
       // TODO Auto-generated catch block
@@ -238,7 +239,7 @@ public class GenericChartContainer<S extends Solution<?>> {
 
   private void displayReferenceFront() {
     XYSeries referenceFront = this.frontChart.addSeries("Reference Front", xReferenceFrontData, yReferenceFrontData);
-    referenceFront.setMarkerColor(Color.red);
+    referenceFront.setMarkerColor(Color.blue);
   }
 
   private void displayReferenceFront(String fileName) throws FileNotFoundException {

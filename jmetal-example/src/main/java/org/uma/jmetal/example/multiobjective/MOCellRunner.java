@@ -50,7 +50,7 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "resources/referenceFronts/ZDT4.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);

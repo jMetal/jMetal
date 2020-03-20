@@ -23,7 +23,7 @@ public class ChartContainer {
   private Map<String, XYChart> charts;
   private XYChart frontChart;
   private XYChart varChart;
-  private SwingWrapper<XYChart> sw;
+  private SwingWrapper<XYChart> swingWrapper;
   private String name;
   private int delay;
   private int objective1;
@@ -107,8 +107,9 @@ public class ChartContainer {
   }
 
   public void initChart() {
-    this.sw = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
-    this.sw.displayChartMatrix(this.name);
+    this.swingWrapper = new SwingWrapper<XYChart>(new ArrayList<XYChart>(this.charts.values()));
+    //this.swingWrapper.displayChartMatrix(this.name);
+    this.swingWrapper.displayChartMatrix();
   }
 
   public void updateFrontCharts(List<DoubleSolution> solutionList) {
@@ -185,7 +186,7 @@ public class ChartContainer {
   public void repaint() {
     try {
       for (int i = 0; i < this.charts.values().size(); i++) {
-        this.sw.repaintChart(i);
+        this.swingWrapper.repaintChart(i);
       }
     } catch (IndexOutOfBoundsException e) {
       // TODO Auto-generated catch block

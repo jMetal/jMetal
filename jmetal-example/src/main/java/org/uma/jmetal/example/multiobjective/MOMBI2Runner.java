@@ -53,7 +53,7 @@ public class MOMBI2Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
+      referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.pf";
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);

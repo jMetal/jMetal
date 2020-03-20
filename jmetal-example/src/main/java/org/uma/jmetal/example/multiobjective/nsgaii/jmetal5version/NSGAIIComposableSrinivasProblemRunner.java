@@ -39,7 +39,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "resources/referenceFronts/Srinivas.pf" ;
+    String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.pf" ;
 
     problem = new ComposableDoubleProblem()
         .setName("Srinivas")

@@ -38,7 +38,7 @@ public class NSGAIIWithExperimentalNDSAlgorithmExample extends AbstractAlgorithm
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
     problem = new DTLZ4(10, 3);

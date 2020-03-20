@@ -53,7 +53,7 @@ public class NSGAIIMeasuresRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFronts/ZDT1.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);

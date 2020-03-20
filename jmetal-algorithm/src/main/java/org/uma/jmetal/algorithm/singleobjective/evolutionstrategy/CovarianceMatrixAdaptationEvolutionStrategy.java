@@ -162,7 +162,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   @Override protected void initProgress() {
-    evaluations = 0;
+    evaluations = lambda;
   }
 
   @Override protected void updateProgress() {
@@ -240,7 +240,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     weights = new double[mu];
     double sum = 0;
     for (int i = 0; i < mu; i++) {
-      weights[i] = (Math.log(mu + 1 / 2) - Math.log(i + 1));
+      weights[i] = (Math.log(mu + 0.5) - Math.log(i + 1));
       sum += weights[i];
     }
     // normalize recombination weights array
