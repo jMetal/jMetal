@@ -267,13 +267,13 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     DoubleSolution bestSolution = findBestSolution.execute(swarm);
 
     if (bestFoundParticle == null) {
-      bestFoundParticle = bestSolution;
+      bestFoundParticle = (DoubleSolution) bestSolution.copy();
     } else {
       if (bestSolution.getObjective(objectiveId) == bestFoundParticle.getObjective(0)) {
         neighborhood.recompute();
       }
       if (bestSolution.getObjective(objectiveId) < bestFoundParticle.getObjective(0)) {
-        bestFoundParticle = bestSolution;
+        bestFoundParticle = (DoubleSolution) bestSolution.copy();
       }
     }
   }
