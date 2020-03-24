@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective.smpso.jmetal5version;
+package org.uma.jmetal.example.multiobjective.smpsorp.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSORP;

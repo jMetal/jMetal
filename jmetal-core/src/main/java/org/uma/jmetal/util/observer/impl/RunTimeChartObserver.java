@@ -53,6 +53,10 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     chart.initChart();
   }
 
+  public void setReferencePoins(List<List<Double>> referencePoins) {
+    chart.setReferencePoint(referencePoins);
+  }
+
   /**
    * This method is used to set a list of reference points; it is used by reference-point based
    * algorithms.
