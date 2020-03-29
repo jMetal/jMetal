@@ -72,7 +72,7 @@ public class ZDTStudy {
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
-                    .setReferenceFrontDirectory("/pareto_fronts")
+                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")

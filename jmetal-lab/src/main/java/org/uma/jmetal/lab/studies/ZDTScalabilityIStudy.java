@@ -70,7 +70,7 @@ public class ZDTScalabilityIStudy {
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
-                    .setReferenceFrontDirectory("/pareto_fronts")
+                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
                     .setIndicatorList(Arrays.asList(
                             new Epsilon<DoubleSolution>(),
                             new Spread<DoubleSolution>(),
