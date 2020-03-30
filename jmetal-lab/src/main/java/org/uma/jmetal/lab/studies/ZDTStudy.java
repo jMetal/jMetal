@@ -58,12 +58,12 @@ public class ZDTStudy {
     }
     String experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new ZDT1()));
-    problemList.add(new ExperimentProblem<>(new ZDT2()));
-    problemList.add(new ExperimentProblem<>(new ZDT3()));
-    problemList.add(new ExperimentProblem<>(new ZDT4()));
-    problemList.add(new ExperimentProblem<>(new ZDT6()));
+    List<ExperimentProblem<DoubleSolution>> problemList = List.of(
+            new ExperimentProblem<>(new ZDT1()),
+            new ExperimentProblem<>(new ZDT2()),
+            new ExperimentProblem<>(new ZDT3()),
+            new ExperimentProblem<>(new ZDT4()),
+            new ExperimentProblem<>(new ZDT6()));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);

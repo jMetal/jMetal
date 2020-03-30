@@ -54,12 +54,12 @@ public class ZDTStudy2 {
     }
     String experimentBaseDirectory = args[0];
 
-    List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new ZDT1()));
-    problemList.add(new ExperimentProblem<>(new ZDT2()));
-    problemList.add(new ExperimentProblem<>(new ZDT3()));
-    problemList.add(new ExperimentProblem<>(new ZDT4()));
-    problemList.add(new ExperimentProblem<>(new ZDT6()));
+    List<ExperimentProblem<DoubleSolution>> problemList = List.of(
+            new ExperimentProblem<>(new ZDT1()),
+            new ExperimentProblem<>(new ZDT2()),
+            new ExperimentProblem<>(new ZDT3()),
+            new ExperimentProblem<>(new ZDT4()),
+            new ExperimentProblem<>(new ZDT6()));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
@@ -73,12 +73,13 @@ public class ZDTStudy2 {
     zdt2Study.setOutputParetoSetFileName("VAR");
     zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/ZDTStudy2/referenceFronts");
     zdt2Study.setIndicatorList(Arrays.asList(
-            new Epsilon<DoubleSolution>(),
-            new Spread<DoubleSolution>(),
-            new GenerationalDistance<DoubleSolution>(),
-            new PISAHypervolume<DoubleSolution>(),
-            new InvertedGenerationalDistance<DoubleSolution>(),
-            new InvertedGenerationalDistancePlus<DoubleSolution>()));
+            new Epsilon<>(),
+            new Spread<>(),
+            new GenerationalDistance<>(),
+            new PISAHypervolume<>(),
+            new RelativeHypervolume<>(),
+            new InvertedGenerationalDistance<>(),
+            new InvertedGenerationalDistancePlus<>()));
     zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);
     zdt2Study.setNumberOfCores(8);
     Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
@@ -109,35 +110,35 @@ public class ZDTStudy2 {
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
 
-      for (int i = 0; i < problemList.size(); i++) {
-        double mutationProbability = 1.0 / problemList.get(i).getProblem().getNumberOfVariables();
+      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
-                (DoubleProblem) problemList.get(i).getProblem(),
+                (DoubleProblem) experimentProblem.getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
                 .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
                 .setMaxIterations(250)
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
+      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
-                problemList.get(i).getProblem(),
+                experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
                         20.0),
                 100)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problemList.get(i).getProblem(), MOEADBuilder.Variant.MOEAD)
+      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
                 .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
-                .setMutation(new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
                         20.0))
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
@@ -147,7 +148,7 @@ public class ZDTStudy2 {
                 .setNeighborSize(20)
                 .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
                 .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
     }
     return algorithms;
