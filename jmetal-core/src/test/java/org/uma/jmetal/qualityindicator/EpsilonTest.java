@@ -37,7 +37,7 @@ public class EpsilonTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationListIsNull() {
-    exception.expect(JMetalException.class);
+    exception.expect(NullParameterException.class);
 
     Front referenceFront = new ArrayFront() ;
 

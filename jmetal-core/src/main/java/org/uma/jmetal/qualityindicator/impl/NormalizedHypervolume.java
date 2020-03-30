@@ -3,6 +3,7 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
@@ -11,18 +12,21 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class providing an implementation of the relative hypervolume, which is calculated as follows:
+ * Class providing an implementation of the normalized hypervolume, which is calculated as follows:
  * relative hypervolume = 1 - (HV of the front / HV of the reference front)
+ *
+ * Before computing this indicator it must be checked that the HV of the reference front is not zero.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class RelativeHypervolume<S extends Solution<?>> extends GenericIndicator<S> {
+public class NormalizedHypervolume<S extends Solution<?>> extends GenericIndicator<S> {
   private double referenceFrontHypervolume;
   private Hypervolume<S> hypervolume;
 
-  public RelativeHypervolume() {}
+  public NormalizedHypervolume() {
+  }
 
-  public RelativeHypervolume(String referenceParetoFrontFile)
+  public NormalizedHypervolume(String referenceParetoFrontFile)
       throws FileNotFoundException {
     super(referenceParetoFrontFile);
     Front referenceFront = new ArrayFront(referenceParetoFrontFile);
@@ -33,7 +37,7 @@ public class RelativeHypervolume<S extends Solution<?>> extends GenericIndicator
             (List<S>) FrontUtils.convertFrontToSolutionList(referenceFront));
   }
 
-  public RelativeHypervolume(double[] referencePoint) {
+  public NormalizedHypervolume(double[] referencePoint) {
     Front referenceFront = new ArrayFront(referencePoint.length, referencePoint.length);
     hypervolume = new PISAHypervolume<>();
     hypervolume.setReferenceParetoFront(referenceFront);
@@ -42,7 +46,7 @@ public class RelativeHypervolume<S extends Solution<?>> extends GenericIndicator
         hypervolume.evaluate((List<S>) FrontUtils.convertFrontToSolutionList(referenceFront));
   }
 
-  public RelativeHypervolume(Front referenceParetoFront) {
+  public NormalizedHypervolume(Front referenceParetoFront) {
     super(referenceParetoFront);
     hypervolume = new PISAHypervolume<>(referenceParetoFront) ;
 
@@ -52,8 +56,26 @@ public class RelativeHypervolume<S extends Solution<?>> extends GenericIndicator
   }
 
   @Override
+  public void setReferenceParetoFront(Front referenceFront) {
+    super.setReferenceParetoFront(referenceFront);
+
+    hypervolume = new PISAHypervolume<>(referenceFront) ;
+    referenceFrontHypervolume =
+            hypervolume.evaluate((List<S>) FrontUtils.convertFrontToSolutionList(new ArrayFront(referenceFront)));
+  }
+
+  @Override
+  public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
+    super.setReferenceParetoFront(referenceParetoFrontFile);
+
+    hypervolume = new PISAHypervolume<>(referenceParetoFrontFile) ;
+    referenceFrontHypervolume =
+            hypervolume.evaluate((List<S>) FrontUtils.convertFrontToSolutionList(new ArrayFront(referenceParetoFrontFile)));
+  }
+
+  @Override
   public String getName() {
-    return "rHV";
+    return "NHV";
   }
 
   @Override

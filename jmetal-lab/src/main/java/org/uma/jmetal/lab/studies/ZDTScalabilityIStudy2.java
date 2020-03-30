@@ -71,7 +71,7 @@ public class ZDTScalabilityIStudy2 {
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")
-                    .setReferenceFrontDirectory("/pareto_fronts")
+                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
                     .setReferenceFrontDirectory(
                             experimentBaseDirectory + "/ZDTScalabilityStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(

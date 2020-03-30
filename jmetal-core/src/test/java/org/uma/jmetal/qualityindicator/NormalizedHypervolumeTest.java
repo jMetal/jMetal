@@ -5,7 +5,7 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.uma.jmetal.qualityindicator.impl.RelativeHypervolume;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
  * @author Antonio J. Nebro
  * @version 1.0
  */
-public class RelativeHypervolumeTest {
+public class NormalizedHypervolumeTest {
   public static double EPSILON = 0.0000000001;
 
   private static String frontDirectory ;
@@ -44,14 +44,14 @@ public class RelativeHypervolumeTest {
 
   @Test
   public void shouldConstructorWithReferencePointCreateAValidInstance() {
-    var relativeHypervolume = new RelativeHypervolume<>(new double[] {1.0, 1.0});
+    var normalizedHypervolume = new NormalizedHypervolume<>(new double[] {1.0, 1.0});
 
-    assertNotNull(relativeHypervolume);
+    assertNotNull(normalizedHypervolume);
   }
 
   @Test
   public void shouldEvaluateReturnOneInTheSimplestCase() {
-    var relativeHypervolume = new RelativeHypervolume<PointSolution>(new double[] {1.0, 1.0});
+    var normalizedHypervolume = new NormalizedHypervolume<PointSolution>(new double[] {1.0, 1.0});
 
     Front frontToEvaluate = new ArrayFront(1, 2);
     frontToEvaluate.setPoint(0, new ArrayPoint(new double[] {1.0, 1.0}));
@@ -61,14 +61,14 @@ public class RelativeHypervolumeTest {
     point.setObjective(1, 1.0);
     List<PointSolution> list = List.of(point);
 
-    assertEquals(1.0, relativeHypervolume.evaluate(list), EPSILON);
+    assertEquals(1.0, normalizedHypervolume.evaluate(list), EPSILON);
   }
 
   @Test
   public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
       throws FileNotFoundException {
     var relativeHypervolume =
-        new RelativeHypervolume<PointSolution>("../resources/referenceFrontsCSV/ZDT1.pf");
+        new NormalizedHypervolume<PointSolution>("../resources/referenceFrontsCSV/ZDT1.pf");
 
     Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.pf");
     assertEquals(
@@ -81,12 +81,12 @@ public class RelativeHypervolumeTest {
   @Ignore
   public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithAReferencePoint()
       throws FileNotFoundException {
-    var relativeHypervolume = new RelativeHypervolume<PointSolution>(new double[] {1.0, 1.0});
+    var normalizedHypervolume = new NormalizedHypervolume<PointSolution>(new double[] {1.0, 1.0});
 
     Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.pf");
     assertEquals(
         0.0,
-        relativeHypervolume.evaluate(FrontUtils.convertFrontToSolutionList(frontToEvaluate)),
+            normalizedHypervolume.evaluate(FrontUtils.convertFrontToSolutionList(frontToEvaluate)),
         EPSILON);
   }
 }

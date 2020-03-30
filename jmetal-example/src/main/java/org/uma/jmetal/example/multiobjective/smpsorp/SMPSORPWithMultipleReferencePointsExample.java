@@ -1,7 +1,11 @@
-package org.uma.jmetal.example.multiobjective.smpso.jmetal5version;
+package org.uma.jmetal.example.multiobjective.smpsorp;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSORP;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
+import org.uma.jmetal.component.evaluation.Evaluation;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.termination.Termination;
+import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -12,7 +16,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -20,14 +23,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SMPSORPWithMultipleReferencePointsRunner {
+public class SMPSORPWithMultipleReferencePointsExample {
   /**
-   * Program to run the SMPSORP algorithm with two reference points. SMPSORP is described in "Extending
-   * the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
-   * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
-   * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
-   * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
-   *  pp. 298-310. 2018"
+   * Program to run the SMPSORP algorithm with one reference point. SMPSORP is described in
+   *  "Extending the Speed-constrained Multi-Objective PSO (SMPSO) With Reference Point Based Preference
+   *  * Articulation. Antonio J. Nebro, Juan J. Durillo, José García-Nieto, Cristóbal Barba-González,
+   *  * Javier Del Ser, Carlos A. Coello Coello, Antonio Benítez-Hidalgo, José F. Aldana-Montes.
+   *  * Parallel Problem Solving from Nature -- PPSN XV. Lecture Notes In Computer Science, Vol. 11101,
+   *  * pp. 298-310. 2018
    *
    * @author Antonio J. Nebro
    */
@@ -40,20 +43,20 @@ public class SMPSORPWithMultipleReferencePointsRunner {
     if (args.length == 1) {
       problemName = args[0];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     }
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
-    referencePoints.add(Arrays.asList(0.2, 0.8));
-    referencePoints.add(Arrays.asList(0.7, 0.4));
+    referencePoints.add(List.of(0.2, 0.8));
+    referencePoints.add(List.of(0.7, 0.4));
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int maxIterations = 250;
+    int maxEvaluations = 25000;
     int swarmSize = 100;
 
     List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
@@ -64,19 +67,21 @@ public class SMPSORPWithMultipleReferencePointsRunner {
                       swarmSize / referencePoints.size(), referencePoints.get(i)));
     }
 
+    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
+    Termination termination = new TerminationByEvaluations(maxEvaluations) ;
+
     algorithm = new SMPSORP(problem,
             swarmSize,
             archivesWithReferencePoints,
             referencePoints,
             mutation,
-            maxIterations,
             0.0, 1.0,
             0.0, 1.0,
             2.5, 1.5,
             2.5, 1.5,
             0.1, 0.1,
             -1.0, -1.0,
-            new SequentialSolutionListEvaluator<>());
+            evaluation, termination);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute();
@@ -87,16 +92,9 @@ public class SMPSORPWithMultipleReferencePointsRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
             .print();
-
-    for (int i = 0; i < archivesWithReferencePoints.size(); i++) {
-      new SolutionListOutput(archivesWithReferencePoints.get(i).getSolutionList())
-              .setVarFileOutputContext(new DefaultFileOutputContext("VAR" + i + ".tsv"))
-              .setFunFileOutputContext(new DefaultFileOutputContext("FUN" + i + ".tsv"))
-              .print();
-    }
 
     System.exit(0);
   }

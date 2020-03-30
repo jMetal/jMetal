@@ -137,7 +137,7 @@ public class CommandLineQualityIndicatorTool {
     List<QualityIndicator<List<PointSolution>, Double>> list = new ArrayList<>() ;
     list.add(new Epsilon<PointSolution>(referenceFront)) ;
     list.add(new PISAHypervolume<PointSolution>(referenceFront)) ;
-    list.add(new RelativeHypervolume<>(referenceFront)) ;
+    list.add(new NormalizedHypervolume<>(referenceFront)) ;
     list.add(new GenerationalDistance<PointSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistance<PointSolution>(referenceFront)) ;
     list.add(new InvertedGenerationalDistancePlus<PointSolution>(referenceFront)) ;

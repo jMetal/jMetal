@@ -73,7 +73,7 @@ public class WFGStudy {
             new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
-                    .setReferenceFrontDirectory("/pareto_fronts")
+                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
                     .setExperimentBaseDirectory(experimentBaseDirectory)
                     .setOutputParetoFrontFileName("FUN")
                     .setOutputParetoSetFileName("VAR")

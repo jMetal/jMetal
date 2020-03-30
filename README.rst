@@ -56,7 +56,7 @@ Comments and suggestions are very welcome.
 Changelog
 ---------
 
-* [3/19/2020] New quality indicator: `RelativeHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/RelativeHypervolume.java>`_.
+* [3/19/2020] New quality indicator: `NormalizedHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_.
 
 * [3/19/2020] The jMetal 6 project is changed to use Java 11.
 

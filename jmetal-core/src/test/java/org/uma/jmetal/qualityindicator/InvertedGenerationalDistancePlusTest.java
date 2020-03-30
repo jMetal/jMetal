@@ -44,7 +44,7 @@ public class InvertedGenerationalDistancePlusTest {
 
   @Test
   public void shouldEvaluateRaiseAnExceptionIfTheFrontApproximationIsNull() {
-    exception.expect(JMetalException.class);
+    exception.expect(NullParameterException.class);
 
     Front front = new ArrayFront(0, 0) ;
 
