@@ -77,7 +77,7 @@ public class ZDTStudy2 {
             new Spread<>(),
             new GenerationalDistance<>(),
             new PISAHypervolume<>(),
-            new RelativeHypervolume<>(),
+            new NormalizedHypervolume<>(),
             new InvertedGenerationalDistance<>(),
             new InvertedGenerationalDistancePlus<>()));
     zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);

@@ -59,9 +59,9 @@ public abstract class AbstractAlgorithmRunner {
     outputString += "Hypervolume     : " +
         new PISAHypervolume<S>(referenceFront).evaluate(population) + "\n";
     outputString += "Relative Hypervolume (N) : " +
-            new RelativeHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+            new NormalizedHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
     outputString += "Relative Hypervolume     : " +
-            new RelativeHypervolume<S>(referenceFront).evaluate(population) + "\n";
+            new NormalizedHypervolume<S>(referenceFront).evaluate(population) + "\n";
     outputString += "Epsilon (N)     : " +
         new Epsilon<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
         "\n" ;

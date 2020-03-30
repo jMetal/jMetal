@@ -25,7 +25,6 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,7 +80,6 @@ public class ZDTStudy {
                             new Spread<>(),
                             new GenerationalDistance<>(),
                             new PISAHypervolume<>(),
-                            new RelativeHypervolume<>(),
                             new InvertedGenerationalDistance<>(),
                             new InvertedGenerationalDistancePlus<>()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
