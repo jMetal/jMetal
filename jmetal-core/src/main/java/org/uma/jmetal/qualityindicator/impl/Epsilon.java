@@ -2,6 +2,7 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 
@@ -59,10 +60,9 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
    * @param solutionList
    * @return
    */
-  @Override public Double evaluate(List<S> solutionList) {
-    if (solutionList == null) {
-      throw new JMetalException("The pareto front approximation list is null") ;
-    }
+  @Override
+  public Double evaluate(List<S> solutionList) {
+    Check.isNotNull(solutionList);
 
     return epsilon(new ArrayFront(solutionList), referenceParetoFront);
   }
@@ -76,7 +76,6 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
    * @throws JMetalException
    */
   private double epsilon(Front front, Front referenceFront) throws JMetalException {
-
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
     int numberOfObjectives = front.getPointDimensions() ;

@@ -11,5 +11,5 @@ import java.io.Serializable;
  * @param <Result> Result of the evaluation
  */
 public interface QualityIndicator<Evaluate, Result> extends DescribedEntity, Serializable {
-  public Result evaluate(Evaluate evaluate) ;
+  Result evaluate(Evaluate evaluate) ;
 }

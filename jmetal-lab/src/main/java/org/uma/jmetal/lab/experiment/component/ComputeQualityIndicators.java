@@ -91,13 +91,13 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
             }
             Front normalizedFront = frontNormalizer.normalize(front);
             List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
-            Double indicatorValue = (Double) indicator.evaluate((List<S>) normalizedPopulation);
+            Double indicatorValue = indicator.evaluate((List<S>) normalizedPopulation);
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
             indicatorValues[run] = indicatorValue ;
           });
 
-          for (int i = 0; i < indicatorValues.length; i++) {
-            writeQualityIndicatorValueToFile(indicatorValues[i], qualityIndicatorFile);
+          for (double indicatorValue : indicatorValues) {
+            writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
           }
 
           /*
