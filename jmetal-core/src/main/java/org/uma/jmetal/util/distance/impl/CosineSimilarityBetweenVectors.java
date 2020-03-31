@@ -22,7 +22,7 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
   }
 
   @Override
-  public double getDistance(double[] vector1, double[] vector2) {
+  public double compute(double[] vector1, double[] vector2) {
     double sum = 0.0;
 
     for (int i = 0; i < vector1.length; i++) {

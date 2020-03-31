@@ -34,7 +34,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(1.0, receivedValue, EPSILON) ;
   }
 
@@ -58,7 +58,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(1.0, receivedValue, EPSILON) ;
   }
 
@@ -82,7 +82,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
   }
 }

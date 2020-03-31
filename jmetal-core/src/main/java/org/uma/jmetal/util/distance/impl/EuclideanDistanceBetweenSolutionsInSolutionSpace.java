@@ -15,7 +15,7 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
   private EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
 
   @Override
-  public double getDistance(S solution1, S solution2) {
+  public double compute(S solution1, S solution2) {
     double[] vector1 = new double[solution1.getNumberOfVariables()] ;
     double[] vector2 = new double[solution1.getNumberOfVariables()] ;
     for (int i = 0 ; i < solution1.getNumberOfVariables(); i++) {
@@ -23,6 +23,6 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
       vector2[i] = solution2.getVariable(i) ;
     }
 
-    return distance.getDistance(vector1, vector2) ;
+    return distance.compute(vector1, vector2) ;
   }
 }

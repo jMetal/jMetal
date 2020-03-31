@@ -111,7 +111,7 @@ public class FrontUtils {
     double minDistance = Double.MAX_VALUE;
 
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      double aux = distance.getDistance(point.getValues(), front.getPoint(i).getValues());
+      double aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
       if ((aux < minDistance) && (aux > 0.0)) {
         minDistance = aux;
       }
@@ -150,10 +150,10 @@ public class FrontUtils {
       throw new JMetalException("The point is null");
     }
 
-    double minDistance = distance.getDistance(point.getValues(), front.getPoint(0).getValues());
+    double minDistance = distance.compute(point.getValues(), front.getPoint(0).getValues());
 
     for (int i = 1; i < front.getNumberOfPoints(); i++) {
-      double aux = distance.getDistance(point.getValues(), front.getPoint(i).getValues());
+      double aux = distance.compute(point.getValues(), front.getPoint(i).getValues());
       if (aux < minDistance) {
         minDistance = aux;
       }

@@ -35,7 +35,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    * @return
    */
   @Override
-  public double getDistance(S solution, List<S> solutionList) {
+  public double compute(S solution, List<S> solutionList) {
     List<Double> listOfDistances = knnDistances(solution, solutionList) ;
     listOfDistances.sort(Comparator.naturalOrder());
 
@@ -64,7 +64,7 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
   private List<Double> knnDistances(S solution, List<S> solutionList) {
     List<Double> listOfDistances = new ArrayList<>() ;
     for (int i = 0 ; i< solutionList.size(); i++) {
-      double distanceBetweenSolutions = distance.getDistance(solution, solutionList.get(i)) ;
+      double distanceBetweenSolutions = distance.compute(solution, solutionList.get(i)) ;
       if (distanceBetweenSolutions != 0) {
         listOfDistances.add(distanceBetweenSolutions) ;
       }

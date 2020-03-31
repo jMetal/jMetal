@@ -88,7 +88,7 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
 
     front.sort(new LexicographicalPointComparator());
 
-    if (new EuclideanDistanceBetweenVectors().getDistance(front.getPoint(0).getValues(),
+    if (new EuclideanDistanceBetweenVectors().compute(front.getPoint(0).getValues(),
         front.getPoint(front.getNumberOfPoints() - 1).getValues()) == 0.0) {
       return 1.0;
     } else {

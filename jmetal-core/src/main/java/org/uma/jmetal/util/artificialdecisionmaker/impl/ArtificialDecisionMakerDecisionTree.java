@@ -201,7 +201,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     EuclideanDistanceBetweenSolutionsInObjectiveSpace<S> euclidean = new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>();
 
     double distance = euclidean
-        .getDistance(solution, getSolutionFromRP(referencePoint));
+        .compute(solution, getSolutionFromRP(referencePoint));
     distances.add(distance);
   }
   private S getSolutionFromRP(List<Double> referencePoint){
@@ -242,7 +242,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     SortedMap<Double, S> map = new TreeMap<>();
     S aux = getSolutionFromRP(referencePoint);
     for (S solution : front) {
-      double distance = euclidean.getDistance(solution,aux);
+      double distance = euclidean.compute(solution,aux);
       map.put(distance, solution);
     }
     result = map.get(map.firstKey());

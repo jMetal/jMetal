@@ -12,7 +12,7 @@ import org.uma.jmetal.util.distance.Distance;
 public class EuclideanDistanceBetweenVectors implements Distance<double[], double[]> {
 
   @Override
-  public double getDistance(double[] vector1, double[] vector2) {
+  public double compute(double[] vector1, double[] vector2) {
     Check.isNotNull(vector1);
     Check.isNotNull(vector2);
     Check.that(vector1.length == vector2.length, "The vectors have different" +

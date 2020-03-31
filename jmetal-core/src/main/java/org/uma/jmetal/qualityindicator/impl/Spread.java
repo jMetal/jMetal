@@ -1,6 +1,5 @@
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.front.Front;
@@ -70,8 +69,8 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
     referenceFront.sort(new LexicographicalPointComparator());
 
     // STEP 2. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = distance.getDistance(front.getPoint(0).getValues(), referenceFront.getPoint(0).getValues()) ;
-    double dl = distance.getDistance(front.getPoint(front.getNumberOfPoints() - 1).getValues(),
+    double df = distance.compute(front.getPoint(0).getValues(), referenceFront.getPoint(0).getValues()) ;
+    double dl = distance.compute(front.getPoint(front.getNumberOfPoints() - 1).getValues(),
         referenceFront.getPoint(referenceFront.getNumberOfPoints() - 1).getValues()) ;
 
     double mean = 0.0;
@@ -82,7 +81,7 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
     // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
     for (int i = 0; i < (numberOfPoints - 1); i++) {
-      mean += distance.getDistance(front.getPoint(i).getValues(), front.getPoint(i + 1).getValues());
+      mean += distance.compute(front.getPoint(i).getValues(), front.getPoint(i + 1).getValues());
     }
 
     mean = mean / (double) (numberOfPoints - 1);
@@ -91,7 +90,7 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
     // metric. In other case, return the worse value (1.0, see metric's description).
     if (numberOfPoints > 1) {
       for (int i = 0; i < (numberOfPoints - 1); i++) {
-        diversitySum += Math.abs(distance.getDistance(front.getPoint(i).getValues(),
+        diversitySum += Math.abs(distance.compute(front.getPoint(i).getValues(),
             front.getPoint(i + 1).getValues()) - mean);
       }
       return diversitySum / (df + dl + (numberOfPoints - 1) * mean);

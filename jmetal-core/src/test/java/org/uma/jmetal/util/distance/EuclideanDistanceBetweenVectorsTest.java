@@ -2,7 +2,6 @@ package org.uma.jmetal.util.distance;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
@@ -26,21 +25,21 @@ public class EuclideanDistanceBetweenVectorsTest {
 
   @Test(expected = NullParameterException.class)
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() {
-    distance.getDistance(null, new double[]{1, 2}) ;
+    distance.compute(null, new double[]{1, 2}) ;
   }
 
   @Test (expected = NullParameterException.class)
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() {
-    distance.getDistance(new double[]{1, 2}, null ) ;
+    distance.compute(new double[]{1, 2}, null ) ;
   }
 
   @Test (expected = InvalidConditionException.class)
   public void shouldPassingPointsWithDifferentDimensionsRaiseAnException() {
-    distance.getDistance(new double[]{1, 2}, new double[]{1, 2, 3}) ;
+    distance.compute(new double[]{1, 2}, new double[]{1, 2, 3}) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithZeroDimensionReturnZero() {
-    assertEquals(0, distance.getDistance(new double[]{}, new double[]{}), EPSILON) ; ;
+    assertEquals(0, distance.compute(new double[]{}, new double[]{}), EPSILON) ; ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithOneDimensionReturnTheCorrectValue() {
@@ -50,14 +49,14 @@ public class EuclideanDistanceBetweenVectorsTest {
     point1.setValue(0, -2.0);
     point2.setValue(0, +2.0);
 
-    assertEquals(4.0, distance.getDistance(new double[]{-2.0}, new double[]{2}), EPSILON) ;
+    assertEquals(4.0, distance.compute(new double[]{-2.0}, new double[]{2}), EPSILON) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseA() {
-    assertEquals(Math.sqrt(0.02), distance.getDistance(new double[]{0.3, 0.4}, new double[]{0.2, 0.3}), EPSILON) ;
+    assertEquals(Math.sqrt(0.02), distance.compute(new double[]{0.3, 0.4}, new double[]{0.2, 0.3}), EPSILON) ;
   }
 
   @Test public void shouldCalculatingDistanceOfPointsWithTwoDimensionsReturnTheCorrectValueCaseB() {
-    assertEquals(Math.sqrt(8.0), distance.getDistance(new double[]{0.0, 0.0}, new double[]{2, 2}), EPSILON) ;
+    assertEquals(Math.sqrt(8.0), distance.compute(new double[]{0.0, 0.0}, new double[]{2, 2}), EPSILON) ;
   }
 }

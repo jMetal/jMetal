@@ -9,7 +9,6 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 
 import java.util.ArrayList;
@@ -72,7 +71,7 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
 
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = i + 1; j < solutionList.size(); j++) {
-        distanceMatrix[i][j] = distance.getDistance(solutionMatrix[i], solutionMatrix[j]) ;
+        distanceMatrix[i][j] = distance.compute(solutionMatrix[i], solutionMatrix[j]) ;
         distanceMatrix[j][i] = distanceMatrix[i][j] ;
       }
     }
