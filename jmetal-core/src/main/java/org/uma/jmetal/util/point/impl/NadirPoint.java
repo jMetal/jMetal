@@ -2,6 +2,7 @@ package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 
 import java.util.List;
 
@@ -21,10 +22,8 @@ public class NadirPoint extends ArrayPoint {
 
   @Override
   public void update(double[] point) {
-    if (point.length != this.point.length) {
-      throw new JMetalException("The point to be update have a dimension of " + point.length + " "
-          + "while the parameter point has a dimension of " + point.length) ;
-    }
+    Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
+            + "while the parameter point has a dimension of " + point.length);
 
     for (int i = 0; i < point.length; i++) {
       if (this.point[i] < point[i]) {

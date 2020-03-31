@@ -3,6 +3,7 @@ package org.uma.jmetal.util.point.impl;
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.util.point.Point;
 
 import java.util.Arrays;
 import java.util.List;
@@ -144,5 +145,15 @@ public class NadirPointTest {
     assertEquals(5.0, referencePoint.getValue(0), EPSILON) ;
     assertEquals(6.0, referencePoint.getValue(1), EPSILON) ;
     assertEquals(5.5, referencePoint.getValue(2), EPSILON) ;
+  }
+
+  @Test
+  public void shouldSetAssignTheRightValues() {
+    Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
+
+    point.set(new double[]{5, 6, 7}) ;
+    assertEquals(5, point.getValue(0), EPSILON);
+    assertEquals(6, point.getValue(1), EPSILON);
+    assertEquals(7, point.getValue(2), EPSILON);
   }
 }

@@ -1,7 +1,9 @@
-package org.uma.jmetal.util.distance.impl;
+package org.uma.jmetal.util.distance;
 
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInSolutionSpace;
 
 import java.util.ArrayList;
 import java.util.List;

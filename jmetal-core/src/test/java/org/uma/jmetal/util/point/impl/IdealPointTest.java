@@ -3,6 +3,7 @@ package org.uma.jmetal.util.point.impl;
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.util.point.Point;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -106,8 +107,18 @@ public class IdealPointTest {
     referencePoint.update(solution2.getObjectives());
     referencePoint.update(solution3.getObjectives());
 
-
     assertEquals(0.2, referencePoint.getValue(0), EPSILON) ;
     assertEquals(1.0, referencePoint.getValue(1), EPSILON) ;
     assertEquals(1.5, referencePoint.getValue(2), EPSILON) ;
-  }}
+  }
+
+  @Test
+  public void shouldSetAssignTheRightValues() {
+    Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
+
+    point.set(new double[]{5, 6, 7}) ;
+    assertEquals(5, point.getValue(0), EPSILON);
+    assertEquals(6, point.getValue(1), EPSILON);
+    assertEquals(7, point.getValue(2), EPSILON);
+  }
+}

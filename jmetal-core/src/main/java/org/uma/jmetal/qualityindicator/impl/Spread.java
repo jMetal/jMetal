@@ -2,11 +2,10 @@ package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
-import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
-import org.uma.jmetal.util.point.util.distance.PointDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -64,16 +63,16 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
    * @param referenceFront    The true pareto front.
    */
   public double spread(Front front, Front referenceFront) {
-    PointDistance distance = new EuclideanDistance() ;
+    EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
 
     // STEP 1. Sort normalizedFront and normalizedParetoFront;
     front.sort(new LexicographicalPointComparator());
     referenceFront.sort(new LexicographicalPointComparator());
 
     // STEP 2. Compute df and dl (See specifications in Deb's description of the metric)
-    double df = distance.compute(front.getPoint(0), referenceFront.getPoint(0)) ;
-    double dl = distance.compute(front.getPoint(front.getNumberOfPoints() - 1),
-        referenceFront.getPoint(referenceFront.getNumberOfPoints() - 1)) ;
+    double df = distance.getDistance(front.getPoint(0).getValues(), referenceFront.getPoint(0).getValues()) ;
+    double dl = distance.getDistance(front.getPoint(front.getNumberOfPoints() - 1).getValues(),
+        referenceFront.getPoint(referenceFront.getNumberOfPoints() - 1).getValues()) ;
 
     double mean = 0.0;
     double diversitySum = df + dl;
@@ -83,7 +82,7 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
     // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
     for (int i = 0; i < (numberOfPoints - 1); i++) {
-      mean += distance.compute(front.getPoint(i), front.getPoint(i + 1));
+      mean += distance.getDistance(front.getPoint(i).getValues(), front.getPoint(i + 1).getValues());
     }
 
     mean = mean / (double) (numberOfPoints - 1);
@@ -92,8 +91,8 @@ public class Spread <S extends Solution<?>> extends GenericIndicator<S> {
     // metric. In other case, return the worse value (1.0, see metric's description).
     if (numberOfPoints > 1) {
       for (int i = 0; i < (numberOfPoints - 1); i++) {
-        diversitySum += Math.abs(distance.compute(front.getPoint(i),
-            front.getPoint(i + 1)) - mean);
+        diversitySum += Math.abs(distance.getDistance(front.getPoint(i).getValues(),
+            front.getPoint(i + 1).getValues()) - mean);
       }
       return diversitySum / (df + dl + (numberOfPoints - 1) * mean);
     } else {
