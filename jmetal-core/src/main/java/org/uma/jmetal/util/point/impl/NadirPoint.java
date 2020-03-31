@@ -4,7 +4,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Class representing a nadir point (minimization is assumed)
@@ -15,9 +17,7 @@ public class NadirPoint extends ArrayPoint {
 
   public NadirPoint(int dimension) {
     super(dimension) ;
-    for (int i = 0; i < dimension; i++) {
-      point[i] = Double.NEGATIVE_INFINITY ;
-    }
+    Arrays.fill(point, Double.NEGATIVE_INFINITY);
   }
 
   @Override

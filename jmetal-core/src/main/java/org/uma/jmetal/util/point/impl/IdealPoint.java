@@ -4,7 +4,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**d
  * Class representing an ideal point (minimization is assumed)
@@ -15,9 +17,7 @@ public class IdealPoint extends ArrayPoint {
 
   public IdealPoint(int dimension) {
     super(dimension) ;
-    for (int i = 0; i < dimension; i++) {
-      point[i] = Double.POSITIVE_INFINITY;
-    }
+    Arrays.fill(point, Double.POSITIVE_INFINITY);
   }
 
   @Override
