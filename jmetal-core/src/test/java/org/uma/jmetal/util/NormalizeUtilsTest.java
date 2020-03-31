@@ -1,6 +1,7 @@
 package org.uma.jmetal.util;
 
 import org.junit.Test;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class NormalizeUtilsTest {
     c.newInstance((Object[]) null);
   }
 
-  @Test(expected = JMetalException.class)
+  @Test(expected = InvalidConditionException.class)
   public void shouldThrowAnExceptionWhenMinAndMaxValuesAreTheSame() {
     NormalizeUtils.normalize(2, 10, 10);
   }
