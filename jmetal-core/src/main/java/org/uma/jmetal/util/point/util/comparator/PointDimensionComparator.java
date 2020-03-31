@@ -50,12 +50,6 @@ public class PointDimensionComparator implements Comparator<Point> {
           + " is out of range (0,  " + (pointTwo.getDimension()-1) + ")") ;
     }
 
-    if (pointOne.getValue(index) < pointTwo.getValue(index)) {
-      return -1;
-    } else if (pointOne.getValue(index) > pointTwo.getValue(index)) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return Double.compare(pointOne.getValue(index), pointTwo.getValue(index));
   }
 }

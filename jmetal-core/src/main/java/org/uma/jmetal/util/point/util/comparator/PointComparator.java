@@ -6,7 +6,7 @@ import org.uma.jmetal.util.point.Point;
 import java.util.Comparator;
 
 /**
- * Point comparator. Starts the comparison from front last point dimension to the first one
+ * Point comparator. Starts the comparison from front the last point dimension to the first one
  *
  * @author Antonio J. Nebro
  */
