@@ -6,7 +6,7 @@ import org.uma.jmetal.util.point.Point;
 import java.util.Comparator;
 
 /**
- * This class implements the Comparator interface for comparing tow points.
+ * This class implements the Comparator interface for comparing two points.
  * The order used is lexicographical order.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

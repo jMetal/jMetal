@@ -61,9 +61,9 @@ public class LexicographicalPointComparatorTest {
 
     point2 = new ArrayPoint(4) ;
     point2.setValue(0, -1.0);
-    point2.setValue(0, 0.0);
-    point2.setValue(0, 5.0);
-    point2.setValue(0, 7.0);
+    point2.setValue(1, 0.0);
+    point2.setValue(2, 5.0);
+    point2.setValue(3, 7.0);
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
@@ -78,9 +78,9 @@ public class LexicographicalPointComparatorTest {
 
     point2 = new ArrayPoint(4) ;
     point2.setValue(0, -1.0);
-    point2.setValue(0, 0.0);
-    point2.setValue(0, 5.0);
-    point2.setValue(0, 7.0);
+    point2.setValue(1, 0.0);
+    point2.setValue(2, 5.0);
+    point2.setValue(3, 7.0);
 
     assertEquals(1, comparator.compare(point2, point1));
   }
