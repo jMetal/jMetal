@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
 
-  private int numberOfThreads;
+  private final int numberOfThreads;
 
   public MultithreadedSolutionListEvaluator(int numberOfThreads) {
     if (numberOfThreads == 0) {
@@ -27,7 +27,7 @@ public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvalua
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) {
-    solutionList.parallelStream().forEach(s -> problem.evaluate(s));
+    solutionList.parallelStream().forEach(problem::evaluate);
 
     return solutionList;
   }
