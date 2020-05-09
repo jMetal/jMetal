@@ -22,7 +22,6 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator;

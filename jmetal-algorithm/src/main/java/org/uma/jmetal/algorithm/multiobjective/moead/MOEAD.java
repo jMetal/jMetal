@@ -28,6 +28,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
   /** Constructor */

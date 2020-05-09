@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class SpatialSpreadDeviation<S extends Solution<?>>
         extends GenericSolutionAttribute<S, Double>
         implements DensityEstimator<S> {

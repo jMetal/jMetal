@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class FDA2 extends FDA implements Serializable {
 
   public FDA2() {

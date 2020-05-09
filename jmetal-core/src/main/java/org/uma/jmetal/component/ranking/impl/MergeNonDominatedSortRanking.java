@@ -20,7 +20,6 @@ import java.util.List;
  *
  * @author Javier Moreno <javier.morenom@edu.uah.es>
  */
-@SuppressWarnings("serial")
 public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator;

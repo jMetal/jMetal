@@ -6,6 +6,7 @@ import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** This problem consists in finding a string matching a target string. */
+@SuppressWarnings("serial")
 public class StringMatching extends CharSequenceProblem {
   private String targetString;
   private final char[] alphabet;

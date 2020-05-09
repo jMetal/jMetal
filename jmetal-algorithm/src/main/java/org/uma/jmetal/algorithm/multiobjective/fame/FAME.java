@@ -38,6 +38,7 @@ import java.util.Random;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   private double[] Utilization;
   private double[] OpProb;

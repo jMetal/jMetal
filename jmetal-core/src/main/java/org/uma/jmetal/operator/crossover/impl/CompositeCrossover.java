@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class CompositeCrossover implements CrossoverOperator<CompositeSolution> {
   private List<CrossoverOperator<Solution<?>>> operators;
   private double crossoverProbability = 1.0;

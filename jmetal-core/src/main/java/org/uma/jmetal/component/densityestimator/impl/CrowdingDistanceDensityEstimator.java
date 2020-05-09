@@ -15,7 +15,6 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
   private String attributeId = getClass().getName();

@@ -25,6 +25,7 @@ import java.util.Comparator;
  * This class implements a comparator based on the rank of the solutions; if the rank is the same
  * then the crowding distance is used.
  */
+@SuppressWarnings("serial")
 public class RankingAndSSDComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final Comparator<S> rankComparator = new RankingComparator<S>();
   private final Comparator<S> NewcrowdingDistanceComparator = new SpatialSpreadDeviationComparator<S>() ;
