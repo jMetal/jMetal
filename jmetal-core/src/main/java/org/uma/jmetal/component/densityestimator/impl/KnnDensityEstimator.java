@@ -9,7 +9,6 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 
 import java.util.ArrayList;

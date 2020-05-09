@@ -23,23 +23,16 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
-  private static final String OUTPUT_DIRECTORY = "tablesaw";
-  private int numberOfRows;
-  private int numberOfColumns;
-  private boolean displayNotch;
   private String experimentBaseDirectory;
   private String csvSummaryFile;
 
   public GenerateBoxplotsWithTablesawAndR(
       String csvSummaryFile,
-      int numberOfRows,
-      int numberOfColumns,
-      boolean displayNotch,
+      int numberOfRows,// Not used
+      int numberOfColumns,// Not used
+      boolean displayNotch,// Not used
       String experimentBaseDirectory) {
     this.csvSummaryFile = csvSummaryFile;
-    this.numberOfRows = numberOfRows;
-    this.numberOfColumns = numberOfColumns;
-    this.displayNotch = displayNotch;
     this.experimentBaseDirectory = experimentBaseDirectory;
   }
 
@@ -104,7 +97,6 @@ public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
 
       Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[medians.size()]));
       System.out.println(median);
-      Column<Double> iqr = DoubleColumn.create(alg, iqrs.toArray(new Double[iqrs.size()]));
       summary.addColumns(median);
     }
 

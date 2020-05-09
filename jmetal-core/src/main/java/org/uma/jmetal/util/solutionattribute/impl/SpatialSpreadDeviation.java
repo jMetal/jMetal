@@ -64,7 +64,6 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
 
     double objetiveMaxn[] = new double[numberOfObjectives];
     double objetiveMinn[] = new double[numberOfObjectives];
-    double distan;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n

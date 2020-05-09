@@ -38,7 +38,6 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 public class SPEA2 {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
-    String referenceParetoFront = "/pareto_fronts/ZDT1.pf";
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

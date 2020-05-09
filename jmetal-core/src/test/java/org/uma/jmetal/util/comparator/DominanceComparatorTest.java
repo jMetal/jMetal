@@ -66,8 +66,6 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareReturnZeroIfTheTwoSolutionsHaveOneObjectiveWithTheSameValue() {
-    @SuppressWarnings("unchecked")
-
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
 

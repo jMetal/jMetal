@@ -10,7 +10,6 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class FDA4 extends FDA {
 
-  private boolean theProblemHasBeenModified;
   private final int M = 3;
 
   public FDA4() {

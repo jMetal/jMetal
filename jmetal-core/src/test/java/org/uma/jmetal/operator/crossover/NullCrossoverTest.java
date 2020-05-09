@@ -1,7 +1,6 @@
 package org.uma.jmetal.operator.crossover;
 
 import org.junit.Test;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;

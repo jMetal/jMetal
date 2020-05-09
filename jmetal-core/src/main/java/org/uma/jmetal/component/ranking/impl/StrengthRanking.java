@@ -6,7 +6,6 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.Attribute
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,8 +26,6 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> dominanceComparator;
   private Comparator<S> solutionComparator;
-  private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-      new OverallConstraintViolationComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubPopulations;
 

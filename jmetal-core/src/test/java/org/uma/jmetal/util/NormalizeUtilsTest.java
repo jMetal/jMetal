@@ -3,7 +3,6 @@ package org.uma.jmetal.util;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

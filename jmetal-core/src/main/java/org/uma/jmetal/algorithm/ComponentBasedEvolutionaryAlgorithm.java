@@ -7,7 +7,6 @@ import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.Variation;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
@@ -16,7 +15,6 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Class representing an evolutionary algorithm. It implements the {@link Algorithm} interface by

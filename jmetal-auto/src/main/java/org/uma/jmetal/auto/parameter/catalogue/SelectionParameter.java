@@ -6,7 +6,6 @@ import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEst
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
-import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.solution.Solution;

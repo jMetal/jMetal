@@ -414,7 +414,6 @@ public class SolutionListUtilsTest {
     assertEquals(maxListSize, solutions.size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void shouldNormalizeReturnsCorrectNormalizedNumber() {
 

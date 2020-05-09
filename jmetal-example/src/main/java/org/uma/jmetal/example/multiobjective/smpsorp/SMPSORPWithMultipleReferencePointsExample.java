@@ -20,7 +20,6 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SMPSORPWithMultipleReferencePointsExample {
