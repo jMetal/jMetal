@@ -31,7 +31,7 @@ public class GenericSolutionAttributeTest {
   @Test
   public void shouldConstructorCreateASolutionAttributedWithThePassedIdentifier() {
     GenericSolutionAttribute<?, ?> genericSolutionAttribute;
-    Object attributeIdentifier = new Double(4);
+    Object attributeIdentifier = Double.valueOf(4);
     genericSolutionAttribute = new GenericSolutionAttribute<>(attributeIdentifier);
 
     Object solutionAttributeId =
@@ -64,7 +64,7 @@ public class GenericSolutionAttributeTest {
     GenericSolutionAttribute<MockedDoubleSolution, Integer> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object value = new Double(5);
+    Object value = Double.valueOf(5);
 
     MockedDoubleSolution solution = mock(MockedDoubleSolution.class);
     when(solution.getAttribute(genericSolutionAttribute.getAttributeIdentifier()))
@@ -78,7 +78,7 @@ public class GenericSolutionAttributeTest {
     GenericSolutionAttribute<Solution<?>, Object> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
 
-    Object value = new Double(5);
+    Object value = Double.valueOf(5);
 
     MockedDoubleSolution solution = new MockedDoubleSolution();
     genericSolutionAttribute.setAttribute(solution, value);

@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.comparator;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
@@ -18,35 +17,26 @@ import static org.mockito.Mockito.*;
 public class DominanceComparatorTest {
   private DominanceComparator<Solution<?>> comparator;
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
-    exception.expect(NullParameterException.class);
-
     comparator = new DominanceComparator<Solution<?>>();
 
     Solution<?> solution2 = mock(Solution.class);
 
-    comparator.compare(null, solution2);
+    assertThrows(NullParameterException.class, () -> comparator.compare(null, solution2));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    exception.expect(NullParameterException.class);
-
     comparator = new DominanceComparator<Solution<?>>();
 
     Solution<?> solution2 = mock(Solution.class);
 
-    comparator.compare(solution2, null);
+    assertThrows(NullParameterException.class, () -> comparator.compare(solution2, null));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSolutionsHaveNotTheSameNumberOfObjectives() {
-    exception.expect(InvalidConditionException.class);
-
     comparator = new DominanceComparator<Solution<?>>();
 
     Solution<?> solution1 = mock(Solution.class);
@@ -55,7 +45,7 @@ public class DominanceComparatorTest {
     when(solution1.getNumberOfObjectives()).thenReturn(4);
     when(solution2.getNumberOfObjectives()).thenReturn(2);
 
-    comparator.compare(solution1, solution2);
+    assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
 
   @Test
