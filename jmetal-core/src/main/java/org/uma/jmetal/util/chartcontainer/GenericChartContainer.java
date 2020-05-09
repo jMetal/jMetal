@@ -285,7 +285,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     return this.name;
   }
 
-  public GenericChartContainer setName(String name) {
+  public GenericChartContainer<S> setName(String name) {
     this.name = name;
     return this;
   }
@@ -294,7 +294,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     return this.delay;
   }
 
-  public GenericChartContainer setDelay(int delay) {
+  public GenericChartContainer<S> setDelay(int delay) {
     this.delay = delay;
     return this;
   }

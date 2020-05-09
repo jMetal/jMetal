@@ -9,6 +9,7 @@ import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.DifferentialEvolutionMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class SelectionParameter extends CategoricalParameter<String> {
   }
 
   public MatingPoolSelection<?> getParameter(int matingPoolSize, Comparator<?> comparator) {
-    MatingPoolSelection<?> result ;
+    MatingPoolSelection<Solution<?>> result ;
     switch(getValue()) {
       case "tournament":
         int tournamentSize =
@@ -56,14 +57,14 @@ public class SelectionParameter extends CategoricalParameter<String> {
           densityEstimator = new KnnDensityEstimator<>(1) ;
         }
         */
-        Ranking<?> ranking = new FastNonDominatedSortRanking<>();
-        DensityEstimator<?> densityEstimator = new CrowdingDistanceDensityEstimator<>();
+        Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
+        DensityEstimator<Solution<?>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
-        MultiComparator<?> rankingAndCrowdingComparator =
-            new MultiComparator(
+        MultiComparator<Solution<?>> rankingAndCrowdingComparator =
+            new MultiComparator<>(
                 Arrays.asList(
                     ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
-        result = new NaryTournamentMatingPoolSelection(
+        result = new NaryTournamentMatingPoolSelection<>(
                 tournamentSize, matingPoolSize, rankingAndCrowdingComparator);
 
         break ;

@@ -10,6 +10,7 @@ import org.uma.jmetal.example.multiobjective.smpsorp.jmetal5version.SMPSORPChang
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -113,7 +114,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
   }
 
   private static class ChangeReferencePoint implements Runnable {
-    GenericChartContainer chart ;
+    GenericChartContainer<Solution<?>> chart ;
     List<List<Double>> referencePoints;
     SMPSORP algorithm ;
 
@@ -121,7 +122,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
             Algorithm<List<DoubleSolution>> algorithm,
             List<List<Double>> referencePoints,
             List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints,
-            GenericChartContainer chart) {
+            GenericChartContainer<Solution<?>> chart) {
       this.referencePoints = referencePoints;
       this.chart = chart ;
       this.algorithm = (SMPSORP) algorithm ;

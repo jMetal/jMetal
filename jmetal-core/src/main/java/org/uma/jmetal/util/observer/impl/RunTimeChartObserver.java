@@ -88,7 +88,7 @@ public class RunTimeChartObserver<S extends Solution<?>> implements Observer<Map
     }
   }
 
-  public GenericChartContainer getChart() {
+  public GenericChartContainer<S> getChart() {
     return chart ;
   }
 

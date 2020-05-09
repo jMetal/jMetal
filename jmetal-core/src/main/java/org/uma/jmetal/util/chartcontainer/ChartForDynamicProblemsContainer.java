@@ -169,7 +169,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     return this.name;
   }
 
-  public ChartForDynamicProblemsContainer setName(String name) {
+  public ChartForDynamicProblemsContainer<S> setName(String name) {
     this.name = name;
     return this;
   }
@@ -178,7 +178,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     return this.delay;
   }
 
-  public ChartForDynamicProblemsContainer setDelay(int delay) {
+  public ChartForDynamicProblemsContainer<S> setDelay(int delay) {
     this.delay = delay;
     return this;
   }

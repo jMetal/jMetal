@@ -115,7 +115,7 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
 
     this.replacement =
         new MOEADReplacement<S>(
-            (PopulationAndNeighborhoodMatingPoolSelection) selection,
+            (PopulationAndNeighborhoodMatingPoolSelection<S>) selection,
             neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,
