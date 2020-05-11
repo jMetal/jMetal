@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.point.Point;
 
 import java.io.BufferedReader;
@@ -35,9 +36,7 @@ public class ArrayPoint implements Point {
   public ArrayPoint(int dimension) {
     point = new double[dimension];
 
-    for (int i = 0; i < dimension; i++) {
-      point[i] = 0.0;
-    }
+    Arrays.fill(point, 0);
   }
 
   /**
@@ -46,9 +45,7 @@ public class ArrayPoint implements Point {
    * @param point
    */
   public ArrayPoint(Point point) {
-    if (point == null) {
-      throw new JMetalException("The point is null") ;
-    }
+    Check.isNotNull(point);
 
     this.point = new double[point.getDimension()];
 
@@ -63,9 +60,7 @@ public class ArrayPoint implements Point {
    * @param point
    */
   public ArrayPoint(double[] point) {
-    if (point == null) {
-      throw new JMetalException("The array of values is null") ;
-    }
+    Check.isNotNull(point);
 
     this.point = new double[point.length];
     System.arraycopy(point, 0, this.point, 0, point.length);
@@ -86,7 +81,7 @@ public class ArrayPoint implements Point {
       StringTokenizer st = new StringTokenizer(aux);
 
       while (st.hasMoreTokens()) {
-        Double value = (new Double(st.nextToken()));
+        Double value = Double.valueOf(st.nextToken());
         auxiliarPoint.add(value);
       }
       aux = br.readLine();
@@ -112,28 +107,29 @@ public class ArrayPoint implements Point {
 
   @Override
   public double getValue(int index) {
-    if ((index < 0) || (index >= point.length)) {
-      throw new JMetalException("Index value invalid: " + index +
-          ". The point length is: " + point.length) ;
-    }
+    Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
+            ". The point length is: " + point.length);
+
     return point[index] ;
   }
 
   @Override
   public void setValue(int index, double value) {
-    if ((index < 0) || (index >= point.length)) {
-      throw new JMetalException("Index value invalid: " + index +
-          ". The point length is: " + point.length) ;
-    }
+    Check.that((index >= 0) && (index < point.length), "Index value invalid: " + index +
+            ". The point length is: " + point.length);
+
     point[index] = value ;
   }
 
   @Override
   public void update(double[] point) {
-    if (point.length != this.point.length) {
-      throw new JMetalException("The point to be update have a dimension of " + point.length + " "
-          + "while the parameter point has a dimension of " + point.length) ;
-    }
+    this.set(point);
+  }
+
+  @Override
+  public void set(double[] point) {
+    Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
+            + "while the parameter point has a dimension of " + point.length);
 
     for (int i = 0; i < point.length; i++) {
       this.point[i] = point[i] ;

@@ -1,8 +1,8 @@
 package org.uma.jmetal.qualityindicator;
 
-import org.junit.Rule;
+import static org.junit.Assert.assertThrows;
+
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -16,25 +16,18 @@ import org.uma.jmetal.util.front.impl.ArrayFront;
  */
 public class HypervolumeTest {
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
-    exception.expect(NullParameterException.class);
-
     Front front = new ArrayFront(0, 0) ;
 
     Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(front) ;
-    hypervolume.evaluate(null) ;
+    assertThrows(NullParameterException.class, () -> hypervolume.evaluate(null));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
-    exception.expect(NullParameterException.class);
-
     Front front = null ;
 
-    new PISAHypervolume<DoubleSolution>(front) ;
+    assertThrows(NullParameterException.class, () -> new PISAHypervolume<DoubleSolution>(front));
   }
 }

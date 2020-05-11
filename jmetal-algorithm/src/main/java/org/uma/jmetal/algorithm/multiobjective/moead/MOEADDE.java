@@ -27,6 +27,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution> {
 
   /** Constructor */
@@ -36,7 +37,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
         Termination termination,
         PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
         DifferentialCrossoverVariation variation,
-        MOEADReplacement replacement) {
+        MOEADReplacement<DoubleSolution> replacement) {
         super(
         "MOEAD-DE",
         evaluation,
@@ -123,7 +124,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     this.replacement =
         new MOEADReplacement<DoubleSolution>(
-            (PopulationAndNeighborhoodMatingPoolSelection) selection,
+            (PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution>) selection,
             neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,

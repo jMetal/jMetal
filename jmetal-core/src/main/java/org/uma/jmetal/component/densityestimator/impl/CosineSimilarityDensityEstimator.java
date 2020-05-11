@@ -21,7 +21,6 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> solutionComparator;
@@ -86,7 +85,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
 
     for (int i = 0; i < solutionList.size(); i++) {
       for (int j = i + 1; j < solutionList.size(); j++) {
-        distanceMatrix[i][j] = distance.getDistance(solutionMatrix[i], solutionMatrix[j]);
+        distanceMatrix[i][j] = distance.compute(solutionMatrix[i], solutionMatrix[j]);
         distanceMatrix[j][i] = distanceMatrix[i][j];
       }
     }

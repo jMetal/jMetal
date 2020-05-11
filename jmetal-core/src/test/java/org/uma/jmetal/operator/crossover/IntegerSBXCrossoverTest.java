@@ -22,7 +22,6 @@ public class IntegerSBXCrossoverTest {
 	@Test
 	public void testJMetalRandomGeneratorNotUsedWhenCustomRandomGeneratorProvided() {
 		// Configuration
-		@SuppressWarnings("serial")
 		List<IntegerSolution> parents = new LinkedList<>();
 
 		List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 1)) ;

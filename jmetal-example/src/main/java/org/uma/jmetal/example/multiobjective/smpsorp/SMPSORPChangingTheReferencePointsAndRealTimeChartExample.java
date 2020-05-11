@@ -6,22 +6,19 @@ import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.example.multiobjective.smpsorp.jmetal5version.SMPSORPChangingTheReferencePointsAndChartsRunnerZDT1;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
-import org.uma.jmetal.util.chartcontainer.ChartContainer;
-import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
 import org.uma.jmetal.util.chartcontainer.GenericChartContainer;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 import java.util.ArrayList;
@@ -113,7 +110,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
   }
 
   private static class ChangeReferencePoint implements Runnable {
-    GenericChartContainer chart ;
+    GenericChartContainer<Solution<?>> chart ;
     List<List<Double>> referencePoints;
     SMPSORP algorithm ;
 
@@ -121,7 +118,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
             Algorithm<List<DoubleSolution>> algorithm,
             List<List<Double>> referencePoints,
             List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints,
-            GenericChartContainer chart) {
+            GenericChartContainer<Solution<?>> chart) {
       this.referencePoints = referencePoints;
       this.chart = chart ;
       this.algorithm = (SMPSORP) algorithm ;

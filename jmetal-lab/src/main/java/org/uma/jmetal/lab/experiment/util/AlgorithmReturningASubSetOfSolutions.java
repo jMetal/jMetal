@@ -6,6 +6,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class AlgorithmReturningASubSetOfSolutions<S extends Solution<?>> implements Algorithm<List<S>> {
   private Algorithm<List<S>> algorithm;
   private int numberOfSolutionsToReturn;

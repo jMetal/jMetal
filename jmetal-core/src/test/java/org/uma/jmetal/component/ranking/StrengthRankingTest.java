@@ -106,6 +106,7 @@ public class StrengthRankingTest {
     assertEquals(0, solution5.getAttribute(ranking.getAttributeId()));
   }
 
+  @SuppressWarnings("serial")
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
     /** Constructor */

@@ -14,7 +14,7 @@ public class EuclideanDistanceBetweenSolutionsInObjectiveSpace<S extends Solutio
   private EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
 
   @Override
-  public double getDistance(S solution1, S solution2) {
-    return distance.getDistance(solution1.getObjectives(), solution2.getObjectives()) ;
+  public double compute(S solution1, S solution2) {
+    return distance.compute(solution1.getObjectives(), solution2.getObjectives()) ;
   }
 }

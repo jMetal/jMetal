@@ -2,8 +2,11 @@ package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.Check;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**d
  * Class representing an ideal point (minimization is assumed)
@@ -14,17 +17,13 @@ public class IdealPoint extends ArrayPoint {
 
   public IdealPoint(int dimension) {
     super(dimension) ;
-    for (int i = 0; i < dimension; i++) {
-      point[i] = Double.POSITIVE_INFINITY;
-    }
+    Arrays.fill(point, Double.POSITIVE_INFINITY);
   }
 
   @Override
   public void update(double[] point) {
-    if (point.length != this.point.length) {
-      throw new JMetalException("The point to be update have a dimension of " + point.length + " "
-          + "while the parameter point has a dimension of " + point.length) ;
-    }
+    Check.that(point.length == this.point.length, "The point to be update have a dimension of " + point.length + " "
+            + "while the parameter point has a dimension of " + point.length);
 
     for (int i = 0; i < point.length; i++) {
       if (this.point[i] > point[i]) {

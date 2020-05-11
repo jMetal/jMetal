@@ -1,7 +1,9 @@
-package org.uma.jmetal.util.distance.impl;
+package org.uma.jmetal.util.distance;
 
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInSolutionSpace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
-    double receivedValue = distance.getDistance(solution, solutionList) ;
+    double receivedValue = distance.compute(solution, solutionList) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
   }
 
@@ -51,7 +53,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     int k = 1 ;
     DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
-    double receivedValue = distance.getDistance(solution, solutionList) ;
+    double receivedValue = distance.compute(solution, solutionList) ;
     assertEquals(Math.sqrt(2), receivedValue, EPSILON) ;
   }
 
@@ -87,7 +89,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
     DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =
             new DistanceBetweenSolutionAndKNearestNeighbors<>(k, new EuclideanDistanceBetweenSolutionsInSolutionSpace<>()) ;
 
-    double receivedValue = distance.getDistance(solution, solutionList) ;
+    double receivedValue = distance.compute(solution, solutionList) ;
     assertEquals((Math.sqrt(4+4)), receivedValue, EPSILON) ;
   }
 }

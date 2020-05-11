@@ -64,8 +64,8 @@ public class ObjectiveComparator<S extends Solution<?>> implements Comparator<S>
       throw new JMetalException("The solution2 has " + solution2.getNumberOfObjectives()+ " objectives "
           + "and the objective to sort is " + objectiveId) ;
     } else {
-      Double objective1 = solution1.getObjective(this.objectiveId);
-      Double objective2 = solution2.getObjective(this.objectiveId);
+      double objective1 = solution1.getObjective(this.objectiveId);
+      double objective2 = solution2.getObjective(this.objectiveId);
       if (order == Ordering.ASCENDING) {
         result = Double.compare(objective1, objective2);
       } else {

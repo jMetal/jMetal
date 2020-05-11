@@ -1,12 +1,11 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.util.distance.DominanceDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -68,7 +67,7 @@ public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends Gen
     double sum = 0.0;
     for (int i = 0 ; i < referenceFront.getNumberOfPoints(); i++) {
       sum += FrontUtils.distanceToClosestPoint(referenceFront.getPoint(i),
-          front, new DominanceDistance());
+          front, new DominanceDistanceBetweenVectors());
     }
 
     // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front

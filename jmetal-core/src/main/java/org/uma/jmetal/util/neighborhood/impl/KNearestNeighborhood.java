@@ -35,7 +35,7 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
     int[] indexes = new int[solutionList.size()];
 
     for (int i = 0; i < solutionList.size(); i++) {
-      distances[i] = this.distance.getDistance(solutionList.get(i), solutionList.get(solutionIndex));
+      distances[i] = this.distance.compute(solutionList.get(i), solutionList.get(solutionIndex));
       indexes[i] = i;
     }
 

@@ -18,7 +18,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpace<S extends Solution<?
   }
 
   @Override
-  public double getDistance(S solution1, S solution2) {
+  public double compute(S solution1, S solution2) {
     double sum = 0.0 ;
     for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
       sum += (solution1.getObjective(i) - referencePoint.getObjective(i)) *

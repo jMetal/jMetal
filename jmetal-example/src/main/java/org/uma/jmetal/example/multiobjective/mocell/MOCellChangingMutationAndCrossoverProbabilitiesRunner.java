@@ -1,7 +1,9 @@
-package org.uma.jmetal.example.multiobjective;
+package org.uma.jmetal.example.multiobjective.mocell;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.mocell.MOCell;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
+import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -10,15 +12,19 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
+import org.uma.jmetal.util.neighborhood.impl.C9;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -28,7 +34,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOCellHVRunner extends AbstractAlgorithmRunner {
+public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
@@ -67,15 +73,52 @@ public class MOCellHVRunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    BoundedArchive<DoubleSolution> archive =
-        new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>()) ;
+    class MOCellWithChangesInVariationOperator  extends MOCell<DoubleSolution> {
 
-    algorithm = new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
-        .setSelectionOperator(selection)
-        .setMaxEvaluations(25000)
-        .setPopulationSize(100)
-        .setArchive(archive)
-        .build() ;
+      /**
+       * Constructor
+       *
+       * @param problem
+       * @param maxEvaluations
+       * @param populationSize
+       * @param archive
+       * @param neighborhood
+       * @param crossoverOperator
+       * @param mutationOperator
+       * @param selectionOperator
+       * @param evaluator
+       */
+      public MOCellWithChangesInVariationOperator(
+              Problem<DoubleSolution> problem, int maxEvaluations, int populationSize,
+              BoundedArchive<DoubleSolution> archive, Neighborhood<DoubleSolution> neighborhood,
+              CrossoverOperator<DoubleSolution> crossoverOperator, MutationOperator<DoubleSolution> mutationOperator,
+              SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator,
+              SolutionListEvaluator<DoubleSolution> evaluator) {
+        super(problem, maxEvaluations, populationSize, archive, neighborhood, crossoverOperator, mutationOperator,
+                selectionOperator, evaluator);
+      }
+
+      @Override
+      public void updateProgress() {
+        super.updateProgress();
+
+        if (evaluations > 10000) {
+          crossoverOperator = new SBXCrossover(0.7, 20.0) ;
+          mutationOperator = new PolynomialMutation(0.001, 30.0) ;
+        }
+      }
+    }
+
+    algorithm = new MOCellWithChangesInVariationOperator(
+            problem,
+            25000,
+            100,
+            new CrowdingDistanceArchive<>(100),
+            new C9<DoubleSolution>((int)Math.sqrt(100), (int)Math.sqrt(100)),
+            crossover,
+            mutation,
+            selection,
+            new SequentialSolutionListEvaluator<DoubleSolution>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute() ;

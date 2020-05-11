@@ -5,6 +5,8 @@ import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Arrays;
@@ -49,7 +51,7 @@ public class ArrayPointTest {
     assertEquals(point, newPoint) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldConstructAPointFromANullPointRaiseAnException() {
     Point point = null ;
 
@@ -88,7 +90,7 @@ public class ArrayPointTest {
     assertArrayEquals(array, storedValues, EPSILON);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldConstructFromNullArrayRaiseAnException() {
     double[] array = null ;
 
@@ -129,7 +131,7 @@ public class ArrayPointTest {
     assertEquals(Double.MAX_VALUE, point.getValue(4), EPSILON) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldGetDimensionValueWithInvalidIndexesRaiseAnException() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
@@ -153,7 +155,7 @@ public class ArrayPointTest {
     assertArrayEquals(array, (double[])ReflectionTestUtils.getField(point, "point"), EPSILON);
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldSetDimensionValueWithInvalidIndexesRaiseAnException() {
     int dimension = 5 ;
     Point point = new ArrayPoint(dimension) ;
@@ -202,6 +204,16 @@ public class ArrayPointTest {
     assertFalse(point.equals(newPoint));
   }
 
+ @Test
+ public void shouldSetAssignTheRightValues() {
+   Point point = new ArrayPoint(new double[]{2, 3, 3}) ;
+
+   point.set(new double[]{5, 6, 7}) ;
+   assertEquals(5, point.getValue(0), EPSILON);
+   assertEquals(6, point.getValue(1), EPSILON);
+   assertEquals(7, point.getValue(2), EPSILON);
+ }
+
   @Test
   public void shouldEqualsReturnFalseIfThePointIsNull() {
     int dimension = 5 ;
@@ -210,7 +222,6 @@ public class ArrayPointTest {
     assertFalse(point.equals(null));
   }
 
-  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void shouldEqualsReturnFalseIfTheClassIsNotAPoint() {
     int dimension = 5 ;

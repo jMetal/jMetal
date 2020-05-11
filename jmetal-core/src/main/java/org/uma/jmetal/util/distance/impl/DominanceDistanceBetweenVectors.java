@@ -5,11 +5,11 @@ import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.distance.Distance;
 
 /**
- * Class for calculating the Euclidean distance between two vectors
+ * Class for calculating the dominance distance between two vectors
  *
  * @author <antonio@lcc.uma.es>
  */
-public class EuclideanDistanceBetweenVectors implements Distance<double[], double[]> {
+public class DominanceDistanceBetweenVectors implements Distance<double[], double[]> {
 
   @Override
   public double compute(double[] vector1, double[] vector2) {
@@ -20,12 +20,10 @@ public class EuclideanDistanceBetweenVectors implements Distance<double[], doubl
 
     double distance = 0.0;
 
-    double diff;
-    for (int i = 0; i < vector1.length ; i++){
-      diff = vector1[i] - vector2[i];
-      distance += diff * diff ;
+    for (int i = 0; i < vector1.length; i++) {
+      double max = Math.max(vector2[i] - vector1[i], 0.0) ;
+      distance += Math.pow(max, 2);
     }
-
     return Math.sqrt(distance);
   }
 }

@@ -1,7 +1,8 @@
-package org.uma.jmetal.util.distance.impl;
+package org.uma.jmetal.util.distance;
 
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.distance.impl.CosineDistanceBetweenSolutionsInObjectiveSpace;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -33,7 +34,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(1.0, receivedValue, EPSILON) ;
   }
 
@@ -57,7 +58,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(1.0, receivedValue, EPSILON) ;
   }
 
@@ -81,7 +82,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
 
-    double receivedValue = distance.getDistance(point1, point2) ;
+    double receivedValue = distance.compute(point1, point2) ;
     assertEquals(0.0, receivedValue, EPSILON) ;
   }
 }

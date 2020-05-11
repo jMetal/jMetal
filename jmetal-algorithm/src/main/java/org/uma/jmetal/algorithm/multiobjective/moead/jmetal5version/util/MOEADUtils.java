@@ -210,11 +210,11 @@ public class MOEADUtils {
     while (resultSolutionList.size() < newSolutionListSize) {
       int index = 0;
       S selected = candidate.get(0); // it should be a next! (n <= population size!)
-      double aux = distance.getDistance(selected, solutionList);
+      double aux = distance.compute(selected, solutionList);
       int i = 1;
       while (i < candidate.size()) {
         S nextCandidate = candidate.get(i);
-        double distanceValue = distance.getDistance(nextCandidate, solutionList);
+        double distanceValue = distance.compute(nextCandidate, solutionList);
         if (aux < distanceValue) {
           index = i;
           aux = distanceValue;

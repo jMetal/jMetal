@@ -26,6 +26,7 @@ public class Plot2DSmile implements PlotFront {
     this.plotTitle = plotTitle ;
   }
 
+  @SuppressWarnings("serial")
   class LocalPanel extends JPanel {
     public LocalPanel(){
       super(new GridLayout(1, 1)) ;

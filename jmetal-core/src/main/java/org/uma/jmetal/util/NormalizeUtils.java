@@ -1,10 +1,8 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.checking.Check;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -40,10 +38,7 @@ public class NormalizeUtils {
    */
   public static double normalize(
           double value, double minRangeValue, double maxRangeValue, double min, double max) {
-
-    if (max == min) {
-      throw new JMetalException("The max minus min should not be zero");
-    }
+    Check.that(max != min, "Max minus min should not be zero");
 
     return minRangeValue + (((value - min) * (maxRangeValue - minRangeValue)) / (max - min));
   }
@@ -111,9 +106,9 @@ public class NormalizeUtils {
     Arrays.fill(minValues, Double.MAX_VALUE);
 
     for (int j = 0; j < rowLength; j++) {
-      for (int i = 0 ; i < matrix.length; i++) {
-        if (matrix[i][j] < minValues[j]) {
-          minValues[j] = matrix[i][j] ;
+      for (double[] values : matrix) {
+        if (values[j] < minValues[j]) {
+          minValues[j] = values[j];
         }
       }
     }
@@ -134,9 +129,9 @@ public class NormalizeUtils {
     Arrays.fill(maxValues, Double.MIN_VALUE);
 
     for (int j = 0; j < rowLength; j++) {
-      for (int i = 0 ; i < matrix.length; i++) {
-        if (matrix[i][j] > maxValues[j]) {
-          maxValues[j] = matrix[i][j] ;
+      for (double[] values : matrix) {
+        if (values[j] > maxValues[j]) {
+          maxValues[j] = values[j];
         }
       }
     }

@@ -2,7 +2,6 @@ package org.uma.jmetal.component.replacement.impl;
 
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class SingleObjectiveGenerationalReplacement<S extends Solution<?>> implements Replacement<S> {
-  private DominanceComparator<S> dominanceComparator = new DominanceComparator<>() ;
 
   public List<S> replace(List<S> currentList, List<S> offspringList) {
     List<S> jointPopulation = new ArrayList<>();

@@ -9,7 +9,6 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -36,7 +35,6 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
     ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
@@ -58,7 +56,12 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
 
     algorithm =
         new NSGAII<>(
-                problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
+                problem,
+                populationSize,
+                offspringPopulationSize,
+                crossover,
+                mutation,
+                termination)
                 .setEvaluation(new MultithreadedEvaluation<>(8, problem));
 
     algorithm.run();

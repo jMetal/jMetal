@@ -1,12 +1,6 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.point.Point;
-
-import java.util.Arrays;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 
 /**
  * Class for calculating the cosine similarity between two vectors.
@@ -22,7 +16,7 @@ public class CosineSimilarityBetweenVectors implements Distance<double[], double
   }
 
   @Override
-  public double getDistance(double[] vector1, double[] vector2) {
+  public double compute(double[] vector1, double[] vector2) {
     double sum = 0.0;
 
     for (int i = 0; i < vector1.length; i++) {

@@ -22,11 +22,11 @@ public class EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace
   }
 
   @Override
-  public double getDistance(S solution, L solutionList) {
+  public double compute(S solution, L solutionList) {
     double bestDistance = Double.MAX_VALUE;
 
     for (int i = 0; i < solutionList.size();i++){
-      double aux = distance.getDistance(solution.getObjectives(), solutionList.get(i).getObjectives());
+      double aux = distance.compute(solution.getObjectives(), solutionList.get(i).getObjectives());
       if (aux < bestDistance)
         bestDistance = aux;
     }

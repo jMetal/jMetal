@@ -462,7 +462,7 @@ public class SolutionListUtils {
     while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
         solution.setAttribute(
-                "SUBSET_SELECTION_DISTANCE", distance.getDistance(solution, selectedSolutions));
+                "SUBSET_SELECTION_DISTANCE", distance.compute(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =
               findIndexOfBestSolution(

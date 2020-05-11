@@ -19,7 +19,6 @@ import java.util.*;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
 public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName() ;
   private Comparator<S> dominanceComparator ;

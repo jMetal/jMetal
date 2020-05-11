@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.evaluation;
 
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.List;

@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class CompositeMutation implements MutationOperator<CompositeSolution> {
   private List<MutationOperator<Solution<?>>> operators;
   private double mutationProbability = 1.0;

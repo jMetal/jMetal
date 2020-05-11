@@ -42,7 +42,6 @@ public class PESA2BuilderTest {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    int populationSize  = 100 ;
     builder = new PESA2Builder<DoubleSolution>(problem, crossover, mutation);
   }
 

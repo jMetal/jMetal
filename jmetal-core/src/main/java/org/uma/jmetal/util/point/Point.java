@@ -11,4 +11,5 @@ public interface Point {
   double getValue(int index) ;
   void setValue(int index, double value) ;
   void update(double[] point) ;
+  void set(double[] point) ;
 }

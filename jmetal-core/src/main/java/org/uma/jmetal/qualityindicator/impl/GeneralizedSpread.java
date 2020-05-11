@@ -1,6 +1,7 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
@@ -8,7 +9,6 @@ import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
 import org.uma.jmetal.util.point.util.comparator.PointDimensionComparator;
-import org.uma.jmetal.util.point.util.distance.EuclideanDistance;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -88,8 +88,8 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
 
     front.sort(new LexicographicalPointComparator());
 
-    if (new EuclideanDistance().compute(front.getPoint(0),
-        front.getPoint(front.getNumberOfPoints() - 1)) == 0.0) {
+    if (new EuclideanDistanceBetweenVectors().compute(front.getPoint(0).getValues(),
+        front.getPoint(front.getNumberOfPoints() - 1).getValues()) == 0.0) {
       return 1.0;
     } else {
       double dmean = 0.0;

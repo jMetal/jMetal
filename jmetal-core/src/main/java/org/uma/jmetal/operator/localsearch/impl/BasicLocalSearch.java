@@ -4,7 +4,6 @@ import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -20,7 +19,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
 
   private Problem<S> problem;
   private int improvementRounds;
-  private Comparator<S> constraintComparator;
   private Comparator<S> comparator;
 
   private MutationOperator<S> mutationOperator;
@@ -59,7 +57,6 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
     this.mutationOperator = mutationOperator;
     this.improvementRounds = improvementRounds;
     this.comparator = comparator;
-    constraintComparator = new OverallConstraintViolationComparator<S>();
 
     this.randomGenerator = randomGenerator;
     numberOfImprovements = 0;

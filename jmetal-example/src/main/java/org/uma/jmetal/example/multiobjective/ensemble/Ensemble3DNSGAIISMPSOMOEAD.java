@@ -36,7 +36,6 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws Exception {
     DoubleProblem problem;
-    String problemName;
 
     // problemName = "org.uma.jmetal.problem.multiobjective.maf.MaF01PF_M5";
     String referenceParetoFront = "resources/referenceFronts/MaF01PF_M5.txt";
@@ -91,8 +90,6 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
     int maximumNumberOfReplacedSolutions = 2;
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
-
-    Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
 
     Algorithm<List<DoubleSolution>> moead =
         new MOEADDE(

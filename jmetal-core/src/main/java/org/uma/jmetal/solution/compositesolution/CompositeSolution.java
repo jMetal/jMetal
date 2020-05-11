@@ -20,6 +20,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class CompositeSolution extends AbstractSolution<Solution<?>> {
   /**
    * Constructor.

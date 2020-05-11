@@ -80,8 +80,8 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
 
     int maximumNumberOfReplacedSolutions = 2;
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
-    MOEADReplacement replacement =
-        new MOEADReplacement(
+    MOEADReplacement<DoubleSolution> replacement =
+        new MOEADReplacement<>(
             selection,
             neighborhood,
             aggregativeFunction,

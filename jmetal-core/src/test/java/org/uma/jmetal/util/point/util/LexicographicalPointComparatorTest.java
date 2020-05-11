@@ -1,9 +1,10 @@
-package org.uma.jmetal.util.point.impl;
+package org.uma.jmetal.util.point.util;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.point.Point;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
 
 import static org.junit.Assert.assertEquals;
@@ -60,11 +61,11 @@ public class LexicographicalPointComparatorTest {
 
     point2 = new ArrayPoint(4) ;
     point2.setValue(0, -1.0);
-    point2.setValue(0, 0.0);
-    point2.setValue(0, 5.0);
-    point2.setValue(0, 7.0);
+    point2.setValue(1, 0.0);
+    point2.setValue(2, 5.0);
+    point2.setValue(3, 7.0);
 
-    assertEquals(-1, comparator.compare(point1, point2));
+    assertEquals(1, comparator.compare(point1, point2));
   }
 
   @Test
@@ -77,11 +78,11 @@ public class LexicographicalPointComparatorTest {
 
     point2 = new ArrayPoint(4) ;
     point2.setValue(0, -1.0);
-    point2.setValue(0, 0.0);
-    point2.setValue(0, 5.0);
-    point2.setValue(0, 7.0);
+    point2.setValue(1, 0.0);
+    point2.setValue(2, 5.0);
+    point2.setValue(3, 7.0);
 
-    assertEquals(1, comparator.compare(point2, point1));
+    assertEquals(-1, comparator.compare(point2, point1));
   }
 
   @Test

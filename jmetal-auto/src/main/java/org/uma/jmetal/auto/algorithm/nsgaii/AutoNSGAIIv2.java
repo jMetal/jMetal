@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
-import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.auto.parameter.RealParameter;

@@ -38,8 +38,6 @@ public class C2_DTLZ2 extends DTLZ2 {
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] constraint = new double[getNumberOfConstraints()] ;
-
     double sum2 = 0 ;
     double maxSum1 = Double.MIN_VALUE ;
     for (int i = 0; i < getNumberOfObjectives(); i++) {

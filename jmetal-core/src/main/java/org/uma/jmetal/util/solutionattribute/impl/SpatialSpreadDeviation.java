@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class SpatialSpreadDeviation<S extends Solution<?>>
         extends GenericSolutionAttribute<S, Double>
         implements DensityEstimator<S> {
@@ -63,7 +64,6 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
 
     double objetiveMaxn[] = new double[numberOfObjectives];
     double objetiveMinn[] = new double[numberOfObjectives];
-    double distan;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n

@@ -94,7 +94,6 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   protected List<S> evaluatePopulation(List<S> population) {
     population = evaluator.evaluate(population, getProblem());
 

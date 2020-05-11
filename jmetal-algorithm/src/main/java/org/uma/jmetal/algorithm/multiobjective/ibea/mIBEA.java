@@ -15,13 +15,13 @@ import java.util.List;
 public class mIBEA<S extends Solution<?>> extends IBEA<S> {
 
   public mIBEA(
-      Problem problem,
+      Problem<S> problem,
       int populationSize,
       int archiveSize,
       int maxEvaluations,
-      SelectionOperator selectionOperator,
-      CrossoverOperator crossoverOperator,
-      MutationOperator mutationOperator) {
+      SelectionOperator<List<S>, S> selectionOperator,
+      CrossoverOperator<S> crossoverOperator,
+      MutationOperator<S> mutationOperator) {
     super(
         problem,
         populationSize,
