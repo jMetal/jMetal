@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
   /**

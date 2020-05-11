@@ -2,11 +2,8 @@ package org.uma.jmetal.util.chartcontainer;
 
 import org.knowm.xchart.*;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -133,24 +130,6 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     }
   }
 
-  private void displayFront(String name, String fileName, int objective1, int objective2)
-          throws FileNotFoundException {
-    ArrayFront front = new ArrayFront(fileName);
-    double[][] data = FrontUtils.convertFrontToArray(front);
-    double[] xData = getObjectiveValues(data, objective1);
-    double[] yData = getObjectiveValues(data, objective2);
-    XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
-    referenceFront.setMarkerColor(Color.red);
-  }
-
-  private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = new double[data.length];
-    for (int i = 0; i < data.length; i++) {
-      values[i] = data[i][obj];
-    }
-    return values;
-  }
-
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
@@ -169,7 +148,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     return this.name;
   }
 
-  public ChartForDynamicProblemsContainer setName(String name) {
+  public ChartForDynamicProblemsContainer<S> setName(String name) {
     this.name = name;
     return this;
   }
@@ -178,7 +157,7 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
     return this.delay;
   }
 
-  public ChartForDynamicProblemsContainer setDelay(int delay) {
+  public ChartForDynamicProblemsContainer<S> setDelay(int delay) {
     this.delay = delay;
     return this;
   }

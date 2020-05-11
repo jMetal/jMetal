@@ -28,7 +28,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter<String
   public InitialSolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
     switch (getValue()) {
       case "random":
-        return new RandomSolutionsCreation(problem, populationSize);
+        return new RandomSolutionsCreation<>(problem, populationSize);
       case "scatterSearch":
         return new ScatterSearchSolutionsCreation(problem, populationSize, 4);
       case "latinHypercubeSampling":

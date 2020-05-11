@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class FDA5 extends FDA implements Serializable {
 
   private final int M = 3;

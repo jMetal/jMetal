@@ -1,7 +1,6 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.junit.Test;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.mutation.impl.CompositeMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;

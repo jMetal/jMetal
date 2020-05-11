@@ -14,6 +14,7 @@ import org.uma.jmetal.util.archive.Archive;
 import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class SMSEMOAWithArchive<S extends Solution<?>> extends SMSEMOA<S> {
   private Archive<S> archive;
 

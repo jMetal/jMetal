@@ -73,7 +73,7 @@ public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
         StringTokenizer st = new StringTokenizer(aux);
         j = 0;
         while (st.hasMoreTokens()) {
-          double value = new Double(st.nextToken());
+          double value = Double.valueOf(st.nextToken());
           weightVector[i][j] = value;
           j++;
         }

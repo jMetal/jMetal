@@ -10,7 +10,6 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public abstract class AttributeComparator<S extends Solution<?>> implements Comparator<S> {
   public enum Ordering {
     DESCENDING,

@@ -4,7 +4,6 @@ import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.ranking.Ranking;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 

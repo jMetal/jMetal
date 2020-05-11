@@ -65,7 +65,7 @@ public class RunTimeForDynamicProblemsChartObserver<S extends Solution<?>> imple
     }
   }
 
-  public ChartForDynamicProblemsContainer getChart() {
+  public ChartForDynamicProblemsContainer<S> getChart() {
     return chart ;
   }
 

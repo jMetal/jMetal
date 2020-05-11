@@ -23,14 +23,16 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   private double offset = DEFAULT_OFFSET;
 
   /** Default constructor */
-  public WFGHypervolume() {}
+  public WFGHypervolume() {
+  }
 
   /**
    * Constructor with reference point
+   * 
    * @param referencePoint
    */
   public WFGHypervolume(double[] referencePoint) {
-    super(referencePoint) ;
+    super(referencePoint);
   }
 
   /**
@@ -71,15 +73,15 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }
 
-  static class ComparatorGreater implements Comparator {
+  static class ComparatorGreater implements Comparator<Point> {
 
     @Override
-    public int compare(Object o1, Object o2) {
-      Point p = (Point) o1;
-      Point q = (Point) o2;
+    public int compare(Point p, Point q) {
       for (int i = n - 1; i >= 0; i--)
-        if (BEATS(p.objectives[i], q.objectives[i])) return -1;
-        else if (BEATS(q.objectives[i], p.objectives[i])) return 1;
+        if (BEATS(p.objectives[i], q.objectives[i]))
+          return -1;
+        else if (BEATS(q.objectives[i], p.objectives[i]))
+          return 1;
       return 0;
     }
   }
@@ -122,13 +124,15 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     Front frente;
     frente = new Front(fronton);
     fs = new Front[noObjectives - 2]; // maxdepth = objetivos-2
-    for (int x = 0; x < noObjectives - 2; x++) fs[x] = new Front(fronton); // maxm numero de puntos
+    for (int x = 0; x < noObjectives - 2; x++)
+      fs[x] = new Front(fronton); // maxm numero de puntos
     volume = hv(frente);
     return volume;
   }
 
   static boolean BEATS(double x, double y) {
-    if (x > y) return true;
+    if (x > y)
+      return true;
     return false;
   }
 
@@ -137,80 +141,89 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   static int dominates2way(Point p, Point q, int k)
-        // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
-        // k is the highest index inspected
-      {
+  // returns -1 if p dominates q, 1 if q dominates p, 2 if p == q, 0 otherwise
+  // k is the highest index inspected
+  {
     for (int i = k; i >= 0; i--)
       if (BEATS(p.objectives[i], q.objectives[i])) {
-        for (int j = i - 1; j >= 0; j--) if (BEATS(q.objectives[j], p.objectives[j])) return 0;
+        for (int j = i - 1; j >= 0; j--)
+          if (BEATS(q.objectives[j], p.objectives[j]))
+            return 0;
         return -1;
       } else if (BEATS(q.objectives[i], p.objectives[i])) {
-        for (int j = i - 1; j >= 0; j--) if (BEATS(p.objectives[j], q.objectives[j])) return 0;
+        for (int j = i - 1; j >= 0; j--)
+          if (BEATS(p.objectives[j], q.objectives[j]))
+            return 0;
         return 1;
       }
     return 2;
   }
 
   static boolean dominates1way(Point p, Point q, int k)
-        // returns true if p dominates q or p == q, false otherwise
-        // the assumption is that q doesn't dominate p
-        // k is the highest index inspected
-      {
-    for (int i = k; i >= 0; i--) if (BEATS(q.objectives[i], p.objectives[i])) return false;
+  // returns true if p dominates q or p == q, false otherwise
+  // the assumption is that q doesn't dominate p
+  // k is the highest index inspected
+  {
+    for (int i = k; i >= 0; i--)
+      if (BEATS(q.objectives[i], p.objectives[i]))
+        return false;
     return true;
   }
 
   static void makeDominatedBit(Front ps, int p)
-        // creates the front ps[0 .. p-1] in fs[fr], with each point bounded by ps[p] and dominated
-        // points removed
-      {
+  // creates the front ps[0 .. p-1] in fs[fr], with each point bounded by ps[p]
+  // and dominated
+  // points removed
+  {
     int l = 0;
     int u = p - 1;
     for (int i = p - 1; i >= 0; i--)
       if (BEATS(ps.points[p].objectives[n - 1], ps.points[i].objectives[n - 1])) {
         fs[fr].points[u].objectives[n - 1] = ps.points[i].objectives[n - 1];
         for (int j = 0; j < n - 1; j++)
-          fs[fr].points[u].objectives[j] =
-              WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
+          fs[fr].points[u].objectives[j] = WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
         u--;
       } else {
         fs[fr].points[l].objectives[n - 1] = ps.points[p].objectives[n - 1];
         for (int j = 0; j < n - 1; j++)
-          fs[fr].points[l].objectives[j] =
-              WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
+          fs[fr].points[l].objectives[j] = WORSE(ps.points[p].objectives[j], ps.points[i].objectives[j]);
         l++;
       }
     Point t;
-    // points below l are all equal in the last objective; points above l are all worse
-    // points below l can dominate each other, and we don't need to compare the last objective
-    // points above l cannot dominate points that start below l, and we don't need to compare the
+    // points below l are all equal in the last objective; points above l are all
+    // worse
+    // points below l can dominate each other, and we don't need to compare the last
+    // objective
+    // points above l cannot dominate points that start below l, and we don't need
+    // to compare the
     // last objective
     fs[fr].nPoints = 1;
     for (int i = 1; i < l; i++) {
       int j = 0;
       while (j < fs[fr].nPoints)
         switch (dominates2way(fs[fr].points[i], fs[fr].points[j], n - 2)) {
-          case 0:
-            j++;
-            break;
-          case -1: // AT THIS POINT WE KNOW THAT i CANNOT BE DOMINATED BY ANY OTHER PROMOTED POINT j
-            // SWAP i INTO j, AND 1-WAY DOM FOR THE REST OF THE js
-            t = fs[fr].points[j];
-            fs[fr].points[j] = fs[fr].points[i];
-            fs[fr].points[i] = t;
-            while (j < fs[fr].nPoints - 1
-                && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
+        case 0:
+          j++;
+          break;
+        case -1: // AT THIS POINT WE KNOW THAT i CANNOT BE DOMINATED BY ANY OTHER PROMOTED POINT
+                 // j
+          // SWAP i INTO j, AND 1-WAY DOM FOR THE REST OF THE js
+          t = fs[fr].points[j];
+          fs[fr].points[j] = fs[fr].points[i];
+          fs[fr].points[i] = t;
+          while (j < fs[fr].nPoints - 1 && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
+            fs[fr].nPoints--;
+          int k = j + 1;
+          while (k < fs[fr].nPoints)
+            if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 2)) {
+              t = fs[fr].points[k];
               fs[fr].nPoints--;
-            int k = j + 1;
-            while (k < fs[fr].nPoints)
-              if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 2)) {
-                t = fs[fr].points[k];
-                fs[fr].nPoints--;
-                fs[fr].points[k] = fs[fr].points[fs[fr].nPoints];
-                fs[fr].points[fs[fr].nPoints] = t;
-              } else k++;
-          default:
-            j = fs[fr].nPoints + 1;
+              fs[fr].points[k] = fs[fr].points[fs[fr].nPoints];
+              fs[fr].points[fs[fr].nPoints] = t;
+            } else
+              k++;
+        default:
+          j = fs[fr].nPoints + 1;
         }
       if (j == fs[fr].nPoints) {
         t = fs[fr].points[fs[fr].nPoints];
@@ -223,31 +236,34 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     for (int i = l; i < p; i++) {
       int j = 0;
       while (j < safe)
-        if (dominates1way(fs[fr].points[j], fs[fr].points[i], n - 2)) j = fs[fr].nPoints + 1;
-        else j++;
+        if (dominates1way(fs[fr].points[j], fs[fr].points[i], n - 2))
+          j = fs[fr].nPoints + 1;
+        else
+          j++;
       while (j < fs[fr].nPoints)
         switch (dominates2way(fs[fr].points[i], fs[fr].points[j], n - 1)) {
-          case 0:
-            j++;
-            break;
-          case -1: // AT THIS POINT WE KNOW THAT i CANNOT BE DOMINATED BY ANY OTHER PROMOTED POINT j
-            // SWAP i INTO j, AND 1-WAY DOM FOR THE REST OF THE js
-            t = fs[fr].points[j];
-            fs[fr].points[j] = fs[fr].points[i];
-            fs[fr].points[i] = t;
-            while (j < fs[fr].nPoints - 1
-                && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
+        case 0:
+          j++;
+          break;
+        case -1: // AT THIS POINT WE KNOW THAT i CANNOT BE DOMINATED BY ANY OTHER PROMOTED POINT
+                 // j
+          // SWAP i INTO j, AND 1-WAY DOM FOR THE REST OF THE js
+          t = fs[fr].points[j];
+          fs[fr].points[j] = fs[fr].points[i];
+          fs[fr].points[i] = t;
+          while (j < fs[fr].nPoints - 1 && dominates1way(fs[fr].points[j], fs[fr].points[fs[fr].nPoints - 1], n - 1))
+            fs[fr].nPoints--;
+          int k = j + 1;
+          while (k < fs[fr].nPoints)
+            if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 1)) {
+              t = fs[fr].points[k];
               fs[fr].nPoints--;
-            int k = j + 1;
-            while (k < fs[fr].nPoints)
-              if (dominates1way(fs[fr].points[j], fs[fr].points[k], n - 1)) {
-                t = fs[fr].points[k];
-                fs[fr].nPoints--;
-                fs[fr].points[k] = fs[fr].points[fs[fr].nPoints];
-                fs[fr].points[fs[fr].nPoints] = t;
-              } else k++;
-          default:
-            j = fs[fr].nPoints + 1;
+              fs[fr].points[k] = fs[fr].points[fs[fr].nPoints];
+              fs[fr].points[fs[fr].nPoints] = t;
+            } else
+              k++;
+        default:
+          j = fs[fr].nPoints + 1;
         }
       if (j == fs[fr].nPoints) {
         t = fs[fr].points[fs[fr].nPoints];
@@ -260,28 +276,27 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   static double hv2(Front ps, int k)
-        // returns the hypervolume of ps[0 .. k-1] in 2D
-        // assumes that ps is sorted improving
-      {
+  // returns the hypervolume of ps[0 .. k-1] in 2D
+  // assumes that ps is sorted improving
+  {
     double volume = ps.points[0].objectives[0] * ps.points[0].objectives[1];
     for (int i = 1; i < k; i++)
-      volume +=
-          ps.points[i].objectives[1]
-              * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
+      volume += ps.points[i].objectives[1] * (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
     return volume;
   }
 
   static double inclhv(Point p)
-        // returns the inclusive hypervolume of p
-      {
+  // returns the inclusive hypervolume of p
+  {
     double volume = 1;
-    for (int i = 0; i < n; i++) volume *= p.objectives[i];
+    for (int i = 0; i < n; i++)
+      volume *= p.objectives[i];
     return volume;
   }
 
   static double inclhv2(Point p, Point q)
-        // returns the hypervolume of {p, q}
-      {
+  // returns the hypervolume of {p, q}
+  {
     double vp = 1;
     double vq = 1;
     double vpq = 1;
@@ -295,8 +310,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   static double inclhv3(Point p, Point q, Point r)
-        // returns the hypervolume of {p, q, r}
-      {
+  // returns the hypervolume of {p, q, r}
+  {
     double vp = 1;
     double vq = 1;
     double vr = 1;
@@ -336,8 +351,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   static double inclhv4(Point p, Point q, Point r, Point s)
-        // returns the hypervolume of {p, q, r, s}
-      {
+  // returns the hypervolume of {p, q, r, s}
+  {
     double vp = 1;
     double vq = 1;
     double vr = 1;
@@ -469,13 +484,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
         vpqrs *= p.objectives[i];
       }
     }
-    return vp + vq + vr + vs - vpq - vpr - vps - vqr - vqs - vrs + vpqr + vpqs + vprs + vqrs
-        - vpqrs;
+    return vp + vq + vr + vs - vpq - vpr - vps - vqr - vqs - vrs + vpqr + vpqs + vprs + vqrs - vpqrs;
   }
 
   static double exclhv(Front ps, int p)
-        // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
-      {
+  // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
+  {
     makeDominatedBit(ps, p);
     double a = inclhv(ps.points[p]);
     double b = hv(fs[fr - 1]);
@@ -485,44 +499,40 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   static double hv(Front ps)
-        // returns the hypervolume of ps[0 ..]
-      {
+  // returns the hypervolume of ps[0 ..]
+  {
     // process small fronts with the IEA
     switch (ps.nPoints) {
-      case 1:
-        return inclhv(ps.points[0]);
-      case 2:
-        {
-          double regreso = inclhv2(ps.points[0], ps.points[1]);
-          return regreso;
-        }
-      case 3:
-        return inclhv3(ps.points[0], ps.points[1], ps.points[2]);
-      case 4:
-        return inclhv4(ps.points[0], ps.points[1], ps.points[2], ps.points[3]);
-      default:
-        break;
+    case 1:
+      return inclhv(ps.points[0]);
+    case 2: {
+      double regreso = inclhv2(ps.points[0], ps.points[1]);
+      return regreso;
+    }
+    case 3:
+      return inclhv3(ps.points[0], ps.points[1], ps.points[2]);
+    case 4:
+      return inclhv4(ps.points[0], ps.points[1], ps.points[2], ps.points[3]);
+    default:
+      break;
     }
 
     // these points need sorting
     // FROM INDEX INCLUSIVE TO INDEX EXCLUSIVE POR LO TANTO ES CORRECTO
-    Arrays.sort(
-        ps.points,
-        0,
-        ps.nPoints,
-        new ComparatorGreater()); // ASI FUNCIONO EXCELENTE NO MOVER!!! Arrays.sort(ps.points, 0,
-                                  // ps.nPoints , new ComparadorGreater());
+    Arrays.sort(ps.points, 0, ps.nPoints, new ComparatorGreater()); // ASI FUNCIONO EXCELENTE NO MOVER!!!
+                                                                    // Arrays.sort(ps.points, 0,
+                                                                    // ps.nPoints , new ComparadorGreater());
 
     // n = 2 implies that safe = 0
-    if (n == 2) return hv2(ps, ps.nPoints);
+    if (n == 2)
+      return hv2(ps, ps.nPoints);
 
     if (n == 3 && safe > 0) {
       double volume = ps.points[0].objectives[2] * hv2(ps, safe);
       n--;
-      for (int i = safe;
-          i < ps.nPoints;
-          i++) { // we can ditch dominated points here, but they will be ditched anyway in
-                 // makeDominatedBit
+      for (int i = safe; i < ps.nPoints; i++) { // we can ditch dominated points here, but they will be ditched anyway
+                                                // in
+                                                // makeDominatedBit
         volume += ps.points[i].objectives[n] * exclhv(ps, i);
       }
       n++;
@@ -530,10 +540,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
     } else {
       double volume = inclhv4(ps.points[0], ps.points[1], ps.points[2], ps.points[3]);
       n--;
-      for (int i = 4;
-          i < ps.nPoints;
-          i++) { // we can ditch dominated points here, but they will be ditched anyway in
-                 // makeDominatedBit
+      for (int i = 4; i < ps.nPoints; i++) { // we can ditch dominated points here, but they will be ditched anyway in
+                                             // makeDominatedBit
         double a = ps.points[i].objectives[n];
         double b = exclhv(ps, i);
         volume += a * b;
@@ -546,8 +554,10 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   /**
    * Returns the hypervolume value of a front of points
    *
-   * @param front The front
-   * @param referenceFront The true pareto front
+   * @param front
+   *          The front
+   * @param referenceFront
+   *          The true pareto front
    */
   private double hypervolume(org.uma.jmetal.util.front.Front front, org.uma.jmetal.util.front.Front referenceFront) {
 
@@ -556,10 +566,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
     int numberOfObjectives = referenceFront.getPoint(0).getDimension();
 
-    // STEP4. The hypervolume (control is passed to the Java version of Zitzler code)
-    return CalculateHypervolume(
-        FrontUtils.convertFrontToArray(invertedFront),
-        invertedFront.getNumberOfPoints(),
+    // STEP4. The hypervolume (control is passed to the Java version of Zitzler
+    // code)
+    return CalculateHypervolume(FrontUtils.convertFrontToArray(invertedFront), invertedFront.getNumberOfPoints(),
         numberOfObjectives);
   }
 
@@ -614,10 +623,12 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   }
 
   /**
-   * Calculates how much hypervolume each point dominates exclusively. The points have to be
-   * transformed beforehand, to accommodate the assumptions of Zitzler's hypervolume code.
+   * Calculates how much hypervolume each point dominates exclusively. The points
+   * have to be transformed beforehand, to accommodate the assumptions of
+   * Zitzler's hypervolume code.
    *
-   * @param front transformed objective values
+   * @param front
+   *          transformed objective values
    * @return HV contributions
    */
   private double[] hvContributions(double[][] front) {

@@ -231,6 +231,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     return solutionList;
   }
 
+  @SuppressWarnings("serial")
   private static class DummyDoubleSolution extends AbstractSolution<Double>
       implements DoubleSolution {
 

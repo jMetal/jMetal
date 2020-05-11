@@ -4,11 +4,8 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
-import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;

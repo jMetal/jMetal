@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 

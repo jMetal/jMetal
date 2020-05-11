@@ -243,7 +243,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   @Override
   protected void updateVelocity(List<DoubleSolution> swarm) {
     double r1, r2, c1, c2;
-    double wmax, wmin;
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarm.size(); i++) {
@@ -256,8 +255,6 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       r2 = randomGenerator.nextDouble(r2Min, r2Max);
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
-      wmax = weightMax;
-      wmin = weightMin;
 
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         speed[i][var] =

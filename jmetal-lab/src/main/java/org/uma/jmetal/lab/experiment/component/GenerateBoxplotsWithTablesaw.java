@@ -10,7 +10,6 @@ import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.components.Figure;
 import tech.tablesaw.plotly.components.Layout;
 import tech.tablesaw.plotly.traces.BoxTrace;
-import tech.tablesaw.plotly.traces.HistogramTrace;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,23 +27,16 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class GenerateBoxplotsWithTablesaw implements ExperimentComponent {
-  private static final String OUTPUT_DIRECTORY = "tablesaw";
-  private int numberOfRows;
-  private int numberOfColumns;
-  private boolean displayNotch;
   private String experimentBaseDirectory;
   private String csvSummaryFile;
 
   public GenerateBoxplotsWithTablesaw(
       String csvSummaryFile,
-      int numberOfRows,
-      int numberOfColumns,
-      boolean displayNotch,
+      int numberOfRows,// Not used
+      int numberOfColumns,// Not used
+      boolean displayNotch,// Not used
       String experimentBaseDirectory) {
     this.csvSummaryFile = csvSummaryFile;
-    this.numberOfRows = numberOfRows;
-    this.numberOfColumns = numberOfColumns;
-    this.displayNotch = displayNotch;
     this.experimentBaseDirectory = experimentBaseDirectory;
   }
 
@@ -106,7 +98,6 @@ public class GenerateBoxplotsWithTablesaw implements ExperimentComponent {
 
       Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[medians.size()]));
       System.out.println(median);
-      Column<Double> iqr = DoubleColumn.create(alg, iqrs.toArray(new Double[iqrs.size()]));
       summary.addColumns(median);
     }
 
@@ -132,16 +123,7 @@ public class GenerateBoxplotsWithTablesaw implements ExperimentComponent {
     BoxTrace boxplot1 = BoxTrace.builder(uiAlgorithmNames.toArray(), HVResults).build();
     // Plot.show(new Figure(boxplot1));
 
-    BoxTrace boxplot2 = BoxTrace.builder(uiAlgorithmNames.toArray(), HVResults).build();
-    // Plot.show(new Figure(boxplot2));
-
     Plot.show(new Figure(layout, boxplot1));
-
-    double[] y1 = {1, 4, 9, 16, 11, 4, 0, 20, 4, 7, 9, 12, 8, 6, 28, 12};
-    double[] y2 = {3, 11, 19, 14, 11, 14, 5, 24, -4, 10, 15, 6, 5, 18};
-
-    HistogramTrace trace1 = HistogramTrace.builder(y1).opacity(.75).build();
-    HistogramTrace trace2 = HistogramTrace.builder(y2).opacity(.75).build();
 
     // Grid grid = Grid.builder().rows(1).columns(2).build() ;
 

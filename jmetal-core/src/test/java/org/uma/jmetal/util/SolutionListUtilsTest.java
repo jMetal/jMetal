@@ -1,9 +1,10 @@
 package org.uma.jmetal.util;
 
+import static org.mockito.ArgumentMatchers.any;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Matchers;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
@@ -84,8 +85,7 @@ public class SolutionListUtilsTest {
     IntegerSolution solution2 = mock(IntegerSolution.class);
     list.add(solution2);
 
-    when(comparator.compare(
-            Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject()))
+    when(comparator.compare(any(), any()))
         .thenReturn(1);
 
     assertSame(solution2, SolutionListUtils.findBestSolution(list, comparator));
@@ -101,12 +101,11 @@ public class SolutionListUtilsTest {
       list.add(mock(IntegerSolution.class));
     }
 
-    when(comparator.compare(
-            Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject()))
+    when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
     assertSame(list.get(4), SolutionListUtils.findBestSolution(list, comparator));
     verify(comparator, times(4))
-        .compare(Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject());
+        .compare(any(), any());
   }
 
   /** *** Unit tests to method findIndexOfBestSolution *** */
@@ -163,12 +162,11 @@ public class SolutionListUtilsTest {
     IntegerSolution solution2 = mock(IntegerSolution.class);
     list.add(solution2);
 
-    when(comparator.compare(
-            Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject()))
+    when(comparator.compare(any(), any()))
         .thenReturn(0);
     assertEquals(0, SolutionListUtils.findIndexOfBestSolution(list, comparator));
     verify(comparator)
-        .compare(Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject());
+        .compare(any(), any());
   }
 
   @Test
@@ -182,12 +180,11 @@ public class SolutionListUtilsTest {
     IntegerSolution solution2 = mock(IntegerSolution.class);
     list.add(solution2);
 
-    when(comparator.compare(
-            Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject()))
+    when(comparator.compare(any(), any()))
         .thenReturn(1);
     assertEquals(1, SolutionListUtils.findIndexOfBestSolution(list, comparator));
     verify(comparator)
-        .compare(Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject());
+        .compare(any(), any());
   }
 
   @Test
@@ -200,12 +197,11 @@ public class SolutionListUtilsTest {
       list.add(mock(IntegerSolution.class));
     }
 
-    when(comparator.compare(
-            Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject()))
+    when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
     assertEquals(4, SolutionListUtils.findIndexOfBestSolution(list, comparator));
     verify(comparator, times(4))
-        .compare(Matchers.<IntegerSolution>anyObject(), Matchers.<IntegerSolution>anyObject());
+        .compare(any(), any());
   }
 
   /** *** Unit tests to method selectNRandomDifferentSolutions *** */
@@ -418,7 +414,6 @@ public class SolutionListUtilsTest {
     assertEquals(maxListSize, solutions.size());
   }
 
-  @SuppressWarnings("unchecked")
   @Test
   public void shouldNormalizeReturnsCorrectNormalizedNumber() {
 
