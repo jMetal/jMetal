@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("serial")
 public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
     implements DynamicAlgorithm<List<S>> {
 

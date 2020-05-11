@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class FDA4 extends FDA {
 
-  private boolean theProblemHasBeenModified;
   private final int M = 3;
 
   public FDA4() {

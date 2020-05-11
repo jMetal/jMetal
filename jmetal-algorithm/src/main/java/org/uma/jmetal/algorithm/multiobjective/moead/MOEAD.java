@@ -28,6 +28,7 @@ import java.util.HashMap;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@SuppressWarnings("serial")
 public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
   /** Constructor */
@@ -115,7 +116,7 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
 
     this.replacement =
         new MOEADReplacement<S>(
-            (PopulationAndNeighborhoodMatingPoolSelection) selection,
+            (PopulationAndNeighborhoodMatingPoolSelection<S>) selection,
             neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,

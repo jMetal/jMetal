@@ -7,6 +7,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 
 /** Cristóbal Barba <cbarba@lcc.uma.es> */
+@SuppressWarnings("serial")
 public abstract class FDA extends AbstractDoubleProblem
     implements DynamicProblem<DoubleSolution, Integer>, BoundedProblem<Double, DoubleSolution> {
   protected double time;

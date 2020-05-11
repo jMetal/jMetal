@@ -24,6 +24,7 @@ import java.util.Comparator;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
+@SuppressWarnings("serial")
 public class SpatialSpreadDeviationComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final SpatialSpreadDeviation<S> NewcrowdingDistance = new SpatialSpreadDeviation<S>() ;
 
@@ -37,8 +38,6 @@ public class SpatialSpreadDeviationComparator<S extends Solution<?>> implements 
    */
   @Override
   public int compare(S solution1, S solution2) {
-    int result =0;
-    
     
       double distance1 = Double.MIN_VALUE ;
       double distance2 = Double.MIN_VALUE ;

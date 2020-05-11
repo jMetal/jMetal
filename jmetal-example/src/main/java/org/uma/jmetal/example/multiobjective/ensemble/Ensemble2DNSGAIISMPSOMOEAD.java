@@ -90,8 +90,6 @@ public class Ensemble2DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
-    Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>();
-
     Algorithm<List<DoubleSolution>> moead =
         new MOEADDE(
                 problem,

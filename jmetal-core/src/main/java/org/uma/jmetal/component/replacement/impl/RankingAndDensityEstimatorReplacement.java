@@ -50,29 +50,6 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     return resultList;
   }
 
-  private List<S> oneShotTruncation(int sizeOfTheResultingSolutionList) {
-    int currentRank = 0;
-
-    List<S> resultList = new ArrayList<>();
-    while (resultList.size() < sizeOfTheResultingSolutionList) {
-      if (ranking.getSubFront(currentRank).size()
-          < (sizeOfTheResultingSolutionList - resultList.size())) {
-        resultList.addAll(ranking.getSubFront(currentRank));
-        currentRank++;
-      } else {
-        densityEstimator.computeDensityEstimator(ranking.getSubFront(currentRank));
-        densityEstimator.sort(ranking.getSubFront(currentRank));
-        int i = 0;
-        while (resultList.size() < sizeOfTheResultingSolutionList) {
-          resultList.add(ranking.getSubFront(currentRank).get(i));
-          i++;
-        }
-      }
-    }
-
-    return resultList;
-  }
-
   private List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
     densityEstimator.computeDensityEstimator(currentRankSolutions);

@@ -43,7 +43,6 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
       List<DoubleSolution> solutionList, List<DoubleSolution> matingPool) {
 
     List<DoubleSolution> offspringPopulation = new ArrayList<>();
-    int i = 0 ;
     while (offspringPopulation.size() < offspringPopulationSize) {
       crossover.setCurrentSolution(solutionList.get(solutionIndexGenerator.getValue()));
 

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("serial")
 public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity {
   private List<S> population;

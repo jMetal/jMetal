@@ -10,7 +10,6 @@ import org.uma.jmetal.util.checking.Check;
  *
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public class IntegerValueAttributeComparator<S extends Solution<?>> extends AttributeComparator<S> {
 
   public IntegerValueAttributeComparator(String name, Ordering ordering) {

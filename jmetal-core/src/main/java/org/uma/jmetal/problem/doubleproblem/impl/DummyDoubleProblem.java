@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Implementation of {@link DoubleProblem} that does nothing. Intended to be used in unit tests.
  */
+@SuppressWarnings("serial")
 public class DummyDoubleProblem  extends AbstractDoubleProblem  {
   public DummyDoubleProblem(int numberOfVariables, int numberOfObjectives, int numberOfConstraints) {
     setNumberOfVariables(numberOfVariables);

@@ -86,7 +86,7 @@ public class ArrayPoint implements Point {
       StringTokenizer st = new StringTokenizer(aux);
 
       while (st.hasMoreTokens()) {
-        Double value = (new Double(st.nextToken()));
+        Double value = Double.valueOf(st.nextToken());
         auxiliarPoint.add(value);
       }
       aux = br.readLine();

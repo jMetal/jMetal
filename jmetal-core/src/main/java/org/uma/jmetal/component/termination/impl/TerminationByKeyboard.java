@@ -42,9 +42,9 @@ public class TerminationByKeyboard implements Termination {
     @Override
     public void run() {
       System.out.println("Press any key and hit return") ;
-      Scanner scanner = new Scanner(System.in);
-
-      scanner.nextLine() ;
+      try (Scanner scanner = new Scanner(System.in)) {
+        scanner.nextLine() ;
+      }
 
       terminationByKeyboard.keyHit = true ;
     }

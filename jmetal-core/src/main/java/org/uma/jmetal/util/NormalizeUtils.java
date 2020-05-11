@@ -1,10 +1,8 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.checking.Check;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
 
 /**

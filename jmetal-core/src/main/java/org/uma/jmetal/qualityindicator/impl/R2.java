@@ -113,7 +113,7 @@ public class R2<Evaluate extends List<? extends Solution<?>>>
           while (line!=null) {
             StringTokenizer st = new StringTokenizer(line);
             for (int i = 0; i < numberOfObjectives; i++)
-              lambda[index][i] = new Double(st.nextToken());
+              lambda[index][i] = Double.valueOf(st.nextToken());
             index++;
             line = br.readLine();
           }

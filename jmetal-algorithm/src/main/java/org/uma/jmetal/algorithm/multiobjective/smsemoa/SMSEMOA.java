@@ -14,6 +14,7 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
+@SuppressWarnings("serial")
 public class SMSEMOA<S extends Solution<?>> extends NSGAII<S> {
 
   /** Constructor */

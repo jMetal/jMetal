@@ -48,8 +48,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
@@ -78,8 +76,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
@@ -113,8 +109,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithThreeDominatedSolutionsReturnThreeSubfronts() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
@@ -155,8 +149,6 @@ public class DominanceRankingTest {
 
   @Test
   public void shouldRankingOfAPopulationWithFiveSolutionsWorkProperly() {
-    int numberOfObjectives = 2 ;
-
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);

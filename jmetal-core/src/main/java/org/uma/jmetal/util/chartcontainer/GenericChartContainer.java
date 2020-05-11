@@ -220,16 +220,6 @@ public class GenericChartContainer<S extends Solution<?>> {
     }
   }
 
-  private void displayFront(String name, String fileName, int objective1, int objective2)
-      throws FileNotFoundException {
-    ArrayFront front = new ArrayFront(fileName);
-    double[][] data = FrontUtils.convertFrontToArray(front);
-    double[] xData = getObjectiveValues(data, objective1);
-    double[] yData = getObjectiveValues(data, objective2);
-    XYSeries referenceFront = this.frontChart.addSeries(name, xData, yData);
-    referenceFront.setMarkerColor(Color.red);
-  }
-
   private void getReferenceFrontData(String fileName) throws FileNotFoundException {
     ArrayFront front = new ArrayFront(fileName);
     double[][] data = FrontUtils.convertFrontToArray(front);
@@ -240,15 +230,6 @@ public class GenericChartContainer<S extends Solution<?>> {
   private void displayReferenceFront() {
     XYSeries referenceFront = this.frontChart.addSeries("Reference Front", xReferenceFrontData, yReferenceFrontData);
     referenceFront.setMarkerColor(Color.blue);
-  }
-
-  private void displayReferenceFront(String fileName) throws FileNotFoundException {
-    this.displayReferenceFront(fileName, this.objective1, this.objective2);
-  }
-
-  private void displayReferenceFront(String fileName, int objective1, int objective2)
-      throws FileNotFoundException {
-    this.displayFront("Reference Front", fileName, objective1, objective2);
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
@@ -285,7 +266,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     return this.name;
   }
 
-  public GenericChartContainer setName(String name) {
+  public GenericChartContainer<S> setName(String name) {
     this.name = name;
     return this;
   }
@@ -294,7 +275,7 @@ public class GenericChartContainer<S extends Solution<?>> {
     return this.delay;
   }
 
-  public GenericChartContainer setDelay(int delay) {
+  public GenericChartContainer<S> setDelay(int delay) {
     this.delay = delay;
     return this;
   }

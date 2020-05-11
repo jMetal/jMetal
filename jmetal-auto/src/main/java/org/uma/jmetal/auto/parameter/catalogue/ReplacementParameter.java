@@ -11,6 +11,7 @@ import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.component.ranking.impl.StrengthRanking;
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.component.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Comparator;
@@ -49,14 +50,14 @@ public class ReplacementParameter extends CategoricalParameter<String> {
         String densityEstimatorName =
             (String) findSpecificParameter("densityEstimatorForReplacement").getValue();
 
-        Ranking<?> ranking;
+        Ranking<Solution<?>> ranking;
         if (rankingName.equals("dominanceRanking")) {
           ranking = new FastNonDominatedSortRanking<>();
         } else {
           ranking = new StrengthRanking<>();
         }
 
-        DensityEstimator<?> densityEstimator;
+        DensityEstimator<Solution<?>> densityEstimator;
         if (densityEstimatorName.equals("crowdingDistance")) {
           densityEstimator = new CrowdingDistanceDensityEstimator<>();
         } else {
@@ -65,11 +66,11 @@ public class ReplacementParameter extends CategoricalParameter<String> {
 
         if (removalPolicy.equals("oneShot")) {
           result =
-              new RankingAndDensityEstimatorReplacement(
+              new RankingAndDensityEstimatorReplacement<>(
                   ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
         } else {
           result =
-              new RankingAndDensityEstimatorReplacement(
+              new RankingAndDensityEstimatorReplacement<>(
                   ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
         }
 

@@ -7,14 +7,12 @@ import com.fuzzylite.term.Triangle;
 import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.SteadyStateNSGAII;
-import org.uma.jmetal.operator.Operator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
@@ -38,14 +36,15 @@ import java.util.Random;
  *
  * @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx>
  */
-public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
+@SuppressWarnings("serial")
+public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
   private double[] Utilization;
   private double[] OpProb;
   private int operators = 4;
   private int windowSize;
   private int window;
   private double Stagnation = 0.0;
-  private SpatialSpreadDeviationArchive archiveSSD;
+  private SpatialSpreadDeviationArchive<S> archiveSSD;
   Engine engine;
   InputVariable operatoruse, stagnation;
   OutputVariable probability;
@@ -66,7 +65,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         selectionOperator,
         new DominanceComparator<>(),
         evaluator);
-    archiveSSD = new SpatialSpreadDeviationArchive(archiveSize);
+    archiveSSD = new SpatialSpreadDeviationArchive<S>(archiveSize);
     OpProb = new double[operators];
     Utilization = new double[operators];
     windowSize = (int) Math.ceil(3.33333 * operators);
@@ -181,17 +180,17 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   @Override
   protected List<S> reproduction(List<S> population) {
     List<S> offspringPopulation = new ArrayList<>(1);
-    List<S> parents = null;
+    List<DoubleSolution> parents = null;
 
     double probabilityPolynomial, DristributionIndex;
     probabilityPolynomial = 0.30;
     DristributionIndex = 20;
-    Operator mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
+    PolynomialMutation mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
 
     double probabilityUniform, perturbation;
     probabilityUniform = 0.30;
     perturbation = 0.1;
-    Operator mutationUniform = new UniformMutation(probabilityUniform, perturbation);
+    UniformMutation mutationUniform = new UniformMutation(probabilityUniform, perturbation);
 
     double CR, F;
     CR = 1.0;
@@ -202,7 +201,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     double crossoverProbability, crossoverDistributionIndex;
     crossoverProbability = 1.0;
     crossoverDistributionIndex = 20.0;
-    Operator crossoverOperator_SBX =
+    SBXCrossover crossoverOperator_SBX =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     Random rnd = new Random();
@@ -234,7 +233,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         parents.add(population.get(2));
         DoubleSolution solution = (DoubleSolution) population.get(2).copy();
         crossoverOperator_DE.setCurrentSolution(solution);
-        offspring = (List<S>) crossoverOperator_DE.execute((List<DoubleSolution>) parents);
+        offspring = (List<S>) crossoverOperator_DE.execute(parents);
         evaluator.evaluate(offspring, getProblem());
         offspringPopulation.add(offspring.get(0));
         Utilization[0] += 1.0 / windowSize;
@@ -261,7 +260,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
       case 2:
         parents = new ArrayList<>(1);
         parents.add(population.get(0));
-        offspring.add((S) (DoubleSolution) population.get(0).copy());
+        offspring.add((S) population.get(0).copy());
         mutationPolynomial.execute(offspring.get(0));
         evaluator.evaluate(offspring, getProblem());
         offspringPopulation.add(offspring.get(0));
@@ -275,7 +274,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
       case 3:
         parents = new ArrayList<>(1);
         parents.add(population.get(0));
-        offspring.add((S) (DoubleSolution) population.get(0).copy());
+        offspring.add((S) population.get(0).copy());
         mutationUniform.execute(offspring.get(0));
         evaluator.evaluate(offspring, getProblem());
         offspringPopulation.add(offspring.get(0));
@@ -304,7 +303,7 @@ public class FAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> createInitialPopulation() {
-    SpatialSpreadDeviation distancia = new SpatialSpreadDeviation();
+    SpatialSpreadDeviation<S> distancia = new SpatialSpreadDeviation<>();
     List<S> population = new ArrayList<>(getMaxPopulationSize());
     for (int i = 0; i < getMaxPopulationSize(); i++) {
       S newIndividual = getProblem().createSolution();

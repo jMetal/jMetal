@@ -9,6 +9,7 @@ import org.uma.jmetal.util.checking.Check;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<S>> {
   private List<Algorithm<List<S>>> algorithmList;
   private Archive<S> archive;

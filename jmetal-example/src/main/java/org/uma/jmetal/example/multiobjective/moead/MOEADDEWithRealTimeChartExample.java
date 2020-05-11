@@ -2,8 +2,6 @@ package org.uma.jmetal.example.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -29,8 +27,6 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
     MOEADDE algorithm;
-    MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
