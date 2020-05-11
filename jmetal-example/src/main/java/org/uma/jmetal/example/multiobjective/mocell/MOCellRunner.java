@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective;
+package org.uma.jmetal.example.multiobjective.mocell;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
