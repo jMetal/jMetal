@@ -107,7 +107,7 @@ public class ABYSSIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");
 
     // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.65

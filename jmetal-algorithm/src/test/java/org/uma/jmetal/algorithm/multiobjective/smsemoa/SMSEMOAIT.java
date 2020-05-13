@@ -93,7 +93,7 @@ public class SMSEMOAIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");
 
     // Rationale: the default problem is ZDT1, and SMSEMOA, configured with standard settings,
     // should

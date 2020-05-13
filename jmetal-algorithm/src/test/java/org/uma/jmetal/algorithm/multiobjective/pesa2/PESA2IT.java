@@ -72,7 +72,7 @@ public class PESA2IT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.pf";
+    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
 
     Front referenceFront = new ArrayFront(referenceFrontFileName);
     FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);

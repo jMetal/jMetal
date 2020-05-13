@@ -87,7 +87,7 @@ public class MOEADIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F2.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F2.csv");
 
     // Rationale: the default problem is LZ09F2", and MOEA/D-DRA, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
@@ -130,7 +130,7 @@ public class MOEADIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-            new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F6.pf");
+            new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F6.csv");
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.35
