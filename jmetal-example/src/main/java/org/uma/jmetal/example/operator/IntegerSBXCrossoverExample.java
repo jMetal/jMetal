@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.IntegerVariableComparator;
 
 import java.io.FileNotFoundException;
@@ -38,13 +39,24 @@ public class IntegerSBXCrossoverExample {
    *
    * @param args Command line arguments
    */
-  public static void main(String[] args) throws FileNotFoundException {
-    if (args.length != 3) {
-      throw new JMetalException("Usage: numberOfSolutions granularity distributionIndex") ;
+  public static void main(String[] args) {
+    int numberOfPoints ;
+    int granularity ;
+    double distributionIndex ;
+
+    if (args.length !=3) {
+      JMetalLogger.logger.info("Usage: numberOfSolutions granularity distributionIndex") ;
+      JMetalLogger.logger.info("Using default parameters") ;
+
+      numberOfPoints = 10000 ;
+      granularity = 100 ;
+      distributionIndex = 10.0 ;
+    } else {
+      numberOfPoints = Integer.valueOf(args[0]);
+      granularity = Integer.valueOf(args[1]);
+      distributionIndex = Double.valueOf(args[2]);
     }
-    int numberOfPoints = Integer.valueOf(args[0]) ;
-    int granularity = Integer.valueOf(args[1]) ;
-    double distributionIndex = Double.valueOf(args[2]) ;
+
     IntegerProblem problem ;
 
     problem = new NMMin(1, -50, 50, -100, 100) ;
