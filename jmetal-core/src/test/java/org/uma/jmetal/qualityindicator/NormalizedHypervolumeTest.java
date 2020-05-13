@@ -68,9 +68,9 @@ public class NormalizedHypervolumeTest {
   public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
       throws FileNotFoundException {
     var relativeHypervolume =
-        new NormalizedHypervolume<PointSolution>("../resources/referenceFrontsCSV/ZDT1.pf");
+        new NormalizedHypervolume<PointSolution>("../resources/referenceFrontsCSV/ZDT1.csv");
 
-    Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.pf");
+    Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.csv");
     assertEquals(
         0.0,
         relativeHypervolume.evaluate(FrontUtils.convertFrontToSolutionList(frontToEvaluate)),
@@ -83,7 +83,7 @@ public class NormalizedHypervolumeTest {
       throws FileNotFoundException {
     var normalizedHypervolume = new NormalizedHypervolume<PointSolution>(new double[] {1.0, 1.0});
 
-    Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.pf");
+    Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.csv");
     assertEquals(
         0.0,
             normalizedHypervolume.evaluate(FrontUtils.convertFrontToSolutionList(frontToEvaluate)),
