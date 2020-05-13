@@ -59,7 +59,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
 
         for (int i = 0; i < experiment.getIndependentRuns(); i++) {
           String frontFileName = problemDirectory + "/" + experiment.getOutputParetoFrontFileName() +
-              i + ".dat";
+              i + ".csv";
           Front front = new ArrayFront(frontFileName, ",") ;
           List<PointSolution> solutionList = FrontUtils.convertFrontToSolutionList(front) ;
           GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
@@ -70,10 +70,10 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
           }
         }
       }
-      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".dat" ;
-      referenceFrontFileNames.add(problem.getTag() + ".pf");
+      String referenceSetFileName = outputDirectoryName + "/" + problem.getTag() + ".csv" ;
+      referenceFrontFileNames.add(problem.getTag() + ".csv");
       new SolutionListOutput(nonDominatedSolutionArchive.getSolutionList())
-          .printObjectivesToFile(referenceSetFileName);
+          .printObjectivesToFile(referenceSetFileName, ",");
 
       writeFilesWithTheSolutionsContributedByEachAlgorithm(outputDirectoryName, problem,
           nonDominatedSolutionArchive.getSolutionList()) ;
@@ -108,7 +108,7 @@ public class GenerateReferenceParetoFront implements ExperimentComponent{
       new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(
               outputDirectoryName + "/" + problem.getTag() + "." +
-                  algorithm.getAlgorithmTag() + ".dat"
+                  algorithm.getAlgorithmTag() + ".csv", ","
           );
     }
   }

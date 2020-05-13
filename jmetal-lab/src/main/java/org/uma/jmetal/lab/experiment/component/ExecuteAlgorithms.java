@@ -76,7 +76,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
               + algorithm.getProblemTag()
               + "/" + experiment.getOutputParetoFrontFileName()
               + algorithm.getRunId()
-              + ".dat";
+              + ".csv";
       File file = new File(resultFileName);
       if (!file.exists()) {
         unfinishedAlgorithmList.add(algorithm);
@@ -101,11 +101,7 @@ public class ExecuteAlgorithms<S extends Solution<?>, Result extends List<S>>
     File experimentDirectory;
 
     experimentDirectory = new File(experiment.getExperimentBaseDirectory());
-    if (experimentDirectory.exists() && experimentDirectory.isDirectory()) {
-      result = false;
-    } else {
-      result = true;
-    }
+    result = !experimentDirectory.exists() || !experimentDirectory.isDirectory();
 
     return result;
   }
