@@ -38,7 +38,7 @@ public class PISAHypervolumeTest {
     referenceFront.setPoint(0, new ArrayPoint(new double[]{1.0, 0.0}));
     referenceFront.setPoint(0, new ArrayPoint(new double[]{0.0, 1.0}));
 
-    Front storedFront = new ArrayFront("../resources/referenceFrontsCSV/ZDT1.pf") ;
+    Front storedFront = new ArrayFront("../resources/referenceFrontsCSV/ZDT1.csv") ;
 
     Hypervolume<PointSolution> hypervolume = new PISAHypervolume<>(referenceFront) ;
     double result = hypervolume.evaluate(FrontUtils.convertFrontToSolutionList(storedFront)) ;
@@ -48,7 +48,7 @@ public class PISAHypervolumeTest {
 
   @Test
   public void shouldEvaluateWorkProperlyCase2() throws FileNotFoundException {
-    Front storedFront = new ArrayFront("../resources/referenceFrontsCSV/ZDT1.pf") ;
+    Front storedFront = new ArrayFront("../resources/referenceFrontsCSV/ZDT1.csv") ;
 
     Hypervolume<PointSolution> hypervolume = new PISAHypervolume<>(new double[]{1.0, 1.0}) ;
     double result = hypervolume.evaluate(FrontUtils.convertFrontToSolutionList(storedFront)) ;

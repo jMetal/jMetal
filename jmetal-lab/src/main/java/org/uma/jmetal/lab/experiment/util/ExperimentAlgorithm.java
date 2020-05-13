@@ -50,9 +50,9 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result extends List<S>> 
     }
 
     String funFile =
-        outputDirectoryName + "/" + experimentData.getOutputParetoFrontFileName() + runId + ".dat";
+        outputDirectoryName + "/" + experimentData.getOutputParetoFrontFileName() + runId + ".csv";
     String varFile =
-        outputDirectoryName + "/" + experimentData.getOutputParetoSetFileName() + runId + ".dat";
+        outputDirectoryName + "/" + experimentData.getOutputParetoSetFileName() + runId + ".csv";
     JMetalLogger.logger.info(
         " Running algorithm: "
             + algorithmTag

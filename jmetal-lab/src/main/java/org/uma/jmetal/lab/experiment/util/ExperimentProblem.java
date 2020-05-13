@@ -16,7 +16,7 @@ public class ExperimentProblem<S extends Solution<?>> {
   public ExperimentProblem(Problem<S> problem, String tag) {
     this.problem = problem;
     this.tag = tag;
-    this.referenceFront = this.problem.getName() + ".pf";
+    this.referenceFront = this.problem.getName() + ".csv";
   }
 
   public ExperimentProblem(Problem<S> problem) {

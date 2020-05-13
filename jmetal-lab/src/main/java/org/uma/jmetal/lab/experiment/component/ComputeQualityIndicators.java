@@ -6,8 +6,8 @@ import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -26,7 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -47,16 +46,16 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
   private final Experiment<S, Result> experiment;
 
   public ComputeQualityIndicators(Experiment<S, Result> experiment) {
-    this.experiment = experiment ;
+    this.experiment = experiment;
   }
 
   @Override
   public void run() throws IOException {
-    experiment.removeDuplicatedAlgorithms() ;
-    resetIndicatorFiles() ;
+    experiment.removeDuplicatedAlgorithms();
+    resetIndicatorFiles();
 
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
-      JMetalLogger.logger.info("Computing indicator: " + indicator.getName()); ;
+      JMetalLogger.logger.info("Computing indicator: " + indicator.getName());
 
       for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory;
@@ -79,10 +78,10 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
 
           indicator.setReferenceParetoFront(normalizedReferenceFront);
 
-          double[] indicatorValues = new double[experiment.getIndependentRuns()] ;
+          double[] indicatorValues = new double[experiment.getIndependentRuns()];
           IntStream.range(0, experiment.getIndependentRuns()).forEach(run -> {
             String frontFileName = problemDirectory + "/" +
-                    experiment.getOutputParetoFrontFileName() + run + ".dat";
+                    experiment.getOutputParetoFrontFileName() + run + ".csv";
             Front front = null;
             try {
               front = new ArrayFront(frontFileName, ",");
@@ -93,7 +92,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
             List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
             Double indicatorValue = indicator.evaluate((List<S>) normalizedPopulation);
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
-            indicatorValues[run] = indicatorValue ;
+            indicatorValues[run] = indicatorValue;
           });
 
           for (double indicatorValue : indicatorValues) {
@@ -103,7 +102,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           /*
           for (int run = 0; run < experiment.getIndependentRuns(); run++) {
             String frontFileName = problemDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + run + ".dat";
+                experiment.getOutputParetoFrontFileName() + run + ".csv";
 
             Front front = new ArrayFront(frontFileName, ",");
             Front normalizedFront = frontNormalizer.normalize(front);
@@ -117,16 +116,16 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
         }
       }
     }
-    findBestIndicatorFronts(experiment) ;
+    findBestIndicatorFronts(experiment);
     writeSummaryFile(experiment);
   }
 
   private void writeQualityIndicatorValueToFile(Double indicatorValue, String qualityIndicatorFile) {
 
-    try(FileWriter os = new FileWriter(qualityIndicatorFile, true)) {
+    try (FileWriter os = new FileWriter(qualityIndicatorFile, true)) {
       os.write("" + indicatorValue + "\n");
     } catch (IOException ex) {
-      throw new JMetalException("Error writing indicator file" + ex) ;
+      throw new JMetalException("Error writing indicator file" + ex);
     }
   }
 
@@ -135,75 +134,61 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
       for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
         String algorithmDirectory;
         algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-            algorithm.getAlgorithmTag();
+                algorithm.getAlgorithmTag();
 
-        for (ExperimentProblem<?> problem :experiment.getProblemList()) {
+        for (ExperimentProblem<?> problem : experiment.getProblemList()) {
           String indicatorFileName =
-              algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
-          Path indicatorFile = Paths.get(indicatorFileName) ;
-          if (indicatorFile == null) {
-            throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist") ;
-          }
+                  algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
+          Path indicatorFile = Paths.get(indicatorFileName);
 
           List<String> fileArray;
           fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
 
-          List<Pair<Double, Integer>> list = new ArrayList<>() ;
+          List<Pair<Double, Integer>> list = new ArrayList<>();
 
           for (int i = 0; i < fileArray.size(); i++) {
-            Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i) ;
-            list.add(pair) ;
+            Pair<Double, Integer> pair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i);
+            list.add(pair);
           }
 
-          Collections.sort(list, new Comparator<Pair<Double, Integer>>() {
-            @Override
-            public int compare(Pair<Double, Integer> pair1, Pair<Double, Integer> pair2) {
-              if (Math.abs(pair1.getLeft()) > Math.abs(pair2.getLeft())){
-                return 1;
-              } else if (Math.abs(pair1.getLeft()) < Math.abs(pair2.getLeft())) {
-                return -1;
-              } else {
-                return 0;
-              }
-            }
-          });
-          String bestFunFileName ;
-          String bestVarFileName ;
-          String medianFunFileName ;
-          String medianVarFileName ;
+          list.sort(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft())));
+          String bestFunFileName;
+          String bestVarFileName;
+          String medianFunFileName;
+          String medianVarFileName;
 
-          String outputDirectory = algorithmDirectory + "/" + problem.getTag() ;
+          String outputDirectory = algorithmDirectory + "/" + problem.getTag();
 
-          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.dat" ;
-          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.dat" ;
-          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.dat" ;
-          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.dat" ;
+          bestFunFileName = outputDirectory + "/BEST_" + indicator.getName() + "_FUN.csv";
+          bestVarFileName = outputDirectory + "/BEST_" + indicator.getName() + "_VAR.csv";
+          medianFunFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_FUN.csv";
+          medianVarFileName = outputDirectory + "/MEDIAN_" + indicator.getName() + "_VAR.csv";
           if (indicator.isTheLowerTheIndicatorValueTheBetter()) {
             String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".dat";
+                    experiment.getOutputParetoFrontFileName() + list.get(0).getRight() + ".csv";
             String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".dat";
+                    experiment.getOutputParetoSetFileName() + list.get(0).getRight() + ".csv";
 
-            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
-            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
+            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING);
+            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING);
           } else {
             String bestFunFile = outputDirectory + "/" +
-                experiment.getOutputParetoFrontFileName() + list.get(list.size()-1).getRight() + ".dat";
+                    experiment.getOutputParetoFrontFileName() + list.get(list.size() - 1).getRight() + ".csv";
             String bestVarFile = outputDirectory + "/" +
-                experiment.getOutputParetoSetFileName() + list.get(list.size()-1).getRight() + ".dat";
+                    experiment.getOutputParetoSetFileName() + list.get(list.size() - 1).getRight() + ".csv";
 
-            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING) ;
-            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING) ;
+            Files.copy(Paths.get(bestFunFile), Paths.get(bestFunFileName), REPLACE_EXISTING);
+            Files.copy(Paths.get(bestVarFile), Paths.get(bestVarFileName), REPLACE_EXISTING);
           }
 
-          int medianIndex = list.size() / 2 ;
+          int medianIndex = list.size() / 2;
           String medianFunFile = outputDirectory + "/" +
-              experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".dat";
+                  experiment.getOutputParetoFrontFileName() + list.get(medianIndex).getRight() + ".csv";
           String medianVarFile = outputDirectory + "/" +
-              experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".dat";
+                  experiment.getOutputParetoSetFileName() + list.get(medianIndex).getRight() + ".csv";
 
-          Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING) ;
-          Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING) ;
+          Files.copy(Paths.get(medianFunFile), Paths.get(medianFunFileName), REPLACE_EXISTING);
+          Files.copy(Paths.get(medianVarFile), Paths.get(medianVarFileName), REPLACE_EXISTING);
         }
       }
     }
@@ -215,7 +200,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
   private void resetIndicatorFiles() {
     for (GenericIndicator<S> indicator : experiment.getIndicatorList()) {
       for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
-        for (ExperimentProblem<?> problem: experiment.getProblemList()) {
+        for (ExperimentProblem<?> problem : experiment.getProblemList()) {
           String algorithmDirectory;
           algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" + algorithm.getAlgorithmTag();
           String problemDirectory = algorithmDirectory + "/" + problem.getTag();
@@ -270,21 +255,21 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
         for (ExperimentAlgorithm<?, Result> algorithm : experiment.getAlgorithmList()) {
           String algorithmDirectory;
           algorithmDirectory = experiment.getExperimentBaseDirectory() + "/data/" +
-              algorithm.getAlgorithmTag();
+                  algorithm.getAlgorithmTag();
 
           for (ExperimentProblem<?> problem : experiment.getProblemList()) {
             String indicatorFileName =
-                algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
+                    algorithmDirectory + "/" + problem.getTag() + "/" + indicator.getName();
             Path indicatorFile = Paths.get(indicatorFileName);
             if (indicatorFile == null) {
               throw new JMetalException("Indicator file " + indicator.getName() + " doesn't exist");
             }
             System.out.println("-----");
-            System.out.println(indicatorFileName) ;
+            System.out.println(indicatorFileName);
 
             List<String> fileArray;
             fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
-            System.out.println(fileArray) ;
+            System.out.println(fileArray);
             System.out.println("++++++");
 
             for (int i = 0; i < fileArray.size(); i++) {
