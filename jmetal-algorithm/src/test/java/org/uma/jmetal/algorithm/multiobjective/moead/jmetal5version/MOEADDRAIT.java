@@ -87,7 +87,7 @@ public class MOEADDRAIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F3.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/LZ09_F3.csv");
 
     // Rationale: the default problem is LZ09F", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96

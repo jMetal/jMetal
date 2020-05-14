@@ -90,7 +90,7 @@ public class MOMBI2IT {
     settings, should return 100 solutions
     */
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/DTLZ1.3D.pf") ;
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/DTLZ1.3D.csv") ;
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96

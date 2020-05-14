@@ -54,7 +54,7 @@ public class SMPSOhvIT {
     List<DoubleSolution> population = algorithm.getResult();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT4.pf");
+        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT4.csv");
 
     // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64

@@ -49,11 +49,11 @@ public class IntegerPolynomialMutationExample {
 
       numberOfPoints = 10000 ;
       granularity = 100 ;
-      distributionIndex = 20.0 ;
+      distributionIndex = 100.0 ;
     } else {
-      numberOfPoints = Integer.valueOf(args[0]);
-      granularity = Integer.valueOf(args[1]);
-      distributionIndex = Double.valueOf(args[2]);
+      numberOfPoints = Integer.parseInt(args[0]);
+      granularity = Integer.parseInt(args[1]);
+      distributionIndex = Double.parseDouble(args[2]);
     }
 
     IntegerProblem problem ;
