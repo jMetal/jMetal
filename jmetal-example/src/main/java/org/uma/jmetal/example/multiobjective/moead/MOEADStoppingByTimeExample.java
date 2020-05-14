@@ -38,7 +38,7 @@ public class MOEADStoppingByTimeExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt1.ZDT1";
-    String referenceParetoFront = "resources/referenceFronts/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFronts/ZDT1.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

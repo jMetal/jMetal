@@ -51,7 +51,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Golinski";
-      referenceParetoFront = "resources/referenceFronts/Golinski.pf" ;
+      referenceParetoFront = "resources/referenceFronts/Golinski.csv" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);

@@ -36,7 +36,7 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

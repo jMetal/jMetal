@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.operator;
 
 import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
+import org.uma.jmetal.lab.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
@@ -74,7 +74,7 @@ public class IntegerPolynomialMutationExample {
     Collections.sort(population, new IntegerVariableComparator()) ;
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new Plot2DSmile(classifier) ;
+    PlotFront plot = new PlotSmile(classifier) ;
     plot.plot();
   }
 

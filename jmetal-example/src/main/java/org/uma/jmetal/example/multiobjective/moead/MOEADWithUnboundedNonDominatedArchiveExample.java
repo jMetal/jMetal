@@ -42,7 +42,7 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     CrossoverOperator<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

@@ -58,7 +58,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);

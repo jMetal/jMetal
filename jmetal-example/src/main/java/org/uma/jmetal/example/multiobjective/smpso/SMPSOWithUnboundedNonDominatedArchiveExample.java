@@ -35,7 +35,7 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.pf" ;
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

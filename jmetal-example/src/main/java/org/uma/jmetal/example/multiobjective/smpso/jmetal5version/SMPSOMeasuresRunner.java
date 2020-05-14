@@ -51,7 +51,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFronts/ZDT4.pf" ;
+      referenceParetoFront = "resources/referenceFronts/ZDT4.csv" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);

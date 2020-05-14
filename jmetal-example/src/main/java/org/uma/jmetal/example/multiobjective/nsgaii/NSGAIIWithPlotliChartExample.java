@@ -5,6 +5,7 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.plot.PlotFront;
 import org.uma.jmetal.lab.plot.impl.Plot2D;
+import org.uma.jmetal.lab.plot.impl.Plot3D;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -37,7 +38,7 @@ public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -52,7 +53,7 @@ public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     algorithm =
         new NSGAII<>(

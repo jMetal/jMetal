@@ -65,7 +65,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf" ;
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
 
     String problemName ;
     if (args.length == 1) {

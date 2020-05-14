@@ -39,7 +39,7 @@ public class CDGRunner extends AbstractAlgorithmRunner {
    * @throws SecurityException Invoking command: java org.uma.jmetal.runner.multiobjective.CDGRunner
    *     problemName [referenceFront]
    */
-  public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException {
+  public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionCrossover crossover;

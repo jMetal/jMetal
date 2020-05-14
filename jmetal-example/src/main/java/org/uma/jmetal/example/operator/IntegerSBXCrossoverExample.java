@@ -1,17 +1,15 @@
 package org.uma.jmetal.example.operator;
 
 import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
+import org.uma.jmetal.lab.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.IntegerVariableComparator;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -79,7 +77,7 @@ public class IntegerSBXCrossoverExample {
 
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new Plot2DSmile(classifier) ;
+    PlotFront plot = new PlotSmile(classifier) ;
     plot.plot();
   }
 
