@@ -71,7 +71,7 @@ public class IntegerPolynomialMutationExample {
       population.add(newSolution) ;
     }
 
-    Collections.sort(population, new IntegerVariableComparator()) ;
+    population.sort(new IntegerVariableComparator());
     double[][] classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier) ;

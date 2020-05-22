@@ -69,10 +69,10 @@ public class PolynomialMutationExample {
       population.add(newSolution) ;
     }
 
-    Collections.sort(population, new DoubleVariableComparator()) ;
+    population.sort(new DoubleVariableComparator());
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new PlotSmile(classifier) ;
+    PlotFront plot = new PlotSmile(classifier, "") ;
     plot.plot();
   }
 

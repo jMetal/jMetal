@@ -74,7 +74,7 @@ public class SBXCrossoverExample {
       population.add(solutions.get(1)) ;
     }
 
-    Collections.sort(population, new DoubleVariableComparator()) ;
+    population.sort(new DoubleVariableComparator());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsSBX"))
@@ -82,7 +82,7 @@ public class SBXCrossoverExample {
 
     double[][] classifier = classify(population, problem, granularity);
 
-    PlotFront plot = new PlotSmile(classifier) ;
+    PlotFront plot = new PlotSmile(classifier, "") ;
     plot.plot();
   }
 

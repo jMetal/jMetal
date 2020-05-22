@@ -50,9 +50,9 @@ public class IntegerSBXCrossoverExample {
       granularity = 100 ;
       distributionIndex = 10.0 ;
     } else {
-      numberOfPoints = Integer.valueOf(args[0]);
-      granularity = Integer.valueOf(args[1]);
-      distributionIndex = Double.valueOf(args[2]);
+      numberOfPoints = Integer.parseInt(args[0]);
+      granularity = Integer.parseInt(args[1]);
+      distributionIndex = Double.parseDouble(args[2]);
     }
 
     IntegerProblem problem ;
