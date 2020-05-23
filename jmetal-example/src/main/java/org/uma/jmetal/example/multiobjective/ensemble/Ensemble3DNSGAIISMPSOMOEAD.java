@@ -38,7 +38,7 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
     DoubleProblem problem;
 
     // problemName = "org.uma.jmetal.problem.multiobjective.maf.MaF01PF_M5";
-    String referenceParetoFront = "resources/referenceFronts/MaF01PF_M5.txt";
+    String referenceParetoFront = "resources/referenceFronts/MaF01PF_M5.csv";
 
     // problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
     problem = new MaF01(12, 5);

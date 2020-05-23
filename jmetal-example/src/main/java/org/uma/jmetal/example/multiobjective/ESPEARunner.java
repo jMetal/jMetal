@@ -44,7 +44,7 @@ public class ESPEARunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.pf";
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);

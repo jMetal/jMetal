@@ -36,7 +36,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

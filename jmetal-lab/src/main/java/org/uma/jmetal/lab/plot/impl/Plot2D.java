@@ -9,13 +9,19 @@ import tech.tablesaw.plotly.api.ScatterPlot;
 
 public class Plot2D implements PlotFront {
   private double[][] matrix;
+  private String plotTitle;
 
-  public Plot2D(double[][] matrix) {
+  public Plot2D(double[][] matrix, String title) {
     Check.isNotNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
     Check.that(matrix[0].length == 2, "The data matrix does not have two columns");
 
     this.matrix = matrix;
+    this.plotTitle = title ;
+  }
+
+  public Plot2D(double[][] matrix) {
+    this(matrix, "Front") ;
   }
 
   @Override
@@ -33,6 +39,6 @@ public class Plot2D implements PlotFront {
         Table.create("table")
             .addColumns(DoubleColumn.create("f1", f1), DoubleColumn.create("f2", f2));
 
-    Plot.show(ScatterPlot.create("Front", table, "f1", "f2"));
+    Plot.show(ScatterPlot.create(plotTitle, table, "f1", "f2"));
   }
 }

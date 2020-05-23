@@ -24,14 +24,14 @@ import java.io.FileNotFoundException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     NSGAII<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

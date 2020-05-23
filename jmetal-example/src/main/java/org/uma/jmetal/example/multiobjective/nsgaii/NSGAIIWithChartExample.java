@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
+import org.uma.jmetal.lab.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -37,9 +37,9 @@ public class NSGAIIWithChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = ProblemUtils.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -82,7 +82,7 @@ public class NSGAIIWithChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix(), problem.getName()) ;
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.getName()) ;
     plot.plot();
   }
 }

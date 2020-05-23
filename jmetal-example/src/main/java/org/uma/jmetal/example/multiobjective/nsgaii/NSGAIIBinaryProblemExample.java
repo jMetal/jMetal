@@ -4,7 +4,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
+import org.uma.jmetal.lab.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -63,7 +63,7 @@ public class NSGAIIBinaryProblemExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix());
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix());
     plot.plot();
   }
 }

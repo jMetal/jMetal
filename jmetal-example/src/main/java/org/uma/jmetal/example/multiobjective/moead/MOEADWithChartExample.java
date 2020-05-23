@@ -3,7 +3,7 @@ package org.uma.jmetal.example.multiobjective.moead;
 import org.uma.jmetal.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.Plot2DSmile;
+import org.uma.jmetal.lab.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -41,7 +41,7 @@ public class MOEADWithChartExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -90,7 +90,7 @@ public class MOEADWithChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot2DSmile(new ArrayFront(population).getMatrix()) ;
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix()) ;
     plot.plot();
   }
 }

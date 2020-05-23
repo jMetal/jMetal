@@ -6,13 +6,12 @@ import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.api.Scatter3DPlot;
-import tech.tablesaw.plotly.components.Figure;
-import tech.tablesaw.plotly.traces.Scatter3DTrace;
 
 public class Plot3D implements PlotFront {
   private double[][] matrix;
+  private String plotTitle;
 
-  public Plot3D(double[][] matrix) {
+  public Plot3D(double[][] matrix, String title) {
     Check.isNotNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
     Check.that(matrix[0].length == 3, "The data matrix does not have three columns");
@@ -20,23 +19,12 @@ public class Plot3D implements PlotFront {
     this.matrix = matrix;
   }
 
+  public Plot3D(double[][] matrix) {
+    this(matrix, "Front") ;
+  }
+
   @Override
   public void plot() {
-
-    DoubleColumn xData = DoubleColumn.create("x", new double[]{2, 2, 1});
-    DoubleColumn yData = DoubleColumn.create("y", new double[]{1, 2, 3});
-    DoubleColumn zData = DoubleColumn.create("z", new double[]{1, 4, 1});
-
-    Table data = Table.create().addColumns(xData, yData, zData) ;
-
-    Plot.show(Scatter3DPlot.create("3D", data, "x", "y", "z"));
-
-    Scatter3DTrace trace = Scatter3DTrace.builder(xData, yData, zData).build() ;
-
-    Plot.show(new Figure(trace));
-
-
-
     int numberOfRows = matrix.length;
     double[] f1 = new double[numberOfRows];
     double[] f2 = new double[numberOfRows];
@@ -52,6 +40,6 @@ public class Plot3D implements PlotFront {
         Table.create("table")
             .addColumns(DoubleColumn.create("f1", f1), DoubleColumn.create("f2", f2), DoubleColumn.create("f3", f3));
 
-    Plot.show(Scatter3DPlot.create("Front", table, "f1", "f2", "f3"));
+    Plot.show(Scatter3DPlot.create(plotTitle, table, "f1", "f2", "f3"));
   }
 }

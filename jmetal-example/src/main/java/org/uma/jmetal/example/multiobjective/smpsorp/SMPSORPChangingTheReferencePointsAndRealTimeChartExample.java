@@ -43,7 +43,7 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
     MutationOperator<DoubleSolution> mutation;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.pf";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

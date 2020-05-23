@@ -1,8 +1,10 @@
-package org.uma.jmetal.example.multiobjective.smsemoa;
+package org.uma.jmetal.example.multiobjective.nsgaii;
 
-import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOA;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.lab.plot.PlotFront;
+import org.uma.jmetal.lab.plot.impl.Plot3D;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -15,22 +17,22 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class to configure and run the SMSEMOA algorithm
+ * Class to configure and run the NSGA-II algorithm. At the end of the execution an HTML with the
+ * produced front is shown.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithPlotli3DChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
-    SMSEMOA<DoubleSolution> algorithm;
+    NSGAII<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
@@ -48,18 +50,13 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
+    int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(50000);
 
     algorithm =
-        new SMSEMOA<>(problem, populationSize, crossover, mutation, termination);
-
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-            new RunTimeChartObserver<>("SMS-EMOA", 80, 500, referenceParetoFront);
-
-    algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
+        new NSGAII<>(
+            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
     algorithm.run();
 
@@ -80,6 +77,7 @@ public class SMSEMOAWithRealTimeChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    System.exit(0);
+    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix());
+    plot.plot();
   }
 }

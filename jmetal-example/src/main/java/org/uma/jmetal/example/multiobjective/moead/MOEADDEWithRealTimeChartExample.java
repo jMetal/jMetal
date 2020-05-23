@@ -29,7 +29,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     MOEADDE algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
-    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.pf";
+    String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

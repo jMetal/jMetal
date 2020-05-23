@@ -38,7 +38,7 @@ public class MOEADDefaultConfiguration3DProblemExample extends AbstractAlgorithm
     CrossoverOperator<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
-    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.pf";
+    String referenceParetoFront = "resources/referenceFronts/DTLZ2.3D.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
