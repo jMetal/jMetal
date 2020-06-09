@@ -37,8 +37,6 @@ public class NSGAIITSPRunner extends AbstractAlgorithmRunner {
    *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIITSPRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, IOException {
-    JMetalRandom.getInstance().setSeed(100L);
-
     PermutationProblem<PermutationSolution<Integer>> problem;
     Algorithm<List<PermutationSolution<Integer>>> algorithm;
     CrossoverOperator<PermutationSolution<Integer>> crossover;

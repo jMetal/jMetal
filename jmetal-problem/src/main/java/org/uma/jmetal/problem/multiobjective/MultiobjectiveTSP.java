@@ -125,7 +125,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
         }
       }
     } catch (Exception e) {
-      new JMetalException("TSP.readProblem(): error when reading data file " + e);
+      throw new JMetalException("TSP.readProblem(): error when reading data file " + e);
     }
     return matrix;
   }
