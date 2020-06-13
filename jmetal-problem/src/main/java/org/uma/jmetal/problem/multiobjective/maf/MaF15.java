@@ -11,8 +11,8 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MaF15 extends AbstractDoubleProblem {
-  public static int nk15;
-  public static int sublen15[], len15[];
+  public int nk15;
+  public int sublen15[], len15[];
 
   /**
    * Default constructor

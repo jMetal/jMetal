@@ -11,7 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MaF04 extends AbstractDoubleProblem {
-  public static double const4[];
+  public double const4[];
 
   /**
    * Default constructor
