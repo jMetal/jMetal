@@ -30,7 +30,7 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     this.problem = problem ;
     maxIterations = 250 ;
     populationSize = 100 ;
-    numberOfDivisions = 4;
+    numberOfDivisions = 12;
     evaluator = new SequentialSolutionListEvaluator<S>() ;
   }
 
