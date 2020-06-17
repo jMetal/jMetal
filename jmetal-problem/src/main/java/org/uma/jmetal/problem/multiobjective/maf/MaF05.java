@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class MaF05 extends AbstractDoubleProblem {
 
-  public static double const5[];
+  public double const5[];
 
   /**
    * Default constructor

@@ -14,10 +14,10 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class MaF09 extends AbstractDoubleProblem {
 
-  public static int maxinter9;
-  public static int pindex9[];
-  public static int M9;
-  public static double points9[][], rangex9[][], rangey9[][], r_polyline9[][], oth_poly_points9[][];
+  public int maxinter9;
+  public int pindex9[];
+  public int M9;
+  public double points9[][], rangex9[][], rangey9[][], r_polyline9[][], oth_poly_points9[][];
 
   /**
    * Default constructor
@@ -248,7 +248,7 @@ public class MaF09 extends AbstractDoubleProblem {
   }
   //check if a point is inside any generated polygons(not including the boundary)(only for MaF9)
 
-  public static boolean if_infeasible(double[] x) {
+  public boolean if_infeasible(double[] x) {
     boolean infeasible = false;
     for (int i = 0; i < pindex9.length - 1; i++) {
       double[][] p = new double[pindex9[i + 1] - pindex9[i]][2];
