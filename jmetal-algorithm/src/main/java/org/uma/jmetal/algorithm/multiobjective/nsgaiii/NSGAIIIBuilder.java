@@ -18,6 +18,7 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
   private Problem<S> problem ;
   private int maxIterations ;
   private int populationSize ;
+  private int numberOfDivisions;
   private CrossoverOperator<S> crossoverOperator ;
   private MutationOperator<S> mutationOperator ;
   private SelectionOperator<List<S>, S> selectionOperator ;
@@ -29,6 +30,7 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
     this.problem = problem ;
     maxIterations = 250 ;
     populationSize = 100 ;
+    numberOfDivisions = 4;
     evaluator = new SequentialSolutionListEvaluator<S>() ;
   }
 
@@ -40,6 +42,12 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
 
   public NSGAIIIBuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
+
+    return this ;
+  }
+
+  public NSGAIIIBuilder<S> setNumberOfDivisions(int numberOfDivisions){
+    this.numberOfDivisions = numberOfDivisions ;
 
     return this ;
   }
@@ -83,6 +91,8 @@ public class NSGAIIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<N
   public int getPopulationSize() {
     return populationSize;
   }
+
+  public int getNumberOfDivisions() { return numberOfDivisions; }
 
   public CrossoverOperator<S> getCrossoverOperator() {
     return crossoverOperator;

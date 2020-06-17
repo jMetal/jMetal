@@ -12,7 +12,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class MaF02 extends AbstractDoubleProblem {
 
-  public static int const2;
+  public int const2;
 
   /**
    * Default constructor

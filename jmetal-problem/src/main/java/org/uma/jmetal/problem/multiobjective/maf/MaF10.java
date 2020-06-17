@@ -11,7 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MaF10 extends AbstractDoubleProblem {
-  public static int K10;
+  public int K10;
 
   /**
    * Default constructor
