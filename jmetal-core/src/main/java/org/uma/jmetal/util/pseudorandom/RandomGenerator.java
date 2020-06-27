@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.pseudorandom;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,7 +20,7 @@ import java.util.function.Predicate;
  *            The type of value to generate
  */
 @FunctionalInterface
-public interface RandomGenerator<Value> {
+public interface RandomGenerator<Value> extends Serializable {
 	/**
 	 * Generate a random value.
 	 * 
