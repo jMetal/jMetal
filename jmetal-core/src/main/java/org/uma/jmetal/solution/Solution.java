@@ -1,8 +1,12 @@
 package org.uma.jmetal.solution;
 
+import static java.util.stream.Collectors.*;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.DoubleStream;
+import java.util.stream.Stream;
 
 /**
  * Interface representing a Solution
@@ -14,12 +18,27 @@ public interface Solution<T> extends Serializable {
   void setObjective(int index, double value) ;
   double getObjective(int index) ;
   double[] getObjectives() ;
+  default DoubleStream getObjectivesStream() {
+    return DoubleStream.of(getObjectives());
+  }
+  default List<Double> getObjectivesList() {
+    return getObjectivesStream().mapToObj(d -> d).collect(toList());
+  }
 
   T getVariable(int index) ;
   List<T> getVariables() ;
+  default Stream<T> getVariablesStream() {
+    return getVariables().stream();
+  }
   void setVariable(int index, T variable) ;
 
   double[] getConstraints() ;
+  default DoubleStream getConstraintsStream() {
+    return DoubleStream.of(getConstraints());
+  }
+  default List<Double> getConstraintsList() {
+    return getConstraintsStream().mapToObj(d -> d).collect(toList());
+  }
   double getConstraint(int index) ;
   void setConstraint(int index, double value) ;
 
