@@ -4,27 +4,27 @@ import org.uma.jmetal.component.variation.Variation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** */
-public class DifferentialCrossoverVariation implements Variation<DoubleSolution> {
+public class DifferentialCrossoverVariation<S extends Solution<Double>> implements Variation<S> {
   private int matingPoolSize;
   private int offspringPopulationSize;
 
   private SequenceGenerator<Integer> solutionIndexGenerator ;
 
-  private DifferentialEvolutionCrossover<DoubleSolution> crossover;
+  private DifferentialEvolutionCrossover<S> crossover;
 
-  private MutationOperator<DoubleSolution> mutation;
+  private MutationOperator<S> mutation;
 
   public DifferentialCrossoverVariation(
       int offspringPopulationSize,
-      DifferentialEvolutionCrossover<DoubleSolution> crossover,
-      MutationOperator<DoubleSolution> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
+      DifferentialEvolutionCrossover<S> crossover,
+      MutationOperator<S> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
     this.offspringPopulationSize = offspringPopulationSize;
     this.crossover = crossover;
     this.mutation = mutation;
@@ -34,27 +34,27 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
   }
 
   public DifferentialCrossoverVariation(
-      int offspringPopulationSize, DifferentialEvolutionCrossover<DoubleSolution> crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
+      int offspringPopulationSize, DifferentialEvolutionCrossover<S> crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
     this(offspringPopulationSize, crossover, new NullMutation<>(), solutionIndexGenerator);
   }
 
   @Override
-  public List<DoubleSolution> variate(
-      List<DoubleSolution> solutionList, List<DoubleSolution> matingPool) {
+  public List<S> variate(
+      List<S> solutionList, List<S> matingPool) {
 
-    List<DoubleSolution> offspringPopulation = new ArrayList<>();
+    List<S> offspringPopulation = new ArrayList<>();
     while (offspringPopulation.size() < offspringPopulationSize) {
       crossover.setCurrentSolution(solutionList.get(solutionIndexGenerator.getValue()));
 
       int numberOfRequiredParentsToCross = crossover.getNumberOfRequiredParents() ;
 
-      List<DoubleSolution> parents = new ArrayList<>(numberOfRequiredParentsToCross);
+      List<S> parents = new ArrayList<>(numberOfRequiredParentsToCross);
       for (int j = 0; j < numberOfRequiredParentsToCross; j++) {
         parents.add(matingPool.get(0));
         matingPool.remove(0);
       }
 
-      List<DoubleSolution> offspring = crossover.execute(parents);
+      List<S> offspring = crossover.execute(parents);
 
       offspringPopulation.add(mutation.execute(offspring.get(0)));
     }
@@ -62,11 +62,11 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     return offspringPopulation;
   }
 
-  public DifferentialEvolutionCrossover<DoubleSolution> getCrossover() {
+  public DifferentialEvolutionCrossover<S> getCrossover() {
     return crossover;
   }
 
-  public MutationOperator<DoubleSolution> getMutation() {
+  public MutationOperator<S> getMutation() {
     return mutation;
   }
 

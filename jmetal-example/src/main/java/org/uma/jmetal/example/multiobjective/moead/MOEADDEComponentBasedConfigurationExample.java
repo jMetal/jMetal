@@ -62,8 +62,8 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    DifferentialCrossoverVariation variation =
-        new DifferentialCrossoverVariation(1, crossover, mutation, subProblemIdGenerator);
+    DifferentialCrossoverVariation<DoubleSolution> variation =
+        new DifferentialCrossoverVariation<>(1, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;

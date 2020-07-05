@@ -36,7 +36,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
         InitialSolutionsCreation<DoubleSolution> initialPopulationCreation,
         Termination termination,
         PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
-        DifferentialCrossoverVariation variation,
+        DifferentialCrossoverVariation<DoubleSolution> variation,
         MOEADReplacement<DoubleSolution> replacement) {
         super(
         "MOEAD-DE",
@@ -93,7 +93,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     int offspringPopulationSize = 1;
     this.variation =
-        new DifferentialCrossoverVariation(
+        new DifferentialCrossoverVariation<>(
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;
@@ -114,7 +114,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     this.selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
-            ((DifferentialCrossoverVariation) variation)
+            ((DifferentialCrossoverVariation<DoubleSolution>) variation)
                 .getCrossover()
                 .getNumberOfRequiredParents(),
             subProblemIdGenerator,
