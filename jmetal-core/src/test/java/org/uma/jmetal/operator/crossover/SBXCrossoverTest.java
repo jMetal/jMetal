@@ -1,7 +1,5 @@
 package org.uma.jmetal.operator.crossover;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -13,6 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -146,14 +145,16 @@ public class SBXCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
+    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
+    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(4)).getRandomValue();
   }
 
@@ -205,22 +206,24 @@ public class SBXCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
+    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
+    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(1), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(1), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(1), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(1), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(7)).getRandomValue();
   }
 
@@ -291,10 +294,10 @@ public class SBXCrossoverTest {
 
 		List<DoubleSolution> solutions = new LinkedList<>();
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
 
-		solutions.add(new DefaultDoubleSolution(bounds, 2));
-		solutions.add(new DefaultDoubleSolution(bounds, 2));
+		solutions.add(new DefaultDoubleSolution(2, bounds));
+		solutions.add(new DefaultDoubleSolution(2, bounds));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

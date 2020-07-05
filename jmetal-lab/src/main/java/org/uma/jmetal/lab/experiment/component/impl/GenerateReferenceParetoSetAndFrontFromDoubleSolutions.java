@@ -11,6 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
@@ -244,14 +245,29 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
       return null;
     }
 
+	/**
+	 * @deprecated Use {@link #getBounds(int)}{@link Bounds#getLowerBound()
+	 *             .getLowerBound()} instead.
+	 */
+	@Deprecated
     @Override
     public Double getLowerBound(int index) {
       return null;
     }
 
+	/**
+	 * @deprecated Use {@link #getBounds(int)}{@link Bounds#getUpperBound()
+	 *             .getUpperBound()} instead.
+	 */
+	@Deprecated
     @Override
     public Double getUpperBound(int index) {
       return null;
+    }
+    
+    @Override
+    public Bounds<Double> getBounds(int index) {
+    	return null;
     }
   }
 }

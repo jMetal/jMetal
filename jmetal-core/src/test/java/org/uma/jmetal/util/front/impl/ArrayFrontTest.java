@@ -1,7 +1,5 @@
 package org.uma.jmetal.util.front.impl;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -12,6 +10,7 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.point.Point;
@@ -102,9 +101,9 @@ public class ArrayFrontTest {
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingOneDoubleSolutionObject() {
     int numberOfObjectives = 3;
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(-1.0, 1.0));
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
-        Arrays.asList(new DefaultDoubleSolution(bounds, numberOfObjectives));
+        Arrays.asList(new DefaultDoubleSolution(numberOfObjectives, bounds));
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -116,11 +115,11 @@ public class ArrayFrontTest {
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingTwoDoubleSolutionObject() {
     int numberOfObjectives = 3;
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(-1.0, 1.0));
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
         Arrays.asList(
-            new DefaultDoubleSolution(bounds, numberOfObjectives),
-            new DefaultDoubleSolution(bounds, numberOfObjectives));
+            new DefaultDoubleSolution(numberOfObjectives, bounds),
+            new DefaultDoubleSolution(numberOfObjectives, bounds));
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -132,11 +131,11 @@ public class ArrayFrontTest {
   public void shouldCreateAnArrayFrontFromAListOfSolutionsHavingOneSingleSolutionObject() {
     int numberOfObjectives = 3;
 
-    List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 1)) ;
+    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
     List<IntegerSolution> list =
         Arrays.asList(
-            new DefaultIntegerSolution(bounds, numberOfObjectives)) ;
+            new DefaultIntegerSolution(numberOfObjectives, bounds)) ;
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -160,15 +159,15 @@ public class ArrayFrontTest {
   public void shouldCreateAnArrayFrontFromASolutionListResultInTwoEqualsFronts() {
     int numberOfObjectives = 3;
 
-    List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 1)) ;
+    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
     IntegerSolution solution1 =
-        new DefaultIntegerSolution(bounds, numberOfObjectives);
+        new DefaultIntegerSolution(numberOfObjectives, bounds);
     solution1.setObjective(0, 2);
     solution1.setObjective(0, 235);
     solution1.setObjective(0, -123);
     IntegerSolution solution2 =
-        new DefaultIntegerSolution(bounds, numberOfObjectives);
+        new DefaultIntegerSolution(numberOfObjectives, bounds);
     solution2.setObjective(0, -13234);
     solution2.setObjective(0, 523);
     solution2.setObjective(0, -123423455);

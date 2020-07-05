@@ -90,12 +90,12 @@ public class NullCrossoverTest {
       solution.setObjective(1, randomGenerator.nextDouble());
     }
 
-    @Override public Double getLowerBound(int index) {
-      return super.getUpperBound(index);
+    @Override @Deprecated public Double getLowerBound(int index) {
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
 
-    @Override public Double getUpperBound(int index) {
-      return super.getUpperBound(index);
+    @Override @Deprecated public Double getUpperBound(int index) {
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
   }
 }

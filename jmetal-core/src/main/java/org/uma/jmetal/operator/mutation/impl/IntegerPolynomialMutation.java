@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -104,8 +105,9 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
         y = (double)solution.getVariable(i);
-        yl = (double)solution.getLowerBound(i) ;
-        yu = (double)solution.getUpperBound(i) ;
+        Bounds<Integer> bounds = solution.getBounds(i);
+        yl = (double)bounds.getLowerBound() ;
+        yu = (double)bounds.getUpperBound() ;
         if (yl == yu) {
           y = yl ;
         } else {

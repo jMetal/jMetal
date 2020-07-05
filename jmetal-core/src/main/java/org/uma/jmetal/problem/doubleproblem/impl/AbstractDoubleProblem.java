@@ -1,11 +1,11 @@
 package org.uma.jmetal.problem.doubleproblem.impl;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
 
 import java.util.List;
@@ -16,20 +16,26 @@ import java.util.stream.IntStream;
 public abstract class AbstractDoubleProblem extends AbstractGenericProblem<DoubleSolution>
     implements DoubleProblem {
 
-  protected List<Pair<Double, Double>> bounds;
+  protected List<Bounds<Double>> bounds;
 
+  /**
+   * @deprecated Use {@link #getBoundsForVariables()} instead.
+   */
+  @Deprecated
   public List<Pair<Double, Double>> getVariableBounds() {
-    return bounds;
+    return bounds.stream().map(Bounds<Double>::toPair).collect(Collectors.toList());
   }
 
   @Override
+  @Deprecated
   public Double getUpperBound(int index) {
-    return getVariableBounds().get(index).getRight();
+    return getBoundsForVariables().get(index).getUpperBound();
   }
 
   @Override
+  @Deprecated
   public Double getLowerBound(int index) {
-    return getVariableBounds().get(index).getLeft();
+    return getBoundsForVariables().get(index).getLowerBound();
   }
 
   public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
@@ -41,17 +47,23 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
 
     bounds =
         IntStream.range(0, lowerBounds.size())
-            .mapToObj(i -> new ImmutablePair<>(lowerBounds.get(i), upperBounds.get(i)))
+            .mapToObj(i -> Bounds.create(lowerBounds.get(i), upperBounds.get(i)))
             .collect(Collectors.toList());
   }
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
+    return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
   }
 
   @Override
+  @Deprecated
   public List<Pair<Double, Double>> getBounds() {
+    return getVariableBounds();
+  }
+  
+  @Override
+  public List<Bounds<Double>> getBoundsForVariables() {
     return bounds;
   }
 }

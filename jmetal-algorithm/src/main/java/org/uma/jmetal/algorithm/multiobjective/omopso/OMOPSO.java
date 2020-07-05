@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.bounds.Bounds ;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
@@ -179,12 +180,15 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       DoubleSolution particle = swarm.get(i);
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
-        if (particle.getVariable(var) < problem.getLowerBound(var)) {
-          particle.setVariable(var, problem.getLowerBound(var));
+        Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
+        Double lowerBound = bounds.getLowerBound() ;
+        Double upperBound = bounds.getUpperBound() ;
+        if (particle.getVariable(var) < lowerBound) {
+          particle.setVariable(var, lowerBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle.getVariable(var) > problem.getUpperBound(var)) {
-          particle.setVariable(var, problem.getUpperBound(var));
+        if (particle.getVariable(var) > upperBound) {
+          particle.setVariable(var, upperBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
       }

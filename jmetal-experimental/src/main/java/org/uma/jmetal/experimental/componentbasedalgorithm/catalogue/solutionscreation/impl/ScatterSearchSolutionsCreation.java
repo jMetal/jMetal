@@ -4,6 +4,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscr
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.getBounds(), problem.getNumberOfObjectives());
+          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getBoundsForVariables());
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         newSolution.setVariable(j, variables.get(j));
       }
@@ -74,10 +75,11 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      double low =
-          problem.getLowerBound(i)
-              + range * (problem.getUpperBound(i) - problem.getLowerBound(i)) / numberOfSubRanges;
-      double high = low + (problem.getUpperBound(i) - problem.getLowerBound(i)) / numberOfSubRanges;
+      Bounds<Double> bounds = problem.getBoundsForVariables().get(i);
+      Double lowerBound = bounds.getLowerBound();
+      Double upperBound = bounds.getUpperBound();
+      double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges;
+      double high = low + (upperBound - lowerBound) / numberOfSubRanges;
 
       vars.add(i, JMetalRandom.getInstance().nextDouble(low, high));
     }
