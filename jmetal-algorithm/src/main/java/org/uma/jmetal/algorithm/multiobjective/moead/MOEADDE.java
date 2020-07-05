@@ -12,7 +12,7 @@ import org.uma.jmetal.component.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.Solution ;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
@@ -28,16 +28,16 @@ import java.util.HashMap;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution> {
+public class MOEADDE<S extends Solution<Double>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
   /** Constructor */
   public MOEADDE(
-        Evaluation<DoubleSolution> evaluation,
-        InitialSolutionsCreation<DoubleSolution> initialPopulationCreation,
+        Evaluation<S> evaluation,
+        InitialSolutionsCreation<S> initialPopulationCreation,
         Termination termination,
-        PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
-        DifferentialCrossoverVariation<DoubleSolution> variation,
-        MOEADReplacement<DoubleSolution> replacement) {
+        PopulationAndNeighborhoodMatingPoolSelection<S> selection,
+        DifferentialCrossoverVariation<S> variation,
+        MOEADReplacement<S> replacement) {
         super(
         "MOEAD-DE",
         evaluation,
@@ -62,7 +62,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
    * @param termination
    */
   public MOEADDE(
-      Problem<DoubleSolution> problem,
+      Problem<S> problem,
       int populationSize,
       double cr,
       double f,
@@ -82,13 +82,13 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
-    DifferentialEvolutionCrossover<DoubleSolution> crossover =
+    DifferentialEvolutionCrossover<S> crossover =
         new DifferentialEvolutionCrossover<>(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    PolynomialMutation<DoubleSolution> mutation =
+    PolynomialMutation<S> mutation =
         new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     int offspringPopulationSize = 1;
@@ -96,7 +96,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
         new DifferentialCrossoverVariation<>(
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
-    WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;
+    WeightVectorNeighborhood<S> neighborhood = null ;
     if (problem.getNumberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
@@ -114,7 +114,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     this.selection =
         new PopulationAndNeighborhoodMatingPoolSelection<>(
-            ((DifferentialCrossoverVariation<DoubleSolution>) variation)
+            ((DifferentialCrossoverVariation<S>) variation)
                 .getCrossover()
                 .getNumberOfRequiredParents(),
             subProblemIdGenerator,
@@ -123,8 +123,8 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
             true);
 
     this.replacement =
-        new MOEADReplacement<DoubleSolution>(
-            (PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution>) selection,
+        new MOEADReplacement<S>(
+            (PopulationAndNeighborhoodMatingPoolSelection<S>) selection,
             neighborhood,
             aggregativeFunction,
             subProblemIdGenerator,

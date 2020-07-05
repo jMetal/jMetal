@@ -26,7 +26,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
 
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADDE algorithm;
+    MOEADDE<DoubleSolution> algorithm;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
@@ -46,7 +46,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     algorithm =
-        new MOEADDE(
+        new MOEADDE<>(
             problem,
             populationSize,
             cr,

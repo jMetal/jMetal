@@ -38,7 +38,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
 
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
-    MOEADDE algorithm;
+    MOEADDE<DoubleSolution> algorithm;
     MutationOperator<DoubleSolution> mutation;
     DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
@@ -91,7 +91,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     algorithm =
-        new MOEADDE(
+        new MOEADDE<>(
             evaluation,
             new RandomSolutionsCreation<>(problem, populationSize),
             new TerminationByEvaluations(150000),
