@@ -34,7 +34,7 @@ public class ABYSSTest {
   public void setup() {
     problem = new MockProblem();
     archive = new CrowdingDistanceArchive<>(10);
-    mutation = new PolynomialMutation(1.0, 20.0);
+    mutation = new PolynomialMutation<>(1.0, 20.0);
     localSearch = new BasicLocalSearch<>(2, mutation, new DominanceComparator<>(), problem);
   }
 

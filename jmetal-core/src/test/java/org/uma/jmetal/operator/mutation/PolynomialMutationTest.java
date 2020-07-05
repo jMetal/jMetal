@@ -42,7 +42,7 @@ public class PolynomialMutationTest {
   
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
-    PolynomialMutation mutation = new PolynomialMutation() ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>() ;
     assertEquals(0.01, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(20.0, (Double) ReflectionTestUtils
@@ -52,7 +52,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     DoubleProblem problem = new MockDoubleProblem(4) ;
-    PolynomialMutation mutation = new PolynomialMutation(problem, 10.0) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(problem, 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
@@ -62,7 +62,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
     double mutationProbability = 0.1 ;
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, 2.0) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, 2.0) ;
     assertEquals(mutationProbability, (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
   }
@@ -70,7 +70,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorAssignTheCorrectDistributionIndex() {
     double distributionIndex = 15.0 ;
-    PolynomialMutation mutation = new PolynomialMutation(0.1, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(0.1, distributionIndex) ;
     assertEquals(distributionIndex, (Double) ReflectionTestUtils
         .getField(mutation, "distributionIndex"), EPSILON) ;
   }
@@ -78,36 +78,36 @@ public class PolynomialMutationTest {
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldConstructorFailWhenPassedANegativeProbabilityValue() {
     double mutationProbability = -0.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
+    new PolynomialMutation<>(mutationProbability, 2.0) ;
   }
 
   @Test (expected = InvalidProbabilityValueException.class)
   public void shouldConstructorFailWhenPassedAValueHigherThanOne() {
     double mutationProbability = 1.1 ;
-    new PolynomialMutation(mutationProbability, 2.0) ;
+    new PolynomialMutation<>(mutationProbability, 2.0) ;
   }
 
   @Test (expected = InvalidConditionException.class)
   public void shouldConstructorFailWhenPassedANegativeDistributionIndex() {
     double distributionIndex = -0.1 ;
-    new PolynomialMutation(0.1, distributionIndex) ;
+    new PolynomialMutation<>(0.1, distributionIndex) ;
   }
 
   @Test
   public void shouldGetMutationProbabilityReturnTheRightValue() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(0.1, 20.0) ;
     assertEquals(0.1, mutation.getMutationProbability(), EPSILON) ;
   }
 
   @Test
   public void shouldGetDistributionIndexReturnTheRightValue() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 30.0) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(0.1, 30.0) ;
     assertEquals(30.0, mutation.getDistributionIndex(), EPSILON) ;
   }
 
   @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
-    PolynomialMutation mutation = new PolynomialMutation(0.1, 20.0) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(0.1, 20.0) ;
 
     mutation.execute(null) ;
   }
@@ -117,7 +117,7 @@ public class PolynomialMutationTest {
     double mutationProbability = 0.0;
     double distributionIndex = 20.0 ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
     DoubleSolution solution = problem.createSolution() ;
     DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
@@ -136,7 +136,7 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
     DoubleSolution solution = problem.createSolution() ;
     DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
@@ -158,7 +158,7 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
     DoubleSolution solution = problem.createSolution() ;
 
@@ -181,7 +181,7 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, distributionIndex) ;
     DoubleProblem problem = new MockDoubleProblem(1) ;
     DoubleSolution solution = problem.createSolution() ;
 
@@ -204,7 +204,7 @@ public class PolynomialMutationTest {
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
-    PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability, distributionIndex) ;
 
     MockDoubleProblem problem = new MockDoubleProblem(1) ;
     ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Double[]{1.0}));
@@ -271,13 +271,13 @@ public class PolynomialMutationTest {
 		defaultGenerator.setRandomGenerator(auditor);
 		auditor.addListener((a) -> defaultUses[0]++);
 
-		new PolynomialMutation(crossoverProbability, alpha, solutionRepair).execute(solution);
+		new PolynomialMutation<>(crossoverProbability, alpha, solutionRepair).execute(solution);
 		assertTrue("No use of the default generator", defaultUses[0] > 0);
 
 		// Test same configuration uses custom generator instead
 		defaultUses[0] = 0;
 		final int[] customUses = { 0 };
-		new PolynomialMutation(crossoverProbability, alpha, solutionRepair, () -> {
+		new PolynomialMutation<>(crossoverProbability, alpha, solutionRepair, () -> {
 			customUses[0]++;
 			return new Random().nextDouble();
 		}).execute(solution);

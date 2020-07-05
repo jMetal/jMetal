@@ -60,7 +60,7 @@ public class SMPSOMeasuresWithChartsRunner extends AbstractAlgorithmRunner {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex) ;
 
     int maxIterations = 3000 ;
     int swarmSize = 200 ;

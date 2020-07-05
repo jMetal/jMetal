@@ -51,7 +51,7 @@ public class MOEADWithChartExample extends AbstractAlgorithmRunner {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     double neighborhoodSelectionProbability = 1.0;
     int neighborhoodSize = 20;

@@ -101,7 +101,7 @@ public class NSGAIIStudy2 {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 5),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                         10.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -113,7 +113,7 @@ public class NSGAIIStudy2 {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                         20.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -124,7 +124,7 @@ public class NSGAIIStudy2 {
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(), new SBXCrossover(1.0, 40.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                         40.0),
                 100)
                 .setMaxEvaluations(25000)
@@ -135,7 +135,7 @@ public class NSGAIIStudy2 {
       for (int i = 0; i < problemList.size(); i++) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(), new SBXCrossover(1.0, 80.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
                         80.0),
                 100)
                 .setMaxEvaluations(25000)

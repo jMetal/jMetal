@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 
@@ -31,7 +32,7 @@ public class CompositeMutationTest {
 
   @Test
   public void shouldConstructorCreateAValidOperatorWhenAddingASingleMutationOperator() {
-    PolynomialMutation mutation = new PolynomialMutation(0.9, 20.0);
+    PolynomialMutation<DoubleSolution> mutation = new PolynomialMutation<>(0.9, 20.0);
     List<MutationOperator<?>> operatorList = new ArrayList<>();
     operatorList.add(mutation);
 
@@ -42,7 +43,7 @@ public class CompositeMutationTest {
 
   @Test
   public void shouldConstructorCreateAValidOperatorWhenAddingTwoMutationOperators() {
-    PolynomialMutation polynomialMutation = new PolynomialMutation(0.9, 20.0);
+    PolynomialMutation<DoubleSolution> polynomialMutation = new PolynomialMutation<>(0.9, 20.0);
     BitFlipMutation bitFlipMutation = new BitFlipMutation(0.9);
 
     List<MutationOperator<?>> operatorList = new ArrayList<>();
@@ -57,7 +58,7 @@ public class CompositeMutationTest {
   @Test
   public void shouldExecuteWorkProperlyWithASingleMutationOperator() {
     CompositeMutation operator =
-            new CompositeMutation(Arrays.asList(new PolynomialMutation(1.0, 20.0)));
+            new CompositeMutation(Arrays.asList(new PolynomialMutation<>(1.0, 20.0)));
     DummyDoubleProblem problem = new DummyDoubleProblem();
     CompositeSolution solution = new CompositeSolution(Arrays.asList(problem.createSolution()));
 
@@ -72,7 +73,7 @@ public class CompositeMutationTest {
   public void shouldExecuteWorkProperlyWithTwoMutationOperators() {
     CompositeMutation operator =
             new CompositeMutation(
-                    Arrays.asList(new PolynomialMutation(1.0, 20.0), new BitFlipMutation(0.01)));
+                    Arrays.asList(new PolynomialMutation<>(1.0, 20.0), new BitFlipMutation(0.01)));
 
     DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
     CompositeSolution solution =
@@ -91,7 +92,7 @@ public class CompositeMutationTest {
   public void shouldExecuteRaiseAnExceptionIfTheTypesOfTheSolutionsDoNotMatchTheMutationOperators() {
     CompositeMutation operator =
             new CompositeMutation(
-                    Arrays.asList(new PolynomialMutation(1.0, 20.0), new BitFlipMutation(0.01)));
+                    Arrays.asList(new PolynomialMutation<>(1.0, 20.0), new BitFlipMutation(0.01)));
 
     DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
     CompositeSolution solution =

@@ -52,7 +52,7 @@ public class NSGAII {
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(
+        new PolynomialMutation<>(
             mutationProbability, mutationDistributionIndex, mutationSolutionRepair);
 
     CrossoverAndMutationVariation<DoubleSolution> variation =

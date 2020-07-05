@@ -46,7 +46,7 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
     int offspringPopulationSize = populationSize;

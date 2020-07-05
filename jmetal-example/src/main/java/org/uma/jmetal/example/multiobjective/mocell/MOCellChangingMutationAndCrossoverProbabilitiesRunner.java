@@ -69,7 +69,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex) ;
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
@@ -104,7 +104,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
 
         if (evaluations > 10000) {
           crossoverOperator = new SBXCrossover(0.7, 20.0) ;
-          mutationOperator = new PolynomialMutation(0.001, 30.0) ;
+          mutationOperator = new PolynomialMutation<>(0.001, 30.0) ;
         }
       }
     }

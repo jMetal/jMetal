@@ -40,7 +40,7 @@ public class PESA2BuilderTest {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex) ;
 
     builder = new PESA2Builder<DoubleSolution>(problem, crossover, mutation);
   }
@@ -67,7 +67,7 @@ public class PESA2BuilderTest {
     assertEquals(0.9, crossover.getCrossoverProbability(), EPSILON);
     assertEquals(20.0, crossover.getDistributionIndex(), EPSILON);
 
-    PolynomialMutation mutation = (PolynomialMutation) builder.getMutationOperator();
+    PolynomialMutation<DoubleSolution> mutation = (PolynomialMutation<DoubleSolution>) builder.getMutationOperator();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.getMutationProbability(),
         EPSILON);
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);

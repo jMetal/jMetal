@@ -51,7 +51,7 @@ public class SMPSORPWithMultipleReferencePointsRunner {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     int maxIterations = 250;
     int swarmSize = 100;

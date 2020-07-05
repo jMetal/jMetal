@@ -35,7 +35,7 @@ public class GenerationalGeneticAlgorithmDoubleEncodingRunner {
     CrossoverOperator<DoubleSolution> crossover =
             new SBXCrossover(0.9, 20.0) ;
     MutationOperator<DoubleSolution> mutation =
-            new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+            new PolynomialMutation<>(1.0 / problem.getNumberOfVariables(), 20.0) ;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>() ;
 
     algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)

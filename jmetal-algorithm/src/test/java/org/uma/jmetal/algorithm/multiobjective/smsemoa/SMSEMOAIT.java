@@ -36,7 +36,7 @@ public class SMSEMOAIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     Hypervolume<DoubleSolution> hypervolumeImplementation;
     hypervolumeImplementation = new PISAHypervolume<>();
@@ -74,7 +74,7 @@ public class SMSEMOAIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex);
 
     Hypervolume<DoubleSolution> hypervolumeImplementation;
     hypervolumeImplementation = new PISAHypervolume<>();

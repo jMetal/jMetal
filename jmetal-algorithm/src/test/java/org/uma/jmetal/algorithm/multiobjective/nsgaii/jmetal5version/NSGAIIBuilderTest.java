@@ -43,7 +43,7 @@ public class NSGAIIBuilderTest {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = new PolynomialMutation<>(mutationProbability, mutationDistributionIndex) ;
 
     int populationSize  = 100 ;
     builder = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize);
@@ -71,7 +71,7 @@ public class NSGAIIBuilderTest {
     assertEquals(0.9, crossover.getCrossoverProbability(), EPSILON);
     assertEquals(20.0, crossover.getDistributionIndex(), EPSILON);
 
-    PolynomialMutation mutation = (PolynomialMutation) builder.getMutationOperator();
+    PolynomialMutation<DoubleSolution> mutation = (PolynomialMutation<DoubleSolution>) builder.getMutationOperator();
     assertEquals(1.0 / NUMBER_OF_VARIABLES_OF_THE_MOCKED_PROBLEM, mutation.getMutationProbability(),
         EPSILON);
     assertEquals(20.0, mutation.getDistributionIndex(), EPSILON);

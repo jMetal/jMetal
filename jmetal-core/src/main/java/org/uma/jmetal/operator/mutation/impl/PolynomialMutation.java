@@ -1,12 +1,17 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.List;
+
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.metadata.Metadata;
+import org.uma.jmetal.util.metadata.impl.DoubleLowerBoundsMetadata;
+import org.uma.jmetal.util.metadata.impl.DoubleUpperBoundsMetadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -23,7 +28,7 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class PolynomialMutation implements MutationOperator<DoubleSolution> {
+public class PolynomialMutation<S extends Solution<Double>> implements MutationOperator<S> {
   private static final double DEFAULT_PROBABILITY = 0.01;
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
   private double distributionIndex;
@@ -31,6 +36,9 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private RepairDoubleSolution solutionRepair;
 
   private RandomGenerator<Double> randomGenerator;
+  
+  private final Metadata<S, List<Double>> lowerBoundsMetadata;
+  private final Metadata<S, List<Double>> upperBoundsMetadata;
 
   /** Constructor */
   public PolynomialMutation() {
@@ -38,8 +46,22 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
+  public PolynomialMutation(
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX, lowerBoundsMetadata, upperBoundsMetadata);
+  }
+
+  /** Constructor */
   public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
+  }
+
+  /** Constructor */
+  public PolynomialMutation(DoubleProblem problem, double distributionIndex,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(1.0 / problem.getNumberOfVariables(), distributionIndex, lowerBoundsMetadata, upperBoundsMetadata);
   }
 
   /** Constructor */
@@ -50,8 +72,25 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
+  public PolynomialMutation(
+      DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(1.0 / problem.getNumberOfVariables(), distributionIndex, lowerBoundsMetadata, upperBoundsMetadata);
+    this.randomGenerator = randomGenerator;
+  }
+
+  /** Constructor */
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
+  }
+
+  /** Constructor */
+  public PolynomialMutation(double mutationProbability, double distributionIndex,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue(),
+        lowerBoundsMetadata, upperBoundsMetadata);
   }
 
   /** Constructor */
@@ -68,6 +107,22 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public PolynomialMutation(
+      double mutationProbability,
+      double distributionIndex,
+      RandomGenerator<Double> randomGenerator,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(
+        mutationProbability,
+        distributionIndex,
+        new RepairDoubleSolutionWithBoundValue(),
+        randomGenerator,
+        lowerBoundsMetadata,
+        upperBoundsMetadata);
+  }
+
+  /** Constructor */
+  public PolynomialMutation(
       double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
     this(
         mutationProbability,
@@ -78,16 +133,49 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /** Constructor */
   public PolynomialMutation(
+      double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair,
+      Metadata<S, List<Double>> lowerBoundsMetadata, Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(
+        mutationProbability,
+        distributionIndex,
+        solutionRepair,
+        () -> JMetalRandom.getInstance().nextDouble(),
+        lowerBoundsMetadata,
+        upperBoundsMetadata);
+  }
+
+  /** Constructor */
+  public PolynomialMutation(
       double mutationProbability,
       double distributionIndex,
       RepairDoubleSolution solutionRepair,
       RandomGenerator<Double> randomGenerator) {
+    this(
+        mutationProbability,
+        distributionIndex,
+        solutionRepair,
+        randomGenerator,
+        new DoubleLowerBoundsMetadata<>(),
+        new DoubleUpperBoundsMetadata<>());
+  }
+
+  /** Constructor */
+  public PolynomialMutation(
+      double mutationProbability,
+      double distributionIndex,
+      RepairDoubleSolution solutionRepair,
+      RandomGenerator<Double> randomGenerator,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
     Check.that(distributionIndex >= 0, "Distribution index is negative: " + distributionIndex);
     Check.probabilityIsValid(mutationProbability);
     this.mutationProbability = mutationProbability;
     this.distributionIndex = distributionIndex;
     this.solutionRepair = solutionRepair;
     this.randomGenerator = randomGenerator;
+    
+    this.lowerBoundsMetadata = lowerBoundsMetadata;
+    this.upperBoundsMetadata = upperBoundsMetadata;
   }
 
   /* Getters */
@@ -111,7 +199,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   /** Execute() method */
   @Override
-  public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
+  public S execute(S solution) throws JMetalException {
     Check.isNotNull(solution);
 
     doMutation(solution);
@@ -171,15 +259,17 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Perform the mutation operation */
-  private void doMutation(DoubleSolution solution) {
+  private void doMutation(S solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
+    List<Double> lowerBounds = lowerBoundsMetadata.read(solution);
+    List<Double> upperBounds = upperBoundsMetadata.read(solution);
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = solution.getVariable(i);
-        yl = solution.getLowerBound(i);
-        yu = solution.getUpperBound(i);
+        yl = lowerBounds.get(i);
+        yu = upperBounds.get(i);
         if (yl == yu) {
           y = yl;
         } else {

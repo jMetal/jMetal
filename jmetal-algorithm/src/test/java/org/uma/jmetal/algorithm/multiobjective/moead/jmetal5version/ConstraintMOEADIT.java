@@ -32,7 +32,7 @@ public class ConstraintMOEADIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability,
         mutationDistributionIndex);
 
     algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)
@@ -66,7 +66,7 @@ public class ConstraintMOEADIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
+    MutationOperator<DoubleSolution> mutation = new PolynomialMutation<>(mutationProbability,
         mutationDistributionIndex);
 
     algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)

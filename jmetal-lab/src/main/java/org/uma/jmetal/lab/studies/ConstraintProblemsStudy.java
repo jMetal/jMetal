@@ -114,7 +114,7 @@ public class ConstraintProblemsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
                 100)
                 .setMaxEvaluations(25000)
                 .build();
@@ -125,7 +125,7 @@ public class ConstraintProblemsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, problemList.get(i), run));
       }
@@ -135,7 +135,7 @@ public class ConstraintProblemsStudy {
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder((DoubleProblem) problemList.get(i).getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
-                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+                .setMutation(new PolynomialMutation<>(mutationProbability, mutationDistributionIndex))
                 .setMaxIterations(250)
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
@@ -160,7 +160,7 @@ public class ConstraintProblemsStudy {
         Algorithm<List<DoubleSolution>> algorithm = new MOCellBuilder<DoubleSolution>(
                 (DoubleProblem) problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
+                new PolynomialMutation<>(1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0))
                 .setSelectionOperator(new BinaryTournamentSelection<>())
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)
