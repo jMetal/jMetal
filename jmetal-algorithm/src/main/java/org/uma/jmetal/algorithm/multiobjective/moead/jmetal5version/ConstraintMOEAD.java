@@ -21,7 +21,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
 
-  private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+  private DifferentialEvolutionCrossover<DoubleSolution> differentialEvolutionCrossover ;
   private ViolationThresholdComparator<DoubleSolution> violationThresholdComparator ;
 
   public ConstraintMOEAD(Problem<DoubleSolution> problem,
@@ -39,7 +39,7 @@ public class ConstraintMOEAD extends AbstractMOEAD<DoubleSolution>  {
         dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions,
         neighborSize);
 
-    differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
+    differentialEvolutionCrossover = (DifferentialEvolutionCrossover<DoubleSolution>)crossoverOperator ;
     violationThresholdComparator = new ViolationThresholdComparator<DoubleSolution>() ;
   }
 

@@ -40,7 +40,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     DoubleProblem problem;
     MOEADDE algorithm;
     MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
@@ -55,7 +55,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     double cr = 1.0;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        new DifferentialEvolutionCrossover<>(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();

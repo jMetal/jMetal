@@ -36,7 +36,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
       int populationSize,
       int maxEvaluations,
       DifferentialEvolutionSelection selection,
-      DifferentialEvolutionCrossover crossover,
+      DifferentialEvolutionCrossover<DoubleSolution> crossover,
       SolutionListEvaluator<DoubleSolution> evaluator) {
     setProblem(problem);
     setMaxPopulationSize(populationSize);

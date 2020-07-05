@@ -30,7 +30,7 @@ public class DifferentialEvolutionTestIT {
   private int populationSize;
   private int maxEvaluations;
 
-  @Mock private DifferentialEvolutionCrossover crossover;
+  @Mock private DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
   @Mock private DifferentialEvolutionSelection selection;
 

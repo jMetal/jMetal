@@ -42,7 +42,7 @@ public class CDGRunner extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws FileNotFoundException {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
     String problemName;
     String referenceParetoFront = "";
@@ -62,7 +62,7 @@ public class CDGRunner extends AbstractAlgorithmRunner {
     double cr = 1.0;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        new DifferentialEvolutionCrossover<>(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     algorithm =

@@ -23,7 +23,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
-  protected DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+  protected DifferentialEvolutionCrossover<DoubleSolution> differentialEvolutionCrossover ;
 
   protected DoubleSolution[] savedValues;
   protected double[] utility;
@@ -39,7 +39,7 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
         dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions,
         neighborSize);
 
-    differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
+    differentialEvolutionCrossover = (DifferentialEvolutionCrossover<DoubleSolution>)crossoverOperator ;
 
     savedValues = new DoubleSolution[populationSize];
     utility = new double[populationSize];

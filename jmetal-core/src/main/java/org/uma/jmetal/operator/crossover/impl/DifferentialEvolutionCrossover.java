@@ -1,11 +1,14 @@
 package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.metadata.Metadata;
+import org.uma.jmetal.util.metadata.impl.CompositeMetadata;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -27,7 +30,7 @@ import java.util.stream.IntStream;
  *     (current-to-best/1/bin) - current-to-rand/1/exp (current-to-best/1/exp)
  */
 @SuppressWarnings("serial")
-public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleSolution> {
+public class DifferentialEvolutionCrossover<S extends Solution<Double>> implements CrossoverOperator<S> {
   public enum DE_VARIANT {
     RAND_1_BIN,
     RAND_1_EXP,
@@ -69,17 +72,45 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
   private DE_VARIANT variant;
 
-  private DoubleSolution currentSolution = null;
-  private DoubleSolution bestSolution = null;
+  private S currentSolution = null;
+  private S bestSolution = null;
 
   private BoundedRandomGenerator<Integer> jRandomGenerator;
   private BoundedRandomGenerator<Double> crRandomGenerator;
 
   private RepairDoubleSolution solutionRepair;
 
+  private final Metadata<S, List<Double>> lowerBoundsMetadata;
+  private final Metadata<S, List<Double>> upperBoundsMetadata;
+
   /** Constructor */
   public DifferentialEvolutionCrossover() {
-    this(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT);
+    this(defaultLowerBoundsMetadata(), defaultUpperBoundsMetadata());
+  }
+
+  private static <S extends Solution<Double>> Metadata<S, List<Double>> defaultLowerBoundsMetadata() {
+    CompositeMetadata<S, List<Double>> composite = new CompositeMetadata<>();
+    composite.put(//
+        DoubleSolution.class::isInstance, //
+        DoubleSolution.class::cast, //
+        DoubleSolution.lowerBoundsMetadata());
+    return composite;
+  }
+  
+  private static <S extends Solution<Double>> Metadata<S, List<Double>> defaultUpperBoundsMetadata() {
+    CompositeMetadata<S, List<Double>> composite = new CompositeMetadata<>();
+    composite.put(//
+        DoubleSolution.class::isInstance, //
+        DoubleSolution.class::cast, //
+        DoubleSolution.upperBoundsMetadata());
+    return composite;
+  }
+  
+  /** Constructor */
+  public DifferentialEvolutionCrossover(
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT, lowerBoundsMetadata, upperBoundsMetadata);
   }
 
   /**
@@ -95,7 +126,28 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         f,
         variant,
         (a, b) -> JMetalRandom.getInstance().nextInt(a, b),
-        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b),
+        defaultLowerBoundsMetadata(),
+        defaultUpperBoundsMetadata());
+  }
+
+  /**
+   * Constructor
+   *
+   * @param cr
+   * @param f
+   * @param variant
+   */
+  public DifferentialEvolutionCrossover(double cr, double f,DE_VARIANT variant,
+      Metadata<S, List<Double>> lowerBoundsMetadata, Metadata<S, List<Double>> upperBoundsMetadata) {
+    this(
+        cr,
+        f,
+        variant,
+        (a, b) -> JMetalRandom.getInstance().nextInt(a, b),
+        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b),
+        lowerBoundsMetadata,
+        upperBoundsMetadata);
   }
 
   /**
@@ -107,13 +159,16 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param randomGenerator
    */
   public DifferentialEvolutionCrossover(
-      double cr, double f, DE_VARIANT variant, RandomGenerator<Double> randomGenerator) {
+      double cr, double f, DE_VARIANT variant, RandomGenerator<Double> randomGenerator,
+      Metadata<S, List<Double>> lowerBoundsMetadata, Metadata<S, List<Double>> upperBoundsMetadata) {
     this(
         cr,
         f,
         variant,
         BoundedRandomGenerator.fromDoubleToInteger(randomGenerator),
-        BoundedRandomGenerator.bound(randomGenerator));
+        BoundedRandomGenerator.bound(randomGenerator),
+        lowerBoundsMetadata,
+        upperBoundsMetadata);
   }
 
   /**
@@ -130,7 +185,10 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       double f,
       DE_VARIANT variant,
       BoundedRandomGenerator<Integer> jRandomGenerator,
-      BoundedRandomGenerator<Double> crRandomGenerator) {
+      BoundedRandomGenerator<Double> crRandomGenerator,
+      Metadata<S, List<Double>> lowerBoundsMetadata,
+      Metadata<S, List<Double>> upperBoundsMetadata) {
+
     this.cr = cr;
     this.f = f;
     this.variant = variant;
@@ -141,6 +199,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     this.crRandomGenerator = crRandomGenerator;
 
     solutionRepair = new RepairDoubleSolutionWithBoundValue();
+
+    this.lowerBoundsMetadata = lowerBoundsMetadata;
+    this.upperBoundsMetadata = upperBoundsMetadata;
   }
 
   private void analyzeVariant(DE_VARIANT variant) {
@@ -250,11 +311,11 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   /* Setters */
-  public void setCurrentSolution(DoubleSolution current) {
+  public void setCurrentSolution(S current) {
     this.currentSolution = current;
   }
 
-  public void setBestSolution(DoubleSolution bestSolution) {
+  public void setBestSolution(S bestSolution) {
     this.bestSolution = bestSolution;
   }
 
@@ -268,8 +329,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
   /** Execute() method */
   @Override
-  public List<DoubleSolution> execute(List<DoubleSolution> parentSolutions) {
-    DoubleSolution child = (DoubleSolution) currentSolution.copy();
+  public List<S> execute(List<S> parentSolutions) {
+    S child = (S) currentSolution.copy();
 
     int numberOfVariables = parentSolutions.get(0).getNumberOfVariables();
     int jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
@@ -407,12 +468,14 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
     repairVariableValues(child);
 
-    List<DoubleSolution> result = new ArrayList<>(1);
+    List<S> result = new ArrayList<>(1);
     result.add(child);
     return result;
   }
 
-  private void repairVariableValues(DoubleSolution solution) {
+  private void repairVariableValues(S solution) {
+    List<Double> lowerBounds = lowerBoundsMetadata.read(solution);
+    List<Double> upperBounds = upperBoundsMetadata.read(solution);
     IntStream.range(0, solution.getNumberOfVariables())
         .forEach(
             i ->
@@ -420,8 +483,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
                     i,
                     solutionRepair.repairSolutionVariableValue(
                         solution.getVariable(i),
-                        solution.getLowerBound(i),
-                        solution.getUpperBound(i))));
+                        lowerBounds.get(i),
+                        upperBounds.get(i))));
   }
 
   private double mutate(Double[][] parent, int index) {

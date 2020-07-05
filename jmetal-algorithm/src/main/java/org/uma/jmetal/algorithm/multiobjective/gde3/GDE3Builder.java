@@ -20,7 +20,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
   protected int populationSize;
   protected int maxEvaluations;
 
-  protected DifferentialEvolutionCrossover crossoverOperator;
+  protected DifferentialEvolutionCrossover<DoubleSolution> crossoverOperator;
   protected DifferentialEvolutionSelection selectionOperator;
 
   protected SolutionListEvaluator<DoubleSolution> evaluator;
@@ -31,7 +31,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     maxEvaluations = 25000 ;
     populationSize = 100 ;
     selectionOperator = new DifferentialEvolutionSelection();
-    crossoverOperator = new DifferentialEvolutionCrossover() ;
+    crossoverOperator = new DifferentialEvolutionCrossover<>() ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
   }
 
@@ -48,7 +48,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     return this;
   }
 
-  public GDE3Builder setCrossover(DifferentialEvolutionCrossover crossover) {
+  public GDE3Builder setCrossover(DifferentialEvolutionCrossover<DoubleSolution> crossover) {
     crossoverOperator = crossover;
 
     return this;

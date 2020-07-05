@@ -45,7 +45,7 @@ public class DifferentialEvolutionBuilderTest {
     assertEquals(100, builder.getPopulationSize());
     assertEquals(25000, builder.getMaxEvaluations());
 
-    DifferentialEvolutionCrossover crossover = builder.getCrossoverOperator();
+    DifferentialEvolutionCrossover<DoubleSolution> crossover = builder.getCrossoverOperator();
     assertEquals(0.5, crossover.getCr(), EPSILON);
     assertEquals(0.5, crossover.getF(), EPSILON);
     assertTrue(DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN.equals(crossover.getVariant()));
@@ -70,7 +70,7 @@ public class DifferentialEvolutionBuilderTest {
   }
 
   @Test public void setNewCrossoverOperator() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover<DoubleSolution> crossover = new DifferentialEvolutionCrossover<>();
     assertNotEquals(crossover, builder.getCrossoverOperator());
     builder.setCrossover(crossover);
     assertEquals(crossover, builder.getCrossoverOperator());

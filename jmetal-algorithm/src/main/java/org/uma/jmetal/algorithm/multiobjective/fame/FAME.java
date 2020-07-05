@@ -195,8 +195,8 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     double CR, F;
     CR = 1.0;
     F = 0.5;
-    DifferentialEvolutionCrossover crossoverOperator_DE =
-        new DifferentialEvolutionCrossover(CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    DifferentialEvolutionCrossover<DoubleSolution> crossoverOperator_DE =
+        new DifferentialEvolutionCrossover<>(CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double crossoverProbability, crossoverDistributionIndex;
     crossoverProbability = 1.0;

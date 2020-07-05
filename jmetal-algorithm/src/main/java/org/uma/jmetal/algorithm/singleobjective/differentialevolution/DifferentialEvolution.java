@@ -37,7 +37,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
    * @param evaluator
    */
   public DifferentialEvolution(DoubleProblem problem, int maxEvaluations, int populationSize,
-                               DifferentialEvolutionCrossover crossoverOperator,
+                               DifferentialEvolutionCrossover<DoubleSolution> crossoverOperator,
                                DifferentialEvolutionSelection selectionOperator, SolutionListEvaluator<DoubleSolution> evaluator) {
     setProblem(problem); ;
     this.maxEvaluations = maxEvaluations;

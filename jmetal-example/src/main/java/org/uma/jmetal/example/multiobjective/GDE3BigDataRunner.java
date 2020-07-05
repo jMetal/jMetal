@@ -35,7 +35,7 @@ public class GDE3BigDataRunner {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
     String instanceName ;
 
@@ -55,7 +55,7 @@ public class GDE3BigDataRunner {
 
     double cr = 1.5 ;
     double f = 0.5 ;
-    crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
+    crossover = new DifferentialEvolutionCrossover<>(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
 
     selection = new DifferentialEvolutionSelection() ;
 

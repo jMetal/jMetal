@@ -38,7 +38,7 @@ public class CellDE45 implements Algorithm<List<DoubleSolution>> {
   private List<DoubleSolution> currentNeighbors;
 
   private SelectionOperator<List<DoubleSolution>, DoubleSolution> selection ;
-  private DifferentialEvolutionCrossover crossover ;
+  private DifferentialEvolutionCrossover<DoubleSolution> crossover ;
 
   private BoundedArchive<DoubleSolution> archive;
 
@@ -58,7 +58,7 @@ public class CellDE45 implements Algorithm<List<DoubleSolution>> {
                   BoundedArchive<DoubleSolution> archive,
                   Neighborhood<DoubleSolution> neighborhood,
                   SelectionOperator<List<DoubleSolution>, DoubleSolution> selection,
-                  DifferentialEvolutionCrossover crossover,
+                  DifferentialEvolutionCrossover<DoubleSolution> crossover,
                   double feedback,
                   SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem ;

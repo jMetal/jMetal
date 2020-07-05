@@ -17,13 +17,13 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
 
   private SequenceGenerator<Integer> solutionIndexGenerator ;
 
-  private DifferentialEvolutionCrossover crossover;
+  private DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
   private MutationOperator<DoubleSolution> mutation;
 
   public DifferentialCrossoverVariation(
       int offspringPopulationSize,
-      DifferentialEvolutionCrossover crossover,
+      DifferentialEvolutionCrossover<DoubleSolution> crossover,
       MutationOperator<DoubleSolution> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
     this.offspringPopulationSize = offspringPopulationSize;
     this.crossover = crossover;
@@ -34,7 +34,7 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
   }
 
   public DifferentialCrossoverVariation(
-      int offspringPopulationSize, DifferentialEvolutionCrossover crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
+      int offspringPopulationSize, DifferentialEvolutionCrossover<DoubleSolution> crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
     this(offspringPopulationSize, crossover, new NullMutation<>(), solutionIndexGenerator);
   }
 
@@ -62,7 +62,7 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     return offspringPopulation;
   }
 
-  public DifferentialEvolutionCrossover getCrossover() {
+  public DifferentialEvolutionCrossover<DoubleSolution> getCrossover() {
     return crossover;
   }
 

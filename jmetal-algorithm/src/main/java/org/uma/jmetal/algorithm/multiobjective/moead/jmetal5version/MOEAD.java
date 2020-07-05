@@ -21,7 +21,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class MOEAD extends AbstractMOEAD<DoubleSolution> {
-  protected DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+  protected DifferentialEvolutionCrossover<DoubleSolution> differentialEvolutionCrossover ;
 
   public MOEAD(Problem<DoubleSolution> problem,
       int populationSize,
@@ -38,7 +38,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
         dataDirectory, neighborhoodSelectionProbability, maximumNumberOfReplacedSolutions,
         neighborSize);
 
-    differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
+    differentialEvolutionCrossover = (DifferentialEvolutionCrossover<DoubleSolution>)crossoverOperator ;
   }
 
   @Override public void run() {

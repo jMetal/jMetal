@@ -32,7 +32,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
     String problemName;
     String referenceParetoFront = "";
@@ -51,7 +51,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
     double cr = 1.0;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        new DifferentialEvolutionCrossover<>(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();

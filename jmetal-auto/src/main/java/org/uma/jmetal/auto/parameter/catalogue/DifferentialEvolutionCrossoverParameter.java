@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.Parameter;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -26,12 +27,12 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
     return this;
   }
 
-  public DifferentialEvolutionCrossover getParameter() {
-    DifferentialEvolutionCrossover result;
+  public DifferentialEvolutionCrossover<DoubleSolution> getParameter() {
+    DifferentialEvolutionCrossover<DoubleSolution> result;
     Double cr = (Double) findSpecificParameter("cr").getValue();
     Double f  = (Double) findSpecificParameter("f").getValue() ;
 
-    result = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
+    result = new DifferentialEvolutionCrossover<>(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
 
     return result;
   }

@@ -37,7 +37,7 @@ public class CellDERunner extends AbstractAlgorithmRunner {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
     String referenceParetoFront = "" ;
 
     String problemName ;
@@ -56,7 +56,7 @@ public class CellDERunner extends AbstractAlgorithmRunner {
     double cr = 0.5 ;
     double f = 0.5 ;
 
-    crossover = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
+    crossover = new DifferentialEvolutionCrossover<>(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 

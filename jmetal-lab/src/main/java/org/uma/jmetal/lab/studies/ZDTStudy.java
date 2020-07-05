@@ -129,7 +129,7 @@ public class ZDTStudy {
 
       for (var experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
-                .setCrossover(new DifferentialEvolutionCrossover(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
+                .setCrossover(new DifferentialEvolutionCrossover<>(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
                 .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
                         20.0))
                 .setMaxEvaluations(25000)

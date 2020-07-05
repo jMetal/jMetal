@@ -35,7 +35,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class CDG extends AbstractCDG<DoubleSolution> {
-  private DifferentialEvolutionCrossover differentialEvolutionCrossover ;
+  private DifferentialEvolutionCrossover<DoubleSolution> differentialEvolutionCrossover ;
 
   public CDG(Problem<DoubleSolution> problem,
       int populationSize,
@@ -52,7 +52,7 @@ public class CDG extends AbstractCDG<DoubleSolution> {
     super(problem, populationSize, resultPopulationSize, maxEvaluations, crossover,
         neighborhoodSelectionProbability, sigma_, k_, t_, subproblemNum_, childGrid_, childGridNum_);
 
-    differentialEvolutionCrossover = (DifferentialEvolutionCrossover)crossoverOperator ;
+    differentialEvolutionCrossover = (DifferentialEvolutionCrossover<DoubleSolution>)crossoverOperator ;
   }
 
   @Override public void run() {

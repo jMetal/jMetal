@@ -31,7 +31,7 @@ import static org.uma.jmetal.util.ConstraintHandling.isFeasible;
 @SuppressWarnings("serial")
 public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
-  private DifferentialEvolutionCrossover differentialEvolutionCrossover;
+  private DifferentialEvolutionCrossover<DoubleSolution> differentialEvolutionCrossover;
   private double epsilonK;
   private double phiMax = -1e30;
   private List<DoubleSolution> archive ;
@@ -61,7 +61,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         maximumNumberOfReplacedSolutions,
         neighborSize);
 
-    differentialEvolutionCrossover = (DifferentialEvolutionCrossover) crossoverOperator;
+    differentialEvolutionCrossover = (DifferentialEvolutionCrossover<DoubleSolution>) crossoverOperator;
     archive = new ArrayList<>() ;
   }
 

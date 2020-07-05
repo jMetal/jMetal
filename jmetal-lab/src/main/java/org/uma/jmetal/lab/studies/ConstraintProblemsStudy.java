@@ -147,7 +147,7 @@ public class ConstraintProblemsStudy {
         double f = 0.5;
 
         Algorithm<List<DoubleSolution>> algorithm = new GDE3Builder((DoubleProblem) problemList.get(i).getProblem())
-                .setCrossover(new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
+                .setCrossover(new DifferentialEvolutionCrossover<>(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
                 .setSelection(new DifferentialEvolutionSelection())
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)

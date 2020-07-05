@@ -34,7 +34,7 @@ public class DifferentialEvolutionRunner {
     DoubleProblem problem;
     Algorithm<DoubleSolution> algorithm;
     DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
     SolutionListEvaluator<DoubleSolution> evaluator;
 
     problem = new Sphere(20);
@@ -53,7 +53,7 @@ public class DifferentialEvolutionRunner {
     }
 
     crossover =
-        new DifferentialEvolutionCrossover(
+        new DifferentialEvolutionCrossover<>(
             0.5, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     selection = new DifferentialEvolutionSelection();
 

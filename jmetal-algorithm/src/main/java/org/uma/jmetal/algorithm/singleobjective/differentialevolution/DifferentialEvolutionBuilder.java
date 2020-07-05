@@ -16,7 +16,7 @@ public class DifferentialEvolutionBuilder {
   private DoubleProblem problem;
   private int populationSize;
   private int maxEvaluations;
-  private DifferentialEvolutionCrossover crossoverOperator;
+  private DifferentialEvolutionCrossover<DoubleSolution> crossoverOperator;
   private DifferentialEvolutionSelection selectionOperator;
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
@@ -24,7 +24,7 @@ public class DifferentialEvolutionBuilder {
     this.problem = problem;
     this.populationSize = 100;
     this.maxEvaluations = 25000;
-    this.crossoverOperator = new DifferentialEvolutionCrossover(0.5, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+    this.crossoverOperator = new DifferentialEvolutionCrossover<>(0.5, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     this.selectionOperator = new DifferentialEvolutionSelection();
     this.evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
   }
@@ -49,7 +49,7 @@ public class DifferentialEvolutionBuilder {
     return this;
   }
 
-  public DifferentialEvolutionBuilder setCrossover(DifferentialEvolutionCrossover crossover) {
+  public DifferentialEvolutionBuilder setCrossover(DifferentialEvolutionCrossover<DoubleSolution> crossover) {
     this.crossoverOperator = crossover;
 
     return this;
@@ -85,7 +85,7 @@ public class DifferentialEvolutionBuilder {
     return maxEvaluations;
   }
 
-  public DifferentialEvolutionCrossover getCrossoverOperator() {
+  public DifferentialEvolutionCrossover<DoubleSolution> getCrossoverOperator() {
     return crossoverOperator;
   }
 

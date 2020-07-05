@@ -32,7 +32,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     DifferentialEvolutionSelection selection;
-    DifferentialEvolutionCrossover crossover;
+    DifferentialEvolutionCrossover<DoubleSolution> crossover;
 
     String referenceParetoFront = "";
 
@@ -52,7 +52,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     double cr = 0.5;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        new DifferentialEvolutionCrossover<>(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     selection = new DifferentialEvolutionSelection();
 
