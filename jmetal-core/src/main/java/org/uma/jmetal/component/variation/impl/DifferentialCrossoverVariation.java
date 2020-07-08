@@ -24,6 +24,21 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
   public DifferentialCrossoverVariation(
       int offspringPopulationSize,
       DifferentialEvolutionCrossover crossover,
+      MutationOperator<DoubleSolution> mutation,
+      SequenceGenerator<Integer> solutionIndexGenerator,
+      int matingPoolSize) {
+    this.offspringPopulationSize = offspringPopulationSize;
+    this.crossover = crossover;
+    this.mutation = mutation;
+    this.solutionIndexGenerator = solutionIndexGenerator ;
+    this.matingPoolSize = matingPoolSize;
+  }
+
+  /** @deprecated Use instead {@link #createWithDefaultMatingPoolSize(int, DifferentialEvolutionCrossover, MutationOperator, SequenceGenerator)}. */
+  @Deprecated
+  public DifferentialCrossoverVariation(
+      int offspringPopulationSize,
+      DifferentialEvolutionCrossover crossover,
       MutationOperator<DoubleSolution> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
     this.offspringPopulationSize = offspringPopulationSize;
     this.crossover = crossover;
@@ -33,9 +48,28 @@ public class DifferentialCrossoverVariation implements Variation<DoubleSolution>
     this.matingPoolSize = offspringPopulationSize * crossover.getNumberOfRequiredParents();
   }
 
+  public static DifferentialCrossoverVariation createWithDefaultMatingPoolSize(
+      int offspringPopulationSize,
+      DifferentialEvolutionCrossover crossover,
+      MutationOperator<DoubleSolution> mutation, SequenceGenerator<Integer> solutionIndexGenerator) {
+    return new DifferentialCrossoverVariation(
+        offspringPopulationSize,
+        crossover,
+        mutation,
+        solutionIndexGenerator,
+        offspringPopulationSize * crossover.getNumberOfRequiredParents());
+  }
+  
+  /** @deprecated Use instead {@link #createWithDefaultMatingPoolSizeAndNullMutation(int, DifferentialEvolutionCrossover, SequenceGenerator)}. */
+  @Deprecated
   public DifferentialCrossoverVariation(
       int offspringPopulationSize, DifferentialEvolutionCrossover crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
     this(offspringPopulationSize, crossover, new NullMutation<>(), solutionIndexGenerator);
+  }
+
+  public static DifferentialCrossoverVariation createWithDefaultMatingPoolSizeAndNullMutation(
+      int offspringPopulationSize, DifferentialEvolutionCrossover crossover, SequenceGenerator<Integer> solutionIndexGenerator) {
+    return createWithDefaultMatingPoolSize(offspringPopulationSize, crossover, new NullMutation<>(), solutionIndexGenerator);
   }
 
   @Override
