@@ -78,8 +78,41 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private RepairDoubleSolution solutionRepair;
 
   /** Constructor */
+  public DifferentialEvolutionCrossover(
+      double cr,
+      double f,
+      DE_VARIANT variant,
+      int numberOfDifferenceVectors,
+      DE_CROSSOVER_TYPE crossoverType,
+      DE_MUTATION_TYPE mutationType,
+      BoundedRandomGenerator<Integer> jRandomGenerator,
+      BoundedRandomGenerator<Double> crRandomGenerator,
+      RepairDoubleSolution solutionRepair) {
+
+    this.cr = cr;
+    this.f = f;
+    this.variant = variant;
+    this.numberOfDifferenceVectors = numberOfDifferenceVectors;
+    this.crossoverType = crossoverType;
+    this.mutationType = mutationType;
+    this.jRandomGenerator = jRandomGenerator;
+    this.crRandomGenerator = crRandomGenerator;
+    this.solutionRepair = solutionRepair;
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createDefault()}
+   */
+  @Deprecated
   public DifferentialEvolutionCrossover() {
     this(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT);
+  }
+
+  /** Creates a {@link DifferentialEvolutionCrossover} with default values */
+  public static DifferentialEvolutionCrossover createDefault() {
+    return DifferentialEvolutionCrossover.createWithFewParameters(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT);
   }
 
   /**
@@ -88,9 +121,27 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param cr
    * @param f
    * @param variant
+   * @deprecated Use instead {@link #createWithFewParameters(double, double, DE_VARIANT)}
    */
+  @Deprecated
   public DifferentialEvolutionCrossover(double cr, double f, DE_VARIANT variant) {
     this(
+        cr,
+        f,
+        variant,
+        (a, b) -> JMetalRandom.getInstance().nextInt(a, b),
+        (a, b) -> JMetalRandom.getInstance().nextDouble(a, b));
+  }
+
+  /**
+   * Creates a {@link DifferentialEvolutionCrossover} from {@link DE_VARIANT} and other parameters.
+   *
+   * @param cr
+   * @param f
+   * @param variant
+   */
+  public static DifferentialEvolutionCrossover createWithFewParameters(double cr, double f, DE_VARIANT variant) {
+    return DifferentialEvolutionCrossover.createWithDetailedParameters(
         cr,
         f,
         variant,
@@ -105,10 +156,30 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param f
    * @param variant
    * @param randomGenerator
+   * @deprecated Use instead {@link #createWithSomeParameters(double, double, DE_VARIANT, RandomGenerator)}.
    */
+  @Deprecated
   public DifferentialEvolutionCrossover(
       double cr, double f, DE_VARIANT variant, RandomGenerator<Double> randomGenerator) {
     this(
+        cr,
+        f,
+        variant,
+        BoundedRandomGenerator.fromDoubleToInteger(randomGenerator),
+        BoundedRandomGenerator.bound(randomGenerator));
+  }
+
+  /**
+   * Creates a {@link DifferentialEvolutionCrossover} from {@link DE_VARIANT} and other parameters.
+   *
+   * @param cr
+   * @param f
+   * @param variant
+   * @param randomGenerator
+   */
+  public static DifferentialEvolutionCrossover createWithSomeParameters(
+      double cr, double f, DE_VARIANT variant, RandomGenerator<Double> randomGenerator) {
+    return DifferentialEvolutionCrossover.createWithDetailedParameters(
         cr,
         f,
         variant,
@@ -124,7 +195,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param variant
    * @param jRandomGenerator
    * @param crRandomGenerator
+   * @deprecated Use instead {@link #createWithDetailedParameters(double, double, DE_VARIANT, BoundedRandomGenerator, BoundedRandomGenerator)}.
    */
+  @Deprecated
   public DifferentialEvolutionCrossover(
       double cr,
       double f,
@@ -143,6 +216,39 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     this.crRandomGenerator = crRandomGenerator;
 
     solutionRepair = new RepairDoubleSolutionWithBoundValue();
+  }
+
+  /**
+   * Creates a {@link DifferentialEvolutionCrossover} from {@link DE_VARIANT} and other parameters.
+   *
+   * @param cr
+   * @param f
+   * @param variant
+   * @param jRandomGenerator
+   * @param crRandomGenerator
+   */
+  public static DifferentialEvolutionCrossover createWithDetailedParameters(
+      double cr,
+      double f,
+      DE_VARIANT variant,
+      BoundedRandomGenerator<Integer> jRandomGenerator,
+      BoundedRandomGenerator<Double> crRandomGenerator) {
+    int numberOfDifferenceVectors = analyzeNumberOfDifferenceVectors(variant);
+    DE_CROSSOVER_TYPE crossoverType = analyzeCrossoverType(variant);
+    DE_MUTATION_TYPE mutationType = analyzeMutationType(variant);
+
+    RepairDoubleSolution  solutionRepair = new RepairDoubleSolutionWithBoundValue();
+    
+    return new DifferentialEvolutionCrossover(
+        cr,
+        f,
+        variant,
+        numberOfDifferenceVectors,
+        crossoverType,
+        mutationType,
+        jRandomGenerator,
+        crRandomGenerator,
+        solutionRepair);
   }
 
   private static DE_MUTATION_TYPE analyzeMutationType(DE_VARIANT variant) {
