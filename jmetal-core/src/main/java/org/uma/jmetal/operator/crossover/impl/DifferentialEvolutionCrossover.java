@@ -135,7 +135,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     this.f = f;
     this.variant = variant;
 
-    analyzeVariant(variant);
+    this.numberOfDifferenceVectors = analyzeNumberOfDifferenceVectors(variant);
+    this.crossoverType = analyzeCrossoverType(variant);
+    this.mutationType = analyzeMutationType(variant);
 
     this.jRandomGenerator = jRandomGenerator;
     this.crRandomGenerator = crRandomGenerator;
@@ -143,28 +145,30 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     solutionRepair = new RepairDoubleSolutionWithBoundValue();
   }
 
-  private void analyzeVariant(DE_VARIANT variant) {
+  private static DE_MUTATION_TYPE analyzeMutationType(DE_VARIANT variant) {
     switch (variant) {
       case RAND_1_BIN:
       case RAND_1_EXP:
-      case BEST_1_BIN:
-      case BEST_1_EXP:
-      case RAND_TO_BEST_1_BIN:
-      case RAND_TO_BEST_1_EXP:
-      case CURRENT_TO_RAND_1_BIN:
-      case CURRENT_TO_RAND_1_EXP:
-        numberOfDifferenceVectors = 1;
-        break;
       case RAND_2_BIN:
       case RAND_2_EXP:
+        return DE_MUTATION_TYPE.RAND;
+      case BEST_1_BIN:
+      case BEST_1_EXP:
       case BEST_2_BIN:
       case BEST_2_EXP:
-        numberOfDifferenceVectors = 2;
-        break;
+        return DE_MUTATION_TYPE.BEST;
+      case CURRENT_TO_RAND_1_BIN:
+      case CURRENT_TO_RAND_1_EXP:
+        return DE_MUTATION_TYPE.CURRENT_TO_RAND;
+      case RAND_TO_BEST_1_BIN:
+      case RAND_TO_BEST_1_EXP:
+        return DE_MUTATION_TYPE.RAND_TO_BEST;
       default:
-        throw new JMetalException("DE variant type invalid: " + variant);
+        throw new JMetalException("DE mutation type invalid: " + variant);
     }
+  }
 
+  private static DE_CROSSOVER_TYPE analyzeCrossoverType(DE_VARIANT variant) {
     switch (variant) {
       case RAND_1_BIN:
       case BEST_1_BIN:
@@ -172,43 +176,37 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       case CURRENT_TO_RAND_1_BIN:
       case RAND_2_BIN:
       case BEST_2_BIN:
-        crossoverType = DE_CROSSOVER_TYPE.BIN;
-        break;
+        return DE_CROSSOVER_TYPE.BIN;
       case RAND_1_EXP:
       case BEST_1_EXP:
       case RAND_TO_BEST_1_EXP:
       case CURRENT_TO_RAND_1_EXP:
       case RAND_2_EXP:
       case BEST_2_EXP:
-        crossoverType = DE_CROSSOVER_TYPE.EXP;
-        break;
+        return DE_CROSSOVER_TYPE.EXP;
       default:
         throw new JMetalException("DE crossover type invalid: " + variant);
     }
+  }
 
+  private static int analyzeNumberOfDifferenceVectors(DE_VARIANT variant) {
     switch (variant) {
       case RAND_1_BIN:
       case RAND_1_EXP:
-      case RAND_2_BIN:
-      case RAND_2_EXP:
-        mutationType = DE_MUTATION_TYPE.RAND;
-        break;
       case BEST_1_BIN:
       case BEST_1_EXP:
-      case BEST_2_BIN:
-      case BEST_2_EXP:
-        mutationType = DE_MUTATION_TYPE.BEST;
-        break;
-      case CURRENT_TO_RAND_1_BIN:
-      case CURRENT_TO_RAND_1_EXP:
-        mutationType = DE_MUTATION_TYPE.CURRENT_TO_RAND;
-        break;
       case RAND_TO_BEST_1_BIN:
       case RAND_TO_BEST_1_EXP:
-        mutationType = DE_MUTATION_TYPE.RAND_TO_BEST;
-        break;
+      case CURRENT_TO_RAND_1_BIN:
+      case CURRENT_TO_RAND_1_EXP:
+        return 1;
+      case RAND_2_BIN:
+      case RAND_2_EXP:
+      case BEST_2_BIN:
+      case BEST_2_EXP:
+        return 2;
       default:
-        throw new JMetalException("DE mutation type invalid: " + variant);
+        throw new JMetalException("DE variant type invalid: " + variant);
     }
   }
 
