@@ -32,29 +32,75 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
 
   private RandomGenerator<Double> randomGenerator;
 
-  /** Constructor */
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createWithDoubleDefaults()}.
+   */
+  @Deprecated
   public PolynomialMutation() {
     this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
   }
 
-  /** Constructor */
+  /** Creates a {@link PolynomialMutation} with default values. */
+  public static PolynomialMutation createWithDoubleDefaults() {
+    return createWithDoubleDefaults(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createFromDoubleProblem(DoubleProblem, double)}.
+   */
+  @Deprecated
   public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
   }
 
-  /** Constructor */
+  /** Creates a {@link PolynomialMutation} from {@link DoubleProblem} and other parameters. */
+  public static PolynomialMutation createFromDoubleProblem(DoubleProblem problem, double distributionIndex) {
+    return createWithDoubleDefaults(1.0 / problem.getNumberOfVariables(), distributionIndex);
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createFromDoubleProblem(DoubleProblem, double, RandomGenerator)}.
+   */
+  @Deprecated
   public PolynomialMutation(
       DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
     this.randomGenerator = randomGenerator;
   }
 
-  /** Constructor */
+  /** Creates a {@link PolynomialMutation} from {@link DoubleProblem} and other parameters. */
+  public static PolynomialMutation createFromDoubleProblem(
+      DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
+    return createWithDoubleDefaults(1.0 / problem.getNumberOfVariables(), distributionIndex, randomGenerator);
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createWithDoubleDefaults(double, double)}.
+   */
+  @Deprecated
   public PolynomialMutation(double mutationProbability, double distributionIndex) {
     this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
   }
 
-  /** Constructor */
+  /** Creates a {@link PolynomialMutation} with default values and other parameters. */
+  public static PolynomialMutation createWithDoubleDefaults(double mutationProbability, double distributionIndex) {
+    return createWithDoubleDefaults(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createWithDoubleDefaults(double, double, RandomGenerator)}.
+   */
+  @Deprecated
   public PolynomialMutation(
       double mutationProbability,
       double distributionIndex,
@@ -66,10 +112,37 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
         randomGenerator);
   }
 
-  /** Constructor */
+  /** Creates a {@link PolynomialMutation} with default values and other parameters. */
+  public static PolynomialMutation createWithDoubleDefaults(
+      double mutationProbability,
+      double distributionIndex,
+      RandomGenerator<Double> randomGenerator) {
+    return new PolynomialMutation(
+        mutationProbability,
+        distributionIndex,
+        new RepairDoubleSolutionWithBoundValue(),
+        randomGenerator);
+  }
+
+  /**
+   * Constructor
+   * 
+   * @deprecated Use instead {@link #createWithDoubleDefaults(double, double, RepairDoubleSolution)}.
+   */
+  @Deprecated
   public PolynomialMutation(
       double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
     this(
+        mutationProbability,
+        distributionIndex,
+        solutionRepair,
+        () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Creates a {@link PolynomialMutation} with default values and other parameters. */
+  public static PolynomialMutation createWithDoubleDefaults(
+      double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
+    return new PolynomialMutation(
         mutationProbability,
         distributionIndex,
         solutionRepair,
