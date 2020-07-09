@@ -55,7 +55,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     double cr = 1.0;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();

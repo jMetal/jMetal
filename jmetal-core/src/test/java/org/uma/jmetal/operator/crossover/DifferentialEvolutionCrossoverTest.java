@@ -11,7 +11,7 @@ public class DifferentialEvolutionCrossoverTest {
 
   @Test
   public void shouldDefaultConstructorCreateADefaultOperator() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
 
     assertNotNull(crossover);
     assertEquals(0.5, crossover.getCr(), EPSILON);
@@ -21,7 +21,7 @@ public class DifferentialEvolutionCrossoverTest {
 
   @Test
   public void shouldSetCrChangeTheCrParameter() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
     crossover.setCr(0.9);
 
     assertEquals(0.9, crossover.getCr(), EPSILON);
@@ -29,7 +29,7 @@ public class DifferentialEvolutionCrossoverTest {
 
   @Test
   public void shouldSetCrChangeTheFParameter() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
     crossover.setF(0.9);
 
     assertEquals(0.9, crossover.getF(), EPSILON);
@@ -37,20 +37,20 @@ public class DifferentialEvolutionCrossoverTest {
 
   @Test
   public void shouldGetCrossoverProbabilityReturnOne() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
     assertEquals(1.0, crossover.getCrossoverProbability(), EPSILON);
   }
 
   @Test
   public void shouldGetNumberOfGeneratedChildrenReturnOne() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
     assertEquals(1.0, crossover.getNumberOfGeneratedChildren(), EPSILON);
   }
 
   @Test
   public void shouldRAND_1_BINVariantBeCorrectlyParsed() {
     DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     assertEquals(1, crossover.getNumberOfDifferenceVectors());
@@ -63,7 +63,7 @@ public class DifferentialEvolutionCrossoverTest {
   @Test
   public void shouldRAND_1_EXPVariantBeCorrectlyParsed() {
     DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_EXP);
 
     assertEquals(1, crossover.getNumberOfDifferenceVectors());
@@ -76,7 +76,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldRAND_2_BINVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.RAND_2_BIN);
 
         assertEquals(2, crossover.getNumberOfDifferenceVectors());
@@ -89,7 +89,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldRAND_2_EXPVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.RAND_2_EXP);
 
         assertEquals(2, crossover.getNumberOfDifferenceVectors());
@@ -102,7 +102,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldBEST_1_BINVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.BEST_1_BIN);
 
         assertEquals(1, crossover.getNumberOfDifferenceVectors());
@@ -115,7 +115,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldBEST_1_EXPVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.BEST_1_EXP);
 
         assertEquals(1, crossover.getNumberOfDifferenceVectors());
@@ -129,7 +129,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldBEST_2_BINVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.BEST_2_BIN);
 
         assertEquals(2, crossover.getNumberOfDifferenceVectors());
@@ -142,7 +142,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldBEST_2_EXPVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.BEST_2_EXP);
 
         assertEquals(2, crossover.getNumberOfDifferenceVectors());
@@ -155,7 +155,7 @@ public class DifferentialEvolutionCrossoverTest {
     @Test
     public void shouldRAND_TO_BEST_1_BINVariantBeCorrectlyParsed() {
         DifferentialEvolutionCrossover crossover =
-                new DifferentialEvolutionCrossover(
+                DifferentialEvolutionCrossover.createFromVariant(
                         0.1, 0.1, DifferentialEvolutionCrossover.DE_VARIANT.RAND_TO_BEST_1_BIN);
 
         assertEquals(1, crossover.getNumberOfDifferenceVectors());

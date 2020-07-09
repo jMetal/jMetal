@@ -61,7 +61,7 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
     populationSize = 300;
     resultPopulationSize = 300;
     maxEvaluations = 300000;
-    crossover = new DifferentialEvolutionCrossover();
+    crossover = DifferentialEvolutionCrossover.createDefault();
     neighborhoodSelectionProbability = 0.9;
     numberOfThreads = 1;
     sigma_ = 10e-6;

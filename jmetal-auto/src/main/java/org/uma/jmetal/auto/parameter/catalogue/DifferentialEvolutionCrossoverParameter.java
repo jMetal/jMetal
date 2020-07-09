@@ -31,7 +31,7 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
     Double cr = (Double) findSpecificParameter("cr").getValue();
     Double f  = (Double) findSpecificParameter("f").getValue() ;
 
-    result = new DifferentialEvolutionCrossover(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
+    result = DifferentialEvolutionCrossover.createFromVariant(cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN) ;
 
     return result;
   }

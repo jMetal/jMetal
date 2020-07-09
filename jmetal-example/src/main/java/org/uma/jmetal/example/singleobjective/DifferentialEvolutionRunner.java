@@ -53,7 +53,7 @@ public class DifferentialEvolutionRunner {
     }
 
     crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             0.5, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     selection = new DifferentialEvolutionSelection();
 

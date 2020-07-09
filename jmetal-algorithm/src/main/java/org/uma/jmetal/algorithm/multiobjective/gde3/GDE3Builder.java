@@ -31,7 +31,7 @@ public class GDE3Builder implements AlgorithmBuilder<GDE3> {
     maxEvaluations = 25000 ;
     populationSize = 100 ;
     selectionOperator = new DifferentialEvolutionSelection();
-    crossoverOperator = new DifferentialEvolutionCrossover() ;
+    crossoverOperator = DifferentialEvolutionCrossover.createDefault() ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
   }
 

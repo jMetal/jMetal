@@ -148,7 +148,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
@@ -235,7 +235,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     InitialSolutionsCreation<DoubleSolution> createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
 
     DifferentialEvolutionCrossover crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();

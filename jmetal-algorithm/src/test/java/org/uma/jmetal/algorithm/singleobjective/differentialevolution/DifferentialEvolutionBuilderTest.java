@@ -70,7 +70,7 @@ public class DifferentialEvolutionBuilderTest {
   }
 
   @Test public void setNewCrossoverOperator() {
-    DifferentialEvolutionCrossover crossover = new DifferentialEvolutionCrossover();
+    DifferentialEvolutionCrossover crossover = DifferentialEvolutionCrossover.createDefault();
     assertNotEquals(crossover, builder.getCrossoverOperator());
     builder.setCrossover(crossover);
     assertEquals(crossover, builder.getCrossoverOperator());

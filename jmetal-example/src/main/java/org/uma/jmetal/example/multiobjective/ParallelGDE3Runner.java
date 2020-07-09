@@ -52,7 +52,7 @@ public class ParallelGDE3Runner extends AbstractAlgorithmRunner {
     double cr = 0.5;
     double f = 0.5;
     crossover =
-        new DifferentialEvolutionCrossover(
+        DifferentialEvolutionCrossover.createFromVariant(
             cr, f, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
     selection = new DifferentialEvolutionSelection();
 

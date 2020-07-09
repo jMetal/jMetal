@@ -112,7 +112,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
   /** Creates a {@link DifferentialEvolutionCrossover} with default values */
   public static DifferentialEvolutionCrossover createDefault() {
-    return DifferentialEvolutionCrossover.createWithFewParameters(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT);
+    return DifferentialEvolutionCrossover.createFromVariant(DEFAULT_CR, DEFAULT_F, DEFAULT_DE_VARIANT);
   }
 
   /**
@@ -121,7 +121,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param cr
    * @param f
    * @param variant
-   * @deprecated Use instead {@link #createWithFewParameters(double, double, DE_VARIANT)}
+   * @deprecated Use instead {@link #createFromVariant(double, double, DE_VARIANT)}
    */
   @Deprecated
   public DifferentialEvolutionCrossover(double cr, double f, DE_VARIANT variant) {
@@ -140,8 +140,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param f
    * @param variant
    */
-  public static DifferentialEvolutionCrossover createWithFewParameters(double cr, double f, DE_VARIANT variant) {
-    return DifferentialEvolutionCrossover.createWithDetailedParameters(
+  public static DifferentialEvolutionCrossover createFromVariant(double cr, double f, DE_VARIANT variant) {
+    return DifferentialEvolutionCrossover.createFromVariant(
         cr,
         f,
         variant,
@@ -156,7 +156,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param f
    * @param variant
    * @param randomGenerator
-   * @deprecated Use instead {@link #createWithSomeParameters(double, double, DE_VARIANT, RandomGenerator)}.
+   * @deprecated Use instead {@link #createFromVariant(double, double, DE_VARIANT, RandomGenerator)}.
    */
   @Deprecated
   public DifferentialEvolutionCrossover(
@@ -177,9 +177,9 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param variant
    * @param randomGenerator
    */
-  public static DifferentialEvolutionCrossover createWithSomeParameters(
+  public static DifferentialEvolutionCrossover createFromVariant(
       double cr, double f, DE_VARIANT variant, RandomGenerator<Double> randomGenerator) {
-    return DifferentialEvolutionCrossover.createWithDetailedParameters(
+    return DifferentialEvolutionCrossover.createFromVariant(
         cr,
         f,
         variant,
@@ -195,7 +195,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param variant
    * @param jRandomGenerator
    * @param crRandomGenerator
-   * @deprecated Use instead {@link #createWithDetailedParameters(double, double, DE_VARIANT, BoundedRandomGenerator, BoundedRandomGenerator)}.
+   * @deprecated Use instead {@link #createFromVariant(double, double, DE_VARIANT, BoundedRandomGenerator, BoundedRandomGenerator)}.
    */
   @Deprecated
   public DifferentialEvolutionCrossover(
@@ -227,7 +227,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
    * @param jRandomGenerator
    * @param crRandomGenerator
    */
-  public static DifferentialEvolutionCrossover createWithDetailedParameters(
+  public static DifferentialEvolutionCrossover createFromVariant(
       double cr,
       double f,
       DE_VARIANT variant,
