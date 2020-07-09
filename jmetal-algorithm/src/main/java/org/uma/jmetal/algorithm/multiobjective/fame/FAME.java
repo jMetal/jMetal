@@ -185,7 +185,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     double probabilityPolynomial, DristributionIndex;
     probabilityPolynomial = 0.30;
     DristributionIndex = 20;
-    PolynomialMutation mutationPolynomial = new PolynomialMutation(probabilityPolynomial, DristributionIndex);
+    PolynomialMutation mutationPolynomial = PolynomialMutation.createWithDoubleDefaults(probabilityPolynomial, DristributionIndex);
 
     double probabilityUniform, perturbation;
     probabilityUniform = 0.30;

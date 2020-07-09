@@ -57,7 +57,7 @@ public class MOEADIEpsilonRunner extends AbstractAlgorithmRunner {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex);
 
     algorithm = new MOEADBuilder(problem, Variant.MOEADIEPSILON)
             .setCrossover(crossover)

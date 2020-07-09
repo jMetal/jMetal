@@ -48,7 +48,7 @@ public class MOEADBuilder implements AlgorithmBuilder<AbstractMOEAD<DoubleSoluti
     resultPopulationSize = 300 ;
     maxEvaluations = 150000 ;
     crossover = DifferentialEvolutionCrossover.createDefault() ;
-    mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0);
+    mutation = PolynomialMutation.createWithDoubleDefaults(1.0/problem.getNumberOfVariables(), 20.0);
     functionType = MOEAD.FunctionType.TCHE ;
     neighborhoodSelectionProbability = 0.1 ;
     maximumNumberOfReplacedSolutions = 2 ;

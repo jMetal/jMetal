@@ -62,7 +62,7 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
                 populationSize,
                 offspringPopulationSize,
                 new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
-                new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+                PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
                 termination)
             .withArchive(new NonDominatedSolutionListArchive<>());
 
@@ -77,7 +77,7 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
             (DoubleProblem) problem,
             swarmSize,
             leadersArchive,
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
             evaluation,
             termination,
             new NonDominatedSolutionListArchive<>());

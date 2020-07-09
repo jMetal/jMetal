@@ -44,7 +44,7 @@ public class MutationParameter extends CategoricalParameter<String> {
         Double distributionIndex =
                 (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
         result =
-                new PolynomialMutation(
+                PolynomialMutation.createWithDoubleDefaults(
                         mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":

@@ -45,7 +45,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     double distributionIndex = 20.0;
     this.crossoverOperator = new SBXCrossover(crossoverProbability, distributionIndex);
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    this.mutationOperator = new PolynomialMutation(mutationProbability, distributionIndex);
+    this.mutationOperator = PolynomialMutation.createWithDoubleDefaults(mutationProbability, distributionIndex);
     int improvementRounds = 1;
     this.archive = (CrowdingDistanceArchive<DoubleSolution>) archive;
 

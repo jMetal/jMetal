@@ -103,7 +103,7 @@ public class NSGAIIStudy {
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
                     new SBXCrossover(1.0, 5),
-                    new PolynomialMutation(
+                    PolynomialMutation.createWithDoubleDefaults(
                         1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0),
                     100)
                 .setMaxEvaluations(25000)
@@ -116,7 +116,7 @@ public class NSGAIIStudy {
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
                     new SBXCrossover(1.0, 20.0),
-                    new PolynomialMutation(
+                    PolynomialMutation.createWithDoubleDefaults(
                         1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
                     100)
                 .setMaxEvaluations(25000)
@@ -129,7 +129,7 @@ public class NSGAIIStudy {
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
                     new SBXCrossover(1.0, 40.0),
-                    new PolynomialMutation(
+                    PolynomialMutation.createWithDoubleDefaults(
                         1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 40.0),
                     10)
                 .setMaxEvaluations(25000)
@@ -142,7 +142,7 @@ public class NSGAIIStudy {
             new NSGAIIBuilder<>(
                     problemList.get(i).getProblem(),
                     new SBXCrossover(1.0, 80.0),
-                    new PolynomialMutation(
+                    PolynomialMutation.createWithDoubleDefaults(
                         1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 80.0),
                     100)
                 .setMaxEvaluations(25000)

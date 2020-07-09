@@ -65,7 +65,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     changeVelocity1 = -1;
     changeVelocity2 = -1;
 
-    mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
+    mutationOperator = PolynomialMutation.createWithDoubleDefaults(1.0/problem.getNumberOfVariables(), 20.0) ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
 
     this.variant = SMPSOVariant.SMPSO ;

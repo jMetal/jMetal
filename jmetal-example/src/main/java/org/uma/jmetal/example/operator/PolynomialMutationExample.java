@@ -57,7 +57,7 @@ public class PolynomialMutationExample {
     DoubleProblem problem ;
 
     problem = new Sphere(1) ;
-    MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
+    MutationOperator<DoubleSolution> mutation = PolynomialMutation.createWithDoubleDefaults(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.setVariable(0, 0.0);

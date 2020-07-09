@@ -116,7 +116,7 @@ public class ZDTStudy2 {
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) experimentProblem.getProblem(),
                 new CrowdingDistanceArchive<DoubleSolution>(100))
-                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+                .setMutation(PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex))
                 .setMaxIterations(250)
                 .setSwarmSize(100)
                 .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
@@ -128,7 +128,7 @@ public class ZDTStudy2 {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
                 experimentProblem.getProblem(),
                 new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                PolynomialMutation.createWithDoubleDefaults(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
                         20.0),
                 100)
                 .build();
@@ -138,7 +138,7 @@ public class ZDTStudy2 {
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(experimentProblem.getProblem(), MOEADBuilder.Variant.MOEAD)
                 .setCrossover(DifferentialEvolutionCrossover.createFromVariant(1.0, 0.5, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN))
-                .setMutation(new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                .setMutation(PolynomialMutation.createWithDoubleDefaults(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
                         20.0))
                 .setMaxEvaluations(25000)
                 .setPopulationSize(100)

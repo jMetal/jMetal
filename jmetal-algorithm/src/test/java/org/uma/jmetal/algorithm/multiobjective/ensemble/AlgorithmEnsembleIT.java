@@ -67,7 +67,7 @@ public class AlgorithmEnsembleIT {
             populationSize,
             offspringPopulationSize,
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
             termination);
 
     List<Algorithm<List<DoubleSolution>>> algorithmList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class AlgorithmEnsembleIT {
             populationSize,
             offspringPopulationSize,
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
             termination);
 
     List<Algorithm<List<DoubleSolution>>> algorithmList = new ArrayList<>();
@@ -136,7 +136,7 @@ public class AlgorithmEnsembleIT {
             populationSize,
             offspringPopulationSize,
             new SBXCrossover(crossoverProbability, crossoverDistributionIndex),
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
             termination);
 
     int swarmSize = 100;
@@ -150,7 +150,7 @@ public class AlgorithmEnsembleIT {
             (DoubleProblem) problem,
             swarmSize,
             leadersArchive,
-            new PolynomialMutation(mutationProbability, mutationDistributionIndex),
+            PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex),
             evaluation,
             termination);
 

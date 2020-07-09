@@ -35,7 +35,7 @@ public class DynamicNSGAIIRunner {
     // STEP 2. Create the algorithm
     CrossoverOperator<DoubleSolution> crossover = new SBXCrossover(0.9, 20.0);
     MutationOperator<DoubleSolution> mutation =
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
+        PolynomialMutation.createWithDoubleDefaults(1.0 / problem.getNumberOfVariables(), 20.0);
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
         new BinaryTournamentSelection<>();
 

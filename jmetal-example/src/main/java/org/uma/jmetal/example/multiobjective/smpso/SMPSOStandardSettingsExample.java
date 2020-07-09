@@ -41,7 +41,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(50000) ;

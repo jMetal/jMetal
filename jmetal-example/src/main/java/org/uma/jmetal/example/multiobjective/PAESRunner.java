@@ -48,7 +48,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
 
     problem = ProblemUtils.loadProblem(problemName);
 
-    mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    mutation = PolynomialMutation.createWithDoubleDefaults(1.0 / problem.getNumberOfVariables(), 20.0) ;
 
     algorithm = new PAESBuilder<DoubleSolution>(problem)
             .setMutationOperator(mutation)

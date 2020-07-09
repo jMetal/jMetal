@@ -35,7 +35,7 @@ public class SteadyStateGeneticAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossoverOperator =
         new SBXCrossover(0.9, 20.0) ;
     MutationOperator<DoubleSolution> mutationOperator =
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+        PolynomialMutation.createWithDoubleDefaults(1.0 / problem.getNumberOfVariables(), 20.0) ;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selectionOperator = new BinaryTournamentSelection<DoubleSolution>() ;
 
     algorithm = new GeneticAlgorithmBuilder<DoubleSolution>(problem, crossoverOperator, mutationOperator)

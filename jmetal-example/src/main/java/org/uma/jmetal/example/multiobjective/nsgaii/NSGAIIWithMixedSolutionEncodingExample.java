@@ -43,7 +43,7 @@ public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRun
     CompositeMutation mutation =
         new CompositeMutation(
             Arrays.asList(
-                new IntegerPolynomialMutation(0.1, 2.0), new PolynomialMutation(0.1, 20.0)));
+                new IntegerPolynomialMutation(0.1, 2.0), PolynomialMutation.createWithDoubleDefaults(0.1, 20.0)));
 
     int populationSize = 100;
     int offspringPopulationSize = 100;

@@ -154,7 +154,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     PolynomialMutation mutation =
-        new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+        PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex);
 
     int offspringPopulationSize = 1;
     this.variation =
@@ -241,7 +241,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
     PolynomialMutation mutation =
-        new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+        PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex);
 
     int offspringPopulationSize = 1;
     Variation<DoubleSolution> variation =

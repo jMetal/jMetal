@@ -45,7 +45,7 @@ public class ABYSSConstrainedProblemIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    mutation = PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex);
 
     archive = new CrowdingDistanceArchive<>(100);
 

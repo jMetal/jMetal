@@ -36,7 +36,7 @@ public class NSGAIIIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex) ;
 
     int populationSize = 100 ;
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
@@ -64,7 +64,7 @@ public class NSGAIIIT {
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    mutation = PolynomialMutation.createWithDoubleDefaults(mutationProbability, mutationDistributionIndex) ;
 
     int populationSize  = 100 ;
     algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build() ;
