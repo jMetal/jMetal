@@ -38,7 +38,7 @@ public class MOEADDEIT {
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
             problem,
             populationSize,
             cr,
@@ -75,7 +75,7 @@ public class MOEADDEIT {
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
             problem,
             populationSize,
             cr,
@@ -118,7 +118,7 @@ public class MOEADDEIT {
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
             problem,
             populationSize,
             cr,

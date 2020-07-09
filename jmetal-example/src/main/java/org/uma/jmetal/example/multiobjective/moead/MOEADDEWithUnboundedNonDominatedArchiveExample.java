@@ -55,7 +55,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
                 problem,
                 populationSize,
                 cr,

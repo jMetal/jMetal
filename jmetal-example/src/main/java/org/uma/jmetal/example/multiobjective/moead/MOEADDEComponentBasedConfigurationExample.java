@@ -91,7 +91,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
             evaluation,
             new RandomSolutionsCreation<>(problem, populationSize),
             new TerminationByEvaluations(150000),

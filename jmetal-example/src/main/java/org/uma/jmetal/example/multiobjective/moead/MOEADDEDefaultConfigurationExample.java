@@ -46,7 +46,7 @@ public class MOEADDEDefaultConfigurationExample extends AbstractAlgorithmRunner 
     AggregativeFunction aggregativeFunction = new Tschebyscheff();
 
     algorithm =
-        new MOEADDE(
+        MOEADDE.create(
             problem,
             populationSize,
             cr,
