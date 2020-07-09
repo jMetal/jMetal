@@ -158,7 +158,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     int offspringPopulationSize = 1;
     this.variation =
-        new DifferentialCrossoverVariation(
+        DifferentialCrossoverVariation.createWithDefaultMatingPoolSize(
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;
@@ -245,7 +245,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
 
     int offspringPopulationSize = 1;
     Variation<DoubleSolution> variation =
-        new DifferentialCrossoverVariation(
+        DifferentialCrossoverVariation.createWithDefaultMatingPoolSize(
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;

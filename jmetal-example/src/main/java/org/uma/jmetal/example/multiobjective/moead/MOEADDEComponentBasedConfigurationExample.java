@@ -63,7 +63,7 @@ public class MOEADDEComponentBasedConfigurationExample extends AbstractAlgorithm
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     DifferentialCrossoverVariation variation =
-        new DifferentialCrossoverVariation(1, crossover, mutation, subProblemIdGenerator);
+        DifferentialCrossoverVariation.createWithDefaultMatingPoolSize(1, crossover, mutation, subProblemIdGenerator);
 
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
