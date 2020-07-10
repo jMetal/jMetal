@@ -28,7 +28,7 @@ A summary of the features of jMetal 6.0 are listed next:
 
 * The implementation of the algorithms in ``jmetal-algorithm`` will be revised. 
 
-jMetal 6 is implemented in Java 8 (although I plan to change to Java 11) and it is a Maven project structured in six sub-projects:
+jMetal 6 is implemented in Java 11 and it is a Maven project structured in six sub-projects:
 
 
 +------------------+-----------------------------------+
@@ -58,7 +58,7 @@ Changelog
 
 * [3/19/2020] New quality indicator: `NormalizedHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_.
 
-* [3/19/2020] The jMetal 6 project is changed to use Java 11.
+* [3/19/2020] The jMetal 6 project adopts Java 11.
 
 * [2/11/2020] All the files containing Pareto front approximations and weight vectors have been moved to the ``resources`` folder, located in root project directory.
 

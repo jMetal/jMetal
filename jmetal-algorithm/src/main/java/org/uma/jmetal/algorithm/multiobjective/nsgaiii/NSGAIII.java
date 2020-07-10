@@ -28,7 +28,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   protected SolutionListEvaluator<S> evaluator ;
 
-  protected Vector<Integer> numberOfDivisions  ;
+  protected int numberOfDivisions  ;
   protected List<ReferencePoint<S>> referencePoints = new Vector<>() ;
 
   /** Constructor */
@@ -43,8 +43,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     evaluator = builder.getEvaluator() ;
 
     /// NSGAIII
-    numberOfDivisions = new Vector<>(1) ;
-    numberOfDivisions.add(12) ; // Default value for 3D problems
+    numberOfDivisions = builder.getNumberOfDivisions() ;
 
     (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 

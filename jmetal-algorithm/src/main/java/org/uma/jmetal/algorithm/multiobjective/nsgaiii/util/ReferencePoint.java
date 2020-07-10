@@ -44,10 +44,10 @@ public class ReferencePoint<S extends Solution<?>> {
   public void generateReferencePoints(
           List<ReferencePoint<S>> referencePoints,
           int numberOfObjectives,
-          List<Integer> numberOfDivisions) {
+          int numberOfDivisions) {
 
     ReferencePoint<S> refPoint = new ReferencePoint<>(numberOfObjectives) ;
-    generateRecursive(referencePoints, refPoint, numberOfObjectives, numberOfDivisions.get(0), numberOfDivisions.get(0), 0);
+    generateRecursive(referencePoints, refPoint, numberOfObjectives, numberOfDivisions, numberOfDivisions, 0);
   }
 
   private void generateRecursive(

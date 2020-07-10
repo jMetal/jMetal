@@ -3,6 +3,8 @@ package org.uma.jmetal.example.multiobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.lab.plot.PlotFront;
+import org.uma.jmetal.lab.plot.impl.Plot3D;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -17,6 +19,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
 
     problem = ProblemUtils.loadProblem(problemName);
 
@@ -58,6 +61,7 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
             .setMutationOperator(mutation)
             .setSelectionOperator(selection)
             .setMaxIterations(300)
+            .setNumberOfDivisions(12)
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
@@ -73,8 +77,5 @@ public class NSGAIIIRunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
-
-    //PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix());
-    //plot.plot();
   }
 }
