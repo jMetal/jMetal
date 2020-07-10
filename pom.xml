@@ -148,9 +148,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
