@@ -1,7 +1,11 @@
-package org.uma.jmetal.lab.experiment.visualization.html.impl;
+package org.uma.jmetal.lab.visualization.html.impl;
 
-import org.uma.jmetal.lab.experiment.visualization.html.*;
-
+import org.uma.jmetal.lab.visualization.html.HtmlComponent;
+/**
+ * This class creates a table in HTML
+ *
+ * @author Javier Pérez Abad
+ */
 public class HtmlTable<T> implements HtmlComponent {
 
   protected String title;
@@ -11,25 +15,18 @@ public class HtmlTable<T> implements HtmlComponent {
 
   public HtmlTable<T> setTitle(String title) {
     this.title = title;
-
     return this;
   }
 
   public HtmlTable<T> setColumnHeaders(String[] headers) {
-
     if (data[0].length != headers.length) return this;
-
     this.headersColumn = headers;
-
     return this;
   }
 
   public HtmlTable<T> setRowHeaders(String[] headers) {
-
     if (data.length != headers.length) return this;
-
     this.headersRow = headers;
-
     return this;
   }
 
@@ -39,61 +36,41 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   public String getHtml() {
-
     StringBuilder html = new StringBuilder("<div>\n");
-
     html.append("<table>\n");
-
     html.append(appendTitle());
-
     html.append(appendColumnHeaders());
-
     html.append(appendData());
-
     html.append("</table>\n</div>\n");
-
     return html.toString();
   }
 
   private StringBuilder appendTitle() {
-
-    StringBuilder sb = new StringBuilder();
-
+    StringBuilder stringBuilder = new StringBuilder();
     if (title != null) {
-
-      sb.append("<caption>").append(title).append("</caption>\n");
+      stringBuilder.append("<caption>").append(title).append("</caption>\n");
     }
-
-    return sb;
+    return stringBuilder;
   }
 
   private StringBuilder appendColumnHeaders() {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("<tr>");
-
-    //FIRST CELL EMPTY IF THERE ARE ROW HEADERS
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("<tr>");
+    // FIRST CELL EMPTY IF THERE ARE ROW HEADERS
     if (headersRow != null) {
-
-      sb.append("<th>").append("</th>");
+      stringBuilder.append("<th>").append("</th>");
     }
-
     if (headersColumn != null) {
-
       for (String elem : headersColumn) {
-
-        sb.append("<th>").append(elem).append("</th>");
+        stringBuilder.append("<th>").append(elem).append("</th>");
       }
     }
-
-    sb.append("</tr>\n");
-
-    return sb;
+    stringBuilder.append("</tr>\n");
+    return stringBuilder;
   }
 
   private StringBuilder appendData() {
     StringBuilder html = new StringBuilder();
-
     for (int i = 0; i < data.length; i++) {
       html.append("<tr>");
       if (headersRow != null) {
@@ -102,28 +79,23 @@ public class HtmlTable<T> implements HtmlComponent {
       html.append(createRowOfData(i));
       html.append("</tr>\n");
     }
-
     return html;
   }
 
   protected StringBuilder createRowOfData(int index) {
     StringBuilder html = new StringBuilder();
-
     for (T elem : data[index]) {
       html.append("<td>").append(elem.toString()).append("</td>");
     }
-
     return html;
   }
 
   public String getCSS() {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("table { margin: auto; }");
-    sb.append("th,td { border:1px solid black; text-align: center; padding: 15px }");
-    sb.append(
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("table { margin: auto; }");
+    stringBuilder.append("th,td { border:1px solid black; text-align: center; padding: 15px }");
+    stringBuilder.append(
         "caption { display: table-caption; text-align: center; margin: 10px; font-size: 1.5em; }");
-
-    return sb.toString();
+    return stringBuilder.toString();
   }
 }

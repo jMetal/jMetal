@@ -1,9 +1,13 @@
-package org.uma.jmetal.lab.experiment.visualization;
+package org.uma.jmetal.lab.visualization;
 
-import org.uma.jmetal.lab.experiment.visualization.html.*;
-import org.uma.jmetal.lab.experiment.visualization.html.impl.*;
+import org.uma.jmetal.lab.experiment.Experiment;
+import org.uma.jmetal.lab.visualization.html.*;
+import org.uma.jmetal.lab.visualization.html.impl.*;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.FriedmanTestTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.MedianValuesTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.WilcoxonTestTable;
 import org.uma.jmetal.util.JMetalException;
-import tech.tablesaw.api.NumericColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;
@@ -16,7 +20,22 @@ import tech.tablesaw.plotly.traces.Trace;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
+/**
+ * This class generates HTML files to visualize and analyze the results of a experiment.
+ *
+ * <p>As argument, it needs the path to the experiment base directory. The results are created
+ * in the directory {@link Experiment * #getExperimentBaseDirectory()}/html. There it creates a HTML
+ * file for each indicator computed.
+ *
+ * Each HTML file is composed of:
+ * - A table with the mean value of the executions witch each algorithm and problem
+ * - Wilcoxon test
+ * - Friedman ranking and Holm test
+ * - A boxplot for each problem.
+ * - If a second argument is provided, it shows the best or the median front for each algorithm and each problem.
+ *
+ * @author Javier Pérez
+ */
 public class StudyVisualizer {
 
   public static final String SHOW_BEST_FRONTS = "BEST";
@@ -103,7 +122,6 @@ public class StudyVisualizer {
         new WilcoxonTestTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
     if (indicator.equals("HV")) {
-      // tableFilteredByIndicator = convertTableToMinimize(tableFilteredByIndicator);
       minimizar = false;
     }
     HtmlTable friedmanTable =
@@ -184,17 +202,5 @@ public class StudyVisualizer {
 
   private Table filterTableByProblem(Table table, String problem) {
     return table.where(table.stringColumn(PROBLEM).isEqualTo(problem));
-  }
-
-  private Table filterTableByAlgorithm(Table table, String algorithm) {
-    return table.where(table.stringColumn(ALGORITHM).isEqualTo(algorithm));
-  }
-
-  private Table convertTableToMinimize(Table table) {
-    NumericColumn values = table.numberColumn(INDICATOR_VALUE);
-    for (int i = 0; i < table.rowCount(); i++) {
-      values.set(i, values.getDouble(i) * -1);
-    }
-    return table;
   }
 }

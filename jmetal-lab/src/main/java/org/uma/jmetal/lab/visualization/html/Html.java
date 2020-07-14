@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.experiment.visualization.html;
+package org.uma.jmetal.lab.visualization.html;
 
 import java.awt.Desktop;
 import java.io.*;
@@ -8,10 +8,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * This class creates the skeleton of a HTML file.
+ *
+ * The body of the HTML file is composed by HtmlComponents instances.
+ *
+ * @author Javier Pérez Abad
+ */
 public class Html {
 
-  public static String PATH_FOLDER = "prototype1";
+  public static String PATH_FOLDER = "html";
 
   private String title;
   private final List<HtmlComponent> components = new LinkedList<>();

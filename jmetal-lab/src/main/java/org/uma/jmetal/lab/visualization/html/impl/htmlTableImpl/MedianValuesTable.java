@@ -1,5 +1,6 @@
-package org.uma.jmetal.lab.experiment.visualization.html.impl;
+package org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl;
 
+import org.uma.jmetal.lab.visualization.html.impl.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
@@ -7,19 +8,18 @@ import tech.tablesaw.api.Table;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
-
+/**
+ * This class shows the mean values of the executions with each algorithm and each problem. It also
+ * highlights the best and second best algorithms for each problem.
+ *
+ * @author Javier Pérez Abad
+ */
 public class MedianValuesTable extends HtmlTable<Double> {
 
   private static final String[] INDICATORS_TO_MAXIMIZE = {"HV"};
 
   private static final String BEST_COLOR = "#41e05c";
   private static final String SECOND_BEST_COLOR = "#a3e6ae";
-
-  public enum Objective {
-    MAXIMIZE,
-    MINIMIZE
-  }
-
   private Objective objective = Objective.MINIMIZE;
 
   public MedianValuesTable(
@@ -60,47 +60,39 @@ public class MedianValuesTable extends HtmlTable<Double> {
   }
 
   protected StringBuilder createRowOfData(int index) {
-
     DecimalFormat format = new DecimalFormat("0.#####E0");
-
     StringBuilder html = new StringBuilder();
-
     Double[] orderedData = getDataOrderedByObjective(data[index]);
-
     for (Object elem : data[index]) {
-
       html.append("<td ");
-
       if (!orderedData[0].equals(orderedData[orderedData.length - 1])) {
         if (elem == orderedData[0]) html.append(" class='best'");
         else if (elem == orderedData[1]) html.append(" class='secondBest'");
       }
-
       html.append(">").append(format.format(elem)).append("</td>");
     }
-
     return html;
   }
 
   private Double[] getDataOrderedByObjective(Double[] data) {
-
     Double[] orderedData = data.clone();
-
     if (objective == Objective.MAXIMIZE) Arrays.sort(orderedData, Collections.reverseOrder());
-
     if (objective == Objective.MINIMIZE) Arrays.sort(orderedData);
-
     return orderedData;
   }
 
   public String getCSS() {
+    StringBuilder stringBuilder = new StringBuilder(super.getCSS());
+    stringBuilder.append(".best { background-color: ").append(BEST_COLOR).append("; } ");
+    stringBuilder
+        .append(".secondBest { background-color: ")
+        .append(SECOND_BEST_COLOR)
+        .append("; } ");
+    return stringBuilder.toString();
+  }
 
-    StringBuilder sb = new StringBuilder(super.getCSS());
-
-    sb.append(".best { background-color: ").append(BEST_COLOR).append("; } ");
-
-    sb.append(".secondBest { background-color: ").append(SECOND_BEST_COLOR).append("; } ");
-
-    return sb.toString();
+  public enum Objective {
+    MAXIMIZE,
+    MINIMIZE
   }
 }

@@ -1,6 +1,6 @@
-package org.uma.jmetal.lab.plot.impl;
+package org.uma.jmetal.lab.visualization.plot.impl;
 
-import org.uma.jmetal.lab.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.util.checking.Check;
 import smile.plot.PlotCanvas;
 import smile.plot.ScatterPlot;
