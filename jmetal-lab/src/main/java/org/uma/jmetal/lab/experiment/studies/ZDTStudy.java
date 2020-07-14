@@ -29,8 +29,8 @@ import java.util.List;
 
 /**
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
- * MOEA/D, and SMPSO
- * <p>
+ * MOEA/D, and SMPSO.
+ *
  * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that, given a problem named
  * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
  * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
