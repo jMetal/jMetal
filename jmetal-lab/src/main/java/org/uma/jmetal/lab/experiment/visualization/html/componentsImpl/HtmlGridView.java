@@ -1,6 +1,6 @@
-package org.uma.jmetal.lab.visualization.html.componentsImpl;
+package org.uma.jmetal.lab.experiment.visualization.html.componentsImpl;
 
-import org.uma.jmetal.lab.visualization.html.HtmlComponent;
+import org.uma.jmetal.lab.experiment.visualization.html.HtmlComponent;
 
 import java.util.LinkedList;
 import java.util.List;

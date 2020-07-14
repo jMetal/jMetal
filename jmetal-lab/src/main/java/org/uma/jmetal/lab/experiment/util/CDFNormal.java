@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.util;
+package org.uma.jmetal.lab.experiment.util;
 
 /**
  * This class contains routines to calculate the normal cumulative distribution function (CDF) and

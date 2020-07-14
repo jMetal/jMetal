@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment.component;
 
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
-import org.uma.jmetal.lab.visualization.StudyVisualizer;
+import org.uma.jmetal.lab.experiment.visualization.StudyVisualizer;
 import org.uma.jmetal.solution.Solution;
 
 import java.io.IOException;

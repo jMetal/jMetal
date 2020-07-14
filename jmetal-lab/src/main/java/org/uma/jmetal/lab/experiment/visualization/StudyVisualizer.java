@@ -1,7 +1,7 @@
-package org.uma.jmetal.lab.visualization;
+package org.uma.jmetal.lab.experiment.visualization;
 
-import org.uma.jmetal.lab.visualization.html.*;
-import org.uma.jmetal.lab.visualization.html.componentsImpl.*;
+import org.uma.jmetal.lab.experiment.visualization.html.*;
+import org.uma.jmetal.lab.experiment.visualization.html.componentsImpl.*;
 import org.uma.jmetal.util.JMetalException;
 import tech.tablesaw.api.NumericColumn;
 import tech.tablesaw.api.StringColumn;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.visualization.html.componentsImpl;
+package org.uma.jmetal.lab.experiment.visualization.html.componentsImpl;
 
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
 import tech.tablesaw.api.DoubleColumn;

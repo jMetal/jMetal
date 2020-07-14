@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.util;
+package org.uma.jmetal.lab.experiment.util;
 
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
