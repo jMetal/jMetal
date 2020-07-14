@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIStudy2 {
+public class NSGAIIComputingReferenceParetoFrontsStudy {
 
   private static final int INDEPENDENT_RUNS = 20;
 

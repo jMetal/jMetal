@@ -44,7 +44,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ZDTStudy2 {
+public class ZDTComputingReferenceParetoFrontsStudy {
 
   private static final int INDEPENDENT_RUNS = 25;
 
