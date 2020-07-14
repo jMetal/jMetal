@@ -4,8 +4,9 @@ Experimental studies
 ====================
 
 :Author: Antonio J. Nebro
-:Version: Draft
-:Date: 2019-10-10
+:Author: Javier Pérez Abad
+:Version: 1.0
+:Date: 2020-14-07
 
 
 This tutorial describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
