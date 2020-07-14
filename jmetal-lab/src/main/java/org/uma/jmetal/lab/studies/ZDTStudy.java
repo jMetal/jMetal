@@ -80,7 +80,6 @@ public class ZDTStudy {
                             new Spread<>(),
                             new GenerationalDistance<>(),
                             new PISAHypervolume<>(),
-                            new InvertedGenerationalDistance<>(),
                             new InvertedGenerationalDistancePlus<>()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
                     .setNumberOfCores(8)
@@ -90,8 +89,8 @@ public class ZDTStudy {
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
-    new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateFriedmanHolmTestTables<>(experiment).run();
+    new GenerateHtmlPages<>(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 

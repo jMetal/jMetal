@@ -1,6 +1,6 @@
-package org.uma.jmetal.lab.visualization.html.componentsImpl;
+package org.uma.jmetal.lab.experiment.visualization.html.componentsImpl;
 
-import org.uma.jmetal.lab.visualization.html.*;
+import org.uma.jmetal.lab.experiment.visualization.html.*;
 
 public class HtmlTable<T> implements HtmlComponent {
 
@@ -10,7 +10,6 @@ public class HtmlTable<T> implements HtmlComponent {
   protected T[][] data;
 
   public HtmlTable<T> setTitle(String title) {
-
     this.title = title;
 
     return this;
@@ -69,7 +68,6 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   private StringBuilder appendColumnHeaders() {
-
     StringBuilder sb = new StringBuilder();
 
     sb.append("<tr>");
@@ -94,20 +92,14 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   private StringBuilder appendData() {
-
     StringBuilder html = new StringBuilder();
 
     for (int i = 0; i < data.length; i++) {
-
       html.append("<tr>");
-
       if (headersRow != null) {
-
         html.append("<th>").append(headersRow[i]).append("</th>");
       }
-
       html.append(createRowOfData(i));
-
       html.append("</tr>\n");
     }
 
@@ -115,11 +107,9 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   protected StringBuilder createRowOfData(int index) {
-
     StringBuilder html = new StringBuilder();
 
     for (T elem : data[index]) {
-
       html.append("<td>").append(elem.toString()).append("</td>");
     }
 
@@ -127,13 +117,10 @@ public class HtmlTable<T> implements HtmlComponent {
   }
 
   public String getCSS() {
-
     StringBuilder sb = new StringBuilder();
 
     sb.append("table { margin: auto; }");
-
     sb.append("th,td { border:1px solid black; text-align: center; padding: 15px }");
-
     sb.append(
         "caption { display: table-caption; text-align: center; margin: 10px; font-size: 1.5em; }");
 

@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.visualization.html;
+package org.uma.jmetal.lab.experiment.visualization.html;
 
 import java.awt.Desktop;
 import java.io.*;

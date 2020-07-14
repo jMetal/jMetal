@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.util;
+package org.uma.jmetal.lab.experiment.util;
 
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
@@ -138,7 +138,7 @@ public class FriedmanTest {
     pValues[0] = 0;
     for (int i = 1; i < numberOfAlgorithms; i++) {
       double z = (rankingValues.get(0) - rankingValues.get(i)) / SE;
-      pValues[i] = 2 * CDF_Normal.normp((-1) * Math.abs(z));
+      pValues[i] = 2 * CDFNormal.normp((-1) * Math.abs(z));
     }
     DoubleColumn holm = DoubleColumn.create("p-value", pValues);
     results.addColumns(holm);

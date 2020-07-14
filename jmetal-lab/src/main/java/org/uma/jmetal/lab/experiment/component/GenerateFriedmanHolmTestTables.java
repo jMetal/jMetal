@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment.component;
 
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
-import org.uma.jmetal.lab.util.FriedmanTest;
+import org.uma.jmetal.lab.experiment.util.FriedmanTest;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
@@ -19,10 +19,10 @@ import java.util.List;
 
 /**
  * This class computes the Friedman test ranking and generates a Latex script that produces a table
- * per quality indicator containing the ranking
+ * per quality indicator containing the ranking and the result of the Holm post hoc test.
  *
  * <p>The results are a set of Latex files that are written in the directory {@link Experiment
- * #getExperimentBaseDirectory()}/latex. Each file is called as FriedmanTest[indicatorName].tex
+ * #getExperimentBaseDirectory()}/latex. Each file is called as FriedmanTestWitHolm[indicatorName].tex
  *
  * <p>The implementation is based on the one included in Keel: J. Alcalá-Fdez, L. Sánchez, S.
  * García, M.J. del Jesus, S. Ventura, J.M. Garrell, J. Otero, C. Romero, J. Bacardit, V.M. Rivas,
@@ -30,7 +30,7 @@ import java.util.List;
  * Mining Problems. Soft Computing 13:3 (2009) 307-318 Doi: 10.1007/s00500-008-0323-y
  *
  * @author Antonio J. Nebro
- * @author Javier Pérez
+ * @author Javier Pérez Abad
  */
 public class GenerateFriedmanHolmTestTables<Result extends List<? extends Solution<?>>>
     implements ExperimentComponent {
