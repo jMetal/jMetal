@@ -1,7 +1,7 @@
 package org.uma.jmetal.lab.visualization.html;
 
 /**
- * A Html object is composed of instances of this interface.
+ * A {@link Html} object is composed of instances of this interface.
  *
  * @author Javier Pérez Abad
  */

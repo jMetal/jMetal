@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class makes possible to group elements inside the HTML file using the flexbox technology.
  *
- * <p>It is composed of HtmlComponents.
+ * <p>It is composed of {@link HtmlComponent}.
  *
  * @author Javier Pérez Abad
  */
