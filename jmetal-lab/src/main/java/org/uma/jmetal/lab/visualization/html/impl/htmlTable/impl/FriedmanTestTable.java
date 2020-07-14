@@ -1,7 +1,7 @@
-package org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl;
+package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
-import org.uma.jmetal.lab.visualization.html.impl.HtmlTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 
