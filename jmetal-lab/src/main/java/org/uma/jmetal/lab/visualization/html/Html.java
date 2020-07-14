@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This class creates the skeleton of a HTML file.
  *
- * The body of the HTML file is composed by HtmlComponents instances.
+ * The body of the HTML file is composed by {@link HtmlComponent} objects.
  *
  * @author Javier Pérez Abad
  */
@@ -45,28 +45,21 @@ public class Html {
   }
 
   public void show() {
-
     File file = createFileInDirectory();
-
     writeToFile(file);
 
     try {
-
       browse(file);
-
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   File createFileInDirectory() {
-
     Path path = Paths.get(PATH_FOLDER, title + ".html");
 
     try {
-
       Files.createDirectories(path.getParent());
-
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -75,22 +68,17 @@ public class Html {
   }
 
   private void writeToFile(File outputFile) {
-
     String output = createDocument();
 
     try (Writer writer =
                  new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8)) {
-
       writer.write(output);
-
     } catch (IOException exception) {
-
       exception.printStackTrace();
     }
   }
 
   private String createDocument() {
-
     return "<!DOCTYPE html>\n" +
             "<html>\n" +
             createHead() +
@@ -99,7 +87,6 @@ public class Html {
   }
 
   private StringBuilder createHead() {
-
     StringBuilder sb = new StringBuilder();
 
     sb.append("<head>\n");
