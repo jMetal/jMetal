@@ -8,22 +8,27 @@ import org.uma.jmetal.solution.Solution;
 import java.io.IOException;
 import java.util.List;
 
-public class GenerateHtmlPages<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
+/**
+ * This class executes a StudyVisualizer on the experiment provided.
+ *
+ * <p>The results are created in in the directory {@link Experiment *
+ * #getExperimentBaseDirectory()}/html.
+ *
+ * @author Javier Pérez
+ */
+public class GenerateHtmlPages<Result extends List<? extends Solution<?>>>
+    implements ExperimentComponent {
 
-    private final Experiment<?, Result> experiment;
+  private final Experiment<?, Result> experiment;
 
-    public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration) {
-        this.experiment = experimentConfiguration;
-    }
+  public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration) {
+    this.experiment = experimentConfiguration;
+  }
 
-    @Override
-    public void run() throws IOException {
-
-        String directory = experiment.getExperimentBaseDirectory();
-
-        StudyVisualizer visualizer = new StudyVisualizer(directory, StudyVisualizer.SHOW_BEST_FRONTS);
-
-        visualizer.createHTMLPageForEachIndicator();
-
-    }
+  @Override
+  public void run() throws IOException {
+    String directory = experiment.getExperimentBaseDirectory();
+    StudyVisualizer visualizer = new StudyVisualizer(directory, StudyVisualizer.SHOW_BEST_FRONTS);
+    visualizer.createHTMLPageForEachIndicator();
+  }
 }
