@@ -2,6 +2,7 @@ package org.uma.jmetal.lab.experiment.component.impl;
 
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
+import org.uma.jmetal.solution.Solution;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
@@ -22,9 +23,13 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
+public class GenerateBoxplotsWithTablesawAndR<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
   private String experimentBaseDirectory;
   private String csvSummaryFile;
+
+  public GenerateBoxplotsWithTablesawAndR(Experiment<?, Result> experimentConfiguration) {
+    this("QualityIndicatorSummary.csv", experimentConfiguration.getExperimentBaseDirectory()) ;
+  }
 
   public GenerateBoxplotsWithTablesawAndR(
       String csvSummaryFile,

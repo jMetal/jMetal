@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Class for describing the configuration an experimental study
+ * Class for describing the configuration an experimental study.
  *
  * @author Antonio J. Nebro
  */
