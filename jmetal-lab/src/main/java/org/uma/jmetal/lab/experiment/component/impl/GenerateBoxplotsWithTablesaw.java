@@ -1,7 +1,7 @@
-package org.uma.jmetal.lab.experiment.component;
+package org.uma.jmetal.lab.experiment.component.impl;
 
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.experiment.ExperimentComponent;
+import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
@@ -96,7 +96,7 @@ public class GenerateBoxplotsWithTablesaw implements ExperimentComponent {
 
       medians.forEach(v -> System.out.println(v + " "));
 
-      Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[medians.size()]));
+      Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[0]));
       System.out.println(median);
       summary.addColumns(median);
     }

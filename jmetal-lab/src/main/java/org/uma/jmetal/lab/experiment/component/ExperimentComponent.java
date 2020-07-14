@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.experiment;
+package org.uma.jmetal.lab.experiment.component;
 
 import java.io.IOException;
 

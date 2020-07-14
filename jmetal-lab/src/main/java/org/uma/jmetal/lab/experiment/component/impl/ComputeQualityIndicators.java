@@ -1,9 +1,9 @@
-package org.uma.jmetal.lab.experiment.component;
+package org.uma.jmetal.lab.experiment.component.impl;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.experiment.ExperimentComponent;
+import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;

@@ -1,7 +1,7 @@
-package org.uma.jmetal.lab.experiment.component;
+package org.uma.jmetal.lab.experiment.component.impl;
 
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.experiment.ExperimentComponent;
+import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;

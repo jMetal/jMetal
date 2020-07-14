@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Builder for class {@link Experiment}
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
  */
 public class ExperimentBuilder<S extends Solution<?>, Result extends List<S>> {
   private final String experimentName ;

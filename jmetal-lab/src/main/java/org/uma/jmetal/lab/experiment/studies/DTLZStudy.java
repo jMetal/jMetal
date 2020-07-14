@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.studies;
+package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuilder;
@@ -6,14 +6,14 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.*;
+import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.wfg.*;
+import org.uma.jmetal.problem.multiobjective.dtlz.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -45,9 +45,9 @@ import java.util.List;
  * scripts to obtain boxplots
  */
 
-public class WFGStudy {
+public class DTLZStudy {
 
-  private static final int INDEPENDENT_RUNS = 15;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -56,21 +56,19 @@ public class WFGStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG4()).setReferenceFront("WFG4.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG5()).setReferenceFront("WFG5.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG6()).setReferenceFront("WFG6.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG7()).setReferenceFront("WFG7.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ1()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ2()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ3()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ4()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ5()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ6()).setReferenceFront("DTLZ1.3D.pf"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7()).setReferenceFront("DTLZ1.3D.pf"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGStudy")
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZStudy")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setReferenceFrontDirectory("resources/referenceFrontsCSV")

@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.studies;
+package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
@@ -8,7 +8,7 @@ import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.*;
+import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;

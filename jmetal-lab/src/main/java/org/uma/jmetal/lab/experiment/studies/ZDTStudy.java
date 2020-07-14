@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.studies;
+package org.uma.jmetal.lab.experiment.studies;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version.AbstractMOEAD;
@@ -7,7 +7,7 @@ import org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version.NSGAIIBuild
 import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.*;
+import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
