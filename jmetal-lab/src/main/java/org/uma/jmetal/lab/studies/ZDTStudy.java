@@ -91,6 +91,7 @@ public class ZDTStudy {
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
+    new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 

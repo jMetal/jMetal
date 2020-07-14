@@ -17,24 +17,21 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 /**
- * This class computes the Friedman test ranking and generates a Latex script that produces a table per
- * quality indicator containing the ranking
+ * This class computes the Friedman test ranking and generates a Latex script that produces a table
+ * per quality indicator containing the ranking
  *
- * The results are a set of Latex files that are written in the directory
- * {@link Experiment #getExperimentBaseDirectory()}/latex. Each file is called as
- * FriedmanTest[indicatorName].tex
+ * <p>The results are a set of Latex files that are written in the directory {@link Experiment
+ * #getExperimentBaseDirectory()}/latex. Each file is called as FriedmanTest[indicatorName].tex
  *
- *
- * The implementation is based on the one included in Keel:
- * J. Alcalá-Fdez, L. Sánchez, S. García, M.J. del Jesus, S. Ventura, J.M. Garrell, J. Otero, C. Romero, J. Bacardit,
- * V.M. Rivas, J.C. Fernández, F. Herrera.
- * KEEL: A Software Tool to Assess Evolutionary Algorithms to Data Mining Problems. Soft Computing 13:3 (2009) 307-318
- * Doi: 10.1007/s00500-008-0323-y
+ * <p>The implementation is based on the one included in Keel: J. Alcalá-Fdez, L. Sánchez, S.
+ * García, M.J. del Jesus, S. Ventura, J.M. Garrell, J. Otero, C. Romero, J. Bacardit, V.M. Rivas,
+ * J.C. Fernández, F. Herrera. KEEL: A Software Tool to Assess Evolutionary Algorithms to Data
+ * Mining Problems. Soft Computing 13:3 (2009) 307-318 Doi: 10.1007/s00500-008-0323-y
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
-public class GenerateFriedmanHolmTestTables<Result extends List<? extends Solution<?>>> implements ExperimentComponent {
+public class GenerateFriedmanHolmTestTables<Result extends List<? extends Solution<?>>>
+    implements ExperimentComponent {
   private static final String DEFAULT_LATEX_DIRECTORY = "latex";
   private static final String INDICATOR_SUMMARY_CSV = "QualityIndicatorSummary.csv";
   // NAMES OF CSV COLUMNS
@@ -44,15 +41,15 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
 
   private final Experiment<?, Result> experiment;
 
-  private String latexDirectoryName ;
-  private int numberOfAlgorithms ;
-  private int numberOfProblems ;
+  private String latexDirectoryName;
+  private int numberOfAlgorithms;
+  private int numberOfProblems;
 
   public GenerateFriedmanHolmTestTables(Experiment<?, Result> experimentConfiguration) {
-    this.experiment = experimentConfiguration ;
+    this.experiment = experimentConfiguration;
 
-    numberOfAlgorithms = experiment.getAlgorithmList().size() ;
-    numberOfProblems = experiment.getProblemList().size() ;
+    numberOfAlgorithms = experiment.getAlgorithmList().size();
+    numberOfProblems = experiment.getProblemList().size();
 
     experiment.removeDuplicatedAlgorithms();
   }
@@ -82,20 +79,21 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   private void createLatexFile(Table results, GenericIndicator<?> indicator) {
-    String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
+    String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
 
     File latexOutput;
     latexOutput = new File(latexDirectoryName);
-    if(!latexOutput.exists()){
+    if (!latexOutput.exists()) {
       latexOutput.mkdirs();
     }
 
     String fileContents = prepareFileOutputContents(results);
 
-    try(DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(outputFile))) {
+    try (DataOutputStream dataOutputStream =
+        new DataOutputStream(new FileOutputStream(outputFile))) {
       dataOutputStream.writeBytes(fileContents);
     } catch (IOException e) {
-      throw new JMetalException("Error writing data ", e) ;
+      throw new JMetalException("Error writing data ", e);
     }
   }
 
@@ -104,29 +102,32 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     fileContents = printTableHeader(fileContents);
     fileContents = printTableLines(fileContents, results);
     fileContents = printTableTail(fileContents);
-    fileContents = printDocumentFooter(fileContents, results.doubleColumn("Ranking").asDoubleArray());
-    return fileContents ;
+    fileContents =
+        printDocumentFooter(fileContents, results.doubleColumn("Ranking").asDoubleArray());
+    return fileContents;
   }
 
   private String writeLatexHeader() {
 
-    return ("\\documentclass{article}\n" +
-        "\\usepackage{graphicx}\n" +
-        "\\title{Results}\n" +
-        "\\author{}\n" +
-        "\\date{\\today}\n" +
-        "\\begin{document}\n" +
-        "\\oddsidemargin 0in \\topmargin 0in" +
-        "\\maketitle\n" +
-        "\n" +
-        "\\section{Tables}");
+    return ("\\documentclass{article}\n"
+        + "\\usepackage{graphicx}\n"
+        + "\\title{Results}\n"
+        + "\\author{}\n"
+        + "\\date{\\today}\n"
+        + "\\begin{document}\n"
+        + "\\oddsidemargin 0in \\topmargin 0in"
+        + "\\maketitle\n"
+        + "\n"
+        + "\\section{Tables}");
   }
 
   private String printTableHeader(String fileContents) {
-    return fileContents + "\n"+("\\begin{table}[!htp]\n" +
-        "\\centering\n" +
-        "\\begin{tabular}{c|c|c|c|c}\n" +
-        "Algorithm&Ranking&p-value&Holm&Hypothesis\\\\\n\\hline");
+    return fileContents
+        + "\n"
+        + ("\\begin{table}[!htp]\n"
+            + "\\centering\n"
+            + "\\begin{tabular}{c|c|c|c|c}\n"
+            + "Algorithm&Ranking&p-value&Holm&Hypothesis\\\\\n\\hline");
   }
 
   private String printTableLines(String fileContents, Table results) {
@@ -134,8 +135,8 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     for (int i = 0; i < results.rowCount(); i++) {
       sb.append("\n");
       for (int j = 0; j < results.columnCount(); j++) {
-        if (j == results.columnIndex("Algorithm") ) {
-           sb.append(results.stringColumn(0).get(i));
+        if (j == results.columnIndex("Algorithm")) {
+          sb.append(results.stringColumn(0).get(i));
         } else if (j == results.columnIndex("Hypothesis")) {
           sb.append(results.stringColumn(j).get(i));
         } else if (j == results.columnIndex("p-value")) {
@@ -155,26 +156,35 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
   }
 
   private String printTableTail(String fileContents) {
-    return fileContents + "\n" +
-            "\\end{tabular}\n" +
-            "\\caption{Average ranking of the algorithms}\n"+
-            "\\end{table}";
+    return fileContents
+        + "\n"
+        + "\\end{tabular}\n"
+        + "\\caption{Average ranking of the algorithms}\n"
+        + "\\end{table}";
   }
 
   private String printDocumentFooter(String fileContents, double[] averageRanking) {
-    double term1 = (12*(double)numberOfProblems)/(numberOfAlgorithms*(numberOfAlgorithms+1));
-    double term2 = numberOfAlgorithms*(numberOfAlgorithms+1)*(numberOfAlgorithms+1)/(4.0);
+    double term1 =
+        (12 * (double) numberOfProblems) / (numberOfAlgorithms * (numberOfAlgorithms + 1));
+    double term2 = numberOfAlgorithms * (numberOfAlgorithms + 1) * (numberOfAlgorithms + 1) / (4.0);
     double sum = 0;
-    for (int i=0; i<numberOfAlgorithms;i++) {
+    for (int i = 0; i < numberOfAlgorithms; i++) {
       sum += averageRanking[i] * averageRanking[i];
     }
     double friedman = (sum - term2) * term1;
 
-    String output = fileContents + "\n" + "\n\nFriedman statistic considering reduction performance (distributed according to " +
-        "chi-square with "+(numberOfAlgorithms-1)+" degrees of freedom: "+friedman+").\n\n";
+    String output =
+        fileContents
+            + "\n"
+            + "\n\nFriedman statistic considering reduction performance (distributed according to "
+            + "chi-square with "
+            + (numberOfAlgorithms - 1)
+            + " degrees of freedom: "
+            + friedman
+            + ").\n\n";
     output = output + "\n" + "\\end{document}";
 
-    return output ;
+    return output;
   }
 
   private StringColumn getUniquesValuesOfStringColumn(Table table, String columnName) {
@@ -195,5 +205,3 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return table.where(table.stringColumn(INDICATOR_NAME).isEqualTo(indicator));
   }
 }
-
-
