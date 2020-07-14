@@ -8,29 +8,23 @@ import java.util.Objects;
 public class HtmlFigure implements HtmlComponent {
 
   private final Figure figure;
-
   public HtmlFigure(Figure figure) {
     this.figure = figure;
   }
 
   public String getHtml() {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("<div id='").append(hashCode()).append("' class='js-plotly-plot'>").append("</div>");
+    stringBuilder.append(figure.asJavascript(Integer.toString(hashCode())));
 
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("<div id='").append(hashCode()).append("' class='js-plotly-plot'>").append("</div>");
-
-    sb.append(figure.asJavascript(Integer.toString(hashCode())));
-
-    return sb.toString();
+    return stringBuilder.toString();
   }
 
   public String getCSS() {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(".svg-container { width: 80%, margin: auto} ");
 
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(".svg-container { width: 80%, margin: auto} ");
-
-    return sb.toString();
+    return stringBuilder.toString();
   }
 
   @Override

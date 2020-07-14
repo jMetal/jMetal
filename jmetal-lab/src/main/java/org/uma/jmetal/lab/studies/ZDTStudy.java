@@ -49,7 +49,7 @@ import java.util.List;
 
 public class ZDTStudy {
 
-  private static final int INDEPENDENT_RUNS = 25;
+  private static final int INDEPENDENT_RUNS = 3;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -86,12 +86,13 @@ public class ZDTStudy {
                     .setNumberOfCores(8)
                     .build();
 
-    new ExecuteAlgorithms<>(experiment).run();
+    //new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateFriedmanHolmTestTables<>(experiment).run();
+    new GenerateHtmlPages<>(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
   }
 
