@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.experiment.visualization.html.componentsImpl;
+package org.uma.jmetal.lab.experiment.visualization.html.impl;
 
 import org.uma.jmetal.lab.experiment.visualization.html.HtmlComponent;
 import tech.tablesaw.plotly.components.Figure;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.experiment.visualization.html.componentsImpl;
+package org.uma.jmetal.lab.experiment.visualization.html.impl;
 
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
