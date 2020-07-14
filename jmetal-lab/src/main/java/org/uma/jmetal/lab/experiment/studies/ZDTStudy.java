@@ -31,24 +31,25 @@ import java.util.List;
  * Example of experimental study based on solving the ZDT problems with the algorithms NSGAII,
  * MOEA/D, and SMPSO.
  *
- * This org.uma.jmetal.experiment assumes that the reference Pareto front are known and that, given a problem named
- * P, there is a corresponding file called P.pf containing its corresponding Pareto front. If this
+ * This experiment assumes that the reference Pareto front are known and that, given a problem named
+ * P, there is a corresponding file called P.csv containing its corresponding Pareto front. If this
  * is not the case, please refer to class {@link DTLZStudy} to see an example of how to explicitly
  * indicate the name of those files.
- * <p>
- * Six quality indicators are used for performance assessment.
- * <p>
- * The steps to carry out the org.uma.jmetal.experiment are: 1. Configure the org.uma.jmetal.experiment 2. Execute the algorithms
- * 3. Compute que quality indicators 4. Generate Latex tables reporting means and medians 5.
- * Generate R scripts to produce latex tables with the result of applying the Wilcoxon Rank Sum Test
- * 6. Generate Latex tables with the ranking obtained by applying the Friedman test 7. Generate R
- * scripts to obtain boxplots
+ *
+ * Five quality indicators are used for performance assessment: {@link Epsilon}, {@link Spread},
+ * {@link GenerationalDistance}, {@link PISAHypervolume}, and {@link InvertedGenerationalDistancePlus}.
+ *
+ * The steps to carry out are:
+ * 1. Configure the experiment
+ * 2. Execute the algorithms
+ * 3. Compute que quality indicators
+ * 4. Generate Latex tables reporting means and medians, and tables with statistical tests
+ * 5. Generate HTML pages with tables, boxplots, and fronts.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 
 public class ZDTStudy {
-
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
@@ -59,6 +60,7 @@ public class ZDTStudy {
 
     List<ExperimentProblem<DoubleSolution>> problemList = List.of(
             new ExperimentProblem<>(new ZDT1()),
+            // new ExperimentProblem<>(new ZDT1().setReferenceFront("front.csv"))
             new ExperimentProblem<>(new ZDT2()),
             new ExperimentProblem<>(new ZDT3()),
             new ExperimentProblem<>(new ZDT4()),
@@ -88,10 +90,10 @@ public class ZDTStudy {
     new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanHolmTestTables<>(experiment).run();
-    new GenerateHtmlPages<>(experiment).run() ;
+    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+    new GenerateHtmlPages<>(experiment).run() ;
   }
 
   /**

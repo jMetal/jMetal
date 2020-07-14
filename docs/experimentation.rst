@@ -67,6 +67,8 @@ This package has the following structure:
 .. code-block:: text
 
   └── jmetal-lab: org.uma.jmetal.lab.experiment
+      ├── Experiment
+      ├── ExperimentBuilder
       ├── component
           ├── experimentComponent
           ├── impl
@@ -75,7 +77,6 @@ This package has the following structure:
               ├── GenerateLatexTablesWithStatistics
               ├── GenerateHtmlPages (NEW)
               ├── GenerateReferenceParetoFront
-              ├── ComputeQualityIndicators
               ├── GenerateReferenceParetoSetAndFrontFromDoubleSolutions
               ├── GenerateFriedmanHolmTestTables (NEW)
               ├── GenerateBoxplotsWithR
@@ -88,21 +89,120 @@ This package has the following structure:
           ├── ...
           └── BinaryProblemsStudy
           
+We can observe that there is a class called `Experiment` (which has an associated `ExperimentBuilder` class), which can be populated with a number of components. The mentioned steps are performed by `ExecuteAlgorithms` (step 1), `ComputeQualityIndicators` (step 2), and the rest of components can be selected to produce a variety of elements to analyze the results, such as Latex tables, figures (boxplots), and HTML pages (a new feature in jMetal 6). To compute quality indicators, it is necessary to have a reference front per problem; when solving benchmark problems, these fronts are usually known (there are located by default in the `resources` folder of the jMetal project), but this is not the case when dealing with real-world problems. To cope with this issue, we include the  `GenerateReferenceParetoFront` class, which produces reference Pareto fronts from all the results yielded by all the runs of all the algorithms after executing the `ExecuteAlgorithms` component, and the related `GenerateReferenceParetoSetAndFrontFromDoubleSolutions`, which does the same if the problems to solve are continuous; in this case, a reference Pareto set is also generated, as well as files with the contributed solutions of each algorithm to this set. 
+
+To show how these components can be used in an experiment, we have included a number of examples in the `studies` package. We explain next the `ZDTStudy` and the `NSGAIIComputingReferenceParetoFrontsStudy` classes.
 
 
+Class `ZDTStudy`
+----------------
 
- A new feature in jMetal 6 is the automatic generation of HTML pages containing the results of step 3.
+This class is intended to cope with the following scenario: we want to compare three algorithms (NSGA-II, SMPSO, and MOEA/D) when solving the five continuous ZDT problems (ZDT1-4, 6), and to apply the quality indicators hypervolume (*HV*) and additive epsilon (*EP*) (for the sake of simplicity, we take these two indicators here; the class contains five quality indicators). We explore the contents of the `ZDTStudy` class next.
 
-To illustrate these steps, let us consider that we want to compare three algorithms (NSGA-II, SMPSO, and MOEA/D) when solving the five continuous ZDT problems (ZDT1-4, 6), and the quality indicators hypervolume (*HV*) and additive epsilon (*EP*) will be used. 
+Experiment configuration
+^^^^^^^^^^^^^^^^^^^^^^^^
+After the import section, the code of the class starts in line 52:
 
-1. Execute the algorithms. A number of *R* * *A* * *P* processes will be generated (in our example: *A* = 4, *P* = 5), resulting in the following folder directory:
+.. code-block:: java 
+  :linenos: 
+  :lineno-start: 52
+
+  public class ZDTStudy {
+    private static final int INDEPENDENT_RUNS = 25;
+
+    public static void main(String[] args) throws IOException {
+      if (args.length != 1) {
+        throw new JMetalException("Missing argument: experimentBaseDirectory");
+      }
+      String experimentBaseDirectory = args[0];
+
+We can observe that the number of independent runs is set to 25. When an experiment is going to be executed, it will generate a lot of files, so a directory to store all the experiment data is required. 
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 61
+
+    List<ExperimentProblem<DoubleSolution>> problemList = List.of(
+            new ExperimentProblem<>(new ZDT1()),
+            // new ExperimentProblem<>(new ZDT1().setReferenceFront("front.csv")) 
+            new ExperimentProblem<>(new ZDT2()), 
+            new ExperimentProblem<>(new ZDT3()),
+            new ExperimentProblem<>(new ZDT4()),
+            new ExperimentProblem<>(new ZDT6()));
+
+The list of problems to be solved is configured by default as shown in lines 9-15. The commented line 11 illustrates the case where the default file name containing the reference Pareto front is not named `ZDT1.csv` (the assumed default name) but `front.csv`.           
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 69
+
+    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
+            configureAlgorithmList(problemList);
+
+
+A list with the algorithms already configured to be executed is created in a method called `configureAlgorithmList()`, which is included between lines 99-150 in the class.
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 72
+
+    Experiment<DoubleSolution, List<DoubleSolution>> experiment =
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTStudy")
+                    .setExperimentBaseDirectory(experimentBaseDirectory)
+                    .setAlgorithmList(algorithmList)
+                    .setProblemList(problemList)
+                    .setReferenceFrontDirectory("resources/referenceFrontsCSV")
+                    .setOutputParetoFrontFileName("FUN")
+                    .setOutputParetoSetFileName("VAR")
+                    .setIndicatorList(List.of(
+                            new Epsilon<>(),
+                            new Spread<>(),
+                            new GenerationalDistance<>(),
+                            new PISAHypervolume<>(),
+                            new InvertedGenerationalDistancePlus<>()))
+                    .setIndependentRuns(INDEPENDENT_RUNS)
+                    .setNumberOfCores(8)
+                    .build();
+
+The experiment is configured using the `ExperimentBuilder` class as shown in lines 72-88. The settings include:
+
+1. The experiment base directory (line 73).
+2. Output directory name (line 74). A directory called `ZDTStudy` will be created in the experiment base directory.
+3. The algorithm and problem lists (lines 75, 76).
+4. The directory containing the reference fronts of the problems (line 77).
+5. The default prefix of the names of the output files containing the solutions (`VAR`) and objectives (`FUN`). For each combination of algorithm and problem, the output files will be `FUN0.csv`, `FUN1.csv`, ... , `FUN24.csv`, and `VAR0.csv`, `VAR.csv`, ... ,`VAR24.csv`.
+6. A list with the quality indicators (lines 80-85).
+7. The number of independent runs (line 86).
+8. The number of cores (line 8). An experiment can require a large computing time. This parameter indicates the number of cores that can be used to run the configurations in parallel. 
+
+Algorithm execution
+^^^^^^^^^^^^^^^^^^^
+Once the experiment class is created and configured, we are ready to execute the algorithms: 
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 90
+
+   new ExecuteAlgorithms<>(experiment).run();
+
+As a result, the following folder directory will be generated:
 
 .. code-block:: text
 
   └── data
       ├── NSGAII
         ├── ZDT1
+          ├── FUN0.csv
+          ├── FUN1.csv
+          ├── FUN2.csv
+          ├── ... 
+          └── FUN24.csv
         ├── ZDT2
+          ├── FUN0.csv
+          ├── FUN1.csv
+          ├── FUN2.csv
+          ├── ... 
+          └── FUN24.csv
         ├── ZDT3
         ├── ZDT4
         └── ZDT6
@@ -111,31 +211,27 @@ To illustrate these steps, let us consider that we want to compare three algorit
         ...
       └── MOEAD
 
-A directory *data* will contain a folder per algorithm, each of which will have a subfolder per problem. The contents of each subfolder is a number of number files named *FUNx.tsv* and *VARx.tsv*, where *x* takes values in the range (0, R-1).
+A directory called `data` contains a folder per algorithm, each of which stores a sub-folder per problem. The contents of each sub-folder is composed of the files named `FUNx.csv` and `VARx.csv`, where `x` takes values in the range (0, 24), as mentioned before (let's remind that the number of independent runs was set to 25).
+
+Quality Indicator Computing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When the execution of all the algorithms has finished, the quality indicators are computed next:  
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 91
+   
+   new ComputeQualityIndicators<>(experiment).run();
+
+
+To illustrate the output of this step, let's us consider the hypervolume. The results of calculating this indicator for every `FUNx.csv` file are stored in a file named `HV` (the short name of the indicator), which contains a line per indicator value (in our example, this file contains 25 lines). Furthermore, as sometimes is convenient to know which fronts have the best or median indicator values, the following files are also created: `BEST_HV_FUN.csv`, `BEST_HV_VAR`, `MEDIAN_HV_FUN.csv`, and `MEDIAN_HV_VAR.csv`. The same process is repeated for the rest of quality indicators. 
+
+Consequently, after the computing of the quality indicators, the output directory structure will looks this way:
 
 .. code-block:: text
 
   └── data
-      ├── NSGAII
-        ├── ZDT1
-          ├── FUN0.tsv
-          ├── FUN1.tsv
-          ├── FUN2.tsv
-          ...
-          ├── VAR0.tsv
-          ├── VAR1.tsv
-          ├── VAR2.tsv
-          ...
-        ├── ZDT2
-          ...
-        ...
-      ...
-
-2. Compute quality indicators. Once the algorithms have been executed, it is time to compute quality indicators on the obtained results. As we are considering the *HV* and *EP* indicators, the resulting output is shown next:
-
-.. code-block:: text
-
-  └── data
+      ├── QualityIndicatorSummary.csv
       ├── NSGAII
         ├── ZDT1
           ├── FUN0.tsv
@@ -158,11 +254,9 @@ A directory *data* will contain a folder per algorithm, each of which will have 
         ...
       ...
 
-We can observe the generation of a file called *HV*; it will contains the value of the Hypervolume for each of the *R* fronts found in the previous step (for the current combination of algorithm and problem). Additionally, four files are generated, including the fronts with best and median indicator values, respectively. The same applies to the *EP* indicator and others than can be used.
+We observe that another result of this step is a CSV file called `QualityIndicatorSummary.csv`, which contains a summary of all the quality indicator values. The header contains these fields: algorithm name, problem name, indicator name (*HV*, *EP*, etc.), execution id (from 0 to the number of independent runs minus 1), and indicator value. The first lines of this file would look like this:
 
-Another result is a CSV file called *QualityIndicatorSummary.csv*, which contains a summary of all the quality indicators results. The header (and some lines of contents) contains these fields: algorithm name, problem name, indicator name (*HV*, *EP*, etc.), execution id (from 0 to *R - 1*), and indicator value. The first lines of this file would look like this:
-
-.. code-block:: csv
+.. code-block:: text
 
  Algorithm,Problem,IndicatorName,ExecutionId,IndicatorValue
  NSGAII,ZDT1,EP,0,0.015705992620067832
@@ -172,15 +266,68 @@ Another result is a CSV file called *QualityIndicatorSummary.csv*, which contain
  NSGAII,ZDT1,EP,4,0.010279387564947617
  ...
 
-The interesting point of generating the *QualityIndicatorSummary.csv* it that it can be analyzed outside jMetal. For example, you can use Pandas or even the analysis features of jMetalPy (https://github.com/jMetal/jMetalPy), the Python version of jMetal that is in development.
+The interesting point of generating the *QualityIndicatorSummary.csv* it that it can be analyzed outside jMetal. For example, you can use Pandas or the analysis features of jMetalPy (https://github.com/jMetal/jMetalPy), the Python version of jMetal.
 
-3. Generation of Latex tables and chars. Once the quality indicators have been computed, jMetal includes some functions to generate Latex files containing statistical data (mean/median and standard deviation/IQR,  Friedman ranking) and R scripts producing boxplots and Latex tables containing information about the Wilcoxon rank sum test.
+Generation of Latex Tables and R Files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The next step after getting the indicator values of the fronts obtained by all the algorithms on the selected problems is to conduct an statistical analysis. To support this analysis, the experiment package of jMetal 6 includes components to  generate Latex files containing statistical data (mean/median and standard deviation/IQR,  Friedman ranking) and R scripts producing boxplots and Latex tables containing information about the Wilcoxon rank sum test. The available components include:
 
-The final folder directory is then the following one:
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 92
+   
+   new GenerateLatexTablesWithStatistics(experiment).run();
+   new GenerateFriedmanHolmTestTables<>(experiment).run();
+   new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+   new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
+
+Generation of HTML Pages
+^^^^^^^^^^^^^^^^^^^^^^^^
+Obtaining Latex files containing tables with statistical data resulting from an experimental study is interesting because those tables can be included in research papers. Still, it is a bit cumbersome to analyze them because all the information is distributed among many files. A new feature included in jMetal 6 is the automatic generation of HTML pages including all these information:
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 96
+   
+   new GenerateHtmlPages<>(experiment).run() ;
+
+This component creates a directory called `html` and generates an HTML file per quality indicator (i.e., `EP.html`, `HV.html`, etc.). Each page contains the following:
+
+1. Table with median values.
+2. Table with the results of the Wilcoxon rank-sum test.
+3. Table with the ranking obtained after applying the Friedman test and the post hoc Holm test.
+4. A boxplot per problem.
+5. Optionally, a chart with the front having the best or median indicator value.
+
+The good point is that all this information is included in a single page that can be visualized in a browser. 
+
+.. raw:: html
+   :file: HV.html
+
+
+.. code-block:: HTML 
+
+  <h1> hola </h1>
+  <div>
+  <table>
+  <caption>Median values</caption>
+  <tr><th></th><th>SMPSO</th><th>NSGAII</th><th>MOEAD</th></tr>
+  <tr><th>ZDT1</th><td  class='best'>6,61816E-1</td><td  class='secondBest'>6,59511E-1</td><td >6,38231E-1</td></tr>
+  <tr><th>ZDT2</th><td  class='best'>3,28589E-1</td><td  class='secondBest'>3,2629E-1</td><td >3,09438E-1</td></tr>
+  <tr><th>ZDT3</th><td  class='best'>5,15348E-1</td><td  class='secondBest'>5,14715E-1</td><td >4,44765E-1</td></tr>
+  <tr><th>ZDT4</th><td  class='best'>6,61336E-1</td><td  class='secondBest'>6,56168E-1</td><td >3,46897E-1</td></tr>
+  <tr><th>ZDT6</th><td  class='secondBest'>4,01255E-1</td><td >3,90142E-1</td><td  class='best'>4,01339E-1</td></tr>
+  </table>
+  </div>
+
+Final Result Folder Structure
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+After the execution of the experiment, the output directory will contain the following folders:
 
 .. code-block:: text
 
     ├── QualityIndicatorSummary.csv
+    ├── html
     ├── R
     ├── data
     └── latex
