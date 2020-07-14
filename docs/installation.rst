@@ -4,7 +4,7 @@ jMetal is a Maven project hosted in GitHub, so there are two ways of getting the
 
 The software requirements to use jMetal 6.0-SNAPSHOT are:
 
-* Java 8 JDK 
+* Java 11 JDK 
 * Maven
 * Optional: R, Latex, Tablesaw, Smile.
 

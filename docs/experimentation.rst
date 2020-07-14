@@ -299,26 +299,10 @@ This component creates a directory called `html` and generates an HTML file per 
 4. A boxplot per problem.
 5. Optionally, a chart with the front having the best or median indicator value.
 
-The good point is that all this information is included in a single page that can be visualized in a browser. 
+The good point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
 
-.. raw:: html
-   :file: HV.html
+* 
 
-
-.. code-block:: HTML 
-
-  <h1> hola </h1>
-  <div>
-  <table>
-  <caption>Median values</caption>
-  <tr><th></th><th>SMPSO</th><th>NSGAII</th><th>MOEAD</th></tr>
-  <tr><th>ZDT1</th><td  class='best'>6,61816E-1</td><td  class='secondBest'>6,59511E-1</td><td >6,38231E-1</td></tr>
-  <tr><th>ZDT2</th><td  class='best'>3,28589E-1</td><td  class='secondBest'>3,2629E-1</td><td >3,09438E-1</td></tr>
-  <tr><th>ZDT3</th><td  class='best'>5,15348E-1</td><td  class='secondBest'>5,14715E-1</td><td >4,44765E-1</td></tr>
-  <tr><th>ZDT4</th><td  class='best'>6,61336E-1</td><td  class='secondBest'>6,56168E-1</td><td >3,46897E-1</td></tr>
-  <tr><th>ZDT6</th><td  class='secondBest'>4,01255E-1</td><td >3,90142E-1</td><td  class='best'>4,01339E-1</td></tr>
-  </table>
-  </div>
 
 Final Result Folder Structure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
