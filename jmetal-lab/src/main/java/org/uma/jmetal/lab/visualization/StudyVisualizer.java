@@ -1,10 +1,13 @@
-package org.uma.jmetal.lab.experiment.visualization;
+package org.uma.jmetal.lab.visualization;
 
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.experiment.visualization.html.*;
-import org.uma.jmetal.lab.experiment.visualization.html.impl.*;
+import org.uma.jmetal.lab.visualization.html.*;
+import org.uma.jmetal.lab.visualization.html.impl.*;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.FriedmanTestTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.MedianValuesTable;
+import org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl.WilcoxonTestTable;
 import org.uma.jmetal.util.JMetalException;
-import tech.tablesaw.api.NumericColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;

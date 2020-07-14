@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.plot.impl;
+package org.uma.jmetal.lab.visualization.plot.impl;
 
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.components.Figure;

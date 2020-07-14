@@ -1,21 +1,22 @@
-package org.uma.jmetal.lab.experiment.visualization.html.impl;
+package org.uma.jmetal.lab.visualization.html.impl.htmlTableImpl;
 
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 
 import java.util.Arrays;
-
+/**
+ * This class computes the Wilcoxon test for every pair of algorithms.
+ *
+ * <p>A down arrow means the algorithm in the column outperforms the algorithm in the row.
+ *
+ * @author Javier Pérez Abad
+ */
 public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]> {
 
   private static final String[] INDICATORS_TO_MAXIMIZE = {"HV"};
-
-  public enum Difference {
-    BETTER,
-    WORSE,
-    NO_DIFFERENCE
-  }
 
   public WilcoxonTestTable(
       Table table,
@@ -55,6 +56,14 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
     }
   }
 
+  public static double[] convertDoubleArray(Double[] array) {
+    double[] result = new double[array.length];
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[i];
+    }
+    return result;
+  }
+
   private Table filterTableBy(Table table, String columnName, String value) {
     return table.where(table.stringColumn(columnName).isEqualTo(value));
   }
@@ -72,14 +81,6 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
     } else {
       return Difference.NO_DIFFERENCE;
     }
-  }
-
-  public static double[] convertDoubleArray(Double[] array) {
-    double[] result = new double[array.length];
-    for (int i = 0; i < array.length; i++) {
-      result[i] = array[i];
-    }
-    return result;
   }
 
   protected StringBuilder createRowOfData(int index) {
@@ -110,5 +111,11 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
     css.append(".fas { flex-shrink: 0; margin: 1px; color: #6b6b6b} ");
 
     return css.toString();
+  }
+
+  public enum Difference {
+    BETTER,
+    WORSE,
+    NO_DIFFERENCE
   }
 }
