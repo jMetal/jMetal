@@ -1,8 +1,5 @@
 package org.uma.jmetal.lab.experiment.component;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentComponent;
 import org.uma.jmetal.lab.util.FriedmanTest;
@@ -12,9 +9,13 @@ import org.uma.jmetal.util.JMetalException;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class computes the Friedman test ranking and generates a Latex script that produces a table
@@ -28,7 +29,8 @@ import java.util.*;
  * J.C. Fernández, F. Herrera. KEEL: A Software Tool to Assess Evolutionary Algorithms to Data
  * Mining Problems. Soft Computing 13:3 (2009) 307-318 Doi: 10.1007/s00500-008-0323-y
  *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro
+ * @author Javier Pérez
  */
 public class GenerateFriedmanHolmTestTables<Result extends List<? extends Solution<?>>>
     implements ExperimentComponent {
