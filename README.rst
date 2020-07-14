@@ -56,6 +56,8 @@ Comments and suggestions are very welcome.
 Changelog
 ---------
 
+* [7/14/2020] New experiment component: `GenerateFriedmanHolmTestTables <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_. Contributed by Javier Pérez Abad.
+
 * [3/19/2020] New quality indicator: `NormalizedHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_.
 
 * [3/19/2020] The jMetal 6 project adopts Java 11.
