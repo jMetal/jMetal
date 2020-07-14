@@ -131,26 +131,14 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     List<List<Pair<Integer, Double>>> order = new ArrayList<List<Pair<Integer, Double>>>(numberOfProblems);
 
     for (int i=0; i<numberOfProblems; i++) {
-      order.add(new ArrayList<Pair<Integer, Double>>(numberOfAlgorithms)) ;
+      order.add(new ArrayList<>(numberOfAlgorithms)) ;
       for (int j=0; j<numberOfAlgorithms; j++){
-        order.get(i).add(new ImmutablePair<Integer, Double>(j, mean[i][j]));
+        order.get(i).add(new ImmutablePair<>(j, mean[i][j]));
       }
-      Collections.sort(order.get(i), new Comparator<Pair<Integer, Double>>() {
-        @Override
-        public int compare(Pair<Integer, Double> pair1, Pair<Integer, Double> pair2) {
-          if (Math.abs(pair1.getValue()) > Math.abs(pair2.getValue())){
-            return 1;
-          } else if (Math.abs(pair1.getValue()) < Math.abs(pair2.getValue())) {
-            return -1;
-          } else {
-            return 0;
-          }
-        }
-      });
+      order.get(i).sort(Comparator.comparingDouble(pair -> Math.abs(pair.getValue())));
     }
 
     /*building of the rankings table per algorithms and data sets*/
-   // Pair[][] rank = new Pair[numberOfProblems][numberOfAlgorithms];
     List<List<MutablePair<Double, Double>>> rank = new ArrayList<List<MutablePair<Double, Double>>>(numberOfProblems);
 
     int position = 0;
@@ -164,7 +152,6 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
             position = k+1;
           }
         }
-        //rank[i][j] = new Pair(position,order[i][position-1].value);
         rank.get(i).add(new MutablePair<Double, Double>((double)position, order.get(i).get(position-1).getValue())) ;
       }
     }
@@ -181,7 +168,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
         hasBeenVisited[j] = true;
         int ig = 1;
         for (int k=j+1;k<numberOfAlgorithms;k++) {
-          if (rank.get(i).get(j).getValue() == rank.get(i).get(k).getValue() && !hasBeenVisited[k]) {
+          if (rank.get(i).get(j).getValue().equals(rank.get(i).get(k).getValue()) && !hasBeenVisited[k]) {
             sum += rank.get(i).get(k).getKey();
             ig++;
             pendingToVisit.add(k);

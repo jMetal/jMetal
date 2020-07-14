@@ -28,9 +28,6 @@ public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
 
   public GenerateBoxplotsWithTablesawAndR(
       String csvSummaryFile,
-      int numberOfRows,// Not used
-      int numberOfColumns,// Not used
-      boolean displayNotch,// Not used
       String experimentBaseDirectory) {
     this.csvSummaryFile = csvSummaryFile;
     this.experimentBaseDirectory = experimentBaseDirectory;
@@ -64,9 +61,6 @@ public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
     int numberOfRuns = table.select("ExecutionId").dropDuplicateRows().rowCount();
     System.out.println("Number of runs: " + numberOfRuns);
 
-
-
-
     Table summary = Table.create("Summary");
     Column<String> algs = StringColumn.create("Problem", problemNames.asList());
     summary.addColumns(algs);
@@ -88,26 +82,17 @@ public class GenerateBoxplotsWithTablesawAndR implements ExperimentComponent {
         Table indicatorValues = filtered.select("IndicatorValue");
         DoubleColumn hv = indicatorValues.doubleColumn(0);
 
-        // System.out.println(hv.mean());
         medians.add(hv.median());
         iqrs.add(hv.quartile3() - hv.quartile1());
       }
 
       medians.forEach(v -> System.out.println(v + " "));
 
-      Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[medians.size()]));
+      Column<Double> median = DoubleColumn.create(alg, medians.toArray(new Double[0]));
       System.out.println(median);
       summary.addColumns(median);
     }
 
     System.out.println(summary);
-  }
-
-  public static void main(String[] args) throws IOException {
-    ExperimentComponent component =
-        new GenerateBoxplotsWithTablesawAndR(
-            "jmetal-lab/src/main/resources/QualityIndicatorSummary.csv", 4, 3, false, ".");
-
-    component.run();
   }
 }
