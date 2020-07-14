@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Class for describing the configuration of a jMetal org.uma.jmetal.experiment.
+ * Class for describing the configuration an experimental study.
  *
- * <p>Created by Antonio J. Nebro on 17/07/14.
+ * @author Antonio J. Nebro
  */
 public class Experiment<S extends Solution<?>, Result extends List<S>> {
   private String experimentName;
