@@ -1,4 +1,4 @@
-package org.uma.jmetal.lab.visualization.html.impl;
+package org.uma.jmetal.lab.visualization.html.impl.htmlTable;
 
 import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 /**
