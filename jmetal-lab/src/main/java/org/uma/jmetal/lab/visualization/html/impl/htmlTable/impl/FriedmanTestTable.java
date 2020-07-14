@@ -7,7 +7,7 @@ import tech.tablesaw.api.Table;
 
 import java.text.DecimalFormat;
 /**
- * This class transforms the results of FriedmanTest into a HtmlTable.
+ * This class transforms the results of FriedmanTest into a {@link HtmlTable}.
  *
  * <p>It creates 5 columns: Algorithm, Ranking, p-value, Holm and Hypothesis
  *
