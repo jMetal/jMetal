@@ -6,7 +6,7 @@ Experimental studies
 :Author: Antonio J. Nebro
 :Author: Javier Pérez Abad
 :Version: 1.0
-:Date: 2020-14-07
+:Date: 2020-15-07
 
 
 This tutorial describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
@@ -61,11 +61,11 @@ Experimental studies
 --------------------
 
 An experimental study is used to make a comparison of a number of algorithms when solving a set of problems. It involves the execution and subsequent analysis of the results of *R* independent runs of *A* algorithms, each of will solve *P* problems. This process is carried out in three steps:
-**
+
 1) execution of all the configurations (i.e., all the combinations of *A*, *P*, and *R*),
 2) apply quality indicators to the obtained fronts
 3) performance assessment by using statistical tests and generating stuff summarizing the results (e.g., Latex tables, charts).
-**
+
 These steps are supported by a set of classes included in the `jmetal-lab` sub-project, package `org.uma.jmetal.lab.experiment`.
 
 This package has the following structure:
@@ -136,7 +136,7 @@ We can observe that the number of independent runs is set to 25. When an experim
             new ExperimentProblem<>(new ZDT4()),
             new ExperimentProblem<>(new ZDT6()));
 
-The list of problems to be solved is configured by default as shown in lines *61-67* (9-15). The commented line *63* (11) illustrates the case where the default file name containing the reference Pareto front is not named `ZDT1.csv` (the assumed default name) but `front.csv`.
+The list of problems to be solved is configured by default as shown in lines 61-67. The commented line 63 illustrates the case where the default file name containing the reference Pareto front is not named `ZDT1.csv` (the assumed default name) but `front.csv`.
 
 .. code-block:: java 
    :linenos: 
@@ -305,12 +305,12 @@ This component creates a directory called `html` and generates an HTML file per 
 4. A boxplot per problem.
 5. Optionally, a chart with the front having the best or median indicator value.
 
-The good point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
+The interesting point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
 
-* `EP.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/EP.html>`_
-* `HV.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/HV.html>`_
-* `SPREAD.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/SPREAD.html>`_
-* `IGD+.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/IGD+.html>`_
+* `EP.html <_static/html/EP.html>`_
+* `HV.html <_static/html/HV.html>`_
+* `SPREAD.html <_static/resources/html/SPREAD.html>`_
+* `IGD+.html <_static/resources/html/IGD+.html>`_
 
 
 Final Result Folder Structure
