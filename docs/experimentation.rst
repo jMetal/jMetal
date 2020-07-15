@@ -62,9 +62,9 @@ Experimental studies
 
 An experimental study is used to make a comparison of a number of algorithms when solving a set of problems. It involves the execution and subsequent analysis of the results of *R* independent runs of *A* algorithms, each of will solve *P* problems. This process is carried out in three steps:
 
-1) execution of all the configurations (i.e., all the combinations of *A*, *P*, and *R*),
-2) apply quality indicators to the obtained fronts
-3) performance assessment by using statistical tests and generating stuff summarizing the results (e.g., Latex tables, charts).
+1) Execution of all the configurations (i.e., all the combinations of *A*, *P*, and *R*)
+2) Apply quality indicators to the obtained fronts
+3) Performance assessment by using statistical tests and generating stuff summarizing the results (e.g., Latex tables, charts)
 
 These steps are supported by a set of classes included in the `jmetal-lab` sub-project, package `org.uma.jmetal.lab.experiment`.
 
