@@ -151,12 +151,12 @@ A list with the algorithms already configured to be executed is created in a met
 .. code-block:: java 
    :linenos: 
    :lineno-start: 99
-
-  /**
-   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
-   * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
-   */
-  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+   
+   /**
+    * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
+    * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
+    */
+   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
@@ -359,4 +359,42 @@ After the execution of the experiment, the output directory will contain the fol
 Class `NSGAIIComputingReferenceParetoFrontsStudy`
 -------------------------------------------------
 
-The `NSGAIIComputingReferenceParetoFrontsStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java>`_ class contains an example of study where it is assumed that the reference fronts of the problems are unknown and, instead of comparing different algorithms, a number of versions of a single one (NSGA-II) are used.
+The `NSGAIIComputingReferenceParetoFrontsStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java>`_ class contains an example of study where it is assumed that the reference fronts of the problems are unknown and, instead of comparing different algorithms, a number of versions of a single one (NSGA-II) are used; in particular, the idea is to analyze the effect of using different crossover probabilities when using NSGA-II to solve the ZDT problems.
+
+Compared with the `ZDTStudy`, the main differences are:
+
+1. The reference front directory must be empty, and all the generated files will stored into it.
+2. Before computing the quality indicators, the reference fronts must be computed:
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 83
+
+   new ExecuteAlgorithms<>(experiment).run();
+   new GenerateReferenceParetoSetAndFrontFromDoubleSolutions(experiment).run();
+   new ComputeQualityIndicators<>(experiment).run();
+
+In this case, as we are solving again the ZDT problems, we use the component `GenerateReferenceParetoSetAndFrontFromDoubleSolutions`.
+
+3. The name of an algorithm is used by default in all the generated tables and charts, but as we intend to use only NSGA-II, we add a tag when the algorithm is added to the algorithm list (see line 112):
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 102
+
+    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
+                experimentProblem.getProblem(),
+                new SBXCrossover(1.0, 5),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                        10.0),
+                100)
+                .setMaxEvaluations(25000)
+                .build();
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", experimentProblem, run));
+      }
+
+    ...  // Rest of NSGA-II configurations
+
+The NSGA-II variants will be named *NSGAIIa*, *NSGAIIb*, *NSGAIIc*, and *NSGAIId*.

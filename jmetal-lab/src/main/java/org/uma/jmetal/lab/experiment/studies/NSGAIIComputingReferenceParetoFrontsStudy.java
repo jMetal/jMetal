@@ -100,7 +100,6 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 experimentProblem.getProblem(),
