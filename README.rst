@@ -56,7 +56,7 @@ Comments and suggestions are very welcome.
 Changelog
 ---------
 
-* [7/14/2020] Automatic generation of HTML pages summarizing the results of experimental studies: `GenerateFriedmanHolmTestTables <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_. Contributed by Javier Pérez Abad.
+* [7/15/2020] `Automatic generation of HTML pages <https://github.com/jMetal/jMetal/blob/master/docs/experimentation.rst>`_. summarizing the results of experimental studies. Contributed by Javier Pérez Abad.
 
 * [7/14/2020] New experiment component: `GenerateFriedmanHolmTestTables <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_. Contributed by Javier Pérez Abad.
 
