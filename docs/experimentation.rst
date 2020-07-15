@@ -6,7 +6,7 @@ Experimental studies
 :Author: Antonio J. Nebro
 :Author: Javier Pérez Abad
 :Version: 1.0
-:Date: 2020-14-07
+:Date: 2020-15-07
 
 
 This tutorial describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
@@ -299,12 +299,12 @@ This component creates a directory called `html` and generates an HTML file per 
 4. A boxplot per problem.
 5. Optionally, a chart with the front having the best or median indicator value.
 
-The good point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
+The interesting point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
 
-* `EP.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/EP.html>`_
-* `HV.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/HV.html>`_
-* `SPREAD.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/SPREAD.html>`_
-* `IGD+.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/IGD+.html>`_
+* `EP.html <_static/html/EP.html>`_
+* `HV.html <_static/html/HV.html>`_
+* `SPREAD.html <_static/resources/html/SPREAD.html>`_
+* `IGD+.html <_static/resources/html/IGD+.html>`_
 
 
 Final Result Folder Structure
