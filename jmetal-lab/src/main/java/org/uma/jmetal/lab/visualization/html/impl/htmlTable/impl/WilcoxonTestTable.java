@@ -24,7 +24,7 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
       StringColumn algorithms,
       StringColumn problems,
       String indicatorValueColumnName) {
-    this.title = "Test de Wilcoxon";
+    this.title = "Wilcoxon Test";
     this.headersColumn = algorithms.last(algorithms.size() - 1).asObjectArray();
     this.headersRow = algorithms.asObjectArray();
     this.data = new Difference[algorithms.size() - 1][algorithms.size() - 1][problems.size()];

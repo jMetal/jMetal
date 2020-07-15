@@ -17,7 +17,7 @@ public class FriedmanTestTable extends HtmlTable<String> {
 
   public FriedmanTestTable(
       Table table, StringColumn algorithms, StringColumn problems, boolean minimizar) {
-    this.title = "Test de Friedman y test de Holm";
+    this.title = "Friedman ranking and Holm test";
     FriedmanTest test = new FriedmanTest(minimizar, table, algorithms, problems, "IndicatorValue");
     test.computeHolmTest();
     Table ranking = test.getResults();
