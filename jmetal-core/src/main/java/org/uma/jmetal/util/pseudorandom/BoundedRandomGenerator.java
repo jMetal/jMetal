@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.pseudorandom;
 
+import java.io.Serializable;
+
 /**
  * A {@link BoundedRandomGenerator} aims to provide a random value within a
  * specific range. The range is inclusive, such that the lower bound and upper
@@ -17,7 +19,7 @@ package org.uma.jmetal.util.pseudorandom;
  *            The type of value to generate
  */
 @FunctionalInterface
-public interface BoundedRandomGenerator<Value extends Comparable<Value>> {
+public interface BoundedRandomGenerator<Value extends Comparable<Value>> extends Serializable {
 	/**
 	 * Generate a random value within the provided range.
 	 * 
