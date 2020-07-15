@@ -113,7 +113,7 @@ public class ZDTStudy {
                 .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
                 .setMaxIterations(250)
                 .setSwarmSize(100)
-                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
+                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<>())
                 .build();
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }

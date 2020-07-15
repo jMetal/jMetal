@@ -91,7 +91,7 @@ This package has the following structure:
           
 We can observe that there is a class called `Experiment` (which has an associated `ExperimentBuilder` class), which can be populated with a number of components. The mentioned steps are performed by `ExecuteAlgorithms` (step 1), `ComputeQualityIndicators` (step 2), and the rest of components can be selected to produce a variety of elements to analyze the results, such as Latex tables, figures (boxplots), and HTML pages (a new feature in jMetal 6). To compute quality indicators, it is necessary to have a reference front per problem; when solving benchmark problems, these fronts are usually known (there are located by default in the `resources` folder of the jMetal project), but this is not the case when dealing with real-world problems. To cope with this issue, we include the  `GenerateReferenceParetoFront` class, which produces reference Pareto fronts from all the results yielded by all the runs of all the algorithms after executing the `ExecuteAlgorithms` component, and the related `GenerateReferenceParetoSetAndFrontFromDoubleSolutions`, which does the same if the problems to solve are continuous; in this case, a reference Pareto set is also generated, as well as files with the contributed solutions of each algorithm to this set. 
 
-To show how these components can be used in an experiment, we have included a number of examples in the `studies` package. We explain next the `ZDTStudy` and the `NSGAIIComputingReferenceParetoFrontsStudy` classes.
+To show how these components can be used in an experiment, we have included a number of examples in the `studies` package. We explain next the `ZDTStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/ZDTStudy.java>`_ and the `NSGAIIComputingReferenceParetoFrontsStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java>`_ classes.
 
 
 Class `ZDTStudy`
@@ -140,7 +140,37 @@ The list of problems to be solved is configured by default as shown in lines 9-1
             configureAlgorithmList(problemList);
 
 
-A list with the algorithms already configured to be executed is created in a method called `configureAlgorithmList()`, which is included between lines 99-150 in the class.
+A list with the algorithms already configured to be executed is created in a method called `configureAlgorithmList()`, which is included between lines 99-150 in the class. An example of how this list is updated with the SMPSO algorithm is shown next:
+
+.. code-block:: java 
+   :linenos: 
+   :lineno-start: 99
+
+  /**
+   * The algorithm list is composed of pairs {@link Algorithm} + {@link Problem} which form part of
+   * a {@link ExperimentAlgorithm}, which is a decorator for class {@link Algorithm}.
+   */
+  static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(
+          List<ExperimentProblem<DoubleSolution>> problemList) {
+    List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
+    for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (var experimentProblem : problemList) {
+        double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
+        double mutationDistributionIndex = 20.0;
+        Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
+                (DoubleProblem) experimentProblem.getProblem(),
+                new CrowdingDistanceArchive<DoubleSolution>(100))
+                .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
+                .setMaxIterations(250)
+                .setSwarmSize(100)
+                .setSolutionListEvaluator(new SequentialSolutionListEvaluator<>())
+                .build();
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
+      }
+
+      ... // Configuration of the rest of algorithms
+
+We can observe that there is an outer loop (line 106) and a inner loop (line 107) to create an instance of SMPSO per independent run and problem. The configured algorithm is added to the list in line 118, by creating an instance of class `ExperimentAlgorithm`.
 
 .. code-block:: java 
    :linenos: 
@@ -318,3 +348,9 @@ After the execution of the experiment, the output directory will contain the fol
     ├── R
     ├── data
     └── latex
+
+
+Class `NSGAIIComputingReferenceParetoFrontsStudy`
+-------------------------------------------------
+
+The `NSGAIIComputingReferenceParetoFrontsStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java>`_ class contains an example of study where it is assumed that the reference fronts of the problems are unknown and, instead of comparing different algorithms, a number of versions of a single one (NSGA-II) are used.
