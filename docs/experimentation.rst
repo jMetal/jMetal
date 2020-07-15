@@ -301,7 +301,10 @@ This component creates a directory called `html` and generates an HTML file per 
 
 The good point is that all this information is included in a single page that can be visualized in a browser. Just take a look to the generated files:
 
-* 
+* `EP.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/EP.html>`_
+* `HV.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/HV.html>`_
+* `SPREAD.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/SPREAD.html>`_
+* `IGD+.hmtl <https://github.com/jMetal/jMetal/blob/master/docs/resources/html/IGD+.html>`_
 
 
 Final Result Folder Structure
