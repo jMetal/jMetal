@@ -60,7 +60,7 @@ Implementations:
 * `DefaultBinarySolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/impl/DefaultBinarySolution.java>`_: The solution chromosome is a list of binary strings. The number of solution variables is the number of strings.
 
 Integer encoding
----------------
+----------------
 
 Implementations:
 
@@ -83,7 +83,7 @@ Implementations:
 * `IntegerPermutationSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/permutationsolution/impl/IntegerPermutationSolution.java>`_: The encoding is a list of N integer numbers with are arrange as a permutation of size N. Each value of the permutation is stored in a solution variable.
 
 Sequence encoding
---------------------
+-----------------
 
 Implementations:
 
