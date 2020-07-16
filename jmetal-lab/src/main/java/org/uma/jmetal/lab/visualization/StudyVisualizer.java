@@ -1,8 +1,9 @@
 package org.uma.jmetal.lab.visualization;
 
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.visualization.html.*;
-import org.uma.jmetal.lab.visualization.html.impl.*;
+import org.uma.jmetal.lab.visualization.html.Html;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlFigure;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlGridView;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.FriedmanTestTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.MedianValuesTable;
@@ -23,23 +24,23 @@ import java.util.LinkedList;
 /**
  * This class generates HTML files to visualize and analyze the results of a experiment.
  *
- * <p>As argument, it needs the path to the experiment base directory. The results are created
- * in the directory {@link Experiment * #getExperimentBaseDirectory()}/html. There it creates a HTML
+ * <p>As argument, it needs the path to the experiment base directory. The results are created in
+ * the directory {@link Experiment * #getExperimentBaseDirectory()}/html. There it creates a HTML
  * file for each indicator computed.
  *
- * Each HTML file is composed of:
- * - A table with the mean value of the executions witch each algorithm and problem
- * - Wilcoxon test
- * - Friedman ranking and Holm test
- * - A boxplot for each problem.
- * - If a second argument is provided, it shows the best or the median front for each algorithm and each problem.
+ * <p>Each HTML file is composed of: - A table with the mean value of the executions witch each
+ * algorithm and problem - Wilcoxon test - Friedman ranking and Holm test - A boxplot for each
+ * problem. - If a second argument is provided, it shows the best or the median front for each
+ * algorithm and each problem.
  *
  * @author Javier Pérez
  */
 public class StudyVisualizer {
-
-  public static final String SHOW_BEST_FRONTS = "BEST";
-  public static final String SHOW_MEDIAN_FRONTS = "MEDIAN";
+  public enum TYPE_OF_FRONT_TO_SHOW {
+    NONE,
+    BEST,
+    MEDIAN
+  }
 
   private static final String INDICATOR_SUMMARY_CSV = "QualityIndicatorSummary.csv";
   // NAMES OF CSV COLUMNS
@@ -48,10 +49,19 @@ public class StudyVisualizer {
   private static final String INDICATOR_NAME = "IndicatorName";
   private static final String EXECUTION_ID = "ExecutionId";
   private static final String INDICATOR_VALUE = "IndicatorValue";
-
   private String folderPath;
   private Table table;
-  private String showFronts;
+  private TYPE_OF_FRONT_TO_SHOW typeOfFrontToShow;
+
+  public StudyVisualizer(String path, TYPE_OF_FRONT_TO_SHOW typeOfFrontToShow) throws IOException {
+    folderPath = path;
+    table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
+    this.typeOfFrontToShow = typeOfFrontToShow;
+  }
+
+  public StudyVisualizer(String path) throws IOException {
+    this(path, null);
+  }
 
   public static void main(String[] args) throws IOException {
     String directory;
@@ -62,18 +72,8 @@ public class StudyVisualizer {
       directory = args[0];
     }
 
-    StudyVisualizer visualizer = new StudyVisualizer(directory, StudyVisualizer.SHOW_MEDIAN_FRONTS);
+    StudyVisualizer visualizer = new StudyVisualizer(directory, TYPE_OF_FRONT_TO_SHOW.NONE);
     visualizer.createHTMLPageForEachIndicator();
-  }
-
-  public StudyVisualizer(String path, String showFronts) throws IOException {
-    folderPath = path;
-    table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
-    this.showFronts = showFronts;
-  }
-
-  public StudyVisualizer(String path) throws IOException {
-    this(path, null);
   }
 
   public void createHTMLPageForEachIndicator() throws IOException {
@@ -92,7 +92,7 @@ public class StudyVisualizer {
     htmlPage.addComponent(tablesGridView);
 
     StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
-    if (showFronts == null) {
+    if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.NONE) {
       HtmlGridView boxPlotsGrid = new HtmlGridView();
       for (String problem : problems) {
         HtmlFigure figure = createBoxPlot(indicator, problem);
@@ -113,23 +113,23 @@ public class StudyVisualizer {
     StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
     Table tableFilteredByIndicator = filterTableByIndicator(table, indicator);
 
-    boolean minimizar = true;
+    boolean minimize = true;
 
     HtmlTable medianValuesTable =
         new MedianValuesTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
-    HtmlTable wilconxonTable =
+    HtmlTable wilcoxonTable =
         new WilcoxonTestTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
     if (indicator.equals("HV")) {
-      minimizar = false;
+      minimize = false;
     }
     HtmlTable friedmanTable =
-        new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimizar);
+        new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimize);
 
     HtmlGridView htmlGridView = new HtmlGridView();
     htmlGridView.addComponent(medianValuesTable);
-    htmlGridView.addComponent(wilconxonTable);
+    htmlGridView.addComponent(wilcoxonTable);
     htmlGridView.addComponent(friedmanTable);
     return htmlGridView;
   }
@@ -163,7 +163,13 @@ public class StudyVisualizer {
 
   private HtmlFigure createFrontPlot(String indicator, String problem, String algorithm)
       throws IOException {
-    String csv = algorithm + "/" + problem + "/" + showFronts + "_" + indicator + "_FUN.csv";
+    String frontFileName = "";
+    if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.BEST) {
+      frontFileName = "BEST";
+    } else if (typeOfFrontToShow == TYPE_OF_FRONT_TO_SHOW.MEDIAN) {
+      frontFileName = "MEDIAN";
+    }
+    String csv = algorithm + "/" + problem + "/" + frontFileName + "_" + indicator + "_FUN.csv";
     String path = folderPath + "/data/" + csv;
     CsvReadOptions csvReader = CsvReadOptions.builder(path).header(false).build();
     Table funTable = Table.read().usingOptions(csvReader);

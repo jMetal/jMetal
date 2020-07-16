@@ -1,12 +1,10 @@
 package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**d
  * Class representing an ideal point (minimization is assumed)

@@ -15,6 +15,11 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
   private int matingPoolSize;
   private Preference<S> preference;
 
+  public NaryTournamentMatingPoolSelection(NaryTournamentSelection<S> selection, int matingPoolSize) {
+    this.matingPoolSize = matingPoolSize ;
+    this.selectionOperator = selection ;
+  }
+
   public NaryTournamentMatingPoolSelection(
       int tournamentSize, int matingPoolSize, Comparator<S> comparator) {
     selectionOperator = new NaryTournamentSelection<>(tournamentSize, comparator);

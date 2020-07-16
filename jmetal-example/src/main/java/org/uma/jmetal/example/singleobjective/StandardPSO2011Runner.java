@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2011;
+import org.uma.jmetal.algorithm.singleobjective.jmetal5version.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

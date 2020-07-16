@@ -17,6 +17,7 @@ import java.util.List;
  * Applies a n-ary tournament selection to return a solution from a list.
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class TournamentSelection<S extends Solution<?>> implements SelectionOperator<List<S>,S> {
   private Comparator<S> comparator;
 

@@ -15,8 +15,6 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
-import java.io.FileNotFoundException;
-
 /**
  * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each
  * iteration is displayed.

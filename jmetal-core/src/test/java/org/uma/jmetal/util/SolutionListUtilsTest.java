@@ -1,7 +1,5 @@
 package org.uma.jmetal.util;
 
-import static org.mockito.ArgumentMatchers.any;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -20,6 +18,7 @@ import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
