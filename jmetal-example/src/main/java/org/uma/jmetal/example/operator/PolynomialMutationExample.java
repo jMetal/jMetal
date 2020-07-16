@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.operator;
 
-import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.PlotSmile;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

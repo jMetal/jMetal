@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.operator;
 
-import org.uma.jmetal.lab.plot.PlotFront;
-import org.uma.jmetal.lab.plot.impl.PlotSmile;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -72,7 +72,7 @@ public class BLXAlphaCrossoverExample {
       population.add(solutions.get(1));
     }
 
-    Collections.sort(population, new DoubleVariableComparator());
+    population.sort(new DoubleVariableComparator());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsBLXAlpha"))

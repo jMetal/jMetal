@@ -154,13 +154,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
 
   @Override
   public List<S> getResult() {
-    List<S> result ;
-    if (null != archive) {
-      result = archive.getSolutionList() ;
-    } else {
-      result = population ;
-    }
-    return result;
+    return null == archive ? population: archive.getSolutionList() ;
   }
 
   @Override
