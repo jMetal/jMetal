@@ -340,7 +340,7 @@ The interesting point is that all this information is included in a single page 
 * `EP.html <_static/html/EP.html>`_
 * `HV.html <_static/html/HV.html>`_
 * `SPREAD.html <_static/resources/html/SPREAD.html>`_
-* `IGD+.html <_static/resources/html/IGD+.html>`_
+* `IGDPlus.html <_static/resources/html/IGDPlus.html>`_
 
 
 Final Result Folder Structure
