@@ -339,8 +339,8 @@ The interesting point is that all this information is included in a single page 
 
 * `EP.html <_static/html/EP.html>`_
 * `HV.html <_static/html/HV.html>`_
-* `SPREAD.html <_static/resources/html/SPREAD.html>`_
-* `IGDPlus.html <_static/resources/html/IGDPlus.html>`_
+* `SPREAD.html <_static/html/SPREAD.html>`_
+* `IGDPlus.html <_static/html/IGDPlus.html>`_
 
 
 Final Result Folder Structure
