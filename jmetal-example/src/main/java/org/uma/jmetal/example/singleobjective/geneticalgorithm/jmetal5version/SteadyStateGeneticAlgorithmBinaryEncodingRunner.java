@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.singleobjective.jmetal5version;
+package org.uma.jmetal.example.singleobjective.geneticalgorithm.jmetal5version;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.DefaultLocalSearch;

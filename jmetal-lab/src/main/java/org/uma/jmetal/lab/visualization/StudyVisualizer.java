@@ -1,8 +1,9 @@
 package org.uma.jmetal.lab.visualization;
 
 import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.visualization.html.*;
-import org.uma.jmetal.lab.visualization.html.impl.*;
+import org.uma.jmetal.lab.visualization.html.Html;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlFigure;
+import org.uma.jmetal.lab.visualization.html.impl.HtmlGridView;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.FriedmanTestTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.MedianValuesTable;

@@ -2,10 +2,8 @@ package org.uma.jmetal.component.replacement.impl;
 
 import org.uma.jmetal.component.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

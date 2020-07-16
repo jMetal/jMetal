@@ -1,7 +1,6 @@
 package org.uma.jmetal.component.selection.impl;
 
 import org.uma.jmetal.component.selection.MatingPoolSelection;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.Preference;

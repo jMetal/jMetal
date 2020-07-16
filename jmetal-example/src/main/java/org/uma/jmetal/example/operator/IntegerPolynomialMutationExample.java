@@ -12,7 +12,6 @@ import org.uma.jmetal.util.comparator.IntegerVariableComparator;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

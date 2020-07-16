@@ -1,6 +1,6 @@
 package org.uma.jmetal.lab.visualization.html;
 
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.point.impl;
 
-import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.point.Point;
 

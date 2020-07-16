@@ -1,7 +1,5 @@
 package org.uma.jmetal.qualityindicator;
 
-import static org.junit.Assert.assertThrows;
-
 import org.junit.Test;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
@@ -9,6 +7,8 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
+
+import static org.junit.Assert.assertThrows;
 
 /**
  * @author Antonio J. Nebro

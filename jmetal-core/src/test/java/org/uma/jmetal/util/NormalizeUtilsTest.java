@@ -5,7 +5,8 @@ import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 
 import java.lang.reflect.Constructor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}

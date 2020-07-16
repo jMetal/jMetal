@@ -1,12 +1,10 @@
 package org.uma.jmetal.algorithm.singleobjective.jmetal5version.differentialevolution;
 
 import junit.framework.TestCase;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
