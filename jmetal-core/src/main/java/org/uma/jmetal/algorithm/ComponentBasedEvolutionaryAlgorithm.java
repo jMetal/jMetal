@@ -181,43 +181,44 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setEvaluation(Evaluation<S> evaluation) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setCreateInitialPopulation(InitialSolutionsCreation<S> createInitialPopulation) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withCreateInitialPopulation(InitialSolutionsCreation<S> createInitialPopulation) {
     this.createInitialPopulation = createInitialPopulation;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setTermination(Termination termination) {
+
+  public ComponentBasedEvolutionaryAlgorithm<S> withTermination(Termination termination) {
     this.termination = termination;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setSelection(MatingPoolSelection<S> selection) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withSelection(MatingPoolSelection<S> selection) {
     this.selection = selection;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setVariation(Variation<S> variation) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withVariation(Variation<S> variation) {
     this.variation = variation;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setReplacement(Replacement<S> replacement) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withReplacement(Replacement<S> replacement) {
     this.replacement = replacement;
 
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> setName(String newName) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withName(String newName) {
     this.name = newName ;
 
     return this ;
