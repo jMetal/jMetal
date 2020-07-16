@@ -325,7 +325,7 @@ Obtaining Latex files containing tables with statistical data resulting from an 
    :linenos: 
    :lineno-start: 96
    
-   new GenerateHtmlPages<>(experiment).run() ;
+  new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
 
 This component creates a directory called `html` and generates an HTML file per quality indicator (i.e., `EP.html`, `HV.html`, etc.). Each page contains the following:
 

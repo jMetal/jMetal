@@ -36,9 +36,12 @@ import java.util.LinkedList;
  * @author Javier Pérez
  */
 public class StudyVisualizer {
+  public enum TYPE_OF_FRONT_TO_SHOW {
+    NONE,
+    BEST,
+    MEDIAN
+  }
 
-  public static final String SHOW_BEST_FRONTS = "BEST";
-  public static final String SHOW_MEDIAN_FRONTS = "MEDIAN";
   private static final String INDICATOR_SUMMARY_CSV = "QualityIndicatorSummary.csv";
   // NAMES OF CSV COLUMNS
   private static final String ALGORITHM = "Algorithm";
@@ -49,6 +52,7 @@ public class StudyVisualizer {
   private String folderPath;
   private Table table;
   private TYPE_OF_FRONT_TO_SHOW typeOfFrontToShow;
+
   public StudyVisualizer(String path, TYPE_OF_FRONT_TO_SHOW typeOfFrontToShow) throws IOException {
     folderPath = path;
     table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
@@ -204,11 +208,5 @@ public class StudyVisualizer {
 
   private Table filterTableByProblem(Table table, String problem) {
     return table.where(table.stringColumn(PROBLEM).isEqualTo(problem));
-  }
-
-  public enum TYPE_OF_FRONT_TO_SHOW {
-    NONE,
-    BEST,
-    MEDIAN
   }
 }
