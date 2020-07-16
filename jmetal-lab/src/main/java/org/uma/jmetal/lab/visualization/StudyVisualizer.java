@@ -114,23 +114,23 @@ public class StudyVisualizer {
     StringColumn problems = getUniquesValuesOfStringColumn(PROBLEM);
     Table tableFilteredByIndicator = filterTableByIndicator(table, indicator);
 
-    boolean minimizar = true;
+    boolean minimize = true;
 
     HtmlTable medianValuesTable =
         new MedianValuesTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
-    HtmlTable wilconxonTable =
+    HtmlTable wilcoxonTable =
         new WilcoxonTestTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
     if (indicator.equals("HV")) {
-      minimizar = false;
+      minimize = false;
     }
     HtmlTable friedmanTable =
-        new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimizar);
+        new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimize);
 
     HtmlGridView htmlGridView = new HtmlGridView();
     htmlGridView.addComponent(medianValuesTable);
-    htmlGridView.addComponent(wilconxonTable);
+    htmlGridView.addComponent(wilcoxonTable);
     htmlGridView.addComponent(friedmanTable);
     return htmlGridView;
   }

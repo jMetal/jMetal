@@ -22,15 +22,21 @@ public class GenerateHtmlPages<Result extends List<? extends Solution<?>>>
     implements ExperimentComponent {
 
   private final Experiment<?, Result> experiment;
+  private String defaultTypeOfFrontToShow ;
 
   public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration) {
+    this(experimentConfiguration, StudyVisualizer.SHOW_BEST_FRONTS) ;
+  }
+
+  public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration, String defaultTypeOfFrontToShow){
     this.experiment = experimentConfiguration;
+    this.defaultTypeOfFrontToShow = defaultTypeOfFrontToShow ;
   }
 
   @Override
   public void run() throws IOException {
     String directory = experiment.getExperimentBaseDirectory();
-    StudyVisualizer visualizer = new StudyVisualizer(directory, StudyVisualizer.SHOW_BEST_FRONTS);
+    StudyVisualizer visualizer = new StudyVisualizer(directory, defaultTypeOfFrontToShow);
     visualizer.createHTMLPageForEachIndicator();
   }
 }

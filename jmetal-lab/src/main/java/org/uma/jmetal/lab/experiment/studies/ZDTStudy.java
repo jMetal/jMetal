@@ -10,6 +10,7 @@ import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
+import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -96,7 +97,7 @@ public class ZDTStudy {
     new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
-    new GenerateHtmlPages<>(experiment).run() ;
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.SHOW_BEST_FRONTS).run() ;
   }
 
   /**
