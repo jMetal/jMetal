@@ -97,7 +97,7 @@ public class ZDTStudy {
     new GenerateFriedmanHolmTestTables<>(experiment).run();
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
-    new GenerateHtmlPages<>(experiment, StudyVisualizer.SHOW_BEST_FRONTS).run() ;
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
   }
 
   /**

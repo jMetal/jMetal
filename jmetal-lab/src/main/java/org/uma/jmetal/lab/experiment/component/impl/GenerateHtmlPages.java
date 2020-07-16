@@ -8,7 +8,6 @@ import org.uma.jmetal.solution.Solution;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
  * This class executes a StudyVisualizer on the experiment provided.
  *
@@ -17,20 +16,21 @@ import java.util.List;
  *
  * @author Javier Pérez
  */
-
 public class GenerateHtmlPages<Result extends List<? extends Solution<?>>>
     implements ExperimentComponent {
 
   private final Experiment<?, Result> experiment;
-  private String defaultTypeOfFrontToShow ;
+  private StudyVisualizer.TYPE_OF_FRONT_TO_SHOW defaultTypeOfFrontToShow;
 
   public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration) {
-    this(experimentConfiguration, StudyVisualizer.SHOW_BEST_FRONTS) ;
+    this(experimentConfiguration, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.BEST);
   }
 
-  public GenerateHtmlPages(Experiment<?, Result> experimentConfiguration, String defaultTypeOfFrontToShow){
+  public GenerateHtmlPages(
+      Experiment<?, Result> experimentConfiguration,
+      StudyVisualizer.TYPE_OF_FRONT_TO_SHOW defaultTypeOfFrontToShow) {
     this.experiment = experimentConfiguration;
-    this.defaultTypeOfFrontToShow = defaultTypeOfFrontToShow ;
+    this.defaultTypeOfFrontToShow = defaultTypeOfFrontToShow;
   }
 
   @Override
