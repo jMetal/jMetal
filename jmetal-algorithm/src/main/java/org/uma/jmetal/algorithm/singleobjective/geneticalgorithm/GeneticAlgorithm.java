@@ -18,6 +18,8 @@ import org.uma.jmetal.component.termination.Termination;
 import org.uma.jmetal.component.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -26,8 +28,14 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
-/** @author Antonio J. Nebro  */
+/**
+ * Class representing genetic algorithms which are implemented using the {@link ComponentBasedEvolutionaryAlgorithm}
+ * class.
+ *
+ * @author Antonio J. Nebro
+ * */
 
 public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgorithm<S> {
 
@@ -47,7 +55,7 @@ public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolu
       Termination termination,
       MatingPoolSelection<S> selection,
       CrossoverAndMutationVariation<S> variation,
-      RankingAndDensityEstimatorReplacement<S> replacement) {
+      Replacement<S> replacement) {
     super(
         "Genetic algorithm",
         evaluation,
@@ -63,6 +71,7 @@ public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolu
       Problem<S> problem,
       int populationSize,
       int offspringPopulationSize,
+      NaryTournamentSelection<S> selectionOperator,
       CrossoverOperator<S> crossoverOperator,
       MutationOperator<S> mutationOperator,
       Termination termination) {
@@ -80,10 +89,7 @@ public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolu
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossoverOperator, mutationOperator);
 
-    this.selection =
-        new NaryTournamentMatingPoolSelection<>(
-            2,
-            variation.getMatingPoolSize(),new ObjectiveComparator<>(0));
+    this.selection = new NaryTournamentMatingPoolSelection<>(selectionOperator, variation.getMatingPoolSize()) ;
 
     this.termination = termination;
 

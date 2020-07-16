@@ -1,6 +1,7 @@
 package org.uma.jmetal.component.selection.impl;
 
 import org.uma.jmetal.component.selection.MatingPoolSelection;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.Preference;
@@ -14,6 +15,11 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
   private NaryTournamentSelection<S> selectionOperator;
   private int matingPoolSize;
   private Preference<S> preference;
+
+  public NaryTournamentMatingPoolSelection(NaryTournamentSelection<S> selection, int matingPoolSize) {
+    this.matingPoolSize = matingPoolSize ;
+    this.selectionOperator = selection ;
+  }
 
   public NaryTournamentMatingPoolSelection(
       int tournamentSize, int matingPoolSize, Comparator<S> comparator) {
