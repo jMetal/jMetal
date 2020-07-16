@@ -14,10 +14,10 @@ import java.util.List;
  *
  * @param <S>
  */
-public class MergeReplacementReplacement<S extends Solution<?>> implements Replacement<S> {
+public class MergeReplacement<S extends Solution<?>> implements Replacement<S> {
   protected Comparator<S> comparator ;
 
-  public MergeReplacementReplacement(Comparator<S> comparator) {
+  public MergeReplacement(Comparator<S> comparator) {
     this.comparator = comparator ;
   }
 

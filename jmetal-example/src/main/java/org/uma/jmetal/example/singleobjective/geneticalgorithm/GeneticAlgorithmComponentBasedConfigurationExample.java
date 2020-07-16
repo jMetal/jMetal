@@ -6,7 +6,7 @@ import org.uma.jmetal.component.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.component.initialsolutioncreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.replacement.Replacement;
-import org.uma.jmetal.component.replacement.impl.MergeReplacementReplacement;
+import org.uma.jmetal.component.replacement.impl.MergeReplacement;
 import org.uma.jmetal.component.selection.MatingPoolSelection;
 import org.uma.jmetal.component.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.termination.Termination;
@@ -51,7 +51,7 @@ public class GeneticAlgorithmComponentBasedConfigurationExample extends Abstract
         new RandomSolutionsCreation<>(problem, populationSize);
 
     Replacement<DoubleSolution> replacement =
-        new MergeReplacementReplacement<>(new ObjectiveComparator<>(0));
+        new MergeReplacement<>(new ObjectiveComparator<>(0));
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
