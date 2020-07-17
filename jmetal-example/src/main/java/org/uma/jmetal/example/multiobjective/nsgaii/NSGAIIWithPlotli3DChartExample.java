@@ -52,7 +52,7 @@ public class NSGAIIWithPlotli3DChartExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(150000);
 
     algorithm =
         new NSGAII<>(
@@ -77,7 +77,7 @@ public class NSGAIIWithPlotli3DChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix());
+    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName());
     plot.plot();
   }
 }
