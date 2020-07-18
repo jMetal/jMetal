@@ -77,7 +77,7 @@ public class NSGAIIWithPlotliChartExample extends AbstractAlgorithmRunner {
       printQualityIndicators(population, referenceParetoFront);
     }
 
-    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix());
+    PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
     plot.plot();
   }
 }

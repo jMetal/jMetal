@@ -16,6 +16,7 @@ public class Plot3D implements PlotFront {
     Check.that(matrix.length >= 1, "The data matrix is empty");
     Check.that(matrix[0].length == 3, "The data matrix does not have three columns");
 
+    this.plotTitle = title ;
     this.matrix = matrix;
   }
 
@@ -39,6 +40,8 @@ public class Plot3D implements PlotFront {
     Table table =
         Table.create("table")
             .addColumns(DoubleColumn.create("f1", f1), DoubleColumn.create("f2", f2), DoubleColumn.create("f3", f3));
+
+    table.summary() ;
 
     Plot.show(Scatter3DPlot.create(plotTitle, table, "f1", "f2", "f3"));
   }
