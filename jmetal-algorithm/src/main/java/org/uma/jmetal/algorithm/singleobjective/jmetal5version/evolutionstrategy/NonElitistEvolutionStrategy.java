@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
+ * Class implementing a (mu , lambda) Evolution Strategy (lambda must be divisible by mu)
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -95,7 +95,7 @@ public class NonElitistEvolutionStrategy<S extends Solution<?>> extends Abstract
 
   @Override protected List<S> replacement(List<S> population,
       List<S> offspringPopulation) {
-    Collections.sort(offspringPopulation, comparator) ;
+    offspringPopulation.sort(comparator);
 
     List<S> newPopulation = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
