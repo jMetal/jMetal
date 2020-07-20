@@ -7,7 +7,7 @@ import org.uma.jmetal.algorithm.singleobjective.jmetal5version.coralreefsoptimiz
 import org.uma.jmetal.algorithm.singleobjective.jmetal5version.differentialevolution.DifferentialEvolutionBuilder;
 import org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy.EvolutionStrategyBuilder;
-import org.uma.jmetal.algorithm.singleobjective.jmetal5version.geneticalgorithm.GeneticAlgorithmBuilder;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.jmetal5version.GeneticAlgorithmBuilder;
 import org.uma.jmetal.algorithm.singleobjective.jmetal5version.particleswarmoptimization.StandardPSO2007;
 import org.uma.jmetal.algorithm.singleobjective.jmetal5version.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.example.AlgorithmRunner;
