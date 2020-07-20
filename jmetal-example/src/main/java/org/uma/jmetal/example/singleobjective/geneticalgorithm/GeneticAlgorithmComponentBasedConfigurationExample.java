@@ -50,10 +50,7 @@ public class GeneticAlgorithmComponentBasedConfigurationExample extends Abstract
     InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
-    Replacement<DoubleSolution> replacement =
-        new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0));
-
-    double crossoverProbability = 0.9;
+    double crossoverProbability = 0.95;
     double crossoverDistributionIndex = 20.0;
     CrossoverOperator<DoubleSolution> crossover =
         new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
@@ -73,6 +70,9 @@ public class GeneticAlgorithmComponentBasedConfigurationExample extends Abstract
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+
+    Replacement<DoubleSolution> replacement =
+            new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0));
 
     algorithm =
         new ComponentBasedEvolutionaryAlgorithm<>(
