@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.singleobjective.geneticalgorithm.jmetal5version;
+package org.uma.jmetal.example.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.jmetal5version.GeneticAlgorithmBuilder;
