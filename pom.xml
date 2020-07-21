@@ -5,7 +5,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>6.0-SNAPSHOT</version>
+    <version>5.10-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -228,32 +228,32 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-example</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-lab</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-auto</artifactId>
-                <version>6.0-SNAPSHOT</version>
+                <version>5.10-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
