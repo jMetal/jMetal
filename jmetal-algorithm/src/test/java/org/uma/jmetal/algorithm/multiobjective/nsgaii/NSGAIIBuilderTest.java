@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.junit.After;
 import org.junit.Before;

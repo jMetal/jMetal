@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.moead.jmetal5version;
+package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;

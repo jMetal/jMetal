@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.nsgaii.jmetal5version;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -15,7 +15,6 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-@Deprecated
 public class SteadyStateNSGAII<S extends Solution<?>> extends NSGAII<S> {
   /**
    * Constructor
