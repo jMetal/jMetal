@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.10-SNAPSHOT</version>
+    <version>5.10</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -33,7 +32,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-6.0</tag>
+        <tag>jmetal-5.10</tag>
     </scm>
 
     <distributionManagement>
@@ -228,32 +227,32 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-example</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-lab</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-auto</artifactId>
-                <version>5.10-SNAPSHOT</version>
+                <version>5.10</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
