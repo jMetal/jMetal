@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy.util;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util;
 
 import org.uma.jmetal.util.JMetalLogger;
 

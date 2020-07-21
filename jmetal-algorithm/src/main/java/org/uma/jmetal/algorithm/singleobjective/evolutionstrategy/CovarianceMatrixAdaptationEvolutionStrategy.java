@@ -1,7 +1,7 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
-import org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy.util.CMAESUtils;
+import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;

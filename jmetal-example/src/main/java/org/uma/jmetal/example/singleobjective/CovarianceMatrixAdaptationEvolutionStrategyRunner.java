@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
+import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.Sphere;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.differentialevolution;
+package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;

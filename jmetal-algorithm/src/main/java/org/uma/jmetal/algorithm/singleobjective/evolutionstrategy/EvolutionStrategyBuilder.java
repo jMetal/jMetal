@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;

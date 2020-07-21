@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.differentialevolution;
+package org.uma.jmetal.algorithm.singleobjective.differentialevolution;
 
 import org.junit.After;
 import org.junit.Before;

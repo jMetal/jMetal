@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.evolutionstrategy;
+package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -7,17 +7,16 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class implementing a (mu + lambda) Evolution Strategy (lambda must be divisible by mu)
+ * Class implementing a (mu , lambda) Evolution Strategy (lambda must be divisible by mu)
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
+public class NonElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvolutionStrategy<S, S> {
   private int mu;
   private int lambda;
   private int maxEvaluations;
@@ -29,7 +28,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   /**
    * Constructor
    */
-  public ElitistEvolutionStrategy(Problem<S> problem, int mu, int lambda, int maxEvaluations,
+  public NonElitistEvolutionStrategy(Problem<S> problem, int mu, int lambda, int maxEvaluations,
       MutationOperator<S> mutation) {
     super(problem) ;
     this.mu = mu;
@@ -72,11 +71,16 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
   @Override protected List<S> selection(List<S> population) {
     return population;
+    //    List<Solution> matingPopulation = new ArrayList<>(mu) ;
+    //    for (Solution solution: population) {
+    //      matingPopulation.add(solution.copy()) ;
+    //    }
+    //    return matingPopulation ;
   }
 
   @SuppressWarnings("unchecked")
   @Override protected List<S> reproduction(List<S> population) {
-    List<S> offspringPopulation = new ArrayList<>(lambda + mu);
+    List<S> offspringPopulation = new ArrayList<>(lambda);
     for (int i = 0; i < mu; i++) {
       for (int j = 0; j < lambda / mu; j++) {
         S offspring = (S)population.get(i).copy();
@@ -90,11 +94,7 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
   @Override protected List<S> replacement(List<S> population,
       List<S> offspringPopulation) {
-    for (int i = 0; i < mu; i++) {
-      offspringPopulation.add(population.get(i));
-    }
-
-    Collections.sort(offspringPopulation, comparator) ;
+    offspringPopulation.sort(comparator);
 
     List<S> newPopulation = new ArrayList<>(mu);
     for (int i = 0; i < mu; i++) {
@@ -108,10 +108,10 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   }
 
   @Override public String getName() {
-    return "ElitistEA" ;
+    return "NonElitistEA" ;
   }
 
   @Override public String getDescription() {
-    return "Elitist Evolution Strategy Algorithm, i.e, (mu + lambda) EA" ;
+    return "Non Elitist Evolution Strategy Algorithm, i.e, (mu , lambda) EA" ;
   }
 }

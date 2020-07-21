@@ -1,5 +1,6 @@
-package org.uma.jmetal.algorithm;
+package org.uma.jmetal.auto.algorithm;
 
+import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.component.evaluation.Evaluation;
 import org.uma.jmetal.component.initialsolutioncreation.InitialSolutionsCreation;

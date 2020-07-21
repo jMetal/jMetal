@@ -1,6 +1,6 @@
 package org.uma.jmetal.auto.algorithm.nsgaii;
 
-import org.uma.jmetal.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.auto.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.component.densityestimator.DensityEstimator;
 import org.uma.jmetal.component.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.component.evaluation.Evaluation;

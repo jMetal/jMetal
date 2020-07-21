@@ -1,7 +1,7 @@
 package org.uma.jmetal.example.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.jmetal5version.GeneticAlgorithmBuilder;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;

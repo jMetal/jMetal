@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.singleobjective.jmetal5version.coralreefsoptimization;
+package org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization;
 
 import org.uma.jmetal.algorithm.impl.AbstractCoralReefsOptimization;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
