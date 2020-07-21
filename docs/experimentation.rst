@@ -95,7 +95,7 @@ This package has the following structure:
           ├── ...
           └── BinaryProblemsStudy
           
-We can observe that there is a class called `Experiment` (which has an associated `ExperimentBuilder` class), which can be populated with a number of components. The mentioned steps are performed by `ExecuteAlgorithms` (step 1), `ComputeQualityIndicators` (step 2), and the rest of components can be selected to produce a variety of elements to analyze the results, such as Latex tables, figures (boxplots), and HTML pages (a new feature in jMetal 6). To compute quality indicators, it is necessary to have a reference front per problem; when solving benchmark problems, these fronts are usually known (there are located by default in the `resources` folder of the jMetal project), but this is not the case when dealing with real-world problems. To cope with this issue, we include the  `GenerateReferenceParetoFront` class, which produces reference Pareto fronts from all the results yielded by all the runs of all the algorithms after executing the `ExecuteAlgorithms` component, and the related `GenerateReferenceParetoSetAndFrontFromDoubleSolutions`, which does the same if the problems to solve are continuous; in this case, a reference Pareto set is also generated, as well as files with the contributed solutions of each algorithm to this set. 
+We can observe that there is a class called `Experiment` (which has an associated `ExperimentBuilder` class), which can be populated with a number of components. The mentioned steps are performed by `ExecuteAlgorithms` (step 1), `ComputeQualityIndicators` (step 2), and the rest of components can be selected to produce a variety of elements to analyze the results, such as Latex tables, figures (boxplots), and HTML pages (a new feature in jMetal). To compute quality indicators, it is necessary to have a reference front per problem; when solving benchmark problems, these fronts are usually known (there are located by default in the `resources` folder of the jMetal project), but this is not the case when dealing with real-world problems. To cope with this issue, we include the  `GenerateReferenceParetoFront` class, which produces reference Pareto fronts from all the results yielded by all the runs of all the algorithms after executing the `ExecuteAlgorithms` component, and the related `GenerateReferenceParetoSetAndFrontFromDoubleSolutions`, which does the same if the problems to solve are continuous; in this case, a reference Pareto set is also generated, as well as files with the contributed solutions of each algorithm to this set. 
 
 To show how these components can be used in an experiment, we have included a number of examples in the `studies` package. We explain next the `ZDTStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/ZDTStudy.java>`_ and the `NSGAIIComputingReferenceParetoFrontsStudy <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/studies/NSGAIIComputingReferenceParetoFrontsStudy.java>`_ classes.
 
@@ -306,7 +306,7 @@ The interesting point of generating the *QualityIndicatorSummary.csv* it that it
 
 Generation of Latex Tables and R Files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The next step after getting the indicator values of the fronts obtained by all the algorithms on the selected problems is to conduct an statistical analysis. To support this analysis, the experiment package of jMetal 6 includes components to  generate Latex files containing statistical data (mean/median and standard deviation/IQR,  Friedman ranking) and R scripts producing boxplots and Latex tables containing information about the Wilcoxon rank sum test. The available components include:
+The next step after getting the indicator values of the fronts obtained by all the algorithms on the selected problems is to conduct an statistical analysis. To support this analysis, the experiment package of jMetal includes components to  generate Latex files containing statistical data (mean/median and standard deviation/IQR,  Friedman ranking) and R scripts producing boxplots and Latex tables containing information about the Wilcoxon rank sum test. The available components include:
 
 .. code-block:: java 
    :linenos: 
@@ -321,11 +321,11 @@ Generation of HTML Pages
 ^^^^^^^^^^^^^^^^^^^^^^^^
 Obtaining Latex files containing tables with statistical data resulting from an experimental study is interesting because those tables can be included in research papers. Still, it is a bit cumbersome to analyze them because all the information is distributed among many files. A new feature included in jMetal 6 is the automatic generation of HTML pages including all these information:
 
-.. code-block:: java 
-   :linenos: 
+.. code-block:: java
+   :linenos:
    :lineno-start: 96
-   
-  new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
+
+   new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run() ;
 
 This component creates a directory called `html` and generates an HTML file per quality indicator (i.e., `EP.html`, `HV.html`, etc.). Each page contains the following:
 
