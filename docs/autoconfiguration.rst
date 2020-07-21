@@ -1,3 +1,5 @@
+.. _autoconfiguration:
+
 Auto-configuration of evolutionary algorithms: NSGA-II
 ======================================================
 

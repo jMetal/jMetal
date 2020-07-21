@@ -39,7 +39,7 @@ Every problem is characterized by the number of decision variables, the number o
 
 If a problem has side constraints, it is assumed that the overall constraint degree of a given solution is computed inside the `evaluate()` method.
 
-jMetal 6.0 provides currently the following interfaces representing types of problems (all of them extending `Problem`):
+jMetal provides currently the following interfaces representing types of problems (all of them extending `Problem`):
 
 * `BinaryProblem <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/binaryproblem/BinaryProblem.java>`_
 * `IntegerProblem <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/problem/integerproblem/IntegerProblem.java>`_

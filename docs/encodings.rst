@@ -9,7 +9,7 @@ Solution encodings
 
 One of the first decisions that have to be taken when using metaheuristics is to define how to encode or represent the tentative solutions of the problem to solve. Representation strongly depends on the problem and determines the operations (e.g., recombination with other solutions, local search procedures, etc.) that can be applied. Thus, selecting a specific representation has a great impact on the behavior of metaheuristics and, hence, in the quality of the obtained results.
 
-The base class of all the solution encodings in jMetal 6.0 is the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface:
+The base class of all the solution encodings in jMetal is the `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface:
 
 .. code-block:: java
 
@@ -43,7 +43,7 @@ The base class of all the solution encodings in jMetal 6.0 is the `Solution <htt
 
 Any solution contains a list of decision variables, an array of objective values, and array of constraint values (i.e., the constraint violation degree per each of the problem side constraints), and a map of attributes (e.g., to assign properties such as ranking, strength, etc., which are usually algorithm dependant). The variable values are assigned when a solution is created (typically, when invoking the `createSolution()` method of a problem), whereas the objective and constraint values are set when evaluating a solution. 
 
-jMetal 6.0 provides currently the following interfaces representing encodings (all of them extending `Solution`):
+jMetal provides currently the following interfaces representing encodings (all of them extending `Solution`):
 
 * `BinarySolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/binarysolution/BinarySolution.java>`_
 * `IntegerSolution <https://github.com/jMetal/jMetal/tree/master/jmetal-core/src/main/java/org/uma/jmetal/solution/integersolution/IntegerSolution.java>`_
