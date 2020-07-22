@@ -37,7 +37,7 @@ public class NaryTournamentSelectionTest {
   public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEqualsToTwo() {
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
 
-    assertEquals(2, ReflectionTestUtils.getField(selection, "numberOfSolutionsToBeReturned"));
+    assertEquals(2, selection.getTournamentSize());
   }
 
   @Test
