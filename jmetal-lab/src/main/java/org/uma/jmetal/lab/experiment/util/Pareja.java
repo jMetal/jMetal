@@ -1,6 +1,6 @@
 package org.uma.jmetal.lab.experiment.util;
 
-public class Pareja implements Comparable {
+public class Pareja implements Comparable<Pareja> {
 
   private double indice;
   private double valor;
@@ -30,11 +30,11 @@ public class Pareja implements Comparable {
     this.valor = valor;
   }
 
-  public int compareTo(Object o1) { // ordena por valor absoluto
-    if (this.valor < ((Pareja) o1).valor)
+  public int compareTo(Pareja o1) { // ordena por valor absoluto
+    if (this.valor < o1.valor)
       if (minimizar) return -1;
       else return 1;
-    else if (this.valor > ((Pareja) o1).valor)
+    else if (this.valor > o1.valor)
       if (minimizar) return 1;
       else return -1;
     else return 0;

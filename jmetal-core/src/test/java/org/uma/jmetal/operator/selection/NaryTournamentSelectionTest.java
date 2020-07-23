@@ -1,8 +1,7 @@
 package org.uma.jmetal.operator.selection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
@@ -19,7 +18,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,9 +30,6 @@ public class NaryTournamentSelectionTest {
 
   private static final int POPULATION_SIZE = 20 ;
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void shouldDefaultConstructorSetTheNumberOfSolutionsToBeReturnedEqualsToTwo() {
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
@@ -42,22 +39,20 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    exception.expect(NullParameterException.class);
-
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
     List<IntegerSolution> population ;
     population = null ;
 
-    selection.execute(population) ;
+    assertThrows(NullParameterException.class, () -> selection.execute(population)) ;
   }
 
-  @Test (expected = EmptyCollectionException.class)
+  @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
     NaryTournamentSelection<IntegerSolution> selection = new NaryTournamentSelection<>() ;
 
     List<IntegerSolution> population = new ArrayList<>(0) ;
 
-    selection.execute(population) ;
+    assertThrows(EmptyCollectionException.class, () -> selection.execute(population)) ;
   }
 
   @Test
@@ -92,16 +87,16 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The solution list size (1) is less than " +
-        "the number of requested solutions (4)"));
-
     @SuppressWarnings("unchecked")
     NaryTournamentSelection<IntegerSolution> selection =
         new NaryTournamentSelection<>(4, mock(Comparator.class)) ;
     List<IntegerSolution> list = new ArrayList<>(1) ;
     list.add(mock(IntegerSolution.class)) ;
 
-    selection.execute(list) ;
+    Executable executable = () -> selection.execute(list);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable) ;
+    assertThat(cause.getMessage(), containsString("The solution list size (1) is less than " +
+        "the number of requested solutions (4)"));
   }
 }

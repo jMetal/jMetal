@@ -8,6 +8,8 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import static java.lang.Double.*;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -244,7 +246,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
           while (st.hasMoreTokens()) {
-            double value = (new Double(st.nextToken())).doubleValue();
+            double value = parseDouble(st.nextToken());
             lambda[i][j] = value;
             j++;
           }

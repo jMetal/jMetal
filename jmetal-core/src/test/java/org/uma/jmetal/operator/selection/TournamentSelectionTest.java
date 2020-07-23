@@ -22,6 +22,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Created by ajnebro on 3/5/15.
  */
+@Deprecated
 public class TournamentSelectionTest {
 
   @Rule

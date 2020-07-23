@@ -2,8 +2,8 @@ package org.uma.jmetal.example.multiobjective.smpso;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOBuilder;
-import org.uma.jmetal.algorithm.multiobjective.smpso.jmetal5version.SMPSOMeasures;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
+import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;

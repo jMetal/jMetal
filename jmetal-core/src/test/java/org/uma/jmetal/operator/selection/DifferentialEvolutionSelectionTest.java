@@ -1,8 +1,7 @@
 package org.uma.jmetal.operator.selection;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
@@ -14,8 +13,9 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 /** Created by ajnebro on 3/5/15. */
@@ -23,62 +23,57 @@ public class DifferentialEvolutionSelectionTest {
   private DifferentialEvolutionSelection selection;
   private List<DoubleSolution> population;
 
-  @Rule public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsNull() {
-    exception.expect(NullParameterException.class);
-    exception.expectMessage(containsString("The parameter is null"));
-
     selection = new DifferentialEvolutionSelection();
-
-    selection.execute(null);
+    
+    Executable executable = () -> selection.execute(null);
+    
+    NullParameterException cause = assertThrows(NullParameterException.class, executable);
+    assertThat(cause.getMessage(), containsString("The parameter is null"));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsHasOneSolution() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The population has less than 3 solutions: " + 1));
-
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
 
     population = Arrays.asList(mock(DoubleSolution.class));
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 1));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSizeOFTheListOfSolutionsIsLowerThanTheNumberOfRequestedSolutions() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The population has less than 3 solutions: " + 2));
-
     selection = new DifferentialEvolutionSelection(3, false);
     selection.setIndex(0);
 
     population = Arrays.asList(mock(DoubleSolution.class),mock(DoubleSolution.class));
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 2));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListOfSolutionsIsEmpty() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The population has less than 3 solutions: " + 0));
-
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(0);
 
     population = Collections.emptyList();
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("The population has less than 3 solutions: " + 0));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsNegative() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("Index value invalid: " + -1));
-
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(-1);
 
@@ -86,28 +81,28 @@ public class DifferentialEvolutionSelectionTest {
         Arrays.asList(
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("Index value invalid: " + -1));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsNotIndicated() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("Index value invalid: " + Integer.MIN_VALUE));
-
     selection = new DifferentialEvolutionSelection();
 
     population =
         Arrays.asList(
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("Index value invalid: " + Integer.MIN_VALUE));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheIndexIsHigherThanTheSolutionListLength() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("Index value invalid: " + 5));
-
     selection = new DifferentialEvolutionSelection();
     selection.setIndex(5);
 
@@ -115,7 +110,10 @@ public class DifferentialEvolutionSelectionTest {
         Arrays.asList(
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
-    selection.execute(population);
+    Executable executable = () -> selection.execute(population);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable);
+    assertThat(cause.getMessage(), containsString("Index value invalid: " + 5));
   }
 
   @Test

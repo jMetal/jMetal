@@ -11,6 +11,8 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
+import static java.lang.Double.*;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -131,7 +133,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
           StringTokenizer st = new StringTokenizer(aux);
           j = 0;
           while (st.hasMoreTokens()) {
-            double value = new Double(st.nextToken());
+            double value = parseDouble(st.nextToken());
             lambda[i][j] = value;
             j++;
           }

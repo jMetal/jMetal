@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class DominanceRankingTest {
   private List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
 

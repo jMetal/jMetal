@@ -1,13 +1,12 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.component.ranking.Ranking;
-import org.uma.jmetal.component.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -23,8 +22,10 @@ import java.util.stream.IntStream;
 public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
-    Ranking<S> ranking = new FastNonDominatedSortRanking<>();
-    return ranking.computeRanking(solutionList).getSubFront(0);
+    Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
+    solutionList.forEach(solution -> nonDominatedSolutionArchive.add(solution));
+
+    return nonDominatedSolutionArchive.getSolutionList();
   }
 
   public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {

@@ -35,7 +35,7 @@ public class ReferencePoint<S extends Solution<?>> {
   public ReferencePoint(ReferencePoint<S> point) {
     position = new ArrayList<>(point.position.size());
     for (Double d : point.position) {
-      position.add(new Double(d));
+      position.add(d);
     }
     memberSize = 0 ;
     potentialMembers = new ArrayList<>();

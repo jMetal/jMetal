@@ -2,11 +2,10 @@ package org.uma.jmetal.util.front.impl;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -28,7 +27,9 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Antonio J. Nebro
@@ -39,9 +40,7 @@ public class ArrayFrontTest {
   private static String frontDirectory ;
   private static String resourcesDirectory ;
 
-  @Rule public ExpectedException exception = ExpectedException.none();
-
-  @BeforeClass
+  @BeforeAll
   public static void startup() throws IOException {
     Properties jMetalProperties = new Properties() ;
     jMetalProperties.load(new FileInputStream("../jmetal.properties"));
@@ -59,16 +58,16 @@ public class ArrayFrontTest {
     assertEquals(0, ReflectionTestUtils.getField(front, "pointDimensions"));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldCreateAnArrayFrontFromANullListRaiseAnAnException() {
     List<DoubleSolution> list = null;
-    new ArrayFront(list);
+    assertThrows(JMetalException.class, () -> new ArrayFront(list));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldCreateAnArrayFrontFromAnEmptyListRaiseAnException() {
     List<DoubleSolution> list = new ArrayList<>(0);
-    new ArrayFront(list);
+    assertThrows(JMetalException.class, () -> new ArrayFront(list));
   }
 
   @Test
@@ -84,7 +83,7 @@ public class ArrayFrontTest {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void shouldConstructorCreateAnArranFrontFromAFileContainingA3DFront()
       throws FileNotFoundException {
     Front storeFront = new ArrayFront(frontDirectory + "/DTLZ1.3D.csv");
@@ -145,16 +144,16 @@ public class ArrayFrontTest {
     assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldCreateAnArrayFrontFromANullFrontRaiseAnException() {
     Front front = null;
-    new ArrayFront(front);
+    assertThrows(JMetalException.class, () -> new ArrayFront(front));
   }
 
-  @Test(expected = JMetalException.class)
+  @Test
   public void shouldCreateAnArrayFrontFromAnEmptyFrontRaiseAnException() {
     Front front = new ArrayFront(0, 0);
-    new ArrayFront(front);
+    assertThrows(JMetalException.class, () -> new ArrayFront(front));
   }
 
   @Test
@@ -224,10 +223,10 @@ public class ArrayFrontTest {
     int numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The point is null"));
-
-    front.setPoint(0, null);
+    Executable executable = () -> front.setPoint(0, null);
+    
+    JMetalException cause = assertThrows(JMetalException.class, executable);
+    assertThat(cause.getMessage(), containsString("The point is null"));
   }
 
   @Test
@@ -236,10 +235,10 @@ public class ArrayFrontTest {
     int numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The index value is negative"));
-
-    front.setPoint(-1, new ArrayPoint(1));
+    Executable executable = () -> front.setPoint(-1, new ArrayPoint(1));
+    
+    JMetalException cause = assertThrows(JMetalException.class, executable);
+    assertThat(cause.getMessage(), containsString("The index value is negative"));
   }
 
   @Test
@@ -248,11 +247,11 @@ public class ArrayFrontTest {
     int numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString("The index value (3) is greater than the number of " + "points (1)"));
-
-    front.setPoint(3, new ArrayPoint(1));
+    Executable executable = () -> front.setPoint(3, new ArrayPoint(1));
+    
+    JMetalException cause = assertThrows(JMetalException.class, executable);
+    assertThat(cause.getMessage(),
+            containsString("The index value (3) is greater than the number of " + "points (1)"));
   }
 
   @Test
@@ -273,10 +272,10 @@ public class ArrayFrontTest {
     int numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The index value is negative"));
-
-    front.getPoint(-1);
+    Executable executable = () -> front.getPoint(-1);
+    
+    JMetalException cause = assertThrows(JMetalException.class, executable);
+    assertThat(cause.getMessage(), containsString("The index value is negative"));
   }
 
   @Test
@@ -285,11 +284,11 @@ public class ArrayFrontTest {
     int numberOfPointDimensions = 2;
     Front front = new ArrayFront(numberOfPoints, numberOfPointDimensions);
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(
-        containsString("The index value (3) is greater than the number of " + "points (1)"));
-
-    front.getPoint(3);
+    Executable executable = () -> front.getPoint(3);
+    
+    JMetalException cause = assertThrows(JMetalException.class, executable);
+    assertThat(cause.getMessage(),
+            containsString("The index value (3) is greater than the number of " + "points (1)"));
   }
 
   @Test
@@ -420,12 +419,12 @@ public class ArrayFrontTest {
 
   // TODO more test for ordering are missing
 
-  @Test(expected = FileNotFoundException.class)
+  @Test
   public void shouldCreateInputStreamThrownAnExceptionIfFileDoesNotExist()
       throws FileNotFoundException {
     String fileName = "abcdefadg";
 
-    new ArrayFront(fileName);
+    assertThrows(FileNotFoundException.class, () -> new ArrayFront(fileName));
   }
 
   @Test
@@ -452,14 +451,12 @@ public class ArrayFrontTest {
 
   /** Test using a file containing: 3.0 2.3 asdfg */
   @Test
-  @Ignore
+  @Disabled
   public void shouldReadFrontWithALineContainingWrongDataRaiseAnException()
       throws FileNotFoundException, JMetalException {
     String fileName = "../resources/unitTestsData/arrayFront/fileWithWrongData.dat";
 
-    exception.expect(JMetalException.class);
-
-    new ArrayFront(fileName);
+    assertThrows(JMetalException.class, () -> new ArrayFront(fileName));
   }
 
   /** Test using a file containing: -30 234.234 90.25 15 -5.23 */
@@ -468,9 +465,7 @@ public class ArrayFrontTest {
       throws FileNotFoundException, JMetalException {
     String fileName = resourcesDirectory + "/unitTestsData/arrayFront/fileWithMissingData.dat";
 
-    exception.expect(InvalidConditionException.class);
-
-    new ArrayFront(fileName);
+    assertThrows(InvalidConditionException.class, () -> new ArrayFront(fileName));
   }
 
   /** Test using a file containing: 1 2 3 4 5 6 7 8 9 10 11 12 -1 -2 -3 -4 */
