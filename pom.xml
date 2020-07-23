@@ -32,7 +32,7 @@
         <connection>scm:git://git@github.com:jMetal/jMetal.git</connection>
         <developerConnection>scm:git:https://github.com/jMetal/jMetal.git</developerConnection>
         <url>https://github.com/jMetal/jMetal.git</url>
-        <tag>jmetal-6.0</tag>
+        <tag>jmetal-5.11</tag>
     </scm>
 
     <distributionManagement>
@@ -52,7 +52,7 @@
         <module>jmetal-lab</module>
         <module>jmetal-example</module>
         <module>jmetal-problem</module>
-        <module>jmetal-auto</module>
+        <module>jmetal-experimental</module>
     </modules>
 
     <properties>
