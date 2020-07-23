@@ -250,11 +250,6 @@
                 <version>5.11-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>org.uma.jmetal</groupId>
-                <artifactId>jmetal-auto</artifactId>
-                <version>5.11-SNAPSHOT</version>
-            </dependency>
-            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
