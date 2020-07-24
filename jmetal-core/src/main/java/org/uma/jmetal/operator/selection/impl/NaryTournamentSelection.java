@@ -19,7 +19,7 @@ import java.util.List;
 public class NaryTournamentSelection<S extends Solution<?>>
     implements SelectionOperator<List<S>, S> {
   private Comparator<S> comparator;
-  private int numberOfSolutionsToBeReturned;
+  private int tournamentSize;
 
   /** Constructor */
   public NaryTournamentSelection() {
@@ -27,8 +27,8 @@ public class NaryTournamentSelection<S extends Solution<?>>
   }
 
   /** Constructor */
-  public NaryTournamentSelection(int numberOfSolutionsToBeReturned, Comparator<S> comparator) {
-    this.numberOfSolutionsToBeReturned = numberOfSolutionsToBeReturned;
+  public NaryTournamentSelection(int tournamentSize, Comparator<S> comparator) {
+    this.tournamentSize = tournamentSize;
     this.comparator = comparator;
   }
 
@@ -38,12 +38,12 @@ public class NaryTournamentSelection<S extends Solution<?>>
     Check.isNotNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
-        solutionList.size() >= numberOfSolutionsToBeReturned,
+        solutionList.size() >= tournamentSize,
         "The solution list size ("
             + solutionList.size()
             + ") is less than "
             + "the number of requested solutions ("
-            + numberOfSolutionsToBeReturned
+            + tournamentSize
             + ")");
 
     S result;
@@ -52,10 +52,14 @@ public class NaryTournamentSelection<S extends Solution<?>>
     } else {
       List<S> selectedSolutions =
           SolutionListUtils.selectNRandomDifferentSolutions(
-              numberOfSolutionsToBeReturned, solutionList);
+                  tournamentSize, solutionList);
       result = SolutionListUtils.findBestSolution(selectedSolutions, comparator);
     }
 
     return result;
+  }
+
+  public int getTournamentSize() {
+    return tournamentSize ;
   }
 }

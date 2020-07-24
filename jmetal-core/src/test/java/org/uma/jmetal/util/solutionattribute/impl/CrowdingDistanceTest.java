@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class CrowdingDistanceTest {
   private static final double EPSILON = 0.000000001 ;
 

@@ -4,7 +4,6 @@ import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.visualization.html.Html;
 import org.uma.jmetal.lab.visualization.html.impl.HtmlFigure;
 import org.uma.jmetal.lab.visualization.html.impl.HtmlGridView;
-import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.FriedmanTestTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.MedianValuesTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.WilcoxonTestTable;
@@ -47,7 +46,6 @@ public class StudyVisualizer {
   private static final String ALGORITHM = "Algorithm";
   private static final String PROBLEM = "Problem";
   private static final String INDICATOR_NAME = "IndicatorName";
-  private static final String EXECUTION_ID = "ExecutionId";
   private static final String INDICATOR_VALUE = "IndicatorValue";
   private String folderPath;
   private Table table;
@@ -115,16 +113,16 @@ public class StudyVisualizer {
 
     boolean minimize = true;
 
-    HtmlTable medianValuesTable =
+    MedianValuesTable medianValuesTable =
         new MedianValuesTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
-    HtmlTable wilcoxonTable =
+    WilcoxonTestTable wilcoxonTable =
         new WilcoxonTestTable(
             tableFilteredByIndicator, indicator, algorithms, problems, INDICATOR_VALUE);
     if (indicator.equals("HV")) {
       minimize = false;
     }
-    HtmlTable friedmanTable =
+    FriedmanTestTable friedmanTable =
         new FriedmanTestTable(tableFilteredByIndicator, algorithms, problems, minimize);
 
     HtmlGridView htmlGridView = new HtmlGridView();

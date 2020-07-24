@@ -596,8 +596,8 @@ public class Benchmark {
           .getConstructor(test_func_arg_types)
           .newInstance(
             new Object[] {
-              new Integer(dimension),
-              new Double(m_biases[func_num - 1])
+              Integer.valueOf(dimension),
+              Double.valueOf(m_biases[func_num - 1])
             }
           );
     } catch (Exception e) {

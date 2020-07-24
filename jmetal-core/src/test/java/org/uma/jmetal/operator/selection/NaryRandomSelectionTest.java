@@ -1,9 +1,8 @@
 package org.uma.jmetal.operator.selection;
 
 import org.hamcrest.Matchers;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.solution.Solution;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -27,25 +26,18 @@ import static org.mockito.Mockito.mock;
  * @version 1.0
  */
 public class NaryRandomSelectionTest {
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
-
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsNull() {
-    exception.expect(NullParameterException.class);
-
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>() ;
-    selection.execute(null) ;
+    assertThrows(NullParameterException.class, () -> selection.execute(null)) ;
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheSolutionListIsEmpty() {
-    exception.expect(EmptyCollectionException.class);
-
     NaryRandomSelection<DoubleSolution> selection = new NaryRandomSelection<DoubleSolution>() ;
     List<DoubleSolution> list = new ArrayList<>() ;
 
-    selection.execute(list) ;
+    assertThrows(EmptyCollectionException.class, () -> selection.execute(list)) ;
   }
 
   @Test
@@ -68,29 +60,29 @@ public class NaryRandomSelectionTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsOneAndTwoSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The solution list size (1) is less than " +
-    "the number of requested solutions (2)"));
-
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(2) ;
     List<Solution<?>> list = new ArrayList<>(1) ;
     list.add(mock(Solution.class)) ;
 
-    selection.execute(list) ;
+    Executable executable = () -> selection.execute(list);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable) ;
+    assertThat(cause.getMessage(), containsString("The solution list size (1) is less than " +
+    "the number of requested solutions (2)")) ;
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheListSizeIsTwoAndFourSolutionsAreRequested() {
-    exception.expect(InvalidConditionException.class);
-    exception.expectMessage(containsString("The solution list size (2) is less than " +
-        "the number of requested solutions (4)"));
-
     NaryRandomSelection<Solution<?>> selection = new NaryRandomSelection<Solution<?>>(4) ;
     List<Solution<?>> list = new ArrayList<>(2) ;
     list.add(mock(Solution.class)) ;
     list.add(mock(Solution.class)) ;
 
-    selection.execute(list) ;
+    Executable executable = () -> selection.execute(list);
+    
+    InvalidConditionException cause = assertThrows(InvalidConditionException.class, executable) ;
+    assertThat(cause.getMessage(), containsString("The solution list size (2) is less than " +
+        "the number of requested solutions (4)")) ;
   }
 
   @Test

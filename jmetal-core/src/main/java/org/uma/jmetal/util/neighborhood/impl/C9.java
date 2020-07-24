@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
 
 /**
@@ -16,7 +17,7 @@ import org.uma.jmetal.util.neighborhood.util.TwoDimensionalMesh;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class C9<S> extends TwoDimensionalMesh<S> {
+public class C9<S extends Solution<?>> extends TwoDimensionalMesh<S> {
 
   // There are 8 possible movements: north, south, east, west, northeast, northwest,southeast, southwest
   // Each movement is represented by an array of two positions: first component represents the

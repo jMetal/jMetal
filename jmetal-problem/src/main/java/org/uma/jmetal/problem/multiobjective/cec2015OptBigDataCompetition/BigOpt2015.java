@@ -4,6 +4,8 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 
+import static java.lang.Double.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -118,7 +120,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
         StringTokenizer tokenizer = new StringTokenizer(aux);
         List<Double> doubleList = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
-          double value = new Double(tokenizer.nextToken());
+          double value = parseDouble(tokenizer.nextToken());
           doubleList.add(value) ;
         }
         list.add(doubleList);

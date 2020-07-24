@@ -154,13 +154,13 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
               + "/"
               + experiment.getOutputParetoFrontFileName()
               + algorithm.getRunId()
-              + ".dat";
+              + ".csv";
       String paretoSetFileName =
           problemDirectory
               + "/"
               + experiment.getOutputParetoSetFileName()
               + algorithm.getRunId()
-              + ".dat";
+              + ".csv";
 
       Front frontWithObjectiveValues = new ArrayFront(frontFileName, ",");
       Front frontWithVariableValues = new ArrayFront(paretoSetFileName, ",");

@@ -70,6 +70,7 @@ public class MOCellChangingMutationAndCrossoverProbabilitiesRunner extends Abstr
 
     selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
+    @SuppressWarnings("serial")
     class MOCellWithChangesInVariationOperator  extends MOCell<DoubleSolution> {
 
       /**

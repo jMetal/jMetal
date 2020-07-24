@@ -2,9 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.moead;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.moead.AbstractMOEAD;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder;
-import org.uma.jmetal.algorithm.multiobjective.moead.MOEADBuilder.Variant;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -37,7 +34,7 @@ public class ConstraintMOEADIT {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(50000)
@@ -71,7 +68,7 @@ public class ConstraintMOEADIT {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(mutationProbability,
         mutationDistributionIndex);
 
-    algorithm = new MOEADBuilder(problem, Variant.ConstraintMOEAD)
+    algorithm = new MOEADBuilder(problem, MOEADBuilder.Variant.ConstraintMOEAD)
         .setCrossover(crossover)
         .setMutation(mutation)
         .setMaxEvaluations(50000)

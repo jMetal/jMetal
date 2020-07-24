@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -15,7 +16,7 @@ import java.util.StringTokenizer;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class WeightVectorNeighborhood<S> implements Neighborhood<S> {
+public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighborhood<S> {
   private int numberOfWeightVectors;
   private int weightVectorSize;
   private int[][] neighborhood;
