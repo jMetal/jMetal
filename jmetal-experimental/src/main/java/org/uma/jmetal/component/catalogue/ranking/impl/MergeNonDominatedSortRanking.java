@@ -9,6 +9,7 @@ import org.uma.jmetal.util.JMetalException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,9 +59,9 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
                     [SORT_INDEX + 1]; // 2 extra fields to store: The solution id and the solution index after ordering by the first objective
     for (int i = 0; i < n; i++) {
       population[i] = new double[SORT_INDEX + 1];
-      List<Double> objectives = solutionSet.get(i).objectives();
+      Iterator<Double> iterator = solutionSet.get(i).objectives().iterator();
       for(int j = 0 ; j < m ; j++) {
-		population[i][j] = objectives.get(j);
+		population[i][j] = iterator.next();
       }
       population[i][SOL_ID] = i;
     }
