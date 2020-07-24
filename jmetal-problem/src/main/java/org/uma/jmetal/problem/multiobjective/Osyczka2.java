@@ -45,8 +45,8 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
     fx[1] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4 + x5 * x5 + x6 * x6;
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives().set(0, fx[0]);
+    solution.objectives().set(1, fx[1]);
 
     evaluateConstraints(solution);
   }

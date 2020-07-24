@@ -51,9 +51,9 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
   /** Constructor */
   public DefaultIntegerDoubleSolution(
       IntegerSolution integerSolution, DoubleSolution doubleSolution) {
-    super(2, integerSolution.getNumberOfObjectives(), integerSolution.getNumberOfConstraints());
+    super(2, integerSolution.objectives().size(), integerSolution.getNumberOfConstraints());
     Check.that(
-        integerSolution.getNumberOfObjectives() == doubleSolution.getNumberOfObjectives(),
+        integerSolution.objectives().size() == doubleSolution.objectives().size(),
         "The two solutions must have the same number of objectives");
     Check.that(
         integerSolution.getNumberOfConstraints() == doubleSolution.getNumberOfConstraints(),
@@ -67,15 +67,15 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
     super(
         solution.getNumberOfVariables(),
-        solution.getNumberOfObjectives(),
+        solution.objectives().size(),
         solution.getNumberOfConstraints());
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       setVariable(i, solution.getVariable(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < solution.objectives().size(); i++) {
+      objectives().set(i, solution.objectives().get(i));
     }
 
     for (int i = 0; i < solution.getNumberOfConstraints(); i++) {

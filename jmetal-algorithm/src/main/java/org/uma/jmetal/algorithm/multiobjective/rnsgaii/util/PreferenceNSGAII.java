@@ -24,20 +24,20 @@ public class PreferenceNSGAII<S extends Solution<?>>  {
 
     public Double evaluate(S solution) {
 
-        List<Double> objectiveValues = new ArrayList<>(solution.getNumberOfObjectives());
+        List<Double> objectiveValues = new ArrayList<>(solution.objectives().size());
 
-        for(int i = 0; i < solution.getNumberOfObjectives(); ++i) {
-            objectiveValues.add(solution.getObjective(i));
+        for(int i = 0; i < solution.objectives().size(); ++i) {
+            objectiveValues.add(solution.objectives().get(i));
         }
 
         double normalizeDiff = 0.0D;
         double distance  = 0.0D;
-        for (int i =0;i < solution.getNumberOfObjectives();i++){
+        for (int i =0;i < solution.objectives().size();i++){
             if(this.upperBounds!=null && this.lowerBounds!=null){
-                normalizeDiff = (solution.getObjective(i)-this.interestPoint.get(i))/
+                normalizeDiff = (solution.objectives().get(i)-this.interestPoint.get(i))/
                         (this.upperBounds.get(i)-this.lowerBounds.get(i));
             }else{
-                normalizeDiff = solution.getObjective(i) - this.interestPoint.get(i);
+                normalizeDiff = solution.objectives().get(i) - this.interestPoint.get(i);
             }
             distance += weights.get(i) * Math.pow(normalizeDiff,2.0D);
 

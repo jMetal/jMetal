@@ -63,7 +63,7 @@ public class LZ09F5 extends AbstractDoubleProblem {
     lz09.objective(x, y);
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.setObjective(i, y.get(i));
+      solution.objectives().set(i, y.get(i));
     }
   }
 }

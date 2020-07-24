@@ -49,11 +49,11 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
     Check.isNotNull(solution1);
     Check.isNotNull(solution2);
     Check.that(
-            solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+            solution1.objectives().size() == solution2.objectives().size(),
             "Cannot compare because solution1 has "
-                    + solution1.getNumberOfObjectives()
+                    + solution1.objectives().size()
                     + " objectives and solution2 has "
-                    + solution2.getNumberOfObjectives());
+                    + solution2.objectives().size());
 
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;
@@ -67,9 +67,9 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
     boolean bestIsOne = false ;
     boolean bestIsTwo = false ;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      double value1 = Math.floor(solution1.getObjective(i) / epsilon);
-      double value2 = Math.floor(solution2.getObjective(i) / epsilon);
+    for (int i = 0; i < solution1.objectives().size(); i++) {
+      double value1 = Math.floor(solution1.objectives().get(i) / epsilon);
+      double value2 = Math.floor(solution2.objectives().get(i) / epsilon);
       if (value1 < value2) {
         bestIsOne = true;
 
@@ -88,13 +88,13 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
       double dist1 = 0.0;
       double dist2 = 0.0;
 
-      for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-        double index1 = Math.floor(solution1.getObjective(i) / epsilon);
-        double index2 = Math.floor(solution2.getObjective(i) / epsilon);
+      for (int i = 0; i < solution1.objectives().size(); i++) {
+        double index1 = Math.floor(solution1.objectives().get(i) / epsilon);
+        double index2 = Math.floor(solution2.objectives().get(i) / epsilon);
 
-        dist1 += Math.pow(solution1.getObjective(i) - index1 * epsilon,
+        dist1 += Math.pow(solution1.objectives().get(i) - index1 * epsilon,
                 2.0);
-        dist2 += Math.pow(solution2.getObjective(i) - index2 * epsilon,
+        dist2 += Math.pow(solution2.objectives().get(i) - index2 * epsilon,
                 2.0);
       }
 

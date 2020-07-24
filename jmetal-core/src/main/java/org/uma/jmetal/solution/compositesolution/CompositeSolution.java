@@ -28,14 +28,14 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    *                  number of objectives and constraints.
    */
   public CompositeSolution(List<Solution<?>> solutions) {
-    super(solutions.size(), solutions.get(0).getNumberOfObjectives(), solutions.get(0).getNumberOfConstraints());
+    super(solutions.size(), solutions.get(0).objectives().size(), solutions.get(0).getNumberOfConstraints());
     Check.isNotNull(solutions);
     Check.collectionIsNotEmpty(solutions);
-    int numberOfObjectives = solutions.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutions.get(0).objectives().size();
     int numberOfConstraints = solutions.get(0).getNumberOfConstraints();
     for (Solution<?> solution : solutions) {
       Check.that(
-          solution.getNumberOfObjectives() == numberOfObjectives,
+          solution.objectives().size() == numberOfObjectives,
           "The solutions in the list must have the same number of objectives: "
               + numberOfObjectives);
       Check.that(
@@ -54,14 +54,14 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    * @param solution
    */
   public CompositeSolution(CompositeSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.getNumberOfVariables(), solution.objectives().size(), solution.getNumberOfConstraints()) ;
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       setVariable(i, solution.getVariable(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
+    for (int i = 0; i < solution.objectives().size(); i++) {
+      objectives().set(i, solution.objectives().get(i)) ;
     }
 
     for (int i = 0; i < solution.getNumberOfConstraints(); i++) {

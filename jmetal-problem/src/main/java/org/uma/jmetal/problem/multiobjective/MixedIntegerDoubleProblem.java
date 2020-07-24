@@ -79,8 +79,8 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
       approximationToM += Math.abs(valueM - doubleVariables.get(i));
     }
 
-    solution.setObjective(0, approximationToN);
-    solution.setObjective(1, approximationToM);
+    solution.objectives().set(0, (double) approximationToN);
+    solution.objectives().set(1, (double) approximationToM);
   }
 
   @Override

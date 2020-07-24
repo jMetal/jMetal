@@ -58,7 +58,7 @@ public class MaF08 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
 
     int numberOfVariables = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfObjectives = solution.objectives().size();
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
@@ -72,7 +72,7 @@ public class MaF08 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives().set(i, f[i]);
     }
   }
 

@@ -57,7 +57,7 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
     for (S solution : population)
       for (int i = 0; i < this.maxs.size(); i++)
-        this.maxs.set(i, Math.max(this.maxs.get(i), solution.getObjective(i)));
+        this.maxs.set(i, Math.max(this.maxs.get(i), solution.objectives().get(i)));
 
     this.history.add(maxs);
   }
@@ -90,8 +90,8 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
 
     for (S solution : population) {
       updateReferencePoint(solution);
-      for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-        iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.getObjective(i)));
+      for (int i = 0; i < solution.objectives().size(); i++) {
+        iterationMaxs.set(i, Math.max(iterationMaxs.get(i), solution.objectives().get(i)));
       }
     }
 

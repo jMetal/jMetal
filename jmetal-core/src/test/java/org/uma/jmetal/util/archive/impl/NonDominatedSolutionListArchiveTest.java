@@ -61,15 +61,15 @@ public class NonDominatedSolutionListArchiveTest {
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive.add(solution) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(2.0) ;
-    when(solution2.getObjective(1)).thenReturn(2.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(2.0) ;
+    when(solution2.objectives().get(1)).thenReturn(2.0) ;
     archive.add(solution2) ;
 
     assertEquals(1, archive.size()) ;
@@ -82,15 +82,15 @@ public class NonDominatedSolutionListArchiveTest {
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive.add(solution) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(0.0) ;
-    when(solution2.getObjective(1)).thenReturn(0.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(0.0) ;
+    when(solution2.objectives().get(1)).thenReturn(0.0) ;
     boolean result = archive.add(solution2) ;
 
     assertEquals(1, archive.size()) ;
@@ -104,27 +104,27 @@ public class NonDominatedSolutionListArchiveTest {
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive.add(solution) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(0.0) ;
-    when(solution2.getObjective(1)).thenReturn(2.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(0.0) ;
+    when(solution2.objectives().get(1)).thenReturn(2.0) ;
     archive.add(solution2) ;
 
     IntegerSolution solution3 = mock(IntegerSolution.class) ;
-    when(solution3.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution3.getObjective(0)).thenReturn(0.5) ;
-    when(solution3.getObjective(1)).thenReturn(1.5) ;
+    when(solution3.objectives().size()).thenReturn(2) ;
+    when(solution3.objectives().get(0)).thenReturn(0.5) ;
+    when(solution3.objectives().get(1)).thenReturn(1.5) ;
     archive.add(solution3) ;
 
     IntegerSolution dominantSolution = mock(IntegerSolution.class) ;
-    when(dominantSolution.getNumberOfObjectives()).thenReturn(2) ;
-    when(dominantSolution.getObjective(0)).thenReturn(0.0) ;
-    when(dominantSolution.getObjective(1)).thenReturn(0.0) ;
+    when(dominantSolution.objectives().size()).thenReturn(2) ;
+    when(dominantSolution.objectives().get(0)).thenReturn(0.0) ;
+    when(dominantSolution.objectives().get(1)).thenReturn(0.0) ;
     boolean result = archive.add(dominantSolution) ;
 
     assertEquals(1, archive.size()) ;
@@ -138,15 +138,15 @@ public class NonDominatedSolutionListArchiveTest {
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive.add(solution) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(2.0) ;
-    when(solution2.getObjective(1)).thenReturn(0.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(2.0) ;
+    when(solution2.objectives().get(1)).thenReturn(0.0) ;
     archive.add(solution2) ;
 
     assertEquals(2, archive.size()) ;
@@ -158,21 +158,21 @@ public class NonDominatedSolutionListArchiveTest {
     archive = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive.add(solution) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(2.0) ;
-    when(solution2.getObjective(1)).thenReturn(0.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(2.0) ;
+    when(solution2.objectives().get(1)).thenReturn(0.0) ;
     archive.add(solution2) ;
 
     IntegerSolution equalSolution = mock(IntegerSolution.class) ;
-    when(equalSolution.getNumberOfObjectives()).thenReturn(2) ;
-    when(equalSolution.getObjective(0)).thenReturn(1.0) ;
-    when(equalSolution.getObjective(1)).thenReturn(1.0) ;
+    when(equalSolution.objectives().size()).thenReturn(2) ;
+    when(equalSolution.objectives().get(0)).thenReturn(1.0) ;
+    when(equalSolution.objectives().get(1)).thenReturn(1.0) ;
     boolean result = archive.add(equalSolution) ;
 
     assertEquals(2, archive.size()) ;
@@ -200,9 +200,9 @@ public class NonDominatedSolutionListArchiveTest {
     archive1 = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(1.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(1.0) ;
     archive1.add(solution) ;
 
 
@@ -223,13 +223,13 @@ public class NonDominatedSolutionListArchiveTest {
     archive2 = new NonDominatedSolutionListArchive<>() ;
 
     IntegerSolution solution = mock(IntegerSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution.getObjective(0)).thenReturn(1.0) ;
-    when(solution.getObjective(1)).thenReturn(2.0) ;
+    when(solution.objectives().size()).thenReturn(2) ;
+    when(solution.objectives().get(0)).thenReturn(1.0) ;
+    when(solution.objectives().get(1)).thenReturn(2.0) ;
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(2) ;
-    when(solution2.getObjective(0)).thenReturn(2.0) ;
-    when(solution2.getObjective(1)).thenReturn(1.0) ;
+    when(solution2.objectives().size()).thenReturn(2) ;
+    when(solution2.objectives().get(0)).thenReturn(2.0) ;
+    when(solution2.objectives().get(1)).thenReturn(1.0) ;
 
     archive2.add(solution) ;
     archive2.add(solution2) ;

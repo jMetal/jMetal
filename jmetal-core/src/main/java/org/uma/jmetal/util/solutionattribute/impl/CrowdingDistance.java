@@ -59,20 +59,20 @@ public class CrowdingDistance<S extends Solution<?>>
     double objetiveMinn;
     double distance;
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
+    int numberOfObjectives = solutionList.get(0).objectives().size() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
       Collections.sort(front, new ObjectiveComparator<S>(i)) ;
-      objetiveMinn = front.get(0).getObjective(i);
-      objetiveMaxn = front.get(front.size() - 1).getObjective(i);
+      objetiveMinn = front.get(0).objectives().get(i);
+      objetiveMaxn = front.get(front.size() - 1).objectives().get(i);
 
       // Set de crowding distance
       front.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
       front.get(size - 1).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
 
       for (int j = 1; j < size - 1; j++) {
-        distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
+        distance = front.get(j + 1).objectives().get(i) - front.get(j - 1).objectives().get(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
         distance += (double)front.get(j).getAttribute(getAttributeIdentifier());
         front.get(j).setAttribute(getAttributeIdentifier(), distance);

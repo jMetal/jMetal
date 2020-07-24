@@ -631,8 +631,8 @@ public class FrontUtilsTest {
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(1, list.size());
-    assertEquals(0.1, list.get(0).getObjective(0), EPSILON);
-    assertEquals(0.9, list.get(0).getObjective(1), EPSILON);
+    assertEquals(0.1, list.get(0).objectives().get(0), EPSILON);
+    assertEquals(0.9, list.get(0).objectives().get(1), EPSILON);
   }
 
   /**
@@ -669,9 +669,9 @@ public class FrontUtilsTest {
     list = FrontUtils.convertFrontToSolutionList(front) ;
 
     assertEquals(3, list.size());
-    assertEquals(0.1, list.get(0).getObjective(0), EPSILON);
-    assertEquals(0.8, list.get(1).getObjective(1), EPSILON);
-    assertEquals(32342, list.get(2).getObjective(2), EPSILON);
-    assertEquals(.4E+23, list.get(2).getObjective(3), EPSILON);
+    assertEquals(0.1, list.get(0).objectives().get(0), EPSILON);
+    assertEquals(0.8, list.get(1).objectives().get(1), EPSILON);
+    assertEquals(32342, list.get(2).objectives().get(2), EPSILON);
+    assertEquals(.4E+23, list.get(2).objectives().get(3), EPSILON);
   }
 }

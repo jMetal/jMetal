@@ -52,7 +52,7 @@ public class Viennet4 extends AbstractDoubleProblem {
             + 15.0;
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives().set(i, f[i]);
     }
 
     evaluateConstraints(solution);

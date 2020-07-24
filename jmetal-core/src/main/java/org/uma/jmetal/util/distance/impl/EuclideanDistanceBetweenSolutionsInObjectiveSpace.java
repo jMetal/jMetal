@@ -15,6 +15,6 @@ public class EuclideanDistanceBetweenSolutionsInObjectiveSpace<S extends Solutio
 
   @Override
   public double compute(S solution1, S solution2) {
-    return distance.compute(solution1.getObjectives(), solution2.getObjectives()) ;
+    return distance.compute(solution1.objectivesArray(), solution2.objectivesArray()) ;
   }
 }

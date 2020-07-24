@@ -19,20 +19,20 @@ public class NMMinTest {
     solution.setVariable(0, 100);
     problem.evaluate(solution);
 
-    assertEquals(0, (int)solution.getObjective(0)) ;
-    assertEquals(200, (int)solution.getObjective(1)) ;
+    assertEquals(0, (int)(double)solution.objectives().get(0)) ;
+    assertEquals(200, (int)(double)solution.objectives().get(1)) ;
 
     solution.setVariable(0, -100);
     problem.evaluate(solution);
 
-    assertEquals(200, (int)solution.getObjective(0)) ;
-    assertEquals(0, (int)solution.getObjective(1)) ;
+    assertEquals(200, (int)(double)solution.objectives().get(0)) ;
+    assertEquals(0, (int)(double)solution.objectives().get(1)) ;
 
     solution.setVariable(0, 0);
     problem.evaluate(solution);
 
-    assertEquals(100, (int)solution.getObjective(0)) ;
-    assertEquals(100, (int)solution.getObjective(1)) ;
+    assertEquals(100, (int)(double)solution.objectives().get(0)) ;
+    assertEquals(100, (int)(double)solution.objectives().get(1)) ;
   }
 
 }

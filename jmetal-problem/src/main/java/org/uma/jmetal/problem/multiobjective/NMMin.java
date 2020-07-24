@@ -56,7 +56,7 @@ public class NMMin extends AbstractIntegerProblem {
       approximationToM += Math.abs(valueM - value) ;
     }
 
-    solution.setObjective(0, approximationToN);
-    solution.setObjective(1, approximationToM);
+    solution.objectives().set(0, (double) approximationToN);
+    solution.objectives().set(1, (double) approximationToM);
   }
 }

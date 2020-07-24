@@ -90,13 +90,13 @@ public class ScalarizationUtils {
    */
   private static <S extends Solution<?>> double[][] getExtremePoints(List<S> solutionsList) {
     // One extreme point for each objective
-    double[][] extremePoints = new double[solutionsList.get(0).getNumberOfObjectives()][];
+    double[][] extremePoints = new double[solutionsList.get(0).objectives().size()][];
 
     for (int i = 0; i < extremePoints.length; i++) {
       S extreme = Collections.min(solutionsList, new AchievementScalarizationComparator<S>(i));
-      extremePoints[i] = new double[extreme.getNumberOfObjectives()];
+      extremePoints[i] = new double[extreme.objectives().size()];
       for (int j = 0; j < extremePoints.length; j++) {
-        extremePoints[i][j] = extreme.getObjective(j);
+        extremePoints[i][j] = extreme.objectives().get(j);
       }
     }
 
@@ -110,9 +110,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
-      double sum = solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        sum += solution.getObjective(i);
+      double sum = solution.objectives().get(0);
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        sum += solution.objectives().get(i);
       }
       setScalarizationValue(solution, sum);
     }
@@ -127,9 +127,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void weightedSum(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
-      double sum = weights[0] * solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        sum += weights[i] * solution.getObjective(i);
+      double sum = weights[0] * solution.objectives().get(0);
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        sum += weights[i] * solution.objectives().get(i);
       }
       setScalarizationValue(solution, sum);
     }
@@ -143,9 +143,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
-      double product = solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        product *= solution.getObjective(i);
+      double product = solution.objectives().get(0);
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        product *= solution.objectives().get(i);
       }
       setScalarizationValue(solution, product);
     }
@@ -160,9 +160,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void weightedProduct(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
-      double product = Math.pow(solution.getObjective(0), weights[0]);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        product *= Math.pow(solution.getObjective(i), weights[i]);
+      double product = Math.pow(solution.objectives().get(0), weights[0]);
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        product *= Math.pow(solution.objectives().get(i), weights[i]);
       }
       setScalarizationValue(solution, product);
     }
@@ -197,9 +197,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void chebyshev(List<S> solutionsList, double[] idealValues) {
     for (S solution : solutionsList) {
-      double max = solution.getObjective(0) - idealValues[0];
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        max = Math.max(max, solution.getObjective(i) - idealValues[i]);
+      double max = solution.objectives().get(0) - idealValues[0];
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        max = Math.max(max, solution.objectives().get(i) - idealValues[i]);
       }
       setScalarizationValue(solution, max);
     }
@@ -215,9 +215,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void weightedChebyshev(List<S> solutionsList, double[] idealValues, double[] weights) {
     for (S solution : solutionsList) {
-      double max = weights[0] * (solution.getObjective(0) - idealValues[0]);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
-        max = Math.max(max, weights[i] * (solution.getObjective(i) - idealValues[i]));
+      double max = weights[0] * (solution.objectives().get(0) - idealValues[0]);
+      for (int i = 1; i < solution.objectives().size(); i++) {
+        max = Math.max(max, weights[i] * (solution.objectives().get(i) - idealValues[i]));
       }
       setScalarizationValue(solution, max);
     }
@@ -241,9 +241,9 @@ public class ScalarizationUtils {
    */
   public static <S extends Solution<?>> void nash(List<S> solutionsList, double[] nadirValues) {
     for (S solution : solutionsList) {
-      double nash = nadirValues[0] - solution.getObjective(0);
+      double nash = nadirValues[0] - solution.objectives().get(0);
       for (int i = 1; i < nadirValues.length; i++) {
-        nash *= (nadirValues[i] - solution.getObjective(i));
+        nash *= (nadirValues[i] - solution.objectives().get(i));
       }
       // The Nash bargaining solution is originally maximized. To conform
       // with minimization the bargaining value is negated.
@@ -277,9 +277,9 @@ public class ScalarizationUtils {
         double denominator = 0.0;
         for (int j = 0; j < extremePoints.length; j++) {
           if (i == j) {
-            denominator = Math.abs(extremePoints[i][j] - solution.getObjective(j));
+            denominator = Math.abs(extremePoints[i][j] - solution.objectives().get(j));
           } else {
-            numerator += Math.pow(extremePoints[i][j] - solution.getObjective(j), 2.0);
+            numerator += Math.pow(extremePoints[i][j] - solution.objectives().get(j), 2.0);
           }
         }
         // Avoid numeric instability and division by 0.
@@ -311,11 +311,11 @@ public class ScalarizationUtils {
         S other = solutionsList.get(oth);
         double numerator = 0.0;
         double denominator = 0.0;
-        for (int i = 0; i < current.getNumberOfObjectives(); i++) {
-          if (current.getObjective(i) > other.getObjective(i)) {
-            numerator = Math.max(numerator, current.getObjective(i) - other.getObjective(i));
-          } else if (current.getObjective(i) < other.getObjective(i)) {
-            denominator = Math.max(denominator, other.getObjective(i) - current.getObjective(i));
+        for (int i = 0; i < current.objectives().size(); i++) {
+          if (current.objectives().get(i) > other.objectives().get(i)) {
+            numerator = Math.max(numerator, current.objectives().get(i) - other.objectives().get(i));
+          } else if (current.objectives().get(i) < other.objectives().get(i)) {
+            denominator = Math.max(denominator, other.objectives().get(i) - current.objectives().get(i));
           }
         }
         // Neither solution Pareto dominates the other

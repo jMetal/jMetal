@@ -76,7 +76,7 @@ public class MaF14 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
 
     int numberOfVariables = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfObjectives = solution.objectives().size();
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
@@ -124,7 +124,7 @@ public class MaF14 extends AbstractDoubleProblem {
     f[0] = subf1 * x[numberOfObjectives - 2] * (1 + g[0]);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives().set(i, f[i]);
     }
   }
 

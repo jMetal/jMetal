@@ -38,7 +38,7 @@ public class DirScore<S extends Solution<?>>  extends GenericSolutionAttribute<S
             double minDistance = Double.MAX_VALUE;
             for(int i = 0; i < solutionSet.size(); i++){
                 S solution = solutionSet.get(i) ;
-                double distance = computeAngleDistance(vector, solution.getObjectives()) ;
+                double distance = computeAngleDistance(vector, solution.objectivesArray()) ;
                 if(distance < minDistance){
                     minDistance = distance ;
                     minIndex = i ;

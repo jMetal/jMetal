@@ -57,9 +57,9 @@ public class ArtificiallDecisionMakerIT {
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
     IdealPoint idealPoint = new IdealPoint(problem.getNumberOfObjectives());
-    idealPoint.update(problem.createSolution().getObjectives());
+    idealPoint.update(problem.createSolution().objectivesArray());
     NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
-    nadirPoint.update(problem.createSolution().getObjectives());
+    nadirPoint.update(problem.createSolution().objectivesArray());
     double considerationProbability = 0.1;
     List<Double> rankingCoeficient = new ArrayList<>();
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {

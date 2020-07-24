@@ -50,8 +50,8 @@ public class FDA3 extends FDA implements Serializable {
     double g = this.evalG(solution, limitInfII);
     double h = this.evalH(f[0], g);
     f[1] = g * h;
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
   }
 
   private double evalF(DoubleSolution solution, int limitInf, int limitSup) {

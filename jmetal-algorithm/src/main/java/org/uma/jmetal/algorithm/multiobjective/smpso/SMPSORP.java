@@ -144,7 +144,7 @@ public class SMPSORP
     for (int i = 0; i < referencePoints.size(); i++) {
       DoubleSolution refPoint = problem.createSolution() ;
       for (int j = 0; j < referencePoints.get(0).size(); j++) {
-        refPoint.setObjective(j, referencePoints.get(i).get(j));
+        refPoint.objectives().set(j, referencePoints.get(i).get(j));
       }
 
       referencePointSolutions.add(refPoint) ;

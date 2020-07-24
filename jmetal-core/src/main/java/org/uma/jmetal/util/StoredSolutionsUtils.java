@@ -35,7 +35,7 @@ public class StoredSolutionsUtils {
         String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
         PointSolution solution = new PointSolution(numberOfObjectives);
         for (int i = 0; i < numberOfObjectives; i++) {
-          solution.setObjective(i, Double.parseDouble(textNumbers[i]));
+          solution.objectives().set(i, Double.parseDouble(textNumbers[i]));
         }
         solution.setAttribute(textRepresentation, line);
 

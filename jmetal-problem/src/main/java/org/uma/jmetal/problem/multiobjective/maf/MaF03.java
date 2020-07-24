@@ -52,7 +52,7 @@ public class MaF03 extends AbstractDoubleProblem {
   public void evaluate(DoubleSolution solution) {
 
     int numberOfVariables = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfObjectives = solution.objectives().size();
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
@@ -78,7 +78,7 @@ public class MaF03 extends AbstractDoubleProblem {
     f[0] = Math.pow(subf1 * Math.cos(Math.PI * x[numberOfObjectives - 2] / 2) * subf3, 4);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives().set(i, f[i]);
     }
   }
 }

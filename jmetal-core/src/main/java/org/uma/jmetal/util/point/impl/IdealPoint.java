@@ -32,7 +32,7 @@ public class IdealPoint extends ArrayPoint {
 
   public void update(List<? extends Solution<?>> solutionList) {
     for (Solution<?> solution : solutionList) {
-      update(solution.getObjectives()) ;
+      update(solution.objectivesArray()) ;
     }
   }
 }

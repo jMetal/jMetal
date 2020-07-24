@@ -75,6 +75,6 @@ public class SynchronousCellularGeneticAlgorithmExample extends AbstractAlgorith
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    JMetalLogger.logger.info("Best found solution: " + population.get(0).getObjective(0)) ;
+    JMetalLogger.logger.info("Best found solution: " + population.get(0).objectives().get(0)) ;
   }
 }

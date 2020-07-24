@@ -242,9 +242,9 @@ public class FrontNormalizerTest {
     FrontNormalizer frontNormalizer = new FrontNormalizer(minimum, maximum) ;
     List<? extends Solution<?>> normalizedList = frontNormalizer.normalize(solutionList) ;
 
-    assertEquals(0.75, normalizedList.get(0).getObjective(0), EPSILON) ;
-    assertEquals(3.0/7.0, normalizedList.get(0).getObjective(1), EPSILON) ;
-    assertEquals(0.5, normalizedList.get(1).getObjective(0), EPSILON) ;
-    assertEquals(2.0/7.0, normalizedList.get(1).getObjective(1), EPSILON) ;
+    assertEquals(0.75, normalizedList.get(0).objectives().get(0), EPSILON) ;
+    assertEquals(3.0/7.0, normalizedList.get(0).objectives().get(1), EPSILON) ;
+    assertEquals(0.5, normalizedList.get(1).objectives().get(0), EPSILON) ;
+    assertEquals(2.0/7.0, normalizedList.get(1).objectives().get(1), EPSILON) ;
   }
 }

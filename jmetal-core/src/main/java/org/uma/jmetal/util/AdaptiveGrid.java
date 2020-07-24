@@ -65,11 +65,11 @@ public class AdaptiveGrid<S extends Solution<?>> {
     for (int ind = 0; ind < solutionList.size(); ind++) {
       Solution<?> tmpIndividual = solutionList.get(ind);
       for (int obj = 0; obj < numberOfObjectives; obj++) {
-        if (tmpIndividual.getObjective(obj) < gridLowerLimits[obj]) {
-          gridLowerLimits[obj] = tmpIndividual.getObjective(obj);
+        if (tmpIndividual.objectives().get(obj) < gridLowerLimits[obj]) {
+          gridLowerLimits[obj] = tmpIndividual.objectives().get(obj);
         }
-        if (tmpIndividual.getObjective(obj) > gridUpperLimits[obj]) {
-          gridUpperLimits[obj] = tmpIndividual.getObjective(obj);
+        if (tmpIndividual.objectives().get(obj) > gridUpperLimits[obj]) {
+          gridUpperLimits[obj] = tmpIndividual.objectives().get(obj);
         }
       }
     }
@@ -144,11 +144,11 @@ public class AdaptiveGrid<S extends Solution<?>> {
 
       //Actualize the lower and upper limits whit the individual      
       for (int obj = 0; obj < numberOfObjectives; obj++) {
-        if (solution.getObjective(obj) < gridLowerLimits[obj]) {
-          gridLowerLimits[obj] = solution.getObjective(obj);
+        if (solution.objectives().get(obj) < gridLowerLimits[obj]) {
+          gridLowerLimits[obj] = solution.objectives().get(obj);
         }
-        if (solution.getObjective(obj) > gridUpperLimits[obj]) {
-          gridUpperLimits[obj] = solution.getObjective(obj);
+        if (solution.objectives().get(obj) > gridUpperLimits[obj]) {
+          gridUpperLimits[obj] = solution.objectives().get(obj);
         }
       }
 
@@ -178,16 +178,16 @@ public class AdaptiveGrid<S extends Solution<?>> {
 
     //Calculate the position for each objective
     for (int obj = 0; obj < numberOfObjectives; obj++) {
-      if ((solution.getObjective(obj) > gridUpperLimits[obj])
-              || (solution.getObjective(obj) < gridLowerLimits[obj])) {
+      if ((solution.objectives().get(obj) > gridUpperLimits[obj])
+              || (solution.objectives().get(obj) < gridLowerLimits[obj])) {
         return -1;
-      } else if (solution.getObjective(obj) == gridLowerLimits[obj]) {
+      } else if (solution.objectives().get(obj) == gridLowerLimits[obj]) {
         position[obj] = 0;
-      } else if (solution.getObjective(obj) == gridUpperLimits[obj]) {
+      } else if (solution.objectives().get(obj) == gridUpperLimits[obj]) {
         position[obj] = ((int) Math.pow(2.0, bisections)) - 1;
       } else {
         double tmpSize = divisionSize[obj];
-        double value = solution.getObjective(obj);
+        double value = solution.objectives().get(obj);
         double account = gridLowerLimits[obj];
         int ranges = (int) Math.pow(2.0, bisections);
         for (int b = 0; b < bisections; b++) {

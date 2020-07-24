@@ -50,7 +50,7 @@ public class Sphere extends AbstractDoubleProblem {
       sum += value * value;
     }
 
-    solution.setObjective(0, sum);
+    solution.objectives().set(0, sum);
   }
 }
 

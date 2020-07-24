@@ -43,6 +43,6 @@ public class SteadyStateGeneticAlgorithmTestIT {
     algorithm.run();
 
     BinarySolution solution = algorithm.getResult();
-    assertEquals(NUMBER_OF_BITS, -1 * (int) solution.getObjective(0));
+    assertEquals(NUMBER_OF_BITS, -1 * (int)(double) solution.objectives().get(0));
   }
 }

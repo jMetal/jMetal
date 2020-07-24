@@ -68,7 +68,7 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
+    JMetalLogger.logger.info("Fitness: " + solution.objectives().get(0)) ;
     JMetalLogger.logger.info("Solution: " + solution.getVariable(0)) ;
   }
 }

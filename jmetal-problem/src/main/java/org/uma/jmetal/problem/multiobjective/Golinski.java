@@ -44,8 +44,8 @@ public class Golinski extends AbstractDoubleProblem {
     double aux = 745.0 * x4 / (x2 * x3);
     double f2 = Math.sqrt((aux * aux) + 1.69e7) / (0.1 * x6 * x6 * x6);
 
-    solution.setObjective(0, f1);
-    solution.setObjective(1, f2);
+    solution.objectives().set(0, f1);
+    solution.objectives().set(1, f2);
 
     evaluateConstraints(solution);
   }

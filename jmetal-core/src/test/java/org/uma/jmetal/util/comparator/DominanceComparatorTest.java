@@ -42,8 +42,8 @@ public class DominanceComparatorTest {
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4);
-    when(solution2.getNumberOfObjectives()).thenReturn(2);
+    when(solution1.objectives().size()).thenReturn(4);
+    when(solution2.objectives().size()).thenReturn(2);
 
     assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
@@ -69,18 +69,18 @@ public class DominanceComparatorTest {
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().size()).thenReturn(1);
+    when(solution2.objectives().size()).thenReturn(1);
 
-    when(solution1.getObjective(0)).thenReturn(4.0);
-    when(solution2.getObjective(0)).thenReturn(4.0);
+    when(solution1.objectives().get(0)).thenReturn(4.0);
+    when(solution2.objectives().get(0)).thenReturn(4.0);
 
     comparator = new DominanceComparator<Solution<?>>();
 
     assertEquals(0, comparator.compare(solution1, solution2));
 
-    verify(solution1).getObjective(0);
-    verify(solution2).getObjective(0);
+    verify(solution1).objectives().get(0);
+    verify(solution2).objectives().get(0);
   }
 
   @Test
@@ -93,19 +93,19 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().size()).thenReturn(1);
+    when(solution2.objectives().size()).thenReturn(1);
 
-    when(solution1.getObjective(0)).thenReturn(4.0);
-    when(solution2.getObjective(0)).thenReturn(2.0);
+    when(solution1.objectives().get(0)).thenReturn(4.0);
+    when(solution2.objectives().get(0)).thenReturn(2.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1).getObjective(0);
-    verify(solution2).getObjective(0);
+    verify(solution1).objectives().get(0);
+    verify(solution2).objectives().get(0);
   }
 
   @Test
@@ -118,19 +118,19 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().size()).thenReturn(1);
+    when(solution2.objectives().size()).thenReturn(1);
 
-    when(solution1.getObjective(0)).thenReturn(-1.0);
-    when(solution2.getObjective(0)).thenReturn(2.0);
+    when(solution1.objectives().get(0)).thenReturn(-1.0);
+    when(solution2.objectives().get(0)).thenReturn(2.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1).getObjective(0);
-    verify(solution2).getObjective(0);
+    verify(solution1).objectives().get(0);
+    verify(solution2).objectives().get(0);
   }
 
   /**
@@ -146,23 +146,23 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().size()).thenReturn(3);
+    when(solution2.objectives().size()).thenReturn(3);
 
-    when(solution1.getObjective(0)).thenReturn(-1.0);
-    when(solution1.getObjective(1)).thenReturn(5.0);
-    when(solution1.getObjective(2)).thenReturn(9.0);
-    when(solution2.getObjective(0)).thenReturn(2.0);
-    when(solution2.getObjective(1)).thenReturn(6.0);
-    when(solution2.getObjective(2)).thenReturn(15.0);
+    when(solution1.objectives().get(0)).thenReturn(-1.0);
+    when(solution1.objectives().get(1)).thenReturn(5.0);
+    when(solution1.objectives().get(2)).thenReturn(9.0);
+    when(solution2.objectives().get(0)).thenReturn(2.0);
+    when(solution2.objectives().get(1)).thenReturn(6.0);
+    when(solution2.objectives().get(2)).thenReturn(15.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getObjective(anyInt());
-    verify(solution2, times(3)).getObjective(anyInt());
+    verify(solution1, times(3)).objectives().get(anyInt());
+    verify(solution2, times(3)).objectives().get(anyInt());
   }
 
   /**
@@ -178,23 +178,23 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().size()).thenReturn(3);
+    when(solution2.objectives().size()).thenReturn(3);
 
-    when(solution1.getObjective(0)).thenReturn(-1.0);
-    when(solution1.getObjective(1)).thenReturn(5.0);
-    when(solution1.getObjective(2)).thenReturn(9.0);
-    when(solution2.getObjective(0)).thenReturn(-1.0);
-    when(solution2.getObjective(1)).thenReturn(5.0);
-    when(solution2.getObjective(2)).thenReturn(10.0);
+    when(solution1.objectives().get(0)).thenReturn(-1.0);
+    when(solution1.objectives().get(1)).thenReturn(5.0);
+    when(solution1.objectives().get(2)).thenReturn(9.0);
+    when(solution2.objectives().get(0)).thenReturn(-1.0);
+    when(solution2.objectives().get(1)).thenReturn(5.0);
+    when(solution2.objectives().get(2)).thenReturn(10.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(-1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getObjective(anyInt());
-    verify(solution2, times(3)).getObjective(anyInt());
+    verify(solution1, times(3)).objectives().get(anyInt());
+    verify(solution2, times(3)).objectives().get(anyInt());
   }
 
   /**
@@ -210,23 +210,23 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().size()).thenReturn(3);
+    when(solution2.objectives().size()).thenReturn(3);
 
-    when(solution1.getObjective(0)).thenReturn(-1.0);
-    when(solution1.getObjective(1)).thenReturn(5.0);
-    when(solution1.getObjective(2)).thenReturn(9.0);
-    when(solution2.getObjective(0)).thenReturn(-2.0);
-    when(solution2.getObjective(1)).thenReturn(5.0);
-    when(solution2.getObjective(2)).thenReturn(9.0);
+    when(solution1.objectives().get(0)).thenReturn(-1.0);
+    when(solution1.objectives().get(1)).thenReturn(5.0);
+    when(solution1.objectives().get(2)).thenReturn(9.0);
+    when(solution2.objectives().get(0)).thenReturn(-2.0);
+    when(solution2.objectives().get(1)).thenReturn(5.0);
+    when(solution2.objectives().get(2)).thenReturn(9.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getObjective(anyInt());
-    verify(solution2, times(3)).getObjective(anyInt());
+    verify(solution1, times(3)).objectives().get(anyInt());
+    verify(solution2, times(3)).objectives().get(anyInt());
   }
 
   /**
@@ -242,22 +242,22 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().size()).thenReturn(3);
+    when(solution2.objectives().size()).thenReturn(3);
 
-    when(solution1.getObjective(0)).thenReturn(-1.0);
-    when(solution1.getObjective(1)).thenReturn(5.0);
-    when(solution1.getObjective(2)).thenReturn(9.0);
-    when(solution2.getObjective(0)).thenReturn(-1.0);
-    when(solution2.getObjective(1)).thenReturn(5.0);
-    when(solution2.getObjective(2)).thenReturn(8.0);
+    when(solution1.objectives().get(0)).thenReturn(-1.0);
+    when(solution1.objectives().get(1)).thenReturn(5.0);
+    when(solution1.objectives().get(2)).thenReturn(9.0);
+    when(solution2.objectives().get(0)).thenReturn(-1.0);
+    when(solution2.objectives().get(1)).thenReturn(5.0);
+    when(solution2.objectives().get(2)).thenReturn(8.0);
 
     comparator = new DominanceComparator<Solution<?>>(violationComparator);
 
     assertEquals(1, comparator.compare(solution1, solution2));
 
     verify(violationComparator).compare(solution1, solution2);
-    verify(solution1, times(3)).getObjective(anyInt());
-    verify(solution2, times(3)).getObjective(anyInt());
+    verify(solution1, times(3)).objectives().get(anyInt());
+    verify(solution2, times(3)).objectives().get(anyInt());
   }
 }

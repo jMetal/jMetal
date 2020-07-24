@@ -57,8 +57,8 @@ public class NormalizedHypervolumeTest {
     frontToEvaluate.setPoint(0, new ArrayPoint(new double[] {1.0, 1.0}));
 
     var point = new PointSolution(2);
-    point.setObjective(0, 1.0);
-    point.setObjective(1, 1.0);
+    point.objectives().set(0, 1.0);
+    point.objectives().set(1, 1.0);
     List<PointSolution> list = List.of(point);
 
     assertEquals(1.0, normalizedHypervolume.evaluate(list), EPSILON);

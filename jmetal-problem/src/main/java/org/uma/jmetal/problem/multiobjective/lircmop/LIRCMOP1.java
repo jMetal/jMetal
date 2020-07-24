@@ -43,8 +43,8 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
       x[i] = solution.getVariable(i);
     }
 
-    solution.setObjective(0, x[0] + g1(x));
-    solution.setObjective(1, 1 - x[0] * x[0] + g2(x));
+    solution.objectives().set(0, x[0] + g1(x));
+    solution.objectives().set(1, 1 - x[0] * x[0] + g2(x));
 
     /*
     double sum1 = 0.0, sum2 = 0.0, yj;

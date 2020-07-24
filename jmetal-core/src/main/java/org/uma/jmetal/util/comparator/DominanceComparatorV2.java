@@ -28,12 +28,12 @@ public class DominanceComparatorV2<S extends Solution<?>> implements Comparator<
     Check.isNotNull(solution1);
     Check.isNotNull(solution2);
     Check.that(
-        solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+        solution1.objectives().size() == solution2.objectives().size(),
         "Cannot compare because solution1 has "
-            + solution1.getNumberOfObjectives()
+            + solution1.objectives().size()
             + " objectives and solution2 has "
-            + solution2.getNumberOfObjectives());
+            + solution2.objectives().size());
 
-    return VectorUtils.dominanceTest(solution1.getObjectives(), solution2.getObjectives()) ;
+    return VectorUtils.dominanceTest(solution1.objectivesArray(), solution2.objectivesArray()) ;
   }
 }

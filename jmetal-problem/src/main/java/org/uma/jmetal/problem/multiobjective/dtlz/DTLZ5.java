@@ -83,7 +83,7 @@ public class DTLZ5 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives().set(i, f[i]);
     }
   }
 }

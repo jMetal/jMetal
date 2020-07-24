@@ -49,15 +49,15 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(4) ;
+    when(solution1.objectives().size()).thenReturn(4) ;
+    when(solution2.objectives().size()).thenReturn(4) ;
 
-    when(solution1.getObjective(0)).thenReturn(-4.0) ;
-    when(solution2.getObjective(0)).thenReturn(5.0) ;
+    when(solution1.objectives().get(0)).thenReturn(-4.0) ;
+    when(solution2.objectives().get(0)).thenReturn(5.0) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2)) ;
-    verify(solution1).getObjective(0) ;
-    verify(solution2).getObjective(0) ;
+    verify(solution1).objectives().get(0) ;
+    verify(solution2).objectives().get(0) ;
   }
 
   @Test public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsLower() {
@@ -66,11 +66,11 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(4) ;
+    when(solution1.objectives().size()).thenReturn(4) ;
+    when(solution2.objectives().size()).thenReturn(4) ;
 
-    when(solution1.getObjective(2)).thenReturn(7.0) ;
-    when(solution2.getObjective(2)).thenReturn(5.0) ;
+    when(solution1.objectives().get(2)).thenReturn(7.0) ;
+    when(solution2.objectives().get(2)).thenReturn(5.0) ;
 
     assertEquals(1, comparator.compare(solution1, solution2)) ;
   }
@@ -81,11 +81,11 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(4) ;
+    when(solution1.objectives().size()).thenReturn(4) ;
+    when(solution2.objectives().size()).thenReturn(4) ;
 
-    when(solution1.getObjective(2)).thenReturn(7.0) ;
-    when(solution2.getObjective(2)).thenReturn(7.0) ;
+    when(solution1.objectives().get(2)).thenReturn(7.0) ;
+    when(solution2.objectives().get(2)).thenReturn(7.0) ;
 
     assertEquals(0, comparator.compare(solution1, solution2)) ;
   }
@@ -96,15 +96,15 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(4) ;
+    when(solution1.objectives().size()).thenReturn(4) ;
+    when(solution2.objectives().size()).thenReturn(4) ;
 
-    when(solution1.getObjective(0)).thenReturn(25.0) ;
-    when(solution2.getObjective(0)).thenReturn(5.0) ;
+    when(solution1.objectives().get(0)).thenReturn(25.0) ;
+    when(solution2.objectives().get(0)).thenReturn(5.0) ;
 
     assertEquals(-1, comparator.compare(solution1, solution2)) ;
-    verify(solution1).getObjective(0) ;
-    verify(solution2).getObjective(0) ;
+    verify(solution1).objectives().get(0) ;
+    verify(solution2).objectives().get(0) ;
   }
 
   @Test public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsGreaterInDescendingOrder() {
@@ -113,18 +113,18 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(4) ;
+    when(solution1.objectives().size()).thenReturn(4) ;
+    when(solution2.objectives().size()).thenReturn(4) ;
 
-    when(solution1.getObjective(2)).thenReturn(7.0) ;
-    when(solution2.getObjective(2)).thenReturn(25.0) ;
+    when(solution1.objectives().get(2)).thenReturn(7.0) ;
+    when(solution2.objectives().get(2)).thenReturn(25.0) ;
 
     assertEquals(1, comparator.compare(solution1, solution2)) ;
 
-    verify(solution1).getObjective(2) ;
-    verify(solution2).getObjective(2) ;
-    verify(solution1).getNumberOfObjectives();
-    verify(solution2).getNumberOfObjectives();
+    verify(solution1).objectives().get(2) ;
+    verify(solution2).objectives().get(2) ;
+    verify(solution1).objectives().size();
+    verify(solution2).objectives().size();
   }
 
   @Test public void shouldCompareRaiseAnExceptionIfSolution1HasLessObjectivesThanTheOneRequested() {
@@ -137,13 +137,13 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(6) ;
+    when(solution1.objectives().size()).thenReturn(3) ;
+    when(solution2.objectives().size()).thenReturn(6) ;
 
     comparator.compare(solution1, solution2) ;
 
-    verify(solution1).getNumberOfObjectives();
-    verify(solution2).getNumberOfObjectives();
+    verify(solution1).objectives().size();
+    verify(solution2).objectives().size();
   }
 
   @Test public void shouldCompareRaiseAnExceptionIfSolution2HasLessObjectivesThanTheOneRequested() {
@@ -156,12 +156,12 @@ public class ObjectiveComparatorTest {
     DoubleSolution solution1 = mock(DoubleSolution.class) ;
     DoubleSolution solution2 = mock(DoubleSolution.class) ;
 
-    when(solution1.getNumberOfObjectives()).thenReturn(7) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(5) ;
+    when(solution1.objectives().size()).thenReturn(7) ;
+    when(solution2.objectives().size()).thenReturn(5) ;
 
     comparator.compare(solution1, solution2) ;
 
-    verify(solution1).getNumberOfObjectives();
-    verify(solution2).getNumberOfObjectives();
+    verify(solution1).objectives().size();
+    verify(solution2).objectives().size();
   }
 }

@@ -35,8 +35,8 @@ public class Binh2 extends AbstractDoubleProblem {
     fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
     fx[1] = (x[0] - 5.0) * (x[0] - 5.0) + (x[1] - 5.0) * (x[1] - 5.0);
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives().set(0, fx[0]);
+    solution.objectives().set(1, fx[1]);
 
     this.evaluateConstraints(solution);
   }

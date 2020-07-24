@@ -76,8 +76,8 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   private void updateObjectiveVector(List<S> solutionList){
    for (int j = 0; j < numberOfObjectives; j++) {
       Collections.sort(solutionList, new ObjectiveComparator<>(j));
-      double objetiveMinn = solutionList.get(0).getObjective(j);
-      double objetiveMaxn = solutionList.get(solutionList.size() - 1).getObjective(j);
+      double objetiveMinn = solutionList.get(0).objectives().get(j);
+      double objetiveMaxn = solutionList.get(solutionList.size() - 1).objectives().get(j);
       idealOjectiveVector.add(objetiveMinn);
       nadirObjectiveVector.add(objetiveMaxn);
     }
@@ -159,7 +159,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     S solution = getSolution(front,currentReferencePoint);
     for (Integer i : order) {
       double rand = random.nextDouble(0.0, 1.0);
-      if ((asp.get(i) - solution.getObjective(i)) < tolerance
+      if ((asp.get(i) - solution.objectives().get(i)) < tolerance
           && rand < considerationProbability) {
         indexRelevantObjectivesFunctions.add(i);
       } else if (rand < varyingProbability) {
@@ -183,7 +183,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
         for (int i = 0; i < numberOfObjectives; i++) {
           if (indexOfRelevantObjectiveFunctions.contains(i)) {
             result.add(
-                asp.get(i) - (asp.get(i) - solution.getObjective(i)) / 2);
+                asp.get(i) - (asp.get(i) - solution.objectives().get(i)) / 2);
           } else {
             //predict the i position of reference point
             result.add(prediction(i,front,solution));
@@ -206,8 +206,8 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   }
   private S getSolutionFromRP(List<Double> referencePoint){
     S result = problem.createSolution();
-    for (int i = 0; i < result.getNumberOfObjectives(); i++) {
-      result.setObjective(i,referencePoint.get(i));
+    for (int i = 0; i < result.objectives().size(); i++) {
+      result.objectives().set(i,referencePoint.get(i));
     }
     return result;
   }

@@ -39,11 +39,11 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
     Check.isNotNull(solution1);
     Check.isNotNull(solution2);
     Check.that(
-        solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+        solution1.objectives().size() == solution2.objectives().size(),
         "Cannot compare because solution1 has "
-            + solution1.getNumberOfObjectives()
+            + solution1.objectives().size()
             + " objectives and solution2 has "
-            + solution2.getNumberOfObjectives());
+            + solution2.objectives().size());
 
     int result;
     result = constraintViolationComparator.compare(solution1, solution2);
@@ -58,9 +58,9 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
     int bestIsOne = 0;
     int bestIsTwo = 0;
     int result;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      double value1 = solution1.getObjective(i);
-      double value2 = solution2.getObjective(i);
+    for (int i = 0; i < solution1.objectives().size(); i++) {
+      double value1 = solution1.objectives().get(i);
+      double value2 = solution2.objectives().get(i);
       if (value1 != value2) {
         if (value1 < value2) {
           bestIsOne = 1;

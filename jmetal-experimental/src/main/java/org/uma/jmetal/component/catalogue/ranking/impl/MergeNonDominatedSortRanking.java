@@ -47,7 +47,7 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   public Ranking<S> computeRanking(List<S> solutionSet) {
     initialPopulationSize = solutionSet.size();
     n = solutionSet.size();
-    m = solutionSet.get(0).getNumberOfObjectives();
+    m = solutionSet.get(0).objectives().size();
     bsManager = new MNDSBitsetManager(n);
     SOL_ID = m;
     SORT_INDEX = SOL_ID + 1;
@@ -58,7 +58,10 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
                     [SORT_INDEX + 1]; // 2 extra fields to store: The solution id and the solution index after ordering by the first objective
     for (int i = 0; i < n; i++) {
       population[i] = new double[SORT_INDEX + 1];
-      System.arraycopy(solutionSet.get(i).getObjectives(), 0, population[i], 0, m);
+      List<Double> objectives = solutionSet.get(i).objectives();
+      for(int j = 0 ; j < m ; j++) {
+		population[i][j] = objectives.get(j);
+      }
       population[i][SOL_ID] = i;
     }
     int ranking[] = sort(population);

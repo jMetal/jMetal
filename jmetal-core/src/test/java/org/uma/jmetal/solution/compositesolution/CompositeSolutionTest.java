@@ -50,10 +50,10 @@ public class CompositeSolutionTest {
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
     assertNotNull(solution);
     assertEquals(2, solution.getNumberOfVariables());
-    assertEquals(numberOfObjectives, solution.getNumberOfObjectives());
+    assertEquals(numberOfObjectives, solution.objectives().size());
     assertEquals(numberOfConstraints, solution.getNumberOfConstraints());
-    assertEquals(numberOfObjectives, solution.getVariable(0).getNumberOfObjectives());
-    assertEquals(numberOfObjectives, solution.getVariable(1).getNumberOfObjectives());
+    assertEquals(numberOfObjectives, solution.getVariable(0).objectives().size());
+    assertEquals(numberOfObjectives, solution.getVariable(1).objectives().size());
     assertEquals(numberOfConstraints, solution.getVariable(0).getNumberOfConstraints());
     assertEquals(numberOfConstraints, solution.getVariable(1).getNumberOfConstraints());
     assertTrue(solution.getVariable(0) instanceof DoubleSolution);
@@ -79,7 +79,7 @@ public class CompositeSolutionTest {
     CompositeSolution newSolution = new CompositeSolution(solution) ;
 
     assertEquals(solution.getNumberOfVariables(), newSolution.getNumberOfVariables());
-    assertEquals(solution.getNumberOfObjectives(), newSolution.getNumberOfObjectives());
+    assertEquals(solution.objectives().size(), newSolution.objectives().size());
     assertEquals(solution.getNumberOfConstraints(), newSolution.getNumberOfConstraints());
 
     assertEquals(solution.getVariable(0).getNumberOfVariables(), newSolution.getVariable(0).getNumberOfVariables());

@@ -41,7 +41,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			double minf = Double.MAX_VALUE;
 			for (int i=0; i<fronts.get(0).size(); i+=1) // min values must appear in the first front
 			{
-				minf = Math.min(minf, fronts.get(0).get(i).getObjective(f));
+				minf = Math.min(minf, fronts.get(0).get(i).objectives().get(f));
 			}
 			ideal_point.add(minf);
 
@@ -52,7 +52,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 					if (f==0) // in the first objective we create the vector of conv_objs
 						setAttribute(s, new ArrayList<Double>());
 					
-					getAttribute(s).add(s.getObjective(f)-minf);
+					getAttribute(s).add(s.objectives().get(f)-minf);
 					
 				}
 			}
@@ -70,9 +70,9 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	// ----------------------------------------------------------------------
 	private double ASF(S s, int index) {
 		double max_ratio = Double.NEGATIVE_INFINITY;
-		for (int i = 0; i < s.getNumberOfObjectives(); i++) {
+		for (int i = 0; i < s.objectives().size(); i++) {
 			double weight = (index == i) ? 1.0 : 0.000001;
-			max_ratio = Math.max(max_ratio, s.getObjective(i)/weight);
+			max_ratio = Math.max(max_ratio, s.objectives().get(i)/weight);
 		}
 		return max_ratio;
 	}
@@ -151,7 +151,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			for (int f=0; f<numberOfObjectives; f+=1)
 			{
 				// extreme_points[f] stands for the individual with the largest value of objective f
-				intercepts.add(extreme_points.get(f).getObjective(f));
+				intercepts.add(extreme_points.get(f).objectives().get(f));
 			}
 		}
 		else
@@ -166,7 +166,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			{
 				List<Double> aux = new ArrayList<>();
 				for (int i = 0; i < numberOfObjectives; i++)
-					aux.add(s.getObjective(i));
+					aux.add(s.objectives().get(i));
 				A.add(aux);
 			}
 			List<Double> x = guassianElimination(A, b);

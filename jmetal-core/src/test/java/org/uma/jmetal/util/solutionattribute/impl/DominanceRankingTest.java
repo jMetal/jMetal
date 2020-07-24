@@ -52,11 +52,11 @@ public class DominanceRankingTest {
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives().set(0, 2.0);
+    solution.objectives().set(1, 3.0);
     DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2);
-    solution2.setObjective(0, 1.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives().set(0, 1.0);
+    solution2.objectives().set(1, 6.0);
 
     population.add(solution) ;
     population.add(solution2) ;
@@ -80,11 +80,11 @@ public class DominanceRankingTest {
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives().set(0, 2.0);
+    solution.objectives().set(1, 3.0);
     DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
-    solution2.setObjective(0, 3.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives().set(0, 3.0);
+    solution2.objectives().set(1, 6.0);
 
     population.add(solution) ;
     population.add(solution2) ;
@@ -113,14 +113,14 @@ public class DominanceRankingTest {
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives().set(0, 2.0);
+    solution.objectives().set(1, 3.0);
     DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
-    solution2.setObjective(0, 3.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives().set(0, 3.0);
+    solution2.objectives().set(1, 6.0);
     DoubleSolution solution3 = new DefaultDoubleSolution(bounds, 2);
-    solution3.setObjective(0, 4.0);
-    solution3.setObjective(1, 8.0);
+    solution3.objectives().set(0, 4.0);
+    solution3.objectives().set(1, 8.0);
 
     population.add(solution) ;
     population.add(solution2) ;
@@ -153,20 +153,20 @@ public class DominanceRankingTest {
     List<DoubleSolution>population = new ArrayList<>() ;
 
     DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
-    solution.setObjective(0, 1.0);
-    solution.setObjective(1, 0.0);
+    solution.objectives().set(0, 1.0);
+    solution.objectives().set(1, 0.0);
     DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
-    solution2.setObjective(0, 0.6);
-    solution2.setObjective(1, 0.6);
+    solution2.objectives().set(0, 0.6);
+    solution2.objectives().set(1, 0.6);
     DoubleSolution solution3 = new DefaultDoubleSolution(bounds, 2) ;
-    solution3.setObjective(0, 0.5);
-    solution3.setObjective(1, 0.5);
+    solution3.objectives().set(0, 0.5);
+    solution3.objectives().set(1, 0.5);
     DoubleSolution solution4 = new DefaultDoubleSolution(bounds, 2) ;
-    solution4.setObjective(0, 1.1);
-    solution4.setObjective(1, 0.0);
+    solution4.objectives().set(0, 1.1);
+    solution4.objectives().set(1, 0.0);
     DoubleSolution solution5 = new DefaultDoubleSolution(bounds, 2) ;
-    solution5.setObjective(0, 0.0);
-    solution5.setObjective(1, 1.0);
+    solution5.objectives().set(0, 0.0);
+    solution5.objectives().set(1, 1.0);
 
     population.add(solution) ;
     population.add(solution2) ;
@@ -199,12 +199,12 @@ public class DominanceRankingTest {
 
     DoubleSolution solution = (DoubleSolution)problem.createSolution() ;
     solution.setVariable(0, -93536.88629126895);
-    solution.setObjective(0, 8.749149097065777E9);
-    solution.setObjective(1, 8.749523248610943E9);
+    solution.objectives().set(0, 8.749149097065777E9);
+    solution.objectives().set(1, 8.749523248610943E9);
     DoubleSolution solution2 = (DoubleSolution)problem.createSolution() ;
     solution2.setVariable(0, -55341.05654491017);
-    solution2.setObjective(0, 3.0626325395069447E9);
-    solution2.setObjective(1, 3.0628539077331243E9);
+    solution2.objectives().set(0, 3.0626325395069447E9);
+    solution2.objectives().set(1, 3.0628539077331243E9);
 
     population.add(solution) ;
     population.add(solution2) ;

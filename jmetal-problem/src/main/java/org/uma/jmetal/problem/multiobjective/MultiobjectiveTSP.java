@@ -56,8 +56,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
 
-    solution.setObjective(0, fitness1);
-    solution.setObjective(1, fitness2);
+    solution.objectives().set(0, fitness1);
+    solution.objectives().set(1, fitness2);
   }
 
   private double [][] readProblem(String file) throws IOException {

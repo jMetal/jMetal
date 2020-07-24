@@ -253,8 +253,8 @@ public class BLXAlphaCrossoverTest {
     /** Evaluate() method */
     @Override
     public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives().set(0, 0.0);
+      solution.objectives().set(1, 1.0);
     }
   }
   

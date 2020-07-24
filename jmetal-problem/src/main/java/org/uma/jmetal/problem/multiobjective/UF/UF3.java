@@ -71,7 +71,7 @@ public class UF3 extends AbstractDoubleProblem {
 			}
     }
     
-    solution.setObjective(0,  x[0] + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
-    solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
+    solution.objectives().set(0,  x[0] + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
+    solution.objectives().set(1, 1.0 - Math.sqrt(x[0]) + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
   }
 }

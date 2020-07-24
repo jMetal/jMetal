@@ -39,16 +39,16 @@ public class IdealPointTest {
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
     DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    //when(solution.getObjective(0)).thenReturn(1.0) ;
-    //when(solution.getObjective(1)).thenReturn(2.0) ;
-    when(solution.getObjectives()).thenReturn(new double[]{1.0, 2.0}) ;
+    when(solution.objectives().size()).thenReturn(numberOfObjectives) ;
+    //when(solution.objectives().get(0)).thenReturn(1.0) ;
+    //when(solution.objectives().get(1)).thenReturn(2.0) ;
+    when(solution.objectivesArray()).thenReturn(new double[]{1.0, 2.0}) ;
 
-    referencePoint.update(solution.getObjectives());
+    referencePoint.update(solution.objectivesArray());
 
     assertEquals(1.0, referencePoint.getValue(0), EPSILON) ;
     assertEquals(2.0, referencePoint.getValue(1), EPSILON) ;
-    assertArrayEquals(new double[]{1.0, 2.0}, solution.getObjectives(), EPSILON);
+    assertArrayEquals(new double[]{1.0, 2.0}, solution.objectivesArray(), EPSILON);
   }
 
   @Test
@@ -58,19 +58,19 @@ public class IdealPointTest {
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
-    when(solution1.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    when(solution1.getObjective(0)).thenReturn(0.0) ;
-    when(solution1.getObjective(1)).thenReturn(1.0) ;
-    when(solution1.getObjectives()).thenReturn(new double[]{0.0, 1.0}) ;
+    when(solution1.objectives().size()).thenReturn(numberOfObjectives) ;
+    when(solution1.objectives().get(0)).thenReturn(0.0) ;
+    when(solution1.objectives().get(1)).thenReturn(1.0) ;
+    when(solution1.objectivesArray()).thenReturn(new double[]{0.0, 1.0}) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    when(solution2.getObjective(0)).thenReturn(1.0) ;
-    when(solution2.getObjective(1)).thenReturn(0.0) ;
-    when(solution2.getObjectives()).thenReturn(new double[]{1.0, 0.0}) ;
+    when(solution2.objectives().size()).thenReturn(numberOfObjectives) ;
+    when(solution2.objectives().get(0)).thenReturn(1.0) ;
+    when(solution2.objectives().get(1)).thenReturn(0.0) ;
+    when(solution2.objectivesArray()).thenReturn(new double[]{1.0, 0.0}) ;
 
-    referencePoint.update(solution1.getObjectives());
-    referencePoint.update(solution2.getObjectives());
+    referencePoint.update(solution1.objectivesArray());
+    referencePoint.update(solution2.objectivesArray());
 
     assertEquals(0.0, referencePoint.getValue(0), EPSILON) ;
     assertEquals(0.0, referencePoint.getValue(1), EPSILON) ;
@@ -83,29 +83,29 @@ public class IdealPointTest {
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
     IntegerSolution solution1 = mock(IntegerSolution.class) ;
-    when(solution1.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    when(solution1.getObjective(0)).thenReturn(3.0) ;
-    when(solution1.getObjective(1)).thenReturn(1.0) ;
-    when(solution1.getObjective(2)).thenReturn(2.0) ;
-    when(solution1.getObjectives()).thenReturn(new double[]{3.0, 1.0, 2.0}) ;
+    when(solution1.objectives().size()).thenReturn(numberOfObjectives) ;
+    when(solution1.objectives().get(0)).thenReturn(3.0) ;
+    when(solution1.objectives().get(1)).thenReturn(1.0) ;
+    when(solution1.objectives().get(2)).thenReturn(2.0) ;
+    when(solution1.objectivesArray()).thenReturn(new double[]{3.0, 1.0, 2.0}) ;
 
     IntegerSolution solution2 = mock(IntegerSolution.class) ;
-    when(solution2.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    when(solution2.getObjective(0)).thenReturn(0.2) ;
-    when(solution2.getObjective(1)).thenReturn(4.0) ;
-    when(solution2.getObjective(2)).thenReturn(5.5) ;
-    when(solution2.getObjectives()).thenReturn(new double[]{0.2, 4.0, 5.5}) ;
+    when(solution2.objectives().size()).thenReturn(numberOfObjectives) ;
+    when(solution2.objectives().get(0)).thenReturn(0.2) ;
+    when(solution2.objectives().get(1)).thenReturn(4.0) ;
+    when(solution2.objectives().get(2)).thenReturn(5.5) ;
+    when(solution2.objectivesArray()).thenReturn(new double[]{0.2, 4.0, 5.5}) ;
 
     IntegerSolution solution3 = mock(IntegerSolution.class) ;
-    when(solution3.getNumberOfObjectives()).thenReturn(numberOfObjectives) ;
-    when(solution3.getObjective(0)).thenReturn(5.0) ;
-    when(solution3.getObjective(1)).thenReturn(6.0) ;
-    when(solution3.getObjective(2)).thenReturn(1.5) ;
-    when(solution3.getObjectives()).thenReturn(new double[]{5.0, 6.0, 1.5}) ;
+    when(solution3.objectives().size()).thenReturn(numberOfObjectives) ;
+    when(solution3.objectives().get(0)).thenReturn(5.0) ;
+    when(solution3.objectives().get(1)).thenReturn(6.0) ;
+    when(solution3.objectives().get(2)).thenReturn(1.5) ;
+    when(solution3.objectivesArray()).thenReturn(new double[]{5.0, 6.0, 1.5}) ;
 
-    referencePoint.update(solution1.getObjectives());
-    referencePoint.update(solution2.getObjectives());
-    referencePoint.update(solution3.getObjectives());
+    referencePoint.update(solution1.objectivesArray());
+    referencePoint.update(solution2.objectivesArray());
+    referencePoint.update(solution3.objectivesArray());
 
     assertEquals(0.2, referencePoint.getValue(0), EPSILON) ;
     assertEquals(1.0, referencePoint.getValue(1), EPSILON) ;

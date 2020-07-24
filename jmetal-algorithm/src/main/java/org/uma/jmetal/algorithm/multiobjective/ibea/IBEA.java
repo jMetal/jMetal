@@ -132,11 +132,11 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     r = rho * (maximumValues[d - 1] - minimumValues[d - 1]);
     max = minimumValues[d - 1] + r;
 
-    a = solutionA.getObjective(d - 1);
+    a = solutionA.objectives().get(d - 1);
     if (solutionB == null) {
       b = max;
     } else {
-      b = solutionB.getObjective(d - 1);
+      b = solutionB.objectives().get(d - 1);
     }
 
     if (d == 1) {
@@ -234,7 +234,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
 
     for (S solution : solutionSet) {
       for (int obj = 0; obj < problem.getNumberOfObjectives(); obj++) {
-        double value = solution.getObjective(obj);
+        double value = solution.objectives().get(obj);
         if (value > maximumValues[obj]) {
           maximumValues[obj] = value;
         }

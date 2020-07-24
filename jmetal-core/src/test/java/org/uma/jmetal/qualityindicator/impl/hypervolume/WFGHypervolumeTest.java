@@ -29,13 +29,13 @@ public class WFGHypervolumeTest {
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setObjective(0, 0.25);
-    solution.setObjective(1, 0.75);
+    solution.objectives().set(0, 0.25);
+    solution.objectives().set(1, 0.75);
     frontToEvaluate.add(solution) ;
 
     solution = problem.createSolution() ;
-    solution.setObjective(0, 0.75);
-    solution.setObjective(1, 0.25);
+    solution.objectives().set(0, 0.75);
+    solution.objectives().set(1, 0.25);
     frontToEvaluate.add(solution) ;
 
     Front referenceFront = new ArrayFront(1, 2) ;
@@ -58,18 +58,18 @@ public class WFGHypervolumeTest {
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setObjective(0, 0.25);
-    solution.setObjective(1, 0.75);
+    solution.objectives().set(0, 0.25);
+    solution.objectives().set(1, 0.75);
     frontToEvaluate.add(solution) ;
 
     solution = problem.createSolution() ;
-    solution.setObjective(0, 0.75);
-    solution.setObjective(1, 0.25);
+    solution.objectives().set(0, 0.75);
+    solution.objectives().set(1, 0.25);
     frontToEvaluate.add(solution) ;
 
     solution = problem.createSolution() ;
-    solution.setObjective(0, 0.5);
-    solution.setObjective(1, 0.5);
+    solution.objectives().set(0, 0.5);
+    solution.objectives().set(1, 0.5);
     frontToEvaluate.add(solution) ;
 
     Front referenceFront = new ArrayFront(1, 2) ;
@@ -93,18 +93,18 @@ public class WFGHypervolumeTest {
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setObjective(0, 0.25);
-    solution.setObjective(1, 0.75);
+    solution.objectives().set(0, 0.25);
+    solution.objectives().set(1, 0.75);
     frontToEvaluate.add(solution) ;
 
     solution = problem.createSolution() ;
-    solution.setObjective(0, 0.75);
-    solution.setObjective(1, 0.25);
+    solution.objectives().set(0, 0.75);
+    solution.objectives().set(1, 0.25);
     frontToEvaluate.add(solution) ;
 
     solution = problem.createSolution() ;
-    solution.setObjective(0, 0.5);
-    solution.setObjective(1, 0.5);
+    solution.objectives().set(0, 0.5);
+    solution.objectives().set(1, 0.5);
     frontToEvaluate.add(solution) ;
 
     Front referenceFront = new ArrayFront(1, 2) ;
@@ -132,8 +132,8 @@ public class WFGHypervolumeTest {
     List<DoubleSolution> frontToEvaluate = new ArrayList<>() ;
     for (int i = 0 ; i < storeFront.getNumberOfPoints(); i++) {
       DoubleSolution solution = problem.createSolution() ;
-      solution.setObjective(0, storeFront.getPoint(i).getValue(0));
-      solution.setObjective(1, storeFront.getPoint(i).getValue(1));
+      solution.objectives().set(0, storeFront.getPoint(i).getValue(0));
+      solution.objectives().set(1, storeFront.getPoint(i).getValue(1));
       frontToEvaluate.add(solution) ;
     }
 
@@ -171,7 +171,7 @@ public class WFGHypervolumeTest {
     @Override
     public void evaluate(DoubleSolution solution) {
       for (int i = 0; i < getNumberOfObjectives(); i++) {
-        solution.setObjective(i, 1.0);
+        solution.objectives().set(i, 1.0);
       }
     }
   }

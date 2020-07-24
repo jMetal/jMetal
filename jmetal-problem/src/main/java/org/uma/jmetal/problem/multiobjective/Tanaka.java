@@ -34,8 +34,8 @@ public class Tanaka extends AbstractDoubleProblem {
 
   @Override
   public void evaluate(DoubleSolution solution)  {
-    solution.setObjective(0, solution.getVariable(0));
-    solution.setObjective(1, solution.getVariable(1));
+    solution.objectives().set(0, solution.getVariable(0));
+    solution.objectives().set(1, solution.getVariable(1));
 
     this.evaluateConstraints(solution);
   }

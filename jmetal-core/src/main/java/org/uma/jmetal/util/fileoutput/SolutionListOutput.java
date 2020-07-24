@@ -82,12 +82,12 @@ public class SolutionListOutput {
 
     try {
       if (solutionList.size() > 0) {
-        int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+        int numberOfObjectives = solutionList.get(0).objectives().size();
         for (int i = 0; i < solutionList.size(); i++) {
           for (int j = 0; j < numberOfObjectives - 1; j++) {
-            bufferedWriter.write(solutionList.get(i).getObjective(j) + context.getSeparator());
+            bufferedWriter.write(solutionList.get(i).objectives().get(j) + context.getSeparator());
           }
-          bufferedWriter.write("" + solutionList.get(i).getObjective(numberOfObjectives - 1));
+          bufferedWriter.write("" + solutionList.get(i).objectives().get(numberOfObjectives - 1));
 
           bufferedWriter.newLine();
         }
@@ -107,7 +107,7 @@ public class SolutionListOutput {
 
     try {
       if (solutionList.size() > 0) {
-        int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+        int numberOfObjectives = solutionList.get(0).objectives().size();
         if (numberOfObjectives != minimizeObjective.size()) {
           throw new JMetalException(
               "The size of list minimizeObjective is not correct: " + minimizeObjective.size());
@@ -115,14 +115,14 @@ public class SolutionListOutput {
         for (int i = 0; i < solutionList.size(); i++) {
           for (int j = 0; j < numberOfObjectives - 1; j++) {
             if (minimizeObjective.get(j)) {
-              bufferedWriter.write(solutionList.get(i).getObjective(j) + context.getSeparator());
+              bufferedWriter.write(solutionList.get(i).objectives().get(j) + context.getSeparator());
             } else {
               bufferedWriter.write(
-                  -1.0 * solutionList.get(i).getObjective(j) + context.getSeparator());
+                  -1.0 * solutionList.get(i).objectives().get(j) + context.getSeparator());
             }
           }
           bufferedWriter.write(
-              "" + -1.0 * solutionList.get(i).getObjective(numberOfObjectives - 1));
+              "" + -1.0 * solutionList.get(i).objectives().get(numberOfObjectives - 1));
 
           bufferedWriter.newLine();
         }

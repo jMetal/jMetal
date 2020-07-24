@@ -41,16 +41,16 @@ public class C2_DTLZ2 extends DTLZ2 {
     double sum2 = 0 ;
     double maxSum1 = Double.MIN_VALUE ;
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      double sum1 = Math.pow(solution.getObjective(i)-1.0, 2.0) - Math.pow(rValue, 2.0) ;
+      double sum1 = Math.pow(solution.objectives().get(i)-1.0, 2.0) - Math.pow(rValue, 2.0) ;
       for (int j = 0; j < getNumberOfObjectives(); j++) {
         if (i != j) {
-          sum1 += Math.pow(solution.getObjective(j), 2.0) ;
+          sum1 += Math.pow(solution.objectives().get(j), 2.0) ;
         }
       }
 
       maxSum1 = Math.max(maxSum1, sum1) ;
 
-      sum2 += Math.pow((solution.getObjective(i) -
+      sum2 += Math.pow((solution.objectives().get(i) -
           1.0/Math.sqrt(getNumberOfObjectives())), 2.0)  ;
 
     }

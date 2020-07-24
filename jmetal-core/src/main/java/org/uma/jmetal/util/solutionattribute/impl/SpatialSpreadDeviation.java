@@ -43,7 +43,7 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
   public void computeDensityEstimator(List<S> solutionList) {
     int size = solutionList.size();
 
-    if (size <= solutionList.get(0).getNumberOfObjectives()) {
+    if (size <= solutionList.get(0).objectives().size()) {
       for (int x = 0; x < size; x++) {
         solutionList.get(x).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);
       }
@@ -60,7 +60,7 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
       front.get(i).setAttribute(getAttributeID(), 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().size();
 
     double objetiveMaxn[] = new double[numberOfObjectives];
     double objetiveMinn[] = new double[numberOfObjectives];
@@ -68,8 +68,8 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
       Collections.sort(front, new ObjectiveComparator<S>(i));
-      objetiveMinn[i] = front.get(0).getObjective(i);
-      objetiveMaxn[i] = front.get(front.size() - 1).getObjective(i);
+      objetiveMinn[i] = front.get(0).objectives().get(i);
+      objetiveMaxn[i] = front.get(front.size() - 1).objectives().get(i);
 
       // Set de crowding distance Los extremos si infinitos
       front.get(0).setAttribute(getAttributeID(), Double.POSITIVE_INFINITY);

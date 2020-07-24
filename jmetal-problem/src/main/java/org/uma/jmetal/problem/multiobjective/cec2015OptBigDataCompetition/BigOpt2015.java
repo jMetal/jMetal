@@ -98,8 +98,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
       obj2 = (obj2 - f2min)*(f1max - f1min)/(f2max - f2min)+f1min ;
     }
 
-    solution.setObjective(0, obj1);
-    solution.setObjective(1, obj2);
+    solution.objectives().set(0, obj1);
+    solution.objectives().set(1, obj2);
   }
 
   private void loadData(String problemId, String fName, int dType, int dLength) {

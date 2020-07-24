@@ -33,17 +33,17 @@ public class KnnDensityEstimatorTest {
     DoubleSolution solution3 = problem.createSolution();
     DoubleSolution solution4 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives().set(0, 1.0);
+    solution1.objectives().set(1, 5.0);
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives().set(0, 2.0);
+    solution2.objectives().set(1, 4.0);
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives().set(0, 3.0);
+    solution3.objectives().set(1, 3.0);
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives().set(0, 5.0);
+    solution4.objectives().set(1, 1.0);
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
@@ -84,20 +84,20 @@ public class KnnDensityEstimatorTest {
     DoubleSolution solution4 = problem.createSolution();
     DoubleSolution solution5 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives().set(0, 1.0);
+    solution1.objectives().set(1, 5.0);
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives().set(0, 2.0);
+    solution2.objectives().set(1, 4.0);
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives().set(0, 3.0);
+    solution3.objectives().set(1, 3.0);
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives().set(0, 5.0);
+    solution4.objectives().set(1, 1.0);
 
-    solution5.setObjective(0, 3);
-    solution5.setObjective(1, 2);
+    solution5.objectives().set(0, 3.0);
+    solution5.objectives().set(1, 2.0);
 
     List<DoubleSolution> solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
@@ -134,8 +134,8 @@ public class KnnDensityEstimatorTest {
     /** Evaluate() method */
     @Override
     public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives().set(0, 0.0);
+      solution.objectives().set(1, 1.0);
     }
   }
 }

@@ -126,7 +126,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
           phiMax = (double) ConstraintHandling.overallConstraintViolationDegree(child);
         }
 
-        idealPoint.update(child.getObjectives());
+        idealPoint.update(child.objectivesArray());
         updateNeighborhood(child, subProblemId, neighborType);
       }
       rk = feasibilityRatio(population);

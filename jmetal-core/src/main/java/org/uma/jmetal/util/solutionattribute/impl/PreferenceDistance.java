@@ -65,7 +65,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     double objetiveMinn;
     double distance;
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().size();
     weights = new ArrayList<>();
     for (int i = 0; i < numberOfObjectives; i++) {
       weights.add(1.0d / numberOfObjectives);
@@ -77,10 +77,10 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
       for (int j = 0; j < numberOfObjectives; j++) {
         // Sort the population by Obj n
         Collections.sort(front, new ObjectiveComparator<S>(j));
-        objetiveMinn = front.get(0).getObjective(j);
-        objetiveMaxn = front.get(front.size() - 1).getObjective(j);
+        objetiveMinn = front.get(0).objectives().get(j);
+        objetiveMaxn = front.get(front.size() - 1).objectives().get(j);
         normalizeDiff =
-            (front.get(i).getObjective(j) - this.interestPoint.get(j))
+            (front.get(i).objectives().get(j) - this.interestPoint.get(j))
                 / (objetiveMaxn - objetiveMinn);
         distance += weights.get(j) * Math.pow(normalizeDiff, 2.0D);
       }
@@ -96,7 +96,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     List<S> preference = new ArrayList<>();
     List<S> temporalList = new LinkedList<>();
     temporalList.addAll(solutionList);
-    int numerOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numerOfObjectives = solutionList.get(0).objectives().size();
 
     while (!temporalList.isEmpty()) {
       int indexRandom = JMetalRandom.getInstance().nextInt(0, temporalList.size() - 1); // 0
@@ -111,14 +111,14 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
         for (int indexOfObjective = 0; indexOfObjective < numerOfObjectives; indexOfObjective++) {
           Collections.sort(temporalList, new ObjectiveComparator<S>(indexOfObjective));
-          double objetiveMinn = temporalList.get(0).getObjective(indexOfObjective);
+          double objetiveMinn = temporalList.get(0).objectives().get(indexOfObjective);
           double objetiveMaxn =
-              temporalList.get(temporalList.size() - 1).getObjective(indexOfObjective);
+              temporalList.get(temporalList.size() - 1).objectives().get(indexOfObjective);
           sum =
               sum
                   + ((Math.abs(
-                          randomSolution.getObjective(indexOfObjective)
-                              - temporalList.get(indexOfSolution).getObjective(indexOfObjective)))
+                          randomSolution.objectives().get(indexOfObjective)
+                              - temporalList.get(indexOfSolution).objectives().get(indexOfObjective)))
                       / (objetiveMaxn - objetiveMinn));
         }
 

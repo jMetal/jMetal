@@ -61,14 +61,14 @@ public class ArrayPointTest {
   public void shouldConstructFromASolutionReturnTheCorrectPoint() {
     Solution<?> solution = Mockito.mock(Solution.class) ;
 
-    Mockito.when(solution.getNumberOfObjectives()).thenReturn(3) ;
-    Mockito.when(solution.getObjective(0)).thenReturn(0.2) ;
-    Mockito.when(solution.getObjective(1)).thenReturn(234.23) ;
-    Mockito.when(solution.getObjective(2)).thenReturn(-234.2356) ;
-    Mockito.when(solution.getObjectives()).thenReturn(new double[]{0.2, 234.23, -234.2356}) ;
+    Mockito.when(solution.objectives().size()).thenReturn(3) ;
+    Mockito.when(solution.objectives().get(0)).thenReturn(0.2) ;
+    Mockito.when(solution.objectives().get(1)).thenReturn(234.23) ;
+    Mockito.when(solution.objectives().get(2)).thenReturn(-234.2356) ;
+    Mockito.when(solution.objectivesArray()).thenReturn(new double[]{0.2, 234.23, -234.2356}) ;
     //Mockito.when(solution.getNumberOfObjectives()).thenReturn(3) ;
 
-    Point point = new ArrayPoint(solution.getObjectives()) ;
+    Point point = new ArrayPoint(solution.objectivesArray()) ;
 
     double[] expectedArray = {0.2, 234.23, -234.2356} ;
     double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");
@@ -76,7 +76,7 @@ public class ArrayPointTest {
     assertArrayEquals(expectedArray, pointDimensions, EPSILON);
 
 //    Mockito.verify(solution).getNumberOfObjectives() ;
-//    Mockito.verify(solution, Mockito.times(3)).getObjective(Mockito.anyInt());
+//    Mockito.verify(solution, Mockito.times(3)).objectives().get(Mockito.anyInt());
   }
 
   @Test

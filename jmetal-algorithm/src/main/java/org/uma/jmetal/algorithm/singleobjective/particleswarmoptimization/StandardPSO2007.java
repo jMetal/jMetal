@@ -223,10 +223,10 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     if (bestFoundParticle == null) {
       bestFoundParticle = (DoubleSolution) bestSolution.copy();
     } else {
-      if (bestSolution.getObjective(objectiveId) == bestFoundParticle.getObjective(0)) {
+      if (bestSolution.objectives().get(objectiveId) == bestFoundParticle.objectives().get(0)) {
         neighborhood.recompute();
       }
-      if (bestSolution.getObjective(objectiveId) < bestFoundParticle.getObjective(0)) {
+      if (bestSolution.objectives().get(objectiveId) < bestFoundParticle.objectives().get(0)) {
         bestFoundParticle = (DoubleSolution) bestSolution.copy();
       }
     }
@@ -235,7 +235,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   @Override
   public void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      if ((swarm.get(i).getObjective(objectiveId) < localBest[i].getObjective(0))) {
+      if ((swarm.get(i).objectives().get(objectiveId) < localBest[i].objectives().get(0))) {
         localBest[i] = (DoubleSolution) swarm.get(i).copy();
       }
     }
@@ -251,8 +251,8 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
     for (DoubleSolution solution : neighborhood.getNeighbors(getSwarm(), i)) {
       int solutionPositionInSwarm = positionInSwarm.getAttribute(solution);
-      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
-              > localBest[solutionPositionInSwarm].getObjective(0))) {
+      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.objectives().get(0)
+              > localBest[solutionPositionInSwarm].objectives().get(0))) {
         bestLocalBestSolution = localBest[solutionPositionInSwarm];
       }
     }

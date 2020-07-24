@@ -31,7 +31,7 @@ public class DefaultBinarySolution
 
   /** Copy constructor */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives()) ;
+    super(solution.getNumberOfVariables(), solution.objectives().size()) ;
 
     this.bitsPerVariable = solution.bitsPerVariable ;
 
@@ -39,8 +39,8 @@ public class DefaultBinarySolution
       setVariable(i, (BinarySet) solution.getVariable(i).clone());
     }
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
+    for (int i = 0; i < objectives().size(); i++) {
+      objectives().set(i, solution.objectives().get(i)) ;
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {

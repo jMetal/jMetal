@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Abstract class representing a generic solution
@@ -14,7 +16,7 @@ import java.util.Map;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractSolution<T> implements Solution<T> {
-  private double[] objectives;
+  private List<Double> objectives;
   private List<T> variables;
   private double[] constraints;
 
@@ -35,10 +37,9 @@ public abstract class AbstractSolution<T> implements Solution<T> {
       variables.add(i, null);
     }
 
-    objectives = new double[numberOfObjectives];
-    for (int i = 0; i < numberOfObjectives; i++) {
-      objectives[i] = 0.0;
-    }
+    objectives = IntStream.range(0, numberOfObjectives)//
+        .mapToObj(i -> 0.0)
+        .collect(Collectors.toList());
 
     constraints = new double[numberOfConstraints];
     for (int i = 0; i < numberOfConstraints; i++) {
@@ -48,8 +49,14 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     attributes = new HashMap<Object, Object>();
   }
 
-  @Override
+  @Override// Not used here
+  @Deprecated
   public double[] getObjectives() {
+    return objectives.stream().mapToDouble(d -> d).toArray();
+  }
+  
+  @Override// Used instead
+  public List<Double> objectives() {
     return objectives;
   }
 
@@ -79,13 +86,15 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
+  @Deprecated
   public void setObjective(int index, double value) {
-    objectives[index] = value;
+    objectives.set(index, value);
   }
 
   @Override
+  @Deprecated
   public double getObjective(int index) {
-    return objectives[index];
+    return objectives.get(index);
   }
 
   @Override
@@ -114,8 +123,9 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
+  @Deprecated
   public int getNumberOfObjectives() {
-    return objectives.length;
+    return objectives.size();
   }
 
   @Override

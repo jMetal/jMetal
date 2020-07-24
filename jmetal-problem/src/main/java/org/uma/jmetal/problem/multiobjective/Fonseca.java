@@ -54,7 +54,7 @@ public class Fonseca extends AbstractDoubleProblem {
     double exp2 = StrictMath.exp((-1.0) * sum2);
     f[1] = 1 - exp2;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
   }
 }

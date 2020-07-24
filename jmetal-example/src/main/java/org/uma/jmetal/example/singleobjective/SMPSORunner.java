@@ -70,6 +70,6 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-    JMetalLogger.logger.info("Fitness: " + population.get(0).getObjective(0)) ;
+    JMetalLogger.logger.info("Fitness: " + population.get(0).objectives().get(0)) ;
   }
 }

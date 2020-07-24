@@ -213,20 +213,20 @@ public class DifferentialEvolutionTestIT {
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
     DoubleSolution solution1 = mock(DoubleSolution.class);
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution1.getObjective(0)).thenReturn(2.0);
+    when(solution1.objectives().size()).thenReturn(1);
+    when(solution1.objectives().get(0)).thenReturn(2.0);
 
     DoubleSolution solution2 = mock(DoubleSolution.class);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getObjective(0)).thenReturn(1.0);
+    when(solution2.objectives().size()).thenReturn(1);
+    when(solution2.objectives().get(0)).thenReturn(1.0);
 
     DoubleSolution solution3 = mock(DoubleSolution.class);
-    when(solution3.getNumberOfObjectives()).thenReturn(1);
-    when(solution3.getObjective(0)).thenReturn(6.0);
+    when(solution3.objectives().size()).thenReturn(1);
+    when(solution3.objectives().get(0)).thenReturn(6.0);
 
     DoubleSolution solution4 = mock(DoubleSolution.class);
-    when(solution4.getNumberOfObjectives()).thenReturn(1);
-    when(solution4.getObjective(0)).thenReturn(0.5);
+    when(solution4.objectives().size()).thenReturn(1);
+    when(solution4.objectives().get(0)).thenReturn(0.5);
 
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(solution1, solution2);
     List<DoubleSolution> offspringPopulation = Arrays.<DoubleSolution>asList(solution3, solution4);
@@ -244,20 +244,20 @@ public class DifferentialEvolutionTestIT {
     ReflectionTestUtils.setField(algorithm, "populationSize", populationSize);
 
     DoubleSolution solution1 = mock(DoubleSolution.class);
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution1.getObjective(0)).thenReturn(2.0);
+    when(solution1.objectives().size()).thenReturn(1);
+    when(solution1.objectives().get(0)).thenReturn(2.0);
 
     DoubleSolution solution2 = mock(DoubleSolution.class);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getObjective(0)).thenReturn(1.0);
+    when(solution2.objectives().size()).thenReturn(1);
+    when(solution2.objectives().get(0)).thenReturn(1.0);
 
     DoubleSolution solution3 = mock(DoubleSolution.class);
-    when(solution3.getNumberOfObjectives()).thenReturn(1);
-    when(solution3.getObjective(0)).thenReturn(6.0);
+    when(solution3.objectives().size()).thenReturn(1);
+    when(solution3.objectives().get(0)).thenReturn(6.0);
 
     DoubleSolution solution4 = mock(DoubleSolution.class);
-    when(solution4.getNumberOfObjectives()).thenReturn(1);
-    when(solution4.getObjective(0)).thenReturn(0.5);
+    when(solution4.objectives().size()).thenReturn(1);
+    when(solution4.objectives().get(0)).thenReturn(0.5);
 
     List<DoubleSolution> population =
         Arrays.<DoubleSolution>asList(solution1, solution2, solution3, solution4);
@@ -266,6 +266,6 @@ public class DifferentialEvolutionTestIT {
 
     DoubleSolution result = algorithm.getResult();
     assertEquals(solution4, result);
-    assertEquals(0.5, result.getObjective(0), 0.0);
+    assertEquals(0.5, result.objectives().get(0), 0.0);
   }
 }

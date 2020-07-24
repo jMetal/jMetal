@@ -29,16 +29,16 @@ public class LIRCMOP9 extends LIRCMOP8 {
       x[i] = solution.getVariable(i);
     }
 
-    solution.setObjective(0, 1.7057 * x[0] * (10 * g1(x) + 1));
-    solution.setObjective(1, 1.7957 * (1 - x[0] * x[0]) * (10 * g2(x) + 1));
+    solution.objectives().set(0, 1.7057 * x[0] * (10 * g1(x) + 1));
+    solution.objectives().set(1, 1.7957 * (1 - x[0] * x[0]) * (10 * g2(x) + 1));
 
     evaluateConstraints(solution);
   }
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double f0 = solution.getObjective(0);
-    double f1 = solution.getObjective(1);
+    double f0 = solution.objectives().get(0);
+    double f1 = solution.objectives().get(1);
     double N = 4.0, theta = -0.25 * Math.PI;
     double[] constraint = new double[getNumberOfConstraints()];
     constraint[0] =

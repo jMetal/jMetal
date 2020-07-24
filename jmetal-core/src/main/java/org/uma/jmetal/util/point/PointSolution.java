@@ -3,6 +3,8 @@ package org.uma.jmetal.util.point;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.
@@ -12,7 +14,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class PointSolution implements Solution<Double> {
   private int numberOfObjectives ;
-  private double[] objectives;
+  private List<Double> objectives;
   protected Map<Object, Object> attributes ;
 
   /**
@@ -22,7 +24,7 @@ public class PointSolution implements Solution<Double> {
    */
   public PointSolution(int numberOfObjectives) {
     this.numberOfObjectives = numberOfObjectives ;
-    objectives = new double[numberOfObjectives] ;
+    objectives = new ArrayList<Double>(DoubleStream.of(new double[numberOfObjectives]).mapToObj(d->d).collect(Collectors.toList())) ;
     attributes = new HashMap<>() ;
   }
 
@@ -33,10 +35,10 @@ public class PointSolution implements Solution<Double> {
    */
   public PointSolution(Point point) {
     this.numberOfObjectives = point.getDimension() ;
-    objectives = new double[numberOfObjectives] ;
+    objectives = new ArrayList<>() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getValue(i) ;
+      this.objectives.add(point.getValue(i)) ;
     }
   }
 
@@ -46,11 +48,11 @@ public class PointSolution implements Solution<Double> {
    * @param solution
    */
   public PointSolution(Solution<?> solution) {
-    this.numberOfObjectives = solution.getNumberOfObjectives() ;
-    objectives = new double[numberOfObjectives] ;
+    this.numberOfObjectives = solution.objectives().size() ;
+    objectives = new ArrayList<>() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = solution.getObjective(i) ;
+      this.objectives.add(solution.objectives().get(i)) ;
     }
   }
 
@@ -60,24 +62,32 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(PointSolution point) {
-    this(point.getNumberOfObjectives()) ;
+    this(point.objectives().size()) ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getObjective(i) ;
+      this.objectives.set(i, point.objectives().get(i)) ;
     }
   }
 
+  @Deprecated
   @Override public void setObjective(int index, double value) {
-    objectives[index]=  value ;
+    objectives.set(index, value) ;
   }
 
+  @Deprecated
   @Override public double getObjective(int index) {
-    return objectives[index];
+    return objectives.get(index);
   }
 
+  @Deprecated
   @Override
   public double[] getObjectives() {
-    return objectives ;
+    return objectives.stream().mapToDouble(d->d).toArray() ;
+  }
+  
+  @Override
+  public List<Double> objectives() {
+    return objectives;
   }
 
   @Override
@@ -112,6 +122,7 @@ public class PointSolution implements Solution<Double> {
     return 0;
   }
 
+  @Deprecated
   @Override public int getNumberOfObjectives() {
     return numberOfObjectives;
   }
@@ -148,19 +159,19 @@ public class PointSolution implements Solution<Double> {
 
     if (numberOfObjectives != that.numberOfObjectives)
       return false;
-    if (!Arrays.equals(objectives, that.objectives))
+    if (!Objects.equals(objectives, that.objectives))
       return false;
 
     return true;
   }
 
   @Override public int hashCode() {
-    return Arrays.hashCode(objectives);
+    return Objects.hashCode(objectives);
   }
   
   @Override
 	public String toString() {
-		return Arrays.toString(objectives);
+		return objectives.toString();
 	}
 
 	@Override

@@ -157,18 +157,18 @@ public class ErrorRatioTest {
     List<DoubleSolution> frontApproximation = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
 
-    frontApproximation.get(0).setObjective(0, 1.5);
-    frontApproximation.get(0).setObjective(1, 3.0);
-    frontApproximation.get(1).setObjective(0, 4.0);
-    frontApproximation.get(1).setObjective(1, 2.0);
+    frontApproximation.get(0).objectives().set(0, 1.5);
+    frontApproximation.get(0).objectives().set(1, 3.0);
+    frontApproximation.get(1).objectives().set(0, 4.0);
+    frontApproximation.get(1).objectives().set(1, 2.0);
 
     List<DoubleSolution> paretoFront = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
 
-    paretoFront.get(0).setObjective(0, -1.0);
-    paretoFront.get(0).setObjective(1, -1.0);
-    paretoFront.get(1).setObjective(0, 0.0);
-    paretoFront.get(1).setObjective(1, 0.0);
+    paretoFront.get(0).objectives().set(0, -1.0);
+    paretoFront.get(0).objectives().set(1, -1.0);
+    paretoFront.get(1).objectives().set(0, 0.0);
+    paretoFront.get(1).objectives().set(1, 0.0);
 
     QualityIndicator<List<DoubleSolution>, Double> errorRatio =
         new ErrorRatio<List<DoubleSolution>>(new ArrayFront(paretoFront)) ;
@@ -207,8 +207,8 @@ public class ErrorRatioTest {
     /** Evaluate() method */
     @Override
     public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives().set(0, 0.0);
+      solution.objectives().set(1, 1.0);
     }
   }
 }

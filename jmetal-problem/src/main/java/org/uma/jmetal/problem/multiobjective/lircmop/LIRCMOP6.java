@@ -29,8 +29,8 @@ public class LIRCMOP6 extends LIRCMOP5 {
       x[i] = solution.getVariable(i);
     }
 
-    solution.setObjective(0, x[0] + 10 * g1(x) + 0.7057);
-    solution.setObjective(1, 1 - x[0] * x[0] + 10 * g2(x) + 7057);
+    solution.objectives().set(0, x[0] + 10 * g1(x) + 0.7057);
+    solution.objectives().set(1, 1 - x[0] * x[0] + 10 * g2(x) + 7057);
 
     evaluateConstraints(solution);
   }
@@ -43,8 +43,8 @@ public class LIRCMOP6 extends LIRCMOP5 {
     double[] b_array = new double[] {8.0, 8.0};
     double[] xOffset = new double[] {1.8, 2.8};
     double[] yOffset = new double[] {1.8, 2.8};
-    double f1 = solution.getObjective(0);
-    double f2 = solution.getObjective(1);
+    double f1 = solution.objectives().get(0);
+    double f2 = solution.objectives().get(1);
     double[] constraint = new double[getNumberOfConstraints()];
     for (int i = 0; i < xOffset.length; i++) {
       constraint[i] =

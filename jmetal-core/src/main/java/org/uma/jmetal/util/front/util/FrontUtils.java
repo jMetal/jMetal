@@ -275,7 +275,7 @@ public class FrontUtils {
     for (int i = 0; i < front.getNumberOfPoints(); i++) {
       PointSolution solution = new PointSolution(numberOfObjectives);
       for (int j = 0; j < numberOfObjectives; j++) {
-        solution.setObjective(j, front.getPoint(i).getValue(j));
+        solution.objectives().set(j, front.getPoint(i).getValue(j));
       }
 
       solutionSet.add(solution);

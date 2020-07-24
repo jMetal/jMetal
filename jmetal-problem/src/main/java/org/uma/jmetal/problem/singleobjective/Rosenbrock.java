@@ -51,7 +51,7 @@ public class Rosenbrock extends AbstractDoubleProblem {
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }
 
-    solution.setObjective(0, sum);
+    solution.objectives().set(0, sum);
   }
 }
 

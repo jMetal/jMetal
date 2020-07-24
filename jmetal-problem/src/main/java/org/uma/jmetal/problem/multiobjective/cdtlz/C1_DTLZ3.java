@@ -49,7 +49,7 @@ public class C1_DTLZ3 extends DTLZ3 {
     double sum1 = 0 ;
     double sum2 = 0 ;
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      double v = Math.pow(solution.getObjective(i), 2) ;
+      double v = Math.pow(solution.objectives().get(i), 2) ;
       sum1 += v - 16.0 ;
       sum2 += v - Math.pow(rValue.get(getNumberOfObjectives()), 2.0) ;
     }

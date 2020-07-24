@@ -18,10 +18,10 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
   }
 
   private double computeNorm(S solution) {
-    List<Double> values = new ArrayList<Double>(solution.getNumberOfObjectives());
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++)
-      if (normalizer == null) values.add(solution.getObjective(i));
-      else values.add(this.normalizer.normalize(solution.getObjective(i), i));
+    List<Double> values = new ArrayList<Double>(solution.objectives().size());
+    for (int i = 0; i < solution.objectives().size(); i++)
+      if (normalizer == null) values.add(solution.objectives().get(i));
+      else values.add(this.normalizer.normalize(solution.objectives().get(i), i));
 
     double result = 0.0;
     for (Double d : values) result += Math.pow(d, 2.0);

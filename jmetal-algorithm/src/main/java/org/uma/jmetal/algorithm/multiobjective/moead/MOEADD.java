@@ -101,8 +101,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
         evaluations++;
 
-        idealPoint.update(child.getObjectives());
-        nadirPoint.update(child.getObjectives());
+        idealPoint.update(child.objectivesArray());
+        nadirPoint.update(child.objectivesArray());
         updateArchive(child);
       }
     } while (evaluations < maxEvaluations);
@@ -1276,10 +1276,10 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
     int flag2 = 0;
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      if (a.getObjective(i) < b.getObjective(i)) {
+      if (a.objectives().get(i) < b.objectives().get(i)) {
         flag1 = 1;
       } else {
-        if (a.getObjective(i) > b.getObjective(i)) {
+        if (a.objectives().get(i) > b.objectives().get(i)) {
           flag2 = 1;
         }
       }
@@ -1315,7 +1315,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
     // vecInd has been normalized to the range [0,1]
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecInd[i] = (individual.getObjective(i) - z_[i]) / (nz_[i] - z_[i]);
+      vecInd[i] = (individual.objectives().get(i) - z_[i]) / (nz_[i] - z_[i]);
     }
 
     scale = innerproduct(vecInd, lambda);
@@ -1342,7 +1342,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
     // difference between current point and reference point
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      realA[i] = (indiv.getObjective(i) - z_[i]);
+      realA[i] = (indiv.objectives().get(i) - z_[i]);
     }
 
     // distance along the line segment
@@ -1350,7 +1350,7 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
     // distance to the line segment
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      realB[i] = (indiv.getObjective(i) - (z_[i] + d1 * lambda[i]));
+      realB[i] = (indiv.objectives().get(i) - (z_[i] + d1 * lambda[i]));
     }
 
     double distance = norm_vector(realB);

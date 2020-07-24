@@ -59,12 +59,12 @@ public class CrowdingDistanceTest {
     PointSolution solution2 = new PointSolution(2) ;
     PointSolution solution3 = new PointSolution(2) ;
 
-    solution1.setObjective(0, 0.0);
-    solution1.setObjective(1, 1.0);
-    solution2.setObjective(0, 1.0);
-    solution2.setObjective(1, 0.0);
-    solution3.setObjective(0, 0.5);
-    solution3.setObjective(1, 0.5);
+    solution1.objectives().set(0, 0.0);
+    solution1.objectives().set(1, 1.0);
+    solution2.objectives().set(0, 1.0);
+    solution2.objectives().set(1, 0.0);
+    solution3.objectives().set(0, 0.5);
+    solution3.objectives().set(1, 0.5);
 
     List<PointSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution1);

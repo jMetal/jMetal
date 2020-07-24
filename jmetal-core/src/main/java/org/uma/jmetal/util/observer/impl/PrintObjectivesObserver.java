@@ -41,7 +41,7 @@ public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
     if (solution!=null && evaluations != null) {
       if (evaluations % frequency == 0) {
         String objectiveValues = "" ;
-        for (Double objective: solution.getObjectives()) {
+        for (Double objective: solution.objectivesArray()) {
           objectiveValues += objective + " " ;
         }
         System.out.println("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);

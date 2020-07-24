@@ -30,8 +30,8 @@ public class ConstrEx extends AbstractDoubleProblem {
     f[0] = solution.getVariable(0);
     f[1] = (1.0 + solution.getVariable(1)) / solution.getVariable(0);
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
 
     this.evaluateConstraints(solution);
   }

@@ -144,7 +144,7 @@ public class WFG9 extends WFG {
     float[] sol2 = evaluate(variables);
 
     for (int i = 0; i < sol2.length; i++) {
-      solution.setObjective(i, sol2[i]);
+      solution.objectives().set(i, (double) sol2[i]);
     }
   }
 }

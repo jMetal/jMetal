@@ -42,9 +42,9 @@ public class EqualSolutionsComparator<S extends Solution<?>> implements Comparat
 
     int flag;
     double value1, value2;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      value1 = solution1.getObjective(i);
-      value2 = solution2.getObjective(i);
+    for (int i = 0; i < solution1.objectives().size(); i++) {
+      value1 = solution1.objectives().get(i);
+      value2 = solution2.objectives().get(i);
 
       if (value1 < value2) {
         flag = -1;

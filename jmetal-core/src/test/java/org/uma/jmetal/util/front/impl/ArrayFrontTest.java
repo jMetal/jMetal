@@ -164,14 +164,14 @@ public class ArrayFrontTest {
 
     IntegerSolution solution1 =
         new DefaultIntegerSolution(bounds, numberOfObjectives);
-    solution1.setObjective(0, 2);
-    solution1.setObjective(0, 235);
-    solution1.setObjective(0, -123);
+    solution1.objectives().set(0, 2.0);
+    solution1.objectives().set(0, 235.0);
+    solution1.objectives().set(0, -123.0);
     IntegerSolution solution2 =
         new DefaultIntegerSolution(bounds, numberOfObjectives);
-    solution2.setObjective(0, -13234);
-    solution2.setObjective(0, 523);
-    solution2.setObjective(0, -123423455);
+    solution2.objectives().set(0, -13234.0);
+    solution2.objectives().set(0, 523.0);
+    solution2.objectives().set(0, -123423455.0);
 
     List<IntegerSolution> list = Arrays.asList(solution1, solution2);
 
@@ -181,12 +181,12 @@ public class ArrayFrontTest {
     assertEquals(2, ReflectionTestUtils.getField(front, "numberOfPoints"));
     assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
 
-    assertEquals(list.get(0).getObjective(0), front.getPoint(0).getValue(0), EPSILON);
-    assertEquals(list.get(0).getObjective(1), front.getPoint(0).getValue(1), EPSILON);
-    assertEquals(list.get(0).getObjective(2), front.getPoint(0).getValue(2), EPSILON);
-    assertEquals(list.get(1).getObjective(0), front.getPoint(1).getValue(0), EPSILON);
-    assertEquals(list.get(1).getObjective(1), front.getPoint(1).getValue(1), EPSILON);
-    assertEquals(list.get(1).getObjective(2), front.getPoint(1).getValue(2), EPSILON);
+    assertEquals(list.get(0).objectives().get(0), front.getPoint(0).getValue(0), EPSILON);
+    assertEquals(list.get(0).objectives().get(1), front.getPoint(0).getValue(1), EPSILON);
+    assertEquals(list.get(0).objectives().get(2), front.getPoint(0).getValue(2), EPSILON);
+    assertEquals(list.get(1).objectives().get(0), front.getPoint(1).getValue(0), EPSILON);
+    assertEquals(list.get(1).objectives().get(1), front.getPoint(1).getValue(1), EPSILON);
+    assertEquals(list.get(1).objectives().get(2), front.getPoint(1).getValue(2), EPSILON);
   }
 
   @Test

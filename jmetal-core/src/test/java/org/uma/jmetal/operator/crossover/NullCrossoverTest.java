@@ -86,8 +86,8 @@ public class NullCrossoverTest {
     }
 
     @Override public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, randomGenerator.nextDouble());
-      solution.setObjective(1, randomGenerator.nextDouble());
+      solution.objectives().set(0, randomGenerator.nextDouble());
+      solution.objectives().set(1, randomGenerator.nextDouble());
     }
 
     @Override public Double getLowerBound(int index) {

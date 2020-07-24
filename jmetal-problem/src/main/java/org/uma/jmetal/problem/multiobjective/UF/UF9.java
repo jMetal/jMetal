@@ -79,8 +79,8 @@ public class UF9 extends AbstractDoubleProblem {
 		if (yj < 0.0) 
       yj = 0.0;
         
-    solution.setObjective(0, 0.5*(yj + 2*x[0])*x[1]		+ 2.0*sum1 / (double)count1);
-    solution.setObjective(1, 0.5*(yj - 2*x[0] + 2.0)*x[1] + 2.0*sum2 / (double)count2);
-    solution.setObjective(2, 1.0 - x[1]                   + 2.0*sum3 / (double)count3) ;
+    solution.objectives().set(0, 0.5*(yj + 2*x[0])*x[1]		+ 2.0*sum1 / (double)count1);
+    solution.objectives().set(1, 0.5*(yj - 2*x[0] + 2.0)*x[1] + 2.0*sum2 / (double)count2);
+    solution.objectives().set(2, 1.0 - x[1]                   + 2.0*sum3 / (double)count3) ;
   }
 }

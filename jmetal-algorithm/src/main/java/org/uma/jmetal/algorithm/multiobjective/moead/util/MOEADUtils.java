@@ -116,7 +116,7 @@ public class MOEADUtils {
     }
 
     if (solutionList.size() > 0) {
-      int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+      int numberOfObjectives = solutionList.get(0).objectives().size();
       if (numberOfObjectives == 2) {
         twoObjectivesCase(solutionList, resultSolutionList, newSolutionListSize);
       } else {
@@ -139,7 +139,7 @@ public class MOEADUtils {
     }
 
     IdealPoint idealPoint = new IdealPoint(2);
-    solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
+    solutionList.stream().forEach(solution -> idealPoint.update(solution.objectivesArray()));
 
     // Select the best solution for each mombi2-weights.weight vector
     for (int i = 0; i < newSolutionListSize; i++) {
@@ -236,7 +236,7 @@ public class MOEADUtils {
     double maxFun = -1.0e+30;
 
     for (int n = 0; n < idealPoint.getDimension(); n++) {
-      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getValue(n));
+      double diff = Math.abs(currentBest.objectives().get(n) - idealPoint.getValue(n));
 
       double functionValue;
       if (lambda[n] == 0) {

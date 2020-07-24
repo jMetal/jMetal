@@ -40,8 +40,8 @@ public class FDA2 extends FDA implements Serializable {
     double g = this.evalG(solution, 1, (solution.getNumberOfVariables() / 2) + 1);
     double h = this.evalH(f[0], g);
     f[1] = g * h; // 1-Math.sqrt(f[0]);
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
   }
 
   /**

@@ -67,8 +67,8 @@ public class SolutionUtils {
     double distance = 0.0;
 
     // euclidean distance
-    for (int nObj = 0; nObj < firstSolution.getNumberOfObjectives(); nObj++) {
-      diff = firstSolution.getObjective(nObj) - secondSolution.getObjective(nObj);
+    for (int nObj = 0; nObj < firstSolution.objectives().size(); nObj++) {
+      diff = firstSolution.objectives().get(nObj) - secondSolution.objectives().get(nObj);
       distance += Math.pow(diff, 2.0);
     }
 
@@ -81,10 +81,10 @@ public class SolutionUtils {
     double diff;
     double distance = 0.0;
     // euclidean distance
-    for (int nObj = 0; nObj < firstSolution.getNumberOfObjectives(); nObj++) {
+    for (int nObj = 0; nObj < firstSolution.objectives().size(); nObj++) {
       diff =
-          (firstSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]))
-              - (secondSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]));
+          (firstSolution.objectives().get(nObj) / (maxs[nObj] - mins[nObj]))
+              - (secondSolution.objectives().get(nObj) / (maxs[nObj] - mins[nObj]));
       distance += Math.pow(diff, 2.0);
     }
 
@@ -169,16 +169,16 @@ public class SolutionUtils {
       throw new JMetalException("The minValues and maxValues should have the same length");
     }
 
-    if (solution.getNumberOfObjectives() != minValues.length) {
+    if (solution.objectives().size() != minValues.length) {
       throw new JMetalException(
           "The number of objectives should be the same to min and max length");
     }
 
     S copy = (S) solution.copy();
 
-    for (int i = 0; i < copy.getNumberOfObjectives(); i++) {
-      copy.setObjective(
-          i, NormalizeUtils.normalize(solution.getObjective(i), minValues[i], maxValues[i]));
+    for (int i = 0; i < copy.objectives().size(); i++) {
+      copy.objectives().set(
+          i, NormalizeUtils.normalize(solution.objectives().get(i), minValues[i], maxValues[i]));
     }
 
     return copy;

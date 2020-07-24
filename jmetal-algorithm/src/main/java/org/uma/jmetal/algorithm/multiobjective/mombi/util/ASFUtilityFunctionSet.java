@@ -50,13 +50,13 @@ public class ASFUtilityFunctionSet<S extends Solution<?>> extends AbstractUtilit
 
 		double result = Double.NEGATIVE_INFINITY;
 		List<Double> weightVector 	 =  this.getWeightVector(vector);
-		List<Double> objectiveValues =  new ArrayList<>(solution.getNumberOfObjectives());
-		for (int i = 0; i < solution.getNumberOfObjectives();i++) 
+		List<Double> objectiveValues =  new ArrayList<>(solution.objectives().size());
+		for (int i = 0; i < solution.objectives().size();i++) 
 			if (normalizer==null) {
-        objectiveValues.add(solution.getObjective(i));
+        objectiveValues.add(solution.objectives().get(i));
       }
 			else {
-        objectiveValues.add(this.normalizer.normalize(solution.getObjective(i), i));
+        objectiveValues.add(this.normalizer.normalize(solution.objectives().get(i), i));
       }
 		
 		for (int i = 0; i < weightVector.size(); i++) {

@@ -24,10 +24,10 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
 
   /** Copy Constructor */
   public CharSequenceSolution(CharSequenceSolution solution) {
-    super(solution.getLength(), solution.getNumberOfObjectives());
+    super(solution.getLength(), solution.objectives().size());
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < objectives().size(); i++) {
+      objectives().set(i, solution.objectives().get(i));
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {

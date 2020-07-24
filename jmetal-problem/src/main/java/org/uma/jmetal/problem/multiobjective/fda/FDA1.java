@@ -48,8 +48,8 @@ public class FDA1 extends FDA {
     double h = this.evalH(f[0], g);
     f[1] = h * g;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
   }
 
   /**

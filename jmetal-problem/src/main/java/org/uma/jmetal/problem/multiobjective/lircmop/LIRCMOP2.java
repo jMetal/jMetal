@@ -28,8 +28,8 @@ public class LIRCMOP2 extends LIRCMOP1 {
     fx[0] = x[0] + g1(x);
     fx[1] = 1 - Math.sqrt(x[0]) + g2(x);
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives().set(0, fx[0]);
+    solution.objectives().set(1, fx[1]);
 
     evaluateConstraints(solution);
   }

@@ -118,7 +118,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
     Double[] vars = solution.getVariables().toArray(new Double[getNumberOfVariables()]);
 
     IntStream.range(0, getNumberOfObjectives())
-        .forEach(i -> solution.setObjective(i, objectiveFunctions.get(i).apply(vars)));
+        .forEach(i -> solution.objectives().set(i, objectiveFunctions.get(i).apply(vars)));
 
     IntStream.range(0, getNumberOfConstraints())
         .forEach(i -> solution.setConstraint(i, constraints.get(i).apply(vars)));

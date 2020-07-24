@@ -359,8 +359,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < population.size();i++){
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				if(population.get(i).getObjective(j) > maxFunValue[j])
-					maxFunValue[j] = population.get(i).getObjective(j);
+				if(population.get(i).objectives().get(j) > maxFunValue[j])
+					maxFunValue[j] = population.get(i).objectives().get(j);
 			}
 		}
 		
@@ -377,7 +377,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < populationSize;i++){
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				double nornalObj = population.get(i).getObjective(j) - idealPoint[j];
+				double nornalObj = population.get(i).objectives().get(j) - idealPoint[j];
 				pos[j] = (int) Math.ceil(nornalObj / childDelta[j] - childSigma);
 			}
 			grid = 0;
@@ -404,8 +404,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < population.size();i++){
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				if(population.get(i).getObjective(j) > maxFunValue[j])
-					maxFunValue[j] = population.get(i).getObjective(j);
+				if(population.get(i).objectives().get(j) > maxFunValue[j])
+					maxFunValue[j] = population.get(i).objectives().get(j);
 			}
 		}
 		
@@ -422,7 +422,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < populationSize;i++){
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				double nornalObj = population.get(i).getObjective(j) - idealPoint[j];
+				double nornalObj = population.get(i).objectives().get(j) - idealPoint[j];
 				pos[j] = (int) Math.ceil(nornalObj / childDelta[j] - childSigma);
 			}
 			grid = 0;
@@ -475,8 +475,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 			for(int j = 0;j < border.get(i).size();j++)
 				for(int k = 0;k < problem.getNumberOfObjectives();k++)
 					if(i != k){
-						double funValue = border.get(i).get(j).getObjective(k);
-						border.get(i).get(j).setObjective(k, funValue * borderCoef);
+						double funValue = border.get(i).get(j).objectives().get(k);
+						border.get(i).get(j).objectives().set(k, funValue * borderCoef);
 					}
 		
 	}
@@ -492,15 +492,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < population.size();i++)
 			for(int j = 0;j < problem.getNumberOfObjectives();j++)
-				if(population.get(i).getObjective(j) < minFunValue[j])
-					minFunValue[j] = population.get(i).getObjective(j);
+				if(population.get(i).objectives().get(j) < minFunValue[j])
+					minFunValue[j] = population.get(i).objectives().get(j);
 			
 		int sum;
 		int od;
 		for(int i = 0;i < population.size();i++){
 			sum = 0;
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				if(population.get(i).getObjective(j) < minFunValue[j] + nadirPoint[j] / 100)
+				if(population.get(i).objectives().get(j) < minFunValue[j] + nadirPoint[j] / 100)
 					flag[j] = 1;
 				else
 					flag[j] = 0;
@@ -534,11 +534,11 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 					sum2 = 0;
 					for(int j = 0;j < problem.getNumberOfObjectives();j++){
 						if(i != j){
-							if(tempBorder.get(i).get(p).getObjective(j) 
-									<= tempBorder.get(i).get(q).getObjective(j))
+							if(tempBorder.get(i).get(p).objectives().get(j) 
+									<= tempBorder.get(i).get(q).objectives().get(j))
 								sum1++;
-							if(tempBorder.get(i).get(p).getObjective(j) 
-									< tempBorder.get(i).get(q).getObjective(j))
+							if(tempBorder.get(i).get(p).objectives().get(j) 
+									< tempBorder.get(i).get(q).objectives().get(j))
 								sum2++;
 						}
 					}
@@ -580,8 +580,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		for(int i = 0;i < nondominatedPopulation.size();i++){
 			S individual = nondominatedPopulation.get(i);
 			for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-				if (individual.getObjective(j) > nadirPoint[j]) {
-					nadirPoint[j] = individual.getObjective(j);
+				if (individual.objectives().get(j) > nadirPoint[j]) {
+					nadirPoint[j] = individual.objectives().get(j);
 				}
 			}
 		}
@@ -589,8 +589,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
 	protected void updateIdealPoint(S individual) {
 		for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-			if (individual.getObjective(n) < idealPoint[n]) {
-				idealPoint[n] = individual.getObjective(n);
+			if (individual.objectives().get(n) < idealPoint[n]) {
+				idealPoint[n] = individual.objectives().get(n);
 			}
 		}
 	}
@@ -602,7 +602,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		}
 		for (int i = 0; i < population.size(); i++){
 			for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-				int g = (int) Math.ceil((population.get(i).getObjective(j) - idealPoint[j]) / d_[j]);
+				int g = (int) Math.ceil((population.get(i).objectives().get(j) - idealPoint[j]) / d_[j]);
 				if(g < 0)
 					g = 0;
 				if(g >= k_)
@@ -616,7 +616,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		initialGridDetal();
 		for (int i = 0; i < population.size(); i++){
 			for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
-				int g = getGridPos(j,population.get(i).getObjective(j));
+				int g = getGridPos(j,population.get(i).objectives().get(j));
 				setG(population.get(i),j,g);
 			}
 		}
@@ -671,7 +671,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < problem.getNumberOfObjectives();i++){
 			for(int j = 0;j < population.size();j++){
-				if(population.get(j).getObjective(i) == idealPoint[i]){
+				if(population.get(j).objectives().get(i) == idealPoint[i]){
 					if(!specialSolution.containsKey(j)){
 						specialSolution.put(j, population.get(j));
 					}
@@ -681,7 +681,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		
 		for(int i = 0;i < problem.getNumberOfObjectives();i++){
 			for(int j = 0;j < population.size();j++){
-				if(population.get(j).getObjective(i) == nadirPoint[i]){
+				if(population.get(j).objectives().get(i) == nadirPoint[i]){
 					if(!specialSolution.containsKey(j)){
 						specialSolution.put(j, population.get(j));
 					}
@@ -710,7 +710,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		for(int i = length - 1;i >= 0;i--){
 			S individual = population.get(i);
 			for(int j = 0;j < problem.getNumberOfObjectives();j++){
-				if(individual.getObjective(j) > nadirPoint[j]){
+				if(individual.objectives().get(j) > nadirPoint[j]){
 					badPopulation.add(individual);
 					population.remove(i);
 					break;
@@ -723,9 +723,9 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 		badSolutionNum = 0;
 		for(int i = 0;i < population.size();i++){
 			S individual = population.get(i);
-			if(individual.getObjective(0) > nadirPoint[0] ||
-				individual.getObjective(1) > nadirPoint[1] ||
-				individual.getObjective(2) > nadirPoint[2] ||
+			if(individual.objectives().get(0) > nadirPoint[0] ||
+				individual.objectives().get(1) > nadirPoint[1] ||
+				individual.objectives().get(2) > nadirPoint[2] ||
 				!isInner(individual)){
 				 	badSolution[badSolutionNum] = i;
 					badSolutionNum++;
@@ -766,9 +766,9 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 			sum2 = 0;
 			for(int k = 0;k < problem.getNumberOfObjectives();k++)
 				if(k != i){
-					if(border.get(i).get(j).getObjective(k) <= individual.getObjective(k))
+					if(border.get(i).get(j).objectives().get(k) <= individual.objectives().get(k))
 						sum1++;
-					if(border.get(i).get(j).getObjective(k) < individual.getObjective(k))
+					if(border.get(i).get(j).objectives().get(k) < individual.objectives().get(k))
 						sum2++;
 				}
 			if(sum1 == m && sum2 > 0){
@@ -839,8 +839,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 			
 	        Collections.sort(subproblem.get(i),new Comparator<S>(){
 				public int compare(S o1,S o2){
-					double x = o1.getObjective(objD);
-					double y = o2.getObjective(objD);
+					double x = o1.objectives().get(objD);
+					double y = o2.objectives().get(objD);
 					return (x == y)?0:(y < x)?1:(-1);
 				}
 	        });
@@ -856,8 +856,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 			for(int j = 0;j < subproblem.get(i).size();j++){
 				int order = getOrder(subproblem.get(i).get(j));
 				
-				double objValue = subproblem.get(i).get(j).getObjective(objD);
-				double firstValue = subproblem.get(i).get(0).getObjective(objD);
+				double objValue = subproblem.get(i).get(j).objectives().get(objD);
+				double firstValue = subproblem.get(i).get(0).objectives().get(objD);
 				
 				int gridRank = (int) Math.ceil((objValue - firstValue) / d_[objD]);
 				int objRank = Math.max(gridRank + 1, j + 1);

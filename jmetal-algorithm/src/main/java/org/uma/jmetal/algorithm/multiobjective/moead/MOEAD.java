@@ -67,7 +67,7 @@ public class MOEAD extends AbstractMOEAD<DoubleSolution> {
 
         evaluations++;
 
-        idealPoint.update(child.getObjectives());
+        idealPoint.update(child.objectivesArray());
         updateNeighborhood(child, subProblemId, neighborType);
       }
     } while (evaluations < maxEvaluations);

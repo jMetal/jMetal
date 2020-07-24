@@ -52,8 +52,8 @@ public class MOP3 extends AbstractDoubleProblem {
     f[0] = (1 + g) * Math.cos(solution.getVariable(0) * Math.PI * 0.5);
     f[1] = (1 + g) * Math.sin(solution.getVariable(0) * Math.PI * 0.5);
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives().set(0, f[0]);
+    solution.objectives().set(1, f[1]);
   }
 
   /**

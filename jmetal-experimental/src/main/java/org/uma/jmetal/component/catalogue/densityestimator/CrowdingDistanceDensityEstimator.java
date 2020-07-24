@@ -55,7 +55,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       front.get(i).setAttribute(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
+    int numberOfObjectives = solutionList.get(0).objectives().size() ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
@@ -66,8 +66,8 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       //   we also don't update the crowding distance, as they all will "go to eleven",
       //   which makes no sense as this objective just appears to be non-discriminating.
 
-      double minObjective = front.get(0).getObjective(i);
-      double maxObjective = front.get(front.size() - 1).getObjective(i);
+      double minObjective = front.get(0).objectives().get(i);
+      double maxObjective = front.get(front.size() - 1).objectives().get(i);
       if (minObjective == maxObjective) {
         continue; // otherwise all crowding distances will be NaN = 0.0 / 0.0 except for two
       }
@@ -78,7 +78,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
 
       // Increase the crowding distances for all the intermediate points
       for (int j = 1; j < size - 1; j++) {
-        double distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
+        double distance = front.get(j + 1).objectives().get(i) - front.get(j - 1).objectives().get(i);
         distance = distance / (maxObjective - minObjective);
         distance += (double) front.get(j).getAttribute(attributeId);
         front.get(j).setAttribute(attributeId, distance);

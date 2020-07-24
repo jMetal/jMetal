@@ -65,7 +65,7 @@ public class OneMax extends AbstractBinaryProblem {
     }
 
     // OneMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0 * counterOnes);
+    solution.objectives().set(0, -1.0 * counterOnes);
   }
 }
 

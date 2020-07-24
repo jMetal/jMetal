@@ -38,9 +38,9 @@ public class C3_DTLZ1 extends DTLZ1 {
       constraint[j] = 0.0 ;
       for (int i = 0; i < getNumberOfObjectives(); i++) {
         if (i != j) {
-          sum += solution.getObjective(j) ;
+          sum += solution.objectives().get(j) ;
         }
-        constraint[j]+= sum + solution.getObjective(i)/0.5 - 1.0 ;
+        constraint[j]+= sum + solution.objectives().get(i)/0.5 - 1.0 ;
       }
     }
 

@@ -57,7 +57,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       solutionList.get(0).setAttribute(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().size();
 
     if (size == numberOfObjectives) {
       for (S solution : solutionList) {
@@ -68,7 +68,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     }
 
     for (S solution : solutionList) {
-      referencePoint.update(solution.getObjectives());
+      referencePoint.update(solution.objectivesArray());
     }
 
     double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
@@ -115,7 +115,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
           .setAttribute("DIFF", Math.abs(currentMaximumDistance - secondCurrentMaximumDistance));
     }
 
-    for (int i = 0; i < solutionList.get(0).getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solutionList.get(0).objectives().size(); i++) {
       Collections.sort(solutionList, new ObjectiveComparator<S>(i));
       solutionList.get(solutionList.size() - 1).setAttribute(attributeId, 0.0);
     }
