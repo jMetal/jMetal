@@ -1,7 +1,13 @@
 package org.uma.jmetal.solution.doublesolution;
 
+import static java.util.stream.Collectors.*;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.metadata.Metadata;
 
 /**
  * Interface representing a double solutions
@@ -33,5 +39,16 @@ public interface DoubleSolution extends Solution<Double> {
     Double lowerBound = solution.getLowerBound(index);
     Double upperBound = solution.getUpperBound(index);
     return Bounds.create(lowerBound, upperBound);
+  }
+  
+  /**
+   * {@link Metadata} implementation for {@link #getBounds(int)}.
+   * 
+   * @return the {@link Metadata}
+   */
+  public static Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata() {
+    return solution -> IntStream.range(0, solution.getNumberOfVariables())//
+        .mapToObj(solution::getBounds)//
+        .collect(toList());
   }
 }
