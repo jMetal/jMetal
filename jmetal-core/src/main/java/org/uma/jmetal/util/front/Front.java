@@ -10,6 +10,7 @@ import java.util.Comparator;
  *
  * @author Antonio J. Nebro
  */
+@Deprecated
 public interface Front extends Serializable {
   int getNumberOfPoints();
 

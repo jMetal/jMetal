@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class FrontNormalizer {
   private double[] maximumValues;
   private double[] minimumValues;
