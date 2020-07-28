@@ -180,9 +180,9 @@ To configure NSGA-II, we have developed a package ``org.uma.jmetal.auto.componen
 
 The ``AutoNSGAII`` class
 ------------------------
-An example of configuring and running NSGA-II with these ``EvolutionaryAlgorithm`` class is provided in ``org.uma.jmetal.auto.algorithm.nsgaii.NSGAII``, where that class is instantiated with the components leading to an standard NSGA-II. However, our purpose is to have the ability of automatically configure NSGA-II, so we need something more flexible.
+An example of configuring and running NSGA-II with these ``EvolutionaryAlgorithm`` class is provided in ``NSGAII``, where that class is instantiated with the components leading to an standard NSGA-II. However, our purpose is to have the ability of automatically configure NSGA-II, so we need something more flexible.
 
-The approach we have adopted is to get a sequence of pairs <parameter, value> as input, which is parsed to properly get a version of NSGA-II. This task is performed by class ``org.uma.jmetal.auto.algorithm.nsgaii.AutoNSGAII``. This way, to get an NSGA-II algorithm with standard settings the following string must be passed to class ``AutoNSGAII`` from the command line:
+The approach we have adopted is to get a sequence of pairs <parameter, value> as input, which is parsed to properly get a version of NSGA-II. This task is performed by class ``AutoNSGAII``. This way, to get an NSGA-II algorithm with standard settings the following string must be passed to class ``AutoNSGAII`` from the command line:
 
 .. code-block:: text
 
