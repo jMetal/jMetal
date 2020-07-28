@@ -1,5 +1,12 @@
 package org.uma.jmetal.util;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class VectorUtils {
   /**
    * Method that apply a dominance test between two vectors. It is assumed that the vectors have
@@ -28,5 +35,42 @@ public class VectorUtils {
     }
     result = Integer.compare(bestIsTwo, bestIsOne);
     return result;
+  }
+
+  /**
+   * @param filePath the file need to read
+   * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
+   * @throws JMetalException if error while read file
+   */
+  public static double[][] readVectors(String filePath) {
+    double[][] referenceVectors;
+    String path = filePath ;
+
+    URL url = VectorUtils.class.getClassLoader().getResource(filePath);
+    if (url != null) {
+      try {
+        path = Paths.get(url.toURI()).toString();
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+    }
+
+    List<String> vectorStrList = null;
+    try {
+      vectorStrList = Files.readAllLines(Paths.get(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    referenceVectors = new double[vectorStrList.size()][];
+    for (int i = 0; i < vectorStrList.size(); i++) {
+      String vectorStr = vectorStrList.get(i);
+      String[] objectArray = vectorStr.split("\\s+");
+      referenceVectors[i] = new double[objectArray.length];
+      for (int j = 0; j < objectArray.length; j++) {
+        referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
+      }
+    }
+
+    return referenceVectors;
   }
 }

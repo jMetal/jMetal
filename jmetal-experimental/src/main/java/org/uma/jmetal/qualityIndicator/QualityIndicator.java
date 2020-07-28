@@ -56,5 +56,5 @@ public abstract class QualityIndicator {
   }
 
   public abstract String getName() ;
-  public abstract String getShortName() ;
+  public abstract String getDescription() ;
 }
