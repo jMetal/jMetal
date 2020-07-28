@@ -8,6 +8,7 @@ import java.io.Serializable;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public interface SolutionAttribute <S, V> extends Serializable {
   void setAttribute(S solution, V value) ;
   V getAttribute(S solution) ;
