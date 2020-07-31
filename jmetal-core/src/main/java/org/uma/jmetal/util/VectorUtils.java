@@ -1,5 +1,16 @@
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.distance.Distance;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class VectorUtils {
   /**
    * Method that apply a dominance test between two vectors. It is assumed that the vectors have
@@ -28,5 +39,135 @@ public class VectorUtils {
     }
     result = Integer.compare(bestIsTwo, bestIsOne);
     return result;
+  }
+
+  /**
+   * @param filePath the file need to read
+   * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
+   * @throws JMetalException if error while read file
+   */
+  public static double[][] readVectors(String filePath) {
+    double[][] referenceVectors;
+    String path = filePath;
+
+    URL url = VectorUtils.class.getClassLoader().getResource(filePath);
+    if (url != null) {
+      try {
+        path = Paths.get(url.toURI()).toString();
+      } catch (URISyntaxException e) {
+        e.printStackTrace();
+      }
+    }
+
+    List<String> vectorStrList = null;
+    try {
+      vectorStrList = Files.readAllLines(Paths.get(path));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    referenceVectors = new double[vectorStrList.size()][];
+    for (int i = 0; i < vectorStrList.size(); i++) {
+      String vectorStr = vectorStrList.get(i);
+      String[] objectArray = vectorStr.split("\\s+");
+      referenceVectors[i] = new double[objectArray.length];
+      for (int j = 0; j < objectArray.length; j++) {
+        referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
+      }
+    }
+
+    return referenceVectors;
+  }
+
+  /**
+   * Checks whether a vector is dominated by a front
+   *
+   * @param vector
+   * @param front
+   * @return
+   */
+  public static boolean isVectorDominatedByAFront(double[] vector, double[][] front) {
+    boolean result = false;
+
+    int i = 0;
+    while (!result && (i < front.length)) {
+      if (VectorUtils.dominanceTest(vector, front[i]) == 1) {
+        result = true;
+      }
+      i++;
+    }
+
+    return result;
+  }
+
+  public static double distanceToClosestVector(double[] vector, double[][] front) {
+    return distanceToClosestVector(vector, front, new EuclideanDistanceBetweenVectors());
+  }
+
+  public static double distanceToClosestVector(
+      double[] vector, double[][] front, Distance<double[], double[]> distance) {
+    Check.isNotNull(vector);
+    Check.isNotNull(front);
+    Check.that(front.length > 0, "The front is empty");
+
+    double minDistance = distance.compute(vector, front[0]);
+
+    for (int i = 1; i < front.length; i++) {
+      double aux = distance.compute(vector, front[i]);
+      if (aux < minDistance) {
+        minDistance = aux;
+      }
+    }
+
+    return minDistance;
+  }
+
+  public static double distanceToNearestVector(double[] vector, double[][] front) {
+    return distanceToNearestVector(vector, front, new EuclideanDistanceBetweenVectors());
+  }
+
+  public static double distanceToNearestVector(
+      double[] vector, double[][] front, Distance<double[], double[]> distance) {
+    Check.isNotNull(vector);
+    Check.isNotNull(front);
+    Check.that(front.length > 0, "The front is empty");
+
+    double minDistance = Double.MAX_VALUE;
+
+    for (int i = 0; i < front.length; i++) {
+      double aux = distance.compute(vector, front[i]);
+      if ((aux < minDistance) && (aux > 0.0)) {
+        minDistance = aux;
+      }
+    }
+
+    return minDistance;
+  }
+
+  /**
+   * This method receives a normalized front and return the inverted one.
+   * This method is for minimization problems
+   *
+   * @param front The front
+   * @return The inverted front
+   */
+  public static double[][] getInvertedFront(double[][] front) {
+    Check.isNotNull(front);
+    Check.that(front.length > 0, "The front is empty");
+
+    int numberOfDimensions = front[0].length;
+    double[][] invertedFront = new double[front.length][numberOfDimensions] ;
+
+    for (int i = 0; i < front.length; i++) {
+      for (int j = 0; j < numberOfDimensions; j++) {
+        if (front[i][j] <= 1.0 && front[i][j] >= 0.0) {
+          invertedFront[i][j] =  1.0 - front[i][j];
+        } else if (front[i][j] > 1.0) {
+          invertedFront[i][j] = 0.0 ;
+        } else if (front[i][j] < 0.0) {
+          invertedFront[i][j] = 1.0 ;
+        }
+      }
+    }
+    return invertedFront;
   }
 }

@@ -18,15 +18,15 @@ public class HypervolumeTest {
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
-    Front front = new ArrayFront(0, 0) ;
+    Front front = new ArrayFront(0, 0);
 
-    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(front) ;
+    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(front);
     assertThrows(NullParameterException.class, () -> hypervolume.evaluate(null));
   }
 
   @Test
   public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
-    Front front = null ;
+    Front front = null;
 
     assertThrows(NullParameterException.class, () -> new PISAHypervolume<DoubleSolution>(front));
   }

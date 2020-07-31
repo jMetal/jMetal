@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class FrontUtils {
   /**
    * Gets the maximum values for each objectives in a front
