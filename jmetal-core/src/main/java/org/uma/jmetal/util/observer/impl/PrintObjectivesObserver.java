@@ -48,7 +48,7 @@ public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+
-          ": The algorithm has not registered yet any info related to the EVALUATIONS and POPULATIONS keys");
+          ": The algorithm has not registered yet any info related to the EVALUATIONS and BEST_SOLUTION keys");
     }
   }
 

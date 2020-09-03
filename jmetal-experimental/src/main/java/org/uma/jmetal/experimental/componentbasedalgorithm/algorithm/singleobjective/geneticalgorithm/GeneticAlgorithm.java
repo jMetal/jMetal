@@ -88,4 +88,13 @@ public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolu
 
     this.archive = null;
   }
+
+  @Override
+  protected void updateProgress() {
+    S bestFitnessSolution = population.stream().min(new ObjectiveComparator<>(0)).get() ;
+    attributes.put("BEST_SOLUTION", bestFitnessSolution);
+
+    super.updateProgress();
+  }
+
 }
