@@ -26,7 +26,6 @@ public abstract class AbstractAlgorithmRunner {
    * @param population
    */
   public static void printFinalSolutionSet(List<? extends Solution<?>> population) {
-
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))

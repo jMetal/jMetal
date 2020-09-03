@@ -1,6 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
-import org.uma.jmetal.experimental.component.algorithm.ComponentBasedEvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;

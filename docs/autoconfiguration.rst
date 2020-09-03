@@ -207,7 +207,7 @@ The approach we have adopted is to get a sequence of pairs <parameter, value> as
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
 
-We include a class named ``org.uma.jmetal.auto.algorithm.nsgaii.NSGAWithParameters" showing how to use this parameter string with ``AutoNSGAII``.
+We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.NSGAWithParameters" showing how to use this parameter string with ``AutoNSGAII``.
 
 Stuff required
 --------------
@@ -215,16 +215,16 @@ Stuff required
 To replicate the results presented in https://doi.org/10.1145/3319619.3326832 we need:
 
 * R
-* The jar file `jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar`.
-* The contents of folder ``jmetal-auto/src/main/resources/irace``.
+* The jar file `jmetal-experimental-5.11-SNAPSHOT-jar-with-dependencies.jar`.
+* The contents of folder ``jmetal-experimental/src/main/resources/irace``.
 
-To generate the `jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar` file, just type the following command at the root of the jMetal project:
+To generate the `jmetal-experimetal-5.11-SNAPSHOT-jar-with-dependencies.jar` file, just type the following command at the root of the jMetal project:
 
 .. code-block:: bash
 
   mvn clean package -DskipTests=tournament
 
-If everything goes fine, the file will be generated in the `jmetal-auto/target` folder.
+If everything goes fine, the file will be generated in the `jmetal-experimental/target` folder.
 
 The contents of irace folder are the following:
 
@@ -253,7 +253,7 @@ We must note that **currently we can only auto-configure NSGA-II with benchmark 
 Running everything
 ------------------
 
-Once you have all the needed resources, just create a folder in the machine where you are going to run the experiment and copy  the contents of the `irace` folder and the `jmetal-auto-6.0-SNAPSHOT-jar-with-dependencies.jar` file into it. Take into account that irace will generate thousands of configurations, so using a multi-core machine is advisable (we use a Linux virtual machine with 24 cores). We have tested the software in Linux, macOS, and Windows 10 (in the Ubuntu Bash console).
+Once you have all the needed resources, just create a folder in the machine where you are going to run the experiment and copy  the contents of the `irace` folder and the `jmetal-experimental-5.11-SNAPSHOT-jar-with-dependencies.jar` file into it. Take into account that irace will generate thousands of configurations, so using a multi-core machine is advisable (we use a Linux virtual machine with 24 cores). We have tested the software in Linux, macOS, and Windows 10 (in the Ubuntu Bash console).
 
 To run irace simply run the following command:
 
