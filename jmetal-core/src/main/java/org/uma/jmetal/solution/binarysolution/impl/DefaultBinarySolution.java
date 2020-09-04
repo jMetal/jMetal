@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Defines an implementation of a binary solution
+ * This defines an implementation of a binary solution. These solutions are composed of a number
+ * of variables containing {@link BinarySet} objects.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -50,7 +51,7 @@ public class DefaultBinarySolution
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }
 
-  private static BinarySet createNewBitSet(int numberOfBits, JMetalRandom randomGenerator) {
+  private static BinarySet createNewBinarySet(int numberOfBits, JMetalRandom randomGenerator) {
     BinarySet bitSet = new BinarySet(numberOfBits) ;
 
     for (int i = 0; i < numberOfBits; i++) {
@@ -86,7 +87,7 @@ public class DefaultBinarySolution
   
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariable(i, createNewBitSet(bitsPerVariable.get(i), randomGenerator));
+      setVariable(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
   }
 
