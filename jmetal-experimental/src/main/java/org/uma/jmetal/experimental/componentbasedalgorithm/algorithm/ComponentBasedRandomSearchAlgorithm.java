@@ -1,6 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
@@ -24,6 +26,8 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
   private Problem<S> problem;
 
   protected Termination termination;
+  protected SolutionsCreation<S> solutionsCreation ;
+  protected Evaluation<S> evaluation ;
 
   protected Map<String, Object> attributes;
 
@@ -43,10 +47,11 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
    * @param termination
    */
   public ComponentBasedRandomSearchAlgorithm(
-      String name, Problem<S> problem, Termination termination) {
+      String name, Problem<S> problem, SolutionsCreation<S> solutionsCreation, Evaluation<S> evaluation, Termination termination) {
     this.name = name;
 
     this.termination = termination;
+    this.solutionsCreation = solutionsCreation ;
     this.problem = problem;
 
     this.observable = new DefaultObservable<>(name);
