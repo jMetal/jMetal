@@ -12,6 +12,7 @@ import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,12 +23,10 @@ import java.util.Map;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<S> {
-  private Problem<S> problem;
-
+public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<List<S>> {
   protected Termination termination;
-  protected SolutionsCreation<S> solutionsCreation ;
-  protected Evaluation<S> evaluation ;
+  protected SolutionsCreation<S> solutionsCreation;
+  protected Evaluation<S> evaluation;
 
   protected Map<String, Object> attributes;
 
@@ -40,6 +39,8 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
   protected String name;
   protected NonDominatedSolutionListArchive<S> archive;
 
+  private int evaluatedSolutions ;
+
   /**
    * Constructor
    *
@@ -47,48 +48,70 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
    * @param termination
    */
   public ComponentBasedRandomSearchAlgorithm(
-      String name, Problem<S> problem, SolutionsCreation<S> solutionsCreation, Evaluation<S> evaluation, Termination termination) {
+      String name,
+      SolutionsCreation<S> solutionsCreation,
+      Evaluation<S> evaluation,
+      Termination termination) {
     this.name = name;
 
     this.termination = termination;
-    this.solutionsCreation = solutionsCreation ;
-    this.problem = problem;
+    this.solutionsCreation = solutionsCreation;
+    this.evaluation = evaluation ;
 
     this.observable = new DefaultObservable<>(name);
     this.attributes = new HashMap<>();
 
     this.archive = new NonDominatedSolutionListArchive<>();
-
-    this.evaluations = 0;
   }
 
   @Override
   public void run() {
     initTime = System.currentTimeMillis();
+    initProgress() ;
     while (!termination.isMet(attributes)) {
-      S newSolution = problem.createSolution();
-      problem.evaluate(newSolution);
-      archive.add(newSolution);
-
+      List<S> solutions = solutionsCreation.create();
+      evaluation.evaluate(solutions);
+      evaluatedSolutions = solutions.size() ;
+      updateBestFoundSolutions(solutions) ;
       updateProgress();
     }
 
     totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
-  protected void updateProgress() {
-    evaluations += 1;
+  protected void initProgress() {
+    evaluations = 0 ;
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("BEST_SOLUTIONS", archive.getSolutionList());
 
     observable.setChanged();
     observable.notifyObservers(attributes);
   }
 
+  protected void updateProgress() {
+    evaluations += evaluatedSolutions;
+
+    attributes.put("EVALUATIONS", evaluations);
+    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+    attributes.put("BEST_SOLUTIONS", archive.getSolutionList());
+
+    observable.setChanged();
+    observable.notifyObservers(attributes);
+  }
+
+  protected void updateBestFoundSolutions(List<S> solutions) {
+    solutions.forEach(solution -> archive.add(solution));
+  }
+
+  protected List<S> getBestSolutions() {
+    return archive.getSolutionList() ;
+  }
+
   @Override
-  public S getResult() {
-    return archive.getSolutionList().get(0);
+  public List<S> getResult() {
+    return archive.getSolutionList();
   }
 
   @Override
