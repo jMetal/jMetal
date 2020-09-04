@@ -22,6 +22,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -42,6 +43,9 @@ public class RandomSearchSingleObjectiveBinaryEncodingExample extends AbstractAl
             new ComponentBasedRandomSearchAlgorithm<>(
           "Random Search", solutionsCreation, evaluation,
                     termination);
+
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000) ;
+    algorithm.getObservable().register(evaluationObserver);
 
     algorithm.run();
 
