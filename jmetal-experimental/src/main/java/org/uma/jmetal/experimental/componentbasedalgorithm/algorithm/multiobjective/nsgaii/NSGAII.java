@@ -5,8 +5,8 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityesti
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
@@ -41,7 +41,7 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
    */
   public NSGAII(
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       CrossoverAndMutationVariation<S> variation,

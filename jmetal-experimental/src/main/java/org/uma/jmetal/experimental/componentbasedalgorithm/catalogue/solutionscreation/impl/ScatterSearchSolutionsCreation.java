@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -9,7 +9,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScatterSearchSolutionsCreation implements InitialSolutionsCreation<DoubleSolution> {
+public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleSolution> {
   private final int numberOfSolutionsToCreate;
   private final DoubleProblem problem;
   private final int numberOfSubRanges;

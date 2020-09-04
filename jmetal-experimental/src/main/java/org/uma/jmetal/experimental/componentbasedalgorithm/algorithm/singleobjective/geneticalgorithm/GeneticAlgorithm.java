@@ -3,8 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.singleobje
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuPlusLambdaReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
@@ -42,7 +42,7 @@ public class GeneticAlgorithm<S extends Solution<?>> extends ComponentBasedEvolu
    */
   public GeneticAlgorithm (
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       CrossoverAndMutationVariation<S> variation,

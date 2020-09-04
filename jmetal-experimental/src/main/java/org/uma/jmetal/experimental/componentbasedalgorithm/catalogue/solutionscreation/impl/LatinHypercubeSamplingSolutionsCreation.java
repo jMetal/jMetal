@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LatinHypercubeSamplingSolutionsCreation
-    implements InitialSolutionsCreation<DoubleSolution> {
+    implements SolutionsCreation<DoubleSolution> {
   private final int numberOfSolutionsToCreate;
   private final DoubleProblem problem;
 

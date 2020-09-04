@@ -1,10 +1,10 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.LatinHypercubeSamplingSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.ScatterSearchSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -25,7 +25,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter<String
     return this ;
   }
 
-  public InitialSolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
+  public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
     switch (getValue()) {
       case "random":
         return new RandomSolutionsCreation<>(problem, populationSize);

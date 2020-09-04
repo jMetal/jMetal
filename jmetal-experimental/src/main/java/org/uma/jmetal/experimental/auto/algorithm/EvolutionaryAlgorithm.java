@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.auto.algorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
@@ -24,7 +24,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   private Archive<S> externalArchive;
 
   private Evaluation<S> evaluation;
-  private InitialSolutionsCreation<S> createInitialPopulation;
+  private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
   private MatingPoolSelection<S> selection;
   private Variation<S> variation;
@@ -54,7 +54,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   public EvolutionaryAlgorithm(
       String name,
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
@@ -87,7 +87,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   public EvolutionaryAlgorithm(
       String name,
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,

@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
  *
  * @param <S>
  */
-public class RandomSolutionsCreation<S extends Solution<?>> implements InitialSolutionsCreation<S> {
+public class RandomSolutionsCreation<S extends Solution<?>> implements SolutionsCreation<S> {
   private final int numberOfSolutionsToCreate;
   private final Problem<S> problem;
 

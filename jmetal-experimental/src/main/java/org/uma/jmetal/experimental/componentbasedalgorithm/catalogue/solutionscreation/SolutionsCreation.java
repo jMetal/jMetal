@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation;
 
 import org.uma.jmetal.solution.Solution;
 
@@ -10,6 +10,6 @@ import java.util.List;
  * @param <S>
  */
 @FunctionalInterface
-public interface InitialSolutionsCreation<S extends Solution<?>> {
+public interface SolutionsCreation<S extends Solution<?>> {
   List<S> create() ;
 }

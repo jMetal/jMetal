@@ -3,8 +3,8 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
@@ -33,7 +33,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
   /** Constructor */
   public MOEADDE(
         Evaluation<DoubleSolution> evaluation,
-        InitialSolutionsCreation<DoubleSolution> initialPopulationCreation,
+        SolutionsCreation<DoubleSolution> initialPopulationCreation,
         Termination termination,
         PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution> selection,
         DifferentialCrossoverVariation variation,

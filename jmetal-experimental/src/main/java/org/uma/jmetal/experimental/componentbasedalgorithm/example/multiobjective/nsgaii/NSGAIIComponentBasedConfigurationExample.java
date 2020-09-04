@@ -5,8 +5,8 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityesti
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.DensityEstimator;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
@@ -57,7 +57,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
 
-    InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
+    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
     RankingAndDensityEstimatorReplacement<DoubleSolution> replacement =
