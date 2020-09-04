@@ -16,7 +16,7 @@ import java.util.List;
  * @param <S>
  *          Type of {@link Problem} solutions
  */
-public interface BoundedProblem<T extends Number, S> extends Problem<S> {
+public interface BoundedProblem<T extends Number & Comparable<T>, S> extends Problem<S> {
   /**
    * @param index
    *          index of the variable
