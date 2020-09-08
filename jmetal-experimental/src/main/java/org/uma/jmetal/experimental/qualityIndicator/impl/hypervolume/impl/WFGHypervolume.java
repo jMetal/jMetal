@@ -62,7 +62,7 @@ public class WFGHypervolume extends Hypervolume {
     return hypervolume(front, referenceFront);
   }
 
-  static class ComparatorGreater implements Comparator {
+  private class ComparatorGreater implements Comparator {
 
     @Override
     public int compare(Object o1, Object o2) {
@@ -99,12 +99,12 @@ public class WFGHypervolume extends Hypervolume {
     }
   }
 
-  static int n;
-  static Front[] fs; // memory management stuff
-  static int safe = 0; // the number of points that don't need sorting
-  static int fr = 0;
+  private int n;
+  private Front[] fs; // memory management stuff
+  private int safe = 0; // the number of points that don't need sorting
+  private int fr = 0;
 
-  static double CalculateHypervolume(double[][] fronton, int noPoints, int noObjectives) {
+  private double CalculateHypervolume(double[][] fronton, int noPoints, int noObjectives) {
 
     n = noObjectives;
     safe = 0;
@@ -151,7 +151,7 @@ public class WFGHypervolume extends Hypervolume {
     return true;
   }
 
-  static void makeDominatedBit(Front ps, int p)
+  private void makeDominatedBit(Front ps, int p)
   // creates the front ps[0 .. p-1] in fs[fr], with each point bounded by ps[p] and dominated
   // points removed
   {
@@ -250,7 +250,7 @@ public class WFGHypervolume extends Hypervolume {
     fr++;
   }
 
-  static double hv2(Front ps, int k)
+  private double hv2(Front ps, int k)
   // returns the hypervolume of ps[0 .. k-1] in 2D
   // assumes that ps is sorted improving
   {
@@ -262,7 +262,7 @@ public class WFGHypervolume extends Hypervolume {
     return volume;
   }
 
-  static double inclhv(Point p)
+  private double inclhv(Point p)
   // returns the inclusive hypervolume of p
   {
     double volume = 1;
@@ -270,7 +270,7 @@ public class WFGHypervolume extends Hypervolume {
     return volume;
   }
 
-  static double inclhv2(Point p, Point q)
+  private double inclhv2(Point p, Point q)
   // returns the hypervolume of {p, q}
   {
     double vp = 1;
@@ -285,7 +285,7 @@ public class WFGHypervolume extends Hypervolume {
     return suma;
   }
 
-  static double inclhv3(Point p, Point q, Point r)
+  private double inclhv3(Point p, Point q, Point r)
   // returns the hypervolume of {p, q, r}
   {
     double vp = 1;
@@ -326,7 +326,7 @@ public class WFGHypervolume extends Hypervolume {
     return vp + vq + vr - vpq - vpr - vqr + vpqr;
   }
 
-  static double inclhv4(Point p, Point q, Point r, Point s)
+  private double inclhv4(Point p, Point q, Point r, Point s)
   // returns the hypervolume of {p, q, r, s}
   {
     double vp = 1;
@@ -464,7 +464,7 @@ public class WFGHypervolume extends Hypervolume {
             - vpqrs;
   }
 
-  static double exclhv(Front ps, int p)
+  private double exclhv(Front ps, int p)
   // returns the exclusive hypervolume of ps[p] relative to ps[0 .. p-1]
   {
     makeDominatedBit(ps, p);
@@ -475,7 +475,7 @@ public class WFGHypervolume extends Hypervolume {
     return volume;
   }
 
-  static double hv(Front ps)
+  private double hv(Front ps)
   // returns the hypervolume of ps[0 ..]
   {
     // process small fronts with the IEA
