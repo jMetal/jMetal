@@ -1,8 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;

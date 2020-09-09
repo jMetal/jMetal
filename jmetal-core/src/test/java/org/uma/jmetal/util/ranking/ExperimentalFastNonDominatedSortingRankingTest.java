@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking;
+package org.uma.jmetal.util.ranking;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.ExperimentalFastNonDominanceRanking;
+import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class ExperimentalFastNonDominatedSortingRankingTest extends NonDominanceRankingTestCases<Ranking<DoubleSolution>> {

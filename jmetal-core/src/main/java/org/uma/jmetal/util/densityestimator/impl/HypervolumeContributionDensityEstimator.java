@@ -1,10 +1,11 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator;
+package org.uma.jmetal.util.densityestimator.impl;
 
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 
 import java.util.Collections;

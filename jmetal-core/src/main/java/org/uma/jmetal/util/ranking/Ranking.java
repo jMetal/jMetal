@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking;
+package org.uma.jmetal.util.ranking;
 
 import org.uma.jmetal.solution.util.attribute.Attribute;
 

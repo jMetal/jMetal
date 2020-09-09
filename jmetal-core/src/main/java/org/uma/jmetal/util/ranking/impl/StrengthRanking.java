@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl;
+package org.uma.jmetal.util.ranking.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
+import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;

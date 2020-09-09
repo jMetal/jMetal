@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator;
+package org.uma.jmetal.util.densityestimator;
 
 import org.uma.jmetal.solution.util.attribute.Attribute;
 

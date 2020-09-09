@@ -1,10 +1,11 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator;
+package org.uma.jmetal.util.densityestimator;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

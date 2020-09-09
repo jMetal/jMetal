@@ -1,7 +1,8 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking;
+package org.uma.jmetal.util.ranking;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.ExperimentalFastNonDominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;

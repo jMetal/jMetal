@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.util;
+package org.uma.jmetal.util.ranking.impl.util;
 
 /**
  *

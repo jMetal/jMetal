@@ -1,9 +1,10 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator;
+package org.uma.jmetal.util.densityestimator.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
