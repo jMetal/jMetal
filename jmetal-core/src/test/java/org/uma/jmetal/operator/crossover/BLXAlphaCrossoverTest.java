@@ -14,6 +14,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -34,6 +35,7 @@ import static org.mockito.Mockito.*;
  */
 public class BLXAlphaCrossoverTest {
   private static final double EPSILON = 0.00000000000001 ;
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
 
   @Test
   public void shouldConstructorAssignTheCorrectProbabilityValue() {
@@ -149,8 +151,8 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
-    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
+    Bounds<Double> bounds0 = boundsMetadata.read(solutions.get(0)).get(0);
+    Bounds<Double> bounds1 = boundsMetadata.read(solutions.get(1)).get(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers
@@ -210,8 +212,8 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
-    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
+    Bounds<Double> bounds0 = boundsMetadata.read(solutions.get(0)).get(0);
+    Bounds<Double> bounds1 = boundsMetadata.read(solutions.get(1)).get(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers

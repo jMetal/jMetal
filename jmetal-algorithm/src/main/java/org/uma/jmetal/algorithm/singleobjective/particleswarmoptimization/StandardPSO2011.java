@@ -9,6 +9,7 @@ import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.bounds.Bounds ;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.metadata.Metadata ;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.ExtendedPseudoRandomGenerator;
@@ -45,6 +46,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   private JMetalRandom randomGenerator ;
   private DoubleSolution bestFoundParticle;
   private double changeVelocity;
+  
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
 
   private int objectiveId;
 
@@ -156,8 +159,9 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   public void initializeVelocity(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
+      List<Bounds<Double>> boundsList = boundsMetadata.read(particle) ;
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
-        Bounds<Double> bounds = particle.getBounds(j) ;
+        Bounds<Double> bounds = boundsList.get(j) ;
         speed[i][j] = (randomGenerator.nextDouble(
                 bounds.getLowerBound() - particle.getVariable(0),
                 bounds.getUpperBound() - particle.getVariable(0)));

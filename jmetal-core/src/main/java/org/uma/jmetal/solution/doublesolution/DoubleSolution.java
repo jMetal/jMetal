@@ -33,7 +33,10 @@ public interface DoubleSolution extends Solution<Double> {
    * same index may be counter productive in this case. This methods allows to
    * offer this optimization, although its default implementation just delegates
    * to the separate methods.
+   * 
+   * @deprecated Use {@link Metadata} for additional attributes of {@link Solution} or variables.
    */
+  @Deprecated
   default Bounds<Double> getBounds(int index) {
     DoubleSolution solution = this;
     Double lowerBound = solution.getLowerBound(index);

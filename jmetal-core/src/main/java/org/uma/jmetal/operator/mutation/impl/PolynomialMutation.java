@@ -1,5 +1,7 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.List;
+
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -8,6 +10,7 @@ import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWith
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -29,6 +32,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
   private double distributionIndex;
   private double mutationProbability;
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
   private RepairDoubleSolution solutionRepair;
 
   private RandomGenerator<Double> randomGenerator;
@@ -175,11 +179,12 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private void doMutation(DoubleSolution solution) {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
+    List<Bounds<Double>> boundsList = boundsMetadata.read(solution);
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = solution.getVariable(i);
-        Bounds<Double> bounds = solution.getBounds(i);
+        Bounds<Double> bounds = boundsList.get(i);
         yl = bounds.getLowerBound();
         yu = bounds.getUpperBound();
         if (yl == yu) {

@@ -7,6 +7,7 @@ import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWith
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -76,6 +77,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private BoundedRandomGenerator<Integer> jRandomGenerator;
   private BoundedRandomGenerator<Double> crRandomGenerator;
 
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
   private RepairDoubleSolution solutionRepair;
 
   /** Constructor */
@@ -414,11 +416,12 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private void repairVariableValues(DoubleSolution solution) {
+    List<Bounds<Double>> boundsList = boundsMetadata.read(solution);
     IntStream.range(0, solution.getNumberOfVariables())
         .forEach(
             i ->
                 {
-                  Bounds<Double> bounds = solution.getBounds(i);
+                  Bounds<Double> bounds = boundsList.get(i);
                   solution.setVariable(
                       i,
                       solutionRepair.repairSolutionVariableValue(

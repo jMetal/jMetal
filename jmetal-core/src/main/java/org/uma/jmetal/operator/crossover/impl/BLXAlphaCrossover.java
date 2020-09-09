@@ -7,6 +7,7 @@ import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWith
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -25,6 +26,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   private double crossoverProbability;
   private double alpha ;
 
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
   private RepairDoubleSolution solutionRepair ;
 
   private RandomGenerator<Double> randomGenerator ;
@@ -104,8 +106,9 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     double lowerBound;
 
     if (randomGenerator.getRandomValue() <= probability) {
+      List<Bounds<Double>> boundsList = boundsMetadata.read(parent1);
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
-        Bounds<Double> bounds = parent1.getBounds(i);
+        Bounds<Double> bounds = boundsList.get(i);
         upperBound = bounds.getUpperBound();
         lowerBound = bounds.getLowerBound();
         valueX1 = parent1.getVariable(i);

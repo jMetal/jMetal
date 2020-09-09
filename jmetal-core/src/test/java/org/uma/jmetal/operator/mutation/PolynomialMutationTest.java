@@ -15,6 +15,7 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -38,6 +39,7 @@ import static org.mockito.Mockito.*;
  */
 public class PolynomialMutationTest {
   private static final double EPSILON = 0.00000000000001 ;
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
   
   @Test
   public void shouldConstructorWithoutParameterAssignTheDefaultValues() {
@@ -165,7 +167,7 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    Bounds<Double> bounds = solution.getBounds(0);
+    Bounds<Double> bounds = boundsMetadata.read(solution).get(0);
     assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
     assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
@@ -188,7 +190,7 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    Bounds<Double> bounds = solution.getBounds(0);
+    Bounds<Double> bounds = boundsMetadata.read(solution).get(0);
     assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
     assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();

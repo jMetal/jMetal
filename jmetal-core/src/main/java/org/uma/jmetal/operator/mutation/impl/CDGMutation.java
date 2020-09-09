@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.List;
+
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -20,6 +22,7 @@ import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -39,6 +42,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_DELTA = 0.5 ;
   private double delta ;
   private double mutationProbability ;
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
   private RepairDoubleSolution solutionRepair ;
 
   private JMetalRandom randomGenerator ;
@@ -107,11 +111,12 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
   private void doMutation(double probability, DoubleSolution solution) {
     double rnd, deltaq, tempDelta;
     double y, yl, yu;
+    List<Bounds<Double>> boundsList = boundsMetadata.read(solution);
 
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenerator.nextDouble() <= probability) {
         y = solution.getVariable(i);
-        Bounds<Double> bounds = solution.getBounds(i);
+        Bounds<Double> bounds = boundsList.get(i);
         yl = bounds.getLowerBound() ;
         yu = bounds.getUpperBound() ;
         rnd = randomGenerator.nextDouble();

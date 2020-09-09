@@ -1,9 +1,12 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.List;
+
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.metadata.Metadata;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -21,6 +24,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   private int currentIteration;
   private RandomGenerator<Double> randomGenenerator ;
+  private final Metadata<DoubleSolution, List<Bounds<Double>>> boundsMetadata = DoubleSolution.boundsMetadata();
 
   /** Constructor */
   public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations) {
@@ -93,12 +97,13 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
    * @param solution    The solution to mutate
    */
   public void doMutation(double probability, DoubleSolution solution){
+    List<Bounds<Double>> boundsList = boundsMetadata.read(solution);
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       if (randomGenenerator.getRandomValue() < probability) {
         double rand = randomGenenerator.getRandomValue();
         double tmp;
 
-        Bounds<Double> bounds = solution.getBounds(i);
+        Bounds<Double> bounds = boundsList.get(i);
         if (rand <= 0.5) {
           tmp = delta(bounds.getUpperBound() - solution.getVariable(i),
               perturbation);
