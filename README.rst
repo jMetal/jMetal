@@ -31,6 +31,7 @@ The current development version (5.11-SNAPSHOT) is a Maven project structured in
 | jmetal-experimental |  New features in development       |
 +---------------------+------------------------------------+
 
+The most recent documentation is hosted in https://jmetal.readthedocs.io  (the old documentation site is located in https://github.com/jMetal/jMetalDocumentation).
 
 Comments and suggestions are very welcome.
 
