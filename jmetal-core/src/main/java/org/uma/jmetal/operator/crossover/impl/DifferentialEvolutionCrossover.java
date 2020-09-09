@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -416,12 +417,15 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
     IntStream.range(0, solution.getNumberOfVariables())
         .forEach(
             i ->
-                solution.setVariable(
-                    i,
-                    solutionRepair.repairSolutionVariableValue(
-                        solution.getVariable(i),
-                        solution.getLowerBound(i),
-                        solution.getUpperBound(i))));
+                {
+                  Bounds<Double> bounds = solution.getBounds(i);
+                  solution.setVariable(
+                      i,
+                      solutionRepair.repairSolutionVariableValue(
+                          solution.getVariable(i),
+                          bounds.getLowerBound(),
+                          bounds.getUpperBound()));
+                });
   }
 
   private double mutate(Double[][] parent, int index) {

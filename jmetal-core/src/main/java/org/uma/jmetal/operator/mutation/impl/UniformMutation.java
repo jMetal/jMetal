@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -84,9 +85,10 @@ public class UniformMutation implements MutationOperator<DoubleSolution> {
 
         tmp += solution.getVariable(i);
 
+        Bounds<Double> bounds = solution.getBounds(i);
         tmp =
             solutionRepair.repairSolutionVariableValue(
-                tmp, solution.getLowerBound(i), solution.getUpperBound(i));
+                tmp, bounds.getLowerBound(), bounds.getUpperBound());
 
         solution.setVariable(i, tmp);
       }

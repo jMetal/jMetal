@@ -302,13 +302,15 @@ public class ABYSSTest {
     }
 
     @Override
+    @Deprecated
     public Double getLowerBound(int index) {
-      return super.getUpperBound(index);
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
 
     @Override
+    @Deprecated
     public Double getUpperBound(int index) {
-      return super.getUpperBound(index);
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
   }
 }

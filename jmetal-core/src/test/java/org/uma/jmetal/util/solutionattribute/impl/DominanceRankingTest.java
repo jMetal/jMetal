@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 @Deprecated
 public class DominanceRankingTest {
-  private List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+  private List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
 
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
@@ -35,11 +34,11 @@ public class DominanceRankingTest {
   @Test
   public void shouldTheRankingOfAnEmptyPopulationReturnOneSubfronts(){
     //problem = new DummyProblem(2) ;
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
     List<DoubleSolution> population = Arrays.<DoubleSolution>asList(
-            new DefaultDoubleSolution(bounds, 2),
-            new DefaultDoubleSolution(bounds, 2),
-            new DefaultDoubleSolution(bounds, 2));
+            new DefaultDoubleSolution(2, bounds),
+            new DefaultDoubleSolution(2, bounds),
+            new DefaultDoubleSolution(2, bounds));
 
     Ranking<DoubleSolution> ranking = new DominanceRanking<DoubleSolution>() ;
     ranking.computeRanking(population) ;
@@ -51,10 +50,10 @@ public class DominanceRankingTest {
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
     List<DoubleSolution>population = new ArrayList<>() ;
 
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution = new DefaultDoubleSolution(2, bounds) ;
     solution.setObjective(0, 2.0);
     solution.setObjective(1, 3.0);
-    DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2);
+    DoubleSolution solution2 = new DefaultDoubleSolution(2, bounds);
     solution2.setObjective(0, 1.0);
     solution2.setObjective(1, 6.0);
 
@@ -79,10 +78,10 @@ public class DominanceRankingTest {
   public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
     List<DoubleSolution>population = new ArrayList<>() ;
 
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
+    DoubleSolution solution = new DefaultDoubleSolution(2, bounds);
     solution.setObjective(0, 2.0);
     solution.setObjective(1, 3.0);
-    DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution2 = new DefaultDoubleSolution(2, bounds) ;
     solution2.setObjective(0, 3.0);
     solution2.setObjective(1, 6.0);
 
@@ -112,13 +111,13 @@ public class DominanceRankingTest {
   public void shouldRankingOfAPopulationWithThreeDominatedSolutionsReturnThreeSubfronts() {
     List<DoubleSolution>population = new ArrayList<>() ;
 
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
+    DoubleSolution solution = new DefaultDoubleSolution(2, bounds);
     solution.setObjective(0, 2.0);
     solution.setObjective(1, 3.0);
-    DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution2 = new DefaultDoubleSolution(2, bounds) ;
     solution2.setObjective(0, 3.0);
     solution2.setObjective(1, 6.0);
-    DoubleSolution solution3 = new DefaultDoubleSolution(bounds, 2);
+    DoubleSolution solution3 = new DefaultDoubleSolution(2, bounds);
     solution3.setObjective(0, 4.0);
     solution3.setObjective(1, 8.0);
 
@@ -152,19 +151,19 @@ public class DominanceRankingTest {
   public void shouldRankingOfAPopulationWithFiveSolutionsWorkProperly() {
     List<DoubleSolution>population = new ArrayList<>() ;
 
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2);
+    DoubleSolution solution = new DefaultDoubleSolution(2, bounds);
     solution.setObjective(0, 1.0);
     solution.setObjective(1, 0.0);
-    DoubleSolution solution2 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution2 = new DefaultDoubleSolution(2, bounds) ;
     solution2.setObjective(0, 0.6);
     solution2.setObjective(1, 0.6);
-    DoubleSolution solution3 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution3 = new DefaultDoubleSolution(2, bounds) ;
     solution3.setObjective(0, 0.5);
     solution3.setObjective(1, 0.5);
-    DoubleSolution solution4 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution4 = new DefaultDoubleSolution(2, bounds) ;
     solution4.setObjective(0, 1.1);
     solution4.setObjective(1, 0.0);
-    DoubleSolution solution5 = new DefaultDoubleSolution(bounds, 2) ;
+    DoubleSolution solution5 = new DefaultDoubleSolution(2, bounds) ;
     solution5.setObjective(0, 0.0);
     solution5.setObjective(1, 1.0);
 

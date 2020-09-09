@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.DoubleVariableComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -86,11 +87,12 @@ public class SBXCrossoverExample {
   }
 
   private static double[][] classify(List<DoubleSolution> solutions, DoubleProblem problem, int granularity) {
-    double grain = (problem.getUpperBound(0) - problem.getLowerBound(0)) / granularity ;
+    Bounds<Double> bounds = problem.getBoundsForVariables().get(0);
+    double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;
     for (int i = 0 ; i < granularity; i++) {
       classifier[i] = new double[2] ;
-      classifier[i][0] = problem.getLowerBound(0) + i * grain ;
+      classifier[i][0] = bounds.getLowerBound() + i * grain ;
       classifier[i][1] = 0 ;
     }
 

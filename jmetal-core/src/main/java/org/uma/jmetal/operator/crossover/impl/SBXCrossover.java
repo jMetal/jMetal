@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -121,8 +122,9 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
               y2 = valueX1;
             }
 
-            lowerBound = parent1.getLowerBound(i);
-            upperBound = parent1.getUpperBound(i);
+            Bounds<Double> bounds = parent1.getBounds(i);
+            lowerBound = bounds.getLowerBound();
+            upperBound = bounds.getUpperBound();
 
             rand = randomGenerator.getRandomValue();
             beta = 1.0 + (2.0 * (y1 - lowerBound) / (y2 - y1));

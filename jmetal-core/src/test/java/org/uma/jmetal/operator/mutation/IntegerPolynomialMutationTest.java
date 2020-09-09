@@ -1,7 +1,5 @@
 package org.uma.jmetal.operator.mutation;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,6 +12,7 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -152,9 +151,9 @@ public class IntegerPolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers
-        .greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    Bounds<Integer> bounds = solution.getBounds(0);
+    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -176,8 +175,9 @@ public class IntegerPolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    Bounds<Integer> bounds = solution.getBounds(0);
+    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -247,9 +247,9 @@ public class IntegerPolynomialMutationTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Pair<Integer, Integer>> bounds = Arrays.asList(new ImmutablePair<>(0, 2), new ImmutablePair<>(0, 2)) ;
+    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 2), Bounds.create(0, 2)) ;
 
-    IntegerSolution solution = new DefaultIntegerSolution(bounds, 2);
+    IntegerSolution solution = new DefaultIntegerSolution(2, bounds);
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

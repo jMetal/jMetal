@@ -1,14 +1,15 @@
 package org.uma.jmetal.problem.doubleproblem.impl;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -41,7 +42,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   private List<Function<Double[], Double>> objectiveFunctions;
   private List<Function<Double[], Double>> constraints;
-  private List<Pair<Double, Double>> bounds;
+  private List<Bounds<Double>> bounds;
   private String name;
 
   public ComposableDoubleProblem() {
@@ -63,7 +64,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
   }
 
   public ComposableDoubleProblem addVariable(double lowerBound, double upperBound) {
-    bounds.add(new ImmutablePair<>(lowerBound, upperBound));
+    bounds.add(Bounds.create(lowerBound, upperBound));
     return this;
   }
 
@@ -94,22 +95,30 @@ public class ComposableDoubleProblem implements DoubleProblem {
   }
 
   @Override
+  @Deprecated
   public Double getLowerBound(int index) {
-    return bounds.get(index).getLeft();
+    return bounds.get(index).getLowerBound();
   }
 
   @Override
+  @Deprecated
   public Double getUpperBound(int index) {
-    return bounds.get(index).getRight();
+    return bounds.get(index).getUpperBound();
   }
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
+    return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
   }
 
   @Override
+  @Deprecated
   public List<Pair<Double, Double>> getBounds() {
+    return bounds.stream().map(Bounds<Double>::toPair).collect(Collectors.toList());
+  }
+  
+  @Override
+  public List<Bounds<Double>> getBoundsForVariables() {
     return bounds;
   }
 

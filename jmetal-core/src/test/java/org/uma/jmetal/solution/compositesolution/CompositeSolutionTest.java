@@ -1,11 +1,11 @@
 package org.uma.jmetal.solution.compositesolution;
 
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 
 import java.util.Arrays;
 
@@ -17,7 +17,7 @@ public class CompositeSolutionTest {
   public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfASolution() {
     DoubleSolution doubleSolution =
             new DefaultDoubleSolution(
-                    Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
+                    3, 0, Arrays.asList(Bounds.create(3.0, 5.0)));
 
     assertNotNull(new CompositeSolution(Arrays.asList(doubleSolution))) ;
   }
@@ -26,10 +26,10 @@ public class CompositeSolutionTest {
   public void shouldConstructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
     DoubleSolution doubleSolution =
             new DefaultDoubleSolution(
-                    Arrays.asList(new MutablePair<>(3.0, 5.0)), 3, 0);
+                    3, 0, Arrays.asList(Bounds.create(3.0, 5.0)));
     IntegerSolution integerSolution =
             new DefaultIntegerSolution(
-                    Arrays.asList(new MutablePair<>(2, 10)), 2, 0);
+                    2, 0, Arrays.asList(Bounds.create(2, 10)));
 
     new CompositeSolution(Arrays.asList(doubleSolution, integerSolution)) ;
   }
@@ -41,10 +41,10 @@ public class CompositeSolutionTest {
     int numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(
-            Arrays.asList(new MutablePair<>(3.0, 5.0)), numberOfObjectives, numberOfConstraints);
+            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(3.0, 5.0)));
     IntegerSolution integerSolution =
         new DefaultIntegerSolution(
-            Arrays.asList(new MutablePair<>(2, 10)), numberOfObjectives, numberOfConstraints);
+            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(2, 10)));
 
     CompositeSolution solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
@@ -66,12 +66,12 @@ public class CompositeSolutionTest {
     int numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(
-            Arrays.asList(new MutablePair<>(3.0, 5.0), new MutablePair<>(1.0, 3.0)),
             numberOfObjectives,
-            numberOfConstraints);
+            numberOfConstraints,
+            Arrays.asList(Bounds.create(3.0, 5.0), Bounds.create(1.0, 3.0)));
     IntegerSolution integerSolution =
         new DefaultIntegerSolution(
-            Arrays.asList(new MutablePair<>(2, 10)), numberOfObjectives, numberOfConstraints);
+            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(2, 10)));
 
     CompositeSolution solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));

@@ -1,7 +1,5 @@
 package org.uma.jmetal.operator.mutation;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,6 +11,7 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.exception.InvalidConditionException;
 import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.checking.exception.NullParameterException;
@@ -166,9 +165,9 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(
-        solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    Bounds<Double> bounds = solution.getBounds(0);
+    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -189,8 +188,9 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(solution.getLowerBound(0))) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(solution.getUpperBound(0))) ;
+    Bounds<Double> bounds = solution.getBounds(0);
+    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
+    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -243,7 +243,7 @@ public class PolynomialMutationTest {
 
     @Override
     public DoubleSolution createSolution() {
-      return new DefaultDoubleSolution(getVariableBounds(), getNumberOfObjectives()) ;
+      return new DefaultDoubleSolution(getNumberOfObjectives(), getBoundsForVariables()) ;
     }
 
     /** Evaluate() method */
@@ -261,8 +261,8 @@ public class PolynomialMutationTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
-    DoubleSolution solution = new DefaultDoubleSolution(bounds, 2) ;
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
+    DoubleSolution solution = new DefaultDoubleSolution(2, bounds) ;
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

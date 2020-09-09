@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.selection.impl.BestSolutionSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
+import org.uma.jmetal.util.bounds.Bounds ;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;
@@ -156,9 +157,10 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
+        Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] = (randomGenerator.nextDouble(
-                particle.getLowerBound(j) - particle.getVariable(0),
-                particle.getUpperBound(j) - particle.getVariable(0)));
+                bounds.getLowerBound() - particle.getVariable(0),
+                bounds.getUpperBound() - particle.getVariable(0)));
       }
     }
   }
@@ -235,12 +237,15 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       for (int var = 0; var < particle.getNumberOfVariables(); var++) {
         particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
 
-        if (particle.getVariable(var) < problem.getLowerBound(var)) {
-          particle.setVariable(var, problem.getLowerBound(var));
+        Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
+        Double lowerBound = bounds.getLowerBound() ;
+        Double upperBound = bounds.getUpperBound() ;
+        if (particle.getVariable(var) < lowerBound) {
+          particle.setVariable(var, lowerBound);
           speed[i][var] = changeVelocity * speed[i][var];
         }
-        if (particle.getVariable(var) > problem.getUpperBound(var)) {
-          particle.setVariable(var, problem.getUpperBound(var));
+        if (particle.getVariable(var) > upperBound) {
+          particle.setVariable(var, upperBound);
           speed[i][var] = changeVelocity * speed[i][var];
         }
       }

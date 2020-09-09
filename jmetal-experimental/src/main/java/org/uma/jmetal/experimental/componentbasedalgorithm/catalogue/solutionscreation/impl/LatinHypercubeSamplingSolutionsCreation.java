@@ -5,6 +5,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
+import org.uma.jmetal.util.bounds.Bounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,16 @@ public class LatinHypercubeSamplingSolutionsCreation
     List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.getBounds(), problem.getNumberOfObjectives());
+          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getBoundsForVariables());
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         // newSolution.setVariable(j, (double)latinHypercube[i][j]/numberOfSolutionsToCreate);
+        Bounds<Double> bounds = problem.getBoundsForVariables().get(j);
         newSolution.setVariable(
             j,
             NormalizeUtils.normalize(
                 latinHypercube[i][j],
-                problem.getLowerBound(j),
-                problem.getUpperBound(j),
+                bounds.getLowerBound(),
+                bounds.getUpperBound(),
                 0,
                 numberOfSolutionsToCreate));
       }

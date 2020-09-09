@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.checking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -104,8 +105,9 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
     if (randomGenerator.getRandomValue() <= probability) {
       for (i = 0; i < parent1.getNumberOfVariables(); i++) {
-        upperBound = parent1.getUpperBound(i);
-        lowerBound = parent1.getLowerBound(i);
+        Bounds<Double> bounds = parent1.getBounds(i);
+        upperBound = bounds.getUpperBound();
+        lowerBound = bounds.getLowerBound();
         valueX1 = parent1.getVariable(i);
         valueX2 = parent2.getVariable(i);
 
