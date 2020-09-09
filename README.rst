@@ -1,5 +1,5 @@
-jMetal 6 project Web site
-==========================
+jMetal project Web site
+=======================
 .. image:: https://travis-ci.org/jMetal/jMetal.svg?branch=master
     :alt: Build Status
     :target: https://travis-ci.org/jMetal/jMetal
