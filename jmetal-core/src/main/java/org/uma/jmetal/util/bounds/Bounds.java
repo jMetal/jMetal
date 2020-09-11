@@ -50,7 +50,7 @@ public interface Bounds<T extends Comparable<T>> {
    *          the highest limit
    * @return a {@link Bounds} with the given limits
    */
-  public static <T extends Comparable<T>> Bounds<T> create(T lowerBound, T upperBound) {
+  static <T extends Comparable<T>> Bounds<T> create(T lowerBound, T upperBound) {
     if (lowerBound == null) {
       throw new IllegalArgumentException("null lower bound");
     } else if (upperBound == null) {
