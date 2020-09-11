@@ -77,7 +77,7 @@ public class MaF15 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
 
     int numberOfVariables = solution.getNumberOfVariables();
     int numberOfObjectives = solution.getNumberOfObjectives();
@@ -133,6 +133,7 @@ public class MaF15 extends AbstractDoubleProblem {
       solution.setObjective(i, f[i]);
     }
 
+    return solution ;
   }
 
   public static double Griewank(double[] x) {

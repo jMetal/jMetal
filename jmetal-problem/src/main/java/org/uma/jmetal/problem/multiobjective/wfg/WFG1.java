@@ -155,7 +155,7 @@ public class WFG1 extends WFG {
    * @param solution The solution to runAlgorithm
    * @throws org.uma.jmetal.util.JMetalException
    */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
     double[] x = new double[getNumberOfVariables()];
 
@@ -172,5 +172,6 @@ public class WFG1 extends WFG {
     for (int i = 0; i < f.length; i++) {
       solution.setObjective(i, f[i]);
     }
+    return solution ;
   }
 }

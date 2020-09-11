@@ -30,7 +30,7 @@ public class Fonseca extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[getNumberOfObjectives()];
@@ -56,5 +56,7 @@ public class Fonseca extends AbstractDoubleProblem {
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
+
+    return solution ;
   }
 }

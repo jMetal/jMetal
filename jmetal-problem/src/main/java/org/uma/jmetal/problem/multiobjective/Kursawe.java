@@ -43,7 +43,7 @@ public class Kursawe extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution){
+  public DoubleSolution evaluate(DoubleSolution solution){
     double aux, xi, xj;
     double[] fx = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()];
@@ -68,5 +68,6 @@ public class Kursawe extends AbstractDoubleProblem {
 
     solution.setObjective(0, fx[0]);
     solution.setObjective(1, fx[1]);
+    return solution ;
   }
 }

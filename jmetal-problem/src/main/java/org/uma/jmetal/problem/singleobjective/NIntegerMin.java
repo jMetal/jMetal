@@ -39,7 +39,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(IntegerSolution solution) {
+  public IntegerSolution evaluate(IntegerSolution solution) {
     int approximationToN;
 
     approximationToN = 0;
@@ -50,5 +50,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
     }
 
     solution.setObjective(0, approximationToN);
+
+    return solution ;
   }
 }

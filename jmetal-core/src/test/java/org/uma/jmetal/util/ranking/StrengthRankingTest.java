@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.ranking;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -29,7 +28,7 @@ public class StrengthRankingTest {
 
 
      */
-    DoubleProblem problem = new MockDoubleProblem(2) ;
+    DoubleProblem problem = new DummyDoubleProblem(2,2,0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     DoubleSolution solution3 = problem.createSolution() ;
@@ -72,7 +71,7 @@ public class StrengthRankingTest {
          List: 1,2,3,4,5
          Expected result: two ranks (rank 0: 1, 2, 5, 4; rank 1: 3)
     */
-    DoubleProblem problem = new MockDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(2,2,0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -108,10 +107,10 @@ public class StrengthRankingTest {
     assertEquals(0, solution5.getAttribute(ranking.getAttributeId()));
   }
 
-  @SuppressWarnings("serial")
+
+  /*
   private class MockDoubleProblem extends AbstractDoubleProblem {
 
-    /** Constructor */
     public MockDoubleProblem(Integer numberOfVariables) {
       setNumberOfVariables(numberOfVariables);
       setNumberOfObjectives(2);
@@ -127,11 +126,12 @@ public class StrengthRankingTest {
       setVariableBounds(lowerLimit, upperLimit);
     }
 
-    /** Evaluate() method */
     @Override
     public void evaluate(DoubleSolution solution) {
       solution.setObjective(0, 0.0);
       solution.setObjective(1, 1.0);
     }
   }
+
+   */
 }

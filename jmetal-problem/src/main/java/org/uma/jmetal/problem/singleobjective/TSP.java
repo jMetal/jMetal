@@ -29,7 +29,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(PermutationSolution<Integer> solution){
+  public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
 
     fitness1 = 0.0 ;
@@ -52,6 +52,8 @@ public class TSP extends AbstractIntegerPermutationProblem {
     fitness1 += distanceMatrix[firstCity][lastCity] ;
 
     solution.setObjective(0, fitness1);
+
+    return solution ;
   }
 
   private double [][] readProblem(String file) throws IOException {

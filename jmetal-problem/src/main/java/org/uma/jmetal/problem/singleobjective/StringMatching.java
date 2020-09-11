@@ -33,7 +33,7 @@ public class StringMatching extends CharSequenceProblem {
   }
 
   @Override
-  public void evaluate(CharSequenceSolution solution) {
+  public CharSequenceSolution evaluate(CharSequenceSolution solution) {
     Check.that(solution.getLength() == targetString.length(), "The solution has an invalid length");
     int counter = 0;
 
@@ -45,6 +45,8 @@ public class StringMatching extends CharSequenceProblem {
     }
 
     solution.setObjective(0, counter);
+
+    return solution ;
   }
 
   @Override

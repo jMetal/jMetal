@@ -328,9 +328,11 @@ public class SinglePointCrossoverTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(BinarySolution solution) {
+    public BinarySolution evaluate(BinarySolution solution) {
       solution.setObjective(0, 0);
       solution.setObjective(1, 1);
+
+      return solution ;
     }
   }
   

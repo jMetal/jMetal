@@ -39,13 +39,14 @@ public class C1_DTLZ3 extends DTLZ3 {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
     this.evaluateConstraints(solution);
+
+    return solution ;
   }
 
   public void evaluateConstraints(DoubleSolution solution) {
-
     double sum1 = 0 ;
     double sum2 = 0 ;
     for (int i = 0; i < getNumberOfObjectives(); i++) {

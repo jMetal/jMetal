@@ -233,9 +233,11 @@ public class IntegerPolynomialMutationTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(IntegerSolution solution) {
+    public IntegerSolution evaluate(IntegerSolution solution) {
       solution.setObjective(0, 4);
       solution.setObjective(1, 2);
+
+      return solution ;
     }
   }
 

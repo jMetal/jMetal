@@ -28,7 +28,7 @@ public class Water extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.getNumberOfObjectives()];
     double[] x = new double[solution.getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -48,6 +48,7 @@ public class Water extends AbstractDoubleProblem {
     solution.setObjective(4, fx[4]);
 
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

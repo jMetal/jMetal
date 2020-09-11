@@ -137,7 +137,7 @@ public class WFG2 extends WFG {
    *
    * @param solution The solution to runAlgorithm
    */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
     double[] x = new double[getNumberOfVariables()];
 
@@ -154,6 +154,7 @@ public class WFG2 extends WFG {
     for (int i = 0; i < sol2.length; i++) {
       solution.setObjective(i, sol2[i]);
     }
+    return solution ;
   }
 }
 

@@ -32,5 +32,7 @@ public class DummyDoubleProblem  extends AbstractDoubleProblem  {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {}
+  public DoubleSolution evaluate(DoubleSolution solution) {
+    return solution ;
+  }
 }

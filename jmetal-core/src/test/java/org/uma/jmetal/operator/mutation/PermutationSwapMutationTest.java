@@ -43,8 +43,9 @@ public class PermutationSwapMutationTest {
 		PermutationProblem<PermutationSolution<Integer>> problem = new AbstractIntegerPermutationProblem() {
 
 			@Override
-			public void evaluate(PermutationSolution<Integer> solution) {
+			public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution) {
 				// Do nothing
+				return solution ;
 			}
 			
 			@Override

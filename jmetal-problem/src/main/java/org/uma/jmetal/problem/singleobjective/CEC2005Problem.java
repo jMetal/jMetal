@@ -93,7 +93,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] x = new double[numberOfVariables] ;
@@ -105,6 +105,8 @@ public class CEC2005Problem extends AbstractDoubleProblem {
     result = testFunction.f(x);
 
     solution.setObjective(0, result);
+
+    return solution ;
   }
 }
 

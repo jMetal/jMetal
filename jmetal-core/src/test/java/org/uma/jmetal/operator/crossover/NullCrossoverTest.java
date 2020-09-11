@@ -85,9 +85,11 @@ public class NullCrossoverTest {
       return null;
     }
 
-    @Override public void evaluate(DoubleSolution solution) {
+    @Override public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, randomGenerator.nextDouble());
       solution.setObjective(1, randomGenerator.nextDouble());
+
+      return solution ;
     }
 
     @Override @Deprecated public Double getLowerBound(int index) {

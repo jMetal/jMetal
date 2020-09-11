@@ -37,7 +37,7 @@ public class Griewank extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] x = new double[numberOfVariables] ;
@@ -55,6 +55,8 @@ public class Griewank extends AbstractDoubleProblem {
     }
 
     solution.setObjective(0, 1.0 / d * sum - mult + 1.0);
+
+    return solution ;
   }
 }
 

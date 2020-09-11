@@ -141,8 +141,7 @@ public class MaF09 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
-
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables_ = solution.getNumberOfVariables();
     int numberOfObjectives = solution.getNumberOfObjectives();
 
@@ -186,7 +185,7 @@ public class MaF09 extends AbstractDoubleProblem {
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
-
+    return solution ;
   }
 
   public static double[][] polygonpoints(int m, double r) {

@@ -45,7 +45,7 @@ public class UF2 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i) ;
@@ -76,5 +76,7 @@ public class UF2 extends AbstractDoubleProblem {
 
     solution.setObjective(0, x[0] + 2.0 * sum1 / (double)count1);
     solution.setObjective(1, 1.0 - Math.sqrt(x[0]) + 2.0 * sum2 / (double)count2);
+
+    return solution ;
   }
 }

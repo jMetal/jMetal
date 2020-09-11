@@ -889,8 +889,7 @@ public class Ebes extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
-
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int hi = 0;
     double[] fx = new double[getNumberOfObjectives()]; // functions
 
@@ -975,6 +974,7 @@ public class Ebes extends AbstractDoubleProblem {
     // END NOT USED ------------------------------------------------------------------------------
 
     this.evaluateConstraints(solution);
+    return solution ;
   } // evaluate
 
   /**

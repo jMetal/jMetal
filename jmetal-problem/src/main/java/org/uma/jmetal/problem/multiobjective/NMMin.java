@@ -43,7 +43,7 @@ public class NMMin extends AbstractIntegerProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(IntegerSolution solution) {
+  public IntegerSolution evaluate(IntegerSolution solution) {
     int approximationToN;
     int approximationToM ;
 
@@ -58,5 +58,6 @@ public class NMMin extends AbstractIntegerProblem {
 
     solution.setObjective(0, approximationToN);
     solution.setObjective(1, approximationToM);
+    return solution ;
   }
 }

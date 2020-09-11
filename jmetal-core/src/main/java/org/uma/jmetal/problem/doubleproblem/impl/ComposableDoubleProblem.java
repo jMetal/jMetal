@@ -123,7 +123,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     Double[] vars = solution.getVariables().toArray(new Double[getNumberOfVariables()]);
 
     IntStream.range(0, getNumberOfObjectives())
@@ -131,5 +131,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
     IntStream.range(0, getNumberOfConstraints())
         .forEach(i -> solution.setConstraint(i, constraints.get(i).apply(vars)));
+
+    return solution ;
   }
 }

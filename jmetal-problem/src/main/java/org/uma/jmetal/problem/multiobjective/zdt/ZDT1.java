@@ -37,7 +37,7 @@ public class ZDT1 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
 
     f[0] = solution.getVariable(0);
@@ -47,6 +47,8 @@ public class ZDT1 extends AbstractDoubleProblem {
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
+
+    return solution ;
   }
 
   /**

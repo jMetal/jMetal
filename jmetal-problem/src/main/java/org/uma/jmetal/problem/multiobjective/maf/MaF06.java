@@ -49,7 +49,7 @@ public class MaF06 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
 
     int numberOfVariables_ = solution.getNumberOfVariables();
     int numberOfObjectives_ = solution.getNumberOfObjectives();
@@ -87,5 +87,6 @@ public class MaF06 extends AbstractDoubleProblem {
     for (int i = 0; i < numberOfObjectives_; i++) {
       solution.setObjective(i, f[i]);
     }
+    return solution ;
   }
 }

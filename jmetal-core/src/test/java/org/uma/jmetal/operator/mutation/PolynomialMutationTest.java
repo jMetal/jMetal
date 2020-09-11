@@ -248,9 +248,11 @@ public class PolynomialMutationTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(DoubleSolution solution) {
+    public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, 0.0);
       solution.setObjective(1, 1.0);
+
+      return solution ;
     }
   }
   

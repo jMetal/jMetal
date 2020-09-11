@@ -51,7 +51,7 @@ public class OneMax extends AbstractBinaryProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(BinarySolution solution) {
+  public BinarySolution evaluate(BinarySolution solution) {
     int counterOnes;
 
     counterOnes = 0;
@@ -66,6 +66,8 @@ public class OneMax extends AbstractBinaryProblem {
 
     // OneMax is a maximization problem: multiply by -1 to minimize
     solution.setObjective(0, -1.0 * counterOnes);
+
+    return solution ;
   }
 }
 

@@ -60,7 +60,7 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(IntegerDoubleSolution solution) {
+  public IntegerDoubleSolution evaluate(IntegerDoubleSolution solution) {
     int approximationToN;
     int approximationToM;
 
@@ -81,6 +81,8 @@ public class NMMin2 extends AbstractGenericProblem<IntegerDoubleSolution> {
 
     solution.setObjective(0, approximationToN);
     solution.setObjective(1, approximationToM);
+
+    return solution ;
   }
 
   @Override

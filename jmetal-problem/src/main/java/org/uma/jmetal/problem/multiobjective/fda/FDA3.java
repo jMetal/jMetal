@@ -44,7 +44,7 @@ public class FDA3 extends FDA implements Serializable {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     f[0] = this.evalF(solution, limitInfI, limitSupI);
     double g = this.evalG(solution, limitInfII);
@@ -52,6 +52,7 @@ public class FDA3 extends FDA implements Serializable {
     f[1] = g * h;
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
+    return solution ;
   }
 
   private double evalF(DoubleSolution solution, int limitInf, int limitSup) {

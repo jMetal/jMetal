@@ -42,7 +42,7 @@ public class DTLZ4 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = getNumberOfObjectives() ;
     double alpha = 100.0;
@@ -78,5 +78,7 @@ public class DTLZ4 extends AbstractDoubleProblem {
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
+
+    return solution ;
   }
 }

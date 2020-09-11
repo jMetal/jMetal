@@ -59,7 +59,7 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
 
   /** Evaluate() method */
   @Override
-  public void evaluate(CompositeSolution solution) {
+  public CompositeSolution evaluate(CompositeSolution solution) {
     int approximationToN;
     int approximationToM;
 
@@ -80,6 +80,7 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
 
     solution.setObjective(0, approximationToN);
     solution.setObjective(1, approximationToM);
+    return solution ;
   }
 
   @Override

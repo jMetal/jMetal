@@ -27,10 +27,11 @@ public class DTLZ2Minus extends DTLZ2 {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       solution.setObjective(i, -1.0 * solution.getObjective(i));
     }
+    return solution ;
   }
 }

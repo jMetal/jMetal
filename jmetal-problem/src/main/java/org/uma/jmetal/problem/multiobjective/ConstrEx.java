@@ -25,7 +25,7 @@ public class ConstrEx extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     f[0] = solution.getVariable(0);
     f[1] = (1.0 + solution.getVariable(1)) / solution.getVariable(0);
@@ -34,6 +34,8 @@ public class ConstrEx extends AbstractDoubleProblem {
     solution.setObjective(1, f[1]);
 
     this.evaluateConstraints(solution);
+
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

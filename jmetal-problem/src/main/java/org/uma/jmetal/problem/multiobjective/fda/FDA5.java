@@ -36,7 +36,7 @@ public class FDA5 extends FDA implements Serializable {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     double g = this.evalG(solution, M - 1);
     double Ft = 1.0d + 100.0d * Math.pow(Math.sin(0.5d * Math.PI * time), 4.0d);
@@ -46,6 +46,7 @@ public class FDA5 extends FDA implements Serializable {
     for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
       solution.setObjective(i, f[i]);
     }
+    return solution ;
   }
 
   private double evalF1(DoubleSolution solution, double g, double Ft) {
