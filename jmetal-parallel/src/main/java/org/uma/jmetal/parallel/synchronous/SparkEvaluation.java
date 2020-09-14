@@ -15,7 +15,7 @@ import java.util.List;
  * Data Optimization with jMetal and Spark. EMO 2017". DOI: http://dx.doi.org/10.1007/978-3-319-54157-0_2
  * @param <S>
  */
-public  class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Serializable {
+public class SparkEvaluation<S extends Solution<?>> implements Evaluation<S>, Serializable {
   private int numberOfComputedEvaluations ;
   private Problem<S> problem ;
   static private JavaSparkContext sparkContext ;
