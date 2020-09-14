@@ -42,5 +42,29 @@ We studied this issue in: `J.J. Durillo, A.J. Nebro, F. Luna, E. Alba A Study of
 The `jmetal-parallel` sub-module contains an `AsynchronousParallelAlgorithm` interface and a multi-threaded implementation of it based on the master-worker scheme, which is applied in two classes: `AsynchronousMultiThreadedGeneticAlgorithm` and `AsynchronousMultiThreadedNSGAII`.
 
 
+Module contents
+---------------
 
+The current structure of the `jmetal-parallel` sub-module is the following:
+
+.. code-block:: text
+
+  └── jmetal-parallel: org.uma.jmetal.parallel
+      ├── asynchronous
+          ├── algorithm
+              ├── impl
+                  ├── AsynchronousMultiThreadedGeneticAlgorithm
+                  └── AsynchronousMultiThreadedNSGAII
+          ├── multithreaded
+              ├── Master
+              └── Worker
+          └── task
+      ├── synchronous
+          ├── SparkEvaluation
+          └── SparkSolutionListEvaluator      
+      └── example
+          ├── AsynchronousMasterWorkerBasedNSGAIIExample
+          ├── AsynchronousMultiThreadedGeneticAlgorithmExample
+          ├── SynchronousNSGAIIWithSparkExample
+          └── SynchronousComponentBasedNSGAIIWithSparkExample 
 

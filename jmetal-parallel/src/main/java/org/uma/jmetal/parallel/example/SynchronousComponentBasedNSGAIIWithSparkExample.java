@@ -25,7 +25,6 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import static java.lang.Math.sin;

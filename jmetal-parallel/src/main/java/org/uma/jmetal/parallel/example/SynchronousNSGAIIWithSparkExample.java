@@ -37,7 +37,7 @@ import static java.lang.Math.sin;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ParallelNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
+public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
