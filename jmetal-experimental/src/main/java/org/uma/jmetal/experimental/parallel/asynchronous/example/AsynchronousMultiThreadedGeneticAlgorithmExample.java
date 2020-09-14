@@ -22,7 +22,7 @@ import java.util.List;
 
 import static java.lang.Math.sin;
 
-public class AsynchronousMultithreadedGeneticAlgorithmExample {
+public class AsynchronousMultiThreadedGeneticAlgorithmExample {
   public static void main(String[] args) {
     CrossoverOperator<BinarySolution> crossover;
     MutationOperator<BinarySolution> mutation;
@@ -37,13 +37,16 @@ public class AsynchronousMultithreadedGeneticAlgorithmExample {
       @Override
       public BinarySolution evaluate (BinarySolution solution) {
         super.evaluate(solution) ;
+        computingDelay();
 
+        return solution ;
+      }
+
+      private void computingDelay() {
         for (long i = 0 ; i < 10000; i++)
           for (long j = 0; j < 100; j++) {
             double a = sin(i)*Math.cos(j) ;
           }
-
-        return solution ;
       }
     } ;
 

@@ -1,13 +1,11 @@
 package org.uma.jmetal.experimental.parallel.asynchronous.example;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedNSGAII;
+import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultiThreadedNSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -24,8 +22,6 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    Replacement<DoubleSolution> replacement;
 
     int populationSize = 100;
     int maxEvaluations = 25000;
@@ -35,13 +31,16 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
       @Override
       public DoubleSolution evaluate(DoubleSolution solution) {
         super.evaluate(solution);
+        computingDelay();
 
+        return solution;
+      }
+
+      private void computingDelay() {
         for (long i = 0; i < 1000; i++)
           for (long j = 0; j < 10000; j++) {
             double a = sin(i) * Math.cos(j);
           }
-
-        return solution;
       }
     };
 
@@ -55,8 +54,8 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
 
     long initTime = System.currentTimeMillis();
 
-    AsynchronousMultithreadedNSGAII<DoubleSolution> nsgaii =
-            new AsynchronousMultithreadedNSGAII<DoubleSolution>(
+    AsynchronousMultiThreadedNSGAII<DoubleSolution> nsgaii =
+            new AsynchronousMultiThreadedNSGAII<DoubleSolution>(
                     numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
 
 
