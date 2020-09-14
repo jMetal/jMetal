@@ -10,11 +10,11 @@ import java.util.List;
  * @author Antonio J. Nebro
  */
 @SuppressWarnings("serial")
-public class MultithreadedSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
+public class MultiThreadedSolutionListEvaluator<S> implements SolutionListEvaluator<S> {
 
   private final int numberOfThreads;
 
-  public MultithreadedSolutionListEvaluator(int numberOfThreads) {
+  public MultiThreadedSolutionListEvaluator(int numberOfThreads) {
     if (numberOfThreads == 0) {
       this.numberOfThreads = Runtime.getRuntime().availableProcessors();
     } else {

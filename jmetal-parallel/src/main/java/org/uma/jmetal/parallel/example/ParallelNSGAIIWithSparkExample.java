@@ -4,10 +4,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -23,20 +21,13 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.chartcontainer.ChartContainer;
-import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.measure.MeasureListener;
-import org.uma.jmetal.util.measure.MeasureManager;
-import org.uma.jmetal.util.measure.impl.BasicMeasure;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.sin;
@@ -85,7 +76,7 @@ public class ParallelNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(8);
+        new MultiThreadedSolutionListEvaluator<DoubleSolution>(8);
 
     int populationSize = 100;
     NSGAIIBuilder<DoubleSolution> builder =

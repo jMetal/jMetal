@@ -13,7 +13,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class ParallelSMPSORunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0) ;
+    evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(0) ;
 
     algorithm = new SMPSOBuilder(problem, archive)
             .setMutation(mutation)

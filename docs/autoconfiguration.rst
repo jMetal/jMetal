@@ -3,7 +3,7 @@
 Auto-configuration of evolutionary algorithms: NSGA-II
 ======================================================
 
-Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832), and to the :ref:`installation`. This tutorial is intended as a guide to replicate the experimentation conducted in that paper. Please, take into account that this is a work in progress. Comments, suggestions, and bugs reporting are welcome. The source code is located in the ``org.uma.jmetal.auto`` package of the ``jmetal-experimental`` submodule.
+Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832). This tutorial is intended as a guide to replicate the experimentation conducted in that paper. Please, take into account that this is a work in progress. Comments, suggestions, and bugs reporting are welcome. The source code is located in the ``org.uma.jmetal.auto`` package of the ``jmetal-experimental`` submodule.
 
 Motivation
 ----------
@@ -88,6 +88,7 @@ The *autoNSGAII* has a *variation* component than can take a single value named 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
 As we intend to use irace as auto-tuning package, it requires a text file containing information about the parameters, the values they can take, an their relationships. We have created then a file called ``parameters-NSGAII.txt`` containing the required data::
+
 
   algorithmResult                          "--algorithmResult "                     c       (externalArchive,population)
   populationSize                           "--populationSize "                      o       (100)

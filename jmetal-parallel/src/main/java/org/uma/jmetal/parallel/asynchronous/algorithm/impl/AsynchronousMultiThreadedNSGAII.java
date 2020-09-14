@@ -13,7 +13,7 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 public class AsynchronousMultiThreadedNSGAII<S extends Solution<?>>
-    extends AsynchronousMultithreadedGeneticAlgorithm<S> {
+    extends AsynchronousMultiThreadedGeneticAlgorithm<S> {
 
   public AsynchronousMultiThreadedNSGAII(
       int numberOfCores,

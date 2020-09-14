@@ -15,7 +15,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm using the {@link
- * MultithreadedSolutionListEvaluator}.
+ * MultiThreadedSolutionListEvaluator}.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class AsynchronousMultithreadedGeneticAlgorithm<S extends Solution<?>>
+public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     extends Master<ParallelTask<S>, List<S>> {
   private Problem<S> problem;
   private CrossoverOperator<S> crossover;
@@ -40,7 +40,7 @@ public class AsynchronousMultithreadedGeneticAlgorithm<S extends Solution<?>>
 
   private int numberOfCores;
 
-  public AsynchronousMultithreadedGeneticAlgorithm(
+  public AsynchronousMultiThreadedGeneticAlgorithm(
       int numberOfCores,
       Problem<S> problem,
       int populationSize,

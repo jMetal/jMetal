@@ -9,7 +9,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedGeneticAlgorithm;
+import org.uma.jmetal.parallel.asynchronous.algorithm.impl.AsynchronousMultiThreadedGeneticAlgorithm;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
@@ -61,8 +61,8 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
     replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
     long initTime = System.currentTimeMillis();
-    AsynchronousMultithreadedGeneticAlgorithm<BinarySolution> geneticAlgorithm =
-        new AsynchronousMultithreadedGeneticAlgorithm<>(
+    AsynchronousMultiThreadedGeneticAlgorithm<BinarySolution> geneticAlgorithm =
+        new AsynchronousMultiThreadedGeneticAlgorithm<>(
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
 
     PrintObjectivesObserver printObjectivesObserver = new PrintObjectivesObserver(100) ;
