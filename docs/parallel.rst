@@ -37,7 +37,7 @@ Asynchronous parallelism
 An advantage of synchronous parallelism is that it does not require to modify the code of the metaheuristic using it. The only caveat is to ensure that the `evaluate()` method of the problem is thread-safe.
 
 As mentioned before, a drawback of synchronous parallelism is that it can find difficulties to scale when the number of cores/processors is high. An alternative is to use an **asynchronous** parallel model, which basically consists in that, whenever a new solution has to evaluated, it is submitted immediately for evaluation asynchronously, without having to wait. Therefore, this model can scale better than the synchronous one, but the metaheuristic has to be modified to adopt it, and the resulting algorithm does not behave exactly as the sequential one.
-We studied this issue in: `J.J. Durillo, A.J. Nebro, F. Luna, E. Alba A Study of Master-Slave Approaches to Parallelize NSGA-II. 11th International Workshop on Nature Inspired Distributed Computing (NIDISC) 2008.<http://dx.doi.org/10.1109/IPDPS.2008.4536375>`_. 
+We studied this issue in: `J.J. Durillo, A.J. Nebro, F. Luna, E. Alba A Study of Master-Slave Approaches to Parallelize NSGA-II. 11th International Workshop on Nature Inspired Distributed Computing (NIDISC) 2008. <http://dx.doi.org/10.1109/IPDPS.2008.4536375>`_. 
 
 The `jmetal-parallel` sub-module contains an `AsynchronousParallelAlgorithm` interface and a multi-threaded implementation of it based on the master-worker scheme, which is applied in two classes: `AsynchronousMultiThreadedGeneticAlgorithm` and `AsynchronousMultiThreadedNSGAII`.
 
