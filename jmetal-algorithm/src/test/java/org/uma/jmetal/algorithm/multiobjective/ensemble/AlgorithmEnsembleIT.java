@@ -108,6 +108,7 @@ public class AlgorithmEnsembleIT {
     }
   }
 
+  /*
   @Test
   public void shouldEnsembleWithTwoAlgorithmsReturnAValidResult() {
     Problem<DoubleSolution> problem = new ZDT1();
@@ -115,7 +116,6 @@ public class AlgorithmEnsembleIT {
     MutationOperator<DoubleSolution> mutation;
 
     int populationSize = 240;
-    int offspringPopulationSize = populationSize;
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -126,7 +126,7 @@ public class AlgorithmEnsembleIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     Algorithm<List<DoubleSolution>> nsgaII =
-        new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, populationSize).build();
+        new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).build();
 
     int swarmSize = 100;
     BoundedArchive<DoubleSolution> leadersArchive =
@@ -152,4 +152,6 @@ public class AlgorithmEnsembleIT {
               || (smpso.getName() == solution.getAttribute("ALGORITHM_NAME")));
     }
   }
+
+   */
 }

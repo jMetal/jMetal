@@ -107,7 +107,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     currentNeighbors.add(population.get(currentIndividual));
 
     parents.add(selectionOperator.execute(currentNeighbors));
-    if (archive.size() > 0) { // TODO. REVISAR EN EL CASO DE TAMAÑO 1
+    if (archive.size() > 1) {
       parents.add(selectionOperator.execute(archive.getSolutionList()));
     } else {
       parents.add(selectionOperator.execute(currentNeighbors));
