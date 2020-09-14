@@ -1,7 +1,7 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.multithreaded;
+package org.uma.jmetal.parallel.asynchronous.multithreaded;
 
-import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
-import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
+import org.uma.jmetal.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
+import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;

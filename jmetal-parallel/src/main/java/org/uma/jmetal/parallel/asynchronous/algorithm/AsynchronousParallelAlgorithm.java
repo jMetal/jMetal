@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.algorithm;
+package org.uma.jmetal.parallel.asynchronous.algorithm;
 
-import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
+import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 
 import java.util.List;
 

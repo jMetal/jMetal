@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl;
+package org.uma.jmetal.parallel.asynchronous.algorithm.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;

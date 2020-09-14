@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.synchronous;
+package org.uma.jmetal.parallel.synchronous;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;

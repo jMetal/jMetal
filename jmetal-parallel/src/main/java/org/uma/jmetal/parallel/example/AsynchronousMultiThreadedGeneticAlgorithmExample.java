@@ -1,15 +1,15 @@
-package org.uma.jmetal.experimental.parallel.example;
+package org.uma.jmetal.parallel.example;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuPlusLambdaReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.UniformCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
+import org.uma.jmetal.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedGeneticAlgorithm;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;

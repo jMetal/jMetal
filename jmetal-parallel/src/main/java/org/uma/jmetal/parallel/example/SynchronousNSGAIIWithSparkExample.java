@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.example;
+package org.uma.jmetal.parallel.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -8,12 +8,12 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBa
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.experimental.parallel.synchronous.SparkEvaluation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.parallel.synchronous.SparkEvaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -38,12 +38,11 @@ import static java.lang.Math.sin;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     problem = new ZDT2() {
       @Override

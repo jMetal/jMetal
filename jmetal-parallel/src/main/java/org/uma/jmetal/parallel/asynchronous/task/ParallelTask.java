@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.task;
+package org.uma.jmetal.parallel.asynchronous.task;
 
 import java.io.Serializable;
 
