@@ -37,7 +37,7 @@ import static java.lang.Math.sin;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
+public class SynchronousComponentBasedNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
@@ -60,6 +60,7 @@ public class SynchronousNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
           }
       }
     };
+
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
     crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);

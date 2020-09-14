@@ -1,15 +1,14 @@
-.. _experimentation:
+.. _parallel:
 
-Experimental studies
-====================
+Submodule jmetal-parallel
+==========================
 
 :Author: Antonio J. Nebro
-:Author: Javier Pérez Abad
 :Version: 1.0
-:Date: 2020-15-07
+:Date: 2020-14-09
 
 
-This section describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
+This section describes the contents of the `jmetal-parallel` submodule.
 
 Prerequisites
 -------------

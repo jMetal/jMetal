@@ -17,5 +17,6 @@ The current stable version is jMetal 5.10.
     problems.rst
     constraints.rst
     experimentation.rst
+    parallel.rst
     autoconfiguration.rst
     mnds.rst
