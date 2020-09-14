@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.masterworker;
+package org.uma.jmetal.experimental.parallel.asynchronous.multithreaded;
 
 import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
 

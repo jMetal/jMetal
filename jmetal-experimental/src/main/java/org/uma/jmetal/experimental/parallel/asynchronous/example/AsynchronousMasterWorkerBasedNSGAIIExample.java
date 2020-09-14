@@ -1,13 +1,13 @@
 package org.uma.jmetal.experimental.parallel.asynchronous.example;
 
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedMasterWorkerNSGAII;
+import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedNSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -24,23 +24,26 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    Replacement<DoubleSolution> replacement;
+
     int populationSize = 100;
     int maxEvaluations = 25000;
-    int numberOfCores = 32 ;
+    int numberOfCores = 32;
 
     DoubleProblem problem = new ZDT1() {
       @Override
-      public DoubleSolution evaluate (DoubleSolution solution) {
-        super.evaluate(solution) ;
+      public DoubleSolution evaluate(DoubleSolution solution) {
+        super.evaluate(solution);
 
-        for (long i = 0 ; i < 1000; i++)
+        for (long i = 0; i < 1000; i++)
           for (long j = 0; j < 10000; j++) {
-            double a = sin(i)*Math.cos(j) ;
+            double a = sin(i) * Math.cos(j);
           }
 
-        return solution ;
+        return solution;
       }
-    } ;
+    };
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -51,18 +54,18 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     long initTime = System.currentTimeMillis();
-    AsynchronousMultithreadedMasterWorkerNSGAII<DoubleSolution> nsgaii =
-        new AsynchronousMultithreadedMasterWorkerNSGAII<DoubleSolution>(
-            numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
+
+    AsynchronousMultithreadedNSGAII<DoubleSolution> nsgaii =
+            new AsynchronousMultithreadedNSGAII<DoubleSolution>(
+                    numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
 
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>(
-            "NSGA-II",
-            80,  10, "resources/referenceFrontsCSV/ZDT1.csv");
+            new RunTimeChartObserver<>(
+                    "NSGA-II",
+                    80, 10, "resources/referenceFrontsCSV/ZDT1.csv");
 
     nsgaii.getObservable().register(runTimeChartObserver);
-
 
     nsgaii.run();
 

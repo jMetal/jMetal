@@ -1,9 +1,8 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.masterworker;
+package org.uma.jmetal.experimental.parallel.asynchronous.multithreaded;
 
 import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
 import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

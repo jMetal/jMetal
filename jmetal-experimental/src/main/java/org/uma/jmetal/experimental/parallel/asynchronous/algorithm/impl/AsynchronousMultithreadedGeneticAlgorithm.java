@@ -1,29 +1,27 @@
 package org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
-import org.uma.jmetal.experimental.parallel.asynchronous.masterworker.Master;
-import org.uma.jmetal.experimental.parallel.asynchronous.masterworker.Worker;
+import org.uma.jmetal.experimental.parallel.asynchronous.multithreaded.Master;
+import org.uma.jmetal.experimental.parallel.asynchronous.multithreaded.Worker;
 import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.checking.Check;
-import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
-public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
+public class AsynchronousMultithreadedGeneticAlgorithm<S extends Solution<?>>
     extends Master<ParallelTask<S>, List<S>> {
   private Problem<S> problem;
   private CrossoverOperator<S> crossover;
@@ -42,12 +40,14 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
 
   private int numberOfCores;
 
-  public AsynchronousMultithreadedMasterWorkerNSGAII(
+  public AsynchronousMultithreadedGeneticAlgorithm(
       int numberOfCores,
       Problem<S> problem,
       int populationSize,
       CrossoverOperator<S> crossover,
       MutationOperator<S> mutation,
+      SelectionOperator<List<S>, S> selection,
+      Replacement<S> replacement,
       Termination termination) {
     super(numberOfCores);
     this.problem = problem;
@@ -55,17 +55,11 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     this.mutation = mutation;
     this.populationSize = populationSize;
     this.termination = termination;
-
-    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
-
-    replacement =
-        new RankingAndDensityEstimatorReplacement<S>(
-            new MergeNonDominatedSortRanking<S>(),
-            new CrowdingDistanceDensityEstimator<S>(),
-            Replacement.RemovalPolicy.oneShot);
+    this.selection = selection ;
+    this.replacement = replacement ;
 
     attributes = new HashMap<>();
-    observable = new DefaultObservable<>("Asynchronous NSGAII observable");
+    observable = new DefaultObservable<>("Observable");
 
     this.numberOfCores = numberOfCores;
 
@@ -101,6 +95,7 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", System.currentTimeMillis() - initTime);
+    attributes.put("BEST_SOLUTION", population.get(0));
 
     observable.setChanged();
     observable.notifyObservers(attributes);
@@ -133,17 +128,6 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
         idleWorkers--;
       }
     }
-  }
-
-  @Override
-  public ParallelTask<S> waitForComputedTask() {
-    ParallelTask<S> evaluatedTask = null;
-    try {
-      evaluatedTask = completedTaskQueue.take();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    return evaluatedTask;
   }
 
   @Override
@@ -180,18 +164,6 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     } else {
       return ParallelTask.create(createTaskIdentifier(), problem.createSolution());
     }
-  }
-
-  @Override
-  public boolean thereAreInitialTasksPending(List<ParallelTask<S>> initialTaskList) {
-    return initialTaskList.size() > 0;
-  }
-
-  @Override
-  public ParallelTask<S> getInitialTask(List<ParallelTask<S>> initialTaskList) {
-    ParallelTask<S> initialTask = initialTaskList.get(0);
-    initialTaskList.remove(0);
-    return initialTask;
   }
 
   @Override
