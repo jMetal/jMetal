@@ -9,28 +9,24 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class Master<T extends ParallelTask<?>,R>
-    extends AsynchronousParallelAlgorithm<T,R> {
-  protected List<T> initialTaskList;
-
+    implements AsynchronousParallelAlgorithm<T,R> {
   protected int numberOfCores;
   protected BlockingQueue<T> completedTaskQueue;
   protected BlockingQueue<T> pendingTaskQueue;
 
   public Master(int numberOfCores) {
-    this.initialTaskList = new LinkedList<>();
-
     this.numberOfCores = numberOfCores;
     this.completedTaskQueue =  new LinkedBlockingQueue<>();
     this.pendingTaskQueue = new LinkedBlockingQueue<>();
   }
 
   @Override
-  protected void submitInitialTaskList() {
-    if (initialTaskList.size() >= numberOfCores) {
-      initialTaskList.forEach(this::submitTask);
+  public void submitInitialTasks(List<T> initialTasks) {
+    if (initialTasks.size() >= numberOfCores) {
+      initialTasks.forEach(this::submitTask);
     } else {
-      int idleWorkers = numberOfCores - initialTaskList.size();
-      initialTaskList.forEach(this::submitTask);
+      int idleWorkers = numberOfCores - initialTasks.size();
+      initialTasks.forEach(this::submitTask);
       while (idleWorkers > 0) {
         submitTask(createNewTask());
         idleWorkers--;
@@ -39,7 +35,7 @@ public abstract class Master<T extends ParallelTask<?>,R>
   }
 
   @Override
-  protected T waitForComputedTask() {
+  public T waitForComputedTask() {
     T evaluatedTask = null;
     try {
       evaluatedTask = completedTaskQueue.take();
@@ -50,30 +46,30 @@ public abstract class Master<T extends ParallelTask<?>,R>
   }
 
   @Override
-  protected abstract void processComputedTask(T task);
+  public abstract void processComputedTask(T task);
 
   @Override
-  protected void submitTask(T task) {
+  public void submitTask(T task) {
     pendingTaskQueue.add(task);
   }
 
   @Override
-  protected abstract T createNewTask();
+  public abstract T createNewTask();
 
   @Override
-  protected boolean thereAreInitialTasksPending() {
-    return initialTaskList.size() > 0;
+  public boolean thereAreInitialTasksPending(List<T> initialTasks) {
+    return initialTasks.size() > 0;
   }
 
   @Override
-  protected T getInitialTask() {
-    T initialTask = initialTaskList.get(0);
-    initialTaskList.remove(0);
+  public T getInitialTask(List<T> initialTasks) {
+    T initialTask = initialTasks.get(0);
+    initialTasks.remove(0);
     return initialTask;
   }
 
   @Override
-  protected abstract boolean stoppingConditionIsNotMet();
+  public abstract boolean stoppingConditionIsNotMet();
 
   public BlockingQueue<T> getCompletedTaskQueue() {
     return completedTaskQueue;

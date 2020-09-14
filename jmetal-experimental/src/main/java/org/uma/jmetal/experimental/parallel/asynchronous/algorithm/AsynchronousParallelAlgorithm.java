@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.parallel.asynchronous.algorithm;
 import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
 import org.uma.jmetal.util.observable.Observable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,35 +16,34 @@ import java.util.Map;
  *
  * @param <T> Task to be computed
  */
-public abstract class AsynchronousParallelAlgorithm<T extends ParallelTask<?>, R> {
-  abstract protected void submitInitialTaskList();
-  abstract protected T waitForComputedTask();
-  abstract protected void processComputedTask(T task);
-  abstract protected void submitTask(T task);
-  abstract protected T createNewTask();
-  abstract protected boolean thereAreInitialTasksPending();
-  abstract protected T getInitialTask();
-  abstract protected boolean stoppingConditionIsNotMet();
-  abstract protected void initProgress() ;
-  abstract protected void updateProgress() ;
-  abstract public R getResult() ;
+public interface AsynchronousParallelAlgorithm<T extends ParallelTask<?>, R> {
+  void submitInitialTasks(List<T> tasks);
+  List<T> createInitialTasks() ;
+  T waitForComputedTask();
+  void processComputedTask(T task);
+  void submitTask(T task);
+  T createNewTask();
+  boolean thereAreInitialTasksPending(List<T> tasks);
+  T getInitialTask(List<T> tasks);
+  boolean stoppingConditionIsNotMet();
+  void initProgress() ;
+  void updateProgress() ;
+  R getResult() ;
 
-  abstract public Observable<Map<String, Object>> getObservable() ;
+  default void run() {
+    List<T> initialTasks = createInitialTasks();
+    submitInitialTasks(initialTasks);
 
-  public void run() {
     initProgress() ;
-    submitInitialTaskList();
-
     while (stoppingConditionIsNotMet()) {
       T computedTask = waitForComputedTask();
       processComputedTask(computedTask);
 
-      if (thereAreInitialTasksPending()) {
-        submitTask(getInitialTask());
+      if (thereAreInitialTasksPending(initialTasks)) {
+        submitTask(getInitialTask(initialTasks));
       } else {
         submitTask(createNewTask());
       }
-
       updateProgress();
     }
   }

@@ -40,8 +40,6 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
   private Map<String, Object> attributes;
   private Observable<Map<String, Object>> observable;
 
-  protected List<ParallelTask<S>> initialTaskList;
-
   private int numberOfCores;
 
   public AsynchronousMultithreadedMasterWorkerNSGAII(
@@ -69,21 +67,27 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     attributes = new HashMap<>();
     observable = new DefaultObservable<>("Asynchronous NSGAII observable");
 
-    this.initialTaskList = new LinkedList<>();
-
     this.numberOfCores = numberOfCores;
 
+    createWorkers(numberOfCores, problem);
+  }
+
+  private void createWorkers(int numberOfCores, Problem<S> problem) {
     IntStream.range(0, numberOfCores).forEach(i -> new Worker<>(
             (task) -> {
               problem.evaluate(task.getContents());
-              return ParallelTask.create(1, task.getContents());
+              return ParallelTask.create(createTaskIdentifier(), task.getContents());
             },
             pendingTaskQueue,
             completedTaskQueue).start());
   }
 
+  private int createTaskIdentifier() {
+    return JMetalRandom.getInstance().nextInt(0, 1000000000) ;
+  }
+
   @Override
-  protected void initProgress() {
+  public void initProgress() {
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", System.currentTimeMillis() - initTime);
@@ -93,7 +97,7 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
   }
 
   @Override
-  protected void updateProgress() {
+  public void updateProgress() {
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", System.currentTimeMillis() - initTime);
@@ -102,8 +106,10 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     observable.notifyObservers(attributes);
   }
 
-  private void createInitialSolutions() {
+  @Override
+  public List<ParallelTask<S>> createInitialTasks() {
     List<S> initialPopulation = new ArrayList<>();
+    List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
     IntStream.range(0, populationSize)
         .forEach(i -> initialPopulation.add(problem.createSolution()));
     initialPopulation.forEach(
@@ -111,10 +117,12 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
           int taskId = JMetalRandom.getInstance().nextInt(0, 1000);
           initialTaskList.add(ParallelTask.create(taskId, solution));
         });
+
+    return initialTaskList ;
   }
 
   @Override
-  protected void submitInitialTaskList() {
+  public void submitInitialTasks(List<ParallelTask<S>> initialTaskList) {
     if (initialTaskList.size() >= numberOfCores) {
       initialTaskList.forEach(this::submitTask);
     } else {
@@ -128,7 +136,7 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
   }
 
   @Override
-  protected ParallelTask<S> waitForComputedTask() {
+  public ParallelTask<S> waitForComputedTask() {
     ParallelTask<S> evaluatedTask = null;
     try {
       evaluatedTask = completedTaskQueue.take();
@@ -139,7 +147,7 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
   }
 
   @Override
-  protected void processComputedTask(ParallelTask<S> task) {
+  public void processComputedTask(ParallelTask<S> task) {
     evaluations++;
     if (population.size() < populationSize) {
       population.add(task.getContents());
@@ -153,12 +161,12 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
   }
 
   @Override
-  protected void submitTask(ParallelTask<S> task) {
+  public void submitTask(ParallelTask<S> task) {
     pendingTaskQueue.add(task);
   }
 
   @Override
-  protected ParallelTask<S> createNewTask() {
+  public ParallelTask<S> createNewTask() {
     if (population.size() > 2) {
       List<S> parents = new ArrayList<>(2);
       parents.add(selection.execute(population));
@@ -168,34 +176,32 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
 
       mutation.execute(offspring.get(0));
 
-      return ParallelTask.create(1, offspring.get(0));
+      return ParallelTask.create(createTaskIdentifier(), offspring.get(0));
     } else {
-      return ParallelTask.create(0, problem.createSolution());
+      return ParallelTask.create(createTaskIdentifier(), problem.createSolution());
     }
   }
 
   @Override
-  protected boolean thereAreInitialTasksPending() {
+  public boolean thereAreInitialTasksPending(List<ParallelTask<S>> initialTaskList) {
     return initialTaskList.size() > 0;
   }
 
   @Override
-  protected ParallelTask<S> getInitialTask() {
+  public ParallelTask<S> getInitialTask(List<ParallelTask<S>> initialTaskList) {
     ParallelTask<S> initialTask = initialTaskList.get(0);
     initialTaskList.remove(0);
     return initialTask;
   }
 
   @Override
-  protected boolean stoppingConditionIsNotMet() {
+  public boolean stoppingConditionIsNotMet() {
     return !termination.isMet(attributes);
   }
 
   @Override
   public void run() {
     initTime = System.currentTimeMillis();
-
-    createInitialSolutions();
     super.run();
   }
 
@@ -204,7 +210,6 @@ public class AsynchronousMultithreadedMasterWorkerNSGAII<S extends Solution<?>>
     return population;
   }
 
-  @Override
   public Observable<Map<String, Object>> getObservable() {
     return observable;
   }

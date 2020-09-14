@@ -1,7 +1,7 @@
 package org.uma.jmetal.experimental.parallel.asynchronous.example;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.AsynchronousMultithreadedMasterWorkerNSGAII;
+import org.uma.jmetal.experimental.parallel.asynchronous.algorithm.impl.AsynchronousMultithreadedMasterWorkerNSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -14,6 +14,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     int populationSize = 100;
     int maxEvaluations = 25000;
     int numberOfCores = 32 ;
@@ -33,7 +33,7 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
       public DoubleSolution evaluate (DoubleSolution solution) {
         super.evaluate(solution) ;
 
-        for (long i = 0 ; i < 10000; i++)
+        for (long i = 0 ; i < 1000; i++)
           for (long j = 0; j < 10000; j++) {
             double a = sin(i)*Math.cos(j) ;
           }
@@ -51,22 +51,24 @@ public class AsynchronousMasterWorkerBasedNSGAIIExample {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     long initTime = System.currentTimeMillis();
-    AsynchronousMultithreadedMasterWorkerNSGAII<DoubleSolution> nsgaiiMaster =
+    AsynchronousMultithreadedMasterWorkerNSGAII<DoubleSolution> nsgaii =
         new AsynchronousMultithreadedMasterWorkerNSGAII<DoubleSolution>(
             numberOfCores, problem, populationSize, crossover, mutation, new TerminationByEvaluations(maxEvaluations));
 
-//    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-//        new RunTimeChartObserver<>(
-//            "NSGA-II",
-//            80,  1000, "resources/referenceFrontsCSV/ZDT1.pf");
 
-//    nsgaiiMaster.getObservable().register(runTimeChartObserver);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>(
+            "NSGA-II",
+            80,  10, "resources/referenceFrontsCSV/ZDT1.csv");
 
-    nsgaiiMaster.run();
+    nsgaii.getObservable().register(runTimeChartObserver);
+
+
+    nsgaii.run();
 
     long endTime = System.currentTimeMillis();
 
-    List<DoubleSolution> resultList = nsgaiiMaster.getResult();
+    List<DoubleSolution> resultList = nsgaii.getResult();
 
     JMetalLogger.logger.info("Computing time: " + (endTime - initTime));
     new SolutionListOutput(resultList)
