@@ -3,13 +3,15 @@ package org.uma.jmetal.util.bounds;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.Serializable;
+
 /**
  * Describes a pair of lower and upper bounds for a {@link Comparable} value.
  *
  * @param <T>
  *          the type of {@link Bounds}
  */
-public interface Bounds<T extends Comparable<T>> {
+public interface Bounds<T extends Comparable<T>> extends Serializable {
   /** @return the lower limit of these {@link Bounds} */
   T getLowerBound();
 
