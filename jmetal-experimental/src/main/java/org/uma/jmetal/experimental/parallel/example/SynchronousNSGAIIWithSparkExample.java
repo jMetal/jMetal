@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.synchronous;
+package org.uma.jmetal.experimental.parallel.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -8,6 +8,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBa
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.experimental.parallel.synchronous.SparkEvaluation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;

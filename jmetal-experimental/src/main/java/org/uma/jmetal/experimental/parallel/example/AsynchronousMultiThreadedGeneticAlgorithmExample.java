@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.parallel.asynchronous.example;
+package org.uma.jmetal.experimental.parallel.example;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuPlusLambdaReplacement;
