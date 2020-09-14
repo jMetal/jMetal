@@ -1,13 +1,12 @@
 package org.uma.jmetal.util.ranking;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

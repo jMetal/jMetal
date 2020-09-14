@@ -1,10 +1,8 @@
 package org.uma.jmetal.experimental.parallel.asynchronous.algorithm;
 
 import org.uma.jmetal.experimental.parallel.asynchronous.task.ParallelTask;
-import org.uma.jmetal.util.observable.Observable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Abstract class representing asynchronous parallel algorithms. The general idea is that whenever a new {@link ParallelTask}

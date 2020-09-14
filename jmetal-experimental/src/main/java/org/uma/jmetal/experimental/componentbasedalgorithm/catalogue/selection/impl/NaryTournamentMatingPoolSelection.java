@@ -1,9 +1,9 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 
 import java.util.ArrayList;
 import java.util.Comparator;

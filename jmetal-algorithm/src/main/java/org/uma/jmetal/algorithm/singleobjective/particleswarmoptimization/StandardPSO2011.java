@@ -6,7 +6,7 @@ import org.uma.jmetal.operator.selection.impl.BestSolutionSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
-import org.uma.jmetal.util.bounds.Bounds ;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.impl.AdaptiveRandomNeighborhood;

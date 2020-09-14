@@ -1,11 +1,11 @@
 package org.uma.jmetal.util.ranking.impl;
 
-import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.ranking.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
 import ru.ifmo.nds.NonDominatedSorting;
 

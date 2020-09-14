@@ -5,7 +5,7 @@ import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtil
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.bounds.Bounds ;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.*;

@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.ranking;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.util.ranking.Ranking;
-import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
