@@ -25,6 +25,18 @@ The `evaluate()` method receives the list of solutions to be evaluated by a prob
 * `SequentialSolutionListEvaluator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/SequentialSolutionListEvaluator.java>`_: the solutions are evaluated sequentially.
 * `MultiThreadedSolutionListEvaluator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/evaluator/impl/MultiThreadedSolutionListEvaluator.java>`_: the solutions are evaluated in parallel, by using the processor cores.
 
+An example is shown in the following code snippet:
+
+.. code-block:: java
+
+    SolutionListEvaluator<DoubleSolution> evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(8);
+
+    NSGAIIBuilder<DoubleSolution> builder =
+        new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(25000)
+            .setSolutionListEvaluator(evaluator);
+
 The resulting parallel model when using the `MultiThreadedSolutionListEvaluator` is **synchronous**, which implies that the behavior of the parallel algorithm is the same as the sequential one, but performance is affected by the fact that the algorithm alternates parallel (the solutions evaluation) and sequential codes (the rest of the algorithm code), so this model does not scale well.
 
 An evaluator missing in jMetal is one based on Apache Spark, which was described in the paper `C. Barba-González, J. García-Nieto, Antonio J. Nebro, J.F.Aldana-Montes: Multi-objective Big Data Optimization with jMetal and Spark . EMO 2017 <http://dx.doi.org/10.1007/978-3-319-54157-0_2>`_. However, including this evaluator in the core jMetal sub-module would require to include the dependency to the Spark Maven package in the `pom.xml` file of the `jmetal-core` sub-module. So, we decided to create the `jmetal-parallel` sub-module to include not only the dependencies of the Spark packages but also others that will be eventually be added in the future.
