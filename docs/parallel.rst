@@ -41,7 +41,30 @@ The resulting parallel model when using the `MultiThreadedSolutionListEvaluator`
 
 An evaluator missing in jMetal is one based on Apache Spark, which was described in the paper `C. Barba-González, J. García-Nieto, Antonio J. Nebro, J.F.Aldana-Montes: Multi-objective Big Data Optimization with jMetal and Spark . EMO 2017 <http://dx.doi.org/10.1007/978-3-319-54157-0_2>`_. However, including this evaluator in the core jMetal sub-module would require to include the dependency to the Spark Maven package in the `pom.xml` file of the `jmetal-core` sub-module. So, we decided to create the `jmetal-parallel` sub-module to include not only the dependencies of the Spark packages but also others that will be eventually be added in the future.
 
-Currently, besides the `SparkSolutionListEvaluator`, we provide also a `SparkEvaluation` class, which implements the `Evaluation <https://github.com/jMetal/jMetal/blob/master/jmetal-experimental/src/main/java/org/uma/jmetal/experimental/componentbasedalgorithm/catalogue/evaluation/Evaluation.java>`_ interface.
+The use of the `SparkSolutionListEvaluator <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/synchronous/SparkSolutionListEvaluator.java>`_ class is include in the `SynchronousNSGAIIWithSparkExample <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/example/SynchronousNSGAIIWithSparkExample.java>`_: 
+
+.. code-block:: java
+
+    SparkConf sparkConf = new SparkConf()
+            .setMaster("local[8]") // 8 cores
+            .setAppName("NSGA-II with Spark");
+
+    JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+    SolutionListEvaluator<DoubleSolution> evaluator = new SparkSolutionListEvaluator<>(sparkContext) ;
+
+    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
+            .setSelectionOperator(selection)
+            .setMaxEvaluations(maxEvaluations)
+            .setSolutionListEvaluator(new SparkSolutionListEvaluator<>(sparkContext))
+            .build();
+
+    algorithm.run();
+    List<DoubleSolution> population = algorithm.getResult();
+
+    evaluator.shutdown();
+
+
+Currently, besides the `SparkSolutionListEvaluator`, we provide also a `SparkEvaluation <https://github.com/jMetal/jMetal/blob/master/jmetal-parallel/src/main/java/org/uma/jmetal/parallel/synchronous/SparkEvaluation.java>`_ class, which implements the `Evaluation <https://github.com/jMetal/jMetal/blob/master/jmetal-experimental/src/main/java/org/uma/jmetal/experimental/componentbasedalgorithm/catalogue/evaluation/Evaluation.java>`_ interface.
 
 
 Asynchronous parallelism
