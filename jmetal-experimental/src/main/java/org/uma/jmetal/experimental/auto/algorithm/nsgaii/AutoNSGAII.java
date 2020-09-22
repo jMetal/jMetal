@@ -160,7 +160,7 @@ public class AutoNSGAII {
    *
    * @return
    */
-  EvolutionaryAlgorithm<DoubleSolution> create() {
+  public EvolutionaryAlgorithm<DoubleSolution> create() {
 
     DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
 
