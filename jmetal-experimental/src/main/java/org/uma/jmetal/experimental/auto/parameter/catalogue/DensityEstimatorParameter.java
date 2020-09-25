@@ -10,27 +10,9 @@ import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 import java.util.List;
 import java.util.function.Function;
 
-public class DensityEstimatorParameter<S extends Solution<?>> extends CategoricalParameter<String> {
+public class DensityEstimatorParameter<S extends Solution<?>> extends CategoricalParameter {
   public DensityEstimatorParameter(String name, String args[], List<String> validDensityEstimators) {
     super(name, args, validDensityEstimators);
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--" + getName(), getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public DensityEstimator<S> getParameter() {

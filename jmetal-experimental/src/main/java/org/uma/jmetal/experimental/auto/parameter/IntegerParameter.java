@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IntegerParameter extends Parameter<Integer> {
-  private Integer lowerBound;
-  private Integer upperBound;
+  private final Integer lowerBound;
+  private final Integer upperBound;
 
   public IntegerParameter(String name, String[] args, Integer lowerBound, Integer upperBound) {
     super(name, args);
@@ -32,8 +32,7 @@ public class IntegerParameter extends Parameter<Integer> {
 
   @Override
   public IntegerParameter parse() {
-    setValue(on("--" + getName(), getArgs(), Integer::parseInt));
-    return this;
+    return (IntegerParameter) parse(Integer::parseInt);
   }
 
   public List<Integer> getValidValues() {

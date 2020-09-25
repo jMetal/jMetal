@@ -7,23 +7,13 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter<String> {
+public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter {
   public DifferentialEvolutionCrossoverParameter(String args[]) {
     super("differentialEvolutionCrossover", args, Arrays.asList("DE"));
   }
 
   @Override
   public void check() {
-  }
-
-  public Parameter<String> parse() {
-    setValue(on("--differentialEvolutionCrossover", getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    return this;
   }
 
   public DifferentialEvolutionCrossover getParameter() {

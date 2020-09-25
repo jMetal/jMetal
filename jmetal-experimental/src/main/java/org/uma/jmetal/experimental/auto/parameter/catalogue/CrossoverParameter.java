@@ -10,27 +10,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import java.util.List;
 import java.util.function.Function;
 
-public class CrossoverParameter extends CategoricalParameter<String> {
+public class CrossoverParameter extends CategoricalParameter {
   public CrossoverParameter(String args[], List<String> crossoverOperators) {
     super("crossover", args, crossoverOperators);
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--" +getName(), getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public CrossoverOperator<DoubleSolution> getParameter() {

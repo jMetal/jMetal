@@ -16,23 +16,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
-public class SelectionParameter extends CategoricalParameter<String> {
+public class SelectionParameter extends CategoricalParameter {
   public SelectionParameter(String args[], List<String> selectionStrategies) {
     super("selection", args, selectionStrategies) ;
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--" + getName(), getArgs(), Function.identity()));
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public MatingPoolSelection<?> getParameter(int matingPoolSize, Comparator<?> comparator) {

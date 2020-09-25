@@ -17,8 +17,7 @@ public class RealParameter extends Parameter<Double> {
 
   @Override
   public RealParameter parse() {
-    setValue(on("--" + getName(), getArgs(), Double::parseDouble));
-    return this;
+    return (RealParameter) parse(Double::parseDouble);
   }
 
   @Override

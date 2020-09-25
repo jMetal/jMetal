@@ -18,7 +18,7 @@ public class NSGAIIv2WithParameters {
   public static void main(String[] args) {
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
+                + "--referenceFrontFileName ZDT1.csv "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
@@ -50,7 +50,7 @@ public class NSGAIIv2WithParameters {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.pf");
+            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.csv");
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);

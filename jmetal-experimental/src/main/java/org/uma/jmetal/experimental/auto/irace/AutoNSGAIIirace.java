@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.auto.irace;
 
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
 import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.experimental.auto.parameter.RealParameter;
@@ -41,7 +42,7 @@ public class AutoNSGAIIirace {
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
   private ReferenceFrontFilenameParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
-  private StringCategoricalParameter algorithmResultParameter;
+  private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
   private PopulationSizeWithArchive populationSizeWithArchiveParameter;
   private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
@@ -66,7 +67,7 @@ public class AutoNSGAIIirace {
     }
 
     algorithmResultParameter =
-        new StringCategoricalParameter(
+        new CategoricalParameter(
             "algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
         new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));

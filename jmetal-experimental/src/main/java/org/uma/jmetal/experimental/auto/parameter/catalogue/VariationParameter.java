@@ -11,27 +11,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import java.util.List;
 import java.util.function.Function;
 
-public class VariationParameter extends CategoricalParameter<String> {
-  public VariationParameter(String args[], List<String> variationStrategies) {
+public class VariationParameter extends CategoricalParameter {
+  public VariationParameter(String[] args, List<String> variationStrategies) {
     super("variation", args, variationStrategies);
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--variation", getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public Variation<?> getParameter() {

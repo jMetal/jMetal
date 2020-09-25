@@ -17,27 +17,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
-public class ReplacementParameter extends CategoricalParameter<String> {
+public class ReplacementParameter extends CategoricalParameter {
   public ReplacementParameter(String args[], List<String> selectionStrategies) {
     super("replacement", args, selectionStrategies);
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--replacement", getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {

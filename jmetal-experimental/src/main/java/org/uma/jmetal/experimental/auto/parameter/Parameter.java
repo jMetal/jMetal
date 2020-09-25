@@ -44,6 +44,24 @@ public abstract class Parameter<T> {
 
   public abstract Parameter<T> parse();
 
+  public Parameter<T> parse(Function<String, T> parseFunction) {
+    setValue(on("--" + getName(), getArgs(), parseFunction));
+
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      parameter.parse().check();
+    }
+
+    getSpecificParameters()
+            .forEach(
+                    pair -> {
+                      if (pair.getKey().equals(getValue())) {
+                        pair.getValue().parse().check();
+                      }
+                    });
+
+    return this;
+  }
+
   public String getName() {
     return name;
   }
