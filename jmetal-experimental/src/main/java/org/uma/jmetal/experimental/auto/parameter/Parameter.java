@@ -7,6 +7,7 @@ import org.uma.jmetal.util.checking.Check;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -20,10 +21,10 @@ import java.util.function.Function;
  */
 public abstract class Parameter<T> {
   private T value;
-  private String name;
-  private String[] args;
-  private List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
-  private List<Parameter<?>> globalParameters = new ArrayList<>();
+  private final String name;
+  private final String[] args;
+  private final List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
+  private final List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public Parameter(String name, String[] args) {
     this.name = name;
@@ -104,10 +105,10 @@ public abstract class Parameter<T> {
 
   protected Parameter<?> findSpecificParameter(String parameterName) {
 
-    return getSpecificParameters().stream()
-        .filter(pair -> pair.getRight().getName().equals(parameterName))
-        .findFirst()
-        .orElse(null)
+    return Objects.requireNonNull(getSpecificParameters().stream()
+            .filter(pair -> pair.getRight().getName().equals(parameterName))
+            .findFirst()
+            .orElse(null))
         .getValue();
   }
 

@@ -4,13 +4,12 @@ import org.uma.jmetal.experimental.auto.parameter.OrdinalParameter;
 
 import java.util.List;
 
-public class PopulationSizeWithArchive extends OrdinalParameter<Integer> {
+public class PopulationSizeWithArchiveParameter extends OrdinalParameter<Integer> {
   private String[] args ;
 
-  public PopulationSizeWithArchive(String args[], List<Integer> validValues) {
+  public PopulationSizeWithArchiveParameter(String []args, List<Integer> validValues) {
     super("populationSizeWithArchive", args, validValues) ;
     this.args = args ;
-    //check(value) ;
   }
 
   @Override

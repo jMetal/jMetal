@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.Parameter;
+import org.uma.jmetal.util.checking.Check;
 
 public class PopulationSizeParameter extends Parameter<Integer> {
 
@@ -10,14 +11,11 @@ public class PopulationSizeParameter extends Parameter<Integer> {
 
   @Override
   public Parameter<Integer> parse() {
-    setValue(on("--populationSize", getArgs(), Integer::parseInt));
-    return this ;
+    return super.parse(Integer::parseInt) ;
   }
 
   @Override
   public void check() {
-    if (getValue() <= 0) {
-      throw new RuntimeException("The population size cannot not be <= 0") ;
-    }
+    Check.that(getValue() > 0, "The population size cannot not be <= 0");
   }
 }

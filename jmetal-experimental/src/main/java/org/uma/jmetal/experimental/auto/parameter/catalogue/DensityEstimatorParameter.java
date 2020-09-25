@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class DensityEstimatorParameter<S extends Solution<?>> extends CategoricalParameter {
-  public DensityEstimatorParameter(String name, String args[], List<String> validDensityEstimators) {
+  public DensityEstimatorParameter(String name, String[] args, List<String> validDensityEstimators) {
     super(name, args, validDensityEstimators);
   }
 

@@ -5,15 +5,12 @@ import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter {
-  public DifferentialEvolutionCrossoverParameter(String args[]) {
-    super("differentialEvolutionCrossover", args, Arrays.asList("DE"));
-  }
-
-  @Override
-  public void check() {
+  public DifferentialEvolutionCrossoverParameter(String[] args) {
+    super("differentialEvolutionCrossover", args, List.of("DE"));
   }
 
   public DifferentialEvolutionCrossover getParameter() {

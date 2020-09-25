@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public abstract class OrdinalParameter<T> extends Parameter<T> {
-  private List<T> validValues;
+  private final List<T> validValues;
 
   public OrdinalParameter(String name, String[] args, List<T> validValues) {
     super(name, args);
