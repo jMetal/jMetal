@@ -1,9 +1,6 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.function.Function;
 

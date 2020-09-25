@@ -1,6 +1,6 @@
 package org.uma.jmetal.utilities;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

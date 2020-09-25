@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.qualityIndicator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.qualityIndicator.impl.Epsilon;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
  * @author Antonio J. Nebro

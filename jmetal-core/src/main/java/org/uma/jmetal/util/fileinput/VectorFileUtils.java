@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.fileinput;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -1,6 +1,6 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 
 /**
@@ -16,7 +16,7 @@ public class Transformations {
   /**
    * bPoly transformation
    *
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws JMetalException
    */
   public float bPoly(float y, float alpha) throws JMetalException {
     if (!(alpha > 0)) {

@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.point.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.Comparator;
 

@@ -7,7 +7,7 @@ import org.uma.jmetal.lab.visualization.html.impl.HtmlGridView;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.FriedmanTestTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.MedianValuesTable;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl.WilcoxonTestTable;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;

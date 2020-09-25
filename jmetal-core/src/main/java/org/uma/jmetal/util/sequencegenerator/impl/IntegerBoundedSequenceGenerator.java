@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 /**

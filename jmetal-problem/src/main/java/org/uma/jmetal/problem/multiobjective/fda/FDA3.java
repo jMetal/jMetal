@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.Serializable;
 import java.util.ArrayList;

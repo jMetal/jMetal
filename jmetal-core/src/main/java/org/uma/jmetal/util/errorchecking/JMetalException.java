@@ -1,4 +1,6 @@
-package org.uma.jmetal.util;
+package org.uma.jmetal.util.errorchecking;
+
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.Serializable;
 import java.util.logging.Level;

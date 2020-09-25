@@ -3,7 +3,7 @@ package org.uma.jmetal.util;
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

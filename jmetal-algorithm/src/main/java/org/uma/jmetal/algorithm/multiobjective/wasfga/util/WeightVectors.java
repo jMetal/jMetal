@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga.util;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

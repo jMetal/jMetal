@@ -1,6 +1,6 @@
 package org.uma.jmetal.solution;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

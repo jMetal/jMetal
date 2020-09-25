@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.fileoutput.impl;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 
 import java.io.BufferedWriter;

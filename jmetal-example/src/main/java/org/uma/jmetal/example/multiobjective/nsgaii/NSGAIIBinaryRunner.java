@@ -14,6 +14,7 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
 public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * @throws ClassNotFoundException

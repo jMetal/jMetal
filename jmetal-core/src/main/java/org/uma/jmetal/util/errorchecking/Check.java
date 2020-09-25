@@ -1,6 +1,6 @@
-package org.uma.jmetal.util.checking;
+package org.uma.jmetal.util.errorchecking;
 
-import org.uma.jmetal.util.checking.exception.*;
+import org.uma.jmetal.util.errorchecking.exception.*;
 
 import java.util.Collection;
 

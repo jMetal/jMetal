@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.checking.exception;
+package org.uma.jmetal.util.errorchecking.exception;
 
 @SuppressWarnings("serial")
 public class InvalidConditionException extends RuntimeException {

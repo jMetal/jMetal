@@ -2,7 +2,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 import org.uma.jmetal.problem.sequenceproblem.impl.CharSequenceProblem;
 import org.uma.jmetal.solution.sequencesolution.impl.CharSequenceSolution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** This problem consists in finding a string matching a target string. */

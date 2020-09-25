@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.evaluator.impl;
 
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.List;

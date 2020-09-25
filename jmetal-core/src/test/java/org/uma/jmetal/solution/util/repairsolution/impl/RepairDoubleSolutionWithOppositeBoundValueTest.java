@@ -3,7 +3,7 @@ package org.uma.jmetal.solution.util.repairsolution.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 import static org.junit.Assert.assertEquals;
 
