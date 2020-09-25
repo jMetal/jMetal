@@ -13,8 +13,10 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -29,7 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class to configure NSGA-II with an argument string using class {@link ComponentBasedEvolutionaryAlgorithm}
+ * Class to configure NSGA-II with an argument string using class {@link
+ * ComponentBasedEvolutionaryAlgorithm}
  *
  * @autor Antonio J. Nebro
  */
@@ -37,19 +40,19 @@ public class AutoNSGAIIv2 {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
-  private ProblemNameParameter<DoubleSolution> problemNameParameter;
+  private StringParameter problemNameParameter;
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
-  private PopulationSizeWithArchiveParameter populationSizeWithArchiveParameter;
-  private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
+  private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new ProblemNameParameter<>(args);
+    problemNameParameter = new StringParameter("problemName", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
@@ -122,7 +125,7 @@ public class AutoNSGAIIv2 {
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
     offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
+        new IntegerParameter("offspringPopulationSize", args, 1, 400);
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -146,9 +149,10 @@ public class AutoNSGAIIv2 {
 
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
-        new CategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
+        new CategoricalParameter(
+            "algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchiveParameter(args, Arrays.asList(10, 20, 50, 100, 200));
+        new IntegerParameter("populationSizeWithArchive", args, 10, 200);
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
   }
@@ -160,7 +164,7 @@ public class AutoNSGAIIv2 {
    */
   ComponentBasedEvolutionaryAlgorithm<DoubleSolution> create() {
 
-    DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue()) ;
 
     Archive<DoubleSolution> archive = null;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
@@ -168,7 +172,8 @@ public class AutoNSGAIIv2 {
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
-    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceComparator<>());
+    Ranking<DoubleSolution> ranking =
+        new FastNonDominatedSortRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<DoubleSolution>(
@@ -176,7 +181,7 @@ public class AutoNSGAIIv2 {
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
+        createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>) variationParameter.getParameter();
@@ -187,22 +192,25 @@ public class AutoNSGAIIv2 {
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;
+    Preference<DoubleSolution> preferenceForReplacement =
+        new Preference<>(ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
-            new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
+        new RankingAndDensityEstimatorReplacement<>(
+            preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     ComponentBasedEvolutionaryAlgorithm<DoubleSolution> nsgaii =
         new ComponentBasedEvolutionaryAlgorithm<>(
-            "NSGA-II",
-            evaluation,
-            initialSolutionsCreation,
-            termination,
-            selection,
-            variation,
-            replacement).withArchive(archive) ;
+                "NSGA-II",
+                evaluation,
+                initialSolutionsCreation,
+                termination,
+                selection,
+                variation,
+                replacement)
+            .withArchive(archive);
 
     return nsgaii;
   }

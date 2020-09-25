@@ -13,8 +13,10 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -37,7 +39,7 @@ public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
-  private ProblemNameParameter<DoubleSolution> problemNameParameter;
+  private StringParameter problemNameParameter;
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
@@ -49,7 +51,7 @@ public class AutoNSGAII {
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new ProblemNameParameter<>(args);
+    problemNameParameter = new StringParameter("problemName", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
@@ -158,7 +160,7 @@ public class AutoNSGAII {
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
 
-    DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 
@@ -175,7 +177,7 @@ public class AutoNSGAII {
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
+        createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>) variationParameter.getParameter();

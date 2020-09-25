@@ -11,9 +11,11 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.M
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -36,19 +38,19 @@ public class AutoNSGAIIirace {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
-  private ProblemNameParameter<DoubleSolution> problemNameParameter;
+  private StringParameter problemNameParameter;
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
-  private PopulationSizeWithArchiveParameter populationSizeWithArchiveParameter;
-  private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
+  private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new ProblemNameParameter<>(args);
+    problemNameParameter = new StringParameter("problemName", args);
     populationSizeParameter = new PopulationSizeParameter(args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
@@ -66,8 +68,7 @@ public class AutoNSGAIIirace {
     algorithmResultParameter =
         new CategoricalParameter(
             "algorithmResult", args, Arrays.asList("externalArchive", "population"));
-    populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchiveParameter(args, Arrays.asList(10, 20, 50, 100, 200));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
     algorithmResultParameter.addSpecificParameter("population", populationSizeParameter);
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
@@ -123,7 +124,7 @@ public class AutoNSGAIIirace {
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
     offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
+            populationSizeWithArchiveParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
 
     variationParameter = new VariationParameter(args, List.of("crossoverAndMutationVariation"));
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
@@ -147,7 +148,7 @@ public class AutoNSGAIIirace {
    * @return
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
-    DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
@@ -163,7 +164,7 @@ public class AutoNSGAIIirace {
             List.of(ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
     var initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
+        createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
     var variation = (Variation<DoubleSolution>) variationParameter.getParameter();
     var selection =
         (MatingPoolSelection<DoubleSolution>)
