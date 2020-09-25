@@ -115,13 +115,13 @@ public class AutoNSGAII {
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
-        new DifferentialEvolutionCrossoverParameter(args);
+    //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
+    //    new DifferentialEvolutionCrossoverParameter(args);
 
-    RealParameter f = new RealParameter("f", args, 0.0, 1.0);
-    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
-    differentialEvolutionCrossover.addGlobalParameter(f);
-    differentialEvolutionCrossover.addGlobalParameter(cr);
+    //RealParameter f = new RealParameter("f", args, 0.0, 1.0);
+    //RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
+    //differentialEvolutionCrossover.addGlobalParameter(f);
+    //differentialEvolutionCrossover.addGlobalParameter(cr);
 
     offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
 
