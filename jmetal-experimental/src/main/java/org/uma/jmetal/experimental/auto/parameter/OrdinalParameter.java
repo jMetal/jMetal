@@ -31,14 +31,14 @@ public abstract class OrdinalParameter<T> extends Parameter<T> {
 
   @Override
   public String toString() {
-    String result =
-        "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues;
+    StringBuilder result =
+            new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += " -> " + parameter.toString();
+      result.append(" -> ").append(parameter.toString());
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n  -> " + parameter.getRight().toString();
+      result.append("\n  -> ").append(parameter.getRight().toString());
     }
-    return result;
+    return result.toString();
   }
 }

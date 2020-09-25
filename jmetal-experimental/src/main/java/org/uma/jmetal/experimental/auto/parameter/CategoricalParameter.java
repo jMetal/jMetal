@@ -31,14 +31,14 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
 
   @Override
   public String toString() {
-    String result =
-        "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues;
+    StringBuilder result =
+            new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += "\n -> " + parameter.toString();
+      result.append("\n -> ").append(parameter.toString());
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n -> " + parameter.toString();
+      result.append("\n -> ").append(parameter.toString());
     }
-    return result;
+    return result.toString();
   }
 }

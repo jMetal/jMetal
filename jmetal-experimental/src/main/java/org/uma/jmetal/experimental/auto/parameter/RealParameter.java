@@ -42,22 +42,22 @@ public class RealParameter extends Parameter<Double> {
 
   @Override
   public String toString() {
-    String result =
-        "Name: "
-            + getName()
-            + ": "
-            + "Value: "
-            + getValue()
-            + ". Lower bound: "
-            + lowerBound
-            + ". Upper bound: "
-            + upperBound;
+    StringBuilder result =
+            new StringBuilder("Name: "
+                    + getName()
+                    + ": "
+                    + "Value: "
+                    + getValue()
+                    + ". Lower bound: "
+                    + lowerBound
+                    + ". Upper bound: "
+                    + upperBound);
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += "\n -> " + parameter.toString();
+      result.append("\n -> ").append(parameter.toString());
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n  -> " + parameter.getRight().toString();
+      result.append("\n  -> ").append(parameter.getRight().toString());
     }
-    return result;
+    return result.toString();
   }
 }

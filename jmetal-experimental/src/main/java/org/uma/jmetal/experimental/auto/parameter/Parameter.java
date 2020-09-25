@@ -23,7 +23,6 @@ public abstract class Parameter<T> {
   private String name;
   private String[] args;
   private List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
-  //private Map<String, Parameter<?>> specificParameters = new HashMap<>();
   private List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public Parameter(String name, String[] args) {
@@ -38,11 +37,7 @@ public abstract class Parameter<T> {
   private String retrieve(String[] args, String key) {
     int index = Arrays.asList(args).indexOf(key);
     Check.that(index != -1 && index != args.length - 1, "Missing parameter: " + key);
-    //if (index == -1 || index == args.length - 1) {
-    //  throw new MissingParameterException(key);
-    //} else {
     return args[index + 1];
-    //}
   }
 
   public abstract void check();
@@ -82,42 +77,38 @@ public abstract class Parameter<T> {
   }
 
   protected Parameter<?> findGlobalParameter(String parameterName) {
-    Parameter<?> result =
-        getGlobalParameters().stream()
-            .filter(parameter -> parameter.getName().equals(parameterName))
-            .findFirst()
-            .orElse(null);
 
-    return result;
+    return getGlobalParameters().stream()
+        .filter(parameter -> parameter.getName().equals(parameterName))
+        .findFirst()
+        .orElse(null);
   }
 
   protected Parameter<?> findSpecificParameter(String parameterName) {
-    Parameter<?> result =
-        getSpecificParameters().stream()
-            .filter(pair -> pair.getRight().getName().equals(parameterName))
-            .findFirst()
-            .orElse(null)
-            .getValue();
 
-    return result;
+    return getSpecificParameters().stream()
+        .filter(pair -> pair.getRight().getName().equals(parameterName))
+        .findFirst()
+        .orElse(null)
+        .getValue();
   }
 
   @Override
   public String toString() {
-    String result = "Name: " + getName() + ": " + "Value: " + getValue();
+    StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
     if (globalParameters.size() > 0) {
-      result += "\n\t";
+      result.append("\n\t");
       for (Parameter<?> parameter : globalParameters) {
-        result += " \n -> " + parameter.toString();
+        result.append(" \n -> ").append(parameter.toString());
       }
     }
     if (specificParameters.size() > 0) {
-      result += "\n\t";
+      result.append("\n\t");
 
       for (Pair<String, Parameter<?>> parameter : specificParameters) {
-        result += " \n -> " + parameter.toString();
+        result.append(" \n -> ").append(parameter.toString());
       }
     }
-    return result;
+    return result.toString();
   }
 }
