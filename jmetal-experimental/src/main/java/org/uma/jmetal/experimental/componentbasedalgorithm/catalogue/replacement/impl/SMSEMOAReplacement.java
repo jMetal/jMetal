@@ -37,9 +37,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     List<S> resultPopulation = new ArrayList<>() ;
     for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
-      for (S solution : ranking.getSubFront(i)) {
-        resultPopulation.add(solution);
-      }
+      resultPopulation.addAll(ranking.getSubFront(i));
     }
 
     for (int i = 0; i < lastSubfront.size()-1; i++) {

@@ -195,8 +195,7 @@ public class AutoNSGAII {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii =
-        new EvolutionaryAlgorithm<>(
+    var nsgaii = new EvolutionaryAlgorithm<>(
             "NSGA-II",
             evaluation,
             initialSolutionsCreation,

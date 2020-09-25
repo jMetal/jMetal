@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class CrossoverParameter extends CategoricalParameter {
-  public CrossoverParameter(String args[], List<String> crossoverOperators) {
+  public CrossoverParameter(String[] args, List<String> crossoverOperators) {
     super("crossover", args, crossoverOperators);
   }
 
@@ -38,10 +38,5 @@ public class CrossoverParameter extends CategoricalParameter {
         throw new RuntimeException("Crossover operator does not exist: " + getName());
     }
     return result;
-  }
-
-  @Override
-  public String getName() {
-    return "crossover";
   }
 }
