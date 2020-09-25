@@ -5,7 +5,7 @@ import org.uma.jmetal.experimental.auto.parameter.OrdinalParameter;
 import java.util.List;
 
 public class PopulationSizeWithArchiveParameter extends OrdinalParameter<Integer> {
-  private String[] args ;
+  private final String[] args ;
 
   public PopulationSizeWithArchiveParameter(String []args, List<Integer> validValues) {
     super("populationSizeWithArchive", args, validValues) ;

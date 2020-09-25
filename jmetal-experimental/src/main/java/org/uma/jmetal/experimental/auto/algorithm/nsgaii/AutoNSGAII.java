@@ -1,10 +1,7 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
-import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
@@ -41,19 +38,19 @@ public class AutoNSGAII {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
-  private ReferenceFrontFilenameParameter referenceFrontFilename;
+  private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
-  private PopulationSizeWithArchiveParameter populationSizeWithArchiveParameter;
-  private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
+  private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
-    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
+    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
@@ -124,8 +121,7 @@ public class AutoNSGAII {
     differentialEvolutionCrossover.addGlobalParameter(f);
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
-    offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
+    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -150,8 +146,7 @@ public class AutoNSGAII {
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
-    populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchiveParameter(args, Arrays.asList(10, 20, 50, 100, 200));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
   }

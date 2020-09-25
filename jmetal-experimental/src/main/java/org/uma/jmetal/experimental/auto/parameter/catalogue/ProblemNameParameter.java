@@ -14,6 +14,6 @@ public class ProblemNameParameter<S extends Solution<?>> extends StringParameter
   }
 
   public Problem<S> getProblem() {
-    return ProblemUtils.<S>loadProblem(getValue());
+    return ProblemUtils.loadProblem(getValue());
   }
 }

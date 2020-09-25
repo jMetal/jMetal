@@ -50,7 +50,7 @@ public class NSGAIIWithParameters {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.pf");
+            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.csv");
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);

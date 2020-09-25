@@ -1,9 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
-import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
-import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
@@ -41,7 +38,7 @@ public class AutoNSGAIIv2 {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
-  private ReferenceFrontFilenameParameter referenceFrontFilename;
+  private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
@@ -53,7 +50,7 @@ public class AutoNSGAIIv2 {
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
-    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
+    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 

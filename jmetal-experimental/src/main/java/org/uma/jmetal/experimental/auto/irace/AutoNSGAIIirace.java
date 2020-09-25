@@ -1,10 +1,7 @@
 package org.uma.jmetal.experimental.auto.irace;
 
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
-import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
@@ -40,7 +37,7 @@ public class AutoNSGAIIirace {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private ProblemNameParameter<DoubleSolution> problemNameParameter;
-  private ReferenceFrontFilenameParameter referenceFrontFilename;
+  private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
@@ -53,7 +50,7 @@ public class AutoNSGAIIirace {
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new ProblemNameParameter<>(args);
     populationSizeParameter = new PopulationSizeParameter(args);
-    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
+    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
