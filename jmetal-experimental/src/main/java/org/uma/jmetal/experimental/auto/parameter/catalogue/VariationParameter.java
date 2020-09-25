@@ -31,7 +31,7 @@ public class VariationParameter extends CategoricalParameter {
             mutationParameter.getParameter();
 
         result =
-            new CrossoverAndMutationVariation<DoubleSolution>(
+            new CrossoverAndMutationVariation<>(
                 offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
         break;
       default:
