@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class MutationParameter extends CategoricalParameter<String> {
-  public MutationParameter(String args[], List<String> mutationOperators) {
+  public MutationParameter(String[] args, List<String> mutationOperators) {
     super("mutation", args, mutationOperators);
   }
 

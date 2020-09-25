@@ -4,7 +4,7 @@ import org.uma.jmetal.experimental.auto.parameter.Parameter;
 
 public class PopulationSizeParameter extends Parameter<Integer> {
 
-  public PopulationSizeParameter(String args[]) {
+  public PopulationSizeParameter(String[] args) {
     super("populationSize", args) ;
   }
 

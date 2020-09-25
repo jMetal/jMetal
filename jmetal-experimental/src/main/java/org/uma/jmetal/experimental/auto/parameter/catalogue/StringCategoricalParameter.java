@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class StringCategoricalParameter extends CategoricalParameter<String> {
 
-  public StringCategoricalParameter(String name, String args[], List<String> validValues) {
+  public StringCategoricalParameter(String name, String[] args, List<String> validValues) {
     super(name, args, validValues) ;
   }
 

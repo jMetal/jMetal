@@ -16,7 +16,7 @@ public class CrossoverParameter extends CategoricalParameter<String> {
   }
 
   public CategoricalParameter<String> parse() {
-    setValue(on("--crossover", getArgs(), Function.identity()));
+    setValue(on("--" +getName(), getArgs(), Function.identity()));
 
     for (Parameter<?> parameter : getGlobalParameters()) {
       parameter.parse().check();

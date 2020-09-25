@@ -22,7 +22,7 @@ public class SelectionParameter extends CategoricalParameter<String> {
   }
 
   public CategoricalParameter<String> parse() {
-    setValue(on("--selection", getArgs(), Function.identity()));
+    setValue(on("--" + getName(), getArgs(), Function.identity()));
 
     getSpecificParameters()
         .forEach(
