@@ -12,11 +12,9 @@ import java.util.List;
 import java.util.function.Function;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
-  private String[] args ;
 
-  public CreateInitialSolutionsParameter(String args[], List<String> validValues) {
+  public CreateInitialSolutionsParameter(String[] args, List<String> validValues) {
     super("createInitialSolutions", args, validValues) ;
-    this.args = args ;
   }
 
   public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {

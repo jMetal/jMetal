@@ -8,7 +8,6 @@ import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class MutationParameter extends CategoricalParameter {
   public MutationParameter(String[] args, List<String> mutationOperators) {
