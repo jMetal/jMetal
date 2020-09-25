@@ -30,9 +30,4 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
             getValue() + " is not a valid initialization strategy");
     }
   }
-
-  @Override
-  public String getName() {
-    return "createInitialSolutions";
-  }
 }
