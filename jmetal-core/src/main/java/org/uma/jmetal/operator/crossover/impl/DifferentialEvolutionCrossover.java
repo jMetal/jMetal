@@ -416,16 +416,13 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   private void repairVariableValues(DoubleSolution solution) {
     IntStream.range(0, solution.getNumberOfVariables())
         .forEach(
-            i ->
-                {
-                  Bounds<Double> bounds = solution.getBounds(i);
-                  solution.setVariable(
-                      i,
-                      solutionRepair.repairSolutionVariableValue(
-                          solution.getVariable(i),
-                          bounds.getLowerBound(),
-                          bounds.getUpperBound()));
-                });
+            i -> {
+              Bounds<Double> bounds = solution.getBounds(i);
+              solution.setVariable(
+                  i,
+                  solutionRepair.repairSolutionVariableValue(
+                      solution.getVariable(i), bounds.getLowerBound(), bounds.getUpperBound()));
+            });
   }
 
   private double mutate(Double[][] parent, int index) {
@@ -455,7 +452,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestMutation(Double[][] parent, int index, int numberOfDifferenceVectors) {
-    Check.isNotNull(bestSolution) ;
+    Check.isNotNull(bestSolution);
     if (numberOfDifferenceVectors == 1) {
       return bestSolution.getVariable(index) + f * (parent[0][index] - parent[1][index]);
     } else if (numberOfDifferenceVectors == 2) {
@@ -469,10 +466,49 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestRandToBestMutation(Double[][] parent, int index) {
-    Check.isNotNull(bestSolution) ;
-    Check.isNotNull(currentSolution) ;
+    Check.isNotNull(bestSolution);
+    Check.isNotNull(currentSolution);
     return currentSolution.getVariable(index)
         + f * (bestSolution.getVariable(index) - currentSolution.getVariable(index))
         + f * (parent[0][index] - parent[1][index]);
+  }
+
+  public static DE_VARIANT getVariantFromString(String variant) {
+    DE_VARIANT deVariant;
+    switch (variant) {
+      case "RAND_1_BIN":
+        deVariant = DE_VARIANT.RAND_1_BIN;
+        break;
+      case "RAND_2_BIN":
+        deVariant = DE_VARIANT.RAND_2_BIN;
+        break;
+      case "BEST_1_BIN":
+        deVariant = DE_VARIANT.BEST_1_BIN;
+        break;
+      case "BEST_1_EXP":
+        deVariant = DE_VARIANT.BEST_1_EXP;
+        break;
+      case "BEST_2_BIN":
+        deVariant = DE_VARIANT.BEST_2_BIN;
+        break;
+      case "BEST_2_EXP":
+        deVariant = DE_VARIANT.BEST_2_EXP;
+        break;
+      case "RAND_TO_BEST_1_BIN":
+        deVariant = DE_VARIANT.RAND_TO_BEST_1_BIN;
+        break;
+      case "RAND_TO_BEST_1_EXP":
+        deVariant = DE_VARIANT.RAND_TO_BEST_1_EXP;
+        break;
+      case "CURRENT_TO_RAND_1_BIN":
+        deVariant = DE_VARIANT.CURRENT_TO_RAND_1_BIN;
+        break;
+      case "CURRENT_TO_RAND_1_EXP":
+        deVariant = DE_VARIANT.CURRENT_TO_RAND_1_EXP;
+        break;
+      default:
+        throw new JMetalException("Invalid differential evolution variant: " + variant);
+    }
+    return deVariant;
   }
 }
