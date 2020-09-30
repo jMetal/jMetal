@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing problem RE21. Source:
- * Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use real-world multi-objective optimization problem suite,
- * Applied Soft Computing, Vol. 89, pp. 106078 (2020). DOI: https://doi.org/10.1016/j.asoc.2020.106078
+ * Class representing problem RE21. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use
+ * real-world multi-objective optimization problem suite, Applied Soft Computing, Vol. 89, pp.
+ * 106078 (2020). DOI: https://doi.org/10.1016/j.asoc.2020.106078
  *
  * @author Antonio J. Nebro
  */

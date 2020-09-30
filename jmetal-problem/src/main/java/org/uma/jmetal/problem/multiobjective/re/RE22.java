@@ -60,5 +60,4 @@ public class RE22 extends AbstractDoubleProblem {
 
     return solution;
   }
-
 }
