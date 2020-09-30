@@ -44,15 +44,6 @@ public class RE25 extends AbstractDoubleProblem {
     double x2 = solution.getVariable(1);
     double x3 = getClosestValue(diameterFeasibleIntergers, solution.getVariable(2));
 
-    double e = 700000;
-    double sigmaBMax = 700;
-    double tauMax = 450;
-    double deltaMax = 1.5;
-    double sigmaK = (e * x1 * x1) / 100;
-    double sigmaB = 4500 / (x1 * x2);
-    double tau = 1800 / x2;
-    double delta = (56.2 * 10000) / (e * x1 * x2 * x2);
-
     double[] g = new double[numberOfOriginalConstraints];
 
     double cf = ((4.0 * (x2 / x3) - 1) / (4.0 * (x2 / x3) - 4)) + (0.615 * x3 / x2);

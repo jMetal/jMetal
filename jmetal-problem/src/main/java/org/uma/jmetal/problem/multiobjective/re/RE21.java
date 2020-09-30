@@ -34,10 +34,10 @@ public class RE21 extends AbstractDoubleProblem {
       upperLimit.add(3 * tmpVar);
     }
 
-    lowerLimit.set(0, tmpVar);
-    lowerLimit.set(1, Math.sqrt(2.0) * tmpVar);
-    lowerLimit.set(2, Math.sqrt(2.0) * tmpVar);
-    lowerLimit.set(3, tmpVar);
+    lowerLimit.add(0, tmpVar);
+    lowerLimit.add(1, Math.sqrt(2.0) * tmpVar);
+    lowerLimit.add(2, Math.sqrt(2.0) * tmpVar);
+    lowerLimit.add(3, tmpVar);
 
     setVariableBounds(lowerLimit, upperLimit);
   }

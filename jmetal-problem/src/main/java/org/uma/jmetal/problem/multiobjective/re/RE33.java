@@ -37,14 +37,6 @@ public class RE33 extends AbstractDoubleProblem {
     double x3 = solution.getVariable(2);
     double x4 = solution.getVariable(3);
 
-    double P = 6000;
-    double L = 14;
-    double E = 30 * 1e6;
-
-    double G = 12 * 1e6;
-    double tauMax = 13600;
-    double sigmaMax = 30000;
-
     solution.setObjective(0, 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0));
     solution.setObjective(
         1, ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1)));
