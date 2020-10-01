@@ -12,7 +12,7 @@ import java.util.List;
  * of the population given by a {@link SequenceGenerator} object. If this last solution is replaced by the former if
  * it worse according to a {@link Comparator}.
  *
- * One the replacement is carried out, the next sequence number is generated.
+ * Once the replacement is carried out, the next sequence number is generated.
  *
  * @param <S>
  */
