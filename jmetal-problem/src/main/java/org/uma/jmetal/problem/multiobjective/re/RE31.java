@@ -5,8 +5,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
 
-import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
-
 /**
  * Class representing problem RE31. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use
  * real-world multi-objective optimization problem suite, Applied Soft Computing, Vol. 89, pp.

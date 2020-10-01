@@ -2,10 +2,9 @@ package org.uma.jmetal.problem.multiobjective.cre;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.re.RE21;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CRE21Test {
   @Test

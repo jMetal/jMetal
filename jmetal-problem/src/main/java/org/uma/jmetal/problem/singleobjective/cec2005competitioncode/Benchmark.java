@@ -47,8 +47,8 @@
 
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

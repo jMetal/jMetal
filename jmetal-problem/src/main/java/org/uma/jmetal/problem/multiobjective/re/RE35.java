@@ -3,7 +3,6 @@ package org.uma.jmetal.problem.multiobjective.re;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

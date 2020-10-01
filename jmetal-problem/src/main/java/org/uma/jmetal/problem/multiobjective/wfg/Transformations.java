@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * Class implementing the basics transformations for wfg

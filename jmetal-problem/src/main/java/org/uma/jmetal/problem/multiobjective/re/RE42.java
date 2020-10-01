@@ -5,7 +5,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Class representing problem RE42. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use

@@ -39,6 +39,7 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [10/1/2020] Added the problems described in: Ryoji Tanabe and Hisao Ishibuchi: An Easy-to-use Real-world Multi-objective Optimization Problem Suite. Applied Soft Computing, V.89, April 2020. DOI <https://doi.org/10.1016/j.asoc.2020.106078>`_
 
 * [9/14/2020] New ``jmetal-auto`` sub-module. It contains asynchronous versions of a genetic algorithm and NSGA-II, and a synchronous evaluator based on Apache Spark.
 
