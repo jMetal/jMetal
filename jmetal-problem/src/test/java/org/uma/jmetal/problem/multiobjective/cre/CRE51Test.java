@@ -1,4 +1,4 @@
-package org.uma.jmetal.problem.multiobjective.re;
+package org.uma.jmetal.problem.multiobjective.cre;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -6,26 +6,25 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RE31Test {
-
+class CRE51Test {
   @Test
   public void shouldConstructorCreateAProblemWithTheRightProperties() {
-    DoubleProblem problem = new RE31();
+    DoubleProblem problem = new CRE51();
 
     assertEquals(3, problem.getNumberOfVariables());
-    assertEquals(3, problem.getNumberOfObjectives());
-    assertEquals(0, problem.getNumberOfConstraints());
-    assertEquals("RE31", problem.getName());
+    assertEquals(5, problem.getNumberOfObjectives());
+    assertEquals(7, problem.getNumberOfConstraints());
+    assertEquals("CRE51", problem.getName());
   }
 
   @Test
   public void shouldEvaluateWorkProperly() {
-    DoubleProblem problem = new RE31();
+    DoubleProblem problem = new CRE51();
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);
 
     assertEquals(3, solution.getNumberOfVariables());
-    assertEquals(3, solution.getNumberOfObjectives());
-    assertEquals(0, solution.getNumberOfConstraints());
+    assertEquals(5, solution.getNumberOfObjectives());
+    assertEquals(7, solution.getNumberOfConstraints());
   }
 }

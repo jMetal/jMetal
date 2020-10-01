@@ -13,14 +13,13 @@ import java.util.List;
  *
  * @author Antonio J. Nebro
  */
-@SuppressWarnings("serial")
 public class CRE21 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE21() {
     setNumberOfVariables(3);
     setNumberOfObjectives(2);
-    setNumberOfConstraints(2);
+    setNumberOfConstraints(3);
     setName("CRE21");
 
     List<Double> lowerLimit = List.of(0.01, 0.01, 0.01);

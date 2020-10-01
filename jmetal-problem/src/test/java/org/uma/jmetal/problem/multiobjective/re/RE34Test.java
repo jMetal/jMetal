@@ -15,6 +15,7 @@ class RE34Test {
     assertEquals(5, problem.getNumberOfVariables());
     assertEquals(3, problem.getNumberOfObjectives());
     assertEquals(0, problem.getNumberOfConstraints());
+    assertEquals("RE34", problem.getName());
   }
 
   @Test

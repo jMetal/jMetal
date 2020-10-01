@@ -20,7 +20,7 @@ public class RE37 extends AbstractDoubleProblem {
     setNumberOfVariables(4);
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
-    setName("RE36");
+    setName("RE37");
 
     List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
     List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());

@@ -15,6 +15,7 @@ class RE25Test {
     assertEquals(3, problem.getNumberOfVariables());
     assertEquals(2, problem.getNumberOfObjectives());
     assertEquals(0, problem.getNumberOfConstraints());
+    assertEquals("RE25", problem.getName());
   }
 
   @Test
