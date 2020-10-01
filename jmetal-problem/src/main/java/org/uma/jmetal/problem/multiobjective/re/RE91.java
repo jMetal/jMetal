@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class representing problem RE61. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Antonio J. Nebro
  */
 public class RE91 extends AbstractDoubleProblem {
+  private Random random = new Random() ;
 
   /** Constructor */
   public RE91() {
@@ -22,8 +24,8 @@ public class RE91 extends AbstractDoubleProblem {
     setNumberOfConstraints(0);
     setName("RE91");
 
-    List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.875, 0.4, 0.4);
-    List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 1.2, 1.2);
+    List<Double> lowerLimit = List.of(0.5, 0.45, 0.5, 0.5, 0.875, 0.4, 0.4);
+    List<Double> upperLimit = List.of(1.5, 1.35, 1.5, 1.5, 2.265, 1.2, 1.2);
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -31,8 +33,15 @@ public class RE91 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.getVariable(i);
+    double[] x = new double[11];
+    for (int i = 0; i < getNumberOfVariables(); i++) {
+      x[i] = solution.getVariable(i);
+    }
+
+    x[7] = 0.006 * (random.nextGaussian()) + 0.345;
+    x[8] = 0.006 * (random.nextGaussian()) + 0.192;
+    x[9] = 10 * (random.nextGaussian()) + 0.0;
+    x[10] = 10 * (random.nextGaussian()) + 0.0;
 
     solution.setObjective(
         0,

@@ -36,11 +36,6 @@ public class RE37 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = Math.rint(solution.getVariable(0));
-    double x2 = Math.rint(solution.getVariable(1));
-    double x3 = Math.rint(solution.getVariable(2));
-    double x4 = Math.rint(solution.getVariable(3));
-
     double xAlpha = solution.getVariable(0);
     double xHA = solution.getVariable(1);
     double xOA = solution.getVariable(2);
