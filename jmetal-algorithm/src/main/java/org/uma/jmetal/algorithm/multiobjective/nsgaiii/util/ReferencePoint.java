@@ -6,7 +6,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -78,31 +78,17 @@ public class ReferencePoint<S extends Solution<?>> {
     this.potentialMembers.add(new ImmutablePair<S,Double>(member_ind,distance) );
   }
 
-  public S FindClosestMember() {
-    double minDistance = Double.MAX_VALUE;
-    S closetMember = null;
-    for (Pair<S,Double> p : this.potentialMembers) {
-      if (p.getRight() < minDistance) {
-        minDistance = p.getRight();
-        closetMember = p.getLeft();
-      }
-    }
+  public void sort() {
+    this.potentialMembers.sort(Comparator.comparing(Pair<S, Double>::getRight).reversed());
+  }
 
-    return closetMember;
+  public S FindClosestMember() {
+    return this.potentialMembers.remove(this.potentialMembers.size() - 1)
+            .getLeft();
   }
   
   public S RandomMember() {
     int index = this.potentialMembers.size()>1 ? JMetalRandom.getInstance().nextInt(0, this.potentialMembers.size()-1):0;
-    return this.potentialMembers.get(index).getLeft();
-  }
-  
-  public void RemovePotentialMember(S solution) {
-    Iterator<Pair<S, Double>> it = this.potentialMembers.iterator();
-    while (it.hasNext()) {
-      if (it.next().getLeft().equals(solution)) {
-        it.remove();
-        break;
-      }
-    }
+    return this.potentialMembers.remove(index).getLeft();
   }
 }
