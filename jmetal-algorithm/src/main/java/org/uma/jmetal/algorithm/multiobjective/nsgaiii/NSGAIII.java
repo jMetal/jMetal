@@ -128,24 +128,30 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     Ranking<S> ranking = computeRanking(jointPopulation);
     
     //List<Solution> pop = crowdingDistanceSelection(ranking);
+    List<S> last = new ArrayList<>();
     List<S> pop = new ArrayList<>();
     List<List<S>> fronts = new ArrayList<>();
     int rankingIndex = 0;
     int candidateSolutions = 0;
     while (candidateSolutions < getMaxPopulationSize()) {
-      fronts.add(ranking.getSubFront(rankingIndex));
-      candidateSolutions += ranking.getSubFront(rankingIndex).size();
-      if ((pop.size() + ranking.getSubFront(rankingIndex).size()) <= getMaxPopulationSize())
-        addRankedSolutionsToPopulation(ranking, rankingIndex, pop);
+      last = ranking.getSubFront(rankingIndex);
+      fronts.add(last);
+      candidateSolutions += last.size();
+      if ((pop.size() + last.size()) <= getMaxPopulationSize())
+        pop.addAll(last);
       rankingIndex++;
     }
+
+    if (pop.size() == this.getMaxPopulationSize())
+      return pop;
     
     // A copy of the reference list should be used as parameter of the environmental selection
     EnvironmentalSelection<S> selection =
-            new EnvironmentalSelection<>(fronts,getMaxPopulationSize(),getReferencePointsCopy(),
+            new EnvironmentalSelection<>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
                     getProblem().getNumberOfObjectives());
     
-    pop = selection.execute(pop);
+    var choosen = selection.execute(last);
+    pop.addAll(choosen);
      
     return pop;
   }
@@ -160,16 +166,6 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     ranking.computeRanking(solutionList) ;
 
     return ranking ;
-  }
-
-  protected void addRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
-    List<S> front ;
-
-    front = ranking.getSubFront(rank);
-
-    for (int i = 0 ; i < front.size(); i++) {
-      population.add(front.get(i));
-    }
   }
 
   protected List<S> getNonDominatedSolutions(List<S> solutionList) {
