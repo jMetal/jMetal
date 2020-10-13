@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMSEMOAStandardSettingsExample extends AbstractAlgorithmRunner {
+public class SMSEMOADefaultConfigurationExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
     CrossoverOperator<DoubleSolution> crossover;
