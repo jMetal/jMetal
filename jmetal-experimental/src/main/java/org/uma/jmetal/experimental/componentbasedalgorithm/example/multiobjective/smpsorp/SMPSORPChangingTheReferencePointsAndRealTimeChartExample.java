@@ -49,8 +49,8 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
+
     referencePoints.add(Arrays.asList(0.2, 0.8));
-    referencePoints.add(Arrays.asList(0.7, 0.4));
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
