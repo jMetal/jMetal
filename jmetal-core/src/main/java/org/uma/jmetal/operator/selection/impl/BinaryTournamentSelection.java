@@ -14,14 +14,14 @@ import java.util.Comparator;
  * @author Antonio J. Nebro, Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class BinaryTournamentSelection<S extends Solution<?>> extends TournamentSelection<S> {
+public class BinaryTournamentSelection<S extends Solution<?>> extends NaryTournamentSelection<S> {
     /** Constructor */
   public BinaryTournamentSelection() {
-    super(new DominanceComparator<S>(), 2) ;
+    super(2, new DominanceComparator<S>()) ;
   }
 
   /** Constructor */
   public BinaryTournamentSelection(Comparator<S> comparator) {
-    super(comparator,2);
+    super(2, comparator);
   }
 }

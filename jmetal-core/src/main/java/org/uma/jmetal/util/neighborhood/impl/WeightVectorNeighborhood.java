@@ -2,7 +2,7 @@ package org.uma.jmetal.util.neighborhood.impl;
 
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
 import java.io.*;

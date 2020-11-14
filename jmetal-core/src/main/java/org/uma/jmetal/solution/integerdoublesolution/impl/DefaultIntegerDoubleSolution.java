@@ -8,7 +8,7 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integerdoublesolution.IntegerDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.HashMap;
 import java.util.List;

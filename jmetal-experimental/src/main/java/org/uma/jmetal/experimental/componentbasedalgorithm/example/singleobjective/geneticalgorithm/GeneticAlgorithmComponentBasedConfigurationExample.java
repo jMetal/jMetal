@@ -3,13 +3,13 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.singleobject
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuPlusLambdaReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl.CrossoverAndMutationVariation;
@@ -21,7 +21,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -48,7 +48,7 @@ public class GeneticAlgorithmComponentBasedConfigurationExample extends Abstract
     int offspringPopulationSize = 100;
     int maxNumberOfEvaluations = 25000;
 
-    InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
+    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
     double crossoverProbability = 0.95;

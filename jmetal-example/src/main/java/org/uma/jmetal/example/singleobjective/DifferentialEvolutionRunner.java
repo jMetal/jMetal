@@ -10,7 +10,7 @@ import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -49,7 +49,7 @@ public class DifferentialEvolutionRunner {
     if (numberOfCores == 1) {
       evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
     } else {
-      evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
+      evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
     }
 
     crossover =

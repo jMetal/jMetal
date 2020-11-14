@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class FDA5 extends FDA implements Serializable {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     double g = this.evalG(solution, M - 1);
     double Ft = 1.0d + 100.0d * Math.pow(Math.sin(0.5d * Math.PI * time), 4.0d);
@@ -46,6 +46,7 @@ public class FDA5 extends FDA implements Serializable {
     for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
       solution.setObjective(i, f[i]);
     }
+    return solution ;
   }
 
   private double evalF1(DoubleSolution solution, double g, double Ft) {

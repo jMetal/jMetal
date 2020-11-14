@@ -18,7 +18,7 @@ public class LIRCMOP2 extends LIRCMOP1 {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[getNumberOfObjectives()];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
@@ -32,5 +32,6 @@ public class LIRCMOP2 extends LIRCMOP1 {
     solution.setObjective(1, fx[1]);
 
     evaluateConstraints(solution);
+    return solution ;
   }
 }

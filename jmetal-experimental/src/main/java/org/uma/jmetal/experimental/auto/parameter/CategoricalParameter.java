@@ -3,13 +3,19 @@ package org.uma.jmetal.experimental.auto.parameter;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
+import java.util.function.Function;
 
-public abstract class CategoricalParameter<T> extends Parameter<T> {
-  private List<T> validValues;
+public class CategoricalParameter extends Parameter<String> {
+  private final List<String> validValues;
 
-  public CategoricalParameter(String name, String[] args, List<T> validValues) {
+  public CategoricalParameter(String name, String[] args, List<String> validValues) {
     super(name, args);
     this.validValues = validValues;
+  }
+
+  @Override
+  public CategoricalParameter parse() {
+    return (CategoricalParameter) parse(Function.identity());
   }
 
   @Override
@@ -25,20 +31,20 @@ public abstract class CategoricalParameter<T> extends Parameter<T> {
     }
   }
 
-  public List<T> getValidValues() {
+  public List<String> getValidValues() {
     return validValues;
   }
 
   @Override
   public String toString() {
-    String result =
-        "Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues;
+    StringBuilder result =
+            new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue() + ". Valid values: " + validValues);
     for (Parameter<?> parameter : getGlobalParameters()) {
-      result += "\n -> " + parameter.toString();
+      result.append("\n -> ").append(parameter.toString());
     }
     for (Pair<String, Parameter<?>> parameter : getSpecificParameters()) {
-      result += "\n -> " + parameter.toString();
+      result.append("\n -> ").append(parameter.toString());
     }
-    return result;
+    return result.toString();
   }
 }

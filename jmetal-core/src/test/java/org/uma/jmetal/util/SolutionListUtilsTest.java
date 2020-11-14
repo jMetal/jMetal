@@ -4,14 +4,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -390,7 +390,7 @@ public class SolutionListUtilsTest {
         Arrays.asList(
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
-    Problem<DoubleSolution> problem = new MockedDoubleProblem();
+    Problem<DoubleSolution> problem = new DummyDoubleProblem();
 
     int maxListSize = 2;
     SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
@@ -405,7 +405,7 @@ public class SolutionListUtilsTest {
     solutions.add(mock(DoubleSolution.class));
     solutions.add(mock(DoubleSolution.class));
 
-    Problem<DoubleSolution> problem = new MockedDoubleProblem();
+    Problem<DoubleSolution> problem = new DummyDoubleProblem();
 
     int maxListSize = 10;
     SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
@@ -416,7 +416,7 @@ public class SolutionListUtilsTest {
   @Test
   public void shouldNormalizeReturnsCorrectNormalizedNumber() {
 
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
 
@@ -442,7 +442,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnOneIfAllTheSolutionsInAListAreFeasible() {
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -453,7 +453,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnZeroIfAllTheSolutionsInAListAreNotFeasible() {
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem(2,2,1);
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -468,7 +468,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnTheRightRatioOfFeasibleSolutions() {
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem(2,2,1);
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -482,7 +482,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldNormalizeSolutionListWorkProperly() {
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     s1.setObjective(0, 0.0);
     s1.setObjective(1, 2.0);
@@ -510,7 +510,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldDistanceBasedSubsetSelectionWorkProperly() {
-    MockedDoubleProblem problem = new MockedDoubleProblem();
+    DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     s1.setObjective(0, 0.0);
     s1.setObjective(1, 3.0);
@@ -537,7 +537,7 @@ public class SolutionListUtilsTest {
   @Test
   public void shouldRestartRemoveTheRequestedPercentageOfSolutions() {}
 
-  @SuppressWarnings("serial")
+  /*
   private class MockedDoubleProblem extends AbstractDoubleProblem {
 
     public MockedDoubleProblem() {
@@ -551,4 +551,6 @@ public class SolutionListUtilsTest {
     @Override
     public void evaluate(DoubleSolution solution) {}
   }
+
+   */
 }

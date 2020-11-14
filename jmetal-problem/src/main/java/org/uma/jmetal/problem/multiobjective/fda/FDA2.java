@@ -34,7 +34,7 @@ public class FDA2 extends FDA implements Serializable {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     f[0] = solution.getVariable(0);
     double g = this.evalG(solution, 1, (solution.getNumberOfVariables() / 2) + 1);
@@ -42,6 +42,7 @@ public class FDA2 extends FDA implements Serializable {
     f[1] = g * h; // 1-Math.sqrt(f[0]);
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
+    return solution ;
   }
 
   /**

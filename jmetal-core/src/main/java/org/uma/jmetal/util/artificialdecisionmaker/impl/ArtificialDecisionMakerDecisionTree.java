@@ -7,6 +7,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.artificialdecisionmaker.ArtificialDecisionMaker;
 import org.uma.jmetal.util.artificialdecisionmaker.DecisionTreeEstimator;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -84,8 +85,9 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
     if(problem instanceof BoundedProblem){
       BoundedProblem<?, ?> aux =(BoundedProblem<?, ?>)problem;
       for (int i = 0; i < numberOfObjectives ; i++) {
-        idealOjectiveVector.add(aux.getLowerBound(i).doubleValue());
-        nadirObjectiveVector.add(aux.getUpperBound(i).doubleValue());
+        Bounds<?> bounds = aux.getBoundsForVariables().get(i);
+        idealOjectiveVector.add(((Number) bounds.getLowerBound()).doubleValue());
+        nadirObjectiveVector.add(((Number) bounds.getUpperBound()).doubleValue());
       }
     }
     if(asp==null)

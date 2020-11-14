@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.front.util;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 

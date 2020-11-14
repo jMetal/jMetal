@@ -7,8 +7,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
-import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

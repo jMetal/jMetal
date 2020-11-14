@@ -1,13 +1,12 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +24,8 @@ import java.util.List;
 public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeSolution> {
   private int valueN;
   private int valueM;
-  private List<Pair<Integer, Integer>> integerBounds;
-  private List<Pair<Double, Double>> doubleBounds;
+  private List<Bounds<Integer>> integerBounds;
+  private List<Bounds<Double>> doubleBounds;
 
   public MixedIntegerDoubleProblem() {
     this(10, 10, 100, -100, -1000, +1000);
@@ -50,17 +49,17 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
     doubleBounds = new ArrayList<>(numberOfDoubleVariables);
 
     for (int i = 0; i < numberOfIntegerVariables; i++) {
-      integerBounds.add(new ImmutablePair<>(lowerBound, upperBound));
+      integerBounds.add(Bounds.create(lowerBound, upperBound));
     }
 
     for (int i = 0; i < numberOfDoubleVariables; i++) {
-      doubleBounds.add(new ImmutablePair<>((double) lowerBound, (double) upperBound));
+      doubleBounds.add(Bounds.create((double) lowerBound, (double) upperBound));
     }
   }
 
   /** Evaluate() method */
   @Override
-  public void evaluate(CompositeSolution solution) {
+  public CompositeSolution evaluate(CompositeSolution solution) {
     int approximationToN;
     int approximationToM;
 
@@ -81,12 +80,13 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
 
     solution.setObjective(0, approximationToN);
     solution.setObjective(1, approximationToM);
+    return solution ;
   }
 
   @Override
   public CompositeSolution createSolution() {
-    IntegerSolution integerSolution = new DefaultIntegerSolution(integerBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
-    DoubleSolution doubleSolution = new DefaultDoubleSolution(doubleBounds, getNumberOfObjectives(), getNumberOfConstraints()) ;
+    IntegerSolution integerSolution = new DefaultIntegerSolution(getNumberOfObjectives(), getNumberOfConstraints(), integerBounds) ;
+    DoubleSolution doubleSolution = new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), doubleBounds) ;
     return new CompositeSolution(Arrays.asList(integerSolution, doubleSolution));
   }
 }

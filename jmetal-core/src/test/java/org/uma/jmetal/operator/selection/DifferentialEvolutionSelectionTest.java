@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.Arrays;
 import java.util.Collections;

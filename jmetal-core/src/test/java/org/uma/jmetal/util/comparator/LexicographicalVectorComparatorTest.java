@@ -2,7 +2,7 @@ package org.uma.jmetal.util.comparator;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import static org.junit.Assert.assertEquals;
 

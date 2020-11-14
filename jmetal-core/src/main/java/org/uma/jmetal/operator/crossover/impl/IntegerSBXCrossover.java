@@ -2,7 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -103,8 +104,9 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
               y2 = valueX1;
             }
 
-            yL = parent1.getLowerBound(i);
-            yu = parent1.getUpperBound(i);
+            Bounds<Integer> bounds = parent1.getBounds(i);
+            yL = bounds.getLowerBound();
+            yu = bounds.getUpperBound();
             rand = randomGenerator.getRandomValue();
             beta = 1.0 + (2.0 * (y1 - yL) / (y2 - y1));
             alpha = 2.0 - Math.pow(beta, -(distributionIndex + 1.0));

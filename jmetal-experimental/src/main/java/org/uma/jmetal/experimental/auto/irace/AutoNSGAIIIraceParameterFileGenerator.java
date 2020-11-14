@@ -73,7 +73,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
     String dependenceString = parameter.getName() ;
     if (parentParameter instanceof CategoricalParameter) {
-      dependenceString = ((CategoricalParameter<?>) parentParameter).getValidValues().toString() ;
+      dependenceString = ((CategoricalParameter) parentParameter).getValidValues().toString() ;
       dependenceString = dependenceString.replace("[", "");
       dependenceString = dependenceString.replace("]", "");
     }
@@ -138,7 +138,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
     String result = " ";
 
     if (parameter instanceof CategoricalParameter) {
-      result = ((CategoricalParameter<?>) parameter).getValidValues().toString();
+      result = ((CategoricalParameter) parameter).getValidValues().toString();
       result = result.replace("[", "(");
       result = result.replace("]", ")");
     } else if (parameter instanceof OrdinalParameter) {

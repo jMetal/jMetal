@@ -33,7 +33,7 @@ public class Rastrigin extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] x = new double[numberOfVariables] ;
@@ -52,6 +52,8 @@ public class Rastrigin extends AbstractDoubleProblem {
     result += a * numberOfVariables;
 
     solution.setObjective(0, result);
+
+    return solution ;
   }
 }
 

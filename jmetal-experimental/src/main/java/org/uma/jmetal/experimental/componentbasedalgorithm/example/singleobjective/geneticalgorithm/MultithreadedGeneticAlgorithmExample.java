@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.singleobject
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.MultithreadedEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.MultithreadedEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -14,7 +14,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;

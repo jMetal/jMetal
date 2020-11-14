@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.MultithreadedEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.MultithreadedEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -12,10 +12,10 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm using the {@link
- * MultithreadedSolutionListEvaluator}.
+ * MultiThreadedSolutionListEvaluator}.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

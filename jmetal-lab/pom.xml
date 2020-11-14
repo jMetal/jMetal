@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Runners classes</description>
+    <description>Visualization features and support for experimental studies</description>
     <url>http://jmetal.sourceforge.net</url>
 
     <build>

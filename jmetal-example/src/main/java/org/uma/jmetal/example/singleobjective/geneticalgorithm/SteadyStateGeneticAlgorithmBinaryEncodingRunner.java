@@ -32,10 +32,11 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -216,7 +217,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
         if (numberOfCores == 1) {
           evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
         } else {
-          evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
+          evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
         }
 
         crossover =
@@ -414,7 +415,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
               .setMaxEvaluations(25000)
               .setSelectionOperator(selectionOperator)
               .setSolutionListEvaluator(
-                  new MultithreadedSolutionListEvaluator<BinarySolution>(numberOfCores));
+                  new MultiThreadedSolutionListEvaluator<BinarySolution>(numberOfCores));
 
       algorithm = builder.build();
 
@@ -448,7 +449,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
     /**
      * @param args Command line arguments. The first (optional) argument specifies
      *             the problem to solve.
-     * @throws org.uma.jmetal.util.JMetalException
+     * @throws JMetalException
      * @throws java.io.IOException
      * @throws SecurityException
      * Invoking command:
@@ -524,7 +525,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
       if (numberOfCores == 1) {
         evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
       } else {
-        evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
+        evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
       }
 
       algorithm =
@@ -587,7 +588,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
       if (numberOfCores == 1) {
         evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
       } else {
-        evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
+        evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(numberOfCores);
       }
 
       algorithm =

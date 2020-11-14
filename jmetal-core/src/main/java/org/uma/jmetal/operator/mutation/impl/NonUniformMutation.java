@@ -2,7 +2,8 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -97,21 +98,18 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
         double rand = randomGenenerator.getRandomValue();
         double tmp;
 
+        Bounds<Double> bounds = solution.getBounds(i);
         if (rand <= 0.5) {
-          tmp = delta(solution.getUpperBound(i) - solution.getVariable(i),
+          tmp = delta(bounds.getUpperBound() - solution.getVariable(i),
               perturbation);
           tmp += solution.getVariable(i);
         } else {
-          tmp = delta(solution.getLowerBound(i) - solution.getVariable(i),
+          tmp = delta(bounds.getLowerBound() - solution.getVariable(i),
               perturbation);
           tmp += solution.getVariable(i);
         }
 
-        if (tmp < solution.getLowerBound(i)) {
-          tmp = solution.getLowerBound(i);
-        } else if (tmp > solution.getUpperBound(i)) {
-          tmp = solution.getUpperBound(i);
-        }
+        tmp = bounds.restrict(tmp);
         solution.setVariable(i, tmp);
       }
     }

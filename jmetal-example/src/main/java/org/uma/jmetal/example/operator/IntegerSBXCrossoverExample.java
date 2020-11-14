@@ -8,6 +8,7 @@ import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.multiobjective.NMMin;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.IntegerVariableComparator;
 
 import java.util.ArrayList;
@@ -82,11 +83,12 @@ public class IntegerSBXCrossoverExample {
   }
 
   private static double[][] classify(List<IntegerSolution> solutions, IntegerProblem problem, int granularity) {
-    double grain = (problem.getUpperBound(0) - problem.getLowerBound(0)) / granularity ;
+    Bounds<Integer> bounds = problem.getBoundsForVariables().get(0);
+    double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;
     for (int i = 0 ; i < granularity; i++) {
       classifier[i] = new double[2] ;
-      classifier[i][0] = problem.getLowerBound(0) + i * grain ;
+      classifier[i][0] = bounds.getLowerBound() + i * grain ;
       classifier[i][1] = 0 ;
     }
 

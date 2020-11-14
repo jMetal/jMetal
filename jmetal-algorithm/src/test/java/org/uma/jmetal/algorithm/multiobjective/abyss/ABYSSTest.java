@@ -296,19 +296,23 @@ public class ABYSSTest {
     }
 
     @Override
-    public void evaluate(DoubleSolution solution) {
+    public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, randomGenerator.nextDouble());
       solution.setObjective(1, randomGenerator.nextDouble());
+
+      return solution ;
     }
 
     @Override
+    @Deprecated
     public Double getLowerBound(int index) {
-      return super.getUpperBound(index);
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
 
     @Override
+    @Deprecated
     public Double getUpperBound(int index) {
-      return super.getUpperBound(index);
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
   }
 }

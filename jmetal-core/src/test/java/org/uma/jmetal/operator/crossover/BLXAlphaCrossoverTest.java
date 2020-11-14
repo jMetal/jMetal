@@ -1,7 +1,5 @@
 package org.uma.jmetal.operator.crossover;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -12,9 +10,10 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -150,14 +149,16 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
+    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
+    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(3)).getRandomValue();
   }
 
@@ -209,22 +210,24 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
+    Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
+    Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(0), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(1), Matchers
-        .greaterThanOrEqualTo(solutions.get(0).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
     assertThat(newSolutions.get(0).getVariable(1), Matchers
-        .lessThanOrEqualTo(solutions.get(1).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds1.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(1), Matchers
-        .lessThanOrEqualTo(solutions.get(0).getUpperBound(0))) ;
+        .lessThanOrEqualTo(bounds0.getUpperBound())) ;
     assertThat(newSolutions.get(1).getVariable(1), Matchers
-        .greaterThanOrEqualTo(solutions.get(1).getLowerBound(0))) ;
+        .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(5)).getRandomValue();
   }
 
@@ -252,9 +255,11 @@ public class BLXAlphaCrossoverTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(DoubleSolution solution) {
+    public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, 0.0);
       solution.setObjective(1, 1.0);
+
+      return solution ;
     }
   }
   
@@ -265,11 +270,11 @@ public class BLXAlphaCrossoverTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Pair<Double, Double>> bounds = Arrays.asList(new ImmutablePair<>(0.0, 1.0)) ;
+    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
 
 		List<DoubleSolution> solutions = new LinkedList<>();
-		solutions.add(new DefaultDoubleSolution(bounds, 2));
-		solutions.add(new DefaultDoubleSolution(bounds, 2));
+		solutions.add(new DefaultDoubleSolution(2, bounds));
+		solutions.add(new DefaultDoubleSolution(2, bounds));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

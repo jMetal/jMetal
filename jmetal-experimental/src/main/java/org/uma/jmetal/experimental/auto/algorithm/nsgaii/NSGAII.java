@@ -1,18 +1,14 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.DensityEstimator;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.MergeNonDominatedSortRanking;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl.CrossoverAndMutationVariation;
@@ -26,8 +22,12 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 /**
  * Class to configure and run the NSGA-II using the {@link EvolutionaryAlgorithm} class.
@@ -60,13 +60,12 @@ public class NSGAII {
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    InitialSolutionsCreation<DoubleSolution> createInitialPopulation =
+    SolutionsCreation<DoubleSolution> createInitialPopulation =
         new RandomSolutionsCreation<>(problem, populationSize);
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
-
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
     Preference<DoubleSolution> preferenceForReplacement = new Preference<>(ranking, densityEstimator) ;

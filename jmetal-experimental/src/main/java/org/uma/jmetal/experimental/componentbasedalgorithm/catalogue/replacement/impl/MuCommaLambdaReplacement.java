@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacemen
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.ArrayList;
 import java.util.Comparator;

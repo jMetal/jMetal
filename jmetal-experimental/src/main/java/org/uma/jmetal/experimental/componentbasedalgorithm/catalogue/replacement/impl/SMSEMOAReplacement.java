@@ -1,10 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +37,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     List<S> resultPopulation = new ArrayList<>() ;
     for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
-      for (S solution : ranking.getSubFront(i)) {
-        resultPopulation.add(solution);
-      }
+      resultPopulation.addAll(ranking.getSubFront(i));
     }
 
     for (int i = 0; i < lastSubfront.size()-1; i++) {

@@ -3,7 +3,7 @@ package org.uma.jmetal.utilities;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;

@@ -29,7 +29,7 @@ public class Viennet4 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
 
     double[] f = new double[getNumberOfObjectives()];
@@ -56,6 +56,7 @@ public class Viennet4 extends AbstractDoubleProblem {
     }
 
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

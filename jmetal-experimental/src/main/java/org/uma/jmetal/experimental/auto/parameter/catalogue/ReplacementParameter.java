@@ -2,42 +2,24 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.auto.parameter.Parameter;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.DensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.KnnDensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.StrengthRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
-public class ReplacementParameter extends CategoricalParameter<String> {
+public class ReplacementParameter extends CategoricalParameter {
   public ReplacementParameter(String args[], List<String> selectionStrategies) {
     super("replacement", args, selectionStrategies);
-  }
-
-  public CategoricalParameter<String> parse() {
-    setValue(on("--replacement", getArgs(), Function.identity()));
-
-    for (Parameter<?> parameter : getGlobalParameters()) {
-      parameter.parse().check();
-    }
-
-    getSpecificParameters()
-        .forEach(
-            pair -> {
-              if (pair.getKey().equals(getValue())) {
-                pair.getValue().parse().check();
-              }
-            });
-
-    return this;
   }
 
   public Replacement<?> getParameter(Comparator<DoubleSolution> comparator) {

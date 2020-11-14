@@ -1,7 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class FDA4 extends FDA {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
     double g = this.evalG(solution, M - 1);
     f[0] = this.evalF1(solution, g);
@@ -44,6 +44,7 @@ public class FDA4 extends FDA {
     for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
       solution.setObjective(i, f[i]);
     }
+    return solution ;
   }
 
   private double evalF1(DoubleSolution solution, double g) {

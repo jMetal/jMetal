@@ -5,8 +5,8 @@ import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.checking.exception.InvalidProbabilityValueException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
@@ -43,8 +43,9 @@ public class PermutationSwapMutationTest {
 		PermutationProblem<PermutationSolution<Integer>> problem = new AbstractIntegerPermutationProblem() {
 
 			@Override
-			public void evaluate(PermutationSolution<Integer> solution) {
+			public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution) {
 				// Do nothing
+				return solution ;
 			}
 			
 			@Override

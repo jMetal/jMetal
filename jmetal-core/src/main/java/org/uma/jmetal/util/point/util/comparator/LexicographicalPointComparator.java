@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.point.util.comparator;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Comparator;

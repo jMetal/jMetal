@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;

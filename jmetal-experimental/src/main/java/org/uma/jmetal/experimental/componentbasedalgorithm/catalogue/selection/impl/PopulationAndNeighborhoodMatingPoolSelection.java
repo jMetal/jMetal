@@ -4,7 +4,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.M
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;

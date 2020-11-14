@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;

@@ -26,9 +26,11 @@ public class C3_DTLZ4 extends DTLZ4 {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
     this.evaluateConstraints(solution);
+
+    return solution ;
   }
 
   public void evaluateConstraints(DoubleSolution solution) {

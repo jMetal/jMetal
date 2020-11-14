@@ -5,6 +5,7 @@ import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtil
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.*;
@@ -509,11 +510,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
 
       double value = distributionMean[i] + sigma * sum;
-      if (value > ((DoubleProblem)getProblem()).getUpperBound(i)) {
-        value = ((DoubleProblem)getProblem()).getUpperBound(i);
-      } else if (value < ((DoubleProblem)getProblem()).getLowerBound(i)) {
-        value = ((DoubleProblem)getProblem()).getLowerBound(i);
-      }
+      Bounds<Double> bounds = ((DoubleProblem)getProblem()).getBoundsForVariables().get(i) ;
+      value = bounds.restrict(value);
 
       solution.setVariable(i, value);
     }

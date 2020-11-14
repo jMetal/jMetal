@@ -9,27 +9,27 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
-  implements BinaryProblem {
+        implements BinaryProblem {
 
-  public abstract List<Integer> getListOfBitsPerVariable() ;
+  public abstract List<Integer> getListOfBitsPerVariable();
 
   @Override
   public int getBitsFromVariable(int index) {
-    return getListOfBitsPerVariable().get(index) ;
+    return getListOfBitsPerVariable().get(index);
   }
-  
+
   @Override
   public int getTotalNumberOfBits() {
-  	int count = 0 ;
-  	for (int i = 0; i < this.getNumberOfVariables(); i++) {
-  		count += this.getListOfBitsPerVariable().get(i) ;
-  	}
-  	
-  	return count ;
+    int count = 0;
+    for (int i = 0; i < this.getNumberOfVariables(); i++) {
+      count += this.getListOfBitsPerVariable().get(i);
+    }
+
+    return count;
   }
 
   @Override
   public BinarySolution createSolution() {
-    return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives())  ;
+    return new DefaultBinarySolution(getListOfBitsPerVariable(), getNumberOfObjectives(), getNumberOfConstraints());
   }
 }

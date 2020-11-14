@@ -3,12 +3,11 @@ package org.uma.jmetal.algorithm.multiobjective.dmopso;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import static java.lang.Double.*;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import static java.lang.Double.parseDouble;
 
 @SuppressWarnings("serial")
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {
@@ -122,8 +123,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem.getUpperBound(i) -
-              problem.getLowerBound(i)) / 2.0;
+      Bounds<Double> bounds = problem.getBoundsForVariables().get(i) ;
+      deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0 ;
       deltaMin[i] = -deltaMax[i];
     }
   }
@@ -398,12 +399,15 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     DoubleSolution particle = getSwarm().get(part) ;
 
     for(int var = 0; var < particle.getNumberOfVariables(); var++){
-      if (particle.getVariable(var) < problem.getLowerBound(var)) {
-        particle.setVariable(var, problem.getLowerBound(var));
+      Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
+      Double lowerBound = bounds.getLowerBound() ;
+      Double upperBound = bounds.getUpperBound() ;
+      if (particle.getVariable(var) < lowerBound) {
+        particle.setVariable(var, lowerBound);
         speed[part][var] = speed[part][var] * changeVelocity1;
       }
-      if (particle.getVariable(var) > problem.getUpperBound(var)) {
-        particle.setVariable(var, problem.getUpperBound(var));
+      if (particle.getVariable(var) > upperBound) {
+        particle.setVariable(var, upperBound);
         speed[part][var] = speed[part][var] * changeVelocity2;
       }
     }

@@ -1,15 +1,15 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
-
-import static java.lang.Double.*;
-import static java.lang.Integer.*;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 
 

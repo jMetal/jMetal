@@ -169,10 +169,12 @@ public class WFGHypervolumeTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(DoubleSolution solution) {
+    public DoubleSolution evaluate(DoubleSolution solution) {
       for (int i = 0; i < getNumberOfObjectives(); i++) {
         solution.setObjective(i, 1.0);
       }
+
+      return solution ;
     }
   }
 }

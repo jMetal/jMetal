@@ -2,6 +2,7 @@ package org.uma.jmetal.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;

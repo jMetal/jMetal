@@ -48,13 +48,14 @@ public class GLT3 extends AbstractDoubleProblem {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     solution.setObjective(0, (1.0 + g(solution))*solution.getVariable(0));
     if (solution.getObjective(0) < 0.05) {
       solution.setObjective(1, (1.0 + g(solution))*(1.0 - 19.0*solution.getVariable(0))) ;
     } else {
       solution.setObjective(1, (1.0 + g(solution))*(1.0/19.0 - solution.getVariable(0)/19.0)) ;
     }
+    return solution ;
   }
 
   private double g(DoubleSolution solution) {

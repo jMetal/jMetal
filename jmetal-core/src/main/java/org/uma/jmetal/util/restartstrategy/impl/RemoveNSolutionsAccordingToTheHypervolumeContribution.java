@@ -3,7 +3,7 @@ package org.uma.jmetal.util.restartstrategy.impl;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.restartstrategy.RemoveSolutionsStrategy;
 

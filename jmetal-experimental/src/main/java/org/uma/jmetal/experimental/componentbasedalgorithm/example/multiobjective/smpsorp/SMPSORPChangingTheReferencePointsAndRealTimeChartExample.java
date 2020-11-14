@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSORP;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
@@ -49,8 +49,8 @@ public class SMPSORPChangingTheReferencePointsAndRealTimeChartExample {
 
     List<List<Double>> referencePoints;
     referencePoints = new ArrayList<>();
+
     referencePoints.add(Arrays.asList(0.2, 0.8));
-    referencePoints.add(Arrays.asList(0.7, 0.4));
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;

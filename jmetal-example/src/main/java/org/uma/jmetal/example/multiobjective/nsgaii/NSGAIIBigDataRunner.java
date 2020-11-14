@@ -13,7 +13,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.cec2015OptBigDataCompetition.BigOpt2015;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;

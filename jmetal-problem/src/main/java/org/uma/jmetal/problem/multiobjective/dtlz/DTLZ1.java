@@ -2,7 +2,7 @@ package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = getNumberOfObjectives() ;
 
@@ -78,6 +78,8 @@ public class DTLZ1 extends AbstractDoubleProblem {
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
+
+    return solution ;
   }
 }
 

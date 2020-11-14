@@ -32,9 +32,11 @@ public class C2_DTLZ2 extends DTLZ2 {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     super.evaluate(solution);
     evaluateConstraints(solution);
+
+    return solution ;
   }
 
   public void evaluateConstraints(DoubleSolution solution) {

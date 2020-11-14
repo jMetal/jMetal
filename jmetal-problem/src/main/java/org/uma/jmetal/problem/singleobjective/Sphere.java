@@ -35,7 +35,7 @@ public class Sphere extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] x = new double[numberOfVariables] ;
@@ -51,6 +51,8 @@ public class Sphere extends AbstractDoubleProblem {
     }
 
     solution.setObjective(0, sum);
+
+    return solution ;
   }
 }
 

@@ -2,7 +2,7 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;

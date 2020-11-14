@@ -25,7 +25,7 @@ public class LIRCMOP10 extends LIRCMOP8 {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);
@@ -35,6 +35,8 @@ public class LIRCMOP10 extends LIRCMOP8 {
     solution.setObjective(1, 1.7957 * (1 - sqrt(x[0])) * (10 * g2(x) + 1));
 
     evaluateConstraints(solution);
+
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

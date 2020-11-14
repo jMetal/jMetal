@@ -46,7 +46,7 @@
 //
 package org.uma.jmetal.problem.singleobjective.cec2005competitioncode;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
 

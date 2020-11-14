@@ -25,7 +25,7 @@ public class Golinski extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double x1, x2, x3, x4, x5, x6, x7;
     x1 = solution.getVariable(0);
     x2 = solution.getVariable(1);
@@ -48,6 +48,7 @@ public class Golinski extends AbstractDoubleProblem {
     solution.setObjective(1, f2);
 
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

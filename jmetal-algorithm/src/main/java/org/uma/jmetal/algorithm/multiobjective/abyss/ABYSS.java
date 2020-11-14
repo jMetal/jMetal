@@ -9,6 +9,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
@@ -151,11 +152,11 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      double low = ((DoubleProblem)problem).getLowerBound(i) + range *
-          (((DoubleProblem)problem).getUpperBound(i) -
-              ((DoubleProblem)problem).getLowerBound(i)) / numberOfSubRanges;
-      double high = low + (((DoubleProblem)problem).getUpperBound(i) -
-          ((DoubleProblem)problem).getLowerBound(i)) / numberOfSubRanges;
+      Bounds<Double> bounds = ((DoubleProblem)problem).getBoundsForVariables().get(i) ;
+      Double lowerBound = bounds.getLowerBound() ;
+      Double upperBound = bounds.getUpperBound() ;
+      double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges ;
+      double high = low + (upperBound - lowerBound) / numberOfSubRanges ;
 
       value = randomGenerator.nextDouble(low, high);
       solution.setVariable(i, value);

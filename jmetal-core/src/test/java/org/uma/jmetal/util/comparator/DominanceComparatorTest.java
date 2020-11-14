@@ -3,8 +3,8 @@ package org.uma.jmetal.util.comparator;
 import org.junit.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

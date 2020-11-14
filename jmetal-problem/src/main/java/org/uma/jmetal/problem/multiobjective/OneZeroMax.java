@@ -3,7 +3,7 @@ package org.uma.jmetal.problem.multiobjective;
 import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -50,7 +50,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
 
   /** Evaluate() method */
   @Override
-    public void evaluate(BinarySolution solution) {
+    public BinarySolution evaluate(BinarySolution solution) {
     int counterOnes;
     int counterZeroes;
 
@@ -70,5 +70,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
     solution.setObjective(0, -1.0 * counterOnes);
     solution.setObjective(1, -1.0 * counterZeroes);
+
+    return solution ;
   }
 }

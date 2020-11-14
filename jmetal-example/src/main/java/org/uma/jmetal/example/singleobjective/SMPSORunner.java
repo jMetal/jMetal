@@ -12,6 +12,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -28,7 +29,7 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments. The first (optional) argument specifies
    *             the problem to solve.
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws JMetalException
    * @throws java.io.IOException
    * @throws SecurityException
    * Invoking command:

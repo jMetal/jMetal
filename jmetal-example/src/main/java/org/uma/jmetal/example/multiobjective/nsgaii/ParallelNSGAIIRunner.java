@@ -15,14 +15,14 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.comparator.GDominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -77,7 +77,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
     selection = new BinaryTournamentSelection<DoubleSolution>();
 
     SolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(8);
+        new MultiThreadedSolutionListEvaluator<DoubleSolution>(8);
 
     int populationSize = 100;
     NSGAIIBuilder<DoubleSolution> builder =

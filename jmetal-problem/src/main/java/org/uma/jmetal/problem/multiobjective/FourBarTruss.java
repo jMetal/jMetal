@@ -17,7 +17,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class FourBarTruss extends AbstractDoubleProblem {
-	private double f = 10   ;
+  private double f = 10   ;
   private double e = 200000;
   private double l = 200  ;
   private double sigma = 10 ;
@@ -52,7 +52,7 @@ public class FourBarTruss extends AbstractDoubleProblem {
    * Evaluate() method
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double [] fx = new double[2] ;
     double [] x = new double[getNumberOfVariables()] ;
     for (int i = 0 ; i < getNumberOfVariables(); i++)
@@ -63,5 +63,7 @@ public class FourBarTruss extends AbstractDoubleProblem {
     
     solution.setObjective(0,fx[0]);
     solution.setObjective(1,fx[1]);
+
+    return solution ;
   }
 }

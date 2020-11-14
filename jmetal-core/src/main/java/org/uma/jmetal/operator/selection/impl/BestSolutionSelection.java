@@ -1,7 +1,7 @@
 package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.Comparator;
 import java.util.List;

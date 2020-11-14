@@ -7,7 +7,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.qualityindicator.impl.ErrorRatio;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
@@ -206,9 +206,11 @@ public class ErrorRatioTest {
 
     /** Evaluate() method */
     @Override
-    public void evaluate(DoubleSolution solution) {
+    public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, 0.0);
       solution.setObjective(1, 1.0);
+
+      return solution ;
     }
   }
 }

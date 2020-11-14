@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;

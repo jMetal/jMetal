@@ -3,9 +3,9 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.solution.Solution;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
     extends AbstractEvolutionaryAlgorithm<S, List<S>> {
   protected Evaluation<S> evaluation;
-  protected InitialSolutionsCreation<S> createInitialPopulation;
+  protected SolutionsCreation<S> createInitialPopulation;
   protected Termination termination;
   protected MatingPoolSelection<S> selection;
   protected Variation<S> variation;
@@ -60,7 +60,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
   public ComponentBasedEvolutionaryAlgorithm(
       String name,
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
@@ -188,7 +188,7 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
     return this ;
   }
 
-  public ComponentBasedEvolutionaryAlgorithm<S> withCreateInitialPopulation(InitialSolutionsCreation<S> createInitialPopulation) {
+  public ComponentBasedEvolutionaryAlgorithm<S> withCreateInitialPopulation(SolutionsCreation<S> createInitialPopulation) {
     this.createInitialPopulation = createInitialPopulation;
 
     return this ;

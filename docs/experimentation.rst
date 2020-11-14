@@ -9,7 +9,7 @@ Experimental studies
 :Date: 2020-15-07
 
 
-This tutorial describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
+This section describes the features included in jMetal for performing experimental studies related to assessing and comparing the performance of multi-objective algorithms on a set of problems. 
 
 Prerequisites
 -------------

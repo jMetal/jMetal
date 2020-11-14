@@ -5,6 +5,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -94,7 +95,8 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      deltaMax[i] = (problem.getUpperBound(i) - problem.getLowerBound(i)) / 2.0;
+      Bounds<Double> bounds = problem.getBoundsForVariables().get(i) ;
+      deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
       deltaMin[i] = -deltaMax[i];
     }
   }
@@ -199,12 +201,15 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       for (int j = 0; j < particle.getNumberOfVariables(); j++) {
         particle.setVariable(j, particle.getVariable(j) + speed[i][j]);
 
-        if (particle.getVariable(j) < problem.getLowerBound(j)) {
-          particle.setVariable(j, problem.getLowerBound(j));
+        Bounds<Double> bounds = problem.getBoundsForVariables().get(j) ;
+        Double lowerBound = bounds.getLowerBound() ;
+        Double upperBound = bounds.getUpperBound() ;
+        if (particle.getVariable(j) < lowerBound) {
+          particle.setVariable(j, lowerBound);
           speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getVariable(j) > problem.getUpperBound(j)) {
-          particle.setVariable(j, problem.getUpperBound(j));
+        if (particle.getVariable(j) > upperBound) {
+          particle.setVariable(j, upperBound);
           speed[i][j] = speed[i][j] * changeVelocity2;
         }
       }

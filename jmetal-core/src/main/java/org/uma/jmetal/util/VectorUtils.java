@@ -1,6 +1,7 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 

@@ -50,7 +50,6 @@ public class MOEADDefaultConfigurationExample extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-
     double neighborhoodSelectionProbability = 0.9;
     int neighborhoodSize = 20;
 

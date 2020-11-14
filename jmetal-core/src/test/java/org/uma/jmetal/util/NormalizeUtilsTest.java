@@ -1,7 +1,7 @@
 package org.uma.jmetal.util;
 
 import org.junit.Test;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 import java.lang.reflect.Constructor;
 

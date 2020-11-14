@@ -13,7 +13,7 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -56,7 +56,7 @@ public class ParallelGenerationalGeneticAlgorithmRunner {
             .setMaxEvaluations(25000)
             .setSelectionOperator(selectionOperator)
             .setSolutionListEvaluator(
-                new MultithreadedSolutionListEvaluator<BinarySolution>(numberOfCores));
+                new MultiThreadedSolutionListEvaluator<BinarySolution>(numberOfCores));
 
     algorithm = builder.build();
 

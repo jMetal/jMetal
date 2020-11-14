@@ -2,7 +2,7 @@ package org.uma.jmetal.solution.compositesolution;
 
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.HashMap;
 import java.util.List;

@@ -50,7 +50,7 @@ public class GLT5 extends AbstractDoubleProblem {
   }
 
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     solution.setObjective(0, (1.0 + g(solution))*
         (1.0 - Math.cos(solution.getVariable(0)*Math.PI/2.0))*
         (1.0 - Math.cos(solution.getVariable(1)*Math.PI/2.0)));
@@ -59,6 +59,7 @@ public class GLT5 extends AbstractDoubleProblem {
         (1.0 - Math.sin(solution.getVariable(1)*Math.PI/2.0)));
     solution.setObjective(2, (1.0 + g(solution))*
         (1.0 - Math.sin(solution.getVariable(0)*Math.PI/2.0)));
+    return solution ;
   }
 
   private double g(DoubleSolution solution) {

@@ -37,7 +37,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);
@@ -46,24 +46,8 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     solution.setObjective(0, x[0] + g1(x));
     solution.setObjective(1, 1 - x[0] * x[0] + g2(x));
 
-    /*
-    double sum1 = 0.0, sum2 = 0.0, yj;
-    for (int j = 2; j <= getNumberOfVariables(); j++) {
-      if (j % 2 == 1) {
-        yj = x[j - 1] - Math.sin(0.5 * Math.PI * x[0]);
-        sum1 += yj * yj;
-      } else {
-        yj = x[j - 1] - Math.cos(0.5 * Math.PI * x[0]);
-        sum2 += yj * yj;
-      }
-    }
-
-    System.out.println("sum1: " + sum1) ;
-    System.out.println("sum2: " + sum2) ;
-    System.out.println("g1  : " + g1(x)) ;
-    System.out.println("g2  : " + g2(x)) ;
-    */
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

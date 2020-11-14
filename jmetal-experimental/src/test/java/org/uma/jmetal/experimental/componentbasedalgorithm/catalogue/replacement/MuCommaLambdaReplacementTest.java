@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuCommaLambdaReplacement;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;

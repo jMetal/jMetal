@@ -94,6 +94,8 @@ public class WeightVectorNeighborhoodTest {
       setVariableBounds(lowerLimit, upperLimit);
     }
 
-    public void evaluate(DoubleSolution solution) {}
+    public DoubleSolution evaluate(DoubleSolution solution) {
+      return solution;
+    }
   }
 }

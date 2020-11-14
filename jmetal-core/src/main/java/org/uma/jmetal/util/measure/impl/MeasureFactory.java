@@ -1,6 +1,6 @@
 package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.measure.Measure;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.PullMeasure;

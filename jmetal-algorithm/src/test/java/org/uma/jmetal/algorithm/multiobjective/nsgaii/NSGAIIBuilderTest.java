@@ -10,8 +10,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 
 import java.util.List;
 
@@ -104,8 +104,8 @@ public class NSGAIIBuilderTest {
   }
 
   @Test public void setNewEvaluator() {
-    MultithreadedSolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(2);
+    MultiThreadedSolutionListEvaluator<DoubleSolution> evaluator =
+        new MultiThreadedSolutionListEvaluator<DoubleSolution>(2);
     assertNotEquals(evaluator, builder.getSolutionListEvaluator());
     builder.setSolutionListEvaluator(evaluator);
     assertEquals(evaluator, builder.getSolutionListEvaluator());

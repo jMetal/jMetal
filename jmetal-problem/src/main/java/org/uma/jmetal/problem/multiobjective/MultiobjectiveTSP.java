@@ -2,7 +2,7 @@ package org.uma.jmetal.problem.multiobjective;
 
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.*;
 
@@ -30,7 +30,7 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(PermutationSolution<Integer> solution){
+  public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution){
     double fitness1   ;
     double fitness2   ;
 
@@ -58,6 +58,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
 
     solution.setObjective(0, fitness1);
     solution.setObjective(1, fitness2);
+
+    return solution ;
   }
 
   private double [][] readProblem(String file) throws IOException {

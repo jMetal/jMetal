@@ -1,8 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.util;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.DensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.Comparator;
 import java.util.List;

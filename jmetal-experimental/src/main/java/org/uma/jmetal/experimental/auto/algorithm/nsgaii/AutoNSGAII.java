@@ -1,30 +1,30 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
-import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.densityestimator.DensityEstimator;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
+import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,20 +39,20 @@ public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
-  private ProblemNameParameter<DoubleSolution> problemNameParameter;
-  private ReferenceFrontFilenameParameter referenceFrontFilename;
+  private StringParameter problemNameParameter;
+  private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
-  private StringCategoricalParameter algorithmResultParameter;
+  private CategoricalParameter algorithmResultParameter;
   private PopulationSizeParameter populationSizeParameter;
-  private PopulationSizeWithArchive populationSizeWithArchiveParameter;
-  private OffspringPopulationSizeParameter offspringPopulationSizeParameter;
+  private IntegerParameter populationSizeWithArchiveParameter;
+  private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
   private SelectionParameter selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
-    problemNameParameter = new ProblemNameParameter<>(args);
-    referenceFrontFilename = new ReferenceFrontFilenameParameter(args);
+    problemNameParameter = new StringParameter("problemName", args);
+    referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
 
@@ -115,16 +115,15 @@ public class AutoNSGAII {
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
 
-    DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
-        new DifferentialEvolutionCrossoverParameter(args);
+    //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
+    //    new DifferentialEvolutionCrossoverParameter(args);
 
-    RealParameter f = new RealParameter("f", args, 0.0, 1.0);
-    RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
-    differentialEvolutionCrossover.addGlobalParameter(f);
-    differentialEvolutionCrossover.addGlobalParameter(cr);
+    //RealParameter f = new RealParameter("f", args, 0.0, 1.0);
+    //RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
+    //differentialEvolutionCrossover.addGlobalParameter(f);
+    //differentialEvolutionCrossover.addGlobalParameter(cr);
 
-    offspringPopulationSizeParameter =
-        new OffspringPopulationSizeParameter(args, Arrays.asList(1, 10, 50, 100, 200, 400));
+    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -148,9 +147,8 @@ public class AutoNSGAII {
 
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
-        new StringCategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
-    populationSizeWithArchiveParameter =
-        new PopulationSizeWithArchive(args, Arrays.asList(10, 20, 50, 100, 200));
+        new CategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
   }
@@ -162,7 +160,7 @@ public class AutoNSGAII {
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
 
-    DoubleProblem problem = (DoubleProblem) problemNameParameter.getProblem();
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 
@@ -174,12 +172,12 @@ public class AutoNSGAII {
     Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
-        new MultiComparator<DoubleSolution>(
+        new MultiComparator<>(
             Arrays.asList(
                 ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
 
-    InitialSolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter(problem, populationSizeParameter.getValue());
+    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
+        createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
     Variation<DoubleSolution> variation =
         (Variation<DoubleSolution>) variationParameter.getParameter();
@@ -197,8 +195,7 @@ public class AutoNSGAII {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaii =
-        new EvolutionaryAlgorithm<>(
+    var nsgaii = new EvolutionaryAlgorithm<>(
             "NSGA-II",
             evaluation,
             initialSolutionsCreation,

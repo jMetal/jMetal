@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.maf;
 
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.awt.geom.Point2D;
@@ -140,8 +141,7 @@ public class MaF09 extends AbstractDoubleProblem {
    * @param solution The solution to evaluate
    */
   @Override
-  public void evaluate(DoubleSolution solution) {
-
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables_ = solution.getNumberOfVariables();
     int numberOfObjectives = solution.getNumberOfObjectives();
 
@@ -158,7 +158,8 @@ public class MaF09 extends AbstractDoubleProblem {
     while (infeasible) {
       //re-generate a random variable
       for (int i = 0; i < numberOfVariables_; i++) {
-        x[i] = generV(getLowerBound(i), getUpperBound(i));
+        Bounds<Double> bounds = getBoundsForVariables().get(i) ;
+        x[i] = generV(bounds.getLowerBound(), bounds.getUpperBound());
         solution.setVariable(i, x[i]);
       }
       infeasible = if_infeasible(x);
@@ -184,7 +185,7 @@ public class MaF09 extends AbstractDoubleProblem {
     for (int i = 0; i < numberOfObjectives; i++) {
       solution.setObjective(i, f[i]);
     }
-
+    return solution ;
   }
 
   public static double[][] polygonpoints(int m, double r) {

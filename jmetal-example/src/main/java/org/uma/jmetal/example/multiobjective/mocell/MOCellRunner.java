@@ -12,7 +12,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -49,8 +49,8 @@ public class MOCellRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.re.RE21";
+      referenceParetoFront = "resources/referenceFrontsCSV/RE21.csv" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);

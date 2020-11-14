@@ -10,11 +10,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -60,7 +60,7 @@ public class ParallelPESA2Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     SolutionListEvaluator<DoubleSolution> evaluator =
-        new MultithreadedSolutionListEvaluator<DoubleSolution>(0);
+        new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
     algorithm =
         new PESA2Builder<DoubleSolution>(problem, crossover, mutation)

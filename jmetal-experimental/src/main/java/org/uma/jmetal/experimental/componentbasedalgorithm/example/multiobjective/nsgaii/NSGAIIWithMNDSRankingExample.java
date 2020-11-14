@@ -1,8 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -12,12 +10,14 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 import java.io.FileNotFoundException;
 import java.util.List;

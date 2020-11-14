@@ -1,7 +1,7 @@
 package org.uma.jmetal.experimental.qualityIndicator;
 
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

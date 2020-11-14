@@ -1,7 +1,5 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.Ranking;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -10,6 +8,8 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.List;
 

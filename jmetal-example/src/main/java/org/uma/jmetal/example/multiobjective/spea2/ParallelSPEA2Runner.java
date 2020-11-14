@@ -12,12 +12,12 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultithreadedSolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -68,7 +68,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
         new BinaryTournamentSelection<DoubleSolution>(
             new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(0);
+    evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 
     algorithm =
         new SPEA2Builder<DoubleSolution>(problem, crossover, mutation)

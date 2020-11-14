@@ -8,8 +8,8 @@ import org.uma.jmetal.operator.selection.impl.TournamentSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Comparator;

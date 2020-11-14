@@ -10,52 +10,45 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 
-/**
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
+/** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class DefaultIntegerPermutationSolutionTest {
 
   @Test
   public void shouldConstructorCreateAValidSolution() {
-    int permutationLength = 20 ;
+    int permutationLength = 20;
     AbstractIntegerPermutationProblem problem =
-        new MockIntegerPermutationProblem(permutationLength) ;
+        new MockIntegerPermutationProblem(permutationLength);
     PermutationSolution<Integer> solution = problem.createSolution();
 
-    List<Integer> values = new ArrayList<>() ;
+    List<Integer> values = new ArrayList<>();
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      values.add(solution.getVariable(i)) ;
+      values.add(solution.getVariable(i));
     }
 
     Collections.sort(values);
 
-    List<Integer> expectedList = new ArrayList<>(permutationLength) ;
+    List<Integer> expectedList = new ArrayList<>(permutationLength);
     for (int i = 0; i < permutationLength; i++) {
-      expectedList.add(i) ;
+      expectedList.add(i);
     }
 
     assertArrayEquals(expectedList.toArray(), values.toArray());
   }
 
-  /**
-   * Mock class representing a integer permutation problem
-   */
+  /** Mock class representing a integer permutation problem */
   @SuppressWarnings("serial")
   private class MockIntegerPermutationProblem extends AbstractIntegerPermutationProblem {
 
-    /**
-     * Constructor
-     */
+    /** Constructor */
     public MockIntegerPermutationProblem(int permutationLength) {
       setNumberOfVariables(permutationLength);
       setNumberOfObjectives(2);
     }
 
     @Override
-    public void evaluate(PermutationSolution<Integer> solution) {
-
+    public PermutationSolution<Integer> evaluate(PermutationSolution<Integer> solution) {
+      return solution;
     }
-
 
     @Override
     public int getLength() {

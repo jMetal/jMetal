@@ -2,9 +2,9 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.binarySet.BinarySet;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -63,7 +63,7 @@ public class HUXCrossover implements CrossoverOperator<BinarySolution> {
    * @param parent1 The first parent
    * @param parent2 The second parent
    * @return An array containing the two offspring
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws JMetalException
    */
   public List<BinarySolution> doCrossover(
       double probability, BinarySolution parent1, BinarySolution parent2) throws JMetalException {

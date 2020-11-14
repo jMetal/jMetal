@@ -23,7 +23,7 @@ public class LIRCMOP6 extends LIRCMOP5 {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);
@@ -33,6 +33,7 @@ public class LIRCMOP6 extends LIRCMOP5 {
     solution.setObjective(1, 1 - x[0] * x[0] + 10 * g2(x) + 7057);
 
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

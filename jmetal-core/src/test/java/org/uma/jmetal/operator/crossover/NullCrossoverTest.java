@@ -5,8 +5,8 @@ import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.exception.InvalidConditionException;
-import org.uma.jmetal.util.checking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.ArrayList;
@@ -85,17 +85,19 @@ public class NullCrossoverTest {
       return null;
     }
 
-    @Override public void evaluate(DoubleSolution solution) {
+    @Override public DoubleSolution evaluate(DoubleSolution solution) {
       solution.setObjective(0, randomGenerator.nextDouble());
       solution.setObjective(1, randomGenerator.nextDouble());
+
+      return solution ;
     }
 
-    @Override public Double getLowerBound(int index) {
-      return super.getUpperBound(index);
+    @Override @Deprecated public Double getLowerBound(int index) {
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
 
-    @Override public Double getUpperBound(int index) {
-      return super.getUpperBound(index);
+    @Override @Deprecated public Double getUpperBound(int index) {
+      return super.getBoundsForVariables().get(index).getUpperBound();
     }
   }
 }

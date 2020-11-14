@@ -2,11 +2,12 @@ package org.uma.jmetal.experimental.auto.parameter;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -20,11 +21,10 @@ import java.util.function.Function;
  */
 public abstract class Parameter<T> {
   private T value;
-  private String name;
-  private String[] args;
-  private List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
-  //private Map<String, Parameter<?>> specificParameters = new HashMap<>();
-  private List<Parameter<?>> globalParameters = new ArrayList<>();
+  private final String name;
+  private final String[] args;
+  private final List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
+  private final List<Parameter<?>> globalParameters = new ArrayList<>();
 
   public Parameter(String name, String[] args) {
     this.name = name;
@@ -38,16 +38,30 @@ public abstract class Parameter<T> {
   private String retrieve(String[] args, String key) {
     int index = Arrays.asList(args).indexOf(key);
     Check.that(index != -1 && index != args.length - 1, "Missing parameter: " + key);
-    //if (index == -1 || index == args.length - 1) {
-    //  throw new MissingParameterException(key);
-    //} else {
     return args[index + 1];
-    //}
   }
 
   public abstract void check();
 
   public abstract Parameter<T> parse();
+
+  public Parameter<T> parse(Function<String, T> parseFunction) {
+    setValue(on("--" + getName(), getArgs(), parseFunction));
+
+    for (Parameter<?> parameter : getGlobalParameters()) {
+      parameter.parse().check();
+    }
+
+    getSpecificParameters()
+            .forEach(
+                    pair -> {
+                      if (pair.getKey().equals(getValue())) {
+                        pair.getValue().parse().check();
+                      }
+                    });
+
+    return this;
+  }
 
   public String getName() {
     return name;
@@ -82,42 +96,38 @@ public abstract class Parameter<T> {
   }
 
   protected Parameter<?> findGlobalParameter(String parameterName) {
-    Parameter<?> result =
-        getGlobalParameters().stream()
-            .filter(parameter -> parameter.getName().equals(parameterName))
-            .findFirst()
-            .orElse(null);
 
-    return result;
+    return getGlobalParameters().stream()
+        .filter(parameter -> parameter.getName().equals(parameterName))
+        .findFirst()
+        .orElse(null);
   }
 
   protected Parameter<?> findSpecificParameter(String parameterName) {
-    Parameter<?> result =
-        getSpecificParameters().stream()
+
+    return Objects.requireNonNull(getSpecificParameters().stream()
             .filter(pair -> pair.getRight().getName().equals(parameterName))
             .findFirst()
-            .orElse(null)
-            .getValue();
-
-    return result;
+            .orElse(null))
+        .getValue();
   }
 
   @Override
   public String toString() {
-    String result = "Name: " + getName() + ": " + "Value: " + getValue();
+    StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
     if (globalParameters.size() > 0) {
-      result += "\n\t";
+      result.append("\n\t");
       for (Parameter<?> parameter : globalParameters) {
-        result += " \n -> " + parameter.toString();
+        result.append(" \n -> ").append(parameter.toString());
       }
     }
     if (specificParameters.size() > 0) {
-      result += "\n\t";
+      result.append("\n\t");
 
       for (Pair<String, Parameter<?>> parameter : specificParameters) {
-        result += " \n -> " + parameter.toString();
+        result.append(" \n -> ").append(parameter.toString());
       }
     }
-    return result;
+    return result.toString();
   }
 }

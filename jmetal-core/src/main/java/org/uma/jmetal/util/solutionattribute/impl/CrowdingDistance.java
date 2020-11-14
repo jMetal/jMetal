@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
@@ -22,7 +23,7 @@ public class CrowdingDistance<S extends Solution<?>>
    * Assigns crowding distances to all solutions in a <code>SolutionSet</code>.
    *
    * @param solutionList The <code>SolutionSet</code>.
-   * @throws org.uma.jmetal.util.JMetalException
+   * @throws JMetalException
    */
 
   @Override

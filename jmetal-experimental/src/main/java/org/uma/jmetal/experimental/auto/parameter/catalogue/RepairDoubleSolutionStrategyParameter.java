@@ -9,15 +9,9 @@ import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWith
 import java.util.List;
 import java.util.function.Function;
 
-public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter<String> {
+public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter {
   public RepairDoubleSolutionStrategyParameter(String name, String args[], List<String> strategies) {
     super(name, args, strategies) ;
-  }
-
-  @Override
-  public CategoricalParameter<String> parse() {
-    setValue(on("--"+getName(), getArgs(), Function.identity()));
-    return this ;
   }
 
   public RepairDoubleSolution getParameter() {

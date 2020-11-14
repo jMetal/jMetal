@@ -45,7 +45,7 @@ public class MOP7 extends AbstractDoubleProblem {
   }
 
   /** Evaluate() method */
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[getNumberOfObjectives()];
 
     double g = this.evalG(solution);
@@ -58,6 +58,7 @@ public class MOP7 extends AbstractDoubleProblem {
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
     solution.setObjective(2, f[2]);
+    return solution ;
   }
 
   /**

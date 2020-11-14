@@ -40,15 +40,15 @@ public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
 
     if (solution!=null && evaluations != null) {
       if (evaluations % frequency == 0) {
-        String objectiveValues = "" ;
+        StringBuilder objectiveValues = new StringBuilder();
         for (Double objective: solution.getObjectives()) {
-          objectiveValues += objective + " " ;
+          objectiveValues.append(objective).append(" ");
         }
         System.out.println("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+
-          ": The algorithm has not registered yet any info related to the EVALUATIONS and POPULATIONS keys");
+          ": The algorithm has not registered yet any info related to the EVALUATIONS and BEST_SOLUTION keys");
     }
   }
 

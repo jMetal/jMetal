@@ -2,12 +2,13 @@ package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 @SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>> implements SelectionOperator<List<S>, List<S>>,
@@ -245,28 +246,6 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		
 	}
 	
-	int FindNicheReferencePoint()
-	{
-		// find the minimal cluster size
-		int min_size = Integer.MAX_VALUE;
-		for (ReferencePoint<S> referencePoint : this.referencePoints)
-			min_size = Math.min(min_size,referencePoint.MemberSize());
-		
-		// find the reference points with the minimal cluster size Jmin
-		List<Integer> min_rps=new ArrayList<>();
-		
-		
-		for (int r=0; r<this.referencePoints.size(); r+=1)
-		{
-			if (this.referencePoints.get(r).MemberSize() == min_size)
-			{
-				min_rps.add(r);
-			}
-		}
-		// return a random reference point (j-bar)
-		return min_rps.get(min_rps.size() > 1 ? JMetalRandom.getInstance().nextInt(0, min_rps.size()-1):0);
-	}
-	
 	// ----------------------------------------------------------------------
 	// SelectClusterMember():
 	//
@@ -291,7 +270,16 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		}
 		return chosen;
 	}
-	
+
+	private TreeMap<Integer, ArrayList<ReferencePoint<S>>> referencePointsTree = new TreeMap<>();
+
+	private void addToTree(ReferencePoint<S> rp) {
+		var key = rp.MemberSize();
+		if (!this.referencePointsTree.containsKey(key))
+			this.referencePointsTree.put(key, new ArrayList<>());
+		this.referencePointsTree.get(key).add(rp);
+	}
+
 	@Override
 	/* This method performs the environmental Selection indicated in the paper describing NSGAIII*/
 	public List<S> execute(List<S> source) throws JMetalException {
@@ -311,25 +299,31 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		// ---------- Step 15 / Algorithm 3, Step 16 ----------
 		associate(source);
 
-		// ---------- Step 17 / Algorithm 4 ----------
-		while (source.size() < this.solutionsToSelect)
-		{
-			int min_rp = FindNicheReferencePoint();
+		for (var rp : this.referencePoints) {
+			rp.sort();
+			this.addToTree(rp);
+		}
 
-			S chosen = SelectClusterMember(this.referencePoints.get(min_rp));
-			if (chosen == null) // no potential member in Fl, disregard this reference point
-			{
-				this.referencePoints.remove(min_rp); 
-			}
-			else
-			{
-				this.referencePoints.get(min_rp).AddMember();
-				this.referencePoints.get(min_rp).RemovePotentialMember(chosen);
-				source.add(chosen);
+		var rand = JMetalRandom.getInstance();
+		List<S> result = new ArrayList<>();
+
+		// ---------- Step 17 / Algorithm 4 ----------
+		while (result.size() < this.solutionsToSelect)
+		{
+			final var first = this.referencePointsTree.firstEntry().getValue();
+			final var min_rp_index = 1 == first.size() ? 0 : rand.nextInt(0, first.size() - 1);
+			final var min_rp = first.remove(min_rp_index);
+			if (first.isEmpty())
+				this.referencePointsTree.pollFirstEntry();
+			S chosen = SelectClusterMember(min_rp);
+			if (chosen != null) {
+				min_rp.AddMember();
+				this.addToTree(min_rp);
+				result.add(chosen);
 			}
 		}
 		
-		return source;
+		return result;
 	}
 	
 	public static class Builder<S extends Solution<?>> {

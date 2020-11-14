@@ -11,7 +11,7 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;

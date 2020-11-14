@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.checking.Check;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 import java.util.ArrayList;

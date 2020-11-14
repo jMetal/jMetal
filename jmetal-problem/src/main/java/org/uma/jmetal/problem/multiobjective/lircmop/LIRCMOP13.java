@@ -40,7 +40,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);
@@ -53,6 +53,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
     solution.setObjective(2, (1.7057 + g1(x)) * sin(0.5 * Math.PI + x[0]));
 
     evaluateConstraints(solution);
+    return solution ;
   }
 
   /** EvaluateConstraints() method */

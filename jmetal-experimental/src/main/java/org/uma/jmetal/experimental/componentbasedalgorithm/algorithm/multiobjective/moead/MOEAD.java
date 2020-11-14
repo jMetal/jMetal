@@ -2,12 +2,12 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.InitialSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.initialsolutioncreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -34,7 +34,7 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
   /** Constructor */
   public MOEAD(
       Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
+      SolutionsCreation<S> initialPopulationCreation,
       Termination termination,
       RandomMatingPoolSelection<S> selection,
       CrossoverAndMutationVariation<S> variation,

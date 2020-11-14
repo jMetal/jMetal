@@ -42,7 +42,7 @@ public class MOCellIT {
       throws Exception {
     algorithm =
         new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
-            .setArchive(new CrowdingDistanceArchive<DoubleSolution>(100))
+            .setArchive(new CrowdingDistanceArchive<>(100))
             .build();
 
     algorithm.run();

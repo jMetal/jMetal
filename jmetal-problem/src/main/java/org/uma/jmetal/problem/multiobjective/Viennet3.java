@@ -35,7 +35,7 @@ public class Viennet3 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   @Override
-  public void evaluate(DoubleSolution solution) {
+  public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[getNumberOfObjectives()];
@@ -58,7 +58,9 @@ public class Viennet3 extends AbstractDoubleProblem {
 
         
     for (int i = 0; i < getNumberOfObjectives(); i++)
-      solution.setObjective(i,f[i]);        
+      solution.setObjective(i,f[i]);
+
+    return solution ;
   }
 }
 
