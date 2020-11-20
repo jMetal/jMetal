@@ -5,6 +5,8 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -16,6 +18,7 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -31,8 +34,8 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.Binh2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/Binh2.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -44,7 +47,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
-    Termination termination = new TerminationByEvaluations(50000) ;
+    Termination termination = new TerminationByEvaluations(25000) ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
 
@@ -55,8 +58,8 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
             .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
@@ -66,5 +69,8 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront);
     }
+
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)") ;
+    plot.plot();
   }
 }
