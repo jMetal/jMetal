@@ -17,8 +17,27 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   private double[] objectives;
   private List<T> variables;
   private double[] constraints;
-
   protected Map<Object, Object> attributes;
+
+  @Override
+  public List<T> variables() {
+    return variables ;
+  }
+
+  @Override
+  public double[] objectives() {
+    return objectives ;
+  }
+
+  @Override
+  public double[] constraints() {
+    return constraints ;
+  }
+
+  @Override
+  public Map<Object, Object> attributes() {
+    return attributes ;
+  }
 
   /** Constructor */
   protected AbstractSolution(int numberOfVariables, int numberOfObjectives) {

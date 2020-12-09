@@ -15,6 +15,26 @@ public class PointSolution implements Solution<Double> {
   private double[] objectives;
   protected Map<Object, Object> attributes ;
 
+  @Override
+  public List<Double> variables() {
+    return null ;
+  }
+
+  @Override
+  public double[] objectives() {
+    return objectives ;
+  }
+
+  @Override
+  public double[] constraints() {
+    return null ;
+  }
+
+  @Override
+  public Map<Object, Object> attributes() {
+    return attributes ;
+  }
+
   /**
    * Constructor
    *

@@ -11,27 +11,47 @@ import java.util.Map;
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {
-  void setObjective(int index, double value) ;
-  double getObjective(int index) ;
-  double[] getObjectives() ;
-
-  T getVariable(int index) ;
-  List<T> getVariables() ;
-  void setVariable(int index, T variable) ;
-
-  double[] getConstraints() ;
-  double getConstraint(int index) ;
-  void setConstraint(int index, double value) ;
-
-  int getNumberOfVariables() ;
-  int getNumberOfObjectives() ;
-  int getNumberOfConstraints() ;
+  List<T> variables() ;
+  double[] objectives() ;
+  double[] constraints() ;
+  Map<Object,Object> attributes() ;
 
   Solution<T> copy() ;
 
+  @Deprecated
+  void setObjective(int index, double value) ;
+  @Deprecated
+  double getObjective(int index) ;
+  @Deprecated
+  double[] getObjectives() ;
+
+  @Deprecated
+  T getVariable(int index) ;
+  @Deprecated
+  List<T> getVariables() ;
+  @Deprecated
+  void setVariable(int index, T variable) ;
+
+  @Deprecated
+  double[] getConstraints() ;
+  @Deprecated
+  double getConstraint(int index) ;
+  @Deprecated
+  void setConstraint(int index, double value) ;
+
+  @Deprecated
+  int getNumberOfVariables() ;
+  @Deprecated
+  int getNumberOfObjectives() ;
+  @Deprecated
+  int getNumberOfConstraints() ;
+
+  @Deprecated
   void setAttribute(Object id, Object value) ;
+  @Deprecated
   Object getAttribute(Object id) ;
+  @Deprecated
   boolean hasAttribute(Object id) ;
-  
+  @Deprecated
   Map<Object, Object> getAttributes();
 }

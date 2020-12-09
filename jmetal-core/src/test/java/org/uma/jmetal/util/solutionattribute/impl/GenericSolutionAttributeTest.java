@@ -171,6 +171,26 @@ public class GenericSolutionAttributeTest {
     }
 
     @Override
+    public List<Double> variables() {
+      return null;
+    }
+
+    @Override
+    public double[] objectives() {
+      return new double[0];
+    }
+
+    @Override
+    public double[] constraints() {
+      return new double[0];
+    }
+
+    @Override
+    public Map<Object, Object> attributes() {
+      return null;
+    }
+
+    @Override
     public Solution<Double> copy() {
       return null;
     }
