@@ -58,9 +58,9 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
       // problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       // problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
       // problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      problemName = "org.uma.jmetal.problem.multiobjective.glt.GLT1";
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       evaluaciones = 45000;
-      // referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     } else if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 3) {
