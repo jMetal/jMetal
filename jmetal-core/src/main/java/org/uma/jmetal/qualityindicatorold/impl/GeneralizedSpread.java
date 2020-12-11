@@ -24,6 +24,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**

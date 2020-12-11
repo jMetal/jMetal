@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @param <Evaluate> Entity to runAlgorithm
  * @param <Result> Result of the evaluation
  */
+@Deprecated
 public interface QualityIndicator<Evaluate, Result> extends DescribedEntity, Serializable {
   Result evaluate(Evaluate evaluate) ;
 }

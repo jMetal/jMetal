@@ -4,7 +4,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 
 import java.util.List;
-
+@Deprecated
 public class CoverageFront<S extends Solution<?>> {
 
   private double coverageValue;

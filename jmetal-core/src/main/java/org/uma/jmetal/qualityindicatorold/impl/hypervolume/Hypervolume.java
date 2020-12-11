@@ -17,6 +17,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public abstract class Hypervolume<S> extends GenericIndicator<S> {
 
   public Hypervolume() {}

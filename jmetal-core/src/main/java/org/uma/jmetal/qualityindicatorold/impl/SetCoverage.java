@@ -17,6 +17,7 @@ import java.util.List;
  * @version 1.0
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class SetCoverage
     extends SimpleDescribedEntity
     implements QualityIndicator<Pair<? extends List<? extends Solution<?>>, ? extends List<? extends Solution<?>>>, Pair<Double, Double>> {

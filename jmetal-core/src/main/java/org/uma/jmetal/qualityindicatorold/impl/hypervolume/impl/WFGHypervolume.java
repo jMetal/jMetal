@@ -18,6 +18,7 @@ import java.util.*;
  * @author Alejandro Santiago
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   private static final double DEFAULT_OFFSET = 100.0;
   private double offset = DEFAULT_OFFSET;

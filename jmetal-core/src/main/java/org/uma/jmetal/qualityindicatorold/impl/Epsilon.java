@@ -22,6 +22,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
 
   /**

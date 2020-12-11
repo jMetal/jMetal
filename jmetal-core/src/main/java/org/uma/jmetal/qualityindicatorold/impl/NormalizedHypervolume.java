@@ -19,6 +19,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class NormalizedHypervolume<S extends Solution<?>> extends GenericIndicator<S> {
   private double referenceFrontHypervolume;
   private Hypervolume<S> hypervolume;

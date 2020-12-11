@@ -20,6 +20,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class GenerationalDistance<S extends Solution<?>> extends GenericIndicator<S> {
   private double pow = 2.0;
 

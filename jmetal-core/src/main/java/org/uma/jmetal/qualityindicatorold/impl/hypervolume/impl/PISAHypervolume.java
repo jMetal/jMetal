@@ -27,6 +27,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
   private static final double DEFAULT_OFFSET = 100.0;

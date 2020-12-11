@@ -18,6 +18,7 @@ import java.util.StringTokenizer;
  * TODO: Add comments here
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class R2<Evaluate extends List<? extends Solution<?>>>
     extends SimpleDescribedEntity
     implements QualityIndicator<Evaluate,Double> {
