@@ -13,7 +13,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.Archive;

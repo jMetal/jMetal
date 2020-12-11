@@ -5,7 +5,7 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.DynamicProblem;
-import org.uma.jmetal.qualityindicator.impl.CoverageFront;
+import org.uma.jmetal.qualityindicatorold.impl.CoverageFront;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.front.Front;

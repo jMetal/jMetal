@@ -8,8 +8,8 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F6;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicatorold.QualityIndicator;
+import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 

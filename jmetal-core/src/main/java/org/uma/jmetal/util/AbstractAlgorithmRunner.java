@@ -1,7 +1,7 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicatorold.impl.*;
+import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
