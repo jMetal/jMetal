@@ -1,8 +1,8 @@
 package org.uma.jmetal.utilities;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
 

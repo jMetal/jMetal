@@ -1,8 +1,8 @@
-package org.uma.jmetal.qualityIndicator.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
-import org.uma.jmetal.qualityIndicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.qualityIndicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.VectorUtils;
 
 /**

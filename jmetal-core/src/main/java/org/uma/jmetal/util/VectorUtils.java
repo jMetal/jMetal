@@ -47,7 +47,7 @@ public class VectorUtils {
    * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
    * @throws JMetalException if error while read file
    */
-  public static double[][] readVectors(String filePath) {
+  public static double[][] readVectors(String filePath, String separator) {
     double[][] referenceVectors;
     String path = filePath;
 
@@ -69,7 +69,7 @@ public class VectorUtils {
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
       String vectorStr = vectorStrList.get(i);
-      String[] objectArray = vectorStr.split("\\s+");
+      String[] objectArray = vectorStr.split(separator);
       referenceVectors[i] = new double[objectArray.length];
       for (int j = 0; j < objectArray.length; j++) {
         referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
@@ -77,6 +77,10 @@ public class VectorUtils {
     }
 
     return referenceVectors;
+  }
+
+  public static double[][] readVectors(String filePath) {
+    return readVectors(filePath, "\\s+") ;
   }
 
   /**
@@ -170,5 +174,9 @@ public class VectorUtils {
       }
     }
     return invertedFront;
+  }
+
+  public class readVectors {
+    public readVectors(String arg) {}
   }
 }

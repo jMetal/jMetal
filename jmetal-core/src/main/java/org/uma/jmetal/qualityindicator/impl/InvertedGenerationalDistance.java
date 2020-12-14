@@ -1,15 +1,15 @@
-package org.uma.jmetal.qualityIndicator.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
 
 /**
- * This class implements the generational distance indicator.
- * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary
- * Algorithm Research: A History and Analysis.
+ * This class implements the inverted generational distance metric.
+ * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary Algorithm Research:
+ * A History and Analysis.
  * Technical Report TR-98-03, Dept. Elec. Comput. Eng., Air Force
  * Inst. Technol. (1998)
  *
@@ -17,23 +17,23 @@ import java.io.FileNotFoundException;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class GenerationalDistance extends QualityIndicator {
+public class InvertedGenerationalDistance extends QualityIndicator {
+
   private double pow = 2.0;
 
   /**
    * Default constructor
    */
-  public GenerationalDistance() {
+  public InvertedGenerationalDistance() {
   }
 
   /**
    * Constructor
    *
    * @param referenceParetoFrontFile
-   * @param p
    * @throws FileNotFoundException
    */
-  public GenerationalDistance(String referenceParetoFrontFile, double p) {
+  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) {
     super(referenceParetoFrontFile) ;
     pow = p ;
   }
@@ -44,7 +44,7 @@ public class GenerationalDistance extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public GenerationalDistance(String referenceParetoFrontFile) {
+  public InvertedGenerationalDistance(String referenceParetoFrontFile) {
     this(referenceParetoFrontFile, 2.0) ;
   }
 
@@ -52,8 +52,9 @@ public class GenerationalDistance extends QualityIndicator {
    * Constructor
    *
    * @param referenceFront
+   * @throws FileNotFoundException
    */
-  public GenerationalDistance(double[][] referenceFront) {
+  public InvertedGenerationalDistance(double[][] referenceFront) {
     super(referenceFront) ;
   }
 
@@ -64,34 +65,32 @@ public class GenerationalDistance extends QualityIndicator {
    */
   @Override public double compute(double[][] front) {
     Check.isNotNull(front);
-
-    return generationalDistance(front, referenceFront);
+    return invertedGenerationalDistance(front, referenceFront);
   }
 
   /**
-   * Returns the generational distance value for a given front
+   * Returns the inverted generational distance value for a given front
    *
-   * @param front           The front
+   * @param front The front
    * @param referenceFront The reference pareto front
    */
-  public double generationalDistance(double[][] front, double[][] referenceFront) {
+  public double invertedGenerationalDistance(double[][] front, double[][] referenceFront) {
     double sum = 0.0;
-    for (int i = 0; i < front.length;  i++) {
-      sum += Math.pow(VectorUtils.distanceToClosestVector(front[i], referenceFront), pow);
+    for (double[] vector : referenceFront) {
+      sum += Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow);
     }
 
     sum = Math.pow(sum, 1.0 / pow);
 
-    return sum / front.length;
+    return sum / referenceFront.length;
   }
 
   @Override public String getName() {
-    return "GD" ;
+    return "IGD" ;
   }
 
-  @Override
-  public String getDescription() {
-    return "Generational distance quality indicator" ;
+  @Override public String getDescription() {
+    return "Inverted generational distance quality indicator" ;
   }
 
   @Override

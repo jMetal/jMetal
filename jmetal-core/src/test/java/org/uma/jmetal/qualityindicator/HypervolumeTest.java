@@ -1,8 +1,8 @@
-package org.uma.jmetal.qualityIndicator;
+package org.uma.jmetal.qualityindicator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.qualityIndicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**

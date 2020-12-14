@@ -3,8 +3,8 @@ package org.uma.jmetal.utilities;
 import org.uma.jmetal.qualityindicatorold.QualityIndicator;
 import org.uma.jmetal.qualityindicatorold.impl.*;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -27,6 +27,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
+@Deprecated
 public class CommandLineQualityIndicatorTool {
   public static void main(String[] args) throws Exception {
     boolean normalize ;

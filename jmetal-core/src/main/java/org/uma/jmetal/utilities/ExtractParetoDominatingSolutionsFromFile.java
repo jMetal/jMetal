@@ -1,8 +1,8 @@
 package org.uma.jmetal.utilities;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
 
@@ -38,7 +38,7 @@ public class ExtractParetoDominatingSolutionsFromFile {
 
     String inputFileName = args[0];
     String outputFileName = args[1];
-    Integer numberOfObjectives = Integer.parseInt(args[2]);
+    int numberOfObjectives = Integer.parseInt(args[2]);
 
     NonDominatedSolutionListArchive<PointSolution> archive = new NonDominatedSolutionListArchive<>();
 

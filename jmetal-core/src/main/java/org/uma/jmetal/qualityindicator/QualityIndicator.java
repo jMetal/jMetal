@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityIndicator;
+package org.uma.jmetal.qualityindicator;
 
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;

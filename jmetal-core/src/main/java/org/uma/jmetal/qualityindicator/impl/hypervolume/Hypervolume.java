@@ -1,6 +1,6 @@
-package org.uma.jmetal.qualityIndicator.impl.hypervolume;
+package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 
 /**
  * This interface represents implementations of the Hypervolume quality indicator

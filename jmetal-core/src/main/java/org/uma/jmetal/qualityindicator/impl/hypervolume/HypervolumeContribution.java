@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityIndicator.impl.hypervolume;
+package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;

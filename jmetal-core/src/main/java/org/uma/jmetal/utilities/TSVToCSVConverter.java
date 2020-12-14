@@ -37,7 +37,7 @@ public class TSVToCSVConverter {
             // List<String> values = Arrays.asList(l.split("\\s+")) ;
             String values = line.replaceAll("\\s+", ",");
 
-            if (values.substring(values.length() - 1).equals(",")) {
+            if (values.endsWith(",")) {
               values = values.substring(0, values.length() - 1);
             }
             try {

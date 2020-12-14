@@ -83,6 +83,9 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
 
     eps = Double.MIN_VALUE;
 
+    int a = referenceFront.getNumberOfPoints() ;
+    int b =  front.getNumberOfPoints() ;
+
     for (int i = 0; i < referenceFront.getNumberOfPoints(); i++) {
       for (int j = 0; j < front.getNumberOfPoints(); j++) {
         for (int k = 0; k < numberOfObjectives; k++) {

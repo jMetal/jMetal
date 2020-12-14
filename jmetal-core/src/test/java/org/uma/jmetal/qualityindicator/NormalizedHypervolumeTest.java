@@ -1,9 +1,9 @@
-package org.uma.jmetal.qualityIndicator;
+package org.uma.jmetal.qualityindicator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.qualityIndicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;

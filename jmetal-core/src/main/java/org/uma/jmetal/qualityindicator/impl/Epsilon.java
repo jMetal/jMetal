@@ -1,6 +1,6 @@
-package org.uma.jmetal.qualityIndicator.impl;
+package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.qualityIndicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -75,15 +75,17 @@ public class Epsilon extends QualityIndicator {
 
     double eps, epsJ = 0.0, epsK = 0.0, epsTemp;
 
-    int numberOfObjectives = front.length ;
+    int numberOfObjectives = front[0].length ;
 
     eps = Double.MIN_VALUE;
+
+    int a = referenceFront.length ;
+    int b =  front.length ;
 
     for (int i = 0; i < referenceFront.length; i++) {
       for (int j = 0; j < front.length; j++) {
         for (int k = 0; k < numberOfObjectives; k++) {
-          epsTemp = front[j][k]
-                  - referenceFront[i][k] ;
+          epsTemp = front[j][k] - referenceFront[i][k] ;
           if (k == 0) {
             epsK = epsTemp;
           } else if (epsK < epsTemp) {

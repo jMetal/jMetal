@@ -1,6 +1,6 @@
-package org.uma.jmetal.qualityIndicator.impl.hypervolume.impl;
+package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 
-import org.uma.jmetal.qualityIndicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
