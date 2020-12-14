@@ -40,8 +40,7 @@ public class CommandLineQualityIndicatorTool {
   /** Prints the command line options in the screen */
   private static void printOptions() {
     JMetalLogger.logger.info(
-        "Usage: mvn -pl jmetal-exec exec:java -Dexec:mainClass=\"org.uma.jmetal.qualityIndicator.RunIndicator\""
-            + "-Dexec.args=\"indicatorName referenceFront front [normalize]\" \n\n"
+        "Parameters: indicatorName referenceFront front \" \n\n"
             + "Where indicatorValue can be one of these:\n"
             + "GD   - Generational distance\n"
             + "IGD  - Inverted generational distance\n"
@@ -51,10 +50,9 @@ public class CommandLineQualityIndicatorTool {
             + "ER   - Error ratio \n"
             + "SPREAD  - Spread (two objectives)\n"
             + "GSPREAD - Generalized Spread (more than two objectives)\n"
-            + "ER   - Error ratio\n"
+            //+ "ER   - Error ratio\n"
             // + "R2   - R2\n\n" + "ALL  - prints all the available indicators \n\n"
-            + "Normalize can be TRUE or FALSE (the fronts are normalized before computing"
-            + " the indicators) \n");
+            );
   }
 
   /**
@@ -111,7 +109,6 @@ public class CommandLineQualityIndicatorTool {
     list.add(new Spread(referenceFront));
     list.add(new GeneralizedSpread(referenceFront));
     list.add(new R2(referenceFront));
-    list.add(new ErrorRatio(referenceFront));
 
     return list;
   }
