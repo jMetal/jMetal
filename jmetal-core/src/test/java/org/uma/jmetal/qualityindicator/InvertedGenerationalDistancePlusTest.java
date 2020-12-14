@@ -6,6 +6,8 @@ import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -27,9 +29,9 @@ public class InvertedGenerationalDistancePlusTest {
   }
 
   @Test
-  public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() throws FileNotFoundException {
-    new InvertedGenerationalDistancePlus("nonExistingFile");
-    Assertions.assertThrows(FileNotFoundException.class, () -> new InvertedGenerationalDistancePlus("nonExistingFile"));
+  public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() {
+    // new InvertedGenerationalDistancePlus("nonExistingFile")
+    Assertions.assertThrows(IOException.class, () -> new InvertedGenerationalDistancePlus("nonExistingFile"));
   }
 
   @Test
@@ -59,8 +61,6 @@ public class InvertedGenerationalDistancePlusTest {
 
     InvertedGenerationalDistancePlus igdPlus =
             new InvertedGenerationalDistancePlus(referenceFront);
-
-    Assertions.assertEquals((2.0 * Math.sqrt(0.01) + Math.sqrt(0.02)) / 3.0, igdPlus.compute(front), EPSILON);
 
     Assertions.assertEquals((0.2 + Math.sqrt(0.01 + 0.16) + Math.sqrt(0.01 + 0.04)) / 3.0, igdPlus.compute(front), EPSILON);
   }

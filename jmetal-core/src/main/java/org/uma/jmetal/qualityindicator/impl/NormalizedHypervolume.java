@@ -5,6 +5,8 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.VectorUtils;
 
+import java.io.IOException;
+
 /**
  * Class providing an implementation of the normalized hypervolume, which is calculated as follows:
  * relative hypervolume = 1 - (HV of the front / HV of the reference front)
@@ -20,9 +22,9 @@ public class NormalizedHypervolume extends QualityIndicator {
   public NormalizedHypervolume() {
   }
 
-  public NormalizedHypervolume(String referenceFrontFile) {
+  public NormalizedHypervolume(String referenceFrontFile) throws IOException {
     super(referenceFrontFile);
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile);
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
     hypervolume = new PISAHypervolume(referenceFrontFile);
 
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
@@ -31,8 +33,7 @@ public class NormalizedHypervolume extends QualityIndicator {
   public NormalizedHypervolume(double[] referencePoint) {
     // TODO: add a unit test
     double[][] referenceFront = {referencePoint};
-    hypervolume = new PISAHypervolume();
-    hypervolume.setReferenceFront(referenceFront);
+    hypervolume = new PISAHypervolume(referenceFront);
 
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
   }
@@ -53,12 +54,12 @@ public class NormalizedHypervolume extends QualityIndicator {
   }
 
   @Override
-  public void setReferenceFront(String referenceFrontFile) {
-    super.setReferenceFront(referenceFrontFile);
+  public void setReferenceFront(String referenceFrontFile, String separator) throws IOException {
+    super.setReferenceFront(referenceFrontFile, separator);
 
     hypervolume = new PISAHypervolume(referenceFrontFile);
     referenceFrontHypervolume =
-            hypervolume.compute(VectorUtils.readVectors(referenceFrontFile));
+            hypervolume.compute(VectorUtils.readVectors(referenceFrontFile, separator));
   }
 
   @Override

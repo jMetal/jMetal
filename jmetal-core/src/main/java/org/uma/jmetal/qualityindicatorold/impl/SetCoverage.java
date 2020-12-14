@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.qualityindicatorold.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
@@ -34,12 +35,8 @@ public class SetCoverage
       Pair<? extends List<? extends Solution<?>>, ? extends List<? extends Solution<?>>> pairOfSolutionLists) {
     List<? extends Solution<?>> front1 = pairOfSolutionLists.getLeft() ;
     List<? extends Solution<?>> front2 = pairOfSolutionLists.getRight() ;
-
-    if (front1 == null) {
-      throw new JMetalException("The first front is null") ;
-    } else if (front2 == null) {
-      throw new JMetalException("The second front is null");
-    }
+    Check.isNotNull(front1);
+    Check.isNotNull(front2);
 
     return new ImmutablePair<>(evaluate(front1, front2), evaluate(front2, front1));
   }

@@ -7,6 +7,7 @@ import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -35,7 +36,7 @@ public class GeneralizedSpread extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public GeneralizedSpread(String referenceParetoFrontFile) {
+  public GeneralizedSpread(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile) ;
   }
 

@@ -5,6 +5,7 @@ import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class Spread extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public Spread(String referenceParetoFrontFile) {
+  public Spread(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile) ;
   }
 

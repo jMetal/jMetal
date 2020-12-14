@@ -10,6 +10,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class CommandLineQualityIndicatorTool {
    *
    * @param args
    */
-  private static void calculateAndPrintIndicators(String[] args) {
+  private static void calculateAndPrintIndicators(String[] args) throws IOException {
     double[][] referenceFront = VectorUtils.readVectors(args[1], ",");
     double[][] front = VectorUtils.readVectors(args[2],",");
 
@@ -108,7 +109,6 @@ public class CommandLineQualityIndicatorTool {
     list.add(new InvertedGenerationalDistancePlus(referenceFront));
     list.add(new Spread(referenceFront));
     list.add(new GeneralizedSpread(referenceFront));
-    list.add(new R2(referenceFront));
 
     return list;
   }

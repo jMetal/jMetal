@@ -6,6 +6,7 @@ import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class implements the inverted generational distance metric plust (IGD+)
@@ -28,7 +29,7 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
    *
    * @param referenceParetoFrontFile
    */
-  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) {
+  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile) ;
   }
 

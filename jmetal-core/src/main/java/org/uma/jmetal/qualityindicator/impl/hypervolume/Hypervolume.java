@@ -2,6 +2,8 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 
+import java.io.IOException;
+
 /**
  * This interface represents implementations of the Hypervolume quality indicator
  *
@@ -13,7 +15,7 @@ public abstract class Hypervolume extends QualityIndicator {
 
   public Hypervolume() {}
 
-  public Hypervolume(String referenceParetoFrontFile) {
+  public Hypervolume(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile);
   }
 

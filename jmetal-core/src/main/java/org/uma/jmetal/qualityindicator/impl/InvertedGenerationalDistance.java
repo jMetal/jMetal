@@ -5,6 +5,7 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class implements the inverted generational distance metric.
@@ -33,7 +34,7 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) {
+  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) throws IOException {
     super(referenceParetoFrontFile) ;
     pow = p ;
   }
@@ -44,7 +45,7 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile) {
+  public InvertedGenerationalDistance(String referenceParetoFrontFile) throws IOException {
     this(referenceParetoFrontFile, 2.0) ;
   }
 

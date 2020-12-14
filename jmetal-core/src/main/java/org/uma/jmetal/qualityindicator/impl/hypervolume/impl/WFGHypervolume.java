@@ -5,6 +5,7 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -36,7 +37,7 @@ public class WFGHypervolume extends Hypervolume {
    *
    * @param referenceFrontFile
    */
-  public WFGHypervolume(String referenceFrontFile) {
+  public WFGHypervolume(String referenceFrontFile) throws IOException {
     super(referenceFrontFile);
   }
 

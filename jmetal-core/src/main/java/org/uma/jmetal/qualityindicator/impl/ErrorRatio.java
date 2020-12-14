@@ -6,6 +6,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points
@@ -35,7 +36,7 @@ public class ErrorRatio extends QualityIndicator {
    * @param referenceFrontFile
    * @throws FileNotFoundException
    */
-  public ErrorRatio(String referenceFrontFile)  {
+  public ErrorRatio(String referenceFrontFile) throws IOException {
     referenceFront = VectorUtils.readVectors(referenceFrontFile);
   }
 

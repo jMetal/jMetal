@@ -5,6 +5,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class implements the unary epsilon additive indicator as proposed in E.
@@ -33,7 +34,7 @@ public class Epsilon extends QualityIndicator {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public Epsilon(String referenceParetoFrontFile) {
+  public Epsilon(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile) ;
   }
 

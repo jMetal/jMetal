@@ -41,20 +41,10 @@ public class NormalizedHypervolumeTest {
   }
 
   @Test
-  public void shouldEvaluateReturnOneInTheSimplestCase() {
-    var normalizedHypervolume = new NormalizedHypervolume(new double[] {1.0, 1.0});
-    double[][] front = {{1.0, 1.0}};
+  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself() throws IOException {
+    var relativeHypervolume = new NormalizedHypervolume("../resources/referenceFrontsCSV/ZDT1.csv");
+    double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
-    Assertions.assertEquals(1.0, normalizedHypervolume.compute(front), EPSILON);
-  }
-
-  @Test
-  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
-      throws FileNotFoundException {
-    var relativeHypervolume = new NormalizedHypervolume("../resources/referenceFrontsCSV/ZDT1.pf");
-    double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.pf");
-
-    Front frontToEvaluate = new ArrayFront(frontDirectory + "/ZDT1.pf");
     Assertions.assertEquals(0.0, relativeHypervolume.compute(front), EPSILON);
   }
 

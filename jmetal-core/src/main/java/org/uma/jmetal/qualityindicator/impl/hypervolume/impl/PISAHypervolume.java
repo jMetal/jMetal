@@ -6,6 +6,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class implements the hypervolume indicator. The code is the a Java version of the original
@@ -43,7 +44,7 @@ public class PISAHypervolume extends Hypervolume {
    * @param referenceParetoFrontFile
    * @throws FileNotFoundException
    */
-  public PISAHypervolume(String referenceParetoFrontFile) {
+  public PISAHypervolume(String referenceParetoFrontFile) throws IOException {
     super(referenceParetoFrontFile);
   }
 

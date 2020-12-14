@@ -49,7 +49,7 @@ public class SetCoverageTest {
   @Test
   public void shouldExecuteReturnOneIfTheSecondFrontIsEmpty() {
     double[][] frontA = {{10.0, 12.0}} ;
-    double[][] frontB = {{}} ;
+    double[][] frontB = {} ;
 
     Assertions.assertEquals(1.0, setCoverage.compute(frontA, frontB), EPSILON);
   }

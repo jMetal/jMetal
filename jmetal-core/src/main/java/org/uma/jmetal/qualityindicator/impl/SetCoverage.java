@@ -50,6 +50,9 @@ public class SetCoverage extends QualityIndicator {
    * @return The value of the set coverage
    */
   public double compute(double[][] front, double[][] referenceFront) {
+    Check.isNotNull(front);
+    Check.isNotNull(referenceFront);
+
     double result ;
     int sum = 0 ;
 

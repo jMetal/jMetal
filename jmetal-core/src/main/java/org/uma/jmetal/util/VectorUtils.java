@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class VectorUtils {
    * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
    * @throws JMetalException if error while read file
    */
-  public static double[][] readVectors(String filePath, String separator) {
+  public static double[][] readVectors(String filePath, String separator) throws IOException {
     double[][] referenceVectors;
     String path = filePath;
 
@@ -61,11 +62,8 @@ public class VectorUtils {
     }
 
     List<String> vectorStrList = null;
-    try {
-      vectorStrList = Files.readAllLines(Paths.get(path));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    vectorStrList = Files.readAllLines(Paths.get(path));
+
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
       String vectorStr = vectorStrList.get(i);
@@ -79,7 +77,7 @@ public class VectorUtils {
     return referenceVectors;
   }
 
-  public static double[][] readVectors(String filePath) {
+  public static double[][] readVectors(String filePath) throws IOException {
     return readVectors(filePath, "\\s+") ;
   }
 
