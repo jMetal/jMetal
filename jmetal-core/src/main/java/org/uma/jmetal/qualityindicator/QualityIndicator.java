@@ -29,6 +29,7 @@ public abstract class QualityIndicator {
    * @param referenceFront
    */
   public QualityIndicator(double[][] referenceFront) {
+    Check.isNotNull(referenceFront);
     this.referenceFront = referenceFront;
   }
 
