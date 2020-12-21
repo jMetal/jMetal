@@ -144,22 +144,22 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   @Override
   public String toString() {
-    String result = "Variables: ";
+    StringBuilder result = new StringBuilder("Variables: ");
     for (T var : variables) {
-      result += "" + var + " ";
+      result.append(var).append(" ");
     }
-    result += "Objectives: ";
+    result.append("Objectives: ");
     for (Double obj : objectives) {
-      result += "" + obj + " ";
+      result.append(obj).append(" ");
     }
-    result += "Constraints: ";
+    result.append("Constraints: ");
     for (Double obj : constraints) {
-      result += "" + obj + " ";
+      result.append(obj).append(" ");
     }
-    result += "\t";
-    result += "AlgorithmAttributes: " + attributes + "\n";
+    result.append("\t");
+    result.append("AlgorithmAttributes: ").append(attributes).append("\n");
 
-    return result;
+    return result.toString();
   }
 
   @Override
