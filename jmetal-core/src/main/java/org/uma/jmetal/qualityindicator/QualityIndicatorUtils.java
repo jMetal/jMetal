@@ -14,7 +14,7 @@ public class QualityIndicatorUtils {
    * @param referenceFront
    * @return
    */
-  private static List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
+  public static List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
 
     List<QualityIndicator> list = new ArrayList<>();
     list.add(new Epsilon(referenceFront));
@@ -36,7 +36,7 @@ public class QualityIndicatorUtils {
    * @param list
    * @return
    */
-  private static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
+  public static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
     QualityIndicator result = null;
 
     for (QualityIndicator indicator : list) {

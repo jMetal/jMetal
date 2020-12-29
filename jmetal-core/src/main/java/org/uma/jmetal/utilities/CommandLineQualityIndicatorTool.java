@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
+
 /**
  * Class for executing quality indicators from the command line. An optional argument allows to
  * indicate whether the fronts are to be normalized by the quality indicators.
@@ -90,48 +93,5 @@ public class CommandLineQualityIndicatorTool {
       JMetalLogger.logger.info(
           "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
     }
-  }
-
-  /**
-   * Creates a list with the available indicators (but setCoverage)
-   *
-   * @param referenceFront
-   * @return
-   */
-  private static List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
-
-    List<QualityIndicator> list = new ArrayList<>();
-    list.add(new Epsilon(referenceFront));
-    list.add(new PISAHypervolume(referenceFront));
-    list.add(new NormalizedHypervolume(referenceFront));
-    list.add(new GenerationalDistance(referenceFront));
-    list.add(new InvertedGenerationalDistance(referenceFront));
-    list.add(new InvertedGenerationalDistancePlus(referenceFront));
-    list.add(new Spread(referenceFront));
-    list.add(new GeneralizedSpread(referenceFront));
-
-    return list;
-  }
-
-  /**
-   * Given an indicator name, finds the indicator in the list of indicator
-   *
-   * @param name
-   * @param list
-   * @return
-   */
-  private static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
-    QualityIndicator result = null;
-
-    for (QualityIndicator indicator : list) {
-      if (indicator.getName().equals(name)) {
-        result = indicator;
-        break;
-      }
-    }
-
-    Check.isNotNull(result);
-
-    return result;
   }
 }

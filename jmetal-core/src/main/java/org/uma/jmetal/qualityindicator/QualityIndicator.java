@@ -20,14 +20,6 @@ public abstract class QualityIndicator {
 
   /**
    * Constructor
-   * @param referenceFrontFile
-   */
-  //public QualityIndicator(String referenceFrontFile) throws IOException {
-  //  setReferenceFront(referenceFrontFile, ",");
-  //}
-
-  /**
-   * Constructor
    * @param referenceFront
    */
   public QualityIndicator(double[][] referenceFront) {
@@ -37,13 +29,6 @@ public abstract class QualityIndicator {
 
   public abstract double compute(double[][] front) ;
 
-  /**
-  public void setReferenceFront(String referenceFrontFile, String separator) throws IOException {
-    Check.isNotNull(referenceFrontFile);
-
-    referenceFront = VectorUtils.readVectors(referenceFrontFile, separator);
-  }
- */
   public void setReferenceFront(double[][] referenceFront) {
     this.referenceFront = referenceFront;
   }
