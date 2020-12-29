@@ -35,15 +35,6 @@ public class WFGHypervolume extends Hypervolume {
   /**
    * Constructor
    *
-   * @param referenceFrontFile
-   */
-  public WFGHypervolume(String referenceFrontFile) throws IOException {
-    super(referenceFrontFile);
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */

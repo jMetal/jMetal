@@ -22,14 +22,6 @@ public class NormalizedHypervolume extends QualityIndicator {
   public NormalizedHypervolume() {
   }
 
-  public NormalizedHypervolume(String referenceFrontFile) throws IOException {
-    super(referenceFrontFile);
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    hypervolume = new PISAHypervolume(referenceFrontFile);
-
-    referenceFrontHypervolume = hypervolume.compute(referenceFront);
-  }
-
   public NormalizedHypervolume(double[] referencePoint) {
     // TODO: add a unit test
     double[][] referenceFront = {referencePoint};
@@ -51,15 +43,6 @@ public class NormalizedHypervolume extends QualityIndicator {
 
     hypervolume = new PISAHypervolume(referenceFront);
     referenceFrontHypervolume = hypervolume.compute(referenceFront);
-  }
-
-  @Override
-  public void setReferenceFront(String referenceFrontFile, String separator) throws IOException {
-    super.setReferenceFront(referenceFrontFile, separator);
-
-    hypervolume = new PISAHypervolume(referenceFrontFile);
-    referenceFrontHypervolume =
-            hypervolume.compute(VectorUtils.readVectors(referenceFrontFile, separator));
   }
 
   @Override

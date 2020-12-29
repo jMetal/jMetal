@@ -41,16 +41,6 @@ public class PISAHypervolume extends Hypervolume {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public PISAHypervolume(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile);
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */

@@ -27,15 +27,6 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   */
-  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */

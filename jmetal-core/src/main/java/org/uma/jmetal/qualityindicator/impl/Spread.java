@@ -28,16 +28,6 @@ public class Spread extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public Spread(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */

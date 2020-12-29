@@ -41,8 +41,11 @@ public class NormalizedHypervolumeTest {
   }
 
   @Test
-  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself() throws IOException {
-    var relativeHypervolume = new NormalizedHypervolume("../resources/referenceFrontsCSV/ZDT1.csv");
+  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithItself()
+      throws IOException {
+    var relativeHypervolume =
+        new NormalizedHypervolume(
+            VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
     double[][] front = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
 
     Assertions.assertEquals(0.0, relativeHypervolume.compute(front), EPSILON);

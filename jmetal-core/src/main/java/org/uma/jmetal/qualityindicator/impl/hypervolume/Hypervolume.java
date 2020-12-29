@@ -15,10 +15,6 @@ public abstract class Hypervolume extends QualityIndicator {
 
   public Hypervolume() {}
 
-  public Hypervolume(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile);
-  }
-
   public Hypervolume(double[][] referenceFront) {
     super(referenceFront) ;
   }

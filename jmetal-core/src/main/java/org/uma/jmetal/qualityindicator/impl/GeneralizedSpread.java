@@ -33,16 +33,6 @@ public class GeneralizedSpread extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public GeneralizedSpread(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */

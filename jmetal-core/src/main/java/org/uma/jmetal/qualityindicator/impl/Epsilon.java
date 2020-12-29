@@ -31,16 +31,6 @@ public class Epsilon extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public Epsilon(String referenceParetoFrontFile) throws IOException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    */
   public Epsilon(double[][] referenceFront) {

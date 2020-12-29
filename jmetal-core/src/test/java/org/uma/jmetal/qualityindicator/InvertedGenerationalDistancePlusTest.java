@@ -29,12 +29,6 @@ public class InvertedGenerationalDistancePlusTest {
   }
 
   @Test
-  public void shouldConstructorRaiseAnExceptionIfFileNameIsNull() {
-    // new InvertedGenerationalDistancePlus("nonExistingFile")
-    Assertions.assertThrows(IOException.class, () -> new InvertedGenerationalDistancePlus("nonExistingFile"));
-  }
-
-  @Test
   public void shouldEvaluateReturnZeroIfTheFrontAndTheReferenceFrontContainsTheSamePoints() {
     double[] point = {4.0, 10.0};
     double[][] referenceFront = {point};

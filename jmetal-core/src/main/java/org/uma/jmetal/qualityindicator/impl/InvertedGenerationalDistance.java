@@ -31,22 +31,11 @@ public class InvertedGenerationalDistance extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
+   * @param referenceFront
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile, double p) throws IOException {
-    super(referenceParetoFrontFile) ;
-    pow = p ;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public InvertedGenerationalDistance(String referenceParetoFrontFile) throws IOException {
-    this(referenceParetoFrontFile, 2.0) ;
+  public InvertedGenerationalDistance(double[][] referenceFront) {
+    super(referenceFront) ;
   }
 
   /**
@@ -55,8 +44,9 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceFront
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistance(double[][] referenceFront) {
+  public InvertedGenerationalDistance(double[][] referenceFront, double pow) {
     super(referenceFront) ;
+    this.pow = pow ;
   }
 
   /**

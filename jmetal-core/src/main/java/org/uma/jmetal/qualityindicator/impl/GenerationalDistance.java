@@ -30,28 +30,6 @@ public class GenerationalDistance extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @param p
-   * @throws FileNotFoundException
-   */
-  public GenerationalDistance(String referenceParetoFrontFile, double p) throws IOException {
-    super(referenceParetoFrontFile) ;
-    pow = p ;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public GenerationalDistance(String referenceParetoFrontFile) throws IOException {
-    this(referenceParetoFrontFile, 2.0) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    */
   public GenerationalDistance(double[][] referenceFront) {
