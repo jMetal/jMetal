@@ -11,8 +11,8 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicatorold.impl.*;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -69,12 +69,13 @@ public class NSGAIIStudy {
             .setReferenceFrontDirectory("resources/referenceFrontsCSV")
             .setIndicatorList(
                 Arrays.asList(
-                    new Epsilon<DoubleSolution>(),
-                    new Spread<DoubleSolution>(),
-                    new GenerationalDistance<DoubleSolution>(),
-                    new PISAHypervolume<DoubleSolution>(),
-                    new InvertedGenerationalDistance<DoubleSolution>(),
-                    new InvertedGenerationalDistancePlus<DoubleSolution>()))
+                        new Epsilon(),
+                        new Spread(),
+                        new GenerationalDistance(),
+                        new PISAHypervolume(),
+                        new NormalizedHypervolume(),
+                        new InvertedGenerationalDistance(),
+                        new InvertedGenerationalDistancePlus()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
             .build();

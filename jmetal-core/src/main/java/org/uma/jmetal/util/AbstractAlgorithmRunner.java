@@ -1,5 +1,6 @@
 package org.uma.jmetal.util;
 
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.qualityindicatorold.impl.*;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
@@ -13,7 +14,10 @@ import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 /**
  * Abstract class for Runner classes
@@ -23,6 +27,7 @@ import java.util.List;
 public abstract class AbstractAlgorithmRunner {
   /**
    * Write the population into two files and prints some data on screen
+   *
    * @param population
    */
   public static void printFinalSolutionSet(List<? extends Solution<?>> population) {
@@ -38,58 +43,20 @@ public abstract class AbstractAlgorithmRunner {
 
   /**
    * Print all the available quality indicators
+   *
    * @param population
    * @param paretoFrontFile
    * @throws FileNotFoundException
    */
   @Deprecated
-  public static <S extends Solution<?>> void printQualityIndicators(List<S> population, String paretoFrontFile)
-      throws FileNotFoundException {
-    Front referenceFront = new ArrayFront(paretoFrontFile);
-    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
+  public static <S extends Solution<?>> void printQualityIndicators(
+      List<S> population, String paretoFrontFile) {
 
-    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
-    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population)) ;
-    List<PointSolution> normalizedPopulation = FrontUtils
-        .convertFrontToSolutionList(normalizedFront) ;
-
-    String outputString = "\n" ;
-    outputString += "Hypervolume (N) : " +
-        new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString += "Hypervolume     : " +
-        new PISAHypervolume<S>(referenceFront).evaluate(population) + "\n";
-    outputString += "Relative Hypervolume (N) : " +
-            new NormalizedHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString += "Relative Hypervolume     : " +
-            new NormalizedHypervolume<S>(referenceFront).evaluate(population) + "\n";
-    outputString += "Epsilon (N)     : " +
-        new Epsilon<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) +
-        "\n" ;
-    outputString += "Epsilon         : " +
-        new Epsilon<S>(referenceFront).evaluate(population) + "\n" ;
-    outputString += "GD (N)          : " +
-        new GenerationalDistance<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString += "GD              : " +
-        new GenerationalDistance<S>(referenceFront).evaluate(population) + "\n";
-    outputString += "IGD (N)         : " +
-        new InvertedGenerationalDistance<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString +="IGD             : " +
-        new InvertedGenerationalDistance<S>(referenceFront).evaluate(population) + "\n";
-    outputString += "IGD+ (N)        : " +
-        new InvertedGenerationalDistancePlus<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString += "IGD+            : " +
-        new InvertedGenerationalDistancePlus<S>(referenceFront).evaluate(population) + "\n";
-    outputString += "Spread (N)      : " +
-        new Spread<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-    outputString += "Spread          : " +
-        new Spread<S>(referenceFront).evaluate(population) + "\n";
-//    outputString += "R2 (N)          : " +
-//        new R2<List<DoubleSolution>>(normalizedReferenceFront).runAlgorithm(normalizedPopulation) + "\n";
-//    outputString += "R2              : " +
-//        new R2<List<? extends Solution<?>>>(referenceFront).runAlgorithm(population) + "\n";
-    outputString += "Error ratio     : " +
-        new ErrorRatio<List<? extends Solution<?>>>(referenceFront).evaluate(population) + "\n";
-    
-    JMetalLogger.logger.info(outputString);
+    try {
+      QualityIndicatorUtils.printQualityIndicators(
+          getMatrixWithObjectiveValues(population), VectorUtils.readVectors(paretoFrontFile, ","));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

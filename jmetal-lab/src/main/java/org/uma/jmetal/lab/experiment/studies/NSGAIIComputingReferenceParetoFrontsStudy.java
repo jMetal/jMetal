@@ -11,11 +11,8 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicatorold.impl.Epsilon;
-import org.uma.jmetal.qualityindicatorold.impl.GenerationalDistance;
-import org.uma.jmetal.qualityindicatorold.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicatorold.impl.Spread;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -74,11 +71,13 @@ public class NSGAIIComputingReferenceParetoFrontsStudy {
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory(experimentBaseDirectory + "/NSGAIIComputingReferenceParetoFrontsStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(
-                            new Epsilon<>(),
-                            new Spread<>(),
-                            new GenerationalDistance<>(),
-                            new PISAHypervolume<>(),
-                            new InvertedGenerationalDistancePlus<>()))
+                            new Epsilon(),
+                            new Spread(),
+                            new GenerationalDistance(),
+                            new PISAHypervolume(),
+                            new NormalizedHypervolume(),
+                            new InvertedGenerationalDistance(),
+                            new InvertedGenerationalDistancePlus()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
                     .setNumberOfCores(8)
                     .build();

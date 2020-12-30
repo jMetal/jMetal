@@ -19,12 +19,13 @@ import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.*;
-import org.uma.jmetal.qualityindicatorold.impl.Epsilon;
-import org.uma.jmetal.qualityindicatorold.impl.InvertedGenerationalDistancePlus;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.IOException;
@@ -83,9 +84,10 @@ public class ConstraintProblemsStudy {
                     .setOutputParetoSetFileName("VAR")
                     .setReferenceFrontDirectory(experimentBaseDirectory + "/ConstrainedProblemsStudy/referenceFronts")
                     .setIndicatorList(Arrays.asList(
-                            new Epsilon<DoubleSolution>(),
-                            new PISAHypervolume<DoubleSolution>(),
-                            new InvertedGenerationalDistancePlus<DoubleSolution>()))
+                            new Epsilon(),
+                            new PISAHypervolume(),
+                            new NormalizedHypervolume(),
+                            new InvertedGenerationalDistancePlus()))
                     .setIndependentRuns(INDEPENDENT_RUNS)
                     .setNumberOfCores(8)
                     .build();

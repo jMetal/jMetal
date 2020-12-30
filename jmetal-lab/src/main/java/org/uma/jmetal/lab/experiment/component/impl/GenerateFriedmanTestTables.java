@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
-import org.uma.jmetal.qualityindicatorold.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -51,7 +51,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
   public void run() throws IOException {
     latexDirectoryName = experiment.getExperimentBaseDirectory() + "/" + DEFAULT_LATEX_DIRECTORY;
 
-    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
+    for (QualityIndicator indicator : experiment.getIndicatorList()) {
       Vector<Vector<Double>> data = readData(indicator);
       double []averageRanking = computeAverageRanking(data) ;
       String fileContents = prepareFileOutputContents(averageRanking) ;
@@ -59,7 +59,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
     }
   }
 
-  private Vector<Vector<Double>> readData(GenericIndicator<?> indicator) {
+  private Vector<Vector<Double>> readData(QualityIndicator indicator) {
     Vector<Vector<Double>> data = new Vector<Vector<Double>>() ;
 
     for (int algorithm = 0; algorithm < experiment.getAlgorithmList().size(); algorithm++) {
@@ -210,7 +210,7 @@ public class GenerateFriedmanTestTables<Result extends List<? extends Solution<?
    * @param indicator
    * @param fileContents
    */
-  private void writeLatexFile(GenericIndicator<?> indicator, String fileContents) {
+  private void writeLatexFile(QualityIndicator indicator, String fileContents) {
     String outputFile = latexDirectoryName +"/FriedmanTest"+indicator.getName()+".tex";
 
     File latexOutput;

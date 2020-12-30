@@ -26,8 +26,8 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.multiobjective.OneZeroMax;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT5;
-import org.uma.jmetal.qualityindicatorold.impl.*;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -79,12 +79,13 @@ public class BinaryProblemsStudy {
         .setOutputParetoSetFileName("VAR")
         .setReferenceFrontDirectory(experimentBaseDirectory + "/BinaryProblemsStudy/referenceFronts")
         .setIndicatorList(Arrays.asList(
-            new Epsilon<BinarySolution>(),
-            new Spread<BinarySolution>(),
-            new GenerationalDistance<BinarySolution>(),
-            new PISAHypervolume<BinarySolution>(),
-            new InvertedGenerationalDistance<BinarySolution>(),
-            new InvertedGenerationalDistancePlus<BinarySolution>())
+            new Epsilon(),
+            new Spread(),
+            new GenerationalDistance(),
+            new PISAHypervolume(),
+                new NormalizedHypervolume(),
+                new InvertedGenerationalDistance(),
+            new InvertedGenerationalDistancePlus())
         )
         .setIndependentRuns(INDEPENDENT_RUNS)
         .setNumberOfCores(8)

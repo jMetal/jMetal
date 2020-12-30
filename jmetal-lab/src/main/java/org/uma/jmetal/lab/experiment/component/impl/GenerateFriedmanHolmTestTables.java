@@ -3,7 +3,7 @@ package org.uma.jmetal.lab.experiment.component.impl;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
-import org.uma.jmetal.qualityindicatorold.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import tech.tablesaw.api.StringColumn;
@@ -64,7 +64,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     Table table = Table.read().csv(path + "/" + INDICATOR_SUMMARY_CSV);
     boolean minimizar = true;
 
-    for (GenericIndicator<?> indicator : experiment.getIndicatorList()) {
+    for (QualityIndicator indicator : experiment.getIndicatorList()) {
       Table tableFilteredByIndicator = filterTableByIndicator(table, indicator.getName());
       if (indicator.getName().equals("HV")) minimizar = false;
       Table results = computeFriedmanAndHolmTests(tableFilteredByIndicator, minimizar);
@@ -80,7 +80,7 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     return test.getResults();
   }
 
-  private void createLatexFile(Table results, GenericIndicator<?> indicator) {
+  private void createLatexFile(Table results, QualityIndicator indicator) {
     String outputFile = latexDirectoryName + "/FriedmanTestWithHolm" + indicator.getName() + ".tex";
 
     File latexOutput;

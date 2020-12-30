@@ -16,11 +16,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.*;
-import org.uma.jmetal.qualityindicatorold.impl.*;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.*;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.io.IOException;
@@ -73,13 +73,13 @@ public class ZDTComputingReferenceParetoFrontsStudy {
     zdt2Study.setOutputParetoSetFileName("VAR");
     zdt2Study.setReferenceFrontDirectory(experimentBaseDirectory + "/ZDTStudy2/referenceFronts");
     zdt2Study.setIndicatorList(Arrays.asList(
-            new Epsilon<>(),
-            new Spread<>(),
-            new GenerationalDistance<>(),
-            new PISAHypervolume<>(),
-            new NormalizedHypervolume<>(),
-            new InvertedGenerationalDistance<>(),
-            new InvertedGenerationalDistancePlus<>()));
+            new Epsilon(),
+            new Spread(),
+            new GenerationalDistance(),
+            new PISAHypervolume(),
+            new NormalizedHypervolume(),
+            new InvertedGenerationalDistance(),
+            new InvertedGenerationalDistancePlus())) ;
     zdt2Study.setIndependentRuns(INDEPENDENT_RUNS);
     zdt2Study.setNumberOfCores(8);
     Experiment<DoubleSolution, List<DoubleSolution>> experiment = zdt2Study.build();
