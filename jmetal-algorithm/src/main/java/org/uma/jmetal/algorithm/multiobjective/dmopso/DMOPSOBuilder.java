@@ -8,14 +8,8 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
-/**
- * @author Jorge Rodriguez
- */
+/** @author Jorge Rodriguez */
 public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
-  public enum DMOPSOVariant {
-    DMOPSO, Measures
-  }
-
   private String name;
   private DoubleProblem problem;
 
@@ -42,8 +36,6 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
 
   private SolutionListEvaluator<DoubleSolution> evaluator;
 
-  private DMOPSOVariant variant;
-
   public DMOPSOBuilder(DoubleProblem problem) {
     this.name = "dMOPSO";
     this.problem = problem;
@@ -68,9 +60,6 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     this.changeVelocity2 = -1;
 
     this.evaluator = new SequentialSolutionListEvaluator<DoubleSolution>();
-
-    this.variant = DMOPSOVariant.DMOPSO;
-
   }
 
   /* Getters */
@@ -267,29 +256,36 @@ public class DMOPSOBuilder implements AlgorithmBuilder<DMOPSO> {
     return this;
   }
 
-  public DMOPSOBuilder setVariant(DMOPSOVariant variant) {
-    this.variant = variant;
-
-    return this;
-  }
-
   public DMOPSO build() {
     DMOPSO algorithm = null;
-    if (variant.equals(DMOPSOVariant.DMOPSO)) {
-      algorithm = new DMOPSO(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max, c2Min,
-              c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory, maxAge,
-              name);
-    } else if (variant.equals(DMOPSOVariant.Measures)) {
-      algorithm = new DMOPSOMeasures(problem, swarmSize, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
-              c2Min, c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, functionType, dataDirectory,
-              maxAge, name);
-    }
+    algorithm =
+        new DMOPSO(
+            problem,
+            swarmSize,
+            maxIterations,
+            r1Min,
+            r1Max,
+            r2Min,
+            r2Max,
+            c1Min,
+            c1Max,
+            c2Min,
+            c2Max,
+            weightMin,
+            weightMax,
+            changeVelocity1,
+            changeVelocity2,
+            functionType,
+            dataDirectory,
+            maxAge,
+            name);
+
     return algorithm;
   }
 
-    /*
-     * Getters
-     */
+  /*
+   * Getters
+   */
 
   public DoubleProblem getProblem() {
     return problem;
