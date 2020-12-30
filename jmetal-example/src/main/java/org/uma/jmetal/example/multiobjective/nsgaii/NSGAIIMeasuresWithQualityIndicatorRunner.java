@@ -10,14 +10,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.qualityindicatorold.QualityIndicator;
-import org.uma.jmetal.qualityindicatorold.impl.Epsilon;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume ;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
@@ -26,7 +23,10 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 /**
  * Class to configure and run the NSGA-II algorithm (variant with measures) getting the value of quality indicators of
@@ -40,7 +40,7 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
   java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIMeasuresRunner problemName [referenceFront]
    */
   public static void main(String[] args)
-      throws JMetalException, InterruptedException, FileNotFoundException {
+          throws JMetalException, InterruptedException, IOException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -111,20 +111,27 @@ public class NSGAIIMeasuresWithQualityIndicatorRunner extends AbstractAlgorithmR
   private static class Listener implements MeasureListener<List<DoubleSolution>> {
     private static int counter = 1 ;
 
-    ArrayFront referenceParetoFront ;
+    double[][] referenceParetoFront ;
 
-    public Listener(String referenceParetoFrontFile) throws FileNotFoundException {
-      referenceParetoFront = new ArrayFront(referenceParetoFrontFile) ;
+    public Listener(String referenceParetoFrontFile) throws IOException {
+      referenceParetoFront = VectorUtils.readVectors(referenceParetoFrontFile, ",") ;
     }
 
     @Override synchronized public void measureGenerated(List<DoubleSolution> solutionList) {
-      QualityIndicator<List<DoubleSolution>, Double> epsilon =
-              new Epsilon<DoubleSolution>(referenceParetoFront) ;
-      QualityIndicator<List<DoubleSolution>, Double> hv =
-              new PISAHypervolume<>(referenceParetoFront) ;
+      double[][] front = getMatrixWithObjectiveValues(solutionList);
+
+      double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceParetoFront);
+      double[][] normalizedFront =
+              NormalizeUtils.normalize(
+                      front,
+                      NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceParetoFront),
+                      NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceParetoFront));
+
+      var epsilon = new Epsilon(normalizedReferenceFront) ;
+      var hv = new PISAHypervolume(normalizedReferenceFront) ;
 
       System.out.println("Iteration: " + counter +
-              ". Epsilon: " + epsilon.evaluate(solutionList) + ". Hypervolume: " + hv.evaluate(solutionList)) ;
+              ". Epsilon: " + epsilon.compute(normalizedFront) + ". Hypervolume: " + hv.compute(normalizedFront)) ;
       counter ++ ;
     }
 
