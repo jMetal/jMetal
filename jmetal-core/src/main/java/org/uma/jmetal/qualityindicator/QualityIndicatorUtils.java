@@ -2,8 +2,18 @@ package org.uma.jmetal.qualityindicator;
 
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.NormalizeUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.point.PointSolution;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +59,19 @@ public class QualityIndicatorUtils {
     Check.isNotNull(result);
 
     return result;
+  }
+
+  public static void printQualityIndicators(double[][] front, double[][] referenceFront){
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[][] normalizedFront =
+            NormalizeUtils.normalize(
+                    front,
+                    NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+                    NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
+    for (QualityIndicator indicator: qualityIndicators) {
+      JMetalLogger.logger.info(indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
+    }
   }
 }

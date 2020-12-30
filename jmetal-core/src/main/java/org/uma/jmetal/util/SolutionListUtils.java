@@ -24,7 +24,7 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
     Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
-    solutionList.forEach(solution -> nonDominatedSolutionArchive.add(solution));
+    solutionList.forEach(nonDominatedSolutionArchive::add);
 
     return nonDominatedSolutionArchive.getSolutionList();
   }

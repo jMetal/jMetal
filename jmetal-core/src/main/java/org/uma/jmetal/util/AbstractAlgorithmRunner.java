@@ -42,6 +42,7 @@ public abstract class AbstractAlgorithmRunner {
    * @param paretoFrontFile
    * @throws FileNotFoundException
    */
+  @Deprecated
   public static <S extends Solution<?>> void printQualityIndicators(List<S> population, String paretoFrontFile)
       throws FileNotFoundException {
     Front referenceFront = new ArrayFront(paretoFrontFile);

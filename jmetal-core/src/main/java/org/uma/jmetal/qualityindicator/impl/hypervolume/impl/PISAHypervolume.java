@@ -213,6 +213,6 @@ public class PISAHypervolume extends Hypervolume {
 
   @Override
   public String getName() {
-    return "PISA implementation of the hypervolume quality indicator";
+    return "HV (PISA)";
   }
 }
