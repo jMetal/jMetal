@@ -109,7 +109,7 @@ public class DTLZStudy {
         double mutationDistributionIndex = 20.0;
         Algorithm<List<DoubleSolution>> algorithm = new SMPSOBuilder(
                 (DoubleProblem) problemList.get(i).getProblem(),
-                new CrowdingDistanceArchive<DoubleSolution>(100))
+                new CrowdingDistanceArchive<>(100))
                 .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
                 .setMaxIterations(250)
                 .setSwarmSize(100)
@@ -119,7 +119,7 @@ public class DTLZStudy {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 20.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
@@ -130,7 +130,7 @@ public class DTLZStudy {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
+        Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),
                 new PolynomialMutation(1.0 / problemList.get(i).getProblem().getNumberOfVariables(),
