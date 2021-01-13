@@ -70,13 +70,7 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
         }
       }
     }
-    if (bestIsOne > bestIsTwo) {
-      result = -1;
-    } else if (bestIsTwo > bestIsOne) {
-      result = 1;
-    } else {
-      result = 0;
-    }
+    result = Integer.compare(bestIsTwo, bestIsOne);
     return result;
   }
 }

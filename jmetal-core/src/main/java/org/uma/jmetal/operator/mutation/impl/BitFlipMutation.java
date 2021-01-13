@@ -58,10 +58,10 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
    * @param solution The solution to mutate
    */
   public void doMutation(double probability, BinarySolution solution) {
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      for (int j = 0; j < solution.getVariable(i).getBinarySetLength(); j++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
+      for (int j = 0; j < solution.variables().get(i).getBinarySetLength(); j++) {
         if (randomGenerator.getRandomValue() <= probability) {
-          solution.getVariable(i).flip(j);
+          solution.variables().get(i).flip(j);
         }
       }
     }

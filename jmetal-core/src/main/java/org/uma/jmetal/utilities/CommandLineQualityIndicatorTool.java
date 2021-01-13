@@ -75,7 +75,7 @@ public class CommandLineQualityIndicatorTool {
             NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
             NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    JMetalLogger.logger.info("The fronts are NORMALIZED before computing the indicators");
+    JMetalLogger.logger.info("The fronts are normalized before computing the indicators");
 
     List<QualityIndicator> indicatorList = getAvailableIndicators(normalizedReferenceFront);
 

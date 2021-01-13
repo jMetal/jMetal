@@ -34,14 +34,9 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
    * @throws FileNotFoundException
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    DoubleProblem problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "resources/referenceFrontsCSV/Srinivas.csv" ;
 
-    problem = new ComposableDoubleProblem()
+    var problem = new ComposableDoubleProblem()
         .setName("Srinivas")
         .addVariable(-20.0, 20.0)
         .addVariable(-20.0, 20.0)
@@ -52,16 +47,16 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(
-        new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
+        new RankingAndCrowdingDistanceComparator<>());
 
-    algorithm = new NSGAIIBuilder<DoubleSolution>(problem, crossover, mutation, 100)
+    var algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, 100)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
         .build() ;

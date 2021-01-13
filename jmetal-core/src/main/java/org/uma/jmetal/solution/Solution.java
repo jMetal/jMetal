@@ -16,6 +16,7 @@ public interface Solution<T> extends Serializable {
   double[] constraints() ;
   Map<Object,Object> attributes() ;
 
+  @Deprecated
   Solution<T> copy() ;
 
   @Deprecated

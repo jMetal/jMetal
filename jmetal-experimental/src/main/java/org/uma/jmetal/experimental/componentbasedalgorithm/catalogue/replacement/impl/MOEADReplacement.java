@@ -62,10 +62,10 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
 
       double f1 =
           aggregativeFunction.compute(
-              population.get(k).getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+              population.get(k).objectives(), weightVectorNeighborhood.getWeightVector()[k]);
       double f2 =
           aggregativeFunction.compute(
-              newSolution.getObjectives(), weightVectorNeighborhood.getWeightVector()[k]);
+              newSolution.objectives(), weightVectorNeighborhood.getWeightVector()[k]);
 
       if (f2 < f1) {
         population.set(k, (S) newSolution.copy());
