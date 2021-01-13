@@ -5,15 +5,20 @@ import org.uma.jmetal.util.point.impl.IdealPoint;
 
 public class PenaltyBoundaryIntersection implements AggregativeFunction {
   private IdealPoint idealPoint ;
+  private final double theta ;
 
   public PenaltyBoundaryIntersection() {
+    this(0.5) ;
+  }
+
+  public PenaltyBoundaryIntersection(double theta) {
     this.idealPoint = null ;
+    this.theta = theta ;
   }
 
   @Override
   public double compute(double[] vector, double[] weightVector) {
     double d1, d2, nl;
-    double theta = 5.0;
 
     d1 = d2 = nl = 0.0;
 
