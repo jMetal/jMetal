@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.distance.Distance;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class for calculating the dominance distance between two vectors

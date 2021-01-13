@@ -76,23 +76,19 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
     offspring.add((DoubleSolution) parent2.copy()) ;
 
     int i;
-    double random;
-    double valueY1;
-    double valueY2;
     double upperBound;
     double lowerBound;
 
     if (randomGenerator.getRandomValue() <= probability) {
+      double alpha = randomGenerator.getRandomValue() ;
+
       for (i = 0; i < parent1.variables().size(); i++) {
         Bounds<Double> bounds = parent1.getBounds(i);
         upperBound = bounds.getUpperBound();
         lowerBound = bounds.getLowerBound();
 
-        double alpha = randomGenerator.getRandomValue() ;
-
-
         double valueX1 = alpha * parent1.variables().get(i) + (1.0 - alpha) * parent2.variables().get(i) ;
-        double valueX2 = alpha * parent1.variables().get(i) + (1.0 - alpha) * parent2.variables().get(i) ;
+        double valueX2 = alpha * parent2.variables().get(i) + (1.0 - alpha) * parent1.variables().get(i) ;
 
 
         valueX1 = solutionRepair.repairSolutionVariableValue(valueX1, lowerBound, upperBound) ;

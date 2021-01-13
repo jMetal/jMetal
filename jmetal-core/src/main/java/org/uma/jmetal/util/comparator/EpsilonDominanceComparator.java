@@ -1,8 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints and

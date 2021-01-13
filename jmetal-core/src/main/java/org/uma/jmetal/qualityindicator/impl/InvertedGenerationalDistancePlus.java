@@ -1,8 +1,8 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
