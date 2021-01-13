@@ -12,27 +12,35 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
+
 public class HypervolumeContribution<S extends Solution<?>> {
   private static final double DEFAULT_OFFSET = 100.0;
   private double offset = DEFAULT_OFFSET;
   private Hypervolume hypervolume ;
+  public String attributeId = getClass().getName() ;
 
   public HypervolumeContribution(Hypervolume hypervolume) {
+    this(hypervolume, DEFAULT_OFFSET) ;
+  }
+  public HypervolumeContribution(Hypervolume hypervolume, double offset) {
     this.hypervolume = hypervolume ;
+    this.offset = offset ;
   }
 
-  public List<S> computeHypervolumeContribution(List<S> solutionList) {
-    double[][] referenceFront = hypervolume.getReferenceFront() ;
+  public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceSolutionList) {
+    double[][] referenceFront = getMatrixWithObjectiveValues(referenceSolutionList) ;
     if (solutionList.size() > 1) {
-      double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(solutionList) ;
+      double[][] front = getMatrixWithObjectiveValues(solutionList) ;
+      double[][] normalizedFront =
+              NormalizeUtils.normalize(
+                      front,
+                      NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+                      NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] minimumValues = NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront);
       double[] maximumValues = NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront);
-
-      // STEP 2. Get the normalized front
-      FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-      double[][] normalizedFront = NormalizeUtils.normalize(front);
 
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
@@ -50,12 +58,10 @@ public class HypervolumeContribution<S extends Solution<?>> {
         }
       }
 
-      HypervolumeContributionAttribute<S> hvContribution = new HypervolumeContributionAttribute<>();
-
       // calculate contributions and sort
       double[] contributions = hvContributions(invertedFront);
       for (int i = 0; i < contributions.length; i++) {
-        hvContribution.setAttribute(solutionList.get(i), contributions[i]);
+        solutionList.get(i).attributes().put(attributeId, contributions[i]) ;
       }
 
       solutionList.sort(new HypervolumeContributionComparator<S>());

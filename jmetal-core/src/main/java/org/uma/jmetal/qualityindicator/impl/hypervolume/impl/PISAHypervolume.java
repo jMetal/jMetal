@@ -70,7 +70,7 @@ public class PISAHypervolume extends Hypervolume {
   returns true if 'point1' dominates 'points2' with respect to the
   to the first 'noObjectives' objectives
   */
-  private boolean dominates(double point1[], double point2[], int noObjectives) {
+  private boolean dominates(double[] point1, double[] point2, int noObjectives) {
     int i;
     int betterInAnyObjective;
 
@@ -131,9 +131,7 @@ public class PISAHypervolume extends Hypervolume {
     int i;
     double minValue, value;
 
-    if (noPoints < 1) {
-      new JMetalException("run-time error");
-    }
+    Check.that(noPoints >= 1, "The number of points is lower than 1");
 
     minValue = front[0][objective];
     for (i = 1; i < noPoints; i++) {
@@ -178,9 +176,7 @@ public class PISAHypervolume extends Hypervolume {
 
       nonDominatedPoints = filterNondominatedSet(front, n, noObjectives - 1);
       if (noObjectives < 3) {
-        if (nonDominatedPoints < 1) {
-          new JMetalException("run-time error");
-        }
+        Check.that(nonDominatedPoints >= 1, "The number of non-dominated points is lower than 1") ;
 
         tempVolume = front[0][0];
       } else {

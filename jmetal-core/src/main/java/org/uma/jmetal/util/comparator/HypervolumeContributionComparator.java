@@ -47,13 +47,7 @@ public class HypervolumeContributionComparator<S extends Solution<?>> implements
         contribution2 = (double) hvContribution.getAttribute(solution2);
       }
 
-      if (contribution1 < contribution2) {
-        result = 1;
-      } else  if (contribution1 > contribution2) {
-        result = -1;
-      } else {
-        result = 0;
-      }
+      result = Double.compare(contribution2, contribution1);
     }
 
     return result ;

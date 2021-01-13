@@ -7,7 +7,8 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
@@ -95,7 +96,9 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
 
-    Ranking<S> ranking = computeRanking(jointPopulation);
+    Ranking<S> ranking = new MergeNonDominatedSortRanking<>();
+    ranking.computeRanking(jointPopulation) ;
+
     List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
     lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
@@ -116,13 +119,6 @@ public class SMSEMOA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override public List<S> getResult() {
     return getPopulation();
-  }
-
-  protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
-    ranking.computeRanking(solutionList);
-
-    return ranking;
   }
 
   @Override public String getName() {
