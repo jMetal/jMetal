@@ -113,10 +113,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
     }
 
     this.selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
-            ((DifferentialCrossoverVariation) variation)
-                .getCrossover()
-                .getNumberOfRequiredParents(),
+        new PopulationAndNeighborhoodMatingPoolSelection<>(variation.getMatingPoolSize(),
             subProblemIdGenerator,
             neighborhood,
             neighborhoodSelectionProbability,
