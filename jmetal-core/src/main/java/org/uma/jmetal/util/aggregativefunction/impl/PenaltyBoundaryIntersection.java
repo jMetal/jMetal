@@ -8,7 +8,7 @@ public class PenaltyBoundaryIntersection implements AggregativeFunction {
   private final double theta ;
 
   public PenaltyBoundaryIntersection() {
-    this(0.5) ;
+    this(5.0) ;
   }
 
   public PenaltyBoundaryIntersection(double theta) {
