@@ -120,7 +120,7 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
             true);
 
     this.replacement =
-        new MOEADReplacement<DoubleSolution>(
+        new MOEADReplacement<>(
             (PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution>) selection,
             neighborhood,
             aggregativeFunction,
