@@ -3,7 +3,7 @@ package org.uma.jmetal.algorithm.multiobjective.microfame;
 import generic.Input;
 import generic.Output;
 import generic.Tuple;
-import org.uma.jmetal.algorithm.multiobjective.microfame.util.NullEvaluator;
+import org.uma.jmetal.util.evaluator.impl.NullEvaluator;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -20,7 +20,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import type1.sets.T1MF_Gauangle;
 import type1.system.T1_Antecedent;
@@ -60,8 +59,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         crossoverOperator,
         mutationOperator,
         selectionOperator,
-        new RankingAndCrowdingDistanceComparator<>(),
-        new NullEvaluator<>());
+        new RankingAndCrowdingDistanceComparator<>());
     archive_hv = new HypervolumeArchive(populationSize, new WFGHypervolumeV2());
     operators_desirability = new double[operators_num];
     operators_use = new double[operators_num];
@@ -156,6 +154,10 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
       contador_ventana = 0;
       estancamiento = 0.0;
     }
+  }
+
+  @Override protected List<S> evaluatePopulation(List<S> population) {
+    return population;
   }
 
   @Override
