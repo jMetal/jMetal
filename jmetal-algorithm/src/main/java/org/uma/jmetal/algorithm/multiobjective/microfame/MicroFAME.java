@@ -64,7 +64,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     operators_desirability = new double[operators_num];
     operators_use = new double[operators_num];
     window_size = (int) Math.ceil(3.33333 * operators_num);
-    System.out.println("Tamanio de ventana " + window_size);
+    System.out.println("Window size: " + window_size);
     for (int x = 0; x < operators_num; x++) {
       operators_desirability[x] = (1.0);
       operators_use[x] = 0.0;
@@ -156,7 +156,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     }
   }
 
-  @Override protected List<S> evaluatePopulation(List<S> population) {
+  @Override
+  protected List<S> evaluatePopulation(List<S> population) {
     return population;
   }
 
@@ -189,7 +190,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     CR = 1.0;
     F = 0.5;
     DifferentialEvolutionCrossover crossoverOperator_DE =
-        new DifferentialEvolutionCrossover(CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+        new DifferentialEvolutionCrossover(
+            CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double crossoverProbability, crossoverDistributionIndex;
     crossoverProbability = 1.0;

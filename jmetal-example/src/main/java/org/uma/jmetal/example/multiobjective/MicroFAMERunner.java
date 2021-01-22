@@ -18,7 +18,9 @@ import org.uma.jmetal.algorithm.multiobjective.microfame.MicroFAME;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.HVTournamentSelection;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -39,8 +41,7 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
-   * @throws FileNotFoundException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.NSGAIIRunner problemName [referenceFront]
+   * @throws FileNotFoundException
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     Problem<DoubleSolution> problem;
@@ -50,7 +51,7 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
     String referenceParetoFront = "";
 
-    int evaluaciones = 45000; //
+    int evaluations = 175000; //
     int archiveSize = 100;
     String problemName = null;
     if (args.length == 0) {
@@ -58,30 +59,23 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
       // problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       // problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
       // problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      evaluaciones = 45000;
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+      evaluations = 175000;
+      referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
     } else if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 3) {
       problemName = args[0];
       archiveSize = Integer.valueOf(args[1]);
-      evaluaciones = Integer.valueOf(args[2]);
+      evaluations = Integer.valueOf(args[2]);
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    crossover = null;
-    mutation = null;
+    crossover = new NullCrossover<>();
+    mutation = new NullMutation<>();
     selection = new HVTournamentSelection(5);
-    algorithm =
-        new MicroFAME<>(
-            problem,
-            evaluaciones,
-            archiveSize,
-            crossover,
-            mutation,
-            selection);
+    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 

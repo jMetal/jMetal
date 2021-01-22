@@ -1,7 +1,11 @@
-package org.uma.jmetal.algorithm.multiobjective.fame;
+package org.uma.jmetal.algorithm.multiobjective.microfame;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.fame.FAME;
+import org.uma.jmetal.algorithm.multiobjective.microfame.util.HVTournamentSelection;
+import org.uma.jmetal.operator.crossover.impl.NullCrossover;
+import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.SpatialSpreadDeviationSelection;
 import org.uma.jmetal.problem.Problem;
@@ -16,7 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class FAMEIT {
+public class MicroFAMEIT {
 
   @Test
   public void shouldTheAlgorithmReturnANumberOfSolutionsWhenSolvingASimpleProblem() {
@@ -24,29 +28,23 @@ public class FAMEIT {
     Algorithm<List<DoubleSolution>> algorithm;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new ZDT1();
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
-
-    int populationSize = 25;
     int archiveSize = 100;
-    int maxEvaluations = 25000;
+    int evaluations = 25000;
 
-    algorithm =
-        new FAME<>(
-            problem,
-            populationSize,
-            archiveSize,
-            maxEvaluations,
-            selection,
-            new SequentialSolutionListEvaluator<>());
+    problem = new ZDT1();
+
+    var crossover = new NullCrossover<DoubleSolution>();
+    var mutation = new NullMutation<DoubleSolution>();
+    selection = new HVTournamentSelection(5);
+    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
 
     algorithm.run();
 
     /*
-    Rationale: the default problem is ZDT1, and FAME, configured with standard settings, should
+    Rationale: the default problem is ZDT1, and MicroFAME, configured with standard settings, should
     return 100 solutions
     */
-    assertTrue(algorithm.getResult().size() >= 99);
+    assertTrue(algorithm.getResult().size() >= 98);
     JMetalRandom.getInstance().setSeed(System.currentTimeMillis());
   }
 
@@ -56,33 +54,27 @@ public class FAMEIT {
     Algorithm<List<DoubleSolution>> algorithm;
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
-    problem = new ZDT1();
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
-
-    int populationSize = 25;
     int archiveSize = 100;
-    int maxEvaluations = 25000;
+    int evaluations = 25000;
 
-    algorithm =
-        new FAME<>(
-            problem,
-            populationSize,
-            archiveSize,
-            maxEvaluations,
-            selection,
-            new SequentialSolutionListEvaluator<>());
+    problem = new ZDT1();
+
+    var crossover = new NullCrossover<DoubleSolution>();
+    var mutation = new NullMutation<DoubleSolution>();
+    selection = new HVTournamentSelection(5);
+    algorithm = new MicroFAME<>(problem, evaluations, archiveSize, crossover, mutation, selection);
 
     algorithm.run();
 
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");
 
-    // Rationale: the default problem is ZDT1, and FAME, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.66
+    // Rationale: the default problem is ZDT1, and MicroFAME, configured with standard settings, should
+    // return find a front with a hypervolume value higher than 0.65
 
     double hv = (Double) hypervolume.evaluate(algorithm.getResult());
 
-    assertTrue(hv > 0.66);
+    assertTrue(hv > 0.65);
     JMetalRandom.getInstance().setSeed(System.currentTimeMillis());
   }
 }
