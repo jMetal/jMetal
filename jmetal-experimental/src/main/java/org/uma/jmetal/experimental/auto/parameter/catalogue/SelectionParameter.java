@@ -14,7 +14,6 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
 
 public class SelectionParameter extends CategoricalParameter {
   public SelectionParameter(String args[], List<String> selectionStrategies) {

@@ -1,9 +1,9 @@
 package org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 

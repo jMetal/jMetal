@@ -2,18 +2,15 @@ package org.uma.jmetal.algorithm.multiobjective.microfame;
 
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.fame.FAME;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.HVTournamentSelection;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.SpatialSpreadDeviationSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;

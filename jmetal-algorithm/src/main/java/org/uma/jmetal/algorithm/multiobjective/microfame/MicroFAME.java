@@ -3,7 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.microfame;
 import generic.Input;
 import generic.Output;
 import generic.Tuple;
-import org.uma.jmetal.util.evaluator.impl.NullEvaluator;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -20,7 +19,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-
 import type1.sets.T1MF_Gauangle;
 import type1.system.T1_Antecedent;
 import type1.system.T1_Consequent;
