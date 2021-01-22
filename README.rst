@@ -39,6 +39,8 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [1/21/2021] Added the MicroFAME multi-objective genetic algorith, described in: Alejandro Santiago, Bernabé Dorronsoro, Héctor Fraire, Patricia Ruíz: Micro-Genetic algorithm with fuzzy selection of operators for multi-Objective optimization: microFAME. Swarm and Evolutionary Computation, V.61, March 2021. `DOI <https://doi.org/10.1016/j.swevo.2020.100818>`_.
+
 * [10/1/2020] Added the problems described in: Ryoji Tanabe and Hisao Ishibuchi: An Easy-to-use Real-world Multi-objective Optimization Problem Suite. Applied Soft Computing, V.89, April 2020. `DOI <https://doi.org/10.1016/j.asoc.2020.106078>`_.
 
 * [9/14/2020] New ``jmetal-auto`` sub-module. It contains asynchronous versions of a genetic algorithm and NSGA-II, and a synchronous evaluator based on Apache Spark.
