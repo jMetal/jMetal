@@ -6,7 +6,7 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.comparator.impl.ViolationThresholdComparator;
+import org.uma.jmetal.algorithm.multiobjective.moead.util.ViolationThresholdComparator;
 
 import java.util.List;
 

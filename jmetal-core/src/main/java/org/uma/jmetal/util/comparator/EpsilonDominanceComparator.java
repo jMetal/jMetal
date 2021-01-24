@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -17,12 +16,12 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
 
   /** Constructor */
   public EpsilonDominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>(), 0.0) ;
+    this(new ConstraintViolationComparator<S>(), 0.0) ;
   }
 
   /** Constructor */
   public EpsilonDominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator<S>(), epsilon) ;
+    this(new ConstraintViolationComparator<S>(), epsilon) ;
   }
 
   /** Constructor */

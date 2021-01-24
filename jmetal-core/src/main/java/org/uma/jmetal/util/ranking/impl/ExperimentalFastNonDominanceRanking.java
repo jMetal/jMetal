@@ -4,7 +4,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.ranking.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
 import ru.ifmo.nds.NonDominatedSorting;
@@ -40,8 +40,8 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   private final List<List<S>> subFronts = new ArrayList<>();
 
   // Constraint violation checking support.
-  private final OverallConstraintViolationComparator<S> overallConstraintViolationComparator
-          = new OverallConstraintViolationComparator<>();
+  private final ConstraintViolationComparator<S> constraintViolationComparator
+          = new ConstraintViolationComparator<>();
 
   // Delegation.
   private NonDominatedSorting sortingInstance = null;
@@ -75,7 +75,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
     } else {
       // Need to apply the constraint comparator first
       List<S> defensiveCopy = new ArrayList<>(solutionList);
-      defensiveCopy.sort(overallConstraintViolationComparator);
+      defensiveCopy.sort((Comparator<? super S>) constraintViolationComparator);
       int rankOffset = 0;
       int lastSpanStart = 0;
       double lastConstraint = getConstraint(defensiveCopy.get(0));

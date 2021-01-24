@@ -4,7 +4,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 
@@ -24,7 +24,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
   private Comparator<S> dominanceComparator ;
   private Comparator<S> solutionComparator;
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-      new OverallConstraintViolationComparator<Solution<?>>();
+      new ConstraintViolationComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubPopulations;
 

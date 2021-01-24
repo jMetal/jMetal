@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
 
   /** Constructor */
   public DominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>());
+    this(new ConstraintViolationComparator<S>());
   }
 
   /** Constructor */
