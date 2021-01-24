@@ -45,7 +45,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   /** Execute() method */
   @Override
   public BinarySolution execute(BinarySolution solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(mutationProbability, solution);
     return solution;

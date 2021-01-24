@@ -25,8 +25,8 @@ public class DoubleVariableComparator implements Comparator<DoubleSolution> {
    */
   @Override
   public int compare(DoubleSolution solution1, DoubleSolution solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
 
     if (solution1.getVariable(variableIndex) < solution2.getVariable(variableIndex)) {
       return -1;

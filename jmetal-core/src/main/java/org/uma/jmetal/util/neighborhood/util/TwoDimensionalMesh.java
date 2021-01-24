@@ -118,7 +118,7 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    *
    */
   public List<S> getNeighbors(List<S> solutionList, int solutionPosition) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     if (solutionPosition < 0) {
       throw new JMetalException("The solution position value is negative: " + solutionPosition) ;

@@ -61,7 +61,7 @@ public class PermutationSwapMutation<T> implements MutationOperator<PermutationS
   /* Execute() method */
   @Override
   public PermutationSolution<T> execute(PermutationSolution<T> solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(solution);
     return solution;

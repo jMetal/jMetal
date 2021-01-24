@@ -55,7 +55,7 @@ public class GeneralizedSpread extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return generalizedSpread(front, referenceFront);
   }

@@ -71,7 +71,7 @@ public class PISAHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    */
   @Override
   public Double evaluate(List<S> paretoFrontApproximation) {
-    Check.isNotNull(paretoFrontApproximation);
+    Check.notNull(paretoFrontApproximation);
 
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }

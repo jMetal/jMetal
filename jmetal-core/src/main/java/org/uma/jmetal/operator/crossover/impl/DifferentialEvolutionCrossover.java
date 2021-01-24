@@ -352,7 +352,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestMutation(Double[][] parent, int index, int numberOfDifferenceVectors) {
-    Check.isNotNull(bestSolution);
+    Check.notNull(bestSolution);
     if (numberOfDifferenceVectors == 1) {
       return bestSolution.getVariable(index) + f * (parent[0][index] - parent[1][index]);
     } else if (numberOfDifferenceVectors == 2) {
@@ -366,8 +366,8 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestRandToBestMutation(Double[][] parent, int index) {
-    Check.isNotNull(bestSolution);
-    Check.isNotNull(currentSolution);
+    Check.notNull(bestSolution);
+    Check.notNull(currentSolution);
     return currentSolution.getVariable(index)
         + f * (bestSolution.getVariable(index) - currentSolution.getVariable(index))
         + f * (parent[0][index] - parent[1][index]);

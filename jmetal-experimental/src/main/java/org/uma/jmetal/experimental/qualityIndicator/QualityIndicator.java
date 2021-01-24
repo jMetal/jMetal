@@ -35,7 +35,7 @@ public abstract class QualityIndicator {
   public abstract double compute(double[][] front) ;
 
   public void setReferenceFront(String referenceFrontFile) {
-    Check.isNotNull(referenceFrontFile);
+    Check.notNull(referenceFrontFile);
 
     referenceFront = VectorUtils.readVectors(referenceFrontFile);
   }

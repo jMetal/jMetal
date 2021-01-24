@@ -44,7 +44,7 @@ public class ArrayPoint implements Point {
    * @param point
    */
   public ArrayPoint(Point point) {
-    Check.isNotNull(point);
+    Check.notNull(point);
 
     this.point = new double[point.getDimension()];
 
@@ -59,7 +59,7 @@ public class ArrayPoint implements Point {
    * @param point
    */
   public ArrayPoint(double[] point) {
-    Check.isNotNull(point);
+    Check.notNull(point);
 
     this.point = new double[point.length];
     System.arraycopy(point, 0, this.point, 0, point.length);

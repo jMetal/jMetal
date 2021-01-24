@@ -37,7 +37,7 @@ public class TournamentSelection<S extends Solution<?>> implements SelectionOper
   @Override
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
 
     S result;

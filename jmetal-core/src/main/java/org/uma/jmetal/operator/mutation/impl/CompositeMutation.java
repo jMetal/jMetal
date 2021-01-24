@@ -22,7 +22,7 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
 
   /** Constructor */
   public CompositeMutation(List<?> operators) {
-    Check.isNotNull(operators);
+    Check.notNull(operators);
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
@@ -43,7 +43,7 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
   /** Execute() method */
   @Override
   public CompositeSolution execute(CompositeSolution solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     List<Solution<?>> mutatedSolutionComponents = new ArrayList<>();
     int numberOfSolutionsInCompositeSolution = solution.getNumberOfVariables();

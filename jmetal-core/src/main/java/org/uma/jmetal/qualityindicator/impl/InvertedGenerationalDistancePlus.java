@@ -51,7 +51,7 @@ public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends Gen
    * @return
    */
   @Override public Double evaluate(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
 
     return invertedGenerationalDistancePlus(new ArrayFront(solutionList), referenceParetoFront);
   }

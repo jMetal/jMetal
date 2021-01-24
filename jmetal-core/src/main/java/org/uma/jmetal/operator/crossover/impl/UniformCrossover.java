@@ -48,7 +48,7 @@ public class UniformCrossover implements CrossoverOperator<BinarySolution> {
 
   @Override
   public List<BinarySolution> execute(List<BinarySolution> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1));

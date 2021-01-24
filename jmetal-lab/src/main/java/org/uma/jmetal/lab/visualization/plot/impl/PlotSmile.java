@@ -18,7 +18,7 @@ public class PlotSmile implements PlotFront {
   }
 
   public PlotSmile(double[][] matrix, String plotTitle) {
-    Check.isNotNull(matrix);
+    Check.notNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
 
     this.matrix = matrix;

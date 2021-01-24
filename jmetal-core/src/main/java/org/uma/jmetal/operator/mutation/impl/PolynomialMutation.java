@@ -113,7 +113,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(solution);
     /*

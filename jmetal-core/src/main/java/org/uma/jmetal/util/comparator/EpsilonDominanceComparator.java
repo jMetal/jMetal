@@ -45,8 +45,8 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
     Check.that(
             solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
             "Cannot compare because solution1 has "

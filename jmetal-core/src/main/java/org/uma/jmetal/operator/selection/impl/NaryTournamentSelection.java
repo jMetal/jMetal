@@ -35,7 +35,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
   @Override
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= tournamentSize,

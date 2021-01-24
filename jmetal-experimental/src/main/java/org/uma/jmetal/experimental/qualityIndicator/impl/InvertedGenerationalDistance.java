@@ -64,7 +64,7 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
     return invertedGenerationalDistance(front, referenceFront);
   }
 

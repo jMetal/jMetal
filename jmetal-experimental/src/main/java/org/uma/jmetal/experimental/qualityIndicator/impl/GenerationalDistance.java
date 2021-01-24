@@ -63,7 +63,7 @@ public class GenerationalDistance extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return generationalDistance(front, referenceFront);
   }

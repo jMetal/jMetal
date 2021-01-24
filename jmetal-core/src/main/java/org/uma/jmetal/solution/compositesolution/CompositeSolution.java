@@ -29,7 +29,7 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    */
   public CompositeSolution(List<Solution<?>> solutions) {
     super(solutions.size(), solutions.get(0).getNumberOfObjectives(), solutions.get(0).getNumberOfConstraints());
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
     int numberOfObjectives = solutions.get(0).getNumberOfObjectives();
     int numberOfConstraints = solutions.get(0).getNumberOfConstraints();

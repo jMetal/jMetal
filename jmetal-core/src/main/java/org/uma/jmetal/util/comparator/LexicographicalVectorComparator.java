@@ -21,8 +21,8 @@ public class LexicographicalVectorComparator implements Comparator<double[]> {
    */
   @Override
   public int compare(double[] x, double[] y) {
-    Check.isNotNull(x);
-    Check.isNotNull(y);
+    Check.notNull(x);
+    Check.notNull(y);
 
     // Find the first i such as x[i] != y[i];
     int index = 0;

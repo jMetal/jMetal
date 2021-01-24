@@ -12,8 +12,8 @@ public class DominanceDistanceBetweenVectors implements Distance<double[], doubl
 
   @Override
   public double compute(double[] vector1, double[] vector2) {
-    Check.isNotNull(vector1);
-    Check.isNotNull(vector2);
+    Check.notNull(vector1);
+    Check.notNull(vector2);
     Check.that(vector1.length == vector2.length, "The vectors have different" +
             "dimension: " + vector1.length + " and " + vector2.length);
 

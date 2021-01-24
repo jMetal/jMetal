@@ -16,13 +16,13 @@ public class BestSolutionSelection<S> implements SelectionOperator<List<S>, S> {
 private final Comparator<S> comparator ;
 
   public BestSolutionSelection(Comparator<S> comparator) {
-    Check.isNotNull(comparator);
+    Check.notNull(comparator);
     this.comparator = comparator ;
   }
 
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
 
     return solutionList.stream().reduce(solutionList.get(0), (x, y) -> (comparator.compare(x, y) < 0) ? x : y);

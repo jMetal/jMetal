@@ -62,7 +62,7 @@ public class Epsilon<S extends Solution<?>> extends GenericIndicator<S> {
    */
   @Override
   public Double evaluate(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
 
     return epsilon(new ArrayFront(solutionList), referenceParetoFront);
   }
