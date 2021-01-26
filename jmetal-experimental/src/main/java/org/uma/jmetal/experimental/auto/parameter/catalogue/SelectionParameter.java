@@ -47,7 +47,7 @@ public class SelectionParameter extends CategoricalParameter {
         MultiComparator<Solution<?>> rankingAndCrowdingComparator =
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
+                    ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed()));
         result = new NaryTournamentMatingPoolSelection<>(
                 tournamentSize, matingPoolSize, rankingAndCrowdingComparator);
 

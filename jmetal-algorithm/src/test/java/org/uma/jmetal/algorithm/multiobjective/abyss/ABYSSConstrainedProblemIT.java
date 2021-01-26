@@ -16,9 +16,9 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparatorV2;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 
 import java.util.Arrays;
 import java.util.Comparator;

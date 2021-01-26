@@ -33,6 +33,7 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -83,7 +84,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+                    ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed())));
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 

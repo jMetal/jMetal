@@ -3,8 +3,8 @@ package org.uma.jmetal.util.ranking.impl;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 

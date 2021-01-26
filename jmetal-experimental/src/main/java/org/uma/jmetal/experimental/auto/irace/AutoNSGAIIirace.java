@@ -32,6 +32,7 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class AutoNSGAIIirace {
@@ -161,7 +162,7 @@ public class AutoNSGAIIirace {
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     var rankingAndCrowdingComparator =
         new MultiComparator<>(
-            List.of(ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
+            List.of(ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed()));
 
     var initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());

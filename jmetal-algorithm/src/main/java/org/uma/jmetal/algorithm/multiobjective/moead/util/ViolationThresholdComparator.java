@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 
 import java.util.Comparator;
 import java.util.List;

@@ -2,16 +2,16 @@ package org.uma.jmetal.util.densityestimator;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KnnDensityEstimatorTest {
   private double EPSILON = 0.00000000000001;
@@ -26,40 +26,38 @@ public class KnnDensityEstimatorTest {
          1         4
          0 1 2 3 4 5
     */
-    DoubleProblem problem =
-        new MockDoubleProblem(2);
-    KnnDensityEstimator<Solution<?>> densityEstimator = new KnnDensityEstimator<>(1);
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+
+    KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
     DoubleSolution solution4 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] = 1.0;
+    solution1.objectives()[1] = 5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] = 2.0;
+    solution2.objectives()[1] = 4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] = 3.0;
+    solution3.objectives()[1] = 3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] = 5.0;
+    solution4.objectives()[1] = 1.0;
 
-    List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
-    densityEstimator.computeDensityEstimator(solutionList);
+    densityEstimator.compute(solutionList);
 
     assertEquals(
-        Math.sqrt(2), (double) solution1.getAttribute(densityEstimator.getAttributeId()), EPSILON);
+        Math.sqrt(2), densityEstimator.getValue(solution1), EPSILON);
     assertEquals(
-        Math.sqrt(2), (double) solution2.getAttribute(densityEstimator.getAttributeId()), EPSILON);
+        Math.sqrt(2), densityEstimator.getValue(solution2), EPSILON);
     assertEquals(
-        Math.sqrt(2), (double) solution3.getAttribute(densityEstimator.getAttributeId()), EPSILON);
+        Math.sqrt(2), densityEstimator.getValue(solution3), EPSILON);
     assertEquals(
-        Math.sqrt(2 * 2 + 2 * 2),
-        (double) solution4.getAttribute(densityEstimator.getAttributeId()),
-        EPSILON);
+        Math.sqrt(2 * 2 + 2 * 2), densityEstimator.getValue(solution4), EPSILON);
   }
 
   @Test
@@ -75,70 +73,41 @@ public class KnnDensityEstimatorTest {
          List: 1,2,3,4,5
          Expected result: 4, 1, 2, 5, 3
     */
-    DoubleProblem problem =
-        new MockDoubleProblem(2);
-    KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
 
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+
+    KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
     DoubleSolution solution4 = problem.createSolution();
     DoubleSolution solution5 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] = 1.0;
+    solution1.objectives()[1] = 5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] = 2.0;
+    solution2.objectives()[1] = 4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] = 3.0;
+    solution3.objectives()[1] = 3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] = 5.0;
+    solution4.objectives()[1] = 1.0;
 
-    solution5.setObjective(0, 3);
-    solution5.setObjective(1, 2);
+    solution5.objectives()[0] = 3.0;
+    solution5.objectives()[1] = 2.0;
 
     List<DoubleSolution> solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
-    densityEstimator.computeDensityEstimator(solutionList);
-    densityEstimator.sort(solutionList);
+    densityEstimator.compute(solutionList);
+    solutionList.sort(Comparator.comparing(densityEstimator::getValue).reversed());
 
     assertEquals(solutionList.get(0), solution4);
-    assertEquals(solutionList.get(1), solution1);
-    assertEquals(solutionList.get(2), solution2);
-    assertEquals(solutionList.get(3), solution5);
-  }
-
-  /** Mock class representing a double problem */
-  @SuppressWarnings("serial")
-  private class MockDoubleProblem extends AbstractDoubleProblem {
-
-    /** Constructor */
-    public MockDoubleProblem(Integer numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(2);
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(0.0);
-        upperLimit.add(5.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    /** Evaluate() method */
-    @Override
-    public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
-
-      return solution ;
-    }
+    assertTrue((solutionList.get(1) == solution1) || (solutionList.get(1) == solution2)); ;
+    assertTrue((solutionList.get(2) == solution1) || (solutionList.get(2) == solution2)); ;
+    assertTrue((solutionList.get(3) == solution3) || (solutionList.get(3) == solution5)); ;
+    assertTrue((solutionList.get(4) == solution3) || (solutionList.get(4) == solution5)); ;
   }
 }

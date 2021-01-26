@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.multiobjective;
+package org.uma.jmetal.example.multiobjective.paes;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
@@ -50,7 +50,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
 
     mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
 
-    algorithm = new PAESBuilder<DoubleSolution>(problem)
+    algorithm = new PAESBuilder<>(problem)
             .setMutationOperator(mutation)
             .setMaxEvaluations(25000)
             .setArchiveSize(100)

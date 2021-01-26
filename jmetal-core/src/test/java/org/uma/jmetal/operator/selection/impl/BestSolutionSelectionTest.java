@@ -1,14 +1,11 @@
 package org.uma.jmetal.operator.selection.impl;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.List;
