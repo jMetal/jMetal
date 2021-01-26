@@ -25,8 +25,6 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
   private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
-
-  /** Constructor */
   public WholeArithmeticCrossover(double crossoverProbability) {
     this (crossoverProbability, new RepairDoubleSolutionWithBoundValue()) ;
   }
@@ -38,9 +36,8 @@ public class WholeArithmeticCrossover implements CrossoverOperator<DoubleSolutio
 
   /** Constructor */
   public WholeArithmeticCrossover(double crossoverProbability, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenerator) {
-    if (crossoverProbability < 0) {
-      throw new JMetalException("Crossover probability is negative: " + crossoverProbability) ;
-    }
+    Check.probabilityIsValid(crossoverProbability);
+
     this.crossoverProbability = crossoverProbability ;
     this.randomGenerator = randomGenerator ;
     this.solutionRepair = solutionRepair ;

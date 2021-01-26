@@ -1,11 +1,12 @@
 package org.uma.jmetal.util.neighborhood.util;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import net.bytebuddy.matcher.CollectionItemMatcher;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -26,37 +28,26 @@ public class TwoDimensionalMeshTest {
   private static final int [] east       = { 0 , 1};
   private static final int [] west       = { 0 ,-1};
 
-  @Rule
-  public ExpectedException exception = ExpectedException.none();
 
   @Test
   public void shouldGetNeighborsWithANullListOfSolutionsThrowAnException() {
     TwoDimensionalMesh<Solution<?>> neighborhood = new TwoDimensionalMesh<Solution<?>>(3, 3, new int[][]{north, south, east, west}) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is null"));
-
-    neighborhood.getNeighbors(null, 0) ;
+    assertThrows(NullParameterException.class, () -> neighborhood.getNeighbors(null, 0)) ;
   }
 
   @Test
   public void shouldGetNeighborsWithAnEmptyListOfSolutionsThrowAnException() {
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution list is empty"));
-
     List<IntegerSolution> list = new ArrayList<>() ;
 
-    neighborhood.getNeighbors(list, 0) ;
+    assertThrows(EmptyCollectionException.class, () -> neighborhood.getNeighbors(list, 0) ) ;
   }
 
   @Test
   public void shouldGetNeighborsWithANegativeSolutionIndexThrowAnException() {
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(3, 3, new int[][]{north, south, east, west}) ;
-
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString("The solution position value is negative: -1"));
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
@@ -71,10 +62,6 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsWithASolutionIndexValueEqualToTheListSizeThrowAnException() {
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(1, 1, new int[][]{north, south, east, west}) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString(
-        "The solution position value 1 is equal or greater than the solution list size 1"));
-
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
 
@@ -85,9 +72,6 @@ public class TwoDimensionalMeshTest {
   public void shouldGetNeighborsWithASolutionIndexValueGreaterThanTheListSizeThrowAnException() {
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(2, 2, new int[][]{north, south, east, west}) ;
 
-    exception.expect(JMetalException.class);
-    exception.expectMessage(containsString(
-        "The solution position value 5 is equal or greater than the solution list size 4"));
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
