@@ -26,28 +26,14 @@ public class SelectionParameter extends CategoricalParameter {
       case "tournament":
         int tournamentSize =
                 (Integer) findSpecificParameter("selectionTournamentSize").getValue();
-        /*
-        String rankingName = (String) findSpecificParameter("rankingForSelection").getValue() ;
-        String densityEstimatorName = (String) findSpecificParameter("densityEstimatorForSelection").getValue() ;
-        Ranking<?> ranking ;
-        if (rankingName.equals("dominanceRanking")) {
-        } else {
-          ranking = new StrengthRanking<>() ;
-        }
 
-        DensityEstimator<?> densityEstimator ;
-        if (densityEstimatorName.equals("crowdingDistance")){
-        } else {
-          densityEstimator = new KnnDensityEstimator<>(1) ;
-        }
-        */
         Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
         DensityEstimator<Solution<?>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
 
         MultiComparator<Solution<?>> rankingAndCrowdingComparator =
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed()));
+                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
         result = new NaryTournamentMatingPoolSelection<>(
                 tournamentSize, matingPoolSize, rankingAndCrowdingComparator);
 

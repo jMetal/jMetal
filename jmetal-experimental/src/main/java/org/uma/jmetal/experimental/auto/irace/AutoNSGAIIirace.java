@@ -162,7 +162,7 @@ public class AutoNSGAIIirace {
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     var rankingAndCrowdingComparator =
         new MultiComparator<>(
-            List.of(ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed()));
+            List.of(Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
 
     var initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());

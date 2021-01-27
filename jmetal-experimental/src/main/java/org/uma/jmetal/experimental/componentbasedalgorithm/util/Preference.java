@@ -61,11 +61,11 @@ public class Preference<S> {
   }
 
   private void recomputeRanking(List<S> solutionList) {
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
   }
 
   private boolean rankingsAreDifferent() {
-    return !ranking.getAttributeId().equals(relatedPreference.getRanking().getAttributeId());
+    return !ranking.getClass().equals(relatedPreference.getRanking().getClass());
   }
 
   public Ranking<S> getRanking() {
@@ -79,6 +79,6 @@ public class Preference<S> {
   public Comparator<S> getComparator() {
     return new MultiComparator<>(
         List.of(
-            getRanking().getSolutionComparator(), Comparator.comparing(getDensityEstimator()::getValue).reversed()));
+            Comparator.comparing(getRanking()::getRank), Comparator.comparing(getDensityEstimator()::getValue).reversed()));
   }
 }

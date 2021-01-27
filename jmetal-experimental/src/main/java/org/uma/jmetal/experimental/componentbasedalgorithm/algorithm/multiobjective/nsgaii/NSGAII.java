@@ -89,7 +89,7 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed())));
+                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed())));
 
     this.termination = termination;
 

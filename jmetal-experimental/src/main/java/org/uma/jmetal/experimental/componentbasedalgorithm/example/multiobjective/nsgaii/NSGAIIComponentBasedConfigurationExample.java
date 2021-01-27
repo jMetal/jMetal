@@ -84,7 +84,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed())));
+                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed())));
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 

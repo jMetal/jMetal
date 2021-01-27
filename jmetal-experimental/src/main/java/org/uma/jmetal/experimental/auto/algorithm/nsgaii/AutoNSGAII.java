@@ -175,7 +175,7 @@ public class AutoNSGAII {
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
-                ranking.getSolutionComparator(), Comparator.comparing(densityEstimator::getValue).reversed()));
+                Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
 
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());

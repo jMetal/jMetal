@@ -47,9 +47,12 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
   @Override
   public Double getValue(S solution) {
     Check.notNull(solution);
-    Check.notNull(solution.attributes().get(attributeId));
 
-    return (Double) solution.attributes().get(attributeId) ;
+    Double result = 0.0 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Double) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 }
 

@@ -41,7 +41,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     jointPopulation.addAll(offspringList);
 
     List<S> resultList;
-    ranking.computeRanking(jointPopulation);
+    ranking.compute(jointPopulation);
 
     if (removalPolicy == RemovalPolicy.oneShot) {
       resultList = oneShotTruncation(0, solutionList.size());
