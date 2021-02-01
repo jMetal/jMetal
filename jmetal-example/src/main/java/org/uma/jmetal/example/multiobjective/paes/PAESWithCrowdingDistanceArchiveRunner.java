@@ -10,6 +10,7 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -21,7 +22,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PAESRunner extends AbstractAlgorithmRunner {
+public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws SecurityException Invoking command: java
@@ -37,7 +38,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.ConstrEx";
+      problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
       referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
     }
 
@@ -47,10 +48,11 @@ public class PAESRunner extends AbstractAlgorithmRunner {
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
 
     PAES<DoubleSolution> algorithm =
-        new PAES<>(problem, 25000, 100, 5, mutation);
-    // Alternative using a generic bounded archive:
-    // new PAES<>(problem, 25000,
-    //      new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.getNumberOfObjectives())),  mutation);
+        new PAES<>(
+            problem,
+            25000,
+            new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>()),
+            mutation);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
