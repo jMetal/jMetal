@@ -214,11 +214,6 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
   }
 
   @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), fitnessComparator);
-  }
-
-  @Override
   public void prune() {
     if (getSolutionList().size() > getMaxSize()) {
       computeDensityEstimator();

@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.densityestimator;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -11,4 +12,5 @@ public interface DensityEstimator<S> {
   void compute(List<S> solutionSet) ;
 
   Double getValue(S solution) ;
+  Comparator<S> getComparator() ;
 }

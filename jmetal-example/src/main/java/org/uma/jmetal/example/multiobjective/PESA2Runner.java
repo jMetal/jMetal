@@ -58,7 +58,7 @@ public class PESA2Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
-        new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
+        new PESA2Builder<>(problem, crossover, mutation)
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .setArchiveSize(100)

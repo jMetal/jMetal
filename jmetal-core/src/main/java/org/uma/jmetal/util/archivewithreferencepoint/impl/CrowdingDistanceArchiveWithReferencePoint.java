@@ -47,8 +47,4 @@ public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> ex
     densityEstimator.computeDensityEstimator(getSolutionList());
   }
 
-  @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), new CrowdingDistanceComparator<S>());
-  }
 }

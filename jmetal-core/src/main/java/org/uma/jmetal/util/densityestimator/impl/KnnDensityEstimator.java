@@ -91,4 +91,9 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
     }
     return result ;
   }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue) ;
+  }
 }

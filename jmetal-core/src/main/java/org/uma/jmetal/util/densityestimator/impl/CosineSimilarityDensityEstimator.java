@@ -12,6 +12,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -111,7 +112,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     }
 
     for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
-      Collections.sort(solutionList, new ObjectiveComparator<S>(i));
+      solutionList.sort(new ObjectiveComparator<S>(i));
       solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
     }
   }
@@ -125,5 +126,10 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
       result = (Double) solution.attributes().get(attributeId) ;
     }
     return result ;
+  }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue) ;
   }
 }

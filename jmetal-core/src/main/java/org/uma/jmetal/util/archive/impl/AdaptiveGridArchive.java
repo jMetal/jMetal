@@ -14,6 +14,7 @@ import java.util.Iterator;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;
@@ -127,11 +128,6 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
 
   @Override
   public void computeDensityEstimator() {
-    // TODO
-  }
-
-  @Override
-  public void sortByDensityEstimator() {
     // TODO
   }
 }

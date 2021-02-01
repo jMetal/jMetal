@@ -6,6 +6,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -89,5 +90,10 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       result = (Double) solution.attributes().get(attributeId) ;
     }
     return result ;
+  }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue).reversed() ;
   }
 }

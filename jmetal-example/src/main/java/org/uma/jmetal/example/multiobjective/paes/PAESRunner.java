@@ -1,7 +1,6 @@
 package org.uma.jmetal.example.multiobjective.paes;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.paes.PAESBuilder;
+import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
@@ -10,6 +9,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.archive.impl.AdaptiveGridArchiveV2;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
@@ -20,54 +24,46 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-
 public class PAESRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
-   * @throws SecurityException
-   * Invoking command:
-  java org.uma.jmetal.runner.multiobjective.PAESRunner problemName [referenceFront]
+   * @throws SecurityException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.PAESRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    Algorithm<List<DoubleSolution>> algorithm;
-    MutationOperator<DoubleSolution> mutation;
+    String referenceParetoFront = "";
 
-    String referenceParetoFront = "" ;
-
-    String problemName ;
+    String problemName;
     if (args.length == 1) {
       problemName = args[0];
     } else if (args.length == 2) {
-      problemName = args[0] ;
-      referenceParetoFront = args[1] ;
+      problemName = args[0];
+      referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
-      referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemName);
 
-    mutation = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    MutationOperator<DoubleSolution> mutation =
+        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
 
-    algorithm = new PAESBuilder<>(problem)
-            .setMutationOperator(mutation)
-            .setMaxEvaluations(25000)
-            .setArchiveSize(100)
-            .setBiSections(5)
-            .build() ;
+    PAES<DoubleSolution> algorithm =
+            //new PAES<>(problem, 25000, new GenericBoundedArchive<>(100, new CrowdingDistanceDensityEstimator<>()), mutation);
+    new PAES<>(problem, 25000,
+            new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.getNumberOfObjectives())),  mutation);
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute() ;
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult() ;
-    long computingTime = algorithmRunner.getComputingTime() ;
+    List<DoubleSolution> population = algorithm.getResult();
+    long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront) ;
+      printQualityIndicators(population, referenceParetoFront);
     }
   }
 }

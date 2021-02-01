@@ -7,6 +7,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -53,6 +54,11 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
       result = (Double) solution.attributes().get(attributeId) ;
     }
     return result ;
+  }
+
+  @Override
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue) ;
   }
 }
 

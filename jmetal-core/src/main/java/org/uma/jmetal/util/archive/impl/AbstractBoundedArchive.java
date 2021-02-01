@@ -17,7 +17,7 @@ public abstract class AbstractBoundedArchive<S extends Solution<?>> implements B
 
   public AbstractBoundedArchive(int maxSize) {
     this.maxSize = maxSize;
-    this.archive = new NonDominatedSolutionListArchive<S>();
+    this.archive = new NonDominatedSolutionListArchive<>();
   }
 
   @Override
