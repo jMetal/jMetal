@@ -1,7 +1,8 @@
-package org.uma.jmetal.util.archive.impl;
+package org.uma.jmetal.algorithm.multiobjective.pesa2.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
+import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import java.util.Comparator;
@@ -14,7 +15,6 @@ import java.util.Iterator;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-@Deprecated
 public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedArchive<S> {
 
   private AdaptiveGrid<S> grid;
