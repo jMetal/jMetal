@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 
 import java.util.*;
@@ -27,7 +27,7 @@ public class DominanceRanking <S extends Solution<?>>
 
   private Comparator<S> dominanceComparator ;
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-      new OverallConstraintViolationComparator<Solution<?>>();
+      new ConstraintViolationComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubPopulations;
 

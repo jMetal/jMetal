@@ -16,8 +16,8 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
   private long totalComputingTime;
 
   public AlgorithmEnsemble(List<Algorithm<List<S>>> algorithmList, Archive<S> archive) {
-    Check.isNotNull(algorithmList);
-    Check.isNotNull(archive);
+    Check.notNull(algorithmList);
+    Check.notNull(archive);
     Check.that(algorithmList.size() > 0, "The algorithm list is empty");
 
     this.algorithmList = algorithmList;

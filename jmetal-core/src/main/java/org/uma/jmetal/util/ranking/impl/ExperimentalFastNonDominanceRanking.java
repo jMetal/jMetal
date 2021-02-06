@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.ranking.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
 import ru.ifmo.nds.NonDominatedSorting;
@@ -28,26 +27,20 @@ import java.util.List;
  * @author Maxim Buzdalov
  */
 public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implements Ranking<S> {
-  private String attributeId = getClass().getName() ;
-  private Comparator<S> solutionComparator ;
-
-  public ExperimentalFastNonDominanceRanking() {
-    this.solutionComparator =
-        new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING);
-}
+  private final String attributeId = getClass().getName() ;
 
   // Interface support: the place to store the fronts.
   private final List<List<S>> subFronts = new ArrayList<>();
 
   // Constraint violation checking support.
-  private final OverallConstraintViolationComparator<S> overallConstraintViolationComparator
-          = new OverallConstraintViolationComparator<>();
+  private final ConstraintViolationComparator<S> constraintViolationComparator
+          = new ConstraintViolationComparator<>();
 
   // Delegation.
   private NonDominatedSorting sortingInstance = null;
 
   @Override
-  public Ranking<S> computeRanking(List<S> solutionList) {
+  public Ranking<S> compute(List<S> solutionList) {
     subFronts.clear();
     int nSolutions = solutionList.size();
     if (nSolutions == 0) {
@@ -75,7 +68,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
     } else {
       // Need to apply the constraint comparator first
       List<S> defensiveCopy = new ArrayList<>(solutionList);
-      defensiveCopy.sort(overallConstraintViolationComparator);
+      defensiveCopy.sort((Comparator<? super S>) constraintViolationComparator);
       int rankOffset = 0;
       int lastSpanStart = 0;
       double lastConstraint = getConstraint(defensiveCopy.get(0));
@@ -143,12 +136,13 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator;
-  }
+  public Integer getRank(S solution) {
+    Check.notNull(solution);
 
-  @Override
-  public String getAttributeId() {
-    return attributeId ;
+    Integer result = -1 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Integer) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 }

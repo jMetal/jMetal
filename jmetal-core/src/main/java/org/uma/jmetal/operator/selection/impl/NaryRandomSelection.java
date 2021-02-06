@@ -29,7 +29,7 @@ public class NaryRandomSelection<S> implements SelectionOperator<List<S>, List<S
 
   /** Execute() method */
   public List<S> execute(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= numberOfSolutionsToBeReturned,

@@ -10,9 +10,9 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -58,7 +58,7 @@ public class PESA2Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     algorithm =
-        new PESA2Builder<DoubleSolution>(problem, crossover, mutation)
+        new PESA2Builder<>(problem, crossover, mutation)
             .setMaxEvaluations(25000)
             .setPopulationSize(100)
             .setArchiveSize(100)

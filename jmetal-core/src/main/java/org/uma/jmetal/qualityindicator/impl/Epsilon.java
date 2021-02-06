@@ -49,7 +49,7 @@ public class Epsilon extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return epsilon(front, referenceFront);
   }

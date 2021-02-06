@@ -29,7 +29,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
-    ranking.computeRanking(jointPopulation);
+    ranking.compute(jointPopulation);
 
     List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 

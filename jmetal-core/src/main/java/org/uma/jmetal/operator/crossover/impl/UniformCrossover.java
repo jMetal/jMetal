@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -48,7 +48,7 @@ public class UniformCrossover implements CrossoverOperator<BinarySolution> {
 
   @Override
   public List<BinarySolution> execute(List<BinarySolution> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1));

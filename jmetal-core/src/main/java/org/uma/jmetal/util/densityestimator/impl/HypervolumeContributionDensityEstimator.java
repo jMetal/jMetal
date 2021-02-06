@@ -3,12 +3,10 @@ package org.uma.jmetal.util.densityestimator.impl;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,16 +18,13 @@ import java.util.List;
 public class HypervolumeContributionDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
   private String attributeId = getClass().getName();
-  private Comparator<S> solutionComparator ;
   private Hypervolume<S> hypervolume ;
 
   public HypervolumeContributionDensityEstimator(List<S> referenceFront) {
-    solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
     hypervolume = new PISAHypervolume<>(new ArrayFront(referenceFront)) ;
   }
 
   public HypervolumeContributionDensityEstimator(double[] referencePoint) {
-    solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
     hypervolume = new PISAHypervolume<>(referencePoint) ;
   }
 
@@ -40,7 +35,7 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
    */
 
   @Override
-  public void computeDensityEstimator(List<S> solutionList) {
+  public void compute(List<S> solutionList) {
     int size = solutionList.size();
 
     if (size == 0) {
@@ -51,20 +46,19 @@ public class HypervolumeContributionDensityEstimator<S extends Solution<?>> impl
   }
 
   @Override
-  public String getAttributeId() {
-    return attributeId ;
+  public Double getValue(S solution) {
+    Check.notNull(solution);
+
+    Double result = 0.0 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Double) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator ;
-  }
-
-  @Override
-  public List<S> sort(List<S> solutionList) {
-    Collections.sort(solutionList, getSolutionComparator());
-
-    return solutionList ;
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue) ;
   }
 }
 

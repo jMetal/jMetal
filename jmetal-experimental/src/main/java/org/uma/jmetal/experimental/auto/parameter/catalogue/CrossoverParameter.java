@@ -1,14 +1,12 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class CrossoverParameter extends CategoricalParameter {
   public CrossoverParameter(String[] args, List<String> crossoverOperators) {

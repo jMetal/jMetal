@@ -33,7 +33,7 @@ public class SetCoverage extends QualityIndicator {
 
   @Override
   public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return compute(front, referenceFront);
   }
@@ -50,8 +50,8 @@ public class SetCoverage extends QualityIndicator {
    * @return The value of the set coverage
    */
   public double compute(double[][] front, double[][] referenceFront) {
-    Check.isNotNull(front);
-    Check.isNotNull(referenceFront);
+    Check.notNull(front);
+    Check.notNull(referenceFront);
 
     double result ;
     int sum = 0 ;

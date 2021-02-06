@@ -8,7 +8,7 @@ import java.util.Collection;
  * Static class for error checking
  */
 public class Check {
-  public static void isNotNull(Object object) {
+  public static void notNull(Object object) {
     if (null == object) {
       throw new NullParameterException() ;
     }

@@ -4,9 +4,9 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -80,7 +80,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;

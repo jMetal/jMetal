@@ -28,6 +28,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -174,7 +175,7 @@ public class AutoNSGAII {
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
-                ranking.getSolutionComparator(), densityEstimator.getSolutionComparator()));
+                Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
 
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());

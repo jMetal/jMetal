@@ -49,7 +49,7 @@ public class WFGHypervolume extends Hypervolume {
 
   @Override
   public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return hypervolume(front, referenceFront);
   }

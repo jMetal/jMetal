@@ -2,6 +2,7 @@ package org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl;
 
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.front.impl.ArrayFront;
@@ -67,9 +68,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
   @Override
   public Double evaluate(List<S> paretoFrontApproximation) {
-    if (paretoFrontApproximation == null) {
-      throw new JMetalException("The pareto front approximation is null");
-    }
+    Check.notNull(paretoFrontApproximation);
 
     return hypervolume(new ArrayFront(paretoFrontApproximation), referenceParetoFront);
   }

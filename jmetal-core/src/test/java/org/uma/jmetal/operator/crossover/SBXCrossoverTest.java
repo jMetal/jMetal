@@ -10,10 +10,10 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
@@ -74,14 +74,14 @@ public class SBXCrossoverTest {
     assertEquals(30.0, crossover.getDistributionIndex(), EPSILON) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = NullParameterException.class)
   public void shouldExecuteWithNullParameterThrowAnException() {
     SBXCrossover crossover = new SBXCrossover(0.1, 20.0) ;
 
     crossover.execute(null) ;
   }
 
-  @Test (expected = JMetalException.class)
+  @Test (expected = InvalidConditionException.class)
   public void shouldExecuteWithInvalidSolutionListSizeThrowAnException() {
     DoubleProblem problem = new MockDoubleProblem(1) ;
 

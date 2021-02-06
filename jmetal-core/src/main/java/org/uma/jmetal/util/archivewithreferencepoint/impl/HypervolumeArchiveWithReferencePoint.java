@@ -52,9 +52,4 @@ public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends
           .computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList());
     }
   }
-
-  @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), new HypervolumeContributionComparator<S>());
-  }
 }

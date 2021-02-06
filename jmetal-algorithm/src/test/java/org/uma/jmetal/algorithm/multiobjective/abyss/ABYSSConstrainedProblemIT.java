@@ -16,9 +16,9 @@ import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparatorV2;
 import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -52,7 +52,7 @@ public class ABYSSConstrainedProblemIT {
     Comparator<DoubleSolution> comparator =
         new MultiComparator<>(
             Arrays.asList(
-                new OverallConstraintViolationComparator<>(), new DominanceComparatorV2<>()));
+                new ConstraintViolationComparator<>(), new DominanceComparatorV2<>()));
 
     localSearchOperator = new BasicLocalSearch<>(1, mutation, comparator, problem);
   }

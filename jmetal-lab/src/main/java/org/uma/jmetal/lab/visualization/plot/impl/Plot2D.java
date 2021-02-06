@@ -12,7 +12,7 @@ public class Plot2D implements PlotFront {
   private String plotTitle;
 
   public Plot2D(double[][] matrix, String title) {
-    Check.isNotNull(matrix);
+    Check.notNull(matrix);
     Check.that(matrix.length >= 1, "The data matrix is empty");
     Check.that(matrix[0].length == 2, "The data matrix does not have two columns");
 

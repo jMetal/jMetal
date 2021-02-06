@@ -2,12 +2,12 @@ package org.uma.jmetal.parallel.asynchronous.algorithm.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
-import org.uma.jmetal.parallel.asynchronous.multithreaded.Master;
-import org.uma.jmetal.parallel.asynchronous.multithreaded.Worker;
-import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.parallel.asynchronous.multithreaded.Master;
+import org.uma.jmetal.parallel.asynchronous.multithreaded.Worker;
+import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;

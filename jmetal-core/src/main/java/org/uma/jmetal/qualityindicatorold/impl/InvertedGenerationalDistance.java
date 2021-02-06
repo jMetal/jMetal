@@ -1,6 +1,7 @@
 package org.uma.jmetal.qualityindicatorold.impl;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;
@@ -67,6 +68,7 @@ public class InvertedGenerationalDistance<S extends Solution<?>> extends Generic
    * @return
    */
   @Override public Double evaluate(List<S> solutionList) {
+    Check.notNull(solutionList);
     return invertedGenerationalDistance(new ArrayFront(solutionList), referenceParetoFront);
   }
 

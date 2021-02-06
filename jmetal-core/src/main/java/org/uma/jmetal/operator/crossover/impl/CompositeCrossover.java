@@ -31,7 +31,7 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
     }
   */
   public CompositeCrossover(List<?> operators) {
-    Check.isNotNull(operators);
+    Check.notNull(operators);
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
@@ -52,7 +52,7 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
   /** Execute() method */
   @Override
   public List<CompositeSolution> execute(List<CompositeSolution> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.that(solutions.size() == 2, "The number of parents is not two: " + solutions.size());
 
     List<Solution<?>> offspring1 = new ArrayList<>();

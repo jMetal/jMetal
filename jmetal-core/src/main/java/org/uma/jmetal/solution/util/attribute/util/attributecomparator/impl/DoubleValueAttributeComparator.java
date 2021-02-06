@@ -29,8 +29,8 @@ public class DoubleValueAttributeComparator<S extends Solution<?>> extends Attri
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
 
     //Check.isNotNull(solution1.getAttribute(attributeName));
     //Check.isNotNull(solution2.getAttribute(attributeName));

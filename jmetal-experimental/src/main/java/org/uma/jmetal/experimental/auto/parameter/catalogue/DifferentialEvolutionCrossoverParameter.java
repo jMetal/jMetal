@@ -1,12 +1,9 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter {
   public DifferentialEvolutionCrossoverParameter(String[] args) {

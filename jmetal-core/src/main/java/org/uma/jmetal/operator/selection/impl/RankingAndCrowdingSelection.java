@@ -2,15 +2,14 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -88,15 +87,13 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
 
     front = ranking.getSubFront(rank);
 
-    for (int i = 0 ; i < front.size(); i++) {
-      population.add(front.get(i));
-    }
+    front.forEach(population::add);
   }
 
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
     List<S> currentRankedFront = ranking.getSubFront(rank) ;
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>()) ;
+    currentRankedFront.sort(new CrowdingDistanceComparator<S>());
 
     int i = 0 ;
     while (population.size() < solutionsToSelect) {

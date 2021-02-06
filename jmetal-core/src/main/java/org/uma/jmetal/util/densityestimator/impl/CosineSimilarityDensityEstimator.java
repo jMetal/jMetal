@@ -1,15 +1,14 @@
 package org.uma.jmetal.util.densityestimator.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.CosineSimilarityBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
 import java.util.Collections;
@@ -22,8 +21,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
-  private String attributeId = getClass().getName();
-  private Comparator<S> solutionComparator;
+  private final String attributeId = getClass().getName();
   private Distance<double[], double[]> distance;
   private Point referencePoint;
   private boolean normalize;
@@ -34,8 +32,6 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
 
   public CosineSimilarityDensityEstimator(Point referencePoint, boolean normalize) {
     this.referencePoint = referencePoint;
-    solutionComparator =
-        new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING);
     distance = new CosineSimilarityBetweenVectors(referencePoint.getValues());
     this.normalize = normalize;
   }
@@ -46,7 +42,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
    * @param solutionList
    */
   @Override
-  public void computeDensityEstimator(List<S> solutionList) {
+  public void compute(List<S> solutionList) {
     int size = solutionList.size();
 
     if (size == 0) {
@@ -54,10 +50,10 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     }
 
     if (size == 1) {
-      solutionList.get(0).setAttribute(attributeId, 0.0);
+      solutionList.get(0).attributes().put(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().length;
 
     if (size == numberOfObjectives) {
       for (S solution : solutionList) {
@@ -68,7 +64,7 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
     }
 
     for (S solution : solutionList) {
-      referencePoint.update(solution.getObjectives());
+      referencePoint.update(solution.objectives());
     }
 
     double[][] distanceMatrix = new double[solutionList.size()][solutionList.size()];
@@ -115,26 +111,25 @@ public class CosineSimilarityDensityEstimator<S extends Solution<?>> implements 
           .setAttribute("DIFF", Math.abs(currentMaximumDistance - secondCurrentMaximumDistance));
     }
 
-    for (int i = 0; i < solutionList.get(0).getNumberOfObjectives(); i++) {
-      Collections.sort(solutionList, new ObjectiveComparator<S>(i));
-      solutionList.get(solutionList.size() - 1).setAttribute(attributeId, 0.0);
+    for (int i = 0; i < solutionList.get(0).objectives().length; i++) {
+      solutionList.sort(new ObjectiveComparator<S>(i));
+      solutionList.get(solutionList.size() - 1).attributes().put(attributeId, 0.0);
     }
   }
 
   @Override
-  public String getAttributeId() {
-    return attributeId;
+  public Double getValue(S solution) {
+    Check.notNull(solution);
+
+    Double result = 0.0 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Double) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator;
-  }
-
-  @Override
-  public List<S> sort(List<S> solutionList) {
-    Collections.sort(solutionList, getSolutionComparator());
-
-    return solutionList;
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue) ;
   }
 }

@@ -108,7 +108,7 @@ public class SMSEMOA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S,
     jointPopulation.addAll(offspringPopulation);
 
     Ranking<S> ranking = new MergeNonDominatedSortRanking<>();
-    ranking.computeRanking(jointPopulation);
+    ranking.compute(jointPopulation);
 
     List<S> lastSubFront = ranking.getSubFront(ranking.getNumberOfSubFronts() - 1);
 

@@ -1,14 +1,12 @@
 package org.uma.jmetal.util.ranking.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.util.MNDSBitsetManager;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,8 +19,7 @@ import java.util.List;
  * @author Javier Moreno <javier.morenom@edu.uah.es>
  */
 public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
-  private String attributeId = getClass().getName();
-  private Comparator<S> solutionComparator;
+  private final String attributeId = getClass().getName();
 
   private static final int INSERTIONSORT = 7;
   private int SOL_ID; //field to store the identifier of the jMetal solution
@@ -37,14 +34,8 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   private MNDSBitsetManager bsManager;
   private List<ArrayList<S>> rankedSubPopulations;
 
-  public MergeNonDominatedSortRanking() {
-    this.solutionComparator =
-            new IntegerValueAttributeComparator<>(
-                    attributeId, AttributeComparator.Ordering.ASCENDING);
-  }
-
   @Override
-  public Ranking<S> computeRanking(List<S> solutionSet) {
+  public Ranking<S> compute(List<S> solutionSet) {
     initialPopulationSize = solutionSet.size();
     n = solutionSet.size();
     m = solutionSet.get(0).getNumberOfObjectives();
@@ -227,12 +218,13 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator;
-  }
+  public Integer getRank(S solution) {
+    Check.notNull(solution);
 
-  @Override
-  public String getAttributeId() {
-    return attributeId;
+    Integer result = -1 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Integer) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 }

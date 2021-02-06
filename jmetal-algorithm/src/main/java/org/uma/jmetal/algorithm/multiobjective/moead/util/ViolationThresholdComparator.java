@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.comparator.impl;
+package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -12,8 +12,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class ViolationThresholdComparator<S extends Solution<?>> implements
-    ConstraintViolationComparator<S> {
+public class ViolationThresholdComparator<S extends Solution<?>> implements Comparator<S> {
   private double threshold = 0.0;
 
   /**
@@ -31,13 +30,7 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
     overall2 = ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2);
 
     if ((overall1 < 0) && (overall2 < 0)) {
-      if (overall1 > overall2) {
-        return -1;
-      } else if (overall2 > overall1) {
-        return 1;
-      } else {
-        return 0;
-      }
+      return Double.compare(overall2, overall1);
     } else if ((overall1 == 0) && (overall2 < 0)) {
       return -1;
     } else if ((overall1 < 0) && (overall2 == 0)) {
@@ -68,8 +61,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
    */
   public double feasibilityRatio(List<S> solutionSet) {
     double aux = 0.0;
-    for (int i = 0; i < solutionSet.size(); i++) {
-      if (ConstraintHandling.numberOfViolatedConstraints(solutionSet.get(i)) < 0) {
+    for (S solution : solutionSet) {
+      if (ConstraintHandling.numberOfViolatedConstraints(solution) < 0) {
         aux = aux + 1.0;
       }
     }
@@ -82,9 +75,9 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements
    */
   public double meanOverallViolation(List<S> solutionSet) {
     double aux = 0.0;
-    for (int i = 0; i < solutionSet.size(); i++) {
-      aux += Math.abs(ConstraintHandling.numberOfViolatedConstraints(solutionSet.get(i)) *
-          ConstraintHandling.overallConstraintViolationDegree(solutionSet.get(i)));
+    for (S solution : solutionSet) {
+      aux += Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
+              ConstraintHandling.overallConstraintViolationDegree(solution));
     }
     return aux / (double) solutionSet.size();
   }

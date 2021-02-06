@@ -1,9 +1,9 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -108,8 +108,8 @@ public class VectorUtils {
 
   public static double distanceToClosestVector(
       double[] vector, double[][] front, Distance<double[], double[]> distance) {
-    Check.isNotNull(vector);
-    Check.isNotNull(front);
+    Check.notNull(vector);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     double minDistance = distance.compute(vector, front[0]);
@@ -130,8 +130,8 @@ public class VectorUtils {
 
   public static double distanceToNearestVector(
       double[] vector, double[][] front, Distance<double[], double[]> distance) {
-    Check.isNotNull(vector);
-    Check.isNotNull(front);
+    Check.notNull(vector);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     double minDistance = Double.MAX_VALUE;
@@ -154,7 +154,7 @@ public class VectorUtils {
    * @return The inverted front
    */
   public static double[][] getInvertedFront(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     int numberOfDimensions = front[0].length;

@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 

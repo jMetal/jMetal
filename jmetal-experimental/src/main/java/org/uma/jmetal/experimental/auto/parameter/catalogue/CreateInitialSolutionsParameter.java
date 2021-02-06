@@ -9,7 +9,6 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 

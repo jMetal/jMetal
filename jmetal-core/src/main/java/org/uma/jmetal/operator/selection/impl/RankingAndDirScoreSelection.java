@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.DirScoreComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.solutionattribute.Ranking;
 import org.uma.jmetal.util.solutionattribute.impl.DirScore;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;

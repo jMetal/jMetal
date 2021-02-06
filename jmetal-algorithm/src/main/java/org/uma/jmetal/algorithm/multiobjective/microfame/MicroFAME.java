@@ -3,7 +3,6 @@ package org.uma.jmetal.algorithm.multiobjective.microfame;
 import generic.Input;
 import generic.Output;
 import generic.Tuple;
-import org.uma.jmetal.algorithm.multiobjective.microfame.util.NullEvaluator;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -20,8 +19,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
 import type1.sets.T1MF_Gauangle;
 import type1.system.T1_Antecedent;
 import type1.system.T1_Consequent;
@@ -60,13 +57,12 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
         crossoverOperator,
         mutationOperator,
         selectionOperator,
-        new RankingAndCrowdingDistanceComparator<>(),
-        new NullEvaluator<>());
+        new RankingAndCrowdingDistanceComparator<>());
     archive_hv = new HypervolumeArchive(populationSize, new WFGHypervolumeV2());
     operators_desirability = new double[operators_num];
     operators_use = new double[operators_num];
     window_size = (int) Math.ceil(3.33333 * operators_num);
-    System.out.println("Tamanio de ventana " + window_size);
+    System.out.println("Window size: " + window_size);
     for (int x = 0; x < operators_num; x++) {
       operators_desirability[x] = (1.0);
       operators_use[x] = 0.0;
@@ -159,6 +155,11 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
   }
 
   @Override
+  protected List<S> evaluatePopulation(List<S> population) {
+    return population;
+  }
+
+  @Override
   protected List<S> selection(List<S> population) {
     List<S> matingPopulation = new ArrayList<>(3);
     for (int x = 0; x < 3; x++) {
@@ -187,7 +188,8 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     CR = 1.0;
     F = 0.5;
     DifferentialEvolutionCrossover crossoverOperator_DE =
-        new DifferentialEvolutionCrossover(CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
+        new DifferentialEvolutionCrossover(
+            CR, F, DifferentialEvolutionCrossover.DE_VARIANT.RAND_1_BIN);
 
     double crossoverProbability, crossoverDistributionIndex;
     crossoverProbability = 1.0;

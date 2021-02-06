@@ -7,12 +7,12 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -52,8 +52,8 @@ public class SolutionListUtils {
    * @return The index of the best solution
    */
   public static <S> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
-    Check.isNotNull(solutionList);
-    Check.isNotNull(comparator);
+    Check.notNull(solutionList);
+    Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
     int index = 0;
@@ -82,8 +82,8 @@ public class SolutionListUtils {
    */
   public static <S> int findIndexOfWorstSolution(
       List<? extends S> solutionList, Comparator<S> comparator) {
-    Check.isNotNull(solutionList);
-    Check.isNotNull(comparator);
+    Check.notNull(solutionList);
+    Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
     int index = 0;
@@ -153,7 +153,7 @@ public class SolutionListUtils {
    * @return the normalized list of non-dominated solutions
    */
   public static <S extends Solution<?>> List<S> normalizeSolutionList(List<S> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
 
     double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
@@ -240,7 +240,7 @@ public class SolutionListUtils {
       int numberOfSolutionsToBeReturned,
       List<S> solutionList,
       BoundedRandomGenerator<Integer> randomGenerator) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= numberOfSolutionsToBeReturned,
@@ -339,7 +339,7 @@ public class SolutionListUtils {
    */
   public static <S> void restart(
       List<S> solutionList, Problem<S> problem, int percentageOfSolutionsToRemove) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         (percentageOfSolutionsToRemove >= 0) && (percentageOfSolutionsToRemove <= 100),
@@ -423,7 +423,7 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
           List<S> originalSolutionList, int finalListSize) {
-    Check.isNotNull(originalSolutionList);
+    Check.notNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
     if (originalSolutionList.size() <= finalListSize) {

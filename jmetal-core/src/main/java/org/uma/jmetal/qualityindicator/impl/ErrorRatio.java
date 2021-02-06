@@ -46,7 +46,7 @@ public class ErrorRatio extends QualityIndicator {
    * @param referenceFront
    */
   public ErrorRatio(double[][] referenceFront) {
-    Check.isNotNull(referenceFront);
+    Check.notNull(referenceFront);
     this.referenceFront = referenceFront ;
   }
 
@@ -56,7 +56,7 @@ public class ErrorRatio extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return errorRatio(front, referenceFront);
   }

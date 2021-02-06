@@ -7,7 +7,6 @@ import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWith
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter {
   public RepairDoubleSolutionStrategyParameter(String name, String args[], List<String> strategies) {

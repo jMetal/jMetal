@@ -1,51 +1,43 @@
 package org.uma.jmetal.util.ranking.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.IntegerValueAttributeComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.*;
 
 /**
- * This class implements a solution list ranking based on dominance ranking. Given a collection of solutions, they
- * are ranked according to scheme similar to the one proposed in NSGA-II. As an output, a set of subsets are obtained.
- * The subsets are numbered starting from 0 (in NSGA-II, the numbering starts from 1); thus, subset 0 contains the
- * non-dominated solutions, subset 1 contains the non-dominated population after removing those belonging to subset
- * 0, and so on.
+ * This class implements a solution list ranking based on dominance ranking. Given a collection of
+ * solutions, they are ranked according to scheme similar to the one proposed in NSGA-II. As an
+ * output, a set of subsets are obtained. The subsets are numbered starting from 0 (in NSGA-II, the
+ * numbering starts from 1); thus, subset 0 contains the non-dominated solutions, subset 1 contains
+ * the non-dominated population after removing those belonging to subset 0, and so on.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
-  private String attributeId = getClass().getName() ;
-  private Comparator<S> dominanceComparator ;
-  private Comparator<S> solutionComparator;
+  private String attributeId = getClass().getName();
+  private Comparator<S> dominanceComparator;
   private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-      new OverallConstraintViolationComparator<Solution<?>>();
+      new ConstraintViolationComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubPopulations;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public FastNonDominatedSortRanking(Comparator<S> comparator) {
-    this.dominanceComparator = comparator ;
+    this.dominanceComparator = comparator;
     rankedSubPopulations = new ArrayList<>();
-    this.solutionComparator = new IntegerValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.ASCENDING) ;
   }
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public FastNonDominatedSortRanking() {
-    this(new DominanceComparator<>()) ;
+    this(new DominanceComparator<>());
   }
 
   @Override
-  public Ranking<S> computeRanking(List<S> solutionList) {
+  public Ranking<S> compute(List<S> solutionList) {
     List<S> population = solutionList;
 
     // dominateMe[i] contains the number of population dominating i
@@ -97,7 +89,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
       }
     }
 
-    //Obtain the rest of fronts
+    // Obtain the rest of fronts
     int i = 0;
     Iterator<Integer> it1, it2; // Iterators
     while (front.get(i).size() != 0) {
@@ -117,7 +109,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     }
 
     rankedSubPopulations = new ArrayList<>();
-    //0,1,2,....,i-1 are fronts, then i fronts
+    // 0,1,2,....,i-1 are fronts, then i fronts
     for (int j = 0; j < i; j++) {
       rankedSubPopulations.add(j, new ArrayList<S>(front.get(j).size()));
       it1 = front.get(j).iterator();
@@ -131,9 +123,10 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
 
   @Override
   public List<S> getSubFront(int rank) {
-    if (rank >= rankedSubPopulations.size()) {
-      throw new JMetalException("Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() -1)) ;
-    }
+    Check.that(
+        rank < rankedSubPopulations.size(),
+        "Invalid rank: " + rank + ". Max rank = " + (rankedSubPopulations.size() - 1));
+
     return rankedSubPopulations.get(rank);
   }
 
@@ -143,12 +136,13 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator;
-  }
+  public Integer getRank(S solution) {
+    Check.notNull(solution);
 
-  @Override
-  public String getAttributeId() {
-    return attributeId ;
+    Integer result = -1 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Integer) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 }

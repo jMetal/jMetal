@@ -36,7 +36,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
   /* Execute() method */
   @Override
   public CharSequenceSolution execute(CharSequenceSolution solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(solution);
     return solution;

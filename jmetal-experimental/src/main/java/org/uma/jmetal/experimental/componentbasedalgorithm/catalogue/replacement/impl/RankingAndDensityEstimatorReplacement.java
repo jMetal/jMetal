@@ -7,6 +7,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
@@ -40,7 +41,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     jointPopulation.addAll(offspringList);
 
     List<S> resultList;
-    ranking.computeRanking(jointPopulation);
+    ranking.compute(jointPopulation);
 
     if (removalPolicy == RemovalPolicy.oneShot) {
       resultList = oneShotTruncation(0, solutionList.size());
@@ -52,7 +53,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
 
   private List<S> oneShotTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
-    densityEstimator.computeDensityEstimator(currentRankSolutions);
+    densityEstimator.compute(currentRankSolutions);
 
     List<S> resultList = new ArrayList<>();
 
@@ -62,7 +63,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
           oneShotTruncation(
               rankingId + 1, sizeOfTheResultingSolutionList - currentRankSolutions.size()));
     } else {
-      densityEstimator.sort(currentRankSolutions);
+      currentRankSolutions.sort(Comparator.comparing(densityEstimator::getValue).reversed());
       int i = 0;
       while (resultList.size() < sizeOfTheResultingSolutionList) {
         resultList.add(currentRankSolutions.get(i));
@@ -75,7 +76,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
 
   private List<S> sequentialTruncation(int rankingId, int sizeOfTheResultingSolutionList) {
     List<S> currentRankSolutions = ranking.getSubFront(rankingId);
-    densityEstimator.computeDensityEstimator(currentRankSolutions);
+    densityEstimator.compute(currentRankSolutions);
 
     List<S> resultList = new ArrayList<>();
 
@@ -87,10 +88,10 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     } else {
       for (S solution : currentRankSolutions) resultList.add(solution);
       while (resultList.size() > sizeOfTheResultingSolutionList) {
-        densityEstimator.sort(resultList);
+        resultList.sort(Comparator.comparing(densityEstimator::getValue).reversed()) ;
 
         resultList.remove(resultList.size() - 1);
-        densityEstimator.computeDensityEstimator(resultList);
+        densityEstimator.compute(resultList);
       }
     }
 

@@ -40,9 +40,4 @@ public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedAr
   public void computeDensityEstimator() {
     hypervolume.computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList()) ;
   }
-
-  @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), new HypervolumeContributionComparator<S>());
-  }
 }

@@ -2,7 +2,6 @@ package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints and
@@ -17,12 +16,12 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
 
   /** Constructor */
   public EpsilonDominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>(), 0.0) ;
+    this(new ConstraintViolationComparator<S>(), 0.0) ;
   }
 
   /** Constructor */
   public EpsilonDominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator<S>(), epsilon) ;
+    this(new ConstraintViolationComparator<S>(), epsilon) ;
   }
 
   /** Constructor */
@@ -46,8 +45,8 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
     Check.that(
             solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
             "Cannot compare because solution1 has "

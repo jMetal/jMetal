@@ -1,7 +1,8 @@
-package org.uma.jmetal.util.archive.impl;
+package org.uma.jmetal.algorithm.multiobjective.pesa2;
 
 import org.junit.Test;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
+import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 
 import static org.junit.Assert.assertEquals;
 

@@ -23,6 +23,7 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
@@ -88,7 +89,7 @@ public class NSGAII<S extends Solution<?>> extends ComponentBasedEvolutionaryAlg
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed())));
 
     this.termination = termination;
 

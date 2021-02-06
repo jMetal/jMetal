@@ -32,20 +32,20 @@ public abstract class GenericIndicator<S>
   }
 
   public GenericIndicator(Front referenceParetoFront) {
-   Check.isNotNull(referenceParetoFront);
+   Check.notNull(referenceParetoFront);
 
     this.referenceParetoFront = referenceParetoFront ;
   }
 
   public void setReferenceParetoFront(String referenceParetoFrontFile) throws FileNotFoundException {
-    Check.isNotNull(referenceParetoFrontFile);
+    Check.notNull(referenceParetoFrontFile);
 
     Front front = new ArrayFront(referenceParetoFrontFile);
     referenceParetoFront = front ;
   }
 
   public void setReferenceParetoFront(Front referenceFront) {
-    Check.isNotNull(referenceFront);
+    Check.notNull(referenceFront);
 
     referenceParetoFront = referenceFront ;
   }

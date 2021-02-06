@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.neighborhood.util;
 
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
@@ -11,9 +12,9 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class TwoDimensionalMesh<S> implements Neighborhood<S> {
-  private int rows ;
-  private int columns ;
-  private int[][] neighborhood ;
+  private final int rows ;
+  private final int columns ;
+  private final int[][] neighborhood ;
   private int [][] mesh;
 
   /**
@@ -117,11 +118,9 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    *
    */
   public List<S> getNeighbors(List<S> solutionList, int solutionPosition) {
-    if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
-    } else if (solutionList.size() == 0) {
-      throw new JMetalException("The solution list is empty") ;
-    } else if (solutionPosition < 0) {
+    Check.notNull(solutionList);
+    Check.collectionIsNotEmpty(solutionList);
+    if (solutionPosition < 0) {
       throw new JMetalException("The solution position value is negative: " + solutionPosition) ;
     } else if (solutionList.size() != rows * columns) {
       throw new JMetalException("The solution list size " + solutionList.size() + " is not"

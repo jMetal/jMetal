@@ -56,7 +56,7 @@ public class QualityIndicatorUtils {
       }
     }
 
-    Check.isNotNull(result);
+    Check.notNull(result);
 
     return result;
   }

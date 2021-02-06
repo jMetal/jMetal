@@ -9,8 +9,8 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.Comparator;
 import java.util.List;

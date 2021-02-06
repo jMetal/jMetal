@@ -77,7 +77,7 @@ public class FAMEIT {
     QualityIndicator<List<DoubleSolution>, Double> hypervolume =
         new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");
 
-    // Rationale: the default problem is ZDT1, and GDE3, configured with standard settings, should
+    // Rationale: the default problem is ZDT1, and FAME, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.66
 
     double hv = (Double) hypervolume.evaluate(algorithm.getResult());
