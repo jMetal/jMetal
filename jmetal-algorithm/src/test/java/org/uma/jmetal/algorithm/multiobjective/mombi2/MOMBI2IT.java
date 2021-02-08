@@ -10,9 +10,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
-import org.uma.jmetal.qualityindicatorold.QualityIndicator;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -42,9 +44,9 @@ public class MOMBI2IT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<>());
 
-    algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<DoubleSolution>(),
+    algorithm = new MOMBI2<>(problem,400,crossover,mutation,selection,new SequentialSolutionListEvaluator<>(),
         "../resources/weightVectorFiles/mombi2/weight_03D_12.sld");
     algorithm.run();
 
@@ -89,13 +91,14 @@ public class MOMBI2IT {
     Rationale: the default problem is DTLZ1, and MOMBI2, configured with standard
     settings, should return 100 solutions
     */
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/DTLZ1.3D.csv") ;
+    QualityIndicator hypervolume =
+            new PISAHypervolume(
+                    VectorUtils.readVectors("../resources/referenceFrontsCSV/DTLZ1.3D.csv", ","));
 
-    // Rationale: the default problem is ZDT4, and SMPSO, configured with standard settings, should
+    // Rationale: the default problem is DTLZ1 (3 objectives), and MOMBI2, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.96
 
-    double hv = (Double)hypervolume.evaluate(population) ;
+    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.96) ;
 

@@ -140,7 +140,7 @@ public class MOEADIT {
 
     // Rationale: the default problem is LZ09F6", and MOEA/D, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.35
-    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(algorithm.getResult()));
+    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.35);
 

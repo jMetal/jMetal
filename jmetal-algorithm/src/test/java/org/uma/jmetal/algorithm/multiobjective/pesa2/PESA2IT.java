@@ -8,8 +8,12 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.NormalizeUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
@@ -19,6 +23,7 @@ import org.uma.jmetal.util.point.PointSolution;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 public class PESA2IT {
   Algorithm<List<DoubleSolution>> algorithm;
@@ -38,7 +43,7 @@ public class PESA2IT {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    algorithm = new PESA2Builder<DoubleSolution>(problem, crossover, mutation).build();
+    algorithm = new PESA2Builder<>(problem, crossover, mutation).build();
 
     algorithm.run();
 
@@ -70,20 +75,25 @@ public class PESA2IT {
 
     algorithm.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = algorithm.getResult() ;
 
-    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv";
+    String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
-    Front referenceFront = new ArrayFront(referenceFrontFileName);
-    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
+    printFinalSolutionSet(population);
 
-    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
-    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(population));
-    List<PointSolution> normalizedPopulation =
-        FrontUtils.convertFrontToSolutionList(normalizedFront);
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
+    QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
-    double hv =
-        new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
+    // Rationale: the default problem is ConstrEx, and PESA-II, configured with standard settings, should
+    // return find a front with a hypervolume value higher than 0.7
+
+    double[][] normalizedFront =
+            NormalizeUtils.normalize(
+                    SolutionListUtils.getMatrixWithObjectiveValues(population),
+                    NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+                    NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    double hv = hypervolume.compute(normalizedFront);
 
     assertTrue(population.size() >= 98);
     assertTrue(hv > 0.7);
