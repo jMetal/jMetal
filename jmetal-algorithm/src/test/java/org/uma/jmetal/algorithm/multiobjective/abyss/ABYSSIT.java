@@ -11,9 +11,11 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
-import org.uma.jmetal.qualityindicatorold.QualityIndicator;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -106,13 +108,14 @@ public class ABYSSIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT1.csv");
+    QualityIndicator hypervolume =
+            new PISAHypervolume(
+                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
+    
+    // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings,
+    // should return find a front with a hypervolume value higher than 0.22
 
-    // Rationale: the default problem is ZDT1, and AbYSS, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.65
-
-    double hv = hypervolume.evaluate(population);
+    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.65);
   }

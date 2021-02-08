@@ -61,8 +61,7 @@ public class VectorUtils {
       }
     }
 
-    List<String> vectorStrList = null;
-    vectorStrList = Files.readAllLines(Paths.get(path));
+    List<String> vectorStrList = Files.readAllLines(Paths.get(path));
 
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
@@ -172,9 +171,5 @@ public class VectorUtils {
       }
     }
     return invertedFront;
-  }
-
-  public class readVectors {
-    public readVectors(String arg) {}
   }
 }
