@@ -256,8 +256,8 @@ public class BLXAlphaCrossoverTest {
     /** Evaluate() method */
     @Override
     public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives()[0] = 0.0;
+      solution.objectives()[1] = 1.0;
 
       return solution ;
     }
@@ -270,7 +270,7 @@ public class BLXAlphaCrossoverTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
+    List<Bounds<Double>> bounds = List.of(Bounds.create(0.0, 1.0)) ;
 
 		List<DoubleSolution> solutions = new LinkedList<>();
 		solutions.add(new DefaultDoubleSolution(2, bounds));

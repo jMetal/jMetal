@@ -297,8 +297,8 @@ public class ABYSSTest {
 
     @Override
     public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.setObjective(0, randomGenerator.nextDouble());
-      solution.setObjective(1, randomGenerator.nextDouble());
+      solution.objectives()[0] = randomGenerator.nextDouble();
+      solution.objectives()[1] = randomGenerator.nextDouble();
 
       return solution ;
     }

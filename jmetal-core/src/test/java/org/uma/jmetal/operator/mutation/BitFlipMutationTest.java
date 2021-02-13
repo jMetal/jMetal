@@ -176,8 +176,8 @@ public class BitFlipMutationTest {
     /** Evaluate() method */
     @Override
     public BinarySolution evaluate(BinarySolution solution) {
-      solution.setObjective(0, 0);
-      solution.setObjective(1, 1);
+      solution.objectives()[0] = 0;
+      solution.objectives()[1] = 1;
 
       return solution ;
     }
@@ -188,7 +188,7 @@ public class BitFlipMutationTest {
 		// Configuration
 		double mutationProbability = 0.1;
 
-		BinarySolution solution = new DefaultBinarySolution(Arrays.asList(2), 2) ;
+		BinarySolution solution = new DefaultBinarySolution(List.of(2), 2) ;
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

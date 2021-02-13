@@ -249,8 +249,8 @@ public class PolynomialMutationTest {
     /** Evaluate() method */
     @Override
     public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives()[0] = 0.0;
+      solution.objectives()[1] = 1.0;
 
       return solution ;
     }
@@ -263,7 +263,7 @@ public class PolynomialMutationTest {
 		int alpha = 20;
 		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
 
-    List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
+    List<Bounds<Double>> bounds = List.of(Bounds.create(0.0, 1.0)) ;
     DoubleSolution solution = new DefaultDoubleSolution(2, bounds) ;
 
 		// Check configuration leads to use default generator by default
