@@ -3,7 +3,10 @@ package org.uma.jmetal.util.point.impl;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.point.Point;
@@ -59,16 +62,13 @@ public class ArrayPointTest {
 
   @Test
   public void shouldConstructFromASolutionReturnTheCorrectPoint() {
-    Solution<?> solution = Mockito.mock(Solution.class) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 3, 0) ;
+    DoubleSolution solution = problem.createSolution() ;
+    solution.objectives()[0] = 0.2 ;
+    solution.objectives()[1] = 234.23 ;
+    solution.objectives()[2] = -234.2356 ;
 
-    Mockito.when(solution.getNumberOfObjectives()).thenReturn(3) ;
-    Mockito.when(solution.getObjective(0)).thenReturn(0.2) ;
-    Mockito.when(solution.getObjective(1)).thenReturn(234.23) ;
-    Mockito.when(solution.getObjective(2)).thenReturn(-234.2356) ;
-    Mockito.when(solution.getObjectives()).thenReturn(new double[]{0.2, 234.23, -234.2356}) ;
-    //Mockito.when(solution.getNumberOfObjectives()).thenReturn(3) ;
-
-    Point point = new ArrayPoint(solution.getObjectives()) ;
+    Point point = new ArrayPoint(solution.objectives()) ;
 
     double[] expectedArray = {0.2, 234.23, -234.2356} ;
     double[] pointDimensions = (double[])ReflectionTestUtils.getField(point, "point");

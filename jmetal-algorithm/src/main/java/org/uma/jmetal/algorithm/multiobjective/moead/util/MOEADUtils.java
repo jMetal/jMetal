@@ -139,7 +139,7 @@ public class MOEADUtils {
     }
 
     IdealPoint idealPoint = new IdealPoint(2);
-    solutionList.stream().forEach(solution -> idealPoint.update(solution.getObjectives()));
+    solutionList.stream().forEach(solution -> idealPoint.update(solution.objectives()));
 
     // Select the best solution for each mombi2-weights.weight vector
     for (int i = 0; i < newSolutionListSize; i++) {

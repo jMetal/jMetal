@@ -91,7 +91,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
     double[][] points = new double[until - from][];
     int[] ranks = new int[until - from];
     for (int i = from; i < until; ++i) {
-      points[i - from] = solutions.get(i).getObjectives();
+      points[i - from] = solutions.get(i).objectives();
     }
     sortingInstance.sort(points, ranks, until - from);
     int maxRank = 0;

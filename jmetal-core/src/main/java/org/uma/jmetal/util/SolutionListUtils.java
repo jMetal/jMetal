@@ -492,7 +492,7 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(List<S> solutionList) {
     double[][] matrix = new double[solutionList.size()][] ;
 
-    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).getObjectives()) ;
+    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).objectives()) ;
 
     return matrix ;
   }

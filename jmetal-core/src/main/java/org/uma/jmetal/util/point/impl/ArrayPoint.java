@@ -153,10 +153,7 @@ public class ArrayPoint implements Point {
 
     ArrayPoint that = (ArrayPoint) o;
 
-    if (!Arrays.equals(point, that.point))
-      return false;
-
-    return true;
+    return Arrays.equals(point, that.point);
   }
 
   @Override public int hashCode() {
