@@ -82,12 +82,12 @@ public class CompositeSolutionTest {
     assertEquals(solution.getNumberOfObjectives(), newSolution.getNumberOfObjectives());
     assertEquals(solution.getNumberOfConstraints(), newSolution.getNumberOfConstraints());
 
-    assertEquals(solution.getVariable(0).getNumberOfVariables(), newSolution.getVariable(0).getNumberOfVariables());
-    assertEquals(solution.getVariable(1).getNumberOfVariables(), newSolution.getVariable(1).getNumberOfVariables());
+    assertEquals(solution.getVariable(0).variables().size(), newSolution.getVariable(0).variables().size());
+    assertEquals(solution.getVariable(1).variables().size(), newSolution.getVariable(1).variables().size());
     assertNotSame(solution.getVariable(0), newSolution.getVariable(0));
     assertNotSame(solution.getVariable(1), newSolution.getVariable(1));
 
-    assertEquals(solution.getVariable(0).getVariables(), newSolution.getVariable(0).getVariables());
-    assertEquals(solution.getVariable(1).getVariables(), newSolution.getVariable(1).getVariables());
+    assertEquals(solution.getVariable(0).variables(), newSolution.getVariable(0).variables());
+    assertEquals(solution.getVariable(1).variables(), newSolution.getVariable(1).variables());
   }
 }

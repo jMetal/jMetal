@@ -170,7 +170,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
     Solution<T> solution = (Solution<T>) o;
 
-    return this.getVariables().equals(solution.getVariables());
+    return this.variables().equals(solution.variables());
   }
 
   @Override
