@@ -120,16 +120,6 @@ public class GenericSolutionAttributeTest {
     public void setObjective(int index, double value) {}
 
     @Override
-    public double[] getObjectives() {
-      return null;
-    }
-
-    @Override
-    public List<Double> getVariables() {
-      return Collections.emptyList();
-    }
-
-    @Override
     public double getObjective(int index) {
       return 0;
     }
@@ -141,11 +131,6 @@ public class GenericSolutionAttributeTest {
 
     @Override
     public void setVariable(int index, Double value) {}
-
-    @Override
-    public double[] getConstraints() {
-      return new double[0];
-    }
 
     @Override
     public double getConstraint(int index) {

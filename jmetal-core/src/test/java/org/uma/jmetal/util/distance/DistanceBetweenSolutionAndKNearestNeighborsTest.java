@@ -1,6 +1,8 @@
 package org.uma.jmetal.util.distance;
 
 import org.junit.Test;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInSolutionSpace;
@@ -17,11 +19,11 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
 
   @Test
   public void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariable(0)).thenReturn(1.0) ;
-    when(solution.getVariable(1)).thenReturn(1.0) ;
-    when(solution.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution = problem.createSolution() ;
+    solution.variables().set(0, 1.0) ;
+    solution.variables().set(1, 1.0) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution) ;
@@ -36,16 +38,15 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
 
   @Test
   public void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariable(0)).thenReturn(1.0) ;
-    when(solution.getVariable(1)).thenReturn(1.0) ;
-    when(solution.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution = problem.createSolution() ;
+    solution.variables().set(0, 1.0) ;
+    solution.variables().set(1, 1.0) ;
 
-    DoubleSolution solution2 = mock(DoubleSolution.class) ;
-    when(solution2.getVariable(0)).thenReturn(2.0) ;
-    when(solution2.getVariable(1)).thenReturn(2.0) ;
-    when(solution2.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.variables().set(0, 2.0) ;
+    solution2.variables().set(1, 2.0) ;
 
     List<DoubleSolution> solutionList = new ArrayList<>() ;
     solutionList.add(solution2) ;
@@ -58,32 +59,27 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   }
 
   @Test
-  public void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionAndKIsEqualToTwo() {
+  public void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionsAndKIsEqualToTwo() {
 
-    DoubleSolution solution = mock(DoubleSolution.class) ;
-    when(solution.getVariable(0)).thenReturn(1.0) ;
-    when(solution.getVariable(1)).thenReturn(1.0) ;
-    when(solution.getNumberOfVariables()).thenReturn(2) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
 
-    DoubleSolution solution2 = mock(DoubleSolution.class) ;
-    when(solution2.getVariable(0)).thenReturn(2.0) ;
-    when(solution2.getVariable(1)).thenReturn(2.0) ;
-    when(solution2.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution = problem.createSolution() ;
+    solution.variables().set(0, 1.0) ;
+    solution.variables().set(1, 1.0) ;
 
-    DoubleSolution solution3 = mock(DoubleSolution.class) ;
-    when(solution3.getVariable(0)).thenReturn(3.0) ;
-    when(solution3.getVariable(1)).thenReturn(3.0) ;
-    when(solution3.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.variables().set(0, 2.0) ;
+    solution2.variables().set(1, 2.0) ;
 
-    DoubleSolution solution4 = mock(DoubleSolution.class) ;
-    when(solution4.getVariable(0)).thenReturn(4.0) ;
-    when(solution4.getVariable(1)).thenReturn(4.0) ;
-    when(solution4.getNumberOfVariables()).thenReturn(2) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.variables().set(0, 3.0) ;
+    solution3.variables().set(1, 3.0) ;
 
-    List<DoubleSolution> solutionList = new ArrayList<>() ;
-    solutionList.add(solution2) ;
-    solutionList.add(solution3) ;
-    solutionList.add(solution4) ;
+    DoubleSolution solution4 = problem.createSolution() ;
+    solution4.variables().set(0, 4.0) ;
+    solution4.variables().set(1, 4.0) ;
+
+    List<DoubleSolution> solutionList = List.of(solution, solution2, solution3, solution4) ;
 
     int k = 2 ;
     DistanceBetweenSolutionAndKNearestNeighbors<DoubleSolution> distance =

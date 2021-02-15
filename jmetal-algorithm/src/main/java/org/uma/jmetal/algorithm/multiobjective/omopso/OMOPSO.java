@@ -164,11 +164,11 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       W = randomGenerator.nextDouble(0.1, 0.5);
       //
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+      for (int var = 0; var < particle.variables().size(); var++) {
         //Computing the velocity of this particle
-        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.getVariable(var) -
-            particle.getVariable(var)) +
-            C2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var));
+        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.variables().get(var) -
+            particle.variables().get(var)) +
+            C2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var));
       }
     }
   }
@@ -178,17 +178,17 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   protected void updatePosition(List<DoubleSolution> swarm)  {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
+      for (int var = 0; var < particle.variables().size(); var++) {
+        particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
         Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
-        if (particle.getVariable(var) < lowerBound) {
-          particle.setVariable(var, lowerBound);
+        if (particle.variables().get(var) < lowerBound) {
+          particle.variables().set(var, lowerBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle.getVariable(var) > upperBound) {
-          particle.setVariable(var, upperBound);
+        if (particle.variables().get(var) > upperBound) {
+          particle.variables().set(var, upperBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
       }

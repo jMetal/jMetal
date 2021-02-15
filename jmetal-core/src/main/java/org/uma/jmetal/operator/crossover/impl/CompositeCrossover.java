@@ -35,11 +35,11 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
     Check.collectionIsNotEmpty(operators);
 
     this.operators = new ArrayList<>();
-    for (int i = 0; i < operators.size(); i++) {
+    for (Object operator : operators) {
       Check.that(
-          operators.get(i) instanceof CrossoverOperator,
-          "The operator list does not contain an object implementing class CrossoverOperator");
-      this.operators.add((CrossoverOperator<Solution<?>>) operators.get(i));
+              operator instanceof CrossoverOperator,
+              "The operator list does not contain an object implementing class CrossoverOperator");
+      this.operators.add((CrossoverOperator<Solution<?>>) operator);
     }
   }
 
@@ -57,7 +57,7 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
 
     List<Solution<?>> offspring1 = new ArrayList<>();
     List<Solution<?>> offspring2 = new ArrayList<>();
-    int numberOfSolutionsInCompositeSolution = solutions.get(0).getNumberOfVariables();
+    int numberOfSolutionsInCompositeSolution = solutions.get(0).variables().size();
     for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
       List<Solution<?>> parents =
           Arrays.asList(solutions.get(0).getVariable(i), solutions.get(1).getVariable(i));

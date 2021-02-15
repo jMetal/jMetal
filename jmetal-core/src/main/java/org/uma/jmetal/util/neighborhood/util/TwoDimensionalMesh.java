@@ -120,17 +120,12 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
   public List<S> getNeighbors(List<S> solutionList, int solutionPosition) {
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
-    if (solutionPosition < 0) {
-      throw new JMetalException("The solution position value is negative: " + solutionPosition) ;
-    } else if (solutionList.size() != rows * columns) {
-      throw new JMetalException("The solution list size " + solutionList.size() + " is not"
-          + "equal to the grid size: " + rows + " * " + columns) ;
-    }
-    else if (solutionPosition >= solutionList.size()) {
-      throw new JMetalException("The solution position value " + solutionPosition +
-          " is equal or greater than the solution list size "
-          + solutionList.size()) ;
-    }
+    Check.that(solutionPosition >= 0, "The solution position value is negative: " + solutionPosition);
+    Check.that(solutionList.size() == rows * columns, "The solution list size " + solutionList.size() + " is not"
+            + "equal to the grid size: " + rows + " * " + columns);
+    Check.that(solutionPosition < solutionList.size(), "The solution position value " + solutionPosition +
+            " is equal or greater than the solution list size "
+            + solutionList.size()) ;
 
     return findNeighbors(solutionList, solutionPosition, neighborhood);
   }

@@ -39,15 +39,15 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
     super(solution.getLength(), solution.getNumberOfObjectives());
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       setObjective(i, solution.getObjective(i));
     }
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < variables().size(); i++) {
       setVariable(i, solution.getVariable(i));
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < constraints().length; i++) {
       setConstraint(i, solution.getConstraint(i));
     }
 
@@ -66,6 +66,6 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
 
   @Override
   public int getLength() {
-    return getNumberOfVariables();
+    return variables().size();
   }
 }

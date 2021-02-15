@@ -258,13 +258,13 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+      for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
                 velocityConstriction(
                         constrictionCoefficient(c1, c2)
                                 * (weightMax * speed[i][var]
-                                + c1 * r1 * (bestParticle.getVariable(var) - particle.getVariable(var))
-                                + c2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var))),
+                                + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
+                                + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
                         deltaMax,
                         deltaMin,
                         var);
@@ -276,18 +276,18 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
   protected void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < particle.getNumberOfVariables(); j++) {
-        particle.setVariable(j, particle.getVariable(j) + speed[i][j]);
+      for (int j = 0; j < particle.variables().size(); j++) {
+        particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
         Bounds<Double> bounds = problem.getBoundsForVariables().get(j);
         Double lowerBound = bounds.getLowerBound();
         Double upperBound = bounds.getUpperBound();
-        if (particle.getVariable(j) < lowerBound) {
-          particle.setVariable(j, lowerBound);
+        if (particle.variables().get(j) < lowerBound) {
+          particle.variables().set(j, lowerBound);
           speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getVariable(j) > upperBound) {
-          particle.setVariable(j, upperBound);
+        if (particle.variables().get(j) > upperBound) {
+          particle.variables().set(j, upperBound);
           speed[i][j] = speed[i][j] * changeVelocity2;
         }
       }

@@ -43,19 +43,19 @@ public class DefaultBinarySolution
    * Copy constructor
    */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints());
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     this.bitsPerVariable = solution.bitsPerVariable;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < variables().size(); i++) {
       setVariable(i, (BinarySet) solution.getVariable(i).clone());
     }
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       setObjective(i, solution.getObjective(i));
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < constraints().length; i++) {
       setConstraint(i, solution.getConstraint(i));
     }
 
@@ -89,7 +89,7 @@ public class DefaultBinarySolution
   @Override
   public int getTotalNumberOfBits() {
     int sum = 0;
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < variables().size(); i++) {
       sum += getVariable(i).getBinarySetLength();
     }
 
@@ -97,7 +97,7 @@ public class DefaultBinarySolution
   }
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < variables().size(); i++) {
       setVariable(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
   }

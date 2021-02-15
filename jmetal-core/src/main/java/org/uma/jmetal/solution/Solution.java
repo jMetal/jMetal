@@ -23,18 +23,13 @@ public interface Solution<T> extends Serializable {
   void setObjective(int index, double value) ;
   @Deprecated
   double getObjective(int index) ;
-  @Deprecated
-  double[] getObjectives() ;
 
   @Deprecated
   T getVariable(int index) ;
-  @Deprecated
-  List<T> getVariables() ;
+
   @Deprecated
   void setVariable(int index, T variable) ;
 
-  @Deprecated
-  double[] getConstraints() ;
   @Deprecated
   double getConstraint(int index) ;
   @Deprecated

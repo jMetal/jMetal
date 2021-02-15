@@ -281,18 +281,18 @@ public class SMPSORP
   @Override protected void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int j = 0; j < particle.getNumberOfVariables(); j++) {
-        particle.setVariable(j, particle.getVariable(j) + speed[i][j]);
+      for (int j = 0; j < particle.variables().size(); j++) {
+        particle.variables().set(j, particle.variables().get(j) + speed[i][j]);
 
         Bounds<Double> bounds = problem.getBoundsForVariables().get(j);
         Double lowerBound = bounds.getLowerBound();
         Double upperBound = bounds.getUpperBound();
-        if (particle.getVariable(j) < lowerBound) {
-          particle.setVariable(j, lowerBound);
+        if (particle.variables().get(j) < lowerBound) {
+          particle.variables().set(j, lowerBound);
           speed[i][j] = speed[i][j] * changeVelocity1;
         }
-        if (particle.getVariable(j) > upperBound) {
-          particle.setVariable(j, upperBound);
+        if (particle.variables().get(j) > upperBound) {
+          particle.variables().set(j, upperBound);
           speed[i][j] = speed[i][j] * changeVelocity2;
         }
       }

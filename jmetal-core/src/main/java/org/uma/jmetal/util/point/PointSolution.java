@@ -95,27 +95,12 @@ public class PointSolution implements Solution<Double> {
     return objectives[index];
   }
 
-  @Override
-  public double[] getObjectives() {
-    return objectives ;
-  }
-
-  @Override
-  public List<Double> getVariables() {
-    return Collections.emptyList() ;
-  }
-
   @Override public Double getVariable(int index) {
     return null;
   }
 
   @Override public void setVariable(int index, Double value) {
 	  //This method is an intentionally-blank override.
-  }
-
-  @Override
-  public double[] getConstraints() {
-    return new double[0];
   }
 
   @Override

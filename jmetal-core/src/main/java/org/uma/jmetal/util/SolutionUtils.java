@@ -124,8 +124,8 @@ public class SolutionUtils {
     double distance = 0.0;
 
     double diff;
-    for (int i = 0; i < solutionI.getNumberOfVariables(); i++) {
-      diff = solutionI.getVariable(i) - solutionJ.getVariable(i);
+    for (int i = 0; i < solutionI.variables().size(); i++) {
+      diff = solutionI.variables().get(i) - solutionJ.variables().get(i);
       distance += Math.pow(diff, 2.0);
     }
 

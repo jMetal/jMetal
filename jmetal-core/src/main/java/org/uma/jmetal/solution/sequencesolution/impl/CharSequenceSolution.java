@@ -24,17 +24,17 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
 
   /** Copy Constructor */
   public CharSequenceSolution(CharSequenceSolution solution) {
-    super(solution.getLength(), solution.getNumberOfObjectives());
+    super(solution.getLength(), solution.objectives().length);
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       setObjective(i, solution.getObjective(i));
     }
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < variables().size(); i++) {
       setVariable(i, solution.getVariable(i));
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
+    for (int i = 0; i < constraints().length; i++) {
       setConstraint(i, solution.getConstraint(i));
     }
 
@@ -53,6 +53,6 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
 
   @Override
   public int getLength() {
-    return getNumberOfVariables();
+    return variables().size();
   }
 }

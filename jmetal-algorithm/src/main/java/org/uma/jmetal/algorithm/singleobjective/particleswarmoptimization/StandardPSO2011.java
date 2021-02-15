@@ -178,21 +178,21 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       DoubleSolution gravityCenter = problem.createSolution();
 
       if (this.localBest[i] != this.neighborhoodBest[i]) {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        for (int var = 0; var < particle.variables().size(); var++) {
           double G;
-          G = particle.getVariable(var) +
-                  c * (localBest[i].getVariable(var) +
-                          neighborhoodBest[i].getVariable(var) - 2 *
-                          particle.getVariable(var)) / 3.0;
+          G = particle.variables().get(var) +
+                  c * (localBest[i].variables().get(var) +
+                          neighborhoodBest[i].variables().get(var) - 2 *
+                          particle.variables().get(var)) / 3.0;
 
-          gravityCenter.setVariable(var, G);
+          gravityCenter.variables().set(var, G);
         }
       } else {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-          double g  = particle.getVariable(var) +
-                  c * (localBest[i].getVariable(var) - particle.getVariable(var)) / 2.0;
+        for (int var = 0; var < particle.variables().size(); var++) {
+          double g  = particle.variables().get(var) +
+                  c * (localBest[i].variables().get(var) - particle.variables().get(var)) / 2.0;
 
-          gravityCenter.setVariable(var, g);
+          gravityCenter.variables().set(var, g);
         }
       }
 
@@ -203,28 +203,28 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
 
       double[] random = ((ExtendedPseudoRandomGenerator)randomGenerator.getRandomGenerator()).randSphere(problem.getNumberOfVariables());
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        randomParticle.setVariable(var, gravityCenter.getVariable(var) + radius * random[var]);
+      for (int var = 0; var < particle.variables().size(); var++) {
+        randomParticle.variables().set(var, gravityCenter.variables().get(var) + radius * random[var]);
       }
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+      for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
-                weight * speed[i][var] + randomParticle.getVariable(var) - particle.getVariable(var);
+                weight * speed[i][var] + randomParticle.variables().get(var) - particle.variables().get(var);
       }
 
 
       if (localBest[i] != neighborhoodBest[i]) {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        for (int var = 0; var < particle.variables().size(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariable(var) - particle.getVariable(var)) +
-                  r2 * (neighborhoodBest[i].getVariable(var) - particle.getVariable
+                  r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
+                  r2 * (neighborhoodBest[i].variables().get(var) - particle.variables().get
                           (var));
         }
       } else {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        for (int var = 0; var < particle.variables().size(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariable(var) -
-                          particle.getVariable(var));
+                  r1 * (localBest[i].variables().get(var) -
+                          particle.variables().get(var));
         }
       }
     }
@@ -234,18 +234,18 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
   public void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
+      for (int var = 0; var < particle.variables().size(); var++) {
+        particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
 
         Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
-        if (particle.getVariable(var) < lowerBound) {
-          particle.setVariable(var, lowerBound);
+        if (particle.variables().get(var) < lowerBound) {
+          particle.variables().set(var, lowerBound);
           speed[i][var] = changeVelocity * speed[i][var];
         }
-        if (particle.getVariable(var) > upperBound) {
-          particle.setVariable(var, upperBound);
+        if (particle.variables().get(var) > upperBound) {
+          particle.variables().set(var, upperBound);
           speed[i][var] = changeVelocity * speed[i][var];
         }
       }

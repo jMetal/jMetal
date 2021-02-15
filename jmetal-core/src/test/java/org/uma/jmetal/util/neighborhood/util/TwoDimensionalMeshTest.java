@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class TwoDimensionalMeshTest {
     list.add(mock(IntegerSolution.class));
     list.add(mock(IntegerSolution.class));
 
-    neighborhood.getNeighbors(list, -1) ;
+    assertThrows(InvalidConditionException.class, () ->neighborhood.getNeighbors(list, -1)) ;
   }
 
   @Test

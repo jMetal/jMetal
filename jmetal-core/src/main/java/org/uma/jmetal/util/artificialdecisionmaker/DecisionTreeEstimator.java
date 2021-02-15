@@ -114,7 +114,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
     double result = 0.0d;
 
     try {
-      int numberOfVariables = solutionList.get(0).getNumberOfVariables();
+      int numberOfVariables = solutionList.get(0).variables().size();
       //Attributes
       //numeric
       Attribute attr = new Attribute("my-numeric");
@@ -141,7 +141,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
         //instaces
         for (int i = 0; i <numberOfVariables ; i++) {
           double[] attValues = new double[dataset.numAttributes()];
-          attValues[0] = ((DoubleSolution)solution).getVariable(i);
+          attValues[0] = ((DoubleSolution)solution).variables().get(i);
           attValues[1] = dataset.attribute(NOMINAL_STRING).indexOfValue(VALUE_STRING+i);
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
           dataset.add(new DenseInstance(1.0, attValues));
@@ -155,7 +155,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //Add instances
       for (int i = 0; i < numberOfVariables; i++) {
         Instance test = new DenseInstance(3);
-        test.setValue(attr, ((DoubleSolution)testSolution).getVariable(i));
+        test.setValue(attr, ((DoubleSolution)testSolution).variables().get(i));
         test.setValue(attr1, VALUE_STRING+i);
         test.setValue(attr2, testSolution.toString()+i);
         datasetTest.add(test);
@@ -184,7 +184,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       eval.evaluateModel(classifier, datasetTest); //testset
       result = classifier.classifyInstance(datasetTest.get(index));
     } catch (Exception e) {
-      result = ((DoubleSolution)testSolution).getVariable(index);
+      result = ((DoubleSolution)testSolution).variables().get(index);
     }
     return result;
   }

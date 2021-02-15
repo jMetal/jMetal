@@ -104,12 +104,12 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     double lowerBound;
 
     if (randomGenerator.getRandomValue() <= probability) {
-      for (i = 0; i < parent1.getNumberOfVariables(); i++) {
+      for (i = 0; i < parent1.variables().size(); i++) {
         Bounds<Double> bounds = parent1.getBounds(i);
         upperBound = bounds.getUpperBound();
         lowerBound = bounds.getLowerBound();
-        valueX1 = parent1.getVariable(i);
-        valueX2 = parent2.getVariable(i);
+        valueX1 = parent1.variables().get(i);
+        valueX2 = parent2.variables().get(i);
 
         double max;
         double min;
@@ -140,8 +140,8 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
         valueY1 = solutionRepair.repairSolutionVariableValue(valueY1, lowerBound, upperBound) ;
         valueY2 = solutionRepair.repairSolutionVariableValue(valueY2, lowerBound, upperBound) ;
 
-        offspring.get(0).setVariable(i, valueY1);
-        offspring.get(1).setVariable(i, valueY2);
+        offspring.get(0).variables().set(i, valueY1);
+        offspring.get(1).variables().set(i, valueY2);
       }
     }
 

@@ -66,19 +66,19 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
   /** Copy constructor */
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
     super(
-        solution.getNumberOfVariables(),
-        solution.getNumberOfObjectives(),
-        solution.getNumberOfConstraints());
+        solution.variables().size(),
+        solution.objectives().length,
+        solution.constraints().length);
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       setVariable(i, solution.getVariable(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solution.objectives().length; i++) {
       setObjective(i, solution.getObjective(i));
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+    for (int i = 0; i < solution.constraints().length; i++) {
       setConstraint(i, solution.getConstraint(i));
     }
 

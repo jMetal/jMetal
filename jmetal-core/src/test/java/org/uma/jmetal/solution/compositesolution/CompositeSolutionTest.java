@@ -8,6 +8,7 @@ import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -41,21 +42,21 @@ public class CompositeSolutionTest {
     int numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(
-            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(3.0, 5.0)));
+            numberOfObjectives, numberOfConstraints, List.of(Bounds.create(3.0, 5.0)));
     IntegerSolution integerSolution =
         new DefaultIntegerSolution(
-            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(2, 10)));
+            numberOfObjectives, numberOfConstraints, List.of(Bounds.create(2, 10)));
 
     CompositeSolution solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
     assertNotNull(solution);
-    assertEquals(2, solution.getNumberOfVariables());
+    assertEquals(2, solution.variables().size());
     assertEquals(numberOfObjectives, solution.getNumberOfObjectives());
     assertEquals(numberOfConstraints, solution.getNumberOfConstraints());
-    assertEquals(numberOfObjectives, solution.getVariable(0).getNumberOfObjectives());
-    assertEquals(numberOfObjectives, solution.getVariable(1).getNumberOfObjectives());
-    assertEquals(numberOfConstraints, solution.getVariable(0).getNumberOfConstraints());
-    assertEquals(numberOfConstraints, solution.getVariable(1).getNumberOfConstraints());
+    assertEquals(numberOfObjectives, solution.getVariable(0).objectives().length);
+    assertEquals(numberOfObjectives, solution.getVariable(1).objectives().length);
+    assertEquals(numberOfConstraints, solution.getVariable(0).constraints().length);
+    assertEquals(numberOfConstraints, solution.getVariable(1).constraints().length);
     assertTrue(solution.getVariable(0) instanceof DoubleSolution);
     assertTrue(solution.getVariable(1) instanceof IntegerSolution);
   }
@@ -78,9 +79,9 @@ public class CompositeSolutionTest {
 
     CompositeSolution newSolution = new CompositeSolution(solution) ;
 
-    assertEquals(solution.getNumberOfVariables(), newSolution.getNumberOfVariables());
-    assertEquals(solution.getNumberOfObjectives(), newSolution.getNumberOfObjectives());
-    assertEquals(solution.getNumberOfConstraints(), newSolution.getNumberOfConstraints());
+    assertEquals(solution.variables().size(), newSolution.variables().size());
+    assertEquals(solution.objectives().length, newSolution.objectives().length);
+    assertEquals(solution.constraints().length, newSolution.constraints().length);
 
     assertEquals(solution.getVariable(0).variables().size(), newSolution.getVariable(0).variables().size());
     assertEquals(solution.getVariable(1).variables().size(), newSolution.getVariable(1).variables().size());

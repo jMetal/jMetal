@@ -64,7 +64,7 @@ public class CompositeMutationTest {
     CompositeSolution mutatedSolution = operator.execute(solution) ;
 
     assertNotNull(mutatedSolution);
-    assertEquals(1, mutatedSolution.getNumberOfVariables());
+    assertEquals(1, mutatedSolution.variables().size());
     //assertTrue(mutatedSolution.getVariable(0) instanceof PolynomialMutation);
   }
 
@@ -84,7 +84,7 @@ public class CompositeMutationTest {
     CompositeSolution mutatedSolution = operator.execute(solution);
 
     assertNotNull(mutatedSolution);
-    assertEquals(2, mutatedSolution.getNumberOfVariables());
+    assertEquals(2, mutatedSolution.variables().size());
   }
 
   @Test (expected = ClassCastException.class)

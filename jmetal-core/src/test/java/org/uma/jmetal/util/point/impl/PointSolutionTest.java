@@ -80,18 +80,6 @@ public class PointSolutionTest {
     assertEquals(solution, newSolution) ;
   }
 
-  @Test public void idleTestToCoverTheUnusedMethods() {
-    PointSolution solution = new PointSolution(3) ;
-
-    solution.setVariable(0, 0.0);
-    solution.setAttribute(null, null);
-
-    assertNull(solution.getVariable(0)) ;
-    assertEquals(0, solution.getNumberOfVariables()) ;
-    assertNull(solution.getAttribute(null)) ;
-  }
-
-
   @Test
   public void shouldEqualsReturnTrueIfTheSolutionsAreIdentical() {
     int numberOfObjectives = 3 ;

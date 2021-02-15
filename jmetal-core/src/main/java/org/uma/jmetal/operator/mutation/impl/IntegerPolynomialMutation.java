@@ -102,9 +102,9 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
     Double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= probability) {
-        y = (double)solution.getVariable(i);
+        y = (double)solution.variables().get(i);
         Bounds<Integer> bounds = solution.getBounds(i);
         yl = (double)bounds.getLowerBound() ;
         yu = (double)bounds.getUpperBound() ;
@@ -127,7 +127,7 @@ public class IntegerPolynomialMutation implements MutationOperator<IntegerSoluti
           y = y + deltaq * (yu - yl);
           y = solutionRepair.repairSolutionVariableValue(y, yl, yu);
         }
-        solution.setVariable(i, (int) y);
+        solution.variables().set(i, (int) y);
       }
     }
   }

@@ -44,7 +44,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
 
   /** Performs the operation */
   public void doMutation(CharSequenceSolution solution) {
-    int sequenceLength = solution.getNumberOfVariables();
+    int sequenceLength = solution.variables().size();
 
     for (int i = 0; i < sequenceLength; i++) {
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {

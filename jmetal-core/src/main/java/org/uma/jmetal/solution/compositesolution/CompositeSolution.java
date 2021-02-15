@@ -28,18 +28,18 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    *                  number of objectives and constraints.
    */
   public CompositeSolution(List<Solution<?>> solutions) {
-    super(solutions.size(), solutions.get(0).getNumberOfObjectives(), solutions.get(0).getNumberOfConstraints());
+    super(solutions.size(), solutions.get(0).objectives().length, solutions.get(0).constraints().length);
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
-    int numberOfObjectives = solutions.get(0).getNumberOfObjectives();
-    int numberOfConstraints = solutions.get(0).getNumberOfConstraints();
+    int numberOfObjectives = solutions.get(0).objectives().length;
+    int numberOfConstraints = solutions.get(0).constraints().length;
     for (Solution<?> solution : solutions) {
       Check.that(
-          solution.getNumberOfObjectives() == numberOfObjectives,
+          solution.objectives().length == numberOfObjectives,
           "The solutions in the list must have the same number of objectives: "
               + numberOfObjectives);
       Check.that(
-              solution.getNumberOfConstraints() == numberOfConstraints,
+              solution.constraints().length == numberOfConstraints,
               "The solutions in the list must have the same number of constraints: "
                       + numberOfConstraints);
     }
@@ -54,17 +54,17 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    * @param solution
    */
   public CompositeSolution(CompositeSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.variables().size(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       setVariable(i, solution.getVariable(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solution.objectives().length; i++) {
       setObjective(i, solution.getObjective(i)) ;
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
+    for (int i = 0; i < solution.constraints().length; i++) {
       setConstraint(i, solution.getConstraint(i));
     }
 

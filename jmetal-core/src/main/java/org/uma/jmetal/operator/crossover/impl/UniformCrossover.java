@@ -69,19 +69,19 @@ public class UniformCrossover implements CrossoverOperator<BinarySolution> {
     offspring.add((BinarySolution) parent2.copy());
 
     if (crossoverRandomGenerator.getRandomValue() < probability) {
-      for (int variableIndex = 0; variableIndex < parent1.getNumberOfVariables(); variableIndex++) {
+      for (int variableIndex = 0; variableIndex < parent1.variables().size(); variableIndex++) {
         for (int bitIndex = 0;
-            bitIndex < parent1.getVariable(variableIndex).getBinarySetLength();
+            bitIndex < parent1.variables().get(variableIndex).getBinarySetLength();
             bitIndex++) {
           if (crossoverRandomGenerator.getRandomValue() < 0.5) {
             offspring
                 .get(0)
-                .getVariable(variableIndex)
-                .set(bitIndex, parent2.getVariable(variableIndex).get(bitIndex));
+                .variables().get(variableIndex)
+                .set(bitIndex, parent2.variables().get(variableIndex).get(bitIndex));
             offspring
                 .get(1)
-                .getVariable(variableIndex)
-                .set(bitIndex, parent1.getVariable(variableIndex).get(bitIndex));
+                .variables().get(variableIndex)
+                .set(bitIndex, parent1.variables().get(variableIndex).get(bitIndex));
           }
         }
       }
