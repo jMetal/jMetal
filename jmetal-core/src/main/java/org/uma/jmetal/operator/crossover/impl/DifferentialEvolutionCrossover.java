@@ -281,7 +281,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         .forEach(
             i -> {
               parent[i] = new Double[numberOfVariables];
-              parentSolutions.get(i).getVariables().toArray(parent[i]);
+              parentSolutions.get(i).variables().toArray(parent[i]);
             });
 
     if (crossoverType.equals(DE_CROSSOVER_TYPE.BIN)) {

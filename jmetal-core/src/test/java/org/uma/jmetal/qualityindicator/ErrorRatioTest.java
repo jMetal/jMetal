@@ -3,7 +3,9 @@ package org.uma.jmetal.qualityindicator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.ErrorRatio;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
+import org.uma.jmetal.util.front.impl.ArrayFront;
 
 import java.io.FileNotFoundException;
 
@@ -67,10 +69,11 @@ public class ErrorRatioTest {
     double[][] referenceFront = {{-1.0, -1.0}, {0.0, 0.0}};
 
     Assertions.assertEquals(1.0, new ErrorRatio(referenceFront).compute(front), EPSILON);
+
   }
 
   @Test
-  public void shouldGetNameReturnTheCorrectValue() throws FileNotFoundException {
+  public void shouldGetNameReturnTheCorrectValue() {
     Assertions.assertEquals("ER", new ErrorRatio().getName());
   }
 }

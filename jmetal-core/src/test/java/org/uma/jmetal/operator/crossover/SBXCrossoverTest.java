@@ -280,8 +280,8 @@ public class SBXCrossoverTest {
     /** Evaluate() method */
     @Override
     public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
+      solution.objectives()[0] = 0.0;
+      solution.objectives()[1] = 1.0;
 
       return solution ;
     }

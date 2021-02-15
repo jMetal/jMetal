@@ -101,8 +101,8 @@ public class MOEADD<S extends DoubleSolution> extends AbstractMOEAD<S> {
 
         evaluations++;
 
-        idealPoint.update(child.getObjectives());
-        nadirPoint.update(child.getObjectives());
+        idealPoint.update(child.objectives());
+        nadirPoint.update(child.objectives());
         updateArchive(child);
       }
     } while (evaluations < maxEvaluations);

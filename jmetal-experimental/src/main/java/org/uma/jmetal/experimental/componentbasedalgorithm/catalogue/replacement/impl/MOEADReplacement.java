@@ -35,7 +35,7 @@ public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
   public List<S> replace(
       List<S> population, List<S> offspringPopulation) {
     S newSolution = offspringPopulation.get(0);
-    aggregativeFunction.update(newSolution.getObjectives());
+    aggregativeFunction.update(newSolution.objectives());
 
     Neighborhood.NeighborType neighborType = matingPoolSelection.getNeighborType();
     IntegerPermutationGenerator randomPermutation =
