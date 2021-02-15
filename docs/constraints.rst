@@ -29,7 +29,7 @@ If we take a look to the `Solution` interface:
       void setConstraint(int index, double value) ;
 
       int getNumberOfVariables() ;
-      int getNumberOfObjectives() ;
+      int objectives().length ;
       int getNumberOfConstraints() ;
 
       ...

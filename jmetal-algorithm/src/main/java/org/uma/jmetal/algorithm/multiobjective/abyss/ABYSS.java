@@ -205,7 +205,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     for (int i = 0; i < referenceSet1Size; i++) {
       individual = getPopulation().get(0);
       getPopulation().remove(0);
-      individual.setAttribute(SOLUTION_IS_MARKED, false);
+      individual.attributes().put(SOLUTION_IS_MARKED, false);
       referenceSet1.add(individual);
     }
   }
@@ -256,7 +256,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       }
 
       // Insert the individual into REFSET2
-      individual.setAttribute(SOLUTION_IS_MARKED, false);
+      individual.attributes().put(SOLUTION_IS_MARKED, false);
       referenceSet2.add(individual);
 
       // Update distances in REFSET2
@@ -302,7 +302,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     } // while
 
     if (!dominated) {
-      solution.setAttribute(SOLUTION_IS_MARKED, false);
+      solution.attributes().put(SOLUTION_IS_MARKED, false);
       if (referenceSet1.size() < referenceSet1Size) { //refSet1 isn't full
         referenceSet1.add(solution);
       } else {
@@ -360,7 +360,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
           distanceToSolutionListAttribute.setAttribute(referenceSet2.get(j), aux);
         }
       }
-      solution.setAttribute(SOLUTION_IS_MARKED, false);
+      solution.attributes().put(SOLUTION_IS_MARKED, false);
       referenceSet2.add(solution);
       return true;
     }
@@ -404,8 +404,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
           pair.add(solution2);
           subset.add(pair);
 
-          solutionList.get(i).setAttribute(SOLUTION_IS_MARKED, true);
-          solutionList.get(j).setAttribute(SOLUTION_IS_MARKED, true);
+          solutionList.get(i).attributes().put(SOLUTION_IS_MARKED, true);
+          solutionList.get(j).attributes().put(SOLUTION_IS_MARKED, true);
         }
       }
     }
@@ -442,7 +442,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       DoubleSolution solution = referenceSet1.get(i);
       solution = improvement(solution);
 
-      solution.setAttribute(SOLUTION_IS_MARKED, true);
+      solution.attributes().put(SOLUTION_IS_MARKED, true);
 
       getPopulation().add(solution);
     }
@@ -467,7 +467,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
 
     for (int i = 0; i < insert; i++) {
       DoubleSolution solution = (DoubleSolution) crowdingArchive.getSolutionList().get(i).copy();
-      solution.setAttribute(SOLUTION_IS_MARKED, false);
+      solution.attributes().put(SOLUTION_IS_MARKED, false);
       getPopulation().add(solution);
     }
   }
@@ -480,7 +480,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       evaluations++;
       solution = improvement(solution);
 
-      solution.setAttribute(SOLUTION_IS_MARKED, false);
+      solution.attributes().put(SOLUTION_IS_MARKED, false);
       getPopulation().add(solution);
     }
   }

@@ -37,7 +37,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
 
   /** Copy Constructor */
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
-    super(solution.getLength(), solution.getNumberOfObjectives());
+    super(solution.getLength(), solution.objectives().length);
 
     for (int i = 0; i < objectives().length; i++) {
       setObjective(i, solution.getObjective(i));

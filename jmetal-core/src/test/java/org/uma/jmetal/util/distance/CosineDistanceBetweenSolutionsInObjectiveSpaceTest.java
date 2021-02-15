@@ -1,7 +1,10 @@
 package org.uma.jmetal.util.distance;
 
 import org.junit.Test;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.CosineDistanceBetweenSolutionsInObjectiveSpace;
 
 import static org.junit.Assert.assertEquals;
@@ -16,20 +19,18 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldIdenticalPointsHaveADistanceOfOne() {
-    Solution<?> idealPoint = mock(Solution.class) ;
-    when(idealPoint.getObjective(0)).thenReturn(0.0) ;
-    when(idealPoint.getObjective(1)).thenReturn(0.0) ;
-    when(idealPoint.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleSolution idealPoint = problem.createSolution() ;
+    idealPoint.objectives()[0] = 0.0 ;
+    idealPoint.objectives()[1] = 0.0 ;
 
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getObjective(0)).thenReturn(1.0) ;
-    when(point1.getObjective(1)).thenReturn(1.0) ;
-    when(point1.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point1 = problem.createSolution() ;
+    point1.objectives()[0] = 1.0 ;
+    point1.objectives()[1] = 1.0 ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point2 = problem.createSolution() ;
+    point2.objectives()[0] = 1.0 ;
+    point2.objectives()[1] = 1.0 ;
 
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
@@ -40,20 +41,18 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldPointsInTheSameDirectionHaveADistanceOfOne() {
-    Solution<?> idealPoint = mock(Solution.class) ;
-    when(idealPoint.getObjective(0)).thenReturn(0.0) ;
-    when(idealPoint.getObjective(1)).thenReturn(0.0) ;
-    when(idealPoint.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleSolution idealPoint = problem.createSolution() ;
+    idealPoint.objectives()[0] = 0.0 ;
+    idealPoint.objectives()[1] = 0.0 ;
 
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getObjective(0)).thenReturn(1.0) ;
-    when(point1.getObjective(1)).thenReturn(1.0) ;
-    when(point1.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point1 = problem.createSolution() ;
+    point1.objectives()[0] = 1.0 ;
+    point1.objectives()[1] = 1.0 ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getObjective(0)).thenReturn(2.0) ;
-    when(point2.getObjective(1)).thenReturn(2.0) ;
-    when(point2.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point2 = problem.createSolution() ;
+    point2.objectives()[0] = 2.0 ;
+    point2.objectives()[1] = 2.0 ;
 
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;
@@ -64,20 +63,19 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldTwoPerpendicularPointsHaveADistanceOfZero() {
-    Solution<?> idealPoint = mock(Solution.class) ;
-    when(idealPoint.getObjective(0)).thenReturn(0.0) ;
-    when(idealPoint.getObjective(1)).thenReturn(0.0) ;
-    when(idealPoint.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleSolution idealPoint = problem.createSolution() ;
+    idealPoint.objectives()[0] = 0.0 ;
+    idealPoint.objectives()[1] = 0.0 ;
 
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(1.0) ;
-    when(point1.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point1 = problem.createSolution() ;
+    point1.objectives()[0] = 0.0 ;
+    point1.objectives()[1] = 1.0 ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(0.0) ;
-    when(point2.getNumberOfObjectives()).thenReturn(3) ;
+    DoubleSolution point2 = problem.createSolution() ;
+    point2.objectives()[0] = 1.0 ;
+    point2.objectives()[1] = 0.0 ;
+
 
     CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>> distance =
         new CosineDistanceBetweenSolutionsInObjectiveSpace<Solution<?>>(idealPoint) ;

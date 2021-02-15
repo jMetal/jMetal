@@ -66,7 +66,7 @@ public class PointSolution implements Solution<Double> {
    * @param solution
    */
   public PointSolution(Solution<?> solution) {
-    this.numberOfObjectives = solution.getNumberOfObjectives() ;
+    this.numberOfObjectives = solution.objectives().length ;
     objectives = new double[numberOfObjectives] ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
@@ -80,7 +80,7 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(PointSolution point) {
-    this(point.getNumberOfObjectives()) ;
+    this(point.objectives().length) ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       this.objectives[i] = point.getObjective(i) ;
@@ -117,10 +117,6 @@ public class PointSolution implements Solution<Double> {
     return 0;
   }
 
-  @Override public int getNumberOfObjectives() {
-    return numberOfObjectives;
-  }
-
   @Override
   public int getNumberOfConstraints() {
     return 0;
@@ -128,10 +124,6 @@ public class PointSolution implements Solution<Double> {
 
   @Override public PointSolution copy() {
     return new PointSolution(this);
-  }
-
-  @Override public void setAttribute(Object id, Object value) {
-    attributes.put(id, value) ;
   }
 
   @Override public Object getAttribute(Object id) {

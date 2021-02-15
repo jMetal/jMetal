@@ -24,7 +24,7 @@ public class C2_DTLZ2 extends DTLZ2 {
 
     setNumberOfConstraints(1);
 
-    if (getNumberOfObjectives() == 3) {
+    if (objectives().length == 3) {
       rValue = 0.4 ;
     } else {
       rValue = 0.5 ;
@@ -42,9 +42,9 @@ public class C2_DTLZ2 extends DTLZ2 {
   public void evaluateConstraints(DoubleSolution solution) {
     double sum2 = 0 ;
     double maxSum1 = Double.MIN_VALUE ;
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       double sum1 = Math.pow(solution.getObjective(i)-1.0, 2.0) - Math.pow(rValue, 2.0) ;
-      for (int j = 0; j < getNumberOfObjectives(); j++) {
+      for (int j = 0; j < objectives().length; j++) {
         if (i != j) {
           sum1 += Math.pow(solution.getObjective(j), 2.0) ;
         }
@@ -53,7 +53,7 @@ public class C2_DTLZ2 extends DTLZ2 {
       maxSum1 = Math.max(maxSum1, sum1) ;
 
       sum2 += Math.pow((solution.getObjective(i) -
-          1.0/Math.sqrt(getNumberOfObjectives())), 2.0)  ;
+          1.0/Math.sqrt(objectives().length)), 2.0)  ;
 
     }
 

@@ -45,7 +45,7 @@ public class FDA3 extends FDA implements Serializable {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
     f[0] = this.evalF(solution, limitInfI, limitSupI);
     double g = this.evalG(solution, limitInfII);
     double h = this.evalH(f[0], g);

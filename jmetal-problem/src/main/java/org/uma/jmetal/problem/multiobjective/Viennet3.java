@@ -38,7 +38,7 @@ public class Viennet3 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -57,7 +57,7 @@ public class Viennet3 extends AbstractDoubleProblem {
           Math.exp(-(x[0]*x[0])-(x[1]*x[1])) ;
 
         
-    for (int i = 0; i < getNumberOfObjectives(); i++)
+    for (int i = 0; i < objectives().length; i++)
       solution.setObjective(i,f[i]);
 
     return solution ;

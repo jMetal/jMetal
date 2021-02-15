@@ -68,7 +68,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
 
   /** Copy constructor */
   public DefaultDoubleSolution(DefaultDoubleSolution solution) {
-    super(solution.variables().size(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.variables().size(), solution.objectives().length, solution.getNumberOfConstraints()) ;
 
     for (int i = 0; i < solution.variables().size(); i++) {
       setVariable(i, solution.getVariable(i));

@@ -49,14 +49,14 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
 
     // We have at least one individual
     S first = solutionList.get(0);
-    int nObjectives = first.getNumberOfObjectives();
+    int nObjectives = first.objectives().length;
     boolean hasConstraintViolation = getConstraint(first) < 0;
 
     // Iterate over all individuals to check if all have the same number of objectives,
     // and to get whether we have meaningful constraints
     for (int i = 1; i < nSolutions; ++i) {
       S current = solutionList.get(i);
-      if (nObjectives != current.getNumberOfObjectives()) {
+      if (nObjectives != current.objectives().length) {
         throw new IllegalArgumentException("Solutions have different numbers of objectives");
       }
       hasConstraintViolation |= getConstraint(current) < 0;
@@ -99,7 +99,7 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
       S current = solutions.get(i);
       int rank = ranks[i - from] + rankOffset;
       maxRank = Math.max(maxRank, rank);
-      current.setAttribute(attributeId, rank);
+      current.attributes().put(attributeId, rank);
       while (subFronts.size() <= rank) {
         subFronts.add(new ArrayList<>());
       }

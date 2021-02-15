@@ -27,7 +27,7 @@ public class ZDT6 extends ZDT1 {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
 
     double x1;
     x1 = solution.getVariable(0);

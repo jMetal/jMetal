@@ -65,7 +65,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
     int maxFitnessValue = 0;
     for (int i = 0; i < solutionList.size(); i++) {
-      solutionList.get(i).setAttribute(attributeId, rawFitness[i]);
+      solutionList.get(i).attributes().put(attributeId, rawFitness[i]);
       if (rawFitness[i] > maxFitnessValue) {
         maxFitnessValue = rawFitness[i];
       }
@@ -79,7 +79,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
     // Assign each solution to its corresponding front
     solutionList.forEach(
         solution ->
-            rankedSubPopulations.get((int) solution.getAttribute(attributeId)).add(solution));
+            rankedSubPopulations.get((int) solution.attributes().get(attributeId)).add(solution));
 
     // Remove empty fronts
     // rankedSubPopulations.stream().filter(list -> (list.size() == 0));

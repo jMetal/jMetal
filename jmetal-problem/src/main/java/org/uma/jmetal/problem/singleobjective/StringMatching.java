@@ -51,7 +51,7 @@ public class StringMatching extends CharSequenceProblem {
 
   @Override
   public CharSequenceSolution createSolution() {
-    CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
+    CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), objectives().length) ;
     for (int i = 0 ; i < targetString.length(); i++) {
       solution.setVariable(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
     }

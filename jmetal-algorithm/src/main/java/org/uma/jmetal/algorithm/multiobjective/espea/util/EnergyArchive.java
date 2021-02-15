@@ -201,7 +201,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
       } else {
         // If archive member is not eligible for replacement, make sure
         // it is retained in any case.
-        archive.get(i).setAttribute(fitness.getAttributeIdentifier(), -Double.MAX_VALUE);
+        archive.get(i).attributes().put(fitness.getAttributeIdentifier(), -Double.MAX_VALUE);
       }
       if (eligible) {
         // New solution is always retained

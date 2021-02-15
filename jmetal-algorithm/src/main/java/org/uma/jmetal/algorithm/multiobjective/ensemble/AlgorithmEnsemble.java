@@ -36,7 +36,7 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
               + " finished. "
               + (System.currentTimeMillis() - startComputingTime));
       for (S solution : algorithm.getResult()) {
-        solution.setAttribute("ALGORITHM_NAME", algorithm.getName());
+        solution.attributes().put("ALGORITHM_NAME", algorithm.getName());
       }
       bagOfSolutions.addAll(algorithm.getResult());
     }

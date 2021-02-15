@@ -116,7 +116,7 @@ public class MOEADUtils {
     }
 
     if (solutionList.size() > 0) {
-      int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+      int numberOfObjectives = solutionList.get(0).objectives().length;
       if (numberOfObjectives == 2) {
         twoObjectivesCase(solutionList, resultSolutionList, newSolutionListSize);
       } else {

@@ -28,7 +28,7 @@ public class ScalarizationUtils {
    * @param scalarizationValue The scalarization value of the solution.
    */
   private static <S extends Solution<?>> void setScalarizationValue(S solution, double scalarizationValue) {
-    solution.setAttribute(new ScalarizationValue<S>().getAttributeIdentifier(), scalarizationValue);
+    solution.attributes().put(new ScalarizationValue<S>().getAttributeIdentifier(), scalarizationValue);
   }
 
   /**
@@ -39,7 +39,7 @@ public class ScalarizationUtils {
    * @return The scalarization value of the solution.
    */
   private static <S extends Solution<?>> double getScalarizationValue(S solution) {
-    return (double) solution.getAttribute(new ScalarizationValue<>().getAttributeIdentifier());
+    return (double) solution.attributes().get(new ScalarizationValue<>().getAttributeIdentifier());
   }
 
   /**
@@ -90,11 +90,11 @@ public class ScalarizationUtils {
    */
   private static <S extends Solution<?>> double[][] getExtremePoints(List<S> solutionsList) {
     // One extreme point for each objective
-    double[][] extremePoints = new double[solutionsList.get(0).getNumberOfObjectives()][];
+    double[][] extremePoints = new double[solutionsList.get(0).objectives().length][];
 
     for (int i = 0; i < extremePoints.length; i++) {
       S extreme = Collections.min(solutionsList, new AchievementScalarizationComparator<S>(i));
-      extremePoints[i] = new double[extreme.getNumberOfObjectives()];
+      extremePoints[i] = new double[extreme.objectives().length];
       for (int j = 0; j < extremePoints.length; j++) {
         extremePoints[i][j] = extreme.getObjective(j);
       }
@@ -111,7 +111,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double sum = solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         sum += solution.getObjective(i);
       }
       setScalarizationValue(solution, sum);
@@ -128,7 +128,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedSum(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double sum = weights[0] * solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         sum += weights[i] * solution.getObjective(i);
       }
       setScalarizationValue(solution, sum);
@@ -144,7 +144,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double product = solution.getObjective(0);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         product *= solution.getObjective(i);
       }
       setScalarizationValue(solution, product);
@@ -161,7 +161,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedProduct(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double product = Math.pow(solution.getObjective(0), weights[0]);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         product *= Math.pow(solution.getObjective(i), weights[i]);
       }
       setScalarizationValue(solution, product);
@@ -198,7 +198,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void chebyshev(List<S> solutionsList, double[] idealValues) {
     for (S solution : solutionsList) {
       double max = solution.getObjective(0) - idealValues[0];
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         max = Math.max(max, solution.getObjective(i) - idealValues[i]);
       }
       setScalarizationValue(solution, max);
@@ -216,7 +216,7 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedChebyshev(List<S> solutionsList, double[] idealValues, double[] weights) {
     for (S solution : solutionsList) {
       double max = weights[0] * (solution.getObjective(0) - idealValues[0]);
-      for (int i = 1; i < solution.getNumberOfObjectives(); i++) {
+      for (int i = 1; i < solution.objectives().length; i++) {
         max = Math.max(max, weights[i] * (solution.getObjective(i) - idealValues[i]));
       }
       setScalarizationValue(solution, max);
@@ -311,7 +311,7 @@ public class ScalarizationUtils {
         S other = solutionsList.get(oth);
         double numerator = 0.0;
         double denominator = 0.0;
-        for (int i = 0; i < current.getNumberOfObjectives(); i++) {
+        for (int i = 0; i < current.objectives().length; i++) {
           if (current.getObjective(i) > other.getObjective(i)) {
             numerator = Math.max(numerator, current.getObjective(i) - other.getObjective(i));
           } else if (current.getObjective(i) < other.getObjective(i)) {

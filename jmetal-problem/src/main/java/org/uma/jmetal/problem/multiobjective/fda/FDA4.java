@@ -36,12 +36,12 @@ public class FDA4 extends FDA {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
     double g = this.evalG(solution, M - 1);
     f[0] = this.evalF1(solution, g);
     f[1] = evalFK(solution, g, 2);
     f[2] = evalFM(solution, g);
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solution.objectives().length; i++) {
       solution.setObjective(i, f[i]);
     }
     return solution ;

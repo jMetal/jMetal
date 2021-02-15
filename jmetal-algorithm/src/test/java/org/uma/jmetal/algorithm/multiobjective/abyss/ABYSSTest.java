@@ -190,11 +190,11 @@ public class ABYSSTest {
     abyss.referenceSetUpdate();
 
     for (DoubleSolution solution : abyss.referenceSet1) {
-      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
+      solution.attributes().put(ABYSS.SOLUTION_IS_MARKED, true);
     }
 
     for (DoubleSolution solution : abyss.referenceSet2) {
-      solution.setAttribute(ABYSS.SOLUTION_IS_MARKED, true);
+      solution.attributes().put(ABYSS.SOLUTION_IS_MARKED, true);
     }
     List<List<DoubleSolution>> list = abyss.subsetGeneration();
 

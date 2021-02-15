@@ -1,8 +1,11 @@
 package org.uma.jmetal.util.comparator;
 
 import org.junit.Test;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -15,7 +18,7 @@ import static org.mockito.Mockito.*;
  * @version 1.0
  */
 public class DominanceComparatorTest {
-  private DominanceComparator<Solution<?>> comparator;
+  private DominanceComparator comparator;
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
@@ -42,8 +45,8 @@ public class DominanceComparatorTest {
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(4);
-    when(solution2.getNumberOfObjectives()).thenReturn(2);
+    when(solution1.objectives().length).thenReturn(4);
+    when(solution2.objectives().length).thenReturn(2);
 
     assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
@@ -51,17 +54,20 @@ public class DominanceComparatorTest {
   @Test
   public void shouldCompareReturnTheValueReturnedByTheConstraintViolationComparator() {
     @SuppressWarnings("unchecked")
-    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class);
+    ConstraintViolationComparator<DoubleSolution> violationComparator = new ConstraintViolationComparator<>() ;
 
-    Solution<?> solution1 = mock(Solution.class);
-    Solution<?> solution2 = mock(Solution.class);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 1) ;
 
-    when(violationComparator.compare(solution1, solution2)).thenReturn(-1);
-    comparator = new DominanceComparator<Solution<?>>(violationComparator);
+    DoubleSolution solution1 = problem.createSolution();
+    DoubleSolution solution2 = problem.createSolution();
+
+    solution1.constraints()[0] = 0.0 ;
+    solution2.constraints()[0] = -1.0 ;
+
+    comparator = new DominanceComparator<>(violationComparator);
     int obtainedValue = comparator.compare(solution1, solution2);
 
     assertEquals(-1, obtainedValue);
-    verify(violationComparator).compare(solution1, solution2);
   }
 
   @Test
@@ -69,8 +75,8 @@ public class DominanceComparatorTest {
     Solution<?> solution1 = mock(Solution.class);
     Solution<?> solution2 = mock(Solution.class);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().length).thenReturn(1);
+    when(solution2.objectives().length).thenReturn(1);
 
     when(solution1.getObjective(0)).thenReturn(4.0);
     when(solution2.getObjective(0)).thenReturn(4.0);
@@ -93,8 +99,8 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().length).thenReturn(1);
+    when(solution2.objectives().length).thenReturn(1);
 
     when(solution1.getObjective(0)).thenReturn(4.0);
     when(solution2.getObjective(0)).thenReturn(2.0);
@@ -118,8 +124,8 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(1);
-    when(solution2.getNumberOfObjectives()).thenReturn(1);
+    when(solution1.objectives().length).thenReturn(1);
+    when(solution2.objectives().length).thenReturn(1);
 
     when(solution1.getObjective(0)).thenReturn(-1.0);
     when(solution2.getObjective(0)).thenReturn(2.0);
@@ -146,8 +152,8 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().length).thenReturn(3);
+    when(solution2.objectives().length).thenReturn(3);
 
     when(solution1.getObjective(0)).thenReturn(-1.0);
     when(solution1.getObjective(1)).thenReturn(5.0);
@@ -178,8 +184,8 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().length).thenReturn(3);
+    when(solution2.objectives().length).thenReturn(3);
 
     when(solution1.getObjective(0)).thenReturn(-1.0);
     when(solution1.getObjective(1)).thenReturn(5.0);
@@ -203,15 +209,15 @@ public class DominanceComparatorTest {
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
     @SuppressWarnings("unchecked")
-    ConstraintViolationComparator<Solution<?>> violationComparator = mock(ConstraintViolationComparator.class);
+    ConstraintViolationComparator<DoubleSolution> violationComparator = new ConstraintViolationComparator();
 
     BinarySolution solution1 = mock(BinarySolution.class);
     BinarySolution solution2 = mock(BinarySolution.class);
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().length).thenReturn(3);
+    when(solution2.objectives().length).thenReturn(3);
 
     when(solution1.getObjective(0)).thenReturn(-1.0);
     when(solution1.getObjective(1)).thenReturn(5.0);
@@ -242,8 +248,8 @@ public class DominanceComparatorTest {
 
     when(violationComparator.compare(solution1, solution2)).thenReturn(0);
 
-    when(solution1.getNumberOfObjectives()).thenReturn(3);
-    when(solution2.getNumberOfObjectives()).thenReturn(3);
+    when(solution1.objectives().length).thenReturn(3);
+    when(solution2.objectives().length).thenReturn(3);
 
     when(solution1.getObjective(0)).thenReturn(-1.0);
     when(solution1.getObjective(1)).thenReturn(5.0);

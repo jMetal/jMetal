@@ -85,7 +85,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     for (int i = 0; i < population.size(); i++) {
       if (dominateMe[i] == 0) {
         front.get(0).add(i);
-        solutionList.get(i).setAttribute(attributeId, 0);
+        solutionList.get(i).attributes().put(attributeId, 0);
       }
     }
 
@@ -102,7 +102,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
           dominateMe[index]--;
           if (dominateMe[index] == 0) {
             front.get(i).add(index);
-            solutionList.get(index).setAttribute(attributeId, i);
+            solutionList.get(index).attributes().put(attributeId, i);
           }
         }
       }

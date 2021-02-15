@@ -56,7 +56,7 @@ public class StrengthRawFitness <S extends Solution<?>>
     for (int i = 0; i < distance.length; i++) {
       Arrays.sort(distance[i]);
       kDistance = 1.0 / (distance[i][k] + 2.0);
-      solutionSet.get(i).setAttribute(getAttributeIdentifier(), rawFitness[i] + kDistance);
+      solutionSet.get(i).attributes().put(getAttributeIdentifier(), rawFitness[i] + kDistance);
     }
   }
 

@@ -29,7 +29,7 @@ The base class of all the solution encodings in jMetal is the `Solution <https:/
       void setConstraint(int index, double value) ;
 
       int getNumberOfVariables() ;
-      int getNumberOfObjectives() ;
+      int objectives().length ;
       int getNumberOfConstraints() ;
 
       Solution<T> copy() ;

@@ -33,7 +33,7 @@ public class LatinHypercubeSamplingSolutionsCreation
     List<DoubleSolution> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getBoundsForVariables());
+          new DefaultDoubleSolution(problem.objectives().length, problem.getBoundsForVariables());
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         Bounds<Double> bounds = problem.getBoundsForVariables().get(j);
         newSolution.setVariable(

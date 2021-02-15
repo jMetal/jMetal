@@ -38,7 +38,7 @@ public class StoredSolutionsUtils {
         for (int i = 0; i < numberOfObjectives; i++) {
           solution.setObjective(i, Double.parseDouble(textNumbers[i]));
         }
-        solution.setAttribute(textRepresentation, line);
+        solution.attributes().put(textRepresentation, line);
 
         return solution;
       })

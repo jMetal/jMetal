@@ -32,7 +32,7 @@ public class Viennet4 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
 
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
@@ -51,7 +51,7 @@ public class Viennet4 extends AbstractDoubleProblem {
             + (x[0] - x[1] + 1.0) * (x[0] - x[1] + 1.0) / 27.0
             + 15.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       solution.setObjective(i, f[i]);
     }
 

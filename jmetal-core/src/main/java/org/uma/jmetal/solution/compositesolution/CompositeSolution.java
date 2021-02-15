@@ -54,7 +54,7 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    * @param solution
    */
   public CompositeSolution(CompositeSolution solution) {
-    super(solution.variables().size(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.variables().size(), solution.objectives().length, solution.getNumberOfConstraints()) ;
 
     for (int i = 0; i < solution.variables().size(); i++) {
       setVariable(i, solution.getVariable(i).copy());

@@ -26,7 +26,7 @@ public class DirScore<S extends Solution<?>>  extends GenericSolutionAttribute<S
         int[] dirVector = computeDirVector(solutionSet) ;
         for(int i = 0;i < dirVector.length; i++){
             S solution = solutionSet.get(i) ;
-            solution.setAttribute("dir-score", 1.0 / (double) dirVector[i]);
+            solution.attributes().put("dir-score", 1.0 / (double) dirVector[i]);
         }
     }
 

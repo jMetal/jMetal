@@ -52,10 +52,10 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 		this.evaluator = evaluator;
 
-		this.nadirPoint     = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
-		this.initializeNadirPoint(this.getProblem().getNumberOfObjectives());
-		this.referencePoint = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
-		this.initializeReferencePoint(this.getProblem().getNumberOfObjectives());
+		this.nadirPoint     = new ArrayList<Double>(this.getProblem().objectives().length);
+		this.initializeNadirPoint(this.getProblem().objectives().length);
+		this.referencePoint = new ArrayList<Double>(this.getProblem().objectives().length);
+		this.initializeReferencePoint(this.getProblem().objectives().length);
 	}
 
 	@Override
@@ -163,12 +163,12 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 	}
 
 	protected void updateReferencePoint(S s) {
-		for (int i = 0; i < s.getNumberOfObjectives(); i++)
+		for (int i = 0; i < s.objectives().length; i++)
 			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.getObjective(i)));
 	}
 
 	protected void updateNadirPoint(S s) {
-		for (int i = 0; i < s.getNumberOfObjectives(); i++)
+		for (int i = 0; i < s.objectives().length; i++)
 			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.getObjective(i)));
 	}
 

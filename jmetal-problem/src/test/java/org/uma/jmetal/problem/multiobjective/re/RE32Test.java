@@ -13,7 +13,7 @@ class RE32Test {
     DoubleProblem problem = new RE32();
 
     assertEquals(4, problem.getNumberOfVariables());
-    assertEquals(3, problem.getNumberOfObjectives());
+    assertEquals(3, problem.objectives().length);
     assertEquals(0, problem.getNumberOfConstraints());
     assertEquals("RE32", problem.getName());
   }
@@ -25,7 +25,7 @@ class RE32Test {
     problem.evaluate(solution);
 
     assertEquals(4, solution.getNumberOfVariables());
-    assertEquals(3, solution.getNumberOfObjectives());
+    assertEquals(3, solution.objectives().length);
     assertEquals(0, solution.getNumberOfConstraints());
   }
 }

@@ -112,7 +112,7 @@ public class SolutionListUtils {
       return new double[0][0];
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().length;
     int solutionListSize = solutionList.size();
 
     double[][] objectives;
@@ -156,8 +156,8 @@ public class SolutionListUtils {
     Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
 
-    double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
-    double[] maxValues = new double[solutions.get(0).getNumberOfObjectives()];
+    double[] minValues = new double[solutions.get(0).objectives().length];
+    double[] maxValues = new double[solutions.get(0).objectives().length];
 
     for (int i = 0; i < minValues.length; i++) {
       int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
@@ -179,7 +179,7 @@ public class SolutionListUtils {
   @SuppressWarnings("unchecked")
   public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size());
-    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionSet.get(0).objectives().length;
 
     for (int i = 0; i < solutionSet.size(); i++) {
       invertedFront.add(i, (S) solutionSet.get(i).copy());
@@ -430,15 +430,15 @@ public class SolutionListUtils {
       return originalSolutionList;
     }
 
-    if (originalSolutionList.get(0).getNumberOfObjectives() == 2) {
+    if (originalSolutionList.get(0).objectives().length == 2) {
       Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize) ;
-      originalSolutionList.forEach(solution -> archive.add(solution));
+      originalSolutionList.forEach(archive::add);
 
       return archive.getSolutionList() ;
     }
 
     for (int i = 0; i < originalSolutionList.size(); i++) {
-      originalSolutionList.get(i).setAttribute("INDEX_", i);
+      originalSolutionList.get(i).attributes().put("INDEX_", i);
     }
 
     // STEP 1. Normalize the objectives values of the solution list
@@ -448,7 +448,7 @@ public class SolutionListUtils {
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
     int randomObjective =
-            JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
+            JMetalRandom.getInstance().nextInt(0, solutions.get(0).objectives().length - 1);
 
     int bestSolutionIndex =
             findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
@@ -463,7 +463,7 @@ public class SolutionListUtils {
             new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
-        solution.setAttribute(
+        solution.attributes().put(
                 "SUBSET_SELECTION_DISTANCE", distance.compute(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =

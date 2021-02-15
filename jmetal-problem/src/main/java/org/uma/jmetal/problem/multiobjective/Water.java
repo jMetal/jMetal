@@ -29,7 +29,7 @@ public class Water extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[solution.getNumberOfObjectives()];
+    double[] fx = new double[solution.objectives().length];
     double[] x = new double[solution.getNumberOfVariables()];
     for (int i = 0; i < solution.getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);

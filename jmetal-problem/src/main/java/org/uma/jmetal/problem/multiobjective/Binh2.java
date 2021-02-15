@@ -26,7 +26,7 @@ public class Binh2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[objectives().length];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x[i] = solution.getVariable(i);

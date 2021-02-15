@@ -67,7 +67,7 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    assertEquals(numberOfObjectives, solution.getNumberOfObjectives()) ;
+    assertEquals(numberOfObjectives, solution.objectives().length) ;
   }
 
   @Test public void shouldCopyReturnACopyOfTheSolution() {
@@ -160,8 +160,8 @@ public class PointSolutionTest {
 
 		PointSolution solution = new PointSolution(3);
 
-		solution.setAttribute("fake-atribute-1", 1);
-		solution.setAttribute("fake-atribute-2", 2);
+		solution.attributes().put("fake-atribute-1", 1);
+		solution.attributes().put("fake-atribute-2", 2);
 
 		assertFalse(solution.getAttributes().isEmpty());
 		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);

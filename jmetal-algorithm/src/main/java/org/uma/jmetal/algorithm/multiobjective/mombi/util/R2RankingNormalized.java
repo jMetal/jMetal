@@ -18,8 +18,8 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
   }
 
   private double computeNorm(S solution) {
-    List<Double> values = new ArrayList<Double>(solution.getNumberOfObjectives());
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++)
+    List<Double> values = new ArrayList<Double>(solution.objectives().length);
+    for (int i = 0; i < solution.objectives().length; i++)
       if (normalizer == null) values.add(solution.getObjective(i));
       else values.add(this.normalizer.normalize(solution.getObjective(i), i));
 
@@ -33,7 +33,7 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
     for (S solution : population) {
       R2SolutionData data = new R2SolutionData();
       data.utility = this.computeNorm(solution);
-      solution.setAttribute(getAttributeIdentifier(), data);
+      solution.attributes().put(getAttributeIdentifier(), data);
     }
 
     for (int i = 0; i < this.getUtilityFunctions().getSize(); i++) {

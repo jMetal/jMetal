@@ -48,11 +48,11 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
     Check.notNull(solution1);
     Check.notNull(solution2);
     Check.that(
-            solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+            solution1.objectives().length == solution2.objectives().length,
             "Cannot compare because solution1 has "
-                    + solution1.getNumberOfObjectives()
+                    + solution1.objectives().length
                     + " objectives and solution2 has "
-                    + solution2.getNumberOfObjectives());
+                    + solution2.objectives().length);
 
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;
@@ -66,7 +66,7 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
     boolean bestIsOne = false ;
     boolean bestIsTwo = false ;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < solution1.objectives().length; i++) {
       double value1 = Math.floor(solution1.getObjective(i) / epsilon);
       double value2 = Math.floor(solution2.getObjective(i) / epsilon);
       if (value1 < value2) {
@@ -87,7 +87,7 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
       double dist1 = 0.0;
       double dist2 = 0.0;
 
-      for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < solution1.objectives().length; i++) {
         double index1 = Math.floor(solution1.getObjective(i) / epsilon);
         double index2 = Math.floor(solution2.getObjective(i) / epsilon);
 

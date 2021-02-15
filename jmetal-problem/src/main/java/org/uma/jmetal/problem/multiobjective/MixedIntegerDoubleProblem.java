@@ -85,8 +85,8 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
 
   @Override
   public CompositeSolution createSolution() {
-    IntegerSolution integerSolution = new DefaultIntegerSolution(getNumberOfObjectives(), getNumberOfConstraints(), integerBounds) ;
-    DoubleSolution doubleSolution = new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), doubleBounds) ;
+    IntegerSolution integerSolution = new DefaultIntegerSolution(objectives().length, getNumberOfConstraints(), integerBounds) ;
+    DoubleSolution doubleSolution = new DefaultDoubleSolution(objectives().length, getNumberOfConstraints(), doubleBounds) ;
     return new CompositeSolution(Arrays.asList(integerSolution, doubleSolution));
   }
 }

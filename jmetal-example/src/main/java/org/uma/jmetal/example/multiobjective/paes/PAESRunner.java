@@ -50,7 +50,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
         new PAES<>(problem, 25000, 100, 5, mutation);
     // Alternative using a generic bounded archive:
     // new PAES<>(problem, 25000,
-    //      new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.getNumberOfObjectives())),  mutation);
+    //      new GenericBoundedArchive<>(100, new GridDensityEstimator<>(5, problem.objectives().length)),  mutation);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 

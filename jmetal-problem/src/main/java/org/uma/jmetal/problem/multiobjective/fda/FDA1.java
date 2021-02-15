@@ -42,7 +42,7 @@ public class FDA1 extends FDA {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
     f[0] = solution.getVariable(0);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);

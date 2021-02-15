@@ -34,7 +34,7 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         List<Double> upperBound = new ArrayList<>();
         List<Double> lowerBound = new ArrayList<>();
         //get bounds
-        for (int i = 0; i < population.get(0).getNumberOfObjectives(); i++) {
+        for (int i = 0; i < population.get(0).objectives().length; i++) {
             Collections.sort(population, new ObjectiveComparator<S>(i)) ;
             double objetiveMinn = population.get(0).getObjective(i);
             double objetiveMaxn = population.get(population.size() - 1).getObjective(i);
@@ -116,7 +116,7 @@ public class RNSGAIIRanking <S extends Solution<?>> extends GenericSolutionAttri
         double result =0.0D;
 
 
-            for (int indexOfObjective = 0; indexOfObjective < solution1.getNumberOfObjectives(); indexOfObjective++) {
+            for (int indexOfObjective = 0; indexOfObjective < solution1.objectives().length; indexOfObjective++) {
                 if (upperBounds != null && lowerBounds != null) {
                     result = result + ((Math.abs(solution1.getObjective(indexOfObjective) -
                             solution2.getObjective(indexOfObjective))) / (upperBounds.get(indexOfObjective) - lowerBounds.get(indexOfObjective)));

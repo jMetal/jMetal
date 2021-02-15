@@ -13,7 +13,7 @@ class RE41Test {
     DoubleProblem problem = new RE41();
 
     assertEquals(7, problem.getNumberOfVariables());
-    assertEquals(4, problem.getNumberOfObjectives());
+    assertEquals(4, problem.objectives().length);
     assertEquals(0, problem.getNumberOfConstraints());
     assertEquals("RE41", problem.getName());
   }
@@ -25,7 +25,7 @@ class RE41Test {
     problem.evaluate(solution);
 
     assertEquals(7, solution.getNumberOfVariables());
-    assertEquals(4, solution.getNumberOfObjectives());
+    assertEquals(4, solution.objectives().length);
     assertEquals(0, solution.getNumberOfConstraints());
   }
 }

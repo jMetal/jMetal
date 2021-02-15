@@ -26,7 +26,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[objectives().length];
 
     double x1, x2, x3, x4, x5, x6;
     x1 = solution.getVariable(0);

@@ -46,7 +46,7 @@ public class MOP7 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[objectives().length];
 
     double g = this.evalG(solution);
     f[0] = (1 + g) * Math.cos(0.5 * Math.PI * solution.getVariable(0))

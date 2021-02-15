@@ -39,10 +39,10 @@ public class AchievementScalarizationComparator<S extends Solution<?>> implement
     double max1 = -Double.MAX_VALUE;
     double max2 = -Double.MAX_VALUE;
 
-    for (int i = 0; i < s1.getNumberOfObjectives(); i++) {
+    for (int i = 0; i < s1.objectives().length; i++) {
       if (i != objective) {
-        max1 = Math.max(max1, s1.getObjective(i));
-        max2 = Math.max(max2, s2.getObjective(i));
+        max1 = Math.max(max1, s1.objectives()[i]);
+        max2 = Math.max(max2, s2.objectives()[i]);
       }
     }
 

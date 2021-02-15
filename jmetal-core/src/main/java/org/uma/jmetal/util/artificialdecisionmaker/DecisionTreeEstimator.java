@@ -32,7 +32,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
     double result = 0.0d;
 
     try {
-      int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+      int numberOfObjectives = solutionList.get(0).objectives().length;
       //Attributes
       //numeric
       Attribute attr = new Attribute("my-numeric");

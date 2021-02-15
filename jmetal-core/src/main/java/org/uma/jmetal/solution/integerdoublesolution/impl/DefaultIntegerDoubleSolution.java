@@ -51,9 +51,9 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
   /** Constructor */
   public DefaultIntegerDoubleSolution(
       IntegerSolution integerSolution, DoubleSolution doubleSolution) {
-    super(2, integerSolution.getNumberOfObjectives(), integerSolution.getNumberOfConstraints());
+    super(2, integerSolution.objectives().length, integerSolution.getNumberOfConstraints());
     Check.that(
-        integerSolution.getNumberOfObjectives() == doubleSolution.getNumberOfObjectives(),
+        integerSolution.objectives().length == doubleSolution.objectives().length,
         "The two solutions must have the same number of objectives");
     Check.that(
         integerSolution.getNumberOfConstraints() == doubleSolution.getNumberOfConstraints(),

@@ -21,7 +21,7 @@ public class R2Ranking<S extends Solution<?>> extends GenericSolutionAttribute<S
   public R2Ranking<S> computeRanking(List<S> population) {
 
     for (S solution : population) {
-      solution.setAttribute(getAttributeIdentifier(), new R2SolutionData());
+      solution.attributes().put(getAttributeIdentifier(), new R2SolutionData());
     }
 
     for (int i = 0; i < this.utilityFunctions.getSize(); i++) {

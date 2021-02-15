@@ -40,13 +40,13 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     }
 
     if (size == 1) {
-      solutionList.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).attributes().put(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionList.get(0).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
-      solutionList.get(1).setAttribute(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
+      solutionList.get(0).attributes().put(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
+      solutionList.get(1).attributes().put(getAttributeIdentifier(), Double.POSITIVE_INFINITY);
 
       return;
     }
@@ -58,14 +58,14 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
     }
 
     for (int i = 0; i < size; i++) {
-      front.get(i).setAttribute(getAttributeIdentifier(), 0.0);
+      front.get(i).attributes().put(getAttributeIdentifier(), 0.0);
     }
 
     double objetiveMaxn;
     double objetiveMinn;
     double distance;
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().length;
     weights = new ArrayList<>();
     for (int i = 0; i < numberOfObjectives; i++) {
       weights.add(1.0d / numberOfObjectives);
@@ -77,15 +77,15 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
       for (int j = 0; j < numberOfObjectives; j++) {
         // Sort the population by Obj n
         Collections.sort(front, new ObjectiveComparator<S>(j));
-        objetiveMinn = front.get(0).getObjective(j);
+        objetiveMinn = front.get(0).objectives()[j];
         objetiveMaxn = front.get(front.size() - 1).getObjective(j);
         normalizeDiff =
-            (front.get(i).getObjective(j) - this.interestPoint.get(j))
+            (front.get(i).objectives()[j] - this.interestPoint.get(j))
                 / (objetiveMaxn - objetiveMinn);
         distance += weights.get(j) * Math.pow(normalizeDiff, 2.0D);
       }
       distance = Math.sqrt(distance);
-      front.get(i).setAttribute(getAttributeIdentifier(), distance);
+      front.get(i).attributes().put(getAttributeIdentifier(), distance);
     }
 
     // solutionList = epsilonClean(front);
@@ -94,9 +94,8 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
 
   public List<S> epsilonClean(List<S> solutionList) {
     List<S> preference = new ArrayList<>();
-    List<S> temporalList = new LinkedList<>();
-    temporalList.addAll(solutionList);
-    int numerOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    List<S> temporalList = new LinkedList<>(solutionList);
+    int numerOfObjectives = solutionList.get(0).objectives().length;
 
     while (!temporalList.isEmpty()) {
       int indexRandom = JMetalRandom.getInstance().nextInt(0, temporalList.size() - 1); // 0
@@ -110,22 +109,22 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
         double sum = 0;
 
         for (int indexOfObjective = 0; indexOfObjective < numerOfObjectives; indexOfObjective++) {
-          Collections.sort(temporalList, new ObjectiveComparator<S>(indexOfObjective));
-          double objetiveMinn = temporalList.get(0).getObjective(indexOfObjective);
+          temporalList.sort(new ObjectiveComparator<S>(indexOfObjective));
+          double objetiveMinn = temporalList.get(0).objectives()[indexOfObjective];
           double objetiveMaxn =
-              temporalList.get(temporalList.size() - 1).getObjective(indexOfObjective);
+              temporalList.get(temporalList.size() - 1).objectives()[indexOfObjective];
           sum =
               sum
                   + ((Math.abs(
-                          randomSolution.getObjective(indexOfObjective)
-                              - temporalList.get(indexOfSolution).getObjective(indexOfObjective)))
+                          randomSolution.objectives()[indexOfObjective]
+                              - temporalList.get(indexOfSolution).objectives()[indexOfObjective]))
                       / (objetiveMaxn - objetiveMinn));
         }
 
         if (sum < epsilon) {
           temporalList
               .get(indexOfSolution)
-              .setAttribute(getAttributeIdentifier(), Double.MAX_VALUE);
+              .attributes().put(getAttributeIdentifier(), Double.MAX_VALUE);
           preference.add(temporalList.get(indexOfSolution));
           temporalList.remove(indexOfSolution);
         }

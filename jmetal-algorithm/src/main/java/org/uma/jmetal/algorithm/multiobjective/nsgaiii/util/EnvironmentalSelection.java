@@ -23,7 +23,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 		fronts = builder.getFronts();
 		solutionsToSelect = builder.getSolutionsToSelet();
 		referencePoints = builder.getReferencePoints();
-		numberOfObjectives = builder.getNumberOfObjectives();
+		numberOfObjectives = builder.objectives().length;
 	}
 	
 	
@@ -71,7 +71,7 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 	// ----------------------------------------------------------------------
 	private double ASF(S s, int index) {
 		double max_ratio = Double.NEGATIVE_INFINITY;
-		for (int i = 0; i < s.getNumberOfObjectives(); i++) {
+		for (int i = 0; i < s.objectives().length; i++) {
 			double weight = (index == i) ? 1.0 : 0.000001;
 			max_ratio = Math.max(max_ratio, s.getObjective(i)/weight);
 		}
@@ -369,14 +369,14 @@ public class EnvironmentalSelection<S extends Solution<?>> implements SelectionO
 			return this;
 		}
 		
-		public int getNumberOfObjectives() {
+		public int objectives().length {
 			return this.numberOfObjctives;
 		}
 	}
 
 	  @Override
 	  public void setAttribute(S solution, List<Double> value) {
-	    solution.setAttribute(getAttributeIdentifier(), value);
+	    solution.attributes().put(getAttributeIdentifier(), value);
 	  }
 
 	  @Override

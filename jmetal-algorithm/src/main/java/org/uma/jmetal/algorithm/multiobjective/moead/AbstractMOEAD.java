@@ -87,18 +87,18 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     randomGenerator = JMetalRandom.getInstance() ;
 
     population = new ArrayList<>(populationSize);
-    indArray = new Solution[problem.getNumberOfObjectives()];
+    indArray = new Solution[problem.objectives().length];
     neighborhood = new int[populationSize][neighborSize];
-    idealPoint = new IdealPoint(problem.getNumberOfObjectives());
-    nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
-    lambda = new double[populationSize][problem.getNumberOfObjectives()];
+    idealPoint = new IdealPoint(problem.objectives().length);
+    nadirPoint = new NadirPoint(problem.objectives().length);
+    lambda = new double[populationSize][problem.objectives().length];
   }
 
   /**
    * Initialize weight vectors
    */
   protected void initializeUniformWeight() {
-    if ((problem.getNumberOfObjectives() == 2) && (populationSize <= 300)) {
+    if ((problem.objectives().length == 2) && (populationSize <= 300)) {
       for (int n = 0; n < populationSize; n++) {
         double a = 1.0 * n / (populationSize - 1);
         lambda[n][0] = a;
@@ -106,7 +106,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       }
     } else {
       String dataFileName;
-      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
+      dataFileName = "W" + problem.objectives().length + "D_" +
           populationSize + ".dat";
 
       try {
@@ -280,7 +280,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
     if (MOEAD.FunctionType.TCHE.equals(functionType)) {
       double maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.objectives().length; n++) {
         double diff = Math.abs(individual.getObjective(n) - idealPoint.getValue(n));
 
         double feval;
@@ -297,7 +297,7 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
       fitness = maxFun;
     } else if (MOEAD.FunctionType.AGG.equals(functionType)) {
       double sum = 0.0;
-      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
+      for (int n = 0; n < problem.objectives().length; n++) {
         sum += (lambda[n]) * individual.getObjective(n);
       }
 
@@ -309,14 +309,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.objectives().length; i++) {
         d1 += (individual.getObjective(i) - idealPoint.getValue(i)) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      for (int i = 0; i < problem.objectives().length; i++) {
         d2 += Math.pow((individual.getObjective(i) - idealPoint.getValue(i)) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);

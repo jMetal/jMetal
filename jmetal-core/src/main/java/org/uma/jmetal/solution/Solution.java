@@ -16,7 +16,6 @@ public interface Solution<T> extends Serializable {
   double[] constraints() ;
   Map<Object,Object> attributes() ;
 
-  @Deprecated
   Solution<T> copy() ;
 
   @Deprecated
@@ -37,13 +36,10 @@ public interface Solution<T> extends Serializable {
 
   @Deprecated
   int getNumberOfVariables() ;
-  @Deprecated
-  int getNumberOfObjectives() ;
+
   @Deprecated
   int getNumberOfConstraints() ;
 
-  @Deprecated
-  void setAttribute(Object id, Object value) ;
   @Deprecated
   Object getAttribute(Object id) ;
   @Deprecated

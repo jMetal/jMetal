@@ -34,7 +34,7 @@ public class LZ09F9 extends AbstractDoubleProblem {
     setName("LZ09F9");
 
     lz09 = new LZ09(getNumberOfVariables(),
-            getNumberOfObjectives(),
+            objectives().length,
             ptype,
             dtype,
             ltype);
@@ -53,7 +53,7 @@ public class LZ09F9 extends AbstractDoubleProblem {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
     List<Double> x = new ArrayList<Double>(getNumberOfVariables());
-    List<Double> y = new ArrayList<Double>(getNumberOfObjectives());
+    List<Double> y = new ArrayList<Double>(objectives().length);
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       x.add(solution.getVariable(i));
@@ -62,7 +62,7 @@ public class LZ09F9 extends AbstractDoubleProblem {
 
     lz09.objective(x, y);
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
+    for (int i = 0; i < objectives().length; i++) {
       solution.setObjective(i, y.get(i));
     }
 

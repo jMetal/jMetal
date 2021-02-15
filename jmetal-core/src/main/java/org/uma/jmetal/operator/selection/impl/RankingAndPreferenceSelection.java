@@ -47,7 +47,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
     Ranking<S> ranking = new DominanceRanking<S>();
     ranking.computeRanking(solutionList);
 
-    return preferenceDistanceSelection(ranking, solutionList.get(0).getNumberOfObjectives());
+    return preferenceDistanceSelection(ranking, solutionList.get(0).objectives().length);
   }
 
   protected List<S> preferenceDistanceSelection(Ranking<S> ranking, int numberOfObjectives) {

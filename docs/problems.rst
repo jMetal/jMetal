@@ -24,7 +24,7 @@ All the problems in jMetal implement the `Problem <https://github.com/jMetal/jMe
     public interface Problem<S> extends Serializable {
       /* Getters */
       int getNumberOfVariables() ;
-      int getNumberOfObjectives() ;
+      int objectives().length ;
       int getNumberOfConstraints() ;
       String getName() ;
 

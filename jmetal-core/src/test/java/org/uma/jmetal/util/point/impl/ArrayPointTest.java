@@ -75,7 +75,7 @@ public class ArrayPointTest {
 
     assertArrayEquals(expectedArray, pointDimensions, EPSILON);
 
-//    Mockito.verify(solution).getNumberOfObjectives() ;
+//    Mockito.verify(solution).objectives().length ;
 //    Mockito.verify(solution, Mockito.times(3)).getObjective(Mockito.anyInt());
   }
 
