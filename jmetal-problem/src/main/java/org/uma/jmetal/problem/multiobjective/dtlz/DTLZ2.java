@@ -49,7 +49,7 @@ public class DTLZ2 extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;

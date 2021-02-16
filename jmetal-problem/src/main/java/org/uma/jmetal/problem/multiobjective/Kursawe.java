@@ -48,7 +48,7 @@ public class Kursawe extends AbstractDoubleProblem {
     double[] fx = new double[solution.objectives().length];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     fx[0] = 0.0;

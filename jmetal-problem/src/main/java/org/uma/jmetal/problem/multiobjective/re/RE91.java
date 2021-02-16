@@ -34,7 +34,7 @@ public class RE91 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[11];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     x[7] = 0.006 * (random.nextGaussian()) + 0.345;

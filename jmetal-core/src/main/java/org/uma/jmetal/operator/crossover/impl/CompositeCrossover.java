@@ -60,7 +60,7 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
     int numberOfSolutionsInCompositeSolution = solutions.get(0).variables().size();
     for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
       List<Solution<?>> parents =
-          Arrays.asList(solutions.get(0).getVariable(i), solutions.get(1).getVariable(i));
+          Arrays.asList(solutions.get(0).variables().get(i), solutions.get(1).variables().get(i));
       List<Solution<?>> children = operators.get(i).execute(parents);
       offspring1.add(children.get(0));
       offspring2.add(children.get(1));

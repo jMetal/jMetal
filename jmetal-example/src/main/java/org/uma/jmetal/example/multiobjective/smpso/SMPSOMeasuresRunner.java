@@ -121,7 +121,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
     @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
       if ((counter % 100 == 0)) {
-        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).getVariable(0)) ;
+        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).variables().get(0)) ;
       }
       counter ++ ;
     }

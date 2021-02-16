@@ -36,7 +36,7 @@ public class Viennet4 extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     f[0] = (x[0] - 2.0) * (x[0] - 2.0) / 2.0 + (x[1] + 1.0) * (x[1] + 1.0) / 13.0 + 3.0;
@@ -63,8 +63,8 @@ public class Viennet4 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
 
     constraint[0] = -x2 - (4.0 * x1) + 4.0;
     constraint[1] = x1 + 1.0;

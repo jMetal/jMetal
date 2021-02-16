@@ -82,7 +82,7 @@ public class MaF14 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     //change x

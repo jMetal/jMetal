@@ -53,7 +53,7 @@ public class UF9 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
   	int count1, count2, count3;

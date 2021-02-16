@@ -40,7 +40,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     solution.setObjective(0, x[0] + g1(x));
@@ -54,7 +54,7 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     final double a = 0.51;

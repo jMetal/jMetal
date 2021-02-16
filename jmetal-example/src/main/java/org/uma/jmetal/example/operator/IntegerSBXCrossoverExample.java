@@ -96,7 +96,7 @@ public class IntegerSBXCrossoverExample {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariable(0) <= classifier[index][0]) {
+        if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {

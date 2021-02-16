@@ -32,9 +32,9 @@ public class RE31 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
 
     solution.setObjective(0, x1 * Math.sqrt(16.0 + (x3 * x3)) + x2 * Math.sqrt(1.0 + x3 * x3));
     solution.setObjective(1, (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3));

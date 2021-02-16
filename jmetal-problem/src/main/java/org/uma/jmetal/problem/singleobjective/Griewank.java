@@ -43,7 +43,7 @@ public class Griewank extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     double sum = 0.0;

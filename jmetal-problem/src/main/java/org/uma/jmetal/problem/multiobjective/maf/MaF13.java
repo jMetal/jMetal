@@ -61,7 +61,7 @@ public class MaF13 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     // evaluate J,y,sub1,sub2,sub3,sub4

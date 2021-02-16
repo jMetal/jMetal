@@ -53,12 +53,12 @@ public class CompositeSolutionTest {
     assertEquals(2, solution.variables().size());
     assertEquals(numberOfObjectives, solution.objectives().length);
     assertEquals(numberOfConstraints, solution.constraints().length);
-    assertEquals(numberOfObjectives, solution.getVariable(0).objectives().length);
-    assertEquals(numberOfObjectives, solution.getVariable(1).objectives().length);
-    assertEquals(numberOfConstraints, solution.getVariable(0).constraints().length);
-    assertEquals(numberOfConstraints, solution.getVariable(1).constraints().length);
-    assertTrue(solution.getVariable(0) instanceof DoubleSolution);
-    assertTrue(solution.getVariable(1) instanceof IntegerSolution);
+    assertEquals(numberOfObjectives, solution.variables().get(0).objectives().length);
+    assertEquals(numberOfObjectives, solution.variables().get(1).objectives().length);
+    assertEquals(numberOfConstraints, solution.variables().get(0).constraints().length);
+    assertEquals(numberOfConstraints, solution.variables().get(1).constraints().length);
+    assertTrue(solution.variables().get(0) instanceof DoubleSolution);
+    assertTrue(solution.variables().get(1) instanceof IntegerSolution);
   }
 
   @Test
@@ -83,12 +83,12 @@ public class CompositeSolutionTest {
     assertEquals(solution.objectives().length, newSolution.objectives().length);
     assertEquals(solution.constraints().length, newSolution.constraints().length);
 
-    assertEquals(solution.getVariable(0).variables().size(), newSolution.getVariable(0).variables().size());
-    assertEquals(solution.getVariable(1).variables().size(), newSolution.getVariable(1).variables().size());
-    assertNotSame(solution.getVariable(0), newSolution.getVariable(0));
-    assertNotSame(solution.getVariable(1), newSolution.getVariable(1));
+    assertEquals(solution.variables().get(0).variables().size(), newSolution.variables().get(0).variables().size());
+    assertEquals(solution.variables().get(1).variables().size(), newSolution.variables().get(1).variables().size());
+    assertNotSame(solution.variables().get(0), newSolution.variables().get(0));
+    assertNotSame(solution.variables().get(1), newSolution.variables().get(1));
 
-    assertEquals(solution.getVariable(0).variables(), newSolution.getVariable(0).variables());
-    assertEquals(solution.getVariable(1).variables(), newSolution.getVariable(1).variables());
+    assertEquals(solution.variables().get(0).variables(), newSolution.variables().get(0).variables());
+    assertEquals(solution.variables().get(1).variables(), newSolution.variables().get(1).variables());
   }
 }

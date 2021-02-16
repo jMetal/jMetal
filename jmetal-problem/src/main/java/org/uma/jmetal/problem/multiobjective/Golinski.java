@@ -27,13 +27,13 @@ public class Golinski extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double x1, x2, x3, x4, x5, x6, x7;
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
-    x5 = solution.getVariable(4);
-    x6 = solution.getVariable(5);
-    x7 = solution.getVariable(6);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
+    x5 = solution.variables().get(4);
+    x6 = solution.variables().get(5);
+    x7 = solution.variables().get(6);
 
     double f1 =
         0.7854 * x1 * x2 * x2 * ((10 * x3 * x3) / 3.0 + 14.933 * x3 - 43.0934)
@@ -56,13 +56,13 @@ public class Golinski extends AbstractDoubleProblem {
     double[] constraint = new double[this.getNumberOfConstraints()];
     double x1, x2, x3, x4, x5, x6, x7;
 
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
-    x5 = solution.getVariable(4);
-    x6 = solution.getVariable(5);
-    x7 = solution.getVariable(6);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
+    x5 = solution.variables().get(4);
+    x6 = solution.variables().get(5);
+    x7 = solution.variables().get(6);
 
     constraint[0] = -((1.0 / (x1 * x2 * x2 * x3)) - (1.0 / 27.0));
     constraint[1] = -((1.0 / (x1 * x2 * x2 * x3 * x3)) - (1.0 / 397.5));

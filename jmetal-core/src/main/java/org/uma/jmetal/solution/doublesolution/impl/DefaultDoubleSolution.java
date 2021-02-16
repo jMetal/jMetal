@@ -71,7 +71,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      setVariable(i, solution.getVariable(i));
+      setVariable(i, solution.variables().get(i));
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {

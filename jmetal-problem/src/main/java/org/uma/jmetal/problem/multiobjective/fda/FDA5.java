@@ -53,7 +53,7 @@ public class FDA5 extends FDA implements Serializable {
     double f = 1.0d + g;
     double mult = 1.0d;
     for (int i = 1; i <= M - 1; i++) {
-      double y_i = Math.pow(solution.getVariable(i - 1), Ft);
+      double y_i = Math.pow(solution.variables().get(i - 1), Ft);
       mult *= Math.cos(y_i * Math.PI / 2.0d);
     }
     return f * mult;
@@ -63,10 +63,10 @@ public class FDA5 extends FDA implements Serializable {
     double f = 1.0d + g;
     double mult = 1.0d;
     for (int i = 1; i <= M - k; i++) {
-      double y_i = Math.pow(solution.getVariable(i - 1), Ft);
+      double y_i = Math.pow(solution.variables().get(i - 1), Ft);
       mult *= Math.cos(y_i * Math.PI / 2.0d);
     }
-    double yy = Math.pow(solution.getVariable(M - k), Ft);
+    double yy = Math.pow(solution.variables().get(M - k), Ft);
     mult *= Math.sin(yy * Math.PI / 2.0d);
     return f * mult;
   }
@@ -80,14 +80,14 @@ public class FDA5 extends FDA implements Serializable {
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
     for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.getVariable(i) - Gt), 2.0d);
+      g += Math.pow((solution.variables().get(i) - Gt), 2.0d);
     }
     return g + Gt;
   }
 
   private double evalFM(DoubleSolution solution, double g, double Ft) {
     double fm = 1.0d + g;
-    double y_1 = Math.pow(solution.getVariable(0), Ft);
+    double y_1 = Math.pow(solution.variables().get(0), Ft);
     double mult = Math.sin(y_1 * Math.PI / 2.0d);
     return fm * mult;
   }

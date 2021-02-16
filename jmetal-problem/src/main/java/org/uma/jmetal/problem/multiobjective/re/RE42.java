@@ -35,7 +35,7 @@ public class RE42 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double [] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++)
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
 
     double x_L = x[0];
     double x_B = x[1];

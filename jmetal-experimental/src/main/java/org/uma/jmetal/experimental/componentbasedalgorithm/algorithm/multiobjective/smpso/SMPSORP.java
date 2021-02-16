@@ -269,8 +269,8 @@ public class SMPSORP
                 velocityConstriction(
                         constrictionCoefficient(c1, c2)
                                 * (weightMax * speed[i][var]
-                                + c1 * r1 * (bestParticle.getVariable(var) - particle.getVariable(var))
-                                + c2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var))),
+                                + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
+                                + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
                         deltaMax,
                         deltaMin,
                         var);

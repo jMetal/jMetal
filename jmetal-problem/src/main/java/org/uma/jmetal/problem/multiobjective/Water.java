@@ -32,7 +32,7 @@ public class Water extends AbstractDoubleProblem {
     double[] fx = new double[solution.objectives().length];
     double[] x = new double[solution.variables().size()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     fx[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
@@ -56,7 +56,7 @@ public class Water extends AbstractDoubleProblem {
     double[] constraint = new double[getNumberOfConstraints()];
     double[] x = new double[solution.variables().size()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);

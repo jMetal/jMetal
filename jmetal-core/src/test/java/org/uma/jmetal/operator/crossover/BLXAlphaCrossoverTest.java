@@ -151,13 +151,13 @@ public class BLXAlphaCrossoverTest {
 
     Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
     Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(3)).getRandomValue();
   }
@@ -182,8 +182,8 @@ public class BLXAlphaCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0), newSolutions.get(0).getVariable(0), EPSILON) ;
-    assertEquals(solutions.get(1).getVariable(0), newSolutions.get(1).getVariable(0), EPSILON) ;
+    assertEquals(solutions.get(0).variables().get(0), newSolutions.get(0).variables().get(0), EPSILON) ;
+    assertEquals(solutions.get(1).variables().get(0), newSolutions.get(1).variables().get(0), EPSILON) ;
     verify(randomGenerator, times(3)).getRandomValue();
   }
 
@@ -212,21 +212,21 @@ public class BLXAlphaCrossoverTest {
 
     Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
     Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(1), Matchers
+    assertThat(newSolutions.get(0).variables().get(1), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(1), Matchers
+    assertThat(newSolutions.get(0).variables().get(1), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(1), Matchers
+    assertThat(newSolutions.get(1).variables().get(1), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(1), Matchers
+    assertThat(newSolutions.get(1).variables().get(1), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(5)).getRandomValue();
   }

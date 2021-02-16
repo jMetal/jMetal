@@ -27,8 +27,8 @@ public class ConstrEx extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[solution.objectives().length];
-    f[0] = solution.getVariable(0);
-    f[1] = (1.0 + solution.getVariable(1)) / solution.getVariable(0);
+    f[0] = solution.variables().get(0);
+    f[1] = (1.0 + solution.variables().get(1)) / solution.variables().get(0);
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
@@ -40,8 +40,8 @@ public class ConstrEx extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
 
     solution.constraints()[0] = (x2 + 9 * x1 - 6.0);
     solution.constraints()[1] = (-x2 + 9 * x1 - 1.0);

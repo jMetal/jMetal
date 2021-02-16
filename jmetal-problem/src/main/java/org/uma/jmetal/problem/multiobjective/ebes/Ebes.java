@@ -988,7 +988,7 @@ public class Ebes extends AbstractDoubleProblem {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double x1, x2, x3, x4;
@@ -1321,7 +1321,7 @@ public class Ebes extends AbstractDoubleProblem {
 
     double[] x = new double[solution.variables().size()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double x1, x2, x3, x4;

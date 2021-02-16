@@ -61,7 +61,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     for (int i = 0; i < dTypeG; i++) {
       s1Temp = new ArrayList<>();
       for (int j = 0; j < icaComponent.get(0).size(); j++) {
-        s1Temp.add(solution.getVariable(i * (icaComponent.get(0).size()) + j));
+        s1Temp.add(solution.variables().get(i * (icaComponent.get(0).size()) + j));
       }
       s1.add(s1Temp);
     }

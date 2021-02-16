@@ -92,7 +92,7 @@ public class BitFlipMutationTest {
 
     mutation.execute(solution) ;
 
-    assertNotEquals(oldSolution.getVariable(0).get(1), solution.getVariable(0).get(1)) ;
+    assertNotEquals(oldSolution.variables().get(0).get(1), solution.variables().get(0).get(1)) ;
     verify(randomGenerator, times(4)).getRandomValue();
   }
 
@@ -134,8 +134,8 @@ public class BitFlipMutationTest {
 
     mutation.execute(solution) ;
 
-    assertNotEquals(oldSolution.getVariable(0).get(0), solution.getVariable(0).get(0)) ;
-    assertNotEquals(oldSolution.getVariable(1).get(2), solution.getVariable(1).get(2)) ;
+    assertNotEquals(oldSolution.variables().get(0).get(0), solution.variables().get(0).get(0)) ;
+    assertNotEquals(oldSolution.variables().get(1).get(2), solution.variables().get(1).get(2)) ;
     verify(randomGenerator, times(8)).getRandomValue();
  }
 

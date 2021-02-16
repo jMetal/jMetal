@@ -22,7 +22,7 @@ public class LIRCMOP2 extends LIRCMOP1 {
     double[] fx = new double[solution.objectives().length];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     fx[0] = x[0] + g1(x);

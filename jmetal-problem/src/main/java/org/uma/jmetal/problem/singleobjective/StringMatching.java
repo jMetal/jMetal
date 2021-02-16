@@ -38,9 +38,9 @@ public class StringMatching extends CharSequenceProblem {
     int counter = 0;
 
     for (int i = 0; i < targetString.length(); i++) {
-      if (targetString.charAt(i) != solution.getVariable(i)) {
+      if (targetString.charAt(i) != solution.variables().get(i)) {
         counter++;
-        // counter += Math.abs(targetString.charAt(i) - solution.getVariable(i)) ;
+        // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
       }
     }
 

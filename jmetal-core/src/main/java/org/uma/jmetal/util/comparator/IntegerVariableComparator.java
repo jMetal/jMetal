@@ -28,11 +28,11 @@ public class IntegerVariableComparator implements Comparator<IntegerSolution> {
     Check.notNull(solution1);
     Check.notNull(solution2);
 
-    if (solution1.getVariable(variableIndex) < solution2.getVariable(variableIndex)) {
+    if (solution1.variables().get(variableIndex) < solution2.variables().get(variableIndex)) {
       return -1;
     }
 
-    if (solution1.getVariable(variableIndex) > solution2.getVariable(variableIndex)) {
+    if (solution1.variables().get(variableIndex) > solution2.variables().get(variableIndex)) {
       return 1;
     }
 

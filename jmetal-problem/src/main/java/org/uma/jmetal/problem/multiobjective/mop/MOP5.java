@@ -49,8 +49,8 @@ public class MOP5 extends AbstractDoubleProblem {
     double[] f = new double[solution.objectives().length];
 
     double g = this.evalG(solution);
-    f[0] = (1 + g) * solution.getVariable(0);
-    f[1] = (1 + g) * (1 - Math.sqrt(solution.getVariable(0)));
+    f[0] = (1 + g) * solution.variables().get(0);
+    f[1] = (1 + g) * (1 - Math.sqrt(solution.variables().get(0)));
 
     solution.setObjective(0, f[0]);
     solution.setObjective(1, f[1]);
@@ -65,10 +65,10 @@ public class MOP5 extends AbstractDoubleProblem {
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int i = 1; i < solution.variables().size(); i++) {
-      double t = solution.getVariable(i) - Math.sin(0.5 * Math.PI * solution.getVariable(0));
+      double t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
       g += -0.9 * t * t + Math.pow(Math.abs(t), 0.6);
     }
-    g = 2 * Math.abs(Math.cos(Math.PI * solution.getVariable(0))) * g;
+    g = 2 * Math.abs(Math.cos(Math.PI * solution.variables().get(0))) * g;
     return g;
   }
 

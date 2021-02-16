@@ -48,7 +48,7 @@ public class UF7 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < solution.variables().size(); i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
 

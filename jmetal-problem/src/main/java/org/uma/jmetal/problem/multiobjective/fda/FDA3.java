@@ -60,7 +60,7 @@ public class FDA3 extends FDA implements Serializable {
     double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
     double Ft = Math.pow(10.0d, aux);
     for (int i = limitInf; i < limitSup; i++) {
-      f += Math.pow(solution.getVariable(i), Ft);
+      f += Math.pow(solution.variables().get(i), Ft);
     }
     return f;
   }
@@ -75,7 +75,7 @@ public class FDA3 extends FDA implements Serializable {
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
     for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.getVariable(i) - Gt), 2.0);
+      g += Math.pow((solution.variables().get(i) - Gt), 2.0);
     }
     g = g + 1.0 + Gt;
     return g;

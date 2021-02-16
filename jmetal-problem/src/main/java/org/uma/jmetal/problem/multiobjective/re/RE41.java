@@ -32,13 +32,13 @@ public class RE41 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = Math.rint(solution.getVariable(0));
-    double x2 = Math.rint(solution.getVariable(1));
-    double x3 = Math.rint(solution.getVariable(2));
-    double x4 = Math.rint(solution.getVariable(3));
-    double x5 = Math.rint(solution.getVariable(4));
-    double x6 = Math.rint(solution.getVariable(5));
-    double x7 = Math.rint(solution.getVariable(6));
+    double x1 = Math.rint(solution.variables().get(0));
+    double x2 = Math.rint(solution.variables().get(1));
+    double x3 = Math.rint(solution.variables().get(2));
+    double x4 = Math.rint(solution.variables().get(3));
+    double x5 = Math.rint(solution.variables().get(4));
+    double x6 = Math.rint(solution.variables().get(5));
+    double x7 = Math.rint(solution.variables().get(6));
 
     solution.setObjective(
         0,

@@ -33,8 +33,8 @@ public class Srinivas extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[solution.variables().size()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
     f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
     f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
 
@@ -49,8 +49,8 @@ public class Srinivas extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
 
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;

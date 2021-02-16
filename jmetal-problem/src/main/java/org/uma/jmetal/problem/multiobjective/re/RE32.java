@@ -32,10 +32,10 @@ public class RE32 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x4 = solution.getVariable(3);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
 
     double P = 6000;
     double L = 14;

@@ -30,7 +30,7 @@ public class ZDT6 extends ZDT1 {
     double[] f = new double[solution.objectives().length];
 
     double x1;
-    x1 = solution.getVariable(0);
+    x1 = solution.variables().get(0);
     f[0] = 1 - Math.exp(-4 * x1) * Math.pow(Math.sin(6 * Math.PI * x1), 6);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);
@@ -50,7 +50,7 @@ public class ZDT6 extends ZDT1 {
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
     for (int var = 1; var < solution.variables().size(); var++) {
-      g += solution.getVariable(var);
+      g += solution.variables().get(var);
     }
     g = g / (solution.variables().size() - 1);
     g = Math.pow(g, 0.25);

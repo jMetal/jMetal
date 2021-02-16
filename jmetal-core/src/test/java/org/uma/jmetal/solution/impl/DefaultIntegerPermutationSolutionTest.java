@@ -22,7 +22,7 @@ public class DefaultIntegerPermutationSolutionTest {
 
     List<Integer> values = new ArrayList<>();
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      values.add(solution.getVariable(i));
+      values.add(solution.variables().get(i));
     }
 
     Collections.sort(values);

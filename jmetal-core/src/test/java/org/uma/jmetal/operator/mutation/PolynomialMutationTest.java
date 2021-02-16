@@ -166,8 +166,8 @@ public class PolynomialMutationTest {
     mutation.execute(solution) ;
 
     Bounds<Double> bounds = solution.getBounds(0);
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
+    assertThat(solution.variables().get(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound()));
+    assertThat(solution.variables().get(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -189,8 +189,8 @@ public class PolynomialMutationTest {
     mutation.execute(solution) ;
 
     Bounds<Double> bounds = solution.getBounds(0);
-    assertThat(solution.getVariable(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
-    assertThat(solution.getVariable(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
+    assertThat(solution.variables().get(0), Matchers.greaterThanOrEqualTo(bounds.getLowerBound())) ;
+    assertThat(solution.variables().get(0), Matchers.lessThanOrEqualTo(bounds.getUpperBound())) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -216,7 +216,7 @@ public class PolynomialMutationTest {
 
     mutation.execute(solution) ;
 
-    assertEquals(1.0, solution.getVariable(0), EPSILON) ;
+    assertEquals(1.0, solution.variables().get(0), EPSILON) ;
   }
 
   /**

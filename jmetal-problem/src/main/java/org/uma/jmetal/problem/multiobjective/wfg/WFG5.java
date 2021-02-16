@@ -116,7 +116,7 @@ public class WFG5 extends WFG {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {

@@ -159,8 +159,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] = (randomGenerator.nextDouble(
-                bounds.getLowerBound() - particle.getVariable(0),
-                bounds.getUpperBound() - particle.getVariable(0)));
+                bounds.getLowerBound() - particle.variables().get(0),
+                bounds.getUpperBound() - particle.variables().get(0)));
       }
     }
   }

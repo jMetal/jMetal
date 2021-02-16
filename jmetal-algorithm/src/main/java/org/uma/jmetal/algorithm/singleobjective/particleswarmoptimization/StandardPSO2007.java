@@ -152,7 +152,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
         Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] =
                 (randomGenerator.nextDouble(bounds.getLowerBound(), bounds.getUpperBound())
-                        - particle.getVariable(j)) / 2.0;
+                        - particle.variables().get(j)) / 2.0;
       }
     }
   }

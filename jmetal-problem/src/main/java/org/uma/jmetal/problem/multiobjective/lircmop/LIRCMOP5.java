@@ -44,7 +44,7 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     solution.setObjective(0, x[0] + 10 * g1(x) + 0.7057);

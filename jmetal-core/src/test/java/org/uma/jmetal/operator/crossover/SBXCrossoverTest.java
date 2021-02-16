@@ -147,13 +147,13 @@ public class SBXCrossoverTest {
 
     Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
     Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(4)).getRandomValue();
   }
@@ -178,8 +178,8 @@ public class SBXCrossoverTest {
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0), newSolutions.get(0).getVariable(0), EPSILON) ;
-    assertEquals(solutions.get(1).getVariable(0), newSolutions.get(1).getVariable(0), EPSILON) ;
+    assertEquals(solutions.get(0).variables().get(0), newSolutions.get(0).variables().get(0), EPSILON) ;
+    assertEquals(solutions.get(1).variables().get(0), newSolutions.get(1).variables().get(0), EPSILON) ;
     verify(randomGenerator, times(2)).getRandomValue();
   }
 
@@ -208,21 +208,21 @@ public class SBXCrossoverTest {
 
     Bounds<Double> bounds0 = solutions.get(0).getBounds(0);
     Bounds<Double> bounds1 = solutions.get(1).getBounds(0);
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(0), Matchers
+    assertThat(newSolutions.get(0).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(0), Matchers
+    assertThat(newSolutions.get(1).variables().get(0), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(1), Matchers
+    assertThat(newSolutions.get(0).variables().get(1), Matchers
         .greaterThanOrEqualTo(bounds0.getLowerBound())) ;
-    assertThat(newSolutions.get(0).getVariable(1), Matchers
+    assertThat(newSolutions.get(0).variables().get(1), Matchers
         .lessThanOrEqualTo(bounds1.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(1), Matchers
+    assertThat(newSolutions.get(1).variables().get(1), Matchers
         .lessThanOrEqualTo(bounds0.getUpperBound())) ;
-    assertThat(newSolutions.get(1).getVariable(1), Matchers
+    assertThat(newSolutions.get(1).variables().get(1), Matchers
         .greaterThanOrEqualTo(bounds1.getLowerBound())) ;
     verify(randomGenerator, times(7)).getRandomValue();
   }
@@ -244,13 +244,13 @@ public class SBXCrossoverTest {
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0), newSolutions.get(1).getVariable(0), EPSILON);
-    assertNotEquals(solutions.get(0).getVariable(1), newSolutions.get(0).getVariable(1), EPSILON);
-    assertEquals(solutions.get(0).getVariable(2), newSolutions.get(1).getVariable(2), EPSILON);
+    assertEquals(solutions.get(0).variables().get(0), newSolutions.get(1).variables().get(0), EPSILON);
+    assertNotEquals(solutions.get(0).variables().get(1), newSolutions.get(0).variables().get(1), EPSILON);
+    assertEquals(solutions.get(0).variables().get(2), newSolutions.get(1).variables().get(2), EPSILON);
 
-    assertEquals(solutions.get(1).getVariable(0), newSolutions.get(0).getVariable(0), EPSILON);
-    assertNotEquals(solutions.get(1).getVariable(1), newSolutions.get(1).getVariable(1), EPSILON);
-    assertEquals(solutions.get(1).getVariable(2), newSolutions.get(0).getVariable(2), EPSILON);
+    assertEquals(solutions.get(1).variables().get(0), newSolutions.get(0).variables().get(0), EPSILON);
+    assertNotEquals(solutions.get(1).variables().get(1), newSolutions.get(1).variables().get(1), EPSILON);
+    assertEquals(solutions.get(1).variables().get(2), newSolutions.get(0).variables().get(2), EPSILON);
 
     verify(randomGenerator, times(6)).getRandomValue();
   }

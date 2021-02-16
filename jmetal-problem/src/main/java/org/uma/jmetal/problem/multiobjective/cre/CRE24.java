@@ -31,13 +31,13 @@ public class CRE24 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = Math.rint(solution.getVariable(2));
-    double x4 = solution.getVariable(3);
-    double x5 = solution.getVariable(4);
-    double x6 = solution.getVariable(5);
-    double x7 = solution.getVariable(6);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = Math.rint(solution.variables().get(2));
+    double x4 = solution.variables().get(3);
+    double x5 = solution.variables().get(4);
+    double x6 = solution.variables().get(5);
+    double x7 = solution.variables().get(6);
 
     solution.setObjective(0, 0.7854 * x1 * (x2 * x2) * (((10.0 * x3 * x3) / 3.0) + (14.933 * x3) - 43.0934)
             - 1.508 * x1 * (x6 * x6 + x7 * x7)
@@ -56,13 +56,13 @@ public class CRE24 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = Math.rint(solution.getVariable(2));
-    double x4 = solution.getVariable(3);
-    double x5 = solution.getVariable(4);
-    double x6 = solution.getVariable(5);
-    double x7 = solution.getVariable(6);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = Math.rint(solution.variables().get(2));
+    double x4 = solution.variables().get(3);
+    double x5 = solution.variables().get(4);
+    double x6 = solution.variables().get(5);
+    double x7 = solution.variables().get(6);
 
     constraint[0] = -(1.0 / (x1 * x2 * x2 * x3)) + 1.0 / 27.0;
     constraint[1] = -(1.0 / (x1 * x2 * x2 * x3 * x3)) + 1.0 / 397.5 ;

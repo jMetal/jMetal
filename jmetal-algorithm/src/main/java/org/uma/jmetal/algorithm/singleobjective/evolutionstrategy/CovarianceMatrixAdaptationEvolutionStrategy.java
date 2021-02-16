@@ -356,7 +356,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     for (int i = 0; i < numberOfVariables; i++) {
       distributionMean[i] = 0.;
       for (int iNk = 0; iNk < mu; iNk++) {
-        double variableValue = (double) getPopulation().get(iNk).getVariable(i);
+        double variableValue = (double) getPopulation().get(iNk).variables().get(i);
         distributionMean[i] += weights[iNk] * variableValue;
       }
     }
@@ -416,8 +416,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
            * additional rank mu
            * update
            */
-          double valueI = getPopulation().get(k).getVariable(i);
-          double valueJ = getPopulation().get(k).getVariable(j);
+          double valueI = getPopulation().get(k).variables().get(i);
+          double valueJ = getPopulation().get(k).variables().get(j);
           c[i][j] += cmu
                 * weights[k]
                 * (valueI - oldDistributionMean[i])

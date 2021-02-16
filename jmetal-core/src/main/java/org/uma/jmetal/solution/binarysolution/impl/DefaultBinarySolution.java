@@ -48,7 +48,7 @@ public class DefaultBinarySolution
     this.bitsPerVariable = solution.bitsPerVariable;
 
     for (int i = 0; i < variables().size(); i++) {
-      setVariable(i, (BinarySet) solution.getVariable(i).clone());
+      setVariable(i, (BinarySet) solution.variables().get(i).clone());
     }
 
     for (int i = 0; i < objectives().length; i++) {
@@ -78,7 +78,7 @@ public class DefaultBinarySolution
 
   @Override
   public int getNumberOfBits(int index) {
-    return getVariable(index).getBinarySetLength();
+    return variables().get(index).getBinarySetLength();
   }
 
   @Override
@@ -90,7 +90,7 @@ public class DefaultBinarySolution
   public int getTotalNumberOfBits() {
     int sum = 0;
     for (int i = 0; i < variables().size(); i++) {
-      sum += getVariable(i).getBinarySetLength();
+      sum += variables().get(i).getBinarySetLength();
     }
 
     return sum;

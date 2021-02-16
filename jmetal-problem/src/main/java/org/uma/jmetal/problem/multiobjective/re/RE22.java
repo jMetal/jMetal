@@ -41,9 +41,9 @@ public class RE22 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = getClosestValue(asFeasibleIntegers, solution.getVariable(0));
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
+    double x1 = getClosestValue(asFeasibleIntegers, solution.variables().get(0));
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
 
     double[] g = new double[numberOfOriginalConstraints];
     g[0] = (x1 * x3) - 7.735 * ((x1 * x1) / x2) - 180.0;

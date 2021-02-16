@@ -51,7 +51,7 @@ public class FDA4 extends FDA {
     double f = 1.0d + g;
     double mult = 1.0d;
     for (int i = 1; i <= M - 1; i++) {
-      mult *= Math.cos(solution.getVariable(i - 1) * Math.PI / 2.0d);
+      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
     }
     return f * mult;
   }
@@ -59,9 +59,9 @@ public class FDA4 extends FDA {
   private double evalFK(DoubleSolution solution, double g, int k) {
     double f = 1.0d + g;
     double mult = 1.0d;
-    double aux = Math.sin((solution.getVariable(M - k) * Math.PI) / 2.0d);
+    double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
     for (int i = 1; i <= M - k; i++) {
-      mult *= Math.cos(solution.getVariable(i - 1) * Math.PI / 2.0d);
+      mult *= Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
     }
     mult *= aux;
     return f * mult;
@@ -76,14 +76,14 @@ public class FDA4 extends FDA {
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
     for (int i = limitInf; i < solution.variables().size(); i++) {
-      g += Math.pow((solution.getVariable(i) - Gt), 2.0d);
+      g += Math.pow((solution.variables().get(i) - Gt), 2.0d);
     }
     return g;
   }
 
   private double evalFM(DoubleSolution solution, double g) {
     double fm = 1.0d + g;
-    fm *= Math.sin(solution.getVariable(0) * Math.PI / 2);
+    fm *= Math.sin(solution.variables().get(0) * Math.PI / 2);
     return fm;
   }
 }

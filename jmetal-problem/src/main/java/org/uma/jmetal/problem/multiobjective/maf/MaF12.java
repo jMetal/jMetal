@@ -62,7 +62,7 @@ public class MaF12 extends AbstractDoubleProblem {
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double subf1 = 1;

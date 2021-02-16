@@ -22,8 +22,5 @@ public interface Solution<T> extends Serializable {
   void setObjective(int index, double value) ;
 
   @Deprecated
-  T getVariable(int index) ;
-
-  @Deprecated
   void setVariable(int index, T variable) ;
 }

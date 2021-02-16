@@ -32,8 +32,8 @@ public class RE24 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
 
     double e = 700000;
     double sigmaBMax = 700;

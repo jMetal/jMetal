@@ -31,13 +31,13 @@ public class CRE31 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x4 = solution.getVariable(3);
-    double x5 = solution.getVariable(4);
-    double x6 = solution.getVariable(5);
-    double x7 = solution.getVariable(6);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
+    double x5 = solution.variables().get(4);
+    double x6 = solution.variables().get(5);
+    double x7 = solution.variables().get(6);
 
     solution.setObjective(0, 1.98 + 4.9 * x1 + 6.67 * x2 + 6.98 * x3 + 4.01 * x4 + 1.78 * x5 + 0.00001 * x6 + 2.73 * x7);
     solution.setObjective(1, 4.72 - 0.5 * x4 - 0.19 * x2 * x3);
@@ -56,12 +56,12 @@ public class CRE31 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x5 = solution.getVariable(4);
-    double x6 = solution.getVariable(5);
-    double x7 = solution.getVariable(6);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x5 = solution.variables().get(4);
+    double x6 = solution.variables().get(5);
+    double x7 = solution.variables().get(6);
 
     double Vmbp = 10.58 - 0.674 * x1 * x2 - 0.67275 * x2;
     double Vfd = 16.45 - 0.489 * x3 * x7 - 0.843 * x5 * x6;

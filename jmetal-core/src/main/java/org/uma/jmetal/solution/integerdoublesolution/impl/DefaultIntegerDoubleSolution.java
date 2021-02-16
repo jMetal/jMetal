@@ -71,7 +71,7 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
         solution.constraints().length);
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      setVariable(i, solution.getVariable(i).copy());
+      setVariable(i, solution.variables().get(i).copy());
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {
@@ -87,12 +87,12 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
 
   @Override
   public IntegerSolution getIntegerSolution() {
-    return (IntegerSolution) getVariable(0);
+    return (IntegerSolution) variables().get(0);
   }
 
   @Override
   public DoubleSolution getDoubleSolution() {
-    return (DoubleSolution) getVariable(1);
+    return (DoubleSolution) variables().get(1);
   }
 
   @Override

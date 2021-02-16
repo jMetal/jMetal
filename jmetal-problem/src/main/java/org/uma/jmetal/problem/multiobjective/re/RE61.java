@@ -34,7 +34,7 @@ public class RE61 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.getVariable(i);
+    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.variables().get(i);
 
     solution.setObjective(0, 106780.37 * (x[1] + x[2]) + 61704.67);
     solution.setObjective(1, 3000 * x[0]);
