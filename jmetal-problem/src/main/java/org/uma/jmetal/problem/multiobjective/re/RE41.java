@@ -76,7 +76,7 @@ public class RE41 extends AbstractDoubleProblem {
     g[4] = 32 - (28.98 + 3.818 * x3 - 4.2 * x1 * x2 + 1.27296 * x6 - 2.68065 * x7);
     g[5] = 32 - (33.86 + 2.95 * x3 - 5.057 * x1 * x2 - 3.795 * x2 - 3.4431 * x7 + 1.45728);
     g[6] = 32 - (46.36 - 9.9 * x2 - 4.4505 * x1);
-    g[7] = 4 - solution.getObjective(1);
+    g[7] = 4 - solution.objectives()[1];
     g[8] = 9.9 - Vmbp;
     g[9] = 15.7 - Vfd;
 

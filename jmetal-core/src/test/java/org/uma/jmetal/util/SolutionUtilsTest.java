@@ -198,8 +198,8 @@ public class SolutionUtilsTest {
         (DoubleSolution) SolutionUtils.normalize(solution, minValue, maxValue);
 
     assertNotSame(normalized, solution);
-    assertEquals(0.0, normalized.getObjective(0), EPSILON);
-    assertEquals(1.0, normalized.getObjective(1), EPSILON);
+    assertEquals(0.0, normalized.objectives()[0], EPSILON);
+    assertEquals(1.0, normalized.objectives()[1], EPSILON);
   }
 
   /*

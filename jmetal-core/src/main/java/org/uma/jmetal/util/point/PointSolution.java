@@ -70,7 +70,7 @@ public class PointSolution implements Solution<Double> {
     objectives = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = solution.getObjective(i);
+      this.objectives[i] = solution.objectives()[i];
     }
   }
 
@@ -83,18 +83,13 @@ public class PointSolution implements Solution<Double> {
     this(point.objectives().length);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getObjective(i);
+      this.objectives[i] = point.objectives()[i];
     }
   }
 
   @Override
   public void setObjective(int index, double value) {
     objectives[index] = value;
-  }
-
-  @Override
-  public double getObjective(int index) {
-    return objectives[index];
   }
 
   @Override

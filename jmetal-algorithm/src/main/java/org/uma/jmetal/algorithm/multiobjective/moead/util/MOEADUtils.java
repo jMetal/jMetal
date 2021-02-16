@@ -236,7 +236,7 @@ public class MOEADUtils {
     double maxFun = -1.0e+30;
 
     for (int n = 0; n < idealPoint.getDimension(); n++) {
-      double diff = Math.abs(currentBest.getObjective(n) - idealPoint.getValue(n));
+      double diff = Math.abs(currentBest.objectives()[n] - idealPoint.getValue(n));
 
       double functionValue;
       if (lambda[n] == 0) {

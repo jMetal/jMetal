@@ -61,7 +61,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
         //instaces
         for (int i = 0; i <numberOfObjectives ; i++) {
           double[] attValues = new double[dataset.numAttributes()];
-          attValues[0] = solution.getObjective(i);
+          attValues[0] = solution.objectives()[i];
           attValues[1] = dataset.attribute(NOMINAL_STRING).indexOfValue(VALUE_STRING+i);
           attValues[2] = dataset.attribute(MY_STRING).addStringValue(solution.toString()+i);
           dataset.add(new DenseInstance(1.0, attValues));
@@ -75,7 +75,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       //Add instances
       for (int i = 0; i < numberOfObjectives; i++) {
         Instance test = new DenseInstance(3);
-        test.setValue(attr, testSolution.getObjective(i));
+        test.setValue(attr, testSolution.objectives()[i]);
         test.setValue(attr1, VALUE_STRING+i);
         test.setValue(attr2, testSolution.toString()+i);
         datasetTest.add(test);
@@ -104,7 +104,7 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       eval.evaluateModel(classifier, datasetTest); //testset
       result = classifier.classifyInstance(datasetTest.get(index));
     } catch (Exception e) {
-      result = testSolution.getObjective(index);
+      result = testSolution.objectives()[index];
     }
     return result;
   }

@@ -520,8 +520,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   private void storeBest() {
-    if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > getPopulation().get(0)
-        .getObjective(0))) {
+    if ((bestSolutionEver == null) || (bestSolutionEver.objectives()[0] > getPopulation().get(0)
+        .objectives()[0])) {
       bestSolutionEver = getPopulation().get(0);
     }
   }

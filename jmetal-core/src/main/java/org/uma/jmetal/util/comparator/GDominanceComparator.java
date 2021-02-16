@@ -66,14 +66,14 @@ public class GDominanceComparator<S extends Solution<?>> implements Comparator<S
   private int flag(S solution) {
     int result = 1 ;
     for (int i = 0; i < solution.objectives().length; i++) {
-      if (solution.getObjective(i) > referencePoint.get(i)) {
+      if (solution.objectives()[i] > referencePoint.get(i)) {
         result = 0 ;
       }
     }
     if (result == 0) {
       result = 1 ;
       for (int i = 0; i < solution.objectives().length; i++) {
-        if (solution.getObjective(i) < referencePoint.get(i)) {
+        if (solution.objectives()[i] < referencePoint.get(i)) {
           result = 0 ;
         }
       }

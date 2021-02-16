@@ -276,8 +276,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
   private void updateReference(DoubleSolution individual) {
     for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-      if (individual.getObjective(n) < z[n]) {
-        z[n] = individual.getObjective(n);
+      if (individual.objectives()[n] < z[n]) {
+        z[n] = individual.objectives()[n];
 
         indArray[n] = (DoubleSolution)individual.copy() ;
       }
@@ -325,7 +325,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       double maxFun = -1.0e+30;
 
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        double diff = Math.abs(sol.getObjective(n) - z[n]);
+        double diff = Math.abs(sol.objectives()[n] - z[n]);
 
         double feval;
         if (lambda[n] == 0) {
@@ -343,7 +343,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }else if(functionType == FunctionType.AGG){
       double sum = 0.0;
       for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
-        sum += (lambda[n]) * sol.getObjective(n);
+        sum += (lambda[n]) * sol.objectives()[n];
       }
 
       fitness = sum;
@@ -356,7 +356,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       for (int i = 0; i < problem.getNumberOfObjectives(); i++)
       {
-        d1 += (sol.getObjective(i) - z[i]) * lambda[i];
+        d1 += (sol.objectives()[i] - z[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
       }
       nl = Math.sqrt(nl);
@@ -364,7 +364,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       for (int i = 0; i < problem.getNumberOfObjectives(); i++)
       {
-        d2 += Math.pow((sol.getObjective(i) - z[i]) - d1 * (lambda[i] / nl), 2.0);
+        d2 += Math.pow((sol.objectives()[i] - z[i]) - d1 * (lambda[i] / nl), 2.0);
       }
       d2 = Math.sqrt(d2);
 

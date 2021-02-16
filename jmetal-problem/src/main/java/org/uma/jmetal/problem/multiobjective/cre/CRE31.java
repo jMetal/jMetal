@@ -73,7 +73,7 @@ public class CRE31 extends AbstractDoubleProblem {
     constraint[4] = 32 -(28.98 + 3.818 * x3 - 4.2 * x1 * x2 + 1.27296 * x6 - 2.68065 * x7);
     constraint[5] = 32 -(33.86 + 2.95 * x3 - 5.057 * x1 * x2 - 3.795 * x2 - 3.4431 * x7 + 1.45728);
     constraint[6] = 32 -(46.36 - 9.9 * x2 - 4.4505 * x1);
-    constraint[7] = 4 - solution.getObjective(1);
+    constraint[7] = 4 - solution.objectives()[1];
     constraint[8] = 9.9 - Vmbp ;
     constraint[9] = 15.7 - Vfd ;
 

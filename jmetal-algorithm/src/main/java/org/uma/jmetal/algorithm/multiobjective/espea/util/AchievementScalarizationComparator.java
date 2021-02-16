@@ -52,9 +52,9 @@ public class AchievementScalarizationComparator<S extends Solution<?>> implement
       return 1;
 
     // max1 = max2
-    if (s1.getObjective(objective) < s2.getObjective(objective))
+    if (s1.objectives()[objective] < s2.objectives()[objective])
       return -1;
-    if (s1.getObjective(objective) > s2.getObjective(objective))
+    if (s1.objectives()[objective]> s2.objectives()[objective])
       return 1;
 
     return 0;

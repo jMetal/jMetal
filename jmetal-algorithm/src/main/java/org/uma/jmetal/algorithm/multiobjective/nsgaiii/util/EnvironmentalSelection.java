@@ -45,7 +45,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       double minf = Double.MAX_VALUE;
       for (int i = 0; i < fronts.get(0).size(); i += 1) // min values must appear in the first front
       {
-        minf = Math.min(minf, fronts.get(0).get(i).getObjective(f));
+        minf = Math.min(minf, fronts.get(0).get(i).objectives()[f]);
       }
       ideal_point.add(minf);
 
@@ -54,7 +54,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
           if (f == 0) // in the first objective we create the vector of conv_objs
           setAttribute(s, new ArrayList<Double>());
 
-          getAttribute(s).add(s.getObjective(f) - minf);
+          getAttribute(s).add(s.objectives()[f] - minf);
         }
       }
     }
@@ -72,7 +72,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     double max_ratio = Double.NEGATIVE_INFINITY;
     for (int i = 0; i < s.objectives().length; i++) {
       double weight = (index == i) ? 1.0 : 0.000001;
-      max_ratio = Math.max(max_ratio, s.getObjective(i) / weight);
+      max_ratio = Math.max(max_ratio, s.objectives()[i] / weight);
     }
     return max_ratio;
   }
@@ -141,7 +141,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
     {
       for (int f = 0; f < numberOfObjectives; f += 1) {
         // extreme_points[f] stands for the individual with the largest value of objective f
-        intercepts.add(extreme_points.get(f).getObjective(f));
+        intercepts.add(extreme_points.get(f).objectives()[f]);
       }
     } else {
       // Find the equation of the hyperplane
@@ -151,7 +151,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
       List<List<Double>> A = new ArrayList<>();
       for (S s : extreme_points) {
         List<Double> aux = new ArrayList<>();
-        for (int i = 0; i < numberOfObjectives; i++) aux.add(s.getObjective(i));
+        for (int i = 0; i < numberOfObjectives; i++) aux.add(s.objectives()[i]);
         A.add(aux);
       }
       List<Double> x = guassianElimination(A, b);

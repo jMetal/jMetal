@@ -40,8 +40,8 @@ public class RE31 extends AbstractDoubleProblem {
     solution.setObjective(1, (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3));
 
     double[] g = new double[numberOfOriginalConstraints];
-    g[0] = 0.1 - solution.getObjective(0);
-    g[1] = 100000.0 - solution.getObjective(1);
+    g[0] = 0.1 - solution.objectives()[0];
+    g[1] = 100000.0 - solution.objectives()[1];
     g[2] = 100000 - ((80.0 * Math.sqrt(1.0 + x3 * x3)) / (x3 * x2));
 
     for (int i = 0; i < numberOfOriginalConstraints; i++) {

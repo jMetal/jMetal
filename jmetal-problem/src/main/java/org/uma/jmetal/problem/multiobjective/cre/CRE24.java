@@ -73,7 +73,7 @@ public class CRE24 extends AbstractDoubleProblem {
     constraint[6] = -5.0 + (x1 / x2);
     constraint[7] = -1.9 + x4 - 1.5 * x6;
     constraint[8] = -1.9 + x5 - 1.1 * x7;
-    constraint[9] = -solution.getObjective(1) + 1300.0 ;
+    constraint[9] = -solution.objectives()[1] + 1300.0 ;
 
     double tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
     constraint[10] = -Math.sqrt(tmpVar) / (0.1 * x7 * x7 * x7) + 1100.0 ;

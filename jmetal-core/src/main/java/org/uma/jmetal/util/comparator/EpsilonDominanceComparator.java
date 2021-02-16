@@ -67,8 +67,8 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
     boolean bestIsOne = false ;
     boolean bestIsTwo = false ;
     for (int i = 0; i < solution1.objectives().length; i++) {
-      double value1 = Math.floor(solution1.getObjective(i) / epsilon);
-      double value2 = Math.floor(solution2.getObjective(i) / epsilon);
+      double value1 = Math.floor(solution1.objectives()[i] / epsilon);
+      double value2 = Math.floor(solution2.objectives()[i] / epsilon);
       if (value1 < value2) {
         bestIsOne = true;
 
@@ -88,12 +88,12 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
       double dist2 = 0.0;
 
       for (int i = 0; i < solution1.objectives().length; i++) {
-        double index1 = Math.floor(solution1.getObjective(i) / epsilon);
-        double index2 = Math.floor(solution2.getObjective(i) / epsilon);
+        double index1 = Math.floor(solution1.objectives()[i] / epsilon);
+        double index2 = Math.floor(solution2.objectives()[i] / epsilon);
 
-        dist1 += Math.pow(solution1.getObjective(i) - index1 * epsilon,
+        dist1 += Math.pow(solution1.objectives()[i] - index1 * epsilon,
                 2.0);
-        dist2 += Math.pow(solution2.getObjective(i) - index2 * epsilon,
+        dist2 += Math.pow(solution2.objectives()[i] - index2 * epsilon,
                 2.0);
       }
 

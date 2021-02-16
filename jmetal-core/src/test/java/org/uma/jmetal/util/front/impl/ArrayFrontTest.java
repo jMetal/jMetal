@@ -180,12 +180,12 @@ public class ArrayFrontTest {
     assertEquals(2, ReflectionTestUtils.getField(front, "numberOfPoints"));
     assertEquals(numberOfObjectives, ReflectionTestUtils.getField(front, "pointDimensions"));
 
-    assertEquals(list.get(0).getObjective(0), front.getPoint(0).getValue(0), EPSILON);
-    assertEquals(list.get(0).getObjective(1), front.getPoint(0).getValue(1), EPSILON);
-    assertEquals(list.get(0).getObjective(2), front.getPoint(0).getValue(2), EPSILON);
-    assertEquals(list.get(1).getObjective(0), front.getPoint(1).getValue(0), EPSILON);
-    assertEquals(list.get(1).getObjective(1), front.getPoint(1).getValue(1), EPSILON);
-    assertEquals(list.get(1).getObjective(2), front.getPoint(1).getValue(2), EPSILON);
+    assertEquals(list.get(0).objectives()[0], front.getPoint(0).getValue(0), EPSILON);
+    assertEquals(list.get(0).objectives()[1], front.getPoint(0).getValue(1), EPSILON);
+    assertEquals(list.get(0).objectives()[2], front.getPoint(0).getValue(2), EPSILON);
+    assertEquals(list.get(1).objectives()[0], front.getPoint(1).getValue(0), EPSILON);
+    assertEquals(list.get(1).objectives()[1], front.getPoint(1).getValue(1), EPSILON);
+    assertEquals(list.get(1).objectives()[2], front.getPoint(1).getValue(2), EPSILON);
   }
 
   @Test

@@ -119,7 +119,7 @@ public class SolutionListUtils {
     objectives = new double[solutionListSize][numberOfObjectives];
     for (int i = 0; i < solutionListSize; i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        objectives[i][j] = solutionList.get(i).getObjective(j);
+        objectives[i][j] = solutionList.get(i).objectives()[j];
       }
     }
     return objectives;
@@ -162,8 +162,8 @@ public class SolutionListUtils {
     for (int i = 0; i < minValues.length; i++) {
       int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
       int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
-      minValues[i] = solutions.get(best).getObjective(i);
-      maxValues[i] = solutions.get(worst).getObjective(i);
+      minValues[i] = solutions.get(best).objectives()[i];
+      maxValues[i] = solutions.get(worst).objectives()[i];
     }
 
     return normalizeSolutionList(solutions, minValues, maxValues);
@@ -184,12 +184,12 @@ public class SolutionListUtils {
     for (int i = 0; i < solutionSet.size(); i++) {
       invertedFront.add(i, (S) solutionSet.get(i).copy());
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (solutionSet.get(i).getObjective(j) <= 1.0
-            && solutionSet.get(i).getObjective(j) >= 0.0) {
-          invertedFront.get(i).setObjective(j, 1.0 - solutionSet.get(i).getObjective(j));
-        } else if (solutionSet.get(i).getObjective(j) > 1.0) {
+        if (solutionSet.get(i).objectives()[j] <= 1.0
+            && solutionSet.get(i).objectives()[j] >= 0.0) {
+          invertedFront.get(i).setObjective(j, 1.0 - solutionSet.get(i).objectives()[j]);
+        } else if (solutionSet.get(i).objectives()[j] > 1.0) {
           invertedFront.get(i).setObjective(j, 0.0);
-        } else if (solutionSet.get(i).getObjective(j) < 0.0) {
+        } else if (solutionSet.get(i).objectives()[j] < 0.0) {
           invertedFront.get(i).setObjective(j, 1.0);
         }
       }
@@ -405,7 +405,7 @@ public class SolutionListUtils {
     double[] result = new double[solutionList.size()];
 
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getObjective(objective);
+      result[i] = solutionList.get(i).objectives()[objective];
     }
     return result;
   }

@@ -75,7 +75,7 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {
-      setObjective(i, solution.getObjective(i));
+      setObjective(i, solution.objectives()[i]) ;
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {

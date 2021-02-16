@@ -106,8 +106,8 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
     int bestIsTwo = 0 ;
     int result ;
     for (int i = 0; i < solution1.objectives().length; i++) {
-      double value1 = solution1.getObjective(i);
-      double value2 = solution2.getObjective(i);
+      double value1 = solution1.objectives()[i];
+      double value2 = solution2.objectives()[i];
       if (value1 != value2) {
         if (value1 < value2) {
           bestIsOne = 1;

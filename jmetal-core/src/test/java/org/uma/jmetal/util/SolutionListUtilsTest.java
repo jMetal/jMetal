@@ -434,10 +434,10 @@ public class SolutionListUtilsTest {
         (List<DoubleSolution>) SolutionListUtils.normalizeSolutionList(solutions, minValue, maxValue);
 
     assertNotSame(normalizedSolutions, solutions);
-    assertEquals(1.0, normalizedSolutions.get(0).getObjective(0), EPSILON);
-    assertEquals(0.0, normalizedSolutions.get(0).getObjective(1), EPSILON);
-    assertEquals(0.0, normalizedSolutions.get(1).getObjective(0), EPSILON);
-    assertEquals(1.0, normalizedSolutions.get(1).getObjective(1), EPSILON);
+    assertEquals(1.0, normalizedSolutions.get(0).objectives()[0], EPSILON);
+    assertEquals(0.0, normalizedSolutions.get(0).objectives()[1], EPSILON);
+    assertEquals(0.0, normalizedSolutions.get(1).objectives()[0], EPSILON);
+    assertEquals(1.0, normalizedSolutions.get(1).objectives()[1], EPSILON);
   }
 
   @Test
@@ -502,10 +502,10 @@ public class SolutionListUtilsTest {
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4, s5);
     List<DoubleSolution> normalizedSolutionList = SolutionListUtils.normalizeSolutionList(solutionList) ;
     assertEquals(solutionList.size(), normalizedSolutionList.size());
-    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(0), EPSILON);
-    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(1), EPSILON);
-    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(0), EPSILON);
-    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(1), EPSILON);
+    assertEquals(0.0, normalizedSolutionList.get(0).objectives()[0], EPSILON);
+    assertEquals(0.0, normalizedSolutionList.get(0).objectives()[1], EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).objectives()[0], EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).objectives()[1], EPSILON);
   }
 
   @Test

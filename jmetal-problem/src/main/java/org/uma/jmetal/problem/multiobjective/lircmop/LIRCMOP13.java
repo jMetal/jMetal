@@ -62,7 +62,7 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
 
     double f = 0;
     for (int i = 0; i < solution.objectives().length; i++) {
-      f += Math.pow(solution.getObjective(i), 2);
+      f += Math.pow(solution.objectives()[i], 2);
     }
     constraint[0] = (f - 9) * (f - 4);
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);

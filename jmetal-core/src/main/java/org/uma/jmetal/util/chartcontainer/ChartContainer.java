@@ -224,7 +224,7 @@ public class ChartContainer {
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getObjective(objective);
+      result[i] = solutionList.get(i).objectives()[objective];
     }
     return result;
   }

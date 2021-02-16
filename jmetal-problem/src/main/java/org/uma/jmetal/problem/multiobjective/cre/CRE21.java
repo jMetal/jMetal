@@ -47,11 +47,11 @@ public class CRE21 extends AbstractDoubleProblem {
     double[] constraint = new double[this.getNumberOfConstraints()];
     double x2, x3;
 
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
 
-    constraint[0] = 0.1 - solution.getObjective(0);
-    constraint[1] = 100000.0 - -solution.getObjective(1);
+    constraint[0] = 0.1 - solution.objectives()[0];
+    constraint[1] = 100000.0 - -solution.objectives()[1];
     constraint[2] = 100000 - ((80.0 * Math.sqrt(1.0 + x3 * x3)) / (x3 * x2));
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {

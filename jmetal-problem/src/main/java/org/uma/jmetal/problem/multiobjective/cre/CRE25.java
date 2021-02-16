@@ -51,7 +51,7 @@ public class CRE25 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double constraint = 0.5 - solution.getObjective(0) / 6.931;
+    double constraint = 0.5 - solution.objectives()[1] / 6.931;
 
     if (constraint < 0.0) {
       constraint = -constraint;

@@ -73,11 +73,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public double getObjective(int index) {
-    return objectives[index];
-  }
-
-  @Override
   public T getVariable(int index) {
     return variables.get(index);
   }

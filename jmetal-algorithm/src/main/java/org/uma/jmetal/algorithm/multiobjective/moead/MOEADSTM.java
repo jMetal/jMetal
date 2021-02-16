@@ -325,7 +325,7 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
     // vecInd has been normalized to the range [0,1]
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      vecInd[i] = (individual.getObjective(i) - idealPoint.getValue(i)) /
+      vecInd[i] = (individual.objectives()[i] - idealPoint.getValue(i)) /
           (nadirPoint.getValue(i) - idealPoint.getValue(i));
     }
 
@@ -351,10 +351,10 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double[] normalizedObj = new double[problem.getNumberOfObjectives()];
 
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      distanceSum += individual.getObjective(i);
+      distanceSum += individual.objectives()[i];
     }
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
-      normalizedObj[i] = individual.getObjective(i) / distanceSum;
+      normalizedObj[i] = individual.objectives()[i] / distanceSum;
     }
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       vecInd[i] = normalizedObj[i] - lambda[i];

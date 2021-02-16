@@ -96,8 +96,8 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-    JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + solution.getVariable(0)) ;
+    JMetalLogger.logger.info("Fitness: " + solution.objectives()[0]) ;
+    JMetalLogger.logger.info("Solution: " + solution.variables().get(0)) ;
   }
 
     /**
@@ -250,7 +250,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
         JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
         JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-        JMetalLogger.logger.info("Fitness: " + solution.getObjective(0));
+        JMetalLogger.logger.info("Fitness: " + solution.objectives()[0]);
 
         evaluator.shutdown();
       }
@@ -329,8 +329,8 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
 
       BinarySolution newSolution = localSearch.getResult() ;
 
-      JMetalLogger.logger.info("Fitness: " + newSolution.getObjective(0)) ;
-      JMetalLogger.logger.info("Solution: " + newSolution.getVariable(0)) ;
+      JMetalLogger.logger.info("Fitness: " + newSolution.objectives()[0]) ;
+      JMetalLogger.logger.info("Solution: " + newSolution.variables().get(0)) ;
     }
   }
 
@@ -491,7 +491,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
       JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
       JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-      JMetalLogger.logger.info("Fitness: " + population.get(0).getObjective(0)) ;
+      JMetalLogger.logger.info("Fitness: " + population.get(0).objectives()[0]) ;
     }
   }
 
@@ -552,8 +552,8 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
       JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
       JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-      JMetalLogger.logger.info("Fitness: " + solution.getObjective(0));
-      JMetalLogger.logger.info("Solution: " + solution.getVariable(0));
+      JMetalLogger.logger.info("Fitness: " + solution.objectives()[0]);
+      JMetalLogger.logger.info("Solution: " + solution.variables().get(0));
       evaluator.shutdown();
     }
   }
@@ -615,8 +615,8 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
       JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
       JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
-      JMetalLogger.logger.info("Fitness: " + solution.getObjective(0));
-      JMetalLogger.logger.info("Solution: " + solution.getVariable(0));
+      JMetalLogger.logger.info("Fitness: " + solution.objectives()[0]);
+      JMetalLogger.logger.info("Solution: " + solution.variables().get(0));
       evaluator.shutdown();
     }
   }

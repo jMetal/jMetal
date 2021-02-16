@@ -164,12 +164,12 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	protected void updateReferencePoint(S s) {
 		for (int i = 0; i < s.objectives().length; i++)
-			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.getObjective(i)));
+			this.getReferencePoint().set(i, Math.min(this.getReferencePoint().get(i),s.objectives()[i]));
 	}
 
 	protected void updateNadirPoint(S s) {
 		for (int i = 0; i < s.objectives().length; i++)
-			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.getObjective(i)));
+			this.getNadirPoint().set(i, Math.max(this.getNadirPoint().get(i),s.objectives()[i]));
 	}
 
 	public void updateReferencePoint(List<S> population) {

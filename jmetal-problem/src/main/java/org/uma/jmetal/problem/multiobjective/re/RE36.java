@@ -46,7 +46,7 @@ public class RE36 extends AbstractDoubleProblem {
     solution.setObjective(1, maxValue);
 
     double[] g = new double[numberOfOriginalConstraints];
-    g[0] = 0.5 - (solution.getObjective(0) / 6.931);
+    g[0] = 0.5 - (solution.objectives()[0] / 6.931);
 
     for (int i = 0; i < numberOfOriginalConstraints; i++) {
       if (g[i] < 0.0) g[i] = -g[i];

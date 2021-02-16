@@ -59,7 +59,7 @@ public class RE35 extends AbstractDoubleProblem {
     g[6] = -5.0 + (x1 / x2);
     g[7] = -1.9 + x4 - 1.5 * x6;
     g[8] = -1.9 + x5 - 1.1 * x7;
-    g[9] = -solution.getObjective(1) + 1300.0;
+    g[9] = -solution.objectives()[1] + 1300.0;
     tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
     g[10] = -Math.sqrt(tmpVar) / (0.1 * x7 * x7 * x7) + 1100.0;
 

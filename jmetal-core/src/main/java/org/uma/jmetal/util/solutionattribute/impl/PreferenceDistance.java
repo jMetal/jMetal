@@ -78,7 +78,7 @@ public class PreferenceDistance<S extends Solution<?>> extends GenericSolutionAt
         // Sort the population by Obj n
         Collections.sort(front, new ObjectiveComparator<S>(j));
         objetiveMinn = front.get(0).objectives()[j];
-        objetiveMaxn = front.get(front.size() - 1).getObjective(j);
+        objetiveMaxn = front.get(front.size() - 1).objectives()[j];
         normalizeDiff =
             (front.get(i).objectives()[j] - this.interestPoint.get(j))
                 / (objetiveMaxn - objetiveMinn);

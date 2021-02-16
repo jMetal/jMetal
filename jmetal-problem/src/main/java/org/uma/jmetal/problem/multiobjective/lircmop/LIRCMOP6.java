@@ -44,8 +44,8 @@ public class LIRCMOP6 extends LIRCMOP5 {
     double[] b_array = new double[] {8.0, 8.0};
     double[] xOffset = new double[] {1.8, 2.8};
     double[] yOffset = new double[] {1.8, 2.8};
-    double f1 = solution.getObjective(0);
-    double f2 = solution.getObjective(1);
+    double f1 = solution.objectives()[0];
+    double f2 = solution.objectives()[1];
     double[] constraint = new double[getNumberOfConstraints()];
     for (int i = 0; i < xOffset.length; i++) {
       constraint[i] =

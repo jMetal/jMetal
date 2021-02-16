@@ -43,9 +43,9 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    assertEquals(values[0], solution.getObjective(0), EPSILON) ;
-    assertEquals(values[1], solution.getObjective(1), EPSILON) ;
-    assertEquals(values[2], solution.getObjective(2), EPSILON) ;
+    assertEquals(values[0], solution.objectives()[0], EPSILON) ;
+    assertEquals(values[1], solution.objectives()[1], EPSILON) ;
+    assertEquals(values[2], solution.objectives()[2], EPSILON) ;
   }
 
   @Test public void shouldSetObjectiveAssignTheTheCorrectValue() {

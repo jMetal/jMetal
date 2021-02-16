@@ -69,7 +69,7 @@ public class SolutionUtils {
 
     // euclidean distance
     for (int nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
-      diff = firstSolution.getObjective(nObj) - secondSolution.getObjective(nObj);
+      diff = firstSolution.objectives()[nObj] - secondSolution.objectives()[nObj];
       distance += Math.pow(diff, 2.0);
     }
 
@@ -84,8 +84,8 @@ public class SolutionUtils {
     // euclidean distance
     for (int nObj = 0; nObj < firstSolution.objectives().length; nObj++) {
       diff =
-          (firstSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]))
-              - (secondSolution.getObjective(nObj) / (maxs[nObj] - mins[nObj]));
+          (firstSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]))
+              - (secondSolution.objectives()[nObj] / (maxs[nObj] - mins[nObj]));
       distance += Math.pow(diff, 2.0);
     }
 
@@ -179,7 +179,7 @@ public class SolutionUtils {
 
     for (int i = 0; i < copy.objectives().length; i++) {
       copy.setObjective(
-          i, NormalizeUtils.normalize(solution.getObjective(i), minValues[i], maxValues[i]));
+          i, NormalizeUtils.normalize(solution.objectives()[i], minValues[i], maxValues[i]));
     }
 
     return copy;
