@@ -163,14 +163,14 @@ public class ArrayFrontTest {
 
     IntegerSolution solution1 =
         new DefaultIntegerSolution(numberOfObjectives, bounds);
-    solution1.setObjective(0, 2);
-    solution1.setObjective(0, 235);
-    solution1.setObjective(0, -123);
+    solution1.objectives()[0] = 2;
+    solution1.objectives()[1] = 235;
+    solution1.objectives()[2] =-123;
     IntegerSolution solution2 =
         new DefaultIntegerSolution(numberOfObjectives, bounds);
-    solution2.setObjective(0, -13234);
-    solution2.setObjective(0, 523);
-    solution2.setObjective(0, -123423455);
+    solution2.objectives()[0] = -13234;
+    solution2.objectives()[1] = 523;
+    solution2.objectives()[2] = -123423455;
 
     List<IntegerSolution> list = Arrays.asList(solution1, solution2);
 

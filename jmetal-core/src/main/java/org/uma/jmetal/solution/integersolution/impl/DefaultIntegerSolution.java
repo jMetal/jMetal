@@ -70,7 +70,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {
-      setObjective(i, solution.objectives()[i]) ;
+      objectives()[i] = solution.objectives()[i];
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {

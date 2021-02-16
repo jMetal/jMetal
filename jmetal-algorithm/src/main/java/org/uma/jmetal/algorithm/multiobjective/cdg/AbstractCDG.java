@@ -463,7 +463,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
         for (int k = 0; k < problem.getNumberOfObjectives(); k++)
           if (i != k) {
             double funValue = border.get(i).get(j).objectives()[k];
-            border.get(i).get(j).setObjective(k, funValue * borderCoef);
+            border.get(i).get(j).objectives()[k] = funValue * borderCoef;
           }
   }
 

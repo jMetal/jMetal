@@ -53,9 +53,9 @@ public class PointSolutionTest {
     double [] values = {1.0, 2.0, 3.0} ;
 
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    solution.setObjective(0, values[0]);
-    solution.setObjective(1, values[1]);
-    solution.setObjective(2, values[2]);
+    solution.objectives()[0] = values[0];
+    solution.objectives()[1] = values[1];
+    solution.objectives()[2] = values[2];
 
     double [] resultValues = (double [])ReflectionTestUtils.getField(solution, "objectives") ;
     assertArrayEquals(values, resultValues, EPSILON) ;
@@ -114,8 +114,8 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    PointSolution newSolution = (PointSolution)solution.copy() ;
-    newSolution.setObjective(0, 23424);
+    PointSolution newSolution = solution.copy() ;
+    newSolution.objectives()[0] = 23424;
 
     assertFalse(solution.equals(newSolution));
   }

@@ -27,7 +27,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     super(solution.getLength(), solution.objectives().length);
 
     for (int i = 0; i < objectives().length; i++) {
-      setObjective(i, solution.objectives()[i]) ;
+      objectives()[i] = solution.objectives()[i];
     }
 
     for (int i = 0; i < variables().size(); i++) {

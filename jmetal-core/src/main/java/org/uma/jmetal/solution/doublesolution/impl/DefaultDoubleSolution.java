@@ -75,7 +75,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {
-      setObjective(i, solution.objectives()[i]) ;
+      objectives()[i] = solution.objectives()[i];
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {

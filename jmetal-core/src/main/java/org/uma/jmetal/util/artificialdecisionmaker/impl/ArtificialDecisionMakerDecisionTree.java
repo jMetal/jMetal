@@ -209,7 +209,7 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
   private S getSolutionFromRP(List<Double> referencePoint){
     S result = problem.createSolution();
     for (int i = 0; i < result.objectives().length; i++) {
-      result.setObjective(i,referencePoint.get(i));
+      result.objectives()[i] = referencePoint.get(i);
     }
     return result;
   }

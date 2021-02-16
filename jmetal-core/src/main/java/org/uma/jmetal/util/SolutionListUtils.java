@@ -186,11 +186,11 @@ public class SolutionListUtils {
       for (int j = 0; j < numberOfObjectives; j++) {
         if (solutionSet.get(i).objectives()[j] <= 1.0
             && solutionSet.get(i).objectives()[j] >= 0.0) {
-          invertedFront.get(i).setObjective(j, 1.0 - solutionSet.get(i).objectives()[j]);
+          invertedFront.get(i).objectives()[j] = 1.0 - solutionSet.get(i).objectives()[j];
         } else if (solutionSet.get(i).objectives()[j] > 1.0) {
-          invertedFront.get(i).setObjective(j, 0.0);
+          invertedFront.get(i).objectives()[j] = 0.0;
         } else if (solutionSet.get(i).objectives()[j] < 0.0) {
-          invertedFront.get(i).setObjective(j, 1.0);
+          invertedFront.get(i).objectives()[j] = 1.0;
         }
       }
     }

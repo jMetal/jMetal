@@ -178,8 +178,7 @@ public class SolutionUtils {
     S copy = (S) solution.copy();
 
     for (int i = 0; i < copy.objectives().length; i++) {
-      copy.setObjective(
-          i, NormalizeUtils.normalize(solution.objectives()[i], minValues[i], maxValues[i]));
+      copy.objectives()[i] = NormalizeUtils.normalize(solution.objectives()[i], minValues[i], maxValues[i]);
     }
 
     return copy;

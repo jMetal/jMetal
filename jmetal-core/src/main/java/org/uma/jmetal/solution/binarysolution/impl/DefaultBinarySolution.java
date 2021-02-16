@@ -52,7 +52,7 @@ public class DefaultBinarySolution
     }
 
     for (int i = 0; i < objectives().length; i++) {
-      setObjective(i, solution.objectives()[i]);
+      objectives()[i] = solution.objectives()[i];
     }
 
     for (int i = 0; i < constraints().length; i++) {
