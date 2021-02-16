@@ -48,7 +48,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      setConstraint(i, solution.getConstraint(i));
+      setConstraint(i, solution.constraints()[i]);
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);
@@ -57,11 +57,6 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   @Override
   public IntegerPermutationSolution copy() {
     return new IntegerPermutationSolution(this);
-  }
-
-  @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
   }
 
   @Override

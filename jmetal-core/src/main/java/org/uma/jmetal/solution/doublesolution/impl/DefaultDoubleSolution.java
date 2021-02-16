@@ -79,7 +79,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {
-      setConstraint(i, solution.getConstraint(i));
+      setConstraint(i, solution.constraints()[i]);
     }
 
     bounds = solution.bounds ;

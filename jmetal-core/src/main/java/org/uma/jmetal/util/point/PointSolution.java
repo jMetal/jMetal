@@ -11,28 +11,28 @@ import java.util.*;
  */
 @SuppressWarnings("serial")
 public class PointSolution implements Solution<Double> {
-  private int numberOfObjectives ;
+  private int numberOfObjectives;
   private double[] objectives;
-  protected Map<Object, Object> attributes ;
+  protected Map<Object, Object> attributes;
 
   @Override
   public List<Double> variables() {
-    return null ;
+    return null;
   }
 
   @Override
   public double[] objectives() {
-    return objectives ;
+    return objectives;
   }
 
   @Override
   public double[] constraints() {
-    return null ;
+    return null;
   }
 
   @Override
   public Map<Object, Object> attributes() {
-    return attributes ;
+    return attributes;
   }
 
   /**
@@ -41,9 +41,9 @@ public class PointSolution implements Solution<Double> {
    * @param numberOfObjectives
    */
   public PointSolution(int numberOfObjectives) {
-    this.numberOfObjectives = numberOfObjectives ;
-    objectives = new double[numberOfObjectives] ;
-    attributes = new HashMap<>() ;
+    this.numberOfObjectives = numberOfObjectives;
+    objectives = new double[numberOfObjectives];
+    attributes = new HashMap<>();
   }
 
   /**
@@ -52,11 +52,11 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(Point point) {
-    this.numberOfObjectives = point.getDimension() ;
-    objectives = new double[numberOfObjectives] ;
+    this.numberOfObjectives = point.getDimension();
+    objectives = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getValue(i) ;
+      this.objectives[i] = point.getValue(i);
     }
   }
 
@@ -66,11 +66,11 @@ public class PointSolution implements Solution<Double> {
    * @param solution
    */
   public PointSolution(Solution<?> solution) {
-    this.numberOfObjectives = solution.objectives().length ;
-    objectives = new double[numberOfObjectives] ;
+    this.numberOfObjectives = solution.objectives().length;
+    objectives = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = solution.getObjective(i) ;
+      this.objectives[i] = solution.getObjective(i);
     }
   }
 
@@ -80,78 +80,66 @@ public class PointSolution implements Solution<Double> {
    * @param point
    */
   public PointSolution(PointSolution point) {
-    this(point.objectives().length) ;
+    this(point.objectives().length);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      this.objectives[i] = point.getObjective(i) ;
+      this.objectives[i] = point.getObjective(i);
     }
   }
 
-  @Override public void setObjective(int index, double value) {
-    objectives[index]=  value ;
+  @Override
+  public void setObjective(int index, double value) {
+    objectives[index] = value;
   }
 
-  @Override public double getObjective(int index) {
+  @Override
+  public double getObjective(int index) {
     return objectives[index];
   }
 
-  @Override public Double getVariable(int index) {
+  @Override
+  public Double getVariable(int index) {
     return null;
   }
 
-  @Override public void setVariable(int index, Double value) {
-	  //This method is an intentionally-blank override.
+  @Override
+  public void setVariable(int index, Double value) {
+    // This method is an intentionally-blank override.
   }
 
   @Override
-  public double getConstraint(int index) {
-    return 0;
-  }
+  public void setConstraint(int index, double value) {}
 
   @Override
-  public void setConstraint(int index, double value) {
-  }
-
-  @Override public PointSolution copy() {
+  public PointSolution copy() {
     return new PointSolution(this);
   }
 
-  @Override public Object getAttribute(Object id) {
+  @Override
+  public Object getAttribute(Object id) {
     return attributes.get(id);
   }
 
   @Override
-  public boolean hasAttribute(Object id) {
-    return false;
-  }
-
-  @Override public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
     PointSolution that = (PointSolution) o;
 
-    if (numberOfObjectives != that.numberOfObjectives)
-      return false;
-    if (!Arrays.equals(objectives, that.objectives))
-      return false;
+    if (numberOfObjectives != that.numberOfObjectives) return false;
+    if (!Arrays.equals(objectives, that.objectives)) return false;
 
     return true;
   }
 
-  @Override public int hashCode() {
+  @Override
+  public int hashCode() {
     return Arrays.hashCode(objectives);
   }
-  
-  @Override
-	public String toString() {
-		return Arrays.toString(objectives);
-	}
 
-	@Override
-	public Map<Object, Object> getAttributes() {
-		return attributes;
-	}
+  @Override
+  public String toString() {
+    return Arrays.toString(objectives);
+  }
 }

@@ -152,7 +152,7 @@ public class PointSolutionTest {
 
 		PointSolution solution = new PointSolution(3);
 
-		assertTrue(solution.getAttributes().isEmpty());
+		assertTrue(solution.attributes().isEmpty());
 	}
 
 	@Test
@@ -163,8 +163,8 @@ public class PointSolutionTest {
 		solution.attributes().put("fake-atribute-1", 1);
 		solution.attributes().put("fake-atribute-2", 2);
 
-		assertFalse(solution.getAttributes().isEmpty());
-		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
-		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+		assertFalse(solution.attributes().isEmpty());
+		assertEquals((int) solution.attributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.attributes().get("fake-atribute-2"), 2);
 	}
 }

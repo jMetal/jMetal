@@ -20,6 +20,7 @@ public interface Solution<T> extends Serializable {
 
   @Deprecated
   void setObjective(int index, double value) ;
+
   @Deprecated
   double getObjective(int index) ;
 
@@ -30,14 +31,8 @@ public interface Solution<T> extends Serializable {
   void setVariable(int index, T variable) ;
 
   @Deprecated
-  double getConstraint(int index) ;
-  @Deprecated
   void setConstraint(int index, double value) ;
 
   @Deprecated
   Object getAttribute(Object id) ;
-  @Deprecated
-  boolean hasAttribute(Object id) ;
-  @Deprecated
-  Map<Object, Object> getAttributes();
 }

@@ -74,7 +74,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {
-      setConstraint(i, solution.getConstraint(i));
+      setConstraint(i, solution.constraints()[i]);
     }
 
     bounds = solution.bounds;

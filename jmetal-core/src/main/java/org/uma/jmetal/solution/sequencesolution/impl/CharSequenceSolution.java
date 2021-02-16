@@ -35,7 +35,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      setConstraint(i, solution.getConstraint(i));
+      setConstraint(i, solution.constraints()[i]);
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);
@@ -44,11 +44,6 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   @Override
   public CharSequenceSolution copy() {
     return new CharSequenceSolution(this);
-  }
-
-  @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
   }
 
   @Override

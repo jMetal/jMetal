@@ -56,7 +56,7 @@ public class DefaultBinarySolution
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      setConstraint(i, solution.getConstraint(i));
+      setConstraint(i, solution.constraints()[i]);
     }
 
     attributes = new HashMap<>(solution.attributes);
@@ -100,10 +100,5 @@ public class DefaultBinarySolution
     for (int i = 0; i < variables().size(); i++) {
       setVariable(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
-  }
-
-  @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
   }
 }

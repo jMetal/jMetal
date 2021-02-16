@@ -73,11 +73,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public boolean hasAttribute(Object id) {
-    return attributes.containsKey(id);
-  }
-
-  @Override
   public void setObjective(int index, double value) {
     objectives[index] = value;
   }
@@ -95,11 +90,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public void setVariable(int index, T value) {
     variables.set(index, value);
-  }
-
-  @Override
-  public double getConstraint(int index) {
-    return constraints[index] ;
   }
 
   @Override
@@ -141,10 +131,5 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public int hashCode() {
     return variables.hashCode();
-  }
-
-  @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
   }
 }
