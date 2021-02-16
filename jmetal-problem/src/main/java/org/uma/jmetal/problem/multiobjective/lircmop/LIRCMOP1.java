@@ -60,8 +60,8 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
     final double a = 0.51;
     final double b = 0.5;
 
-    solution.setConstraint(0, (a - g1(x)) * (g1(x) - b));
-    solution.setConstraint(1, (a - g2(x)) * (g2(x) - b));
+    solution.constraints()[0] = (a - g1(x)) * (g1(x) - b);
+    solution.constraints()[1] = (a - g2(x)) * (g2(x) - b);
   }
 
   protected double g1(double[] x) {

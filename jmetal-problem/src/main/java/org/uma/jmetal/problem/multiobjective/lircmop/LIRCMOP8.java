@@ -45,7 +45,7 @@ public class LIRCMOP8 extends LIRCMOP6 {
               - r;
     }
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 }

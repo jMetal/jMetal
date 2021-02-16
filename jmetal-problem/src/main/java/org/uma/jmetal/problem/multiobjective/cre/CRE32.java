@@ -121,7 +121,7 @@ public class CRE32 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

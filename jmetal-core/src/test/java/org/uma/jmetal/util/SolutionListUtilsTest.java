@@ -457,9 +457,9 @@ public class SolutionListUtilsTest {
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
-    s1.setConstraint(0, -4);
-    s2.setConstraint(0, -4);
-    s3.setConstraint(0, -4);
+    s1.constraints()[0] = -4;
+    s2.constraints()[0] = -4;
+    s3.constraints()[0] = -4;
 
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3);
@@ -473,8 +473,8 @@ public class SolutionListUtilsTest {
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
     DoubleSolution s4 = problem.createSolution();
-    s1.setConstraint(0, -4);
-    s3.setConstraint(0, -4);
+    s1.constraints()[0] = -4;
+    s3.constraints()[0] = -4;
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4);
     assertEquals(0.5, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);

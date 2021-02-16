@@ -40,11 +40,11 @@ public class DoubleValueAttributeComparator<S extends Solution<?>> extends Attri
     double value1 = 0 ;
     double value2 = 0 ;
 
-    if (solution1.getAttribute(attributeName) != null) {
-      value1 = (double) solution1.getAttribute(attributeName);
+    if (solution1.attributes().get(attributeName) != null) {
+      value1 = (double) solution1.attributes().get(attributeName);
     }
-    if (solution2.getAttribute(attributeName) != null) {
-      value2 = (double) solution2.getAttribute(attributeName);
+    if (solution2.attributes().get(attributeName) != null) {
+      value2 = (double) solution2.attributes().get(attributeName);
     }
 
     if (ordering.equals(Ordering.DESCENDING)) {

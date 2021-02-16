@@ -477,7 +477,7 @@ public class SolutionListUtils {
 
     List<S> resultList = new ArrayList<>();
     for (S solution : selectedSolutions) {
-      resultList.add(originalSolutionList.get((int) solution.getAttribute("INDEX_")));
+      resultList.add(originalSolutionList.get((int) solution.attributes().get("INDEX_")));
     }
 
     return resultList;

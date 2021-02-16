@@ -68,11 +68,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public Object getAttribute(Object id) {
-    return attributes.get(id);
-  }
-
-  @Override
   public void setObjective(int index, double value) {
     objectives[index] = value;
   }
@@ -90,11 +85,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public void setVariable(int index, T value) {
     variables.set(index, value);
-  }
-
-  @Override
-  public void setConstraint(int index, double value) {
-    constraints[index] = value ;
   }
 
   @Override

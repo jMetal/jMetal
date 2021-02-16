@@ -35,7 +35,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      setConstraint(i, solution.constraints()[i]);
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);

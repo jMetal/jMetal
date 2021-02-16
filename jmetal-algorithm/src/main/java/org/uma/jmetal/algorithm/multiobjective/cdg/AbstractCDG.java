@@ -200,7 +200,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void setG(S individual, int index, int value) {
-    int[] g_ = (int[]) individual.getAttribute("g_");
+    int[] g_ = (int[]) individual.attributes().get("g_");
     g_[index] = value;
     individual.attributes().put("g_", g_);
   }
@@ -212,7 +212,7 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected void setOrder(S individual, int value) {
-    int order_ = (int) individual.getAttribute("order_");
+    int order_ = (int) individual.attributes().get("order_");
     order_ = value;
     individual.attributes().put("order_", order_);
   }

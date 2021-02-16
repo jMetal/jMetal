@@ -82,7 +82,7 @@ public class Golinski extends AbstractDoubleProblem {
     constraint[10] = -(java.lang.Math.sqrt(a * a + b) / (0.1 * x7 * x7 * x7) - 1100.0);
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

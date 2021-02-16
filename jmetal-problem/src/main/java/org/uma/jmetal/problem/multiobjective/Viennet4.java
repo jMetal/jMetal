@@ -71,7 +71,7 @@ public class Viennet4 extends AbstractDoubleProblem {
     constraint[2] = x2 - x1 + 2.0;
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

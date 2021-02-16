@@ -104,7 +104,7 @@ public class SpatialSpreadDeviation<S extends Solution<?>>
       temp /= distance.length - 1;
       temp = Math.sqrt(temp);
       temp *= -1;
-      temp += (double) front.get(i).getAttribute(getAttributeID());
+      temp += (double) front.get(i).attributes().get(getAttributeID());
       // if((double) front.get(i).getAttribute(getAttributeID())!=Double.POSITIVE_INFINITY)
       front.get(i).attributes().put(getAttributeID(), temp);
     }

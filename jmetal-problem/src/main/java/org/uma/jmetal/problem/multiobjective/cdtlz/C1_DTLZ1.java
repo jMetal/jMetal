@@ -38,6 +38,6 @@ public class C1_DTLZ1 extends DTLZ1 {
       sum += solution.getObjective(i) / 0.5 ;
     }
 
-    solution.setConstraint(0, 1.0 - solution.getObjective(solution.objectives().length-1) - sum) ;
+    solution.constraints()[0] = 1.0 - solution.getObjective(solution.objectives().length-1) - sum ;
   }
 }

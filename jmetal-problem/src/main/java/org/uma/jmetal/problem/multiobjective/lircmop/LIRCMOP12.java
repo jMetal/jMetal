@@ -38,7 +38,7 @@ public class LIRCMOP12 extends LIRCMOP9 {
                 ((f0 - xOffset) * Math.sin(-theta) + (f1 - yOffset) * Math.cos(-theta)) / b, 2)
             - r;
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 }

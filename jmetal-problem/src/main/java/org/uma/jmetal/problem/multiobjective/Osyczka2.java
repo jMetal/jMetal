@@ -72,7 +72,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
     constraint[5] = ((x5 - 3.0) * (x5 - 3.0) + x6 - 4.0) / 4.0;
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

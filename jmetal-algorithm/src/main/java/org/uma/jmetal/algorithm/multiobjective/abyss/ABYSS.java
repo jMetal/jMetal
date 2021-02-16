@@ -397,8 +397,8 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       for (int j = i + 1; j < solutionList.size(); j++) {
         DoubleSolution solution2 = solutionList.get(j);
 
-        if (!(Boolean)solution1.getAttribute(SOLUTION_IS_MARKED)||
-            !(Boolean)solution2.getAttribute(SOLUTION_IS_MARKED)) {
+        if (!(Boolean)solution1.attributes().get(SOLUTION_IS_MARKED)||
+            !(Boolean)solution2.attributes().get(SOLUTION_IS_MARKED)) {
           List<DoubleSolution> pair = new ArrayList<>(2);
           pair.add(solution1);
           pair.add(solution2);

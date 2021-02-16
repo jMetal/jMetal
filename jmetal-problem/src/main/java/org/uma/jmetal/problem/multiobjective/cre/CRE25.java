@@ -59,6 +59,6 @@ public class CRE25 extends AbstractDoubleProblem {
       constraint = 0;
     }
 
-    solution.setConstraint(0, constraint);
+    solution.constraints()[0] = constraint;
   }
 }

@@ -56,7 +56,7 @@ public class DefaultBinarySolution
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      setConstraint(i, solution.constraints()[i]);
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<>(solution.attributes);

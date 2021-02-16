@@ -79,7 +79,7 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
     }
 
     for (int i = 0; i < solution.constraints().length; i++) {
-      setConstraint(i, solution.constraints()[i]);
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);

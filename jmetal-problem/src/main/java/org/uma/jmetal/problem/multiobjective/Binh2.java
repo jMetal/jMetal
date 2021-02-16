@@ -39,7 +39,7 @@ public class Binh2 extends AbstractDoubleProblem {
     solution.setObjective(1, fx[1]);
 
     this.evaluateConstraints(solution);
-    return solution ;
+    return solution;
   }
 
   /** EvaluateConstraints() method */
@@ -47,7 +47,7 @@ public class Binh2 extends AbstractDoubleProblem {
     double x0 = solution.getVariable(0);
     double x1 = solution.getVariable(1);
 
-    solution.setConstraint(0, -1.0 * (x0 - 5) * (x0 - 5) - x1 * x1 + 25.0);
-    solution.setConstraint(1, (x0 - 8) * (x0 - 8) + (x1 + 3) * (x1 + 3) - 7.7);
+    solution.constraints()[0] = -1.0 * (x0 - 5) * (x0 - 5) - x1 * x1 + 25.0;
+    solution.constraints()[1] = (x0 - 8) * (x0 - 8) + (x1 + 3) * (x1 + 3) - 7.7;
   }
 }

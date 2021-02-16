@@ -29,10 +29,4 @@ public interface Solution<T> extends Serializable {
 
   @Deprecated
   void setVariable(int index, T variable) ;
-
-  @Deprecated
-  void setConstraint(int index, double value) ;
-
-  @Deprecated
-  Object getAttribute(Object id) ;
 }

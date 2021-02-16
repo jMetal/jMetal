@@ -75,7 +75,7 @@ public class CrowdingDistance<S extends Solution<?>>
       for (int j = 1; j < size - 1; j++) {
         distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
         distance = distance / (objetiveMaxn - objetiveMinn);
-        distance += (double)front.get(j).getAttribute(getAttributeIdentifier());
+        distance += (double)front.get(j).attributes().get(getAttributeIdentifier());
         front.get(j).attributes().put(getAttributeIdentifier(), distance);
       }
     }

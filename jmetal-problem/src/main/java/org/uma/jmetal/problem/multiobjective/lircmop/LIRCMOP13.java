@@ -67,8 +67,8 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
     constraint[0] = (f - 9) * (f - 4);
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 
   protected double g1(double[] x) {

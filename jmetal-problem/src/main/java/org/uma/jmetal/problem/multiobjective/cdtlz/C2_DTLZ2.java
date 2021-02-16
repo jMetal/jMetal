@@ -59,6 +59,6 @@ public class C2_DTLZ2 extends DTLZ2 {
 
     sum2 -= Math.pow(rValue, 2.0) ;
 
-    solution.setConstraint(0, Math.max(maxSum1, sum2)) ;
+    solution.constraints()[0] = Math.max(maxSum1, sum2) ;
   }
 }

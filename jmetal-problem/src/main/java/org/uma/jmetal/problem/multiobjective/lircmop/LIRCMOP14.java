@@ -32,8 +32,8 @@ public class LIRCMOP14 extends LIRCMOP13 {
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);
     constraint[2] = (f - 1.75 * 1.75) * (f - 1.6 * 1.6);
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 
   protected double g1(double[] x) {

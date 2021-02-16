@@ -43,7 +43,7 @@ public class ConstrEx extends AbstractDoubleProblem {
     double x1 = solution.getVariable(0);
     double x2 = solution.getVariable(1);
 
-    solution.setConstraint(0, (x2 + 9 * x1 - 6.0));
-    solution.setConstraint(1, (-x2 + 9 * x1 - 1.0));
+    solution.constraints()[0] = (x2 + 9 * x1 - 6.0);
+    solution.constraints()[1] = (-x2 + 9 * x1 - 1.0);
   }
 }

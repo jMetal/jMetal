@@ -108,16 +108,8 @@ public class PointSolution implements Solution<Double> {
   }
 
   @Override
-  public void setConstraint(int index, double value) {}
-
-  @Override
   public PointSolution copy() {
     return new PointSolution(this);
-  }
-
-  @Override
-  public Object getAttribute(Object id) {
-    return attributes.get(id);
   }
 
   @Override

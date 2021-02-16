@@ -47,7 +47,7 @@ public class C3_DTLZ1 extends DTLZ1 {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

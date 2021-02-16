@@ -100,7 +100,7 @@ public class AlgorithmEnsembleIT {
 
     assertTrue(algorithmEnsemble.getResult().size() >= (populationSize - 5));
     for (DoubleSolution solution : algorithmEnsemble.getResult()) {
-      assertEquals(nsgaii.getName(), solution.getAttribute("ALGORITHM_NAME"));
+      assertEquals(nsgaii.getName(), solution.attributes().get("ALGORITHM_NAME"));
     }
   }
 

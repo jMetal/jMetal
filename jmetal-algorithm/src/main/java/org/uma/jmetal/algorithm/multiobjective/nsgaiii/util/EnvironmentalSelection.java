@@ -350,7 +350,7 @@ public class EnvironmentalSelection<S extends Solution<?>>
   @Override
   @SuppressWarnings("unchecked")
   public List<Double> getAttribute(S solution) {
-    return (List<Double>) solution.getAttribute(getAttributeIdentifier());
+    return (List<Double>) solution.attributes().get(getAttributeIdentifier());
   }
 
   @Override

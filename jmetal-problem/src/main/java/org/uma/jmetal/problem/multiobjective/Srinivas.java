@@ -56,7 +56,7 @@ public class Srinivas extends AbstractDoubleProblem {
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }
