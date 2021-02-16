@@ -38,7 +38,7 @@ public class ConstraintHandling {
     double overallConstraintViolation = 0.0;
     for (int i = 0; i < solution.constraints().length; i++) {
       if (solution.constraints()[i] < 0.0) {
-        overallConstraintViolation += solution.getConstraint(i) ;
+        overallConstraintViolation += solution.constraints()[i] ;
       }
     }
 

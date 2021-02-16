@@ -58,7 +58,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
             .setSelectionOperator(selection).build();
 
     // reference vectors
-    double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.objectives().length + "D_" + populationSize + ".dat");
+    double[][] referenceVectors = VectorFileUtils.readVectors("resources/weightVectorFiles/moead/W" + problem.getNumberOfObjectives() + "D_" + populationSize + ".dat");
     ((DNSGAII<DoubleSolution>) algorithm).setReferenceVectors(referenceVectors);
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

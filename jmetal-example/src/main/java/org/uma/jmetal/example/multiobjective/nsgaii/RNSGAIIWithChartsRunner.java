@@ -126,7 +126,7 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
 
     ChartContainerWithReferencePoints chart = new ChartContainerWithReferencePoints(algorithm.getName(), 80);
     chart.setFrontChart(0, 1, referenceParetoFront);
-    chart.setReferencePoint(convertReferencePointListToListOfLists(referencePoint, problem.objectives().length));
+    chart.setReferencePoint(convertReferencePointListToListOfLists(referencePoint, problem.getNumberOfObjectives()));
     chart.initChart();
 
     solutionListMeasure.register(new ChartListener(chart));

@@ -97,14 +97,14 @@ public class MOEADDE extends ComponentBasedEvolutionaryAlgorithm<DoubleSolution>
             offspringPopulationSize, crossover, mutation, subProblemIdGenerator);
 
     WeightVectorNeighborhood<DoubleSolution> neighborhood = null ;
-    if (problem.objectives().length == 2) {
+    if (problem.getNumberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
       try {
         neighborhood =
             new WeightVectorNeighborhood<>(
                 populationSize,
-                problem.objectives().length,
+                problem.getNumberOfObjectives(),
                 neighborhoodSize,
                  weightVectorDirectory);
       } catch (FileNotFoundException exception) {

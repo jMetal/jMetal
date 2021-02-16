@@ -99,12 +99,12 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 		//If a file with weight vectors is not given as parameter, weights are calculated or read from the resources file of jMetal
 		if ("".equals(this.weightVectorsFileName)) {
 			//For two biobjective problems weights are computed
-			if (problem.objectives().length == 2) {
+			if (problem.getNumberOfObjectives() == 2) {
 				weights = WeightVectors.initializeUniformlyInTwoDimensions(epsilon, getMaxPopulationSize());
 			}
 			//For more than two objectives, weights are read from the resources file of jMetal
 			else {
-				String dataFileName = "W" + problem.objectives().length + "D_" + getMaxPopulationSize() + ".dat";
+				String dataFileName = "W" + problem.getNumberOfObjectives() + "D_" + getMaxPopulationSize() + ".dat";
 				weights = VectorFileUtils.readVectors(dataFileName);
 			}
 		} else { //If a file with weight vectors is given as parameter, weights are read from that file
@@ -115,7 +115,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 
 		//We validate that the weight vectors are valid:
 		//The number of components of each weight is similar to the number of objectives of the problem being solved.
-		if (!WeightVectors.validate(weights, problem.objectives().length))
+		if (!WeightVectors.validate(weights, problem.getNumberOfObjectives()))
 		{
 			throw new JMetalException("Weight vectors are invalid. Check that weight vectors have as many components" +
 					" as objectives the problem being solved has.") ;

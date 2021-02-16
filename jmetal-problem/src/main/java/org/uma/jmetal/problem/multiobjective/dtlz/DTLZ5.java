@@ -40,14 +40,14 @@ public class DTLZ5 extends AbstractDoubleProblem {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
-    int numberOfObjectives = objectives().length;
+    int numberOfObjectives = solution.objectives().length;
     double[] theta = new double[numberOfObjectives - 1];
     double g = 0.0;
 
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables];
 
-    int k = getNumberOfVariables() - objectives().length + 1;
+    int k = getNumberOfVariables() - solution.objectives().length + 1;
 
     for (int i = 0; i < numberOfVariables; i++) {
       x[i] = solution.getVariable(i);

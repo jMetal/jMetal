@@ -13,7 +13,7 @@ class RE24Test {
     DoubleProblem problem = new RE24();
 
     assertEquals(2, problem.getNumberOfVariables());
-    assertEquals(2, problem.objectives().length);
+    assertEquals(2, problem.getNumberOfObjectives());
     assertEquals(0, problem.getNumberOfConstraints());
     assertEquals("RE24", problem.getName());
   }
@@ -24,8 +24,8 @@ class RE24Test {
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);
 
-    assertEquals(2, solution.getNumberOfVariables());
+    assertEquals(2, solution.variables().size());
     assertEquals(2, solution.objectives().length);
-    assertEquals(0, solution.getNumberOfConstraints());
+    assertEquals(0, solution.constraints().length);
   }
 }

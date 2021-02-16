@@ -56,14 +56,14 @@ public class ArtificiallDecisionMakerIT {
     selection = new BinaryTournamentSelection<DoubleSolution>(
         new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    IdealPoint idealPoint = new IdealPoint(problem.objectives().length);
+    IdealPoint idealPoint = new IdealPoint(problem.getNumberOfObjectives());
     idealPoint.update(problem.createSolution().objectives());
-    NadirPoint nadirPoint = new NadirPoint(problem.objectives().length);
+    NadirPoint nadirPoint = new NadirPoint(problem.getNumberOfObjectives());
     nadirPoint.update(problem.createSolution().objectives());
     double considerationProbability = 0.1;
     List<Double> rankingCoeficient = new ArrayList<>();
-    for (int i = 0; i < problem.objectives().length; i++) {
-      rankingCoeficient.add(1.0 / problem.objectives().length);
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
+      rankingCoeficient.add(1.0 / problem.getNumberOfObjectives());
     }
 
     for (int cont = 0; cont < numberIterations; cont++) {
@@ -71,7 +71,7 @@ public class ArtificiallDecisionMakerIT {
 
       double epsilon = 0.01;
       List<Double> asp = new ArrayList<>();
-      for (int i = 0; i < problem.objectives().length; i++) {
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
         asp.add(0.0);//initialize asp to ideal
         referencePoint.add(0.0);//initialization
       }

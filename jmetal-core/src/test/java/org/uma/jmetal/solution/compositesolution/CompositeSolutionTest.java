@@ -52,7 +52,7 @@ public class CompositeSolutionTest {
     assertNotNull(solution);
     assertEquals(2, solution.variables().size());
     assertEquals(numberOfObjectives, solution.objectives().length);
-    assertEquals(numberOfConstraints, solution.getNumberOfConstraints());
+    assertEquals(numberOfConstraints, solution.constraints().length);
     assertEquals(numberOfObjectives, solution.getVariable(0).objectives().length);
     assertEquals(numberOfObjectives, solution.getVariable(1).objectives().length);
     assertEquals(numberOfConstraints, solution.getVariable(0).constraints().length);

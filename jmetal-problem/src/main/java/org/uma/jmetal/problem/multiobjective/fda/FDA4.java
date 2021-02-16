@@ -36,7 +36,7 @@ public class FDA4 extends FDA {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[objectives().length];
+    double[] f = new double[solution.objectives().length];
     double g = this.evalG(solution, M - 1);
     f[0] = this.evalF1(solution, g);
     f[1] = evalFK(solution, g, 2);

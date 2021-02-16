@@ -116,9 +116,9 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     speed = new double[swarmSize][problem.getNumberOfVariables()];
     age = new int[swarmSize] ;
 
-    indArray = new DoubleSolution[problem.objectives().length];
-    z = new double[problem.objectives().length];
-    lambda = new double[swarmSize][problem.objectives().length];
+    indArray = new DoubleSolution[problem.getNumberOfObjectives()];
+    z = new double[problem.getNumberOfObjectives()];
+    lambda = new double[swarmSize][problem.getNumberOfObjectives()];
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
@@ -223,7 +223,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
    * initUniformWeight
    */
   private void initUniformWeight() {
-    if ((problem.objectives().length == 2) && (swarmSize < 300)) {
+    if ((problem.getNumberOfObjectives() == 2) && (swarmSize < 300)) {
       for (int n = 0; n < swarmSize; n++) {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
@@ -232,7 +232,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     }
     else {
       String dataFileName;
-      dataFileName = "W" + problem.objectives().length + "D_" +
+      dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
               swarmSize + ".dat";
 
       try {
@@ -263,7 +263,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
 
   private void initIdealPoint()  {
-    for (int i = 0; i < problem.objectives().length; i++) {
+    for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       z[i] = 1.0e+30;
       indArray[i] = problem.createSolution() ;
       problem.evaluate(indArray[i]);
@@ -275,7 +275,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
   private void updateReference(DoubleSolution individual) {
-    for (int n = 0; n < problem.objectives().length; n++) {
+    for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
       if (individual.getObjective(n) < z[n]) {
         z[n] = individual.getObjective(n);
 
@@ -324,7 +324,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     if (functionType == FunctionType.TCHE) {
       double maxFun = -1.0e+30;
 
-      for (int n = 0; n < problem.objectives().length; n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         double diff = Math.abs(sol.getObjective(n) - z[n]);
 
         double feval;
@@ -342,7 +342,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
     }else if(functionType == FunctionType.AGG){
       double sum = 0.0;
-      for (int n = 0; n < problem.objectives().length; n++) {
+      for (int n = 0; n < problem.getNumberOfObjectives(); n++) {
         sum += (lambda[n]) * sol.getObjective(n);
       }
 
@@ -354,7 +354,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
 
       d1 = d2 = nl = 0.0;
 
-      for (int i = 0; i < problem.objectives().length; i++)
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++)
       {
         d1 += (sol.getObjective(i) - z[i]) * lambda[i];
         nl += Math.pow(lambda[i], 2.0);
@@ -362,7 +362,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       nl = Math.sqrt(nl);
       d1 = Math.abs(d1) / nl;
 
-      for (int i = 0; i < problem.objectives().length; i++)
+      for (int i = 0; i < problem.getNumberOfObjectives(); i++)
       {
         d2 += Math.pow((sol.getObjective(i) - z[i]) - d1 * (lambda[i] / nl), 2.0);
       }

@@ -45,7 +45,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     /// NSGAIII
     numberOfDivisions = builder.getNumberOfDivisions() ;
 
-    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().objectives().length , numberOfDivisions);
+    (new ReferencePoint<S>()).generateReferencePoints(referencePoints,getProblem().getNumberOfObjectives() , numberOfDivisions);
 
     int populationSize = referencePoints.size();
     while (populationSize%4>0) {
@@ -148,7 +148,7 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     // A copy of the reference list should be used as parameter of the environmental selection
     EnvironmentalSelection<S> selection =
             new EnvironmentalSelection<>(fronts,getMaxPopulationSize() - pop.size(),getReferencePointsCopy(),
-                    getProblem().objectives().length);
+                    getProblem().getNumberOfObjectives());
     
     var choosen = selection.execute(last);
     pop.addAll(choosen);

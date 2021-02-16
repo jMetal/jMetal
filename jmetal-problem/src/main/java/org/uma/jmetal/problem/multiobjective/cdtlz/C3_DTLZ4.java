@@ -39,7 +39,7 @@ public class C3_DTLZ4 extends DTLZ4 {
     for (int j = 0; j < getNumberOfConstraints(); j++) {
       double sum = 0;
       constraint[j] = Math.pow(solution.getObjective(j), 2.0) / 4.0 - 1.0;
-      for (int i = 0; i < objectives().length; i++) {
+      for (int i = 0; i < solution.objectives().length; i++) {
         if (i != j) {
           sum += Math.pow(solution.getObjective(j), 2.0);
         }

@@ -29,7 +29,7 @@ public class Schaffer extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[objectives().length];
+    double[] f = new double[solution.objectives().length];
     double value = solution.getVariable(0);
 
     f[0] = value * value;

@@ -38,9 +38,6 @@ public interface Solution<T> extends Serializable {
   int getNumberOfVariables() ;
 
   @Deprecated
-  int getNumberOfConstraints() ;
-
-  @Deprecated
   Object getAttribute(Object id) ;
   @Deprecated
   boolean hasAttribute(Object id) ;

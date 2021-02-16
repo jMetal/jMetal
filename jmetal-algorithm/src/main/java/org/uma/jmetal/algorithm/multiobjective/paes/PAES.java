@@ -55,7 +55,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
         problem,
         maxEvaluations,
         new GenericBoundedArchive<>(
-            archiveSize, new GridDensityEstimator<>(biSections, problem.objectives().length)),
+            archiveSize, new GridDensityEstimator<>(biSections, problem.getNumberOfObjectives())),
         mutationOperator);
   }
 

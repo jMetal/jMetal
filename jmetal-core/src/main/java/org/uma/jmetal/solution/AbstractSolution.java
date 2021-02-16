@@ -113,11 +113,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public int getNumberOfConstraints() {
-    return constraints.length ;
-  }
-
-  @Override
   public String toString() {
     StringBuilder result = new StringBuilder("Variables: ");
     for (T var : variables) {

@@ -44,7 +44,7 @@ public class DTLZ2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
-    int numberOfObjectives = objectives().length;
+    int numberOfObjectives = solution.objectives().length;
     double[] f = new double[numberOfObjectives];
     double[] x = new double[numberOfVariables] ;
 
@@ -52,7 +52,7 @@ public class DTLZ2 extends AbstractDoubleProblem {
       x[i] = solution.getVariable(i) ;
     }
 
-    int k = getNumberOfVariables() - objectives().length + 1;
+    int k = getNumberOfVariables() - solution.objectives().length + 1;
 
     double g = 0.0;
     for (int i = numberOfVariables - k; i < numberOfVariables; i++) {

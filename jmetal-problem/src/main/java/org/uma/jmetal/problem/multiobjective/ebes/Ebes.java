@@ -717,9 +717,9 @@ public class Ebes extends AbstractDoubleProblem {
     System.out.println("  Number of Bars: " + numberOfElements_);
     System.out.println("  Number of Groups: " + numberOfGroupElements_);
     System.out.println("Optimization multi-objective: ");
-    System.out.println("  Number of objective function: " + objectives().length);
+    System.out.println("  Number of objective function: " + getNumberOfObjectives());
     String txt = "";
-    for (int i = 0; i < objectives().length; i++) {
+    for (int i = 0; i < getNumberOfObjectives(); i++) {
       txt = txt + OF_[i] + " ";
     }
     System.out.println("  " + txt);
@@ -891,14 +891,14 @@ public class Ebes extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     int hi = 0;
-    double[] fx = new double[objectives().length]; // functions
+    double[] fx = new double[solution.objectives().length]; // functions
 
     EBEsElementsTopology(solution); // transforma geometria a caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
     EBEsCalculus(); //  metodo matricial de la rigidez para estructuras espaciales (3D)
 
     // START OBJETIVES FUNCTION
-    for (int j = 0; j < objectives().length; j++) {
+    for (int j = 0; j < solution.objectives().length; j++) {
       // total weight
       if (OF_[j].equals("W")) {
         // START structure total weight ---------------------

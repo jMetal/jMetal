@@ -37,7 +37,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.objectives().length, problem.getBoundsForVariables());
+          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getBoundsForVariables());
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         newSolution.setVariable(j, variables.get(j));
       }

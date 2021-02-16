@@ -12,7 +12,7 @@ class CRE22Test {
     DoubleProblem problem = new CRE22();
 
     assertEquals(4, problem.getNumberOfVariables());
-    assertEquals(2, problem.objectives().length);
+    assertEquals(2, problem.getNumberOfObjectives());
     assertEquals(4, problem.getNumberOfConstraints());
     assertEquals("CRE22", problem.getName());
   }
@@ -23,8 +23,8 @@ class CRE22Test {
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);
 
-    assertEquals(4, solution.getNumberOfVariables());
+    assertEquals(4, solution.variables().size());
     assertEquals(2, solution.objectives().length);
-    assertEquals(4, solution.getNumberOfConstraints());
+    assertEquals(4, solution.constraints().length);
   }
 }

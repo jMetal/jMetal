@@ -111,7 +111,7 @@ public class CDG extends AbstractCDG<DoubleSolution> {
       if(gen % 20 == 0)
     	  initializeNadirPoint();
 
-      if(problem.objectives().length == 3){
+      if(problem.getNumberOfObjectives() == 3){
           updateBorder();
     	  excludeBadSolution3();
     	  chooseSpecialPopulation();

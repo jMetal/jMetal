@@ -91,14 +91,14 @@ public class MOEAD<S extends Solution<?>> extends ComponentBasedEvolutionaryAlgo
 
     WeightVectorNeighborhood<S> neighborhood = null;
 
-    if (problem.objectives().length == 2) {
+    if (problem.getNumberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
       try {
         neighborhood =
             new WeightVectorNeighborhood<>(
                 populationSize,
-                problem.objectives().length,
+                problem.getNumberOfObjectives(),
                 neighborhoodSize,
                 weightVectorDirectory);
       } catch (FileNotFoundException exception) {

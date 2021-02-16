@@ -52,10 +52,10 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 		this.evaluator = evaluator;
 
-		this.nadirPoint     = new ArrayList<Double>(this.getProblem().objectives().length);
-		this.initializeNadirPoint(this.getProblem().objectives().length);
-		this.referencePoint = new ArrayList<Double>(this.getProblem().objectives().length);
-		this.initializeReferencePoint(this.getProblem().objectives().length);
+		this.nadirPoint     = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
+		this.initializeNadirPoint(this.getProblem().getNumberOfObjectives());
+		this.referencePoint = new ArrayList<Double>(this.getProblem().getNumberOfObjectives());
+		this.initializeReferencePoint(this.getProblem().getNumberOfObjectives());
 	}
 
 	@Override

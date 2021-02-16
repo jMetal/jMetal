@@ -66,11 +66,11 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
     numberOfThreads = 1;
     sigma_ = 10e-6;
 
-    if (problem.objectives().length == 2) {
+    if (problem.getNumberOfObjectives() == 2) {
       k_ = 180;
       t_ = 1;
       childGrid_ = 60;
-    } else if (problem.objectives().length == 3) {
+    } else if (problem.getNumberOfObjectives() == 3) {
       k_ = 25;
       t_ = 1;
       k_++;
@@ -79,10 +79,10 @@ public class CDGBuilder implements AlgorithmBuilder<AbstractCDG<DoubleSolution>>
       k_ = 180;
       t_ = 5;
     }
-    childGridNum_ = (int) Math.pow(childGrid_, problem.objectives().length);
+    childGridNum_ = (int) Math.pow(childGrid_, problem.getNumberOfObjectives());
     childGridNum_++;
-    subproblemNum_ = (int) Math.pow(k_, problem.objectives().length - 1);
-    subproblemNum_ = subproblemNum_ * problem.objectives().length;
+    subproblemNum_ = (int) Math.pow(k_, problem.getNumberOfObjectives() - 1);
+    subproblemNum_ = subproblemNum_ * problem.getNumberOfObjectives();
   }
 
   /* Getters/Setters */
