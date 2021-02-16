@@ -63,13 +63,12 @@ public class TwoDimensionalMeshTest {
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
 
-    neighborhood.getNeighbors(list, 1) ;
+    assertThrows(InvalidConditionException.class, () -> neighborhood.getNeighbors(list, 1)) ;
   }
 
   @Test
   public void shouldGetNeighborsWithASolutionIndexValueGreaterThanTheListSizeThrowAnException() {
     TwoDimensionalMesh<IntegerSolution> neighborhood = new TwoDimensionalMesh<IntegerSolution>(2, 2, new int[][]{north, south, east, west}) ;
-
 
     List<IntegerSolution> list = new ArrayList<>() ;
     list.add(mock(IntegerSolution.class));
@@ -77,7 +76,7 @@ public class TwoDimensionalMeshTest {
     list.add(mock(IntegerSolution.class));
     list.add(mock(IntegerSolution.class));
 
-    neighborhood.getNeighbors(list, 5) ;
+    assertThrows(InvalidConditionException.class, () -> neighborhood.getNeighbors(list, 5)) ;
   }
 
   /**
