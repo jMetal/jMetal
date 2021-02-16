@@ -63,8 +63,8 @@ public class IntegerSBXCrossoverExample {
 
     IntegerSolution solution1 = problem.createSolution() ;
     IntegerSolution solution2 = problem.createSolution() ;
-    solution1.setVariable(0, -50);
-    solution2.setVariable(0, 50);
+    solution1.variables().set(0, -50);
+    solution2.variables().set(0, 50);
     List<IntegerSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;

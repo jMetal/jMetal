@@ -63,8 +63,8 @@ public class SBXCrossoverExample {
 
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
-    solution1.setVariable(0, -3.0);
-    solution2.setVariable(0, 3.0);
+    solution1.variables().set(0, -3.0);
+    solution2.variables().set(0, 3.0);
     List<DoubleSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;

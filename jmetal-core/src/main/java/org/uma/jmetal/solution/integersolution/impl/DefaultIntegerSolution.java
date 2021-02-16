@@ -37,7 +37,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     for (int i = 0; i < boundsList.size(); i++) {
       Bounds<Integer> bounds = boundsList.get(i);
-      setVariable(
+      variables().set(
           i, JMetalRandom.getInstance().nextInt(bounds.getLowerBound(), bounds.getUpperBound()));
     }
   }
@@ -66,7 +66,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      setVariable(i, solution.variables().get(i));
+      variables().set(i, solution.variables().get(i));
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {

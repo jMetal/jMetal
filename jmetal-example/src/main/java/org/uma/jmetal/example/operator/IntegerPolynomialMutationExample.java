@@ -62,7 +62,7 @@ public class IntegerPolynomialMutationExample {
     MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0, distributionIndex) ;
 
     IntegerSolution solution = problem.createSolution() ;
-    solution.setVariable(0, 0);
+    solution.variables().set(0, 0);
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0 ; i < numberOfPoints ; i++) {

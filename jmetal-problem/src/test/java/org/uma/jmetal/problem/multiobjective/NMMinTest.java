@@ -16,19 +16,19 @@ public class NMMinTest {
   public void evaluateSimpleSolutions() {
     problem = new NMMin(1, 100, -100, -1000, 1000) ;
     IntegerSolution solution = problem.createSolution() ;
-    solution.setVariable(0, 100);
+    solution.variables().set(0, 100);
     problem.evaluate(solution);
 
     assertEquals(0, (int)solution.objectives()[0]) ;
     assertEquals(200, (int)solution.objectives()[1]) ;
 
-    solution.setVariable(0, -100);
+    solution.variables().set(0, -100);
     problem.evaluate(solution);
 
     assertEquals(200, (int)solution.objectives()[0]) ;
     assertEquals(0, (int)solution.objectives()[1]) ;
 
-    solution.setVariable(0, 0);
+    solution.variables().set(0, 0);
     problem.evaluate(solution);
 
     assertEquals(100, (int)solution.objectives()[0]) ;

@@ -48,7 +48,7 @@ public class DefaultBinarySolution
     this.bitsPerVariable = solution.bitsPerVariable;
 
     for (int i = 0; i < variables().size(); i++) {
-      setVariable(i, (BinarySet) solution.variables().get(i).clone());
+      variables().set(i, (BinarySet) solution.variables().get(i).clone());
     }
 
     for (int i = 0; i < objectives().length; i++) {
@@ -98,7 +98,7 @@ public class DefaultBinarySolution
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
     for (int i = 0; i < variables().size(); i++) {
-      setVariable(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
+      variables().set(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
   }
 }

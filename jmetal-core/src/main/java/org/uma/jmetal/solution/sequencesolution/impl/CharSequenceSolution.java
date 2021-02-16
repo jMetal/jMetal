@@ -18,7 +18,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     super(stringLength, numberOfObjectives);
 
     for (int i = 0; i < stringLength; i++) {
-      setVariable(i, ' ');
+      variables().set(i, ' ');
     }
   }
 
@@ -31,7 +31,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     }
 
     for (int i = 0; i < variables().size(); i++) {
-      setVariable(i, solution.variables().get(i));
+      variables().set(i, solution.variables().get(i));
     }
 
     for (int i = 0; i < constraints().length; i++) {

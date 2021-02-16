@@ -34,9 +34,9 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
       int numberOfConstraints) {
     super(2, numberOfObjectives, numberOfConstraints);
 
-    setVariable(
+    variables().set(
         0, new DefaultIntegerSolution(integerBounds, numberOfObjectives, numberOfConstraints));
-    setVariable(
+    variables().set(
         1, new DefaultDoubleSolution(doubleBounds, numberOfObjectives, numberOfConstraints));
   }
 
@@ -59,8 +59,8 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
         integerSolution.constraints().length == doubleSolution.constraints().length,
         "The two solutions must have the same number of constraints");
 
-    setVariable(0, integerSolution);
-    setVariable(1, doubleSolution);
+    variables().set(0, integerSolution);
+    variables().set(1, doubleSolution);
   }
 
   /** Copy constructor */
@@ -71,7 +71,7 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
         solution.constraints().length);
 
     for (int i = 0; i < solution.variables().size(); i++) {
-      setVariable(i, solution.variables().get(i).copy());
+      variables().set(i, solution.variables().get(i).copy());
     }
 
     for (int i = 0; i < solution.objectives().length; i++) {

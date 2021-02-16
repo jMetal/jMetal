@@ -160,7 +160,7 @@ public class MaF09 extends AbstractDoubleProblem {
       for (int i = 0; i < numberOfVariables_; i++) {
         Bounds<Double> bounds = getBoundsForVariables().get(i) ;
         x[i] = generV(bounds.getLowerBound(), bounds.getUpperBound());
-        solution.setVariable(i, x[i]);
+        solution.variables().set(i, x[i]);
       }
       infeasible = if_infeasible(x);
     }

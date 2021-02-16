@@ -60,7 +60,7 @@ public class PolynomialMutationExample {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setVariable(0, 0.0);
+    solution.variables().set(0, 0.0);
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0 ; i < numberOfPoints ; i++) {

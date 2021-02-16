@@ -219,7 +219,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     for (int i = 0; i < frontWithVariableValues.getNumberOfPoints(); i++) {
       DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
       for (int vars = 0; vars < numberOfVariables; vars++) {
-        solution.setVariable(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
+        solution.variables().set(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
       }
       for (int objs = 0; objs < numberOfObjectives; objs++) {
         solution.setObjective(objs, frontWithObjectiveValues.getPoint(i).getValues()[objs]);

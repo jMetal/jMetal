@@ -73,11 +73,6 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public void setVariable(int index, T value) {
-    variables.set(index, value);
-  }
-
-  @Override
   public String toString() {
     StringBuilder result = new StringBuilder("Variables: ");
     for (T var : variables) {

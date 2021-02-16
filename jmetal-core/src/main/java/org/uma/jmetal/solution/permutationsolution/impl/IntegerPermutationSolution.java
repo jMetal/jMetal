@@ -31,7 +31,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     java.util.Collections.shuffle(randomSequence);
 
     for (int i = 0; i < permutationLength; i++) {
-      setVariable(i, randomSequence.get(i));
+      variables().set(i, randomSequence.get(i));
     }
   }
 
@@ -44,7 +44,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     }
 
     for (int i = 0; i < variables().size(); i++) {
-      setVariable(i, solution.variables().get(i));
+      variables().set(i, solution.variables().get(i));
     }
 
     for (int i = 0; i < constraints().length; i++) {

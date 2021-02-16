@@ -175,8 +175,8 @@ public class BLXAlphaCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(1) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
-    solutions.get(0).setVariable(0, 1.0);
-    solutions.get(1).setVariable(0, 1.0);
+    solutions.get(0).variables().set(0, 1.0);
+    solutions.get(1).variables().set(0, 1.0);
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);
 
@@ -200,10 +200,10 @@ public class BLXAlphaCrossoverTest {
     DoubleProblem problem = new MockDoubleProblem(2) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
-    solution1.setVariable(0, 1.0);
-    solution1.setVariable(1, 2.0);
-    solution2.setVariable(0, 2.0);
-    solution2.setVariable(1, 1.0);
+    solution1.variables().set(0, 1.0);
+    solution1.variables().set(1, 2.0);
+    solution2.variables().set(0, 2.0);
+    solution2.variables().set(1, 1.0);
     List<DoubleSolution> solutions = Arrays.asList(solution1, solution2) ;
 
     ReflectionTestUtils.setField(crossover, "randomGenerator", randomGenerator);

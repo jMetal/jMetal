@@ -299,7 +299,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       do {
         double value = mutate(parent, j);
 
-        child.setVariable(j, value);
+        child.variables().set(j, value);
 
         j = (j + 1) % numberOfVariables;
         l++;

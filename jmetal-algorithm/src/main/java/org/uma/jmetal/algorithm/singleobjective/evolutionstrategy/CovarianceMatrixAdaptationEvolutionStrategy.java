@@ -513,7 +513,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       Bounds<Double> bounds = ((DoubleProblem)getProblem()).getBoundsForVariables().get(i) ;
       value = bounds.restrict(value);
 
-      solution.setVariable(i, value);
+      solution.variables().set(i, value);
     }
 
     return solution;

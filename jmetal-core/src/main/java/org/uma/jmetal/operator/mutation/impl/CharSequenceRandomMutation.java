@@ -50,7 +50,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {
         int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength - 1);
         char newCharValue = alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length - 1)];
-        solution.setVariable(positionToChange, newCharValue);
+        solution.variables().set(positionToChange, newCharValue);
       }
     }
   }
