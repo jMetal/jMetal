@@ -49,10 +49,10 @@ public class ZDT6 extends ZDT1 {
    */
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int var = 1; var < solution.getNumberOfVariables(); var++) {
+    for (int var = 1; var < solution.variables().size(); var++) {
       g += solution.getVariable(var);
     }
-    g = g / (solution.getNumberOfVariables() - 1);
+    g = g / (solution.variables().size() - 1);
     g = Math.pow(g, 0.25);
     g = 9.0 * g;
     g = 1.0 + g;

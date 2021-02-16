@@ -63,7 +63,7 @@ public class FDA1 extends FDA {
 
     double gT = Math.sin(0.5 * Math.PI * time);
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 1; i < solution.variables().size(); i++) {
       g += Math.pow((solution.getVariable(i) - gT), 2);
     }
     g = g + 1.0;

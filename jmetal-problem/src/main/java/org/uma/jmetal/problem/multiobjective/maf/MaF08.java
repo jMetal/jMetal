@@ -57,7 +57,7 @@ public class MaF08 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables = solution.getNumberOfVariables();
+    int numberOfVariables = solution.variables().size();
     int numberOfObjectives = solution.objectives().length;
 
     double[] x = new double[numberOfVariables];

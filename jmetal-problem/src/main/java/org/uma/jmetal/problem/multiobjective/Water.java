@@ -30,8 +30,8 @@ public class Water extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = new double[solution.getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    double[] x = new double[solution.variables().size()];
+    for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.getVariable(i);
     }
 
@@ -54,8 +54,8 @@ public class Water extends AbstractDoubleProblem {
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
-    double[] x = new double[solution.getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    double[] x = new double[solution.variables().size()];
+    for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.getVariable(i);
     }
 

@@ -37,7 +37,7 @@ public class FDA2 extends FDA implements Serializable {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] f = new double[solution.objectives().length];
     f[0] = solution.getVariable(0);
-    double g = this.evalG(solution, 1, (solution.getNumberOfVariables() / 2) + 1);
+    double g = this.evalG(solution, 1, (solution.variables().size() / 2) + 1);
     double h = this.evalH(f[0], g);
     f[1] = g * h; // 1-Math.sqrt(f[0]);
     solution.setObjective(0, f[0]);
@@ -56,7 +56,7 @@ public class FDA2 extends FDA implements Serializable {
     for (int i = limitInf; i < limitSup; i++) {
       g += Math.pow(solution.getVariable(i), 2.0);
     }
-    for (int i = limitSup; i < solution.getNumberOfVariables(); i++) {
+    for (int i = limitSup; i < solution.variables().size(); i++) {
       g += Math.pow((solution.getVariable(i) + 1.0), 2.0);
     }
     g = g + 1.0;

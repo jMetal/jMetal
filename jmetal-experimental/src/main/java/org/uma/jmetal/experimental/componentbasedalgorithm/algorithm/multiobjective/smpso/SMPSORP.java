@@ -264,7 +264,7 @@ public class SMPSORP
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+      for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
                 velocityConstriction(
                         constrictionCoefficient(c1, c2)

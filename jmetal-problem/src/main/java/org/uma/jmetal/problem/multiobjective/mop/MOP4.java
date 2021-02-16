@@ -65,7 +65,7 @@ public class MOP4 extends AbstractDoubleProblem {
    */
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 1; i < solution.variables().size(); i++) {
       double t = solution.getVariable(i) - Math.sin(0.5 * Math.PI * solution.getVariable(0));
       g += Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
     }

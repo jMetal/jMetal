@@ -68,7 +68,7 @@ public class MOP7 extends AbstractDoubleProblem {
    */
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 2; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 2; i < solution.variables().size(); i++) {
       double t = solution.getVariable(i) - solution.getVariable(0) * solution.getVariable(1);
       g += -0.9 * t * t + Math.pow(Math.abs(t), 0.6);
     }

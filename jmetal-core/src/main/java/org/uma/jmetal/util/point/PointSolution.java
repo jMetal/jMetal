@@ -112,10 +112,6 @@ public class PointSolution implements Solution<Double> {
   public void setConstraint(int index, double value) {
   }
 
-  @Override public int getNumberOfVariables() {
-    return 0;
-  }
-
   @Override public PointSolution copy() {
     return new PointSolution(this);
   }

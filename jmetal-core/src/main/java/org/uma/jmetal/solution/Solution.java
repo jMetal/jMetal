@@ -35,9 +35,6 @@ public interface Solution<T> extends Serializable {
   void setConstraint(int index, double value) ;
 
   @Deprecated
-  int getNumberOfVariables() ;
-
-  @Deprecated
   Object getAttribute(Object id) ;
   @Deprecated
   boolean hasAttribute(Object id) ;

@@ -31,7 +31,7 @@ public class Srinivas extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[solution.getNumberOfVariables()];
+    double[] f = new double[solution.variables().size()];
 
     double x1 = solution.getVariable(0);
     double x2 = solution.getVariable(1);

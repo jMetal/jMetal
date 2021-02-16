@@ -75,7 +75,7 @@ public class FDA4 extends FDA {
   private double evalG(DoubleSolution solution, int limitInf) {
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.getNumberOfVariables(); i++) {
+    for (int i = limitInf; i < solution.variables().size(); i++) {
       g += Math.pow((solution.getVariable(i) - Gt), 2.0d);
     }
     return g;

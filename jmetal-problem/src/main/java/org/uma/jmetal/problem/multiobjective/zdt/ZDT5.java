@@ -82,7 +82,7 @@ public class ZDT5 extends AbstractBinaryProblem {
    */
   public double evalG(BinarySolution solution) {
     double res = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 1; i < solution.variables().size(); i++) {
       res += evalV(u(solution.getVariable(i)));
     }
 

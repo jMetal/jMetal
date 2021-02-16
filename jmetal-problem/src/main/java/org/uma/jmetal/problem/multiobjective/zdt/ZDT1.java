@@ -58,10 +58,10 @@ public class ZDT1 extends AbstractDoubleProblem {
    */
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 1; i < solution.variables().size(); i++) {
       g += solution.getVariable(i);
     }
-    double constant = 9.0 / (solution.getNumberOfVariables() - 1);
+    double constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;
   }

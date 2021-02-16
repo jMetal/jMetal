@@ -58,9 +58,9 @@ public class GLT1 extends AbstractDoubleProblem {
   private double g(DoubleSolution solution) {
     double result = 0.0 ;
 
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 1; i < solution.variables().size(); i++) {
       double value =solution.getVariable(i)
-          - Math.sin(2*Math.PI*solution.getVariable(0)+i*Math.PI/solution.getNumberOfVariables()) ;
+          - Math.sin(2*Math.PI*solution.getVariable(0)+i*Math.PI/solution.variables().size()) ;
 
       result += value * value ;
     }

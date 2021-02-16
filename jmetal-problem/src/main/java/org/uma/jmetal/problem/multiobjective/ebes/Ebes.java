@@ -1319,8 +1319,8 @@ public class Ebes extends AbstractDoubleProblem {
     // asignaciÃƒÂ³n de las variables para cada grupo
     // y determinaciÃƒÂ³n de las caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
-    double[] x = new double[solution.getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    double[] x = new double[solution.variables().size()];
+    for (int i = 0; i < solution.variables().size(); i++) {
       x[i] = solution.getVariable(i);
     }
 

@@ -74,7 +74,7 @@ public class FDA3 extends FDA implements Serializable {
 
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.getNumberOfVariables(); i++) {
+    for (int i = limitInf; i < solution.variables().size(); i++) {
       g += Math.pow((solution.getVariable(i) - Gt), 2.0);
     }
     g = g + 1.0 + Gt;
