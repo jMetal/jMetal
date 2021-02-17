@@ -46,13 +46,12 @@ public class RE23 extends AbstractDoubleProblem {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
-    solution.setObjective(
-        0,
-        (0.6224 * x1 * x3 * x4)
+    solution.objectives()[0] =
+            (0.6224 * x1 * x3 * x4)
             + (1.7781 * x2 * x3 * x3)
             + (3.1661 * x1 * x1 * x4)
-            + (19.84 * x1 * x1 * x3));
-    solution.setObjective(1, g[0] + g[1] + g[2]);
+            + (19.84 * x1 * x1 * x3);
+    solution.objectives()[1] = g[0] + g[1] + g[2];
 
     return solution;
   }

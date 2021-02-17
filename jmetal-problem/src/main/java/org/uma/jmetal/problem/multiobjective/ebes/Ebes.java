@@ -907,7 +907,7 @@ public class Ebes extends AbstractDoubleProblem {
           int idx = (int) Element_[ba][INDEX_];
           fx[j] += Groups_[idx][AREA] * Element_[ba][L_] * Groups_[idx][SPECIFIC_WEIGHT];
         }
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END minimizing structure total weight ------------------------
       }
       // summation of deformations
@@ -920,7 +920,7 @@ public class Ebes extends AbstractDoubleProblem {
           double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
           fx[j] += Math.sqrt(Math.pow(xn, 2.0) + Math.pow(yn, 2.0) + Math.pow(zn, 2.0));
         }
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END minimizing sum of displacement in nodes ---------------------------------------------
       }
       // stress square absolute error
@@ -928,16 +928,16 @@ public class Ebes extends AbstractDoubleProblem {
         // START strain residual minimun ---------------------------------------------
         // strain residualt global
         fx[j] = StrainResidualMin_[hi] + StrainResidualMax_[hi];
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END strain residual minimun ---------------------------------------------
       }
       // Efficiency of Nash-Sutcliffe for stress and compress
       else if (OF_[j].equals("ENS")) {
         fx[j] = FunctionENS(0);
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
       } else if (OF_[j].equals("MDV")) {
         fx[j] = FunctionsMahalanobis_Distance_With_Variance(0);
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
       } else {
         System.out.println("Error: not considerate START OBJECTIVES FUNCTION ");
       }

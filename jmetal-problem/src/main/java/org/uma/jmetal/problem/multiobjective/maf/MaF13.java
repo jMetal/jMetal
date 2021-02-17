@@ -104,7 +104,7 @@ public class MaF13 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

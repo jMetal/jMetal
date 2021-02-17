@@ -54,8 +54,8 @@ public class RE22 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(0, (29.4 * x1) + (0.6 * x2 * x3));
-    solution.setObjective(1, g[0] + g[1]);
+    solution.objectives()[0] = (29.4 * x1) + (0.6 * x2 * x3);
+    solution.objectives()[1] = g[0] + g[1];
 
     return solution;
   }

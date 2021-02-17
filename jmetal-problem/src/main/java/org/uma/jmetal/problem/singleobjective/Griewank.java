@@ -54,7 +54,7 @@ public class Griewank extends AbstractDoubleProblem {
       mult *= Math.cos(x[var] / Math.sqrt(var + 1));
     }
 
-    solution.setObjective(0, 1.0 / d * sum - mult + 1.0);
+    solution.objectives()[0] = 1.0 / d * sum - mult + 1.0;
 
     return solution ;
   }

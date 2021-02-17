@@ -88,11 +88,6 @@ public class PointSolution implements Solution<Double> {
   }
 
   @Override
-  public void setObjective(int index, double value) {
-    objectives[index] = value;
-  }
-
-  @Override
   public PointSolution copy() {
     return new PointSolution(this);
   }

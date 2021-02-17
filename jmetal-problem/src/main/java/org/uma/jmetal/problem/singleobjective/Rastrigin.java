@@ -51,7 +51,7 @@ public class Rastrigin extends AbstractDoubleProblem {
     }
     result += a * numberOfVariables;
 
-    solution.setObjective(0, result);
+    solution.objectives()[0] = result;
 
     return solution ;
   }

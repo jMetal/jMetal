@@ -53,8 +53,8 @@ public class MOP4 extends AbstractDoubleProblem {
     f[1] = (1 + g) * (1- Math.sqrt(solution.variables().get(0)) *
     		Math.pow(Math.cos(solution.variables().get(0) * Math.PI * 2), 2));
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
     return solution ;
   }
 

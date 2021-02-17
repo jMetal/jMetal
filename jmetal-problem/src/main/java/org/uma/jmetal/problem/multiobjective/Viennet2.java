@@ -55,7 +55,7 @@ public class Viennet2 extends AbstractDoubleProblem {
             + (2 * x[1] - x[0]) * (2 * x[1] - x[0]) / 17.0
             - 13.0;
 
-    for (int i = 0; i < solution.objectives().length; i++) solution.setObjective(i, f[i]);
+    for (int i = 0; i < solution.objectives().length; i++) solution.objectives()[i] = f[i];
 
     return solution;
   }

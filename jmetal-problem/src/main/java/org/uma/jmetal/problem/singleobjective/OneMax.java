@@ -34,7 +34,7 @@ public class OneMax extends AbstractBinaryProblem {
 
   @Override
   public int getBitsFromVariable(int index) {
-    Check.that(index == 1, "Problem OneMax has only a variable. Index =" + index) ;
+    Check.that(index == 0, "Problem OneMax has only a variable. Index =" + index) ;
     return bits;
   }
 
@@ -64,7 +64,7 @@ public class OneMax extends AbstractBinaryProblem {
     }
 
     // OneMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0 * counterOnes);
+    solution.objectives()[0] = -1.0 * counterOnes;
 
     return solution;
   }

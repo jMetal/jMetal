@@ -40,7 +40,7 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
       S copy = (S) solution.copy();
       referencePointSolution = copy;
       for (int i = 0; i < solution.objectives().length; i++) {
-        referencePointSolution.setObjective(i, this.referencePoint.get(i));
+        referencePointSolution.objectives()[i] = this.referencePoint.get(i);
       }
     }
 
@@ -86,7 +86,7 @@ public abstract class ArchiveWithReferencePoint <S extends Solution<?>> extends 
   public synchronized void changeReferencePoint(List<Double> newReferencePoint) {
     this.referencePoint = newReferencePoint ;
     for (int i = 0; i < referencePoint.size(); i++) {
-      referencePointSolution.setObjective(i, this.referencePoint.get(i));
+      referencePointSolution.objectives()[i] = this.referencePoint.get(i);
     }
 
     int i = 0 ;

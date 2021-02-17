@@ -69,8 +69,8 @@ public class ZDT5 extends AbstractBinaryProblem {
     double h = evalH(f[0], g);
     f[1] = h * g;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution;
   }

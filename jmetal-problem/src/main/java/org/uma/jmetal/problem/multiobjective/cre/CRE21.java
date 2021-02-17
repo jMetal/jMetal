@@ -34,8 +34,8 @@ public class CRE21 extends AbstractDoubleProblem {
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
 
-    solution.setObjective(0, x1 * Math.sqrt(16.0 + (x3 * x3)) + x2 * Math.sqrt(1.0 + x3 * x3));
-    solution.setObjective(1, (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3));
+    solution.objectives()[0] = x1 * Math.sqrt(16.0 + (x3 * x3)) + x2 * Math.sqrt(1.0 + x3 * x3);
+    solution.objectives()[1] = (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3);
 
     evaluateConstraints(solution);
 

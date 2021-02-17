@@ -54,14 +54,13 @@ public class RE21 extends AbstractDoubleProblem {
     double e = 200000;
     double l = 200;
 
-    solution.setObjective(0, l * ((2 * x1) + Math.sqrt(2.0) * x2 + Math.sqrt(x3) + x4));
-    solution.setObjective(
-        1,
+    solution.objectives()[0] = l * ((2 * x1) + Math.sqrt(2.0) * x2 + Math.sqrt(x3) + x4);
+    solution.objectives()[1] =
         ((f * l) / e)
             * ((2.0 / x1)
                 + (2.0 * Math.sqrt(2.0) / x2)
                 - (2.0 * Math.sqrt(2.0) / x3)
-                + (2.0 / x4)));
+                + (2.0 / x4));
 
     return solution;
   }

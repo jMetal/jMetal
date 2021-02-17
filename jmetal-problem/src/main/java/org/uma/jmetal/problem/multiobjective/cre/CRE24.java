@@ -39,13 +39,13 @@ public class CRE24 extends AbstractDoubleProblem {
     double x6 = solution.variables().get(5);
     double x7 = solution.variables().get(6);
 
-    solution.setObjective(0, 0.7854 * x1 * (x2 * x2) * (((10.0 * x3 * x3) / 3.0) + (14.933 * x3) - 43.0934)
+    solution.objectives()[0] = 0.7854 * x1 * (x2 * x2) * (((10.0 * x3 * x3) / 3.0) + (14.933 * x3) - 43.0934)
             - 1.508 * x1 * (x6 * x6 + x7 * x7)
             + 7.477 * (x6 * x6 * x6 + x7 * x7 * x7)
-            + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7));
+            + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7);
 
     double tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0)  + 1.69 * 1e7;
-    solution.setObjective(1, Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6));
+    solution.objectives()[1] = Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6);
 
     evaluateConstraints(solution);
 

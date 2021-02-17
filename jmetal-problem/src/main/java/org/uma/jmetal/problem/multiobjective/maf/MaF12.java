@@ -153,7 +153,7 @@ public class MaF12 extends AbstractDoubleProblem {
         y[numberOfObjectives_ - 1] + 2 * subf1 * Math.sin(Math.PI * y[numberOfObjectives_ - 2] / 2);
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

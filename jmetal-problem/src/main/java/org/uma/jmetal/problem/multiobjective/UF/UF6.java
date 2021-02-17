@@ -80,8 +80,8 @@ public class UF6 extends AbstractDoubleProblem {
 		if (hj < 0.0) 
       hj = 0.0;
     
-    solution.setObjective(0, x[0] + hj + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1);
-    solution.setObjective(1, 1.0 - x[0] + hj + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2);
+    solution.objectives()[0] = x[0] + hj + 2.0*(4.0*sum1 - 2.0*prod1 + 2.0) / (double)count1;
+    solution.objectives()[1] = 1.0 - x[0] + hj + 2.0*(4.0*sum2 - 2.0*prod2 + 2.0) / (double)count2;
 
     return solution ;
   }

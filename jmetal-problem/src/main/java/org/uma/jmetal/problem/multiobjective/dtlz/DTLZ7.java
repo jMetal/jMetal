@@ -70,7 +70,7 @@ public class DTLZ7 extends AbstractDoubleProblem {
     f[numberOfObjectives - 1] = (1 + g) * h;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution;
   }

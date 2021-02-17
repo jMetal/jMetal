@@ -55,9 +55,9 @@ public class MOP7 extends AbstractDoubleProblem {
     		* Math.sin(0.5 * Math.PI * solution.variables().get(1));
     f[2] = (1 + g) * Math.sin(0.5 * Math.PI * solution.variables().get(0));
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
-    solution.setObjective(2, f[2]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
+    solution.objectives()[2] = f[2];
     return solution ;
   }
 

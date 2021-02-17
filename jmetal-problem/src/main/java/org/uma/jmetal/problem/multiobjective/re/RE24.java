@@ -56,8 +56,8 @@ public class RE24 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(0, x1 + (120 * x2));
-    solution.setObjective(1, g[0] + g[1] + g[2] + g[3]);
+    solution.objectives()[0] =  x1 + (120 * x2);
+    solution.objectives()[1] = g[0] + g[1] + g[2] + g[3];
 
     return solution;
   }

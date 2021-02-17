@@ -36,8 +36,8 @@ public class RE31 extends AbstractDoubleProblem {
     double x2 = solution.variables().get(1);
     double x3 = solution.variables().get(2);
 
-    solution.setObjective(0, x1 * Math.sqrt(16.0 + (x3 * x3)) + x2 * Math.sqrt(1.0 + x3 * x3));
-    solution.setObjective(1, (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3));
+    solution.objectives()[0] = x1 * Math.sqrt(16.0 + (x3 * x3)) + x2 * Math.sqrt(1.0 + x3 * x3);
+    solution.objectives()[1] = (20.0 * Math.sqrt(16.0 + (x3 * x3))) / (x1 * x3);
 
     double[] g = new double[numberOfOriginalConstraints];
     g[0] = 0.1 - solution.objectives()[0];
@@ -49,7 +49,7 @@ public class RE31 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(2, g[0] + g[1] + g[2]);
+    solution.objectives()[2] = g[0] + g[1] + g[2];
 
     return solution;
   }

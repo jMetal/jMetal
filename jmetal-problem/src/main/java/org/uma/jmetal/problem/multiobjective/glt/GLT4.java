@@ -49,10 +49,10 @@ public class GLT4 extends AbstractDoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    solution.setObjective(0, (1.0 + g(solution))*solution.variables().get(0));
-    solution.setObjective(1, (1.0 + g(solution))* (2.0 -
+    solution.objectives()[0] = (1.0 + g(solution))*solution.variables().get(0);
+    solution.objectives()[1] = (1.0 + g(solution))* (2.0 -
         2.0*Math.pow(solution.variables().get(0), 0.5)*
-        Math.pow(Math.cos(2*Math.pow(solution.variables().get(0), 0.5)*Math.PI), 2.0))) ;
+        Math.pow(Math.cos(2*Math.pow(solution.variables().get(0), 0.5)*Math.PI), 2.0)) ;
     return solution ;
   }
 

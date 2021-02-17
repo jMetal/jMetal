@@ -17,7 +17,4 @@ public interface Solution<T> extends Serializable {
   Map<Object,Object> attributes() ;
 
   Solution<T> copy() ;
-
-  @Deprecated
-  void setObjective(int index, double value) ;
 }

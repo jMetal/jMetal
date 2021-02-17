@@ -44,7 +44,7 @@ public class FDA5 extends FDA implements Serializable {
     f[1] = evalFK(solution, g, 2, Ft);
     f[2] = evalFM(solution, g, Ft);
     for (int i = 0; i < solution.objectives().length; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

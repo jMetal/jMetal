@@ -41,11 +41,11 @@ public class Water extends AbstractDoubleProblem {
     fx[3] = 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74);
     fx[4] = 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80);
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
-    solution.setObjective(2, fx[2]);
-    solution.setObjective(3, fx[3]);
-    solution.setObjective(4, fx[4]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] = fx[1];
+    solution.objectives()[2] = fx[2];
+    solution.objectives()[3] = fx[3];
+    solution.objectives()[4] = fx[4];
 
     evaluateConstraints(solution);
     return solution ;

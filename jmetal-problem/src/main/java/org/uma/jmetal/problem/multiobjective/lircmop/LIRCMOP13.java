@@ -46,11 +46,9 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
       x[i] = solution.variables().get(i);
     }
 
-    solution.setObjective(
-        0, (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * cos(0.5 * Math.PI + x[1]));
-    solution.setObjective(
-        1, (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * sin(0.5 * Math.PI + x[1]));
-    solution.setObjective(2, (1.7057 + g1(x)) * sin(0.5 * Math.PI + x[0]));
+    solution.objectives()[0] = (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * cos(0.5 * Math.PI + x[1]);
+    solution.objectives()[1] = (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * sin(0.5 * Math.PI + x[1]);
+    solution.objectives()[2] = (1.7057 + g1(x)) * sin(0.5 * Math.PI + x[0]);
 
     evaluateConstraints(solution);
     return solution ;

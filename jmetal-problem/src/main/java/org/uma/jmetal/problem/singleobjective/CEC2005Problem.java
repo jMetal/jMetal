@@ -104,7 +104,7 @@ public class CEC2005Problem extends AbstractDoubleProblem {
     double result;
     result = testFunction.f(x);
 
-    solution.setObjective(0, result);
+    solution.objectives()[0] = result;
 
     return solution ;
   }

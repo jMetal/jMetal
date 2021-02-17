@@ -45,8 +45,8 @@ public class RE32 extends AbstractDoubleProblem {
     double tauMax = 13600;
     double sigmaMax = 30000;
 
-    solution.setObjective(0, (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2));
-    solution.setObjective(1, (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3));
+    solution.objectives()[0] = (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2);
+    solution.objectives()[1] = (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3);
 
     double[] g = new double[numberOfOriginalConstraints];
     double M = P * (L + (x2 / 2));
@@ -76,7 +76,7 @@ public class RE32 extends AbstractDoubleProblem {
       if (g[i] < 0.0) g[i] = -g[i];
       else g[i] = 0;
     }
-    solution.setObjective(2, g[0] + g[1] + g[2] + g[3]);
+    solution.objectives()[2] = g[0] + g[1] + g[2] + g[3];
 
     return solution;
   }

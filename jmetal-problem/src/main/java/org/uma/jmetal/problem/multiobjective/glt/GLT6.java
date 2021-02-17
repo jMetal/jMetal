@@ -51,15 +51,15 @@ public class GLT6 extends AbstractDoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    solution.setObjective(0, (1.0 + g(solution))*
+    solution.objectives()[0] = (1.0 + g(solution))*
         (1.0 - Math.cos(solution.variables().get(0)*Math.PI/2.0))*
-        (1.0 - Math.cos(solution.variables().get(1)*Math.PI/2.0)));
-    solution.setObjective(1, (1.0 + g(solution))*
+        (1.0 - Math.cos(solution.variables().get(1)*Math.PI/2.0));
+    solution.objectives()[1] = (1.0 + g(solution))*
         (1.0 - Math.cos(solution.variables().get(0)*Math.PI/2.0))*
-        (1.0 - Math.sin(solution.variables().get(1)*Math.PI/2.0)));
-    solution.setObjective(2, (1.0 + g(solution))*
+        (1.0 - Math.sin(solution.variables().get(1)*Math.PI/2.0));
+    solution.objectives()[2] = (1.0 + g(solution))*
         (2.0 - Math.sin(solution.variables().get(0)*Math.PI/2.0)
-        - Math.signum(Math.cos(4*solution.variables().get(0)*Math.PI))));
+        - Math.signum(Math.cos(4*solution.variables().get(0)*Math.PI)));
     return solution ;
   }
 

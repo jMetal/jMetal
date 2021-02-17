@@ -49,11 +49,11 @@ public class GLT3 extends AbstractDoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    solution.setObjective(0, (1.0 + g(solution))*solution.objectives()[0]);
+    solution.objectives()[0] = (1.0 + g(solution))*solution.objectives()[0];
     if (solution.objectives()[0] < 0.05) {
-      solution.setObjective(1, (1.0 + g(solution))*(1.0 - 19.0*solution.objectives()[0])) ;
+      solution.objectives()[1] = (1.0 + g(solution))*(1.0 - 19.0*solution.objectives()[0]) ;
     } else {
-      solution.setObjective(1, (1.0 + g(solution))*(1.0/19.0 - solution.objectives()[0]/19.0)) ;
+      solution.objectives()[1] = (1.0 + g(solution))*(1.0/19.0 - solution.objectives()[0]/19.0) ;
     }
     return solution ;
   }

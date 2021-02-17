@@ -89,7 +89,7 @@ public class MaF05 extends AbstractDoubleProblem {
             1);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

@@ -123,7 +123,7 @@ public class MaF10 extends AbstractDoubleProblem {
         .cos(Math.PI * y[numberOfObjectives_ - 2] / 2));
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

@@ -37,13 +37,13 @@ public class RE36 extends AbstractDoubleProblem {
     double x3 = Math.rint(solution.variables().get(2));
     double x4 = Math.rint(solution.variables().get(3));
 
-    solution.setObjective(0, Math.abs(6.931 - ((x3 / x1) * (x4 / x2))));
+    solution.objectives()[0] = Math.abs(6.931 - ((x3 / x1) * (x4 / x2)));
 
     double maxValue = x1;
     if (x2 > maxValue) maxValue = x2;
     if (x3 > maxValue) maxValue = x3;
     if (x4 > maxValue) maxValue = x4;
-    solution.setObjective(1, maxValue);
+    solution.objectives()[1] = maxValue;
 
     double[] g = new double[numberOfOriginalConstraints];
     g[0] = 0.5 - (solution.objectives()[0] / 6.931);
@@ -53,7 +53,7 @@ public class RE36 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(2, g[0]);
+    solution.objectives()[2] = g[0];
 
     return solution;
   }

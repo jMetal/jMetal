@@ -35,8 +35,8 @@ public class Schaffer extends AbstractDoubleProblem {
     f[0] = value * value;
     f[1] = (value - 2.0) * (value - 2.0);
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution;
   }

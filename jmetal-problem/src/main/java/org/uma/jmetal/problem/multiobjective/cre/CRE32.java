@@ -78,9 +78,9 @@ public class CRE32 extends AbstractDoubleProblem {
     double annual_costs = capital_costs + running_costs + voyage_costs;
     double annual_cargo = cargo_DWT * RTPA;
 
-    solution.setObjective(0, annual_costs / annual_cargo);
-    solution.setObjective(1, light_ship_weight);
-    solution.setObjective(2, -annual_cargo);
+    solution.objectives()[0] = annual_costs / annual_cargo;
+    solution.objectives()[1] = light_ship_weight;
+    solution.objectives()[2] = -annual_cargo ;
 
     evaluateConstraints(solution, DWT, Fn);
 

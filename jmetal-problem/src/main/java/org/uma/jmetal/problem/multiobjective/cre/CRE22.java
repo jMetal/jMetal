@@ -39,8 +39,8 @@ public class CRE22 extends AbstractDoubleProblem {
     double x3 = solution.variables().get(2);
     double x4 = solution.variables().get(3);
 
-    solution.setObjective(0, (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2));
-    solution.setObjective(1, (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3));
+    solution.objectives()[0] = (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2);
+    solution.objectives()[1] = (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3);
 
     evaluateConstraints(solution);
 

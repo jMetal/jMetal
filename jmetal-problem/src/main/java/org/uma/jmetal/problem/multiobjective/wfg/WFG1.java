@@ -170,7 +170,7 @@ public class WFG1 extends WFG {
     float[] f = evaluate(variables);
 
     for (int i = 0; i < f.length; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

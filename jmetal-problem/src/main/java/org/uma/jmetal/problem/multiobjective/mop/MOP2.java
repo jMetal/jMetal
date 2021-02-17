@@ -52,8 +52,8 @@ public class MOP2 extends AbstractDoubleProblem {
     f[0] = (1 + g) * solution.variables().get(0);
     f[1] = (1 + g) * (1 - solution.variables().get(0) * solution.variables().get(0));
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
     return solution ;
   }
 

@@ -58,7 +58,7 @@ public class Viennet3 extends AbstractDoubleProblem {
 
         
     for (int i = 0; i < solution.objectives().length; i++)
-      solution.setObjective(i,f[i]);
+      solution.objectives()[i] = f[i];
 
     return solution ;
   }

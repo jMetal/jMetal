@@ -85,7 +85,7 @@ public class MaF06 extends AbstractDoubleProblem {
     f[0] = subf1 * Math.cos(thet[numberOfObjectives_ - 2]) * sub1;
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

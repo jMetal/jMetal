@@ -44,7 +44,7 @@ public class StringMatching extends CharSequenceProblem {
       }
     }
 
-    solution.setObjective(0, counter);
+    solution.objectives()[0] = counter;
 
     return solution ;
   }

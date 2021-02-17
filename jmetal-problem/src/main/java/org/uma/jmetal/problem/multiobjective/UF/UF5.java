@@ -73,8 +73,8 @@ public class UF5 extends AbstractDoubleProblem {
     }
     hj = (0.5/n + epsilon)*Math.abs(Math.sin(2.0*n*Math.PI*x[0]));
 
-    solution.setObjective(0, x[0] + hj + 2.0*sum1 / (double)count1);
-    solution.setObjective(1, 1.0 - x[0] + hj + 2.0*sum2 / (double)count2);
+    solution.objectives()[0] = x[0] + hj + 2.0*sum1 / (double)count1;
+    solution.objectives()[1] = 1.0 - x[0] + hj + 2.0*sum2 / (double)count2;
 
     return solution ;
   }

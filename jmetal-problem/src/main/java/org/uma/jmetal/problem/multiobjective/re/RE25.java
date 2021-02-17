@@ -70,8 +70,8 @@ public class RE25 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(0, (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0);
-    solution.setObjective(1, g[0] + g[1] + g[2] + g[3] + g[4] + g[5]);
+    solution.objectives()[0] = (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0;
+    solution.objectives()[1] = g[0] + g[1] + g[2] + g[3] + g[4] + g[5];
 
     return solution;
   }

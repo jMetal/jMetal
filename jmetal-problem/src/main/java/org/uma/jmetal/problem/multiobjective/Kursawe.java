@@ -66,8 +66,9 @@ public class Kursawe extends AbstractDoubleProblem {
         5.0 * Math.sin(Math.pow(x[var], 3.0));
     }
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] = fx[1];
+
     return solution ;
   }
 }

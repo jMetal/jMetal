@@ -51,7 +51,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
 
-    solution.setObjective(0, fitness1);
+    solution.objectives()[0] = fitness1;
 
     return solution ;
   }

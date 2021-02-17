@@ -64,8 +64,8 @@ public class UF4 extends AbstractDoubleProblem {
       }
     }
 
-    solution.setObjective(0, x[0] + 2.0 * sum1 / (double) count1);
-    solution.setObjective(1, 1.0 - x[0] * x[0] + 2.0 * sum2 / (double) count2);
+    solution.objectives()[0] = x[0] + 2.0 * sum1 / (double) count1;
+    solution.objectives()[1] = 1.0 - x[0] * x[0] + 2.0 * sum2 / (double) count2;
 
     return solution;
   }

@@ -38,8 +38,8 @@ public class Srinivas extends AbstractDoubleProblem {
     f[0] = 2.0 + (x1 - 2.0) * (x1 - 2.0) + (x2 - 1.0) * (x2 - 1.0);
     f[1] = 9.0 * x1 - (x2 - 1.0) * (x2 - 1.0);
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     evaluateConstraints(solution);
     return solution;

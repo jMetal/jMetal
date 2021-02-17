@@ -42,7 +42,7 @@ public class FDA4 extends FDA {
     f[1] = evalFK(solution, g, 2);
     f[2] = evalFM(solution, g);
     for (int i = 0; i < solution.objectives().length; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

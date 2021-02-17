@@ -78,7 +78,7 @@ public class MaF03 extends AbstractDoubleProblem {
     f[0] = Math.pow(subf1 * Math.cos(Math.PI * x[numberOfObjectives - 2] / 2) * subf3, 4);
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
 
     return solution ;

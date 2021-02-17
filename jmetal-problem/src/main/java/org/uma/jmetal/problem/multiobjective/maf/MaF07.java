@@ -78,7 +78,7 @@ public class MaF07 extends AbstractDoubleProblem {
     f[numberOfObjectives - 1] = h * sub1;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

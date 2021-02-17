@@ -36,8 +36,8 @@ public class CRE23 extends AbstractDoubleProblem {
     double x3 = solution.variables().get(2);
     double x4 = solution.variables().get(3);
 
-    solution.setObjective(0, 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0));
-    solution.setObjective(1, ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1)));
+    solution.objectives()[0] = 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0);
+    solution.objectives()[1] = ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1));
 
     evaluateConstraints(solution);
 

@@ -49,7 +49,7 @@ public class NIntegerMin extends AbstractIntegerProblem {
       approximationToN += Math.abs(valueN - value) ;
     }
 
-    solution.setObjective(0, approximationToN);
+    solution.objectives()[0] = approximationToN;
 
     return solution ;
   }
