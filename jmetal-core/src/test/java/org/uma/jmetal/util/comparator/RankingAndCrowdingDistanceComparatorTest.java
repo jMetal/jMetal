@@ -5,10 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.Comparator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -27,24 +29,18 @@ public class RankingAndCrowdingDistanceComparatorTest {
     comparator = null ;
   }
 
-  @Test public void shouldCompareTwoNullSolutionsReturnZero() {
-    assertEquals(0, comparator.compare(null, null)) ;
+  @Test public void shouldCompareTwoNullSolutionsRaiseAnException() {
+    assertThrows(NullParameterException.class, () -> comparator.compare(null, null)) ;
   }
 
-  @Test public void shouldCompareWithANullSolutionAsFirstArgumentReturnOne() {
+  @Test public void shouldCompareWithANullSolutionAsFirstArgumentRaiseAnException() {
     Solution<?> solution = mock(Solution.class) ;
-    assertEquals(1, comparator.compare(null, solution)) ;
+    assertThrows(NullParameterException.class, () -> comparator.compare(null, solution)) ;
   }
 
-  @Test public void shouldCompareWithANullSolutionAsSecondArgumentReturnMinusOne() {
+  @Test public void shouldCompareWithANullSolutionAsSecondArgumentRaiseAnException() {
     Solution<?> solution = mock(Solution.class) ;
-    assertEquals(-1, comparator.compare(solution, null)) ;
-  }
-
-  @Test public void shouldCompareWithNullRankingAttributeSolutionAsFirstArgumentReturnOne() {
-    Solution<?> solution2 = mock(Solution.class) ;
-
-    assertEquals(1, comparator.compare(null, solution2)) ;
+    assertThrows(NullParameterException.class, () -> comparator.compare(solution, null)) ;
   }
 
   @Test public void shouldCompareWithRankingYieldingANonZeroValueReturnThatValue() {
