@@ -14,6 +14,7 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 import org.uma.jmetal.util.comparator.StrengthFitnessComparator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.DistanceToSolutionListAttribute;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
@@ -99,13 +100,14 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     frequency       = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
     reverseFrequency = new int[numberOfSubRanges][problem.getNumberOfVariables()] ;
 
-    strengthRawFitness = new StrengthRawFitness<DoubleSolution>() ;
-    fitnessComparator = new StrengthFitnessComparator<DoubleSolution>();
+    strengthRawFitness = new StrengthRawFitness<>() ;
+    fitnessComparator = new StrengthFitnessComparator<>();
     distanceToSolutionListAttribute = new DistanceToSolutionListAttribute();
-    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
-    equalComparator = new EqualSolutionsComparator<DoubleSolution>();
+    crowdingDistanceComparator = new CrowdingDistanceDensityEstimator<DoubleSolution>().getComparator() ;
+
+    dominanceComparator = new DominanceComparator<>();
+    equalComparator = new EqualSolutionsComparator<>();
 
     evaluations = 0 ;
   }

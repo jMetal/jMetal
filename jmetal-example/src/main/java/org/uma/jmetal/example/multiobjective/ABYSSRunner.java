@@ -44,8 +44,8 @@ public class ABYSSRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
