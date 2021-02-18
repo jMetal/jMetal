@@ -8,12 +8,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,8 +27,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   SolutionListEvaluator<DoubleSolution> evaluator;
 
-  private int swarmSize;
-  private int archiveSize;
+  private final int swarmSize;
   private int maxIterations;
   private int currentIteration;
 
@@ -38,16 +37,16 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   private double[][] speed;
 
-  private Comparator<DoubleSolution> dominanceComparator;
-  private Comparator<DoubleSolution> crowdingDistanceComparator;
+  private final Comparator<DoubleSolution> dominanceComparator;
+  private final Comparator<DoubleSolution> crowdingDistanceComparator;
 
-  private UniformMutation uniformMutation;
-  private NonUniformMutation nonUniformMutation;
+  private final UniformMutation uniformMutation;
+  private final NonUniformMutation nonUniformMutation;
 
   private double eta = 0.0075;
 
   private JMetalRandom randomGenerator;
-  private CrowdingDistance<DoubleSolution> crowdingDistance;
+  private DensityEstimator<DoubleSolution> crowdingDistance;
 
   /** Constructor */
   public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator,
@@ -58,33 +57,33 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     this.swarmSize = swarmSize ;
     this.maxIterations = maxIterations ;
-    this.archiveSize = archiveSize ;
 
     this.uniformMutation = uniformMutation ;
     this.nonUniformMutation = nonUniformMutation ;
 
     localBest = new DoubleSolution[swarmSize];
-    leaderArchive = new CrowdingDistanceArchive<DoubleSolution>(this.archiveSize);
-    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new EpsilonDominanceComparator<DoubleSolution>(eta));
+    leaderArchive = new CrowdingDistanceArchive<>(archiveSize);
+    epsilonArchive = new NonDominatedSolutionListArchive<>(new EpsilonDominanceComparator<>(eta));
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
-    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
+    crowdingDistance = new CrowdingDistanceDensityEstimator<>();
+
+    dominanceComparator = new DominanceComparator<>();
+    crowdingDistanceComparator = crowdingDistance.getComparator();
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     randomGenerator = JMetalRandom.getInstance() ;
-    crowdingDistance = new CrowdingDistance<DoubleSolution>();
   }
 
 
   @Override protected void initProgress() {
     currentIteration = 1;
-    crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.getSolutionList());
   }
 
   @Override protected void updateProgress() {
     currentIteration += 1;
-    crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.getSolutionList());
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -239,10 +238,6 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
         epsilonArchive.add((DoubleSolution) particle.copy());
       }
     }
-  }
-
-  protected void tearDown() {
-    evaluator.shutdown();
   }
 
   @Override public String getName() {
