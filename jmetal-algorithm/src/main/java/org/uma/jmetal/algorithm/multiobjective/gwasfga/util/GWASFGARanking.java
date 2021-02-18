@@ -25,7 +25,7 @@ import java.util.List;
  *     overall constraint values it compares de values of the utility function.
  */
 @SuppressWarnings("serial")
-public class GWASFGARankingV2<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
+public class GWASFGARanking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
     implements Ranking<S> {
   private final String attributeId = getClass().getName();
 
@@ -36,7 +36,7 @@ public class GWASFGARankingV2<S extends Solution<?>> extends GenericSolutionAttr
   private NumberOfViolatedConstraints<S> numberOfViolatedConstraints;
   private OverallConstraintViolation<S> overallConstraintViolation;
 
-  public GWASFGARankingV2(
+  public GWASFGARanking(
       AbstractUtilityFunctionsSet<S> utilityFunctionsUtopia,
       AbstractUtilityFunctionsSet<S> utilityFunctionsNadir) {
     this.numberOfRanks = 0;

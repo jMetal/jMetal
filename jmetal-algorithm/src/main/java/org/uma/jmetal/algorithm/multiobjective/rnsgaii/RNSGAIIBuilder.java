@@ -35,7 +35,7 @@ public class RNSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<R
   private double epsilon;
 
   /**
-   * NSGAIIBuilder constructor
+   * RNSGAIIBuilder constructor
    */
   public RNSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator,
                         MutationOperator<S> mutationOperator, List<Double> interestPoint, double epsilon) {

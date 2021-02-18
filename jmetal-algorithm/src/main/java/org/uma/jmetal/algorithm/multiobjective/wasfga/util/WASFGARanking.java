@@ -30,7 +30,7 @@ import java.util.List;
  *
  */
 @SuppressWarnings("serial")
-public class WASFGARankingV2<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
+public class WASFGARanking<S extends Solution<?>> extends GenericSolutionAttribute<S, Integer>
 		implements Ranking<S> {
 
 	private final String attributeId = getClass().getName();
@@ -41,7 +41,7 @@ public class WASFGARankingV2<S extends Solution<?>> extends GenericSolutionAttri
 	private NumberOfViolatedConstraints<S> numberOfViolatedConstraints ;
 	private OverallConstraintViolation<S> overallConstraintViolation;
 
-	public WASFGARankingV2(AbstractUtilityFunctionsSet<S> utilityFunctions) {
+	public WASFGARanking(AbstractUtilityFunctionsSet<S> utilityFunctions) {
 		this.numberOfRanks = 0;
 		this.utilityFunctions = utilityFunctions;
 		this.numberOfViolatedConstraints = new NumberOfViolatedConstraints<S>() ;

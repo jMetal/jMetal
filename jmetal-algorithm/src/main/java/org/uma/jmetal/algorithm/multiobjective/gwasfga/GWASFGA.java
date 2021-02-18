@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.gwasfga;
 
-import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARankingV2;
+import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
@@ -65,7 +65,7 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
   }
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
-    Ranking<S> ranking = new GWASFGARankingV2<>(this.achievementScalarizingUtopia, this.achievementScalarizingNadir);
+    Ranking<S> ranking = new GWASFGARanking<>(this.achievementScalarizingUtopia, this.achievementScalarizingNadir);
     ranking.compute(solutionList);
     return ranking;
   }
