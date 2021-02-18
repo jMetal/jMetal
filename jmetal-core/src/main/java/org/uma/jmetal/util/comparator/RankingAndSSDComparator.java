@@ -14,6 +14,8 @@
 package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -27,8 +29,21 @@ import java.util.Comparator;
  */
 @SuppressWarnings("serial")
 public class RankingAndSSDComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-  private final Comparator<S> rankComparator = new RankingComparator<S>();
-  private final Comparator<S> NewcrowdingDistanceComparator = new SpatialSpreadDeviationComparator<S>() ;
+  private final Comparator<S> rankComparator ;
+  private final Comparator<S> crowdingDistanceComparator  ;
+
+  /**
+   * Constructor
+   */
+  public RankingAndSSDComparator() {
+    this(new FastNonDominatedSortRanking<>()) ;
+  }
+
+  public RankingAndSSDComparator(Ranking<S> ranking) {
+    crowdingDistanceComparator = new SpatialSpreadDeviationComparator<>() ;
+    rankComparator = Comparator.comparing(ranking::getRank) ;
+  }
+
 
   /**
    * Compares two solutions.
@@ -42,7 +57,7 @@ public class RankingAndSSDComparator<S extends Solution<?>> implements Comparato
   public int compare(S solution1, S solution2) {
     int result = rankComparator.compare(solution1, solution2) ;
     if (result == 0) {
-      result = NewcrowdingDistanceComparator.compare(solution1, solution2);
+      result = crowdingDistanceComparator.compare(solution1, solution2);
     }
 
     return result;

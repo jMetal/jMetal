@@ -37,7 +37,7 @@ public class SpatialSpreadDeviationSelection<S extends Solution<?>>
 
   /** Constructor */
   public SpatialSpreadDeviationSelection(int numberOfTournaments) {
-    this(new RankingAndSSDComparator<S>(), numberOfTournaments) ;
+    this(new RankingAndSSDComparator<>(), numberOfTournaments) ;
   }
 
   /** Constructor */
