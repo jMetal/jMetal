@@ -15,7 +15,7 @@ import java.util.Comparator;
 @SuppressWarnings("serial")
 public class RankingAndCrowdingDistanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
   private final Comparator<S> rankComparator = new RankingComparator<S>();
-  private final Comparator<S> crowdingDistanceComparator = new CrowdingDistanceComparator<S>() ;
+  private final Comparator<S> crowdingDistanceComparator = new CrowdingDistanceComparator<>() ;
 
   /**
    * Compares two solutions.

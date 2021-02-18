@@ -51,7 +51,7 @@ public class NSGAII45Runner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFronts/ZDT1.csv" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -64,10 +64,10 @@ public class NSGAII45Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
 
-    algorithm = new NSGAII45<DoubleSolution>(problem, 25000, 100, crossover, mutation,
-            selection, new SequentialSolutionListEvaluator<DoubleSolution>()) ;
+    algorithm = new NSGAII45<>(problem, 25000, 100, crossover, mutation,
+            selection, new SequentialSolutionListEvaluator<>()) ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
             .execute() ;

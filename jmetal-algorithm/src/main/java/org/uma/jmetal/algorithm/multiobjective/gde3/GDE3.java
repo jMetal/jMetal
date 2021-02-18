@@ -157,7 +157,6 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     Ranking<DoubleSolution> ranking =  new FastNonDominatedSortRanking<>(dominanceComparator);
     ranking.compute(tmpList) ;
 
-
     RankingAndCrowdingSelection<DoubleSolution> rankingAndCrowdingSelection ;
     rankingAndCrowdingSelection = new RankingAndCrowdingSelection<>(getMaxPopulationSize(), dominanceComparator) ;
 

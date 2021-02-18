@@ -18,7 +18,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.SolutionUtils;
 import org.uma.jmetal.util.comparator.RankingAndSSDComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.Comparator;
 import java.util.List;
@@ -49,11 +49,8 @@ public class SpatialSpreadDeviationSelection<S extends Solution<?>>
   @Override
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    if (null == solutionList) {
-      throw new JMetalException("The solution list is null") ;
-    } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty") ;
-    }
+    Check.notNull(solutionList) ;
+    Check.collectionIsNotEmpty(solutionList);
 
     S result;
     if (solutionList.size() == 1) {
