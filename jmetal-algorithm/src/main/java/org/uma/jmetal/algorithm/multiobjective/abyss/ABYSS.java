@@ -457,7 +457,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
     crowdingArchive = (CrowdingDistanceArchive<DoubleSolution>)archive ;
     crowdingArchive.computeDensityEstimator();
 
-    Collections.sort(crowdingArchive.getSolutionList(),crowdingDistanceComparator);
+    crowdingArchive.getSolutionList().sort(crowdingDistanceComparator);
 
     int insert = getPopulationSize() / 2;
 

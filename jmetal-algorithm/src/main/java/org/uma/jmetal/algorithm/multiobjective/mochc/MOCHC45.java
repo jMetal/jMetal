@@ -11,6 +11,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -88,7 +89,7 @@ public class MOCHC45 implements Algorithm<List<BinarySolution>> {
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceComparator<BinarySolution>();
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator() ;
 
     evaluations = 0 ;
     population = new ArrayList<>() ;

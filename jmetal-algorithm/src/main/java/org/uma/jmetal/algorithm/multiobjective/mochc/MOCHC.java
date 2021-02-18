@@ -10,6 +10,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
@@ -73,7 +74,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceComparator<BinarySolution>();
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator() ;
   }
   
   public void setMaxPopulationSize(int maxPopulationSize) {
@@ -157,7 +158,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
       int preserve = (int) Math.floor(preservedPopulation * population.size());
       newPopulation = new ArrayList<>(getMaxPopulationSize());
-      Collections.sort(population, comparator);
+      population.sort(comparator);
       for (int i = 0; i < preserve; i++) {
         newPopulation.add((BinarySolution) population.get(i).copy());
       }
