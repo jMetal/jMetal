@@ -1,6 +1,5 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
-import org.apache.commons.math3.stat.descriptive.moment.VectorialCovariance;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -19,7 +18,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

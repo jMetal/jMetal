@@ -8,8 +8,8 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.Measurable;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;

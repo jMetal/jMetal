@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.front.util;
+package org.uma.jmetal.util.legacy.front.util;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -6,8 +6,8 @@ import org.junit.rules.ExpectedException;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;

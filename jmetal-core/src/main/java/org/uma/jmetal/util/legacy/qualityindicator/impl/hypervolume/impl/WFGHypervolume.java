@@ -4,9 +4,9 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
+import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 import java.io.FileNotFoundException;
@@ -52,7 +52,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    * @param referenceParetoFront
    * @throws FileNotFoundException
    */
-  public WFGHypervolume(org.uma.jmetal.util.front.Front referenceParetoFront) {
+  public WFGHypervolume(org.uma.jmetal.util.legacy.front.Front referenceParetoFront) {
     super(referenceParetoFront);
   }
 
@@ -558,9 +558,9 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
    * @param referenceFront
    *          The true pareto front
    */
-  private double hypervolume(org.uma.jmetal.util.front.Front front, org.uma.jmetal.util.front.Front referenceFront) {
+  private double hypervolume(org.uma.jmetal.util.legacy.front.Front front, org.uma.jmetal.util.legacy.front.Front referenceFront) {
 
-    org.uma.jmetal.util.front.Front invertedFront;
+    org.uma.jmetal.util.legacy.front.Front invertedFront;
     invertedFront = FrontUtils.getInvertedFront(front);
 
     int numberOfObjectives = referenceFront.getPoint(0).getDimension();
@@ -579,8 +579,8 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
   @Override
   public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceFrontList) {
     if (solutionList.size() > 1) {
-      org.uma.jmetal.util.front.Front front = new ArrayFront(solutionList);
-      org.uma.jmetal.util.front.Front referenceFront = new ArrayFront(referenceFrontList);
+      org.uma.jmetal.util.legacy.front.Front front = new ArrayFront(solutionList);
+      org.uma.jmetal.util.legacy.front.Front referenceFront = new ArrayFront(referenceFrontList);
 
       // STEP 1. Obtain the maximum and minimum values of the Pareto front
       double[] maximumValues = FrontUtils.getMaximumValues(referenceFront);
@@ -588,7 +588,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
 
       // STEP 2. Get the normalized front
       FrontNormalizer frontNormalizer = new FrontNormalizer(minimumValues, maximumValues);
-      org.uma.jmetal.util.front.Front normalizedFront = frontNormalizer.normalize(front);
+      org.uma.jmetal.util.legacy.front.Front normalizedFront = frontNormalizer.normalize(front);
 
       // compute offsets for reference point in normalized space
       double[] offsets = new double[maximumValues.length];
@@ -597,7 +597,7 @@ public class WFGHypervolume<S extends Solution<?>> extends Hypervolume<S> {
       }
       // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
-      org.uma.jmetal.util.front.Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
+      org.uma.jmetal.util.legacy.front.Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);
 
       // shift away from origin, so that boundary points also get a contribution > 0
       for (int i = 0; i < invertedFront.getNumberOfPoints(); i++) {

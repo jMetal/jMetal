@@ -92,9 +92,6 @@ public class NormalizeUtils {
     //double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
     //double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
 
-    System.out.println("matrix length " + matrix.length) ;
-    System.out.println("matrix[0] length " + matrix[0].length) ;
-
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
         normalizedMatrix[i][j] = normalize(matrix[i][j], minRangeValue[j], maxRangeValue[j]) ;

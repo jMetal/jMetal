@@ -13,8 +13,8 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;

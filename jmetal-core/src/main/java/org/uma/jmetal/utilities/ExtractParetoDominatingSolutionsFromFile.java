@@ -2,6 +2,7 @@ package org.uma.jmetal.utilities;
 
 import org.uma.jmetal.util.StoredSolutionsUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
@@ -25,15 +26,13 @@ import java.nio.file.Paths;
 public class ExtractParetoDominatingSolutionsFromFile {
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 3) {
-      throw new JMetalException(
+    Check.that(args.length == 3,
           "Wrong number of arguments: "
               + args.length
               + "\nThis program should be called with three arguments:"
               + "\nThe first argument is the name of the file containing the input solutions."
               + "\nThe second argument is the name of the file containing the computed output."
               + "\nThe third argument is the number of objectives of the problem whose front is to be extracted.");
-    }
 
     String inputFileName = args[0];
     String outputFileName = args[1];

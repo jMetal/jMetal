@@ -5,11 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 

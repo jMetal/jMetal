@@ -5,10 +5,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.comparator.FitnessComparator;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 /**

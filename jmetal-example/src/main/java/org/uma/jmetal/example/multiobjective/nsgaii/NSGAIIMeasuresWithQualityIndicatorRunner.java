@@ -16,14 +16,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 

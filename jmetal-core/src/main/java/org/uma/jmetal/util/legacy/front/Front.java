@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.front;
+package org.uma.jmetal.util.legacy.front;
 
 import org.uma.jmetal.util.point.Point;
 

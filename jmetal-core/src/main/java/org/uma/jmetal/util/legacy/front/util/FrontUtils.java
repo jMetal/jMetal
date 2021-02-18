@@ -1,10 +1,10 @@
-package org.uma.jmetal.util.front.util;
+package org.uma.jmetal.util.legacy.front.util;
 
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
 

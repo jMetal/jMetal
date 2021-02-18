@@ -18,11 +18,6 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.List;
 

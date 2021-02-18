@@ -12,17 +12,11 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 public class SMPSOIT {
   Algorithm<List<DoubleSolution>> algorithm;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.front.impl;
+package org.uma.jmetal.util.legacy.front.impl;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -12,7 +12,7 @@ import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-import org.uma.jmetal.util.front.Front;
+import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;

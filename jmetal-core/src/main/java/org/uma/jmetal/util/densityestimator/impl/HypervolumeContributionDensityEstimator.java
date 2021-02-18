@@ -5,7 +5,7 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 import java.util.Comparator;
 import java.util.List;

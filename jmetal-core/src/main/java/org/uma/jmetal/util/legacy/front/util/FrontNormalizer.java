@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.front.util;
+package org.uma.jmetal.util.legacy.front.util;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 import java.util.List;
 
