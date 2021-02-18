@@ -7,10 +7,9 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,7 +122,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
         // Update PhiMax
         if (phiMax < Math.abs((double) ConstraintHandling.overallConstraintViolationDegree(child))) {
-          phiMax = (double) ConstraintHandling.overallConstraintViolationDegree(child);
+          phiMax = ConstraintHandling.overallConstraintViolationDegree(child);
         }
 
         idealPoint.update(child.objectives());
@@ -138,7 +137,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
   public void initializePopulation() {
     for (int i = 0; i < populationSize; i++) {
-      DoubleSolution newSolution = (DoubleSolution) problem.createSolution();
+      DoubleSolution newSolution = problem.createSolution();
 
       problem.evaluate(newSolution);
       population.add(newSolution);
@@ -226,8 +225,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
     if (feasibleSolutions.size() > 0) {
       feasibleSolutions.addAll(archive) ;
-      Ranking<DoubleSolution> ranking = new DominanceRanking<>() ;
-      ranking.computeRanking(feasibleSolutions) ;
+      Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>() ;
+      ranking.compute(feasibleSolutions) ;
 
       List<DoubleSolution> firstRankSolutions = ranking.getSubFront(0) ;
 
@@ -237,10 +236,10 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
           archive.add((DoubleSolution)solution.copy()) ;
         }
       } else {
-        CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<>() ;
+        CrowdingDistanceDensityEstimator<DoubleSolution> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
         while (firstRankSolutions.size() > populationSize) {
-          crowdingDistance.computeDensityEstimator(firstRankSolutions);
-          firstRankSolutions.sort(new CrowdingDistanceComparator<>());
+          crowdingDistance.compute(firstRankSolutions);
+          firstRankSolutions.sort(crowdingDistance.getComparator());
           firstRankSolutions.remove(firstRankSolutions.size() - 1) ;
         }
 
