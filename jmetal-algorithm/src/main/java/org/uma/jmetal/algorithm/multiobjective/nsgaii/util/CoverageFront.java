@@ -1,33 +1,36 @@
-package org.uma.jmetal.qualityindicatorold.impl;
+package org.uma.jmetal.algorithm.multiobjective.nsgaii.util;
 
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.qualityindicatorold.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.front.Front;
 
 import java.util.List;
-@Deprecated
+
 public class CoverageFront<S extends Solution<?>> {
 
   private double coverageValue;
   private double lastCoverageValue;
-  private GenericIndicator<S> indicator;
+  private QualityIndicator indicator;
 
   private List<S> lastFront;
 
-  public CoverageFront(double coverageValue, GenericIndicator<S> indicator) {
+  public CoverageFront(double coverageValue, QualityIndicator indicator) {
     this.coverageValue = coverageValue;
     this.indicator = indicator;
     this.lastCoverageValue = 0;
   }
 
   public boolean isCoverageWithLast(List<S> front) {
-    double coverage = this.indicator.evaluate(front);
+    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
     double aux = Math.abs(coverage - lastCoverageValue);
     lastCoverageValue = coverage;
     boolean result = aux > coverageValue;
     if (result) {
       lastFront = front;
     } else if (lastFront != null) {
-      coverage = this.indicator.evaluate(lastFront);
+      coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(lastFront));
       aux = Math.abs(coverage - lastCoverageValue);
       result = aux > coverageValue;
       if (result) {
@@ -38,12 +41,12 @@ public class CoverageFront<S extends Solution<?>> {
   }
 
   public boolean isCoverage(List<S> front) {
-    double coverage = this.indicator.evaluate(front);
+    double coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(front));
     boolean result = coverage > coverageValue;
     if (result) {
       lastFront = front;
     } else if (lastFront != null) {
-      coverage = this.indicator.evaluate(lastFront);
+      coverage = this.indicator.compute(SolutionListUtils.getMatrixWithObjectiveValues(lastFront));
       result = coverage > coverageValue;
       if (result) {
         lastFront = front;
@@ -52,9 +55,9 @@ public class CoverageFront<S extends Solution<?>> {
     return result;
   }
 
-  public void updateFront(Front front) {
+  public void updateFront(double[][] front) {
     try {
-      this.indicator.setReferenceParetoFront(front);
+      this.indicator.setReferenceFront(front);
     } catch (Exception ex) {
       ex.printStackTrace();
     }

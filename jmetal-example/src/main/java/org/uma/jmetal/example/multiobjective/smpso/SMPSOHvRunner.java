@@ -7,15 +7,16 @@ import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
   java org.uma.jmetal.runner.multiobjective.smpso.SMPSOHvRunner problemName [referenceFront]
    */
   public static void main(String[] args) throws Exception {
+    JMetalRandom.getInstance().setSeed(1);
     DoubleProblem problem;
     Algorithm<List<DoubleSolution>> algorithm;
     MutationOperator<DoubleSolution> mutation;
@@ -53,16 +55,14 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-      referenceParetoFront = "" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
-    System.out.println("Warning: the problem name is not used anymore and may be removed later.") ;
-    System.out.println("Warning: current problem name: " + problemName) ;
 
-    problem = new LZ09F2() ;
+    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     BoundedArchive<DoubleSolution> archive =
-        new HypervolumeArchive<DoubleSolution>(100, new PISAHypervolume<DoubleSolution>()) ;
+        new HypervolumeArchive(100, new PISAHypervolume<>()) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;
@@ -70,7 +70,7 @@ public class SMPSOHvRunner extends AbstractAlgorithmRunner {
 
     algorithm = new SMPSOBuilder(problem, archive)
         .setMutation(mutation)
-        .setMaxIterations(1750)
+        .setMaxIterations(250)
         .setSwarmSize(100)
         .setRandomGenerator(new MersenneTwisterGenerator())
         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())

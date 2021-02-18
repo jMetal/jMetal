@@ -2,6 +2,7 @@ package org.uma.jmetal.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -10,13 +11,11 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.problem.multiobjective.fda.FDA2;
-import org.uma.jmetal.qualityindicatorold.impl.CoverageFront;
-import org.uma.jmetal.qualityindicatorold.impl.InvertedGenerationalDistance;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
-import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.restartstrategy.impl.CreateNRandomSolutions;
 import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.RemoveNRandomSolutions;
@@ -39,8 +38,8 @@ public class DynamicNSGAIIRunner {
     SelectionOperator<List<DoubleSolution>, DoubleSolution> selection =
         new BinaryTournamentSelection<>();
 
-    InvertedGenerationalDistance<PointSolution> igd = new InvertedGenerationalDistance<>();
-    CoverageFront<PointSolution> coverageFront = new CoverageFront<>(0.055, igd);
+    InvertedGenerationalDistance igd = new InvertedGenerationalDistance();
+    CoverageFront coverageFront = new CoverageFront(0.055, igd);
     DynamicAlgorithm<List<DoubleSolution>> algorithm =
         new DynamicNSGAII<>(
             problem,

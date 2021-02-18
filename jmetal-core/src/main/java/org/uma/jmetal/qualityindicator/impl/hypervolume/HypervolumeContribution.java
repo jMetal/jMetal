@@ -6,6 +6,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 import java.util.Collections;
@@ -23,13 +24,44 @@ public class HypervolumeContribution<S extends Solution<?>> {
   public HypervolumeContribution(Hypervolume hypervolume) {
     this(hypervolume, DEFAULT_OFFSET) ;
   }
+
   public HypervolumeContribution(Hypervolume hypervolume, double offset) {
     this.hypervolume = hypervolume ;
     this.offset = offset ;
   }
 
+  public double[] computeHypervolumeContribution(double[][] referenceFront, double[][]front) {
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    hypervolume.setReferenceFront(normalizedReferenceFront);
+    double[][] normalizedFront =
+            NormalizeUtils.normalize(
+                    front,
+                    NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+                    NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    double[] contributions = new double[front.length] ;
+    double totalHV = hypervolume.compute(normalizedFront) ;
+    double[][] frontSubset = new double[front.length - 1][front[0].length];
+    LinkedList<double[]> frontCopy = new LinkedList<double[]>();
+    Collections.addAll(frontCopy, front);
+
+    for (int i = 0; i < front.length; i++) {
+      double[] evaluatedPoint = frontCopy.remove(i);
+      frontSubset = frontCopy.toArray(frontSubset);
+      double hv = hypervolume.compute(frontSubset);
+      double contribution = totalHV - hv;
+      contributions[i] = contribution;
+      // put point back
+      frontCopy.add(i, evaluatedPoint);
+    }
+
+    return hvContributions(normalizedFront) ;
+  }
+
   public List<S> computeHypervolumeContribution(List<S> solutionList, List<S> referenceSolutionList) {
     double[][] referenceFront = getMatrixWithObjectiveValues(referenceSolutionList) ;
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    hypervolume.setReferenceFront(normalizedReferenceFront);
     if (solutionList.size() > 1) {
       double[][] front = getMatrixWithObjectiveValues(solutionList) ;
       double[][] normalizedFront =
@@ -58,8 +90,9 @@ public class HypervolumeContribution<S extends Solution<?>> {
         }
       }
 
-      // calculate contributions and sort
       double[] contributions = hvContributions(invertedFront);
+
+      // calculate contributions and sort
       for (int i = 0; i < contributions.length; i++) {
         solutionList.get(i).attributes().put(attributeId, contributions[i]) ;
       }
@@ -77,6 +110,8 @@ public class HypervolumeContribution<S extends Solution<?>> {
     this.offset = offset ;
   }
 
+
+
   /**
    * Calculates how much hypervolume each point dominates exclusively. The points have to be
    * transformed beforehand, to accommodate the assumptions of Zitzler's hypervolume code.
@@ -85,20 +120,22 @@ public class HypervolumeContribution<S extends Solution<?>> {
    * @return HV contributions
    */
   private double[] hvContributions(double[][] front) {
+    int numberOfObjectives = front[0].length;
     double[] contributions = new double[front.length];
     double[][] frontSubset = new double[front.length - 1][front[0].length];
     LinkedList<double[]> frontCopy = new LinkedList<double[]>();
     Collections.addAll(frontCopy, front);
     double[][] totalFront = frontCopy.toArray(frontSubset);
-    double totalVolume = hypervolume.compute(totalFront) ;
+    double totalVolume =
+            hypervolume.compute(totalFront);
     for (int i = 0; i < front.length; i++) {
       double[] evaluatedPoint = frontCopy.remove(i);
       frontSubset = frontCopy.toArray(frontSubset);
-
+      // STEP4. The hypervolume (control is passed to java version of Zitzler code)
       double hv = hypervolume.compute(frontSubset);
       double contribution = totalVolume - hv;
       contributions[i] = contribution;
-
+      // put point back
       frontCopy.add(i, evaluatedPoint);
     }
     return contributions;
