@@ -21,7 +21,6 @@ import org.uma.jmetal.util.comparator.SpatialSpreadDeviationComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;
 
 import java.util.ArrayList;

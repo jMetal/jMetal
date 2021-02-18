@@ -16,8 +16,8 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.Comparator;
 import java.util.List;
@@ -108,8 +108,8 @@ public class NSGAIIMeasures<S extends Solution<?>> extends NSGAII<S> implements 
       List<S> offspringPopulation) {
     List<S> pop = super.replacement(population, offspringPopulation) ;
 
-    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
-    ranking.computeRanking(population);
+    Ranking<S> ranking = new FastNonDominatedSortRanking<>(dominanceComparator);
+    ranking.compute(population);
 
     numberOfNonDominatedSolutionsInPopulation.set(ranking.getSubFront(0).size());
 
