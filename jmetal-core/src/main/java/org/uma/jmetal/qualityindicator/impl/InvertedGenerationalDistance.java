@@ -5,7 +5,6 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * This class implements the inverted generational distance metric.

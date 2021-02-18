@@ -2,12 +2,9 @@ package org.uma.jmetal.operator.selection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import org.mockito.Mockito;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
@@ -16,13 +13,12 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Antonio J. Nebro

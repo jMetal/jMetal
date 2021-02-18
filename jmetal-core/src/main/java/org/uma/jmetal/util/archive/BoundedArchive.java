@@ -1,7 +1,5 @@
 package org.uma.jmetal.util.archive;
 
-import org.uma.jmetal.util.densityestimator.DensityEstimator;
-
 import java.util.Comparator;
 
 /**

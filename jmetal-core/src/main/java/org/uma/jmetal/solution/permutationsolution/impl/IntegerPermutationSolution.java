@@ -6,7 +6,6 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Defines an implementation of solution composed of a permutation of integers. A permutation is

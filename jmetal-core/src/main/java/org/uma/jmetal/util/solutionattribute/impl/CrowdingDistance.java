@@ -6,7 +6,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

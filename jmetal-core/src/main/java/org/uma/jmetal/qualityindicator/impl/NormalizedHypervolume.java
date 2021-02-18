@@ -3,9 +3,6 @@ package org.uma.jmetal.qualityindicator.impl;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.VectorUtils;
-
-import java.io.IOException;
 
 /**
  * Class providing an implementation of the normalized hypervolume, which is calculated as follows:

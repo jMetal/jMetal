@@ -5,7 +5,6 @@ import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**

@@ -4,9 +4,6 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 /**
  * This class implements the unary epsilon additive indicator as proposed in E.
  * Zitzler, E. Thiele, L. Laummanns, M., Fonseca, C., and Grunert da Fonseca. V

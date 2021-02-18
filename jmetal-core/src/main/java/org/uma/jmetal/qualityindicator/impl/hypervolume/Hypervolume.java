@@ -2,8 +2,6 @@ package org.uma.jmetal.qualityindicator.impl.hypervolume;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 
-import java.io.IOException;
-
 /**
  * This interface represents implementations of the Hypervolume quality indicator
  *

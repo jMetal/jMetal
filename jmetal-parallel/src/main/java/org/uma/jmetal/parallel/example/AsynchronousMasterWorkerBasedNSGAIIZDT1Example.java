@@ -16,8 +16,6 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 import java.util.List;
 
-import static java.lang.Math.sin;
-
 public class AsynchronousMasterWorkerBasedNSGAIIZDT1Example {
   public static void main(String[] args) {
     CrossoverOperator<DoubleSolution> crossover;

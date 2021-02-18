@@ -3,17 +3,9 @@ package org.uma.jmetal.util.solutionattribute.impl;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class GenericSolutionAttributeTest {

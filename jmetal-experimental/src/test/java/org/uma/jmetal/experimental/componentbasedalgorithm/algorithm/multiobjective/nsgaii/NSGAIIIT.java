@@ -11,12 +11,12 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.ConstrEx;
 import org.uma.jmetal.problem.multiobjective.Kursawe;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.point.PointSolution;
 
 import java.util.List;

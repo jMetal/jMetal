@@ -7,7 +7,6 @@ import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 

@@ -1,9 +1,6 @@
 package org.uma.jmetal.qualityindicator;
 
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.io.IOException;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

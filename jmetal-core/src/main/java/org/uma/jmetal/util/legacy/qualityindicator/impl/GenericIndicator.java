@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.legacy.qualityindicator.impl;
 
-import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
 
 import java.io.FileNotFoundException;

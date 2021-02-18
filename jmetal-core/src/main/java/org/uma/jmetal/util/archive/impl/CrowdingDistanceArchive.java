@@ -2,12 +2,9 @@ package org.uma.jmetal.util.archive.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 /**

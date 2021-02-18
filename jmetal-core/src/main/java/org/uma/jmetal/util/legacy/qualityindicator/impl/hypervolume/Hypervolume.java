@@ -1,9 +1,9 @@
 package org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume;
 
-import org.uma.jmetal.util.legacy.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 

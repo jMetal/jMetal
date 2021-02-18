@@ -1,11 +1,9 @@
 package org.uma.jmetal.util.point.impl;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;

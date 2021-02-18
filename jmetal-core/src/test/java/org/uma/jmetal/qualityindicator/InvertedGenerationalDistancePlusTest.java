@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.NoSuchFileException;
-
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

@@ -11,7 +11,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

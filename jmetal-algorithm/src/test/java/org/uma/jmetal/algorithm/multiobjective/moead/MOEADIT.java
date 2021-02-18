@@ -15,7 +15,6 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 

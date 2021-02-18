@@ -4,9 +4,6 @@ import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 /**
  * This class implements the generational distance indicator.
  * Reference: Van Veldhuizen, D.A., Lamont, G.B.: Multiobjective Evolutionary

@@ -7,7 +7,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This defines an implementation of a binary solution. These solutions are composed of a number

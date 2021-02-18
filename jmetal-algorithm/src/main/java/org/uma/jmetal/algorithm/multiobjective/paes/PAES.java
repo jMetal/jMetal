@@ -1,11 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.paes;
 
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
+import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;

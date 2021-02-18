@@ -1,11 +1,8 @@
 package org.uma.jmetal.experimental.qualityIndicator.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
 
 /**
  * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points

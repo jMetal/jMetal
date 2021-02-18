@@ -15,7 +15,6 @@
 
 package org.uma.jmetal.algorithm.multiobjective.microfame.util;
 
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -23,6 +22,7 @@ import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 

@@ -9,7 +9,6 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Antonio J. Nebro <ajnebro@uma.es>.

@@ -19,7 +19,6 @@ import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

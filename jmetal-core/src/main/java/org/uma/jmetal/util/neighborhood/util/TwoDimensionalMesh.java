@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.neighborhood.util;
 
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 
 import java.util.ArrayList;

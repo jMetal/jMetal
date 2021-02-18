@@ -1,17 +1,13 @@
 package org.uma.jmetal.utilities;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicator.impl.*;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
