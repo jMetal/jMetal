@@ -42,12 +42,11 @@ public class MOEADDRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.UF.UF2";
-      referenceParetoFront = "referenceFronts/UF2.pf";
+      referenceParetoFront = "resources/referenceFrontsCSV/UF2.csv";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-        /**/
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 

@@ -145,4 +145,9 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
     }
     return result ;
   }
+
+  @Override
+  public Object getAttributedId() {
+    return attributeId ;
+  }
 }

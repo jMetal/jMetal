@@ -61,7 +61,7 @@ public class FAMERunner extends AbstractAlgorithmRunner {
 
     problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
 
-    selection = new SpatialSpreadDeviationSelection<DoubleSolution>(5);
+    selection = new SpatialSpreadDeviationSelection<>(5);
 
     int populationSize=25 ;
     int archiveSize=200 ;

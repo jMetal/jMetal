@@ -19,7 +19,8 @@ import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.SpatialSpreadDeviationComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
 import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;
 
@@ -327,8 +328,8 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population);
     jointPopulation.addAll(offspringPopulation);
-    Ranking<S> ranking = new DominanceRanking<>();
-    ranking.computeRanking(jointPopulation);
+    Ranking<S> ranking = new FastNonDominatedSortRanking<>();
+    ranking.compute(jointPopulation);
 
     return fast_nondonimated_sort(ranking);
   }
@@ -364,16 +365,14 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
 
     front = ranking.getSubFront(rank);
 
-    for (S solution : front) {
-      population.add(solution);
-    }
+    population.addAll(front);
   }
 
   protected void addLastRankedSolutionsToPopulation(
       Ranking<S> ranking, int rank, List<S> population) {
     List<S> currentRankedFront = ranking.getSubFront(rank);
 
-    Collections.sort(currentRankedFront, new SpatialSpreadDeviationComparator<>());
+    currentRankedFront.sort(new SpatialSpreadDeviationComparator<>());
 
     int i = 0;
     while (population.size() < getMaxPopulationSize()) {

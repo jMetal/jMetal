@@ -9,11 +9,12 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -154,12 +155,12 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       List<S> population, List<S> offspringPopulation) {
     currentNeighbors.add(offspringPopulation.get(0));
 
-    Ranking<S> rank = new DominanceRanking<S>();
-    rank.computeRanking(currentNeighbors);
+    Ranking<S> rank = new FastNonDominatedSortRanking<S>();
+    rank.compute(currentNeighbors);
 
-    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>();
+    DensityEstimator<S> crowdingDistance = new CrowdingDistanceDensityEstimator<>();
     for (int j = 0; j < rank.getNumberOfSubFronts(); j++) {
-      crowdingDistance.computeDensityEstimator(rank.getSubFront(j));
+      crowdingDistance.compute(rank.getSubFront(j));
     }
 
     Collections.sort(this.currentNeighbors, new RankingAndCrowdingDistanceComparator<S>());

@@ -12,4 +12,5 @@ public interface Ranking<S> {
   List<S> getSubFront(int rank) ;
   int getNumberOfSubFronts() ;
   Integer getRank(S solution) ;
+  Object getAttributedId() ;
 }

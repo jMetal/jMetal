@@ -117,4 +117,9 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
     }
     return result;
   }
+
+  @Override
+  public Object getAttributedId() {
+    return attributeId ;
+  }
 }

@@ -66,13 +66,13 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+        new BinaryTournamentSelection<>(
+            new RankingAndCrowdingDistanceComparator<>());
 
     List<Double> referencePoint = Arrays.asList(0.3, 0.8);
 
     ArchiveWithReferencePoint<DoubleSolution> archive =
-        new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(100, referencePoint);
+        new CrowdingDistanceArchiveWithReferencePoint<>(100, referencePoint);
 
     algorithm =
         new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)

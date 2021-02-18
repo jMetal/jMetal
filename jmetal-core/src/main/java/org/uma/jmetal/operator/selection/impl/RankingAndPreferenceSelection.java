@@ -2,17 +2,15 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.PreferenceDistance;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings("serial")
 public class RankingAndPreferenceSelection<S extends Solution<?>>
         implements SelectionOperator<List<S>, List<S>> {
   private final int solutionsToSelect;
@@ -35,17 +33,13 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
 
   @Override
   public List<S> execute(List<S> solutionList) {
-    if (null == solutionList) {
-      throw new JMetalException("The solution list is null");
-    } else if (solutionList.isEmpty()) {
-      throw new JMetalException("The solution list is empty");
-    } else if (solutionList.size() < solutionsToSelect) {
-      throw new JMetalException("The population size (" + solutionList.size() + ") is smaller than" +
-              "the solutions to selected (" + solutionsToSelect + ")");
-    }
+    Check.notNull(solutionList);
+    Check.collectionIsNotEmpty(solutionList);
+    Check.that(solutionList.size() >= solutionsToSelect, "The population size (" + solutionList.size() + ") is smaller than" +
+            "the solutions to selected (" + solutionsToSelect + ")");
 
-    Ranking<S> ranking = new DominanceRanking<S>();
-    ranking.computeRanking(solutionList);
+    Ranking<S> ranking = new FastNonDominatedSortRanking<S>();
+    ranking.compute(solutionList);
 
     return preferenceDistanceSelection(ranking, solutionList.get(0).objectives().length);
   }
@@ -97,7 +91,7 @@ public class RankingAndPreferenceSelection<S extends Solution<?>>
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S> population) {
     List<S> currentRankedFront = ranking.getSubFront(rank);
 
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<S>());
+    currentRankedFront.sort(new CrowdingDistanceDensityEstimator<S>().getComparator());
 
     int i = 0;
     while (population.size() < solutionsToSelect) {

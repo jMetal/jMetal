@@ -31,7 +31,7 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class HypervolumeArchiveWithReferencePoint<S extends Solution<?>> extends ArchiveWithReferencePoint<S> {
-  private Hypervolume<S> hypervolume ;
+  private Hypervolume hypervolume ;
 
   public HypervolumeArchiveWithReferencePoint(int maxSize, List<Double> refPointDM) {
     super(maxSize, refPointDM, new HypervolumeContributionComparator<>());

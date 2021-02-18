@@ -18,8 +18,8 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.*;
 
@@ -552,8 +552,8 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   // update the current nadir point
   void updateNadirPoint() {
-    Ranking<S> ranking = new DominanceRanking<S>();
-    ranking.computeRanking(population);
+    Ranking<S> ranking = new FastNonDominatedSortRanking<S>();
+    ranking.compute(population);
     List<S> nondominatedPopulation = ranking.getSubFront(0);
 
     for (int i = 0; i < nondominatedPopulation.size(); i++) {

@@ -227,4 +227,9 @@ public class MergeNonDominatedSortRanking<S extends Solution<?>> implements Rank
     }
     return result ;
   }
+
+  @Override
+  public Object getAttributedId() {
+    return attributeId ;
+  }
 }

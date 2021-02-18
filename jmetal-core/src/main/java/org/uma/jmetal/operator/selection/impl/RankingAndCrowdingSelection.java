@@ -2,12 +2,12 @@ package org.uma.jmetal.operator.selection.impl;
 
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,23 +54,23 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
               "the solutions to selected ("+solutionsToSelect+")")  ;
     }
 
-    Ranking<S> ranking = new DominanceRanking<S>(dominanceComparator);
-    ranking.computeRanking(solutionList) ;
+    Ranking<S> ranking = new FastNonDominatedSortRanking<S>(dominanceComparator);
+    ranking.compute(solutionList) ;
 
     return crowdingDistanceSelection(ranking);
   }
 
   protected List<S> crowdingDistanceSelection(Ranking<S> ranking) {
-    CrowdingDistance<S> crowdingDistance = new CrowdingDistance<S>() ;
+    CrowdingDistanceDensityEstimator<S> crowdingDistance = new CrowdingDistanceDensityEstimator<>() ;
     List<S> population = new ArrayList<>(solutionsToSelect) ;
     int rankingIndex = 0;
     while (population.size() < solutionsToSelect) {
       if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        crowdingDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
+        crowdingDistance.compute(ranking.getSubFront(rankingIndex));
         addRankedSolutionsToPopulation(ranking, rankingIndex, population);
         rankingIndex++;
       } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
+        crowdingDistance.compute(ranking.getSubFront(rankingIndex));
         addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
       }
     }
@@ -93,7 +93,7 @@ public class RankingAndCrowdingSelection<S extends Solution<?>>
   protected void addLastRankedSolutionsToPopulation(Ranking<S> ranking, int rank, List<S>population) {
     List<S> currentRankedFront = ranking.getSubFront(rank) ;
 
-    currentRankedFront.sort(new CrowdingDistanceComparator<S>());
+    currentRankedFront.sort(new CrowdingDistanceDensityEstimator<>().getComparator());
 
     int i = 0 ;
     while (population.size() < solutionsToSelect) {

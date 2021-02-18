@@ -145,4 +145,9 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     }
     return result ;
   }
+
+  @Override
+  public Object getAttributedId() {
+    return attributeId ;
+  }
 }

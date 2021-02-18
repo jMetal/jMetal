@@ -54,8 +54,6 @@ public class CDGRunner extends AbstractAlgorithmRunner {
     } else {
       problemName = "(none)";
     }
-    System.out.println("Warning: the problem name is not used anymore and may be removed later.");
-    System.out.println("Warning: current problem name: " + problemName);
 
     problem = new GLT4(10);
 

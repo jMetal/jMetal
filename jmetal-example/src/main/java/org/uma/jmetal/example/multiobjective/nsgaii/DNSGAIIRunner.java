@@ -31,10 +31,10 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
   public static void main(String[] args) throws FileNotFoundException {
 
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     // problem
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemName);
 
     // crossover
