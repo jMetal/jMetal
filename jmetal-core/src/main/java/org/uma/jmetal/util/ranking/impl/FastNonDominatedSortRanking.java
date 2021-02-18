@@ -139,15 +139,15 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
   public Integer getRank(S solution) {
     Check.notNull(solution);
 
-    Integer result = -1 ;
+    Integer result = -1;
     if (solution.attributes().get(attributeId) != null) {
-      result = (Integer) solution.attributes().get(attributeId) ;
+      result = (Integer) solution.attributes().get(attributeId);
     }
-    return result ;
+    return result;
   }
 
   @Override
   public Object getAttributedId() {
-    return attributeId ;
+    return attributeId;
   }
 }
