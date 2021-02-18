@@ -1,6 +1,6 @@
-package org.uma.jmetal.qualityindicatorold.impl.hypervolume;
+package org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume;
 
-import org.uma.jmetal.qualityindicatorold.impl.GenericIndicator;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontUtils;

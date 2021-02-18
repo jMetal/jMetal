@@ -1,6 +1,6 @@
-package org.uma.jmetal.qualityindicatorold.impl;
+package org.uma.jmetal.util.legacy.qualityindicator.impl;
 
-import org.uma.jmetal.qualityindicatorold.QualityIndicator;
+import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.impl.ArrayFront;

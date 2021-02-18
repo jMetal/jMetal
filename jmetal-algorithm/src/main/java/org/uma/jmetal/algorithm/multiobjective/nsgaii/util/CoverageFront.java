@@ -1,10 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii.util;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.qualityindicatorold.impl.GenericIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.front.Front;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.uma.jmetal.qualityindicatorold;
+package org.uma.jmetal.util.legacy.qualityindicator;
 
 import org.uma.jmetal.util.naming.DescribedEntity;
 

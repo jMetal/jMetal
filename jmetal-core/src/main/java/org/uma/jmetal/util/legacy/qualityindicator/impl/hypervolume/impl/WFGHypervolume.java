@@ -1,9 +1,8 @@
-package org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl;
+package org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl;
 
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.front.impl.ArrayFront;
 import org.uma.jmetal.util.front.util.FrontNormalizer;

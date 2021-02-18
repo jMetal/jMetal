@@ -13,13 +13,12 @@
 
 package org.uma.jmetal.util.archivewithreferencepoint.impl;
 
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

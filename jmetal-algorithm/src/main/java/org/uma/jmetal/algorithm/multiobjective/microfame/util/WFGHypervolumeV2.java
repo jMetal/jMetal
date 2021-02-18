@@ -15,7 +15,7 @@
 
 package org.uma.jmetal.algorithm.multiobjective.microfame.util;
 
-import org.uma.jmetal.qualityindicatorold.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
