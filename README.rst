@@ -37,8 +37,10 @@ The most recent documentation is hosted in https://jmetal.readthedocs.io  (the o
 
 Comments and suggestions are very welcome.
 
-Changelog
+Changelog`
 ---------
+* [2/19/2021] The `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface has been refactorized.
+
 * [1/21/2021] Added the MicroFAME multi-objective genetic algorith, described in: Alejandro Santiago, Bernabé Dorronsoro, Héctor Fraire, Patricia Ruíz: Micro-Genetic algorithm with fuzzy selection of operators for multi-Objective optimization: microFAME. Swarm and Evolutionary Computation, V.61, March 2021. `DOI <https://doi.org/10.1016/j.swevo.2020.100818>`_. Contributed by Alejandro Santiago.
 
 * [10/1/2020] Added the problems described in: Ryoji Tanabe and Hisao Ishibuchi: An Easy-to-use Real-world Multi-objective Optimization Problem Suite. Applied Soft Computing, V.89, April 2020. `DOI <https://doi.org/10.1016/j.asoc.2020.106078>`_.
@@ -49,7 +51,7 @@ Changelog
 
 * [7/21/2020] jMetal 5.10 has been released.
 
-* [7/15/2020] `Automatic generation of HTML pages <https://jmetal.readthedocs.io/en/latest/experimentation.html#generation-of-html-pages>`_. summarizing the results of experimental studies. Contributed by Javier Pérez Abad.
+* [7/15/2020] `Automatic generation of HTML pages <https://jmetal.readthedocs.io/en/latest/experimentation.html#generation-of-html-pages>_`. summarizing the results of experimental studies. Contributed by Javier Pérez Abad.
 
 * [7/14/2020] New experiment component: `GenerateFriedmanHolmTestTables <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/component/impl/GenerateFriedmanHolmTestTables.java>`_. Contributed by Javier Pérez Abad.
 
