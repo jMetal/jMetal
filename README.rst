@@ -37,7 +37,7 @@ The most recent documentation is hosted in https://jmetal.readthedocs.io  (the o
 
 Comments and suggestions are very welcome.
 
-Changelog`
+Changelog
 ---------
 * [2/19/2021] The `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface has been refactorized.
 
