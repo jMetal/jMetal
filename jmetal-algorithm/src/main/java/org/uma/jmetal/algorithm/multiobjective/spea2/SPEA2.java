@@ -7,8 +7,8 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.densityestimator.impl.StrenghtRawFitnessDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +16,12 @@ import java.util.List;
 /**
  * @author Juan J. Durillo
  **/
-@SuppressWarnings("serial")
 public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected final int maxIterations;
   protected final SolutionListEvaluator<S> evaluator;
   protected int iterations;
   protected List<S> archive;
-  protected final StrengthRawFitness<S> strenghtRawFitness = new StrengthRawFitness<S>();
+  protected final StrenghtRawFitnessDensityEstimator<S> densityEstimator = new StrenghtRawFitnessDensityEstimator<S>(1);
   protected final EnvironmentalSelection<S> environmentalSelection;
   protected final int k ;
 
@@ -71,7 +70,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
     List<S> union = new ArrayList<>(2*getMaxPopulationSize());
     union.addAll(archive);
     union.addAll(population);
-    strenghtRawFitness.computeDensityEstimator(union);
+    densityEstimator.compute(union);
     archive = environmentalSelection.execute(union);
     return archive;
   }
