@@ -144,7 +144,7 @@ public class WFG8 extends WFG {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
@@ -154,7 +154,7 @@ public class WFG8 extends WFG {
     float[] sol2 = evaluate(variables);
 
     for (int i = 0; i < sol2.length; i++) {
-      solution.setObjective(i, sol2[i]);
+      solution.objectives()[i] = sol2[i];
     }
     return solution ;
   }

@@ -420,10 +420,10 @@ public class SolutionListUtilsTest {
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
 
-    s1.setObjective(0, 20);
-    s1.setObjective(1, 10);
-    s2.setObjective(0, 10);
-    s2.setObjective(1, 20);
+    s1.objectives()[0] = 20;
+    s1.objectives()[1] = 10;
+    s2.objectives()[0] = 10 ;
+    s2.objectives()[1] = 20 ;
 
     List<DoubleSolution> solutions = Arrays.asList(s1, s2);
 
@@ -434,10 +434,10 @@ public class SolutionListUtilsTest {
         (List<DoubleSolution>) SolutionListUtils.normalizeSolutionList(solutions, minValue, maxValue);
 
     assertNotSame(normalizedSolutions, solutions);
-    assertEquals(1.0, normalizedSolutions.get(0).getObjective(0), EPSILON);
-    assertEquals(0.0, normalizedSolutions.get(0).getObjective(1), EPSILON);
-    assertEquals(0.0, normalizedSolutions.get(1).getObjective(0), EPSILON);
-    assertEquals(1.0, normalizedSolutions.get(1).getObjective(1), EPSILON);
+    assertEquals(1.0, normalizedSolutions.get(0).objectives()[0], EPSILON);
+    assertEquals(0.0, normalizedSolutions.get(0).objectives()[1], EPSILON);
+    assertEquals(0.0, normalizedSolutions.get(1).objectives()[0], EPSILON);
+    assertEquals(1.0, normalizedSolutions.get(1).objectives()[1], EPSILON);
   }
 
   @Test
@@ -457,9 +457,9 @@ public class SolutionListUtilsTest {
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
-    s1.setConstraint(0, -4);
-    s2.setConstraint(0, -4);
-    s3.setConstraint(0, -4);
+    s1.constraints()[0] = -4;
+    s2.constraints()[0] = -4;
+    s3.constraints()[0] = -4;
 
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3);
@@ -473,8 +473,8 @@ public class SolutionListUtilsTest {
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
     DoubleSolution s4 = problem.createSolution();
-    s1.setConstraint(0, -4);
-    s3.setConstraint(0, -4);
+    s1.constraints()[0] = -4;
+    s3.constraints()[0] = -4;
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4);
     assertEquals(0.5, ConstraintHandling.feasibilityRatio(solutionList), EPSILON);
@@ -484,48 +484,48 @@ public class SolutionListUtilsTest {
   public void shouldNormalizeSolutionListWorkProperly() {
     DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
-    s1.setObjective(0, 0.0);
-    s1.setObjective(1, 2.0);
+    s1.objectives()[0] = 0.0;
+    s1.objectives()[1] = 2.0;
     DoubleSolution s2 = problem.createSolution();
-    s2.setObjective(0, 1.25);
-    s2.setObjective(1, 2.75);
+    s2.objectives()[0] = 1.25 ;
+    s2.objectives()[1] = 2.75;
     DoubleSolution s3 = problem.createSolution();
-    s3.setObjective(0, 2.5);
-    s3.setObjective(1, 2.5);
+    s3.objectives()[0] = 2.5;
+    s3.objectives()[1] = 2.5;
     DoubleSolution s4 = problem.createSolution();
-    s4.setObjective(0, 3.75);
-    s4.setObjective(1, 2.25);
+    s4.objectives()[0] = 3.75;
+    s4.objectives()[1] = 2.25;
     DoubleSolution s5 = problem.createSolution();
-    s5.setObjective(0, 4.0);
-    s5.setObjective(1, 3.0);
+    s5.objectives()[0] = 4.0;
+    s5.objectives()[1] = 3.0;
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4, s5);
     List<DoubleSolution> normalizedSolutionList = SolutionListUtils.normalizeSolutionList(solutionList) ;
     assertEquals(solutionList.size(), normalizedSolutionList.size());
-    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(0), EPSILON);
-    assertEquals(0.0, normalizedSolutionList.get(0).getObjective(1), EPSILON);
-    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(0), EPSILON);
-    assertEquals(1.0, normalizedSolutionList.get(4).getObjective(1), EPSILON);
+    assertEquals(0.0, normalizedSolutionList.get(0).objectives()[0], EPSILON);
+    assertEquals(0.0, normalizedSolutionList.get(0).objectives()[1], EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).objectives()[0], EPSILON);
+    assertEquals(1.0, normalizedSolutionList.get(4).objectives()[1], EPSILON);
   }
 
   @Test
   public void shouldDistanceBasedSubsetSelectionWorkProperly() {
     DummyDoubleProblem problem = new DummyDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
-    s1.setObjective(0, 0.0);
-    s1.setObjective(1, 3.0);
+    s1.objectives()[0] = 0.0;
+    s1.objectives()[1] = 3.0;
     DoubleSolution s2 = problem.createSolution();
-    s2.setObjective(0, 0.25);
-    s2.setObjective(1, 2.75);
+    s2.objectives()[0] = 0.25;
+    s2.objectives()[1] = 2.75;
     DoubleSolution s3 = problem.createSolution();
-    s3.setObjective(0, 0.5);
-    s3.setObjective(1, 2.5);
+    s3.objectives()[0] = 0.5;
+    s3.objectives()[1] = 2.5;
     DoubleSolution s4 = problem.createSolution();
-    s4.setObjective(0, 0.75);
-    s4.setObjective(1, 2.25);
+    s4.objectives()[0] = 0.75;
+    s4.objectives()[1] = 2.25;
     DoubleSolution s5 = problem.createSolution();
-    s5.setObjective(0, 1.0);
-    s5.setObjective(1, 2.0);
+    s5.objectives()[0] = 1.0;
+    s5.objectives()[1] = 2.0;
 
     List<DoubleSolution> solutionList = Arrays.asList(s1, s2, s3, s4, s5);
 

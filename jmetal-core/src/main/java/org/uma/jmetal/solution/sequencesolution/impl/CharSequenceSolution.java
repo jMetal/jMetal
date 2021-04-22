@@ -4,7 +4,6 @@ import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Defines an implementation of solution representing sequences of chars.
@@ -18,24 +17,24 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
     super(stringLength, numberOfObjectives);
 
     for (int i = 0; i < stringLength; i++) {
-      setVariable(i, ' ');
+      variables().set(i, ' ');
     }
   }
 
   /** Copy Constructor */
   public CharSequenceSolution(CharSequenceSolution solution) {
-    super(solution.getLength(), solution.getNumberOfObjectives());
+    super(solution.getLength(), solution.objectives().length);
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariable(i, solution.getVariable(i));
+    for (int i = 0; i < variables().size(); i++) {
+      variables().set(i, solution.variables().get(i));
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);
@@ -47,12 +46,7 @@ public class CharSequenceSolution extends AbstractSolution<Character> implements
   }
 
   @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
-  }
-
-  @Override
   public int getLength() {
-    return getNumberOfVariables();
+    return variables().size();
   }
 }

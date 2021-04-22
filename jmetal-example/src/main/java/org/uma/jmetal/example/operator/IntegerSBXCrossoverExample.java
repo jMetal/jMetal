@@ -63,8 +63,8 @@ public class IntegerSBXCrossoverExample {
 
     IntegerSolution solution1 = problem.createSolution() ;
     IntegerSolution solution2 = problem.createSolution() ;
-    solution1.setVariable(0, -50);
-    solution2.setVariable(0, 50);
+    solution1.variables().set(0, -50);
+    solution2.variables().set(0, 50);
     List<IntegerSolution> parents = Arrays.asList(solution1, solution2) ;
 
     List<IntegerSolution> population = new ArrayList<>(numberOfPoints) ;
@@ -96,7 +96,7 @@ public class IntegerSBXCrossoverExample {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariable(0) <= classifier[index][0]) {
+        if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {

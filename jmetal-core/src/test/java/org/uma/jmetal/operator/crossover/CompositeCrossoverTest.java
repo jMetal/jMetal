@@ -57,17 +57,17 @@ public class CompositeCrossoverTest {
   @Test
   public void shouldExecuteWorkProperlyWithASingleCrossoverOperator() {
     CompositeCrossover operator =
-        new CompositeCrossover(Arrays.asList(new SBXCrossover(1.0, 20.0)));
+        new CompositeCrossover(List.of(new SBXCrossover(1.0, 20.0)));
     DummyDoubleProblem problem = new DummyDoubleProblem();
-    CompositeSolution solution1 = new CompositeSolution(Arrays.asList(problem.createSolution()));
-    CompositeSolution solution2 = new CompositeSolution(Arrays.asList(problem.createSolution()));
+    CompositeSolution solution1 = new CompositeSolution(List.of(problem.createSolution()));
+    CompositeSolution solution2 = new CompositeSolution(List.of(problem.createSolution()));
 
     List<CompositeSolution> children = operator.execute(Arrays.asList(solution1, solution2));
 
     assertNotNull(children);
     assertEquals(2, children.size());
-    assertEquals(1, children.get(0).getNumberOfVariables());
-    assertEquals(1, children.get(1).getNumberOfVariables());
+    assertEquals(1, children.get(0).variables().size());
+    assertEquals(1, children.get(1).variables().size());
   }
 
   @Test
@@ -92,8 +92,8 @@ public class CompositeCrossoverTest {
 
     assertNotNull(children);
     assertEquals(2, children.size());
-    assertEquals(2, children.get(0).getNumberOfVariables());
-    assertEquals(2, children.get(1).getNumberOfVariables());
+    assertEquals(2, children.get(0).variables().size());
+    assertEquals(2, children.get(1).variables().size());
   }
 
   @Test (expected = ClassCastException.class)

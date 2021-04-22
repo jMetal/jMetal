@@ -356,7 +356,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     for (int i = 0; i < numberOfVariables; i++) {
       distributionMean[i] = 0.;
       for (int iNk = 0; iNk < mu; iNk++) {
-        double variableValue = (double) getPopulation().get(iNk).getVariable(i);
+        double variableValue = (double) getPopulation().get(iNk).variables().get(i);
         distributionMean[i] += weights[iNk] * variableValue;
       }
     }
@@ -416,8 +416,8 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
            * additional rank mu
            * update
            */
-          double valueI = getPopulation().get(k).getVariable(i);
-          double valueJ = getPopulation().get(k).getVariable(j);
+          double valueI = getPopulation().get(k).variables().get(i);
+          double valueJ = getPopulation().get(k).variables().get(j);
           c[i][j] += cmu
                 * weights[k]
                 * (valueI - oldDistributionMean[i])
@@ -513,15 +513,15 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       Bounds<Double> bounds = ((DoubleProblem)getProblem()).getBoundsForVariables().get(i) ;
       value = bounds.restrict(value);
 
-      solution.setVariable(i, value);
+      solution.variables().set(i, value);
     }
 
     return solution;
   }
 
   private void storeBest() {
-    if ((bestSolutionEver == null) || (bestSolutionEver.getObjective(0) > getPopulation().get(0)
-        .getObjective(0))) {
+    if ((bestSolutionEver == null) || (bestSolutionEver.objectives()[0] > getPopulation().get(0)
+        .objectives()[0])) {
       bestSolutionEver = getPopulation().get(0);
     }
   }

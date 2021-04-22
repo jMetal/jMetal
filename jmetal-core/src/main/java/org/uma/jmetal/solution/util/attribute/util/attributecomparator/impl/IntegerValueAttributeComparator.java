@@ -30,8 +30,8 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
 
     //Check.isNotNull(solution1.getAttribute(attributeName));
     //Check.isNotNull(solution2.getAttribute(attributeName));
@@ -41,11 +41,11 @@ public class IntegerValueAttributeComparator<S extends Solution<?>> extends Attr
     int value1 = 0 ;
     int value2 = 0 ;
 
-    if (solution1.getAttribute(attributeName) != null) {
-      value1 = (int) solution1.getAttribute(attributeName);
+    if (solution1.attributes().get(attributeName) != null) {
+      value1 = (int) solution1.attributes().get(attributeName);
     }
-    if (solution2.getAttribute(attributeName) != null) {
-      value2 = (int) solution2.getAttribute(attributeName);
+    if (solution2.attributes().get(attributeName) != null) {
+      value2 = (int) solution2.attributes().get(attributeName);
     }
 
     if (ordering.equals(Ordering.DESCENDING)) {

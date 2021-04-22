@@ -16,8 +16,8 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
   private long totalComputingTime;
 
   public AlgorithmEnsemble(List<Algorithm<List<S>>> algorithmList, Archive<S> archive) {
-    Check.isNotNull(algorithmList);
-    Check.isNotNull(archive);
+    Check.notNull(algorithmList);
+    Check.notNull(archive);
     Check.that(algorithmList.size() > 0, "The algorithm list is empty");
 
     this.algorithmList = algorithmList;
@@ -36,7 +36,7 @@ public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<
               + " finished. "
               + (System.currentTimeMillis() - startComputingTime));
       for (S solution : algorithm.getResult()) {
-        solution.setAttribute("ALGORITHM_NAME", algorithm.getName());
+        solution.attributes().put("ALGORITHM_NAME", algorithm.getName());
       }
       bagOfSolutions.addAll(algorithm.getResult());
     }

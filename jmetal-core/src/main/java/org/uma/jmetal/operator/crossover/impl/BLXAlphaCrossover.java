@@ -4,9 +4,9 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -80,7 +80,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.that(solutions.size() == 2, "There must be two parents instead of " + solutions.size());
 
     return doCrossover(crossoverProbability, solutions.get(0), solutions.get(1)) ;
@@ -104,12 +104,12 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
     double lowerBound;
 
     if (randomGenerator.getRandomValue() <= probability) {
-      for (i = 0; i < parent1.getNumberOfVariables(); i++) {
+      for (i = 0; i < parent1.variables().size(); i++) {
         Bounds<Double> bounds = parent1.getBounds(i);
         upperBound = bounds.getUpperBound();
         lowerBound = bounds.getLowerBound();
-        valueX1 = parent1.getVariable(i);
-        valueX2 = parent2.getVariable(i);
+        valueX1 = parent1.variables().get(i);
+        valueX2 = parent2.variables().get(i);
 
         double max;
         double min;
@@ -140,8 +140,8 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
         valueY1 = solutionRepair.repairSolutionVariableValue(valueY1, lowerBound, upperBound) ;
         valueY2 = solutionRepair.repairSolutionVariableValue(valueY2, lowerBound, upperBound) ;
 
-        offspring.get(0).setVariable(i, valueY1);
-        offspring.get(1).setVariable(i, valueY2);
+        offspring.get(0).variables().set(i, valueY1);
+        offspring.get(1).variables().set(i, valueY2);
       }
     }
 

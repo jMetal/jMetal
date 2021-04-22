@@ -3,8 +3,8 @@ package org.uma.jmetal.util.chartcontainer;
 import org.knowm.xchart.*;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -167,7 +167,7 @@ public class ChartContainerWithReferencePoints {
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getObjective(objective);
+      result[i] = solutionList.get(i).objectives()[objective];
     }
     return result;
   }

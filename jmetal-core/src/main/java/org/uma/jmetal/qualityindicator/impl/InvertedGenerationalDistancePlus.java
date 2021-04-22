@@ -1,14 +1,11 @@
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * This class implements the inverted generational distance metric plust (IGD+)
@@ -18,7 +15,7 @@ import java.util.List;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends GenericIndicator<S> {
+public class InvertedGenerationalDistancePlus extends QualityIndicator {
 
   /**
    * Default constructor
@@ -29,31 +26,22 @@ public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends Gen
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   */
-  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) throws FileNotFoundException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param referenceParetoFront
+   * @param referenceFront
    * @throws FileNotFoundException
    */
-  public InvertedGenerationalDistancePlus(Front referenceParetoFront) {
-    super(referenceParetoFront) ;
+  public InvertedGenerationalDistancePlus(double[][] referenceFront) {
+    super(referenceFront) ;
   }
 
   /**
    * Evaluate() method
-   * @param solutionList
+   * @param front
    * @return
    */
-  @Override public Double evaluate(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+  @Override public double compute(double[][] front) {
+    Check.notNull(front);
 
-    return invertedGenerationalDistancePlus(new ArrayFront(solutionList), referenceParetoFront);
+    return invertedGenerationalDistancePlus(front, referenceFront);
   }
 
   /**
@@ -62,16 +50,15 @@ public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends Gen
    * @param front The front
    * @param referenceFront The reference pareto front
    */
-  public double invertedGenerationalDistancePlus(Front front, Front referenceFront) {
+  public double invertedGenerationalDistancePlus(double[][] front, double[][] referenceFront) {
 
     double sum = 0.0;
-    for (int i = 0 ; i < referenceFront.getNumberOfPoints(); i++) {
-      sum += FrontUtils.distanceToClosestPoint(referenceFront.getPoint(i),
-          front, new DominanceDistanceBetweenVectors());
+    for (int i = 0 ; i < referenceFront.length; i++) {
+      sum += VectorUtils.distanceToClosestVector(referenceFront[i], front, new DominanceDistanceBetweenVectors());
     }
 
     // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
-    return sum / referenceFront.getNumberOfPoints();
+    return sum / referenceFront.length;
   }
 
   @Override public String getName() {
@@ -79,7 +66,7 @@ public class InvertedGenerationalDistancePlus<S extends Solution<?>> extends Gen
   }
 
   @Override public String getDescription() {
-    return "Inverted generational distance quality indicator plus" ;
+    return "Inverted Generational Distance+" ;
   }
 
   @Override

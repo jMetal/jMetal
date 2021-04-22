@@ -6,15 +6,14 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.binarySet.BinarySet;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
     }
     minimumDistance = (int) Math.floor(this.initialConvergenceCount * size);
 
-    comparator = new CrowdingDistanceComparator<BinarySolution>();
+    comparator = new CrowdingDistanceDensityEstimator<BinarySolution>().getComparator() ;
   }
   
   public void setMaxPopulationSize(int maxPopulationSize) {
@@ -157,7 +156,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
 
       int preserve = (int) Math.floor(preservedPopulation * population.size());
       newPopulation = new ArrayList<>(getMaxPopulationSize());
-      Collections.sort(population, comparator);
+      population.sort(comparator);
       for (int i = 0; i < preserve; i++) {
         newPopulation.add((BinarySolution) population.get(i).copy());
       }
@@ -192,7 +191,7 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
     int distance = 0;
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      distance += hammingDistance(solutionOne.getVariable(i), solutionTwo.getVariable(i));
+      distance += hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
     }
 
     return distance;

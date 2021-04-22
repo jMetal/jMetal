@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -93,24 +93,24 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
    * @param solution    The solution to mutate
    */
   public void doMutation(double probability, DoubleSolution solution){
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       if (randomGenenerator.getRandomValue() < probability) {
         double rand = randomGenenerator.getRandomValue();
         double tmp;
 
         Bounds<Double> bounds = solution.getBounds(i);
         if (rand <= 0.5) {
-          tmp = delta(bounds.getUpperBound() - solution.getVariable(i),
+          tmp = delta(bounds.getUpperBound() - solution.variables().get(i),
               perturbation);
-          tmp += solution.getVariable(i);
+          tmp += solution.variables().get(i);
         } else {
-          tmp = delta(bounds.getLowerBound() - solution.getVariable(i),
+          tmp = delta(bounds.getLowerBound() - solution.variables().get(i),
               perturbation);
-          tmp += solution.getVariable(i);
+          tmp += solution.variables().get(i);
         }
 
         tmp = bounds.restrict(tmp);
-        solution.setVariable(i, tmp);
+        solution.variables().set(i, tmp);
       }
     }
   }

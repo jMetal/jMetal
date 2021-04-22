@@ -1,14 +1,9 @@
 package org.uma.jmetal.qualityindicator;
 
-import org.junit.Test;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-
-import static org.junit.Assert.assertThrows;
 
 /**
  * @author Antonio J. Nebro
@@ -16,18 +11,19 @@ import static org.junit.Assert.assertThrows;
  */
 public class HypervolumeTest {
 
-  @Test
-  public void shouldExecuteRaiseAnExceptionIfTheFrontApproximationIsNull() {
-    Front front = new ArrayFront(0, 0);
+  private static final double EPSILON = 0.0000000000001;
 
-    Hypervolume<DoubleSolution> hypervolume = new PISAHypervolume<DoubleSolution>(front);
-    assertThrows(NullParameterException.class, () -> hypervolume.evaluate(null));
+  @Test
+  public void shouldExecuteRaiseAnExceptionIfTheReferenceFrontIsNull() {
+    double[][] referenceFront = null;
+    Assertions.assertThrows(NullParameterException.class, () -> new PISAHypervolume(referenceFront));
   }
 
   @Test
-  public void shouldExecuteRaiseAnExceptionIfTheParetoFrontIsNull() {
-    Front front = null;
-
-    assertThrows(NullParameterException.class, () -> new PISAHypervolume<DoubleSolution>(front));
+  public void shouldComputeRaiseAnExceptionIfTheFrontIsNull() {
+    double[][] referenceFront = new double[0][0];
+    double[][] front = null;
+    Assertions.assertThrows(NullParameterException.class, () -> new PISAHypervolume(referenceFront).compute(front));
   }
+
 }

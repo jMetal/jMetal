@@ -152,7 +152,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
         Bounds<Double> bounds = particle.getBounds(j) ;
         speed[i][j] =
                 (randomGenerator.nextDouble(bounds.getLowerBound(), bounds.getUpperBound())
-                        - particle.getVariable(j)) / 2.0;
+                        - particle.variables().get(j)) / 2.0;
       }
     }
   }
@@ -168,17 +168,17 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
       r2 = randomGenerator.nextDouble(0, c);
 
       if (localBest[i] != neighborhoodBest[i]) {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        for (int var = 0; var < particle.variables().size(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariable(var) - particle.getVariable(var)) +
-                  r2 * (neighborhoodBest[i].getVariable(var) - particle.getVariable
+                  r1 * (localBest[i].variables().get(var) - particle.variables().get(var)) +
+                  r2 * (neighborhoodBest[i].variables().get(var) - particle.variables().get
                           (var));
         }
       } else {
-        for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+        for (int var = 0; var < particle.variables().size(); var++) {
           speed[i][var] = weight * speed[i][var] +
-                  r1 * (localBest[i].getVariable(var) -
-                          particle.getVariable(var));
+                  r1 * (localBest[i].variables().get(var) -
+                          particle.variables().get(var));
         }
       }
     }
@@ -188,18 +188,18 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   public void updatePosition(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
+      for (int var = 0; var < particle.variables().size(); var++) {
+        particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
 
         Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
-        if (particle.getVariable(var) < lowerBound) {
-          particle.setVariable(var, lowerBound);
+        if (particle.variables().get(var) < lowerBound) {
+          particle.variables().set(var, lowerBound);
           speed[i][var] = 0;
         }
-        if (particle.getVariable(var) > upperBound) {
-          particle.setVariable(var, upperBound);
+        if (particle.variables().get(var) > upperBound) {
+          particle.variables().set(var, upperBound);
           speed[i][var] = 0;
         }
       }
@@ -228,10 +228,10 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
     if (bestFoundParticle == null) {
       bestFoundParticle = (DoubleSolution) bestSolution.copy();
     } else {
-      if (bestSolution.getObjective(objectiveId) == bestFoundParticle.getObjective(0)) {
+      if (bestSolution.objectives()[objectiveId] == bestFoundParticle.objectives()[0]) {
         neighborhood.recompute();
       }
-      if (bestSolution.getObjective(objectiveId) < bestFoundParticle.getObjective(0)) {
+      if (bestSolution.objectives()[objectiveId] < bestFoundParticle.objectives()[0]) {
         bestFoundParticle = (DoubleSolution) bestSolution.copy();
       }
     }
@@ -240,7 +240,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
   @Override
   public void updateParticlesMemory(List<DoubleSolution> swarm) {
     for (int i = 0; i < swarm.size(); i++) {
-      if ((swarm.get(i).getObjective(objectiveId) < localBest[i].getObjective(0))) {
+      if ((swarm.get(i).objectives()[objectiveId] < localBest[i].objectives()[0])) {
         localBest[i] = (DoubleSolution) swarm.get(i).copy();
       }
     }
@@ -256,8 +256,8 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
 
     for (DoubleSolution solution : neighborhood.getNeighbors(getSwarm(), i)) {
       int solutionPositionInSwarm = positionInSwarm.getAttribute(solution);
-      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.getObjective(0)
-              > localBest[solutionPositionInSwarm].getObjective(0))) {
+      if ((bestLocalBestSolution == null) || (bestLocalBestSolution.objectives()[0]
+              > localBest[solutionPositionInSwarm].objectives()[0])) {
         bestLocalBestSolution = localBest[solutionPositionInSwarm];
       }
     }

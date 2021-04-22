@@ -57,7 +57,7 @@ public class OneZeroMax extends AbstractBinaryProblem {
     counterOnes = 0;
     counterZeroes = 0;
 
-    BitSet bitset = solution.getVariable(0) ;
+    BitSet bitset = solution.variables().get(0) ;
 
     for (int i = 0; i < bitset.length(); i++) {
       if (bitset.get(i)) {
@@ -68,8 +68,8 @@ public class OneZeroMax extends AbstractBinaryProblem {
     }
 
     // OneZeroMax is a maximization problem: multiply by -1 to minimize
-    solution.setObjective(0, -1.0 * counterOnes);
-    solution.setObjective(1, -1.0 * counterZeroes);
+    solution.objectives()[0] = -1.0 * counterOnes ;
+    solution.objectives()[1] = -1.0 * counterZeroes ;
 
     return solution ;
   }

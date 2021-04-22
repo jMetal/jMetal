@@ -891,14 +891,14 @@ public class Ebes extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     int hi = 0;
-    double[] fx = new double[getNumberOfObjectives()]; // functions
+    double[] fx = new double[solution.objectives().length]; // functions
 
     EBEsElementsTopology(solution); // transforma geometria a caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
     EBEsCalculus(); //  metodo matricial de la rigidez para estructuras espaciales (3D)
 
     // START OBJETIVES FUNCTION
-    for (int j = 0; j < getNumberOfObjectives(); j++) {
+    for (int j = 0; j < solution.objectives().length; j++) {
       // total weight
       if (OF_[j].equals("W")) {
         // START structure total weight ---------------------
@@ -907,7 +907,7 @@ public class Ebes extends AbstractDoubleProblem {
           int idx = (int) Element_[ba][INDEX_];
           fx[j] += Groups_[idx][AREA] * Element_[ba][L_] * Groups_[idx][SPECIFIC_WEIGHT];
         }
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END minimizing structure total weight ------------------------
       }
       // summation of deformations
@@ -920,7 +920,7 @@ public class Ebes extends AbstractDoubleProblem {
           double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
           fx[j] += Math.sqrt(Math.pow(xn, 2.0) + Math.pow(yn, 2.0) + Math.pow(zn, 2.0));
         }
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END minimizing sum of displacement in nodes ---------------------------------------------
       }
       // stress square absolute error
@@ -928,16 +928,16 @@ public class Ebes extends AbstractDoubleProblem {
         // START strain residual minimun ---------------------------------------------
         // strain residualt global
         fx[j] = StrainResidualMin_[hi] + StrainResidualMax_[hi];
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
         // END strain residual minimun ---------------------------------------------
       }
       // Efficiency of Nash-Sutcliffe for stress and compress
       else if (OF_[j].equals("ENS")) {
         fx[j] = FunctionENS(0);
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
       } else if (OF_[j].equals("MDV")) {
         fx[j] = FunctionsMahalanobis_Distance_With_Variance(0);
-        solution.setObjective(j, fx[j]);
+        solution.objectives()[j] = fx[j];
       } else {
         System.out.println("Error: not considerate START OBJECTIVES FUNCTION ");
       }
@@ -988,7 +988,7 @@ public class Ebes extends AbstractDoubleProblem {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double x1, x2, x3, x4;
@@ -1311,7 +1311,7 @@ public class Ebes extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 
@@ -1319,9 +1319,9 @@ public class Ebes extends AbstractDoubleProblem {
     // asignaciÃƒÂ³n de las variables para cada grupo
     // y determinaciÃƒÂ³n de las caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
-    double[] x = new double[solution.getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+    double[] x = new double[solution.variables().size()];
+    for (int i = 0; i < solution.variables().size(); i++) {
+      x[i] = solution.variables().get(i);
     }
 
     double x1, x2, x3, x4;

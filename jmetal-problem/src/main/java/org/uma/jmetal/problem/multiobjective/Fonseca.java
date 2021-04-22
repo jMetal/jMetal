@@ -33,11 +33,11 @@ public class Fonseca extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     double sum1 = 0.0;
@@ -54,8 +54,8 @@ public class Fonseca extends AbstractDoubleProblem {
     double exp2 = StrictMath.exp((-1.0) * sum2);
     f[1] = 1 - exp2;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution ;
   }

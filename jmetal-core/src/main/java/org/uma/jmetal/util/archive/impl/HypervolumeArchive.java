@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.archive.impl;
 
-import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.HypervolumeContributionComparator;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -39,10 +38,5 @@ public class HypervolumeArchive<S extends Solution<?>> extends AbstractBoundedAr
   @Override
   public void computeDensityEstimator() {
     hypervolume.computeHypervolumeContribution(archive.getSolutionList(), archive.getSolutionList()) ;
-  }
-
-  @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), new HypervolumeContributionComparator<S>());
   }
 }

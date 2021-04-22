@@ -39,7 +39,7 @@ public class Rastrigin extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     double result = 0.0;
@@ -51,7 +51,7 @@ public class Rastrigin extends AbstractDoubleProblem {
     }
     result += a * numberOfVariables;
 
-    solution.setObjective(0, result);
+    solution.objectives()[0] = result;
 
     return solution ;
   }

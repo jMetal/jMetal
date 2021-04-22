@@ -29,14 +29,14 @@ public class Schaffer extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
-    double value = solution.getVariable(0);
+    double[] f = new double[solution.objectives().length];
+    double value = solution.variables().get(0);
 
     f[0] = value * value;
     f[1] = (value - 2.0) * (value - 2.0);
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution;
   }

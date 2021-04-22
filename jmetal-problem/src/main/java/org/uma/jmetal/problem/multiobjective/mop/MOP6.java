@@ -46,16 +46,16 @@ public class MOP6 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
 
     double g = this.evalG(solution);
-    f[0] = (1 + g) * solution.getVariable(0) * solution.getVariable(1);
-    f[1] = (1 + g) * solution.getVariable(0) * (1 - solution.getVariable(1));
-    f[2] = (1 + g) * (1 - solution.getVariable(0));
+    f[0] = (1 + g) * solution.variables().get(0) * solution.variables().get(1);
+    f[1] = (1 + g) * solution.variables().get(0) * (1 - solution.variables().get(1));
+    f[2] = (1 + g) * (1 - solution.variables().get(0));
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
-    solution.setObjective(2, f[2]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
+    solution.objectives()[2] = f[2];
     return solution ;
   }
 
@@ -66,11 +66,11 @@ public class MOP6 extends AbstractDoubleProblem {
    */
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 2; i < solution.getNumberOfVariables(); i++) {
-      double t = solution.getVariable(i) - solution.getVariable(0) * solution.getVariable(1);
+    for (int i = 2; i < solution.variables().size(); i++) {
+      double t = solution.variables().get(i) - solution.variables().get(0) * solution.variables().get(1);
       g += -0.9 * t * t + Math.pow(Math.abs(t), 0.6);
     }
-    g = 2 * Math.sin(Math.PI * solution.getVariable(0)) * g;
+    g = 2 * Math.sin(Math.PI * solution.variables().get(0)) * g;
     return g;
   }
 

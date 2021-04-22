@@ -7,7 +7,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This defines an implementation of a binary solution. These solutions are composed of a number
@@ -43,20 +42,20 @@ public class DefaultBinarySolution
    * Copy constructor
    */
   public DefaultBinarySolution(DefaultBinarySolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints());
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     this.bitsPerVariable = solution.bitsPerVariable;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariable(i, (BinarySet) solution.getVariable(i).clone());
+    for (int i = 0; i < variables().size(); i++) {
+      variables().set(i, (BinarySet) solution.variables().get(i).clone());
     }
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<>(solution.attributes);
@@ -78,7 +77,7 @@ public class DefaultBinarySolution
 
   @Override
   public int getNumberOfBits(int index) {
-    return getVariable(index).getBinarySetLength();
+    return variables().get(index).getBinarySetLength();
   }
 
   @Override
@@ -89,21 +88,16 @@ public class DefaultBinarySolution
   @Override
   public int getTotalNumberOfBits() {
     int sum = 0;
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      sum += getVariable(i).getBinarySetLength();
+    for (int i = 0; i < variables().size(); i++) {
+      sum += variables().get(i).getBinarySetLength();
     }
 
     return sum;
   }
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {
-    for (int i = 0; i < getNumberOfVariables(); i++) {
-      setVariable(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
+    for (int i = 0; i < variables().size(); i++) {
+      variables().set(i, createNewBinarySet(bitsPerVariable.get(i), randomGenerator));
     }
-  }
-
-  @Override
-  public Map<Object, Object> getAttributes() {
-    return attributes;
   }
 }

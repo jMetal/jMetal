@@ -35,7 +35,7 @@ public class RE42 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double [] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++)
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
 
     double x_L = x[0];
     double x_B = x[1];
@@ -84,9 +84,9 @@ public class RE42 extends AbstractDoubleProblem {
     double annual_costs = capital_costs + running_costs + voyage_costs;
     double annual_cargo = cargo_DWT * RTPA;
 
-    solution.setObjective(0, annual_costs / annual_cargo);
-    solution.setObjective(1, light_ship_weight) ;
-    solution.setObjective(2, -annual_cargo) ;
+    solution.objectives()[0] = annual_costs / annual_cargo;
+    solution.objectives()[1] = light_ship_weight ;
+    solution.objectives()[2] = -annual_cargo ;
 
     double [] constraintFuncs = new double[numberOfOriginalConstraints];
     constraintFuncs[0] = (x_L / x_B) - 6.0;
@@ -108,7 +108,7 @@ public class RE42 extends AbstractDoubleProblem {
       else constraintFuncs[i] = 0;
     }
 
-    solution.setObjective(3, Arrays.stream(constraintFuncs).sum());
+    solution.objectives()[3] = Arrays.stream(constraintFuncs).sum();
 
     return solution;
   }

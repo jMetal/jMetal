@@ -2,7 +2,7 @@ package org.uma.jmetal.util.extremevalues.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.extremevalues.ExtremeValuesFinder;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 import java.util.List;
 

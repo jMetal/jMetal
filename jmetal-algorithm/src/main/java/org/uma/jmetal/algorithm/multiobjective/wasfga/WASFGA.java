@@ -11,11 +11,11 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
-import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +158,7 @@ public class WASFGA<S extends Solution<?>> extends AbstractMOMBI<S> implements
 	
 	protected Ranking<S> computeRanking(List<S> solutionList) {
 		Ranking<S> ranking = new WASFGARanking<>(this.achievementScalarizingFunction);
-		ranking.computeRanking(solutionList);
+		ranking.compute(solutionList);
 		return ranking;
 	}
 

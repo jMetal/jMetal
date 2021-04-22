@@ -42,7 +42,7 @@ public class TchebycheffUtilityFunctionsSet<S extends Solution<?>>
           Math.max(
               result,
               weightVector.get(i)
-                  * Math.abs(solution.getObjective(i) - this.referencePoint.get(i)));
+                  * Math.abs(solution.objectives()[i] - this.referencePoint.get(i)));
 
     return result;
   }

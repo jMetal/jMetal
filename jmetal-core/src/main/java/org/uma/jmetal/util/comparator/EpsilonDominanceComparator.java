@@ -2,7 +2,6 @@ package org.uma.jmetal.util.comparator;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.comparator.impl.OverallConstraintViolationComparator;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints and
@@ -17,12 +16,12 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
 
   /** Constructor */
   public EpsilonDominanceComparator() {
-    this(new OverallConstraintViolationComparator<S>(), 0.0) ;
+    this(new ConstraintViolationComparator<S>(), 0.0) ;
   }
 
   /** Constructor */
   public EpsilonDominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationComparator<S>(), epsilon) ;
+    this(new ConstraintViolationComparator<S>(), epsilon) ;
   }
 
   /** Constructor */
@@ -46,14 +45,14 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
     Check.that(
-            solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+            solution1.objectives().length == solution2.objectives().length,
             "Cannot compare because solution1 has "
-                    + solution1.getNumberOfObjectives()
+                    + solution1.objectives().length
                     + " objectives and solution2 has "
-                    + solution2.getNumberOfObjectives());
+                    + solution2.objectives().length);
 
     int result ;
     result = constraintViolationComparator.compare(solution1, solution2) ;
@@ -67,9 +66,9 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {
     boolean bestIsOne = false ;
     boolean bestIsTwo = false ;
-    for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-      double value1 = Math.floor(solution1.getObjective(i) / epsilon);
-      double value2 = Math.floor(solution2.getObjective(i) / epsilon);
+    for (int i = 0; i < solution1.objectives().length; i++) {
+      double value1 = Math.floor(solution1.objectives()[i] / epsilon);
+      double value2 = Math.floor(solution2.objectives()[i] / epsilon);
       if (value1 < value2) {
         bestIsOne = true;
 
@@ -88,13 +87,13 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends Dominance
       double dist1 = 0.0;
       double dist2 = 0.0;
 
-      for (int i = 0; i < solution1.getNumberOfObjectives(); i++) {
-        double index1 = Math.floor(solution1.getObjective(i) / epsilon);
-        double index2 = Math.floor(solution2.getObjective(i) / epsilon);
+      for (int i = 0; i < solution1.objectives().length; i++) {
+        double index1 = Math.floor(solution1.objectives()[i] / epsilon);
+        double index2 = Math.floor(solution2.objectives()[i] / epsilon);
 
-        dist1 += Math.pow(solution1.getObjective(i) - index1 * epsilon,
+        dist1 += Math.pow(solution1.objectives()[i] - index1 * epsilon,
                 2.0);
-        dist2 += Math.pow(solution2.getObjective(i) - index2 * epsilon,
+        dist2 += Math.pow(solution2.objectives()[i] - index2 * epsilon,
                 2.0);
       }
 

@@ -160,7 +160,7 @@ public class WFG1 extends WFG {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
@@ -170,7 +170,7 @@ public class WFG1 extends WFG {
     float[] f = evaluate(variables);
 
     for (int i = 0; i < f.length; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

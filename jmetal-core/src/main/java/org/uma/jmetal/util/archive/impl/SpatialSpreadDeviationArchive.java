@@ -45,11 +45,6 @@ public class SpatialSpreadDeviationArchive<S extends Solution<?>> extends Abstra
   }
 
   @Override
-  public void sortByDensityEstimator() {
-    getSolutionList().sort(getComparator());
-  }
-
-  @Override
   public Comparator<S> getComparator() {
     return crowdingDistanceComparator ;
   }

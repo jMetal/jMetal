@@ -50,14 +50,15 @@ public class NMMin extends AbstractIntegerProblem {
     approximationToN = 0;
     approximationToM = 0;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      int value = solution.getVariable(i) ;
+    for (int i = 0; i < solution.variables().size(); i++) {
+      int value = solution.variables().get(i) ;
       approximationToN += Math.abs(valueN - value) ;
       approximationToM += Math.abs(valueM - value) ;
     }
 
-    solution.setObjective(0, approximationToN);
-    solution.setObjective(1, approximationToM);
+    solution.objectives()[0] = approximationToN;
+    solution.objectives()[1] = approximationToM;
+
     return solution ;
   }
 }

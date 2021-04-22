@@ -12,9 +12,9 @@ import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.problem.singleobjective.TSP;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -74,6 +74,6 @@ public class GeneticAlgorithmTSPExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    JMetalLogger.logger.info("Best found solution: " + population.get(0).getObjective(0)) ;
+    JMetalLogger.logger.info("Best found solution: " + population.get(0).objectives()[0]) ;
   }
 }

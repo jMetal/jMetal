@@ -24,8 +24,8 @@ class RE91Test {
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);
 
-    assertEquals(7, solution.getNumberOfVariables());
-    assertEquals(9, solution.getNumberOfObjectives());
-    assertEquals(0, solution.getNumberOfConstraints());
+    assertEquals(7, solution.variables().size());
+    assertEquals(9, solution.objectives().length);
+    assertEquals(0, solution.constraints().length);
   }
 }

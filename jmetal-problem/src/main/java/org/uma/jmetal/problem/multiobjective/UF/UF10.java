@@ -45,8 +45,8 @@ public class UF10 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+    for (int i = 0; i < solution.variables().size(); i++) {
+      x[i] = solution.variables().get(i);
     }
 
     int count1, count2, count3;
@@ -71,15 +71,13 @@ public class UF10 extends AbstractDoubleProblem {
       }
     }
 
-    solution.setObjective(
-        0,
+    solution.objectives()[0] =
         Math.cos(0.5 * Math.PI * x[0]) * Math.cos(0.5 * Math.PI * x[1])
-            + 2.0 * sum1 / (double) count1);
-    solution.setObjective(
-        1,
-        Math.cos(0.5 * Math.PI * x[0]) * Math.sin(0.5 * Math.PI * x[1])
-            + 2.0 * sum2 / (double) count2);
-    solution.setObjective(2, Math.sin(0.5 * Math.PI * x[0]) + 2.0 * sum3 / (double) count3);
+            + 2.0 * sum1 / (double) count1;
+    solution.objectives()[1] =
+    Math.cos(0.5 * Math.PI * x[0]) * Math.sin(0.5 * Math.PI * x[1])
+            + 2.0 * sum2 / (double) count2;
+    solution.objectives()[2] = Math.sin(0.5 * Math.PI * x[0]) + 2.0 * sum3 / (double) count3;
 
     return solution;
   }

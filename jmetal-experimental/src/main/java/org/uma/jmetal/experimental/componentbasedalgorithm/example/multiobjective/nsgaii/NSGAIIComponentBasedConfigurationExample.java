@@ -19,12 +19,12 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -33,6 +33,7 @@ import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -83,7 +84,7 @@ public class NSGAIIComponentBasedConfigurationExample extends AbstractAlgorithmR
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
-                    ranking.getSolutionComparator(), densityEstimator.getSolutionComparator())));
+                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed())));
 
     Termination termination = new TerminationByEvaluations(maxNumberOfEvaluations);
 

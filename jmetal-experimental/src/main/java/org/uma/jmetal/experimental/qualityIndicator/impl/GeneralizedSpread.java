@@ -2,9 +2,9 @@ package org.uma.jmetal.experimental.qualityIndicator.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -32,16 +32,6 @@ public class GeneralizedSpread extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public GeneralizedSpread(String referenceParetoFrontFile) {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */
@@ -55,7 +45,7 @@ public class GeneralizedSpread extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return generalizedSpread(front, referenceFront);
   }

@@ -5,10 +5,9 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.comparator.FitnessComparator;
-import org.uma.jmetal.util.front.util.FrontNormalizer;
+import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -201,7 +200,7 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
       } else {
         // If archive member is not eligible for replacement, make sure
         // it is retained in any case.
-        archive.get(i).setAttribute(fitness.getAttributeIdentifier(), -Double.MAX_VALUE);
+        archive.get(i).attributes().put(fitness.getAttributeIdentifier(), -Double.MAX_VALUE);
       }
       if (eligible) {
         // New solution is always retained
@@ -211,11 +210,6 @@ public class EnergyArchive<S extends Solution<?>> extends AbstractBoundedArchive
         fitness.setAttribute(archive.get(maxSize), Double.MAX_VALUE);
       }
     }
-  }
-
-  @Override
-  public void sortByDensityEstimator() {
-    Collections.sort(getSolutionList(), fitnessComparator);
   }
 
   @Override

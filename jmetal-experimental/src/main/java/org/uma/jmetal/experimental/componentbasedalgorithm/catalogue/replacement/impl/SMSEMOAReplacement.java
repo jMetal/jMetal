@@ -1,9 +1,9 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class SMSEMOAReplacement<S extends Solution<?>>
     jointPopulation.addAll(solutionList);
     jointPopulation.addAll(offspringList);
 
-    ranking.computeRanking(jointPopulation);
+    ranking.compute(jointPopulation);
 
     List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 

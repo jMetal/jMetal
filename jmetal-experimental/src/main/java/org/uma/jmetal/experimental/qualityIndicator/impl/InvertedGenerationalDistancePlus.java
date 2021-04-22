@@ -2,8 +2,8 @@ package org.uma.jmetal.experimental.qualityIndicator.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
 
@@ -26,15 +26,6 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   */
-  public InvertedGenerationalDistancePlus(String referenceParetoFrontFile) {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */
@@ -48,7 +39,7 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return invertedGenerationalDistancePlus(front, referenceFront);
   }

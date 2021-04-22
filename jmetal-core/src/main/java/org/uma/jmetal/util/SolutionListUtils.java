@@ -7,12 +7,12 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -24,7 +24,7 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
     Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
-    solutionList.forEach(solution -> nonDominatedSolutionArchive.add(solution));
+    solutionList.forEach(nonDominatedSolutionArchive::add);
 
     return nonDominatedSolutionArchive.getSolutionList();
   }
@@ -52,8 +52,8 @@ public class SolutionListUtils {
    * @return The index of the best solution
    */
   public static <S> int findIndexOfBestSolution(List<S> solutionList, Comparator<S> comparator) {
-    Check.isNotNull(solutionList);
-    Check.isNotNull(comparator);
+    Check.notNull(solutionList);
+    Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
     int index = 0;
@@ -82,8 +82,8 @@ public class SolutionListUtils {
    */
   public static <S> int findIndexOfWorstSolution(
       List<? extends S> solutionList, Comparator<S> comparator) {
-    Check.isNotNull(solutionList);
-    Check.isNotNull(comparator);
+    Check.notNull(solutionList);
+    Check.notNull(comparator);
     Check.collectionIsNotEmpty(solutionList);
 
     int index = 0;
@@ -112,14 +112,14 @@ public class SolutionListUtils {
       return new double[0][0];
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionList.get(0).objectives().length;
     int solutionListSize = solutionList.size();
 
     double[][] objectives;
     objectives = new double[solutionListSize][numberOfObjectives];
     for (int i = 0; i < solutionListSize; i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
-        objectives[i][j] = solutionList.get(i).getObjective(j);
+        objectives[i][j] = solutionList.get(i).objectives()[j];
       }
     }
     return objectives;
@@ -153,17 +153,17 @@ public class SolutionListUtils {
    * @return the normalized list of non-dominated solutions
    */
   public static <S extends Solution<?>> List<S> normalizeSolutionList(List<S> solutions) {
-    Check.isNotNull(solutions);
+    Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
 
-    double[] minValues = new double[solutions.get(0).getNumberOfObjectives()];
-    double[] maxValues = new double[solutions.get(0).getNumberOfObjectives()];
+    double[] minValues = new double[solutions.get(0).objectives().length];
+    double[] maxValues = new double[solutions.get(0).objectives().length];
 
     for (int i = 0; i < minValues.length; i++) {
       int best = findIndexOfBestSolution(solutions, new ObjectiveComparator<>(i));
       int worst = findIndexOfWorstSolution(solutions, new ObjectiveComparator<>(i));
-      minValues[i] = solutions.get(best).getObjective(i);
-      maxValues[i] = solutions.get(worst).getObjective(i);
+      minValues[i] = solutions.get(best).objectives()[i];
+      maxValues[i] = solutions.get(worst).objectives()[i];
     }
 
     return normalizeSolutionList(solutions, minValues, maxValues);
@@ -179,18 +179,18 @@ public class SolutionListUtils {
   @SuppressWarnings("unchecked")
   public static <S extends Solution<?>> List<S> getInvertedFront(List<S> solutionSet) {
     List<S> invertedFront = new ArrayList<>(solutionSet.size());
-    int numberOfObjectives = solutionSet.get(0).getNumberOfObjectives();
+    int numberOfObjectives = solutionSet.get(0).objectives().length;
 
     for (int i = 0; i < solutionSet.size(); i++) {
       invertedFront.add(i, (S) solutionSet.get(i).copy());
       for (int j = 0; j < numberOfObjectives; j++) {
-        if (solutionSet.get(i).getObjective(j) <= 1.0
-            && solutionSet.get(i).getObjective(j) >= 0.0) {
-          invertedFront.get(i).setObjective(j, 1.0 - solutionSet.get(i).getObjective(j));
-        } else if (solutionSet.get(i).getObjective(j) > 1.0) {
-          invertedFront.get(i).setObjective(j, 0.0);
-        } else if (solutionSet.get(i).getObjective(j) < 0.0) {
-          invertedFront.get(i).setObjective(j, 1.0);
+        if (solutionSet.get(i).objectives()[j] <= 1.0
+            && solutionSet.get(i).objectives()[j] >= 0.0) {
+          invertedFront.get(i).objectives()[j] = 1.0 - solutionSet.get(i).objectives()[j];
+        } else if (solutionSet.get(i).objectives()[j] > 1.0) {
+          invertedFront.get(i).objectives()[j] = 0.0;
+        } else if (solutionSet.get(i).objectives()[j] < 0.0) {
+          invertedFront.get(i).objectives()[j] = 1.0;
         }
       }
     }
@@ -240,7 +240,7 @@ public class SolutionListUtils {
       int numberOfSolutionsToBeReturned,
       List<S> solutionList,
       BoundedRandomGenerator<Integer> randomGenerator) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         solutionList.size() >= numberOfSolutionsToBeReturned,
@@ -339,7 +339,7 @@ public class SolutionListUtils {
    */
   public static <S> void restart(
       List<S> solutionList, Problem<S> problem, int percentageOfSolutionsToRemove) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
     Check.that(
         (percentageOfSolutionsToRemove >= 0) && (percentageOfSolutionsToRemove <= 100),
@@ -405,7 +405,7 @@ public class SolutionListUtils {
     double[] result = new double[solutionList.size()];
 
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getObjective(objective);
+      result[i] = solutionList.get(i).objectives()[objective];
     }
     return result;
   }
@@ -423,22 +423,22 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> List<S> distanceBasedSubsetSelection(
           List<S> originalSolutionList, int finalListSize) {
-    Check.isNotNull(originalSolutionList);
+    Check.notNull(originalSolutionList);
     Check.collectionIsNotEmpty(originalSolutionList);
 
     if (originalSolutionList.size() <= finalListSize) {
       return originalSolutionList;
     }
 
-    if (originalSolutionList.get(0).getNumberOfObjectives() == 2) {
+    if (originalSolutionList.get(0).objectives().length == 2) {
       Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize) ;
-      originalSolutionList.forEach(solution -> archive.add(solution));
+      originalSolutionList.forEach(archive::add);
 
       return archive.getSolutionList() ;
     }
 
     for (int i = 0; i < originalSolutionList.size(); i++) {
-      originalSolutionList.get(i).setAttribute("INDEX_", i);
+      originalSolutionList.get(i).attributes().put("INDEX_", i);
     }
 
     // STEP 1. Normalize the objectives values of the solution list
@@ -448,7 +448,7 @@ public class SolutionListUtils {
     // STEP 2. Find the solution having the best objective value, being the objective randomly
     // selected
     int randomObjective =
-            JMetalRandom.getInstance().nextInt(0, solutions.get(0).getNumberOfObjectives() - 1);
+            JMetalRandom.getInstance().nextInt(0, solutions.get(0).objectives().length - 1);
 
     int bestSolutionIndex =
             findIndexOfBestSolution(solutions, new ObjectiveComparator<>(randomObjective));
@@ -463,7 +463,7 @@ public class SolutionListUtils {
             new EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace<>();
     while (selectedSolutions.size() < finalListSize) {
       for (S solution : solutions) {
-        solution.setAttribute(
+        solution.attributes().put(
                 "SUBSET_SELECTION_DISTANCE", distance.compute(solution, selectedSolutions));
       }
       int largestDistanceSolutionIndex =
@@ -477,7 +477,7 @@ public class SolutionListUtils {
 
     List<S> resultList = new ArrayList<>();
     for (S solution : selectedSolutions) {
-      resultList.add(originalSolutionList.get((int) solution.getAttribute("INDEX_")));
+      resultList.add(originalSolutionList.get((int) solution.attributes().get("INDEX_")));
     }
 
     return resultList;
@@ -492,7 +492,7 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(List<S> solutionList) {
     double[][] matrix = new double[solutionList.size()][] ;
 
-    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).getObjectives()) ;
+    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).objectives()) ;
 
     return matrix ;
   }

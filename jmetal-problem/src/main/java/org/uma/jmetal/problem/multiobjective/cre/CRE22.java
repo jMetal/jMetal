@@ -34,13 +34,13 @@ public class CRE22 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x4 = solution.getVariable(3);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
 
-    solution.setObjective(0, (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2));
-    solution.setObjective(1, (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3));
+    solution.objectives()[0] = (1.10471 * x1 * x1 * x2) + (0.04811 * x3 * x4) * (14.0 + x2);
+    solution.objectives()[1] = (4 * P * L * L * L) / (E * x4 * x3 * x3 * x3);
 
     evaluateConstraints(solution);
 
@@ -52,10 +52,10 @@ public class CRE22 extends AbstractDoubleProblem {
     double[] constraint = new double[this.getNumberOfConstraints()];
     double x1, x2, x3, x4;
 
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
 
     double G = 12 * 1e6;
     double tauMax = 13600;
@@ -90,7 +90,7 @@ public class CRE22 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

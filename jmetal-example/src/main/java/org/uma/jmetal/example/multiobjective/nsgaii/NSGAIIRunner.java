@@ -12,15 +12,15 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.*;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,10 +32,10 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
   /**
    * @param args Command line arguments.
    * @throws JMetalException
-   * @throws FileNotFoundException Invoking command:
-   *                               java org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
+   * @throws FileNotFoundException Invoking command: java
+   *     org.uma.jmetal.runner.multiobjective.nsgaii.NSGAIIRunner problemName [referenceFront]
    */
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem;
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
@@ -50,7 +50,7 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
@@ -64,17 +64,16 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<>(
-            new RankingAndCrowdingDistanceComparator<>());
+    selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
 
-    int populationSize = 100 ;
-    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
+    int populationSize = 100;
+    algorithm =
+        new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
             .setSelectionOperator(selection)
             .setMaxEvaluations(25000)
             .build();
 
-    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-            .execute();
+    AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
     List<DoubleSolution> population = algorithm.getResult();
     long computingTime = algorithmRunner.getComputingTime();
@@ -83,10 +82,12 @@ public class NSGAIIRunner extends AbstractAlgorithmRunner {
 
     printFinalSolutionSet(population);
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
+      QualityIndicatorUtils.printQualityIndicators(
+          SolutionListUtils.getMatrixWithObjectiveValues(population),
+          VectorUtils.readVectors(referenceParetoFront, ","));
     }
 
-    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix()) ;
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix());
     plot.plot();
   }
 }

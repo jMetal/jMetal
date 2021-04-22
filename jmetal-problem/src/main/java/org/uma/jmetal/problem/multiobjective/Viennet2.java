@@ -33,11 +33,11 @@ public class Viennet2 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
 
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     // First function
@@ -55,7 +55,7 @@ public class Viennet2 extends AbstractDoubleProblem {
             + (2 * x[1] - x[0]) * (2 * x[1] - x[0]) / 17.0
             - 13.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) solution.setObjective(i, f[i]);
+    for (int i = 0; i < solution.objectives().length; i++) solution.objectives()[i] = f[i];
 
     return solution;
   }

@@ -19,8 +19,8 @@ public class ConstraintHandling {
    */
   public static <S extends Solution<?>> int numberOfViolatedConstraints(S solution) {
     int result = 0 ;
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      if (solution.getConstraint(i) < 0) {
+    for (int i = 0; i < solution.constraints().length; i++) {
+      if (solution.constraints()[i] < 0) {
         result ++ ;
       }
     }
@@ -36,9 +36,9 @@ public class ConstraintHandling {
    */
   public static <S extends Solution<?>> double overallConstraintViolationDegree(S solution) {
     double overallConstraintViolation = 0.0;
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      if (solution.getConstraint(i) < 0.0) {
-        overallConstraintViolation += solution.getConstraint(i) ;
+    for (int i = 0; i < solution.constraints().length; i++) {
+      if (solution.constraints()[i] < 0.0) {
+        overallConstraintViolation += solution.constraints()[i] ;
       }
     }
 

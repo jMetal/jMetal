@@ -3,8 +3,8 @@ package org.uma.jmetal.util.chartcontainer;
 import org.knowm.xchart.*;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -243,7 +243,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getObjective(objective);
+      result[i] = solutionList.get(i).objectives()[objective];
     }
     return result;
   }
@@ -251,7 +251,7 @@ public class GenericChartContainer<S extends Solution<?>> {
   private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
     double[] result = new double[solutionList.size()];
     for (int i = 0; i < solutionList.size(); i++) {
-      result[i] = solutionList.get(i).getVariable(variable);
+      result[i] = solutionList.get(i).variables().get(variable);
     }
     return result;
   }

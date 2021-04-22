@@ -9,6 +9,8 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 import java.util.List;
@@ -67,13 +69,14 @@ public class OMOPSOIT {
 
     List<DoubleSolution> population = algorithm.getResult();
 
-    QualityIndicator<List<DoubleSolution>, Double> hypervolume =
-        new PISAHypervolume<>("../resources/referenceFrontsCSV/ZDT4.csv");
+    QualityIndicator hypervolume =
+            new PISAHypervolume(
+                    VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ","));
 
     // Rationale: the default problem is ZDT1, and OMOPSO, configured with standard settings, should
     // return find a front with a hypervolume value higher than 0.64
 
-    double hv = (Double) hypervolume.evaluate(population);
+    double hv = hypervolume.compute(SolutionListUtils.getMatrixWithObjectiveValues(population));
 
     assertTrue(hv > 0.64);
   }

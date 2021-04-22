@@ -8,11 +8,11 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -121,7 +121,7 @@ public class SMPSOMeasuresRunner extends AbstractAlgorithmRunner {
 
     @Override synchronized public void measureGenerated(List<DoubleSolution> solutions) {
       if ((counter % 100 == 0)) {
-        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).getVariable(0)) ;
+        System.out.println("PUSH MEASURE. Counter = " + counter+ " First solution: " + solutions.get(0).variables().get(0)) ;
       }
       counter ++ ;
     }

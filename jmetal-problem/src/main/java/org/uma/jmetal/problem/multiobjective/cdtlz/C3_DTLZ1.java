@@ -38,16 +38,16 @@ public class C3_DTLZ1 extends DTLZ1 {
     for (int j = 0; j < getNumberOfConstraints(); j++) {
       double sum = 0 ;
       constraint[j] = 0.0 ;
-      for (int i = 0; i < getNumberOfObjectives(); i++) {
+      for (int i = 0; i < solution.objectives().length; i++) {
         if (i != j) {
-          sum += solution.getObjective(j) ;
+          sum += solution.objectives()[j] ;
         }
-        constraint[j]+= sum + solution.getObjective(i)/0.5 - 1.0 ;
+        constraint[j]+= sum + solution.objectives()[i]/0.5 - 1.0 ;
       }
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

@@ -1,10 +1,8 @@
 package org.uma.jmetal.experimental.qualityIndicator.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.io.FileNotFoundException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * This class implements the unary epsilon additive indicator as proposed in E.
@@ -30,16 +28,6 @@ public class Epsilon extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public Epsilon(String referenceParetoFrontFile) {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    */
   public Epsilon(double[][] referenceFront) {
@@ -58,7 +46,7 @@ public class Epsilon extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return epsilon(front, referenceFront);
   }

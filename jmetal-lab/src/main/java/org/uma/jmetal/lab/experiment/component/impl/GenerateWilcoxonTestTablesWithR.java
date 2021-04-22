@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 
@@ -49,7 +49,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
       new File(rDirectoryName).mkdirs();
       JMetalLogger.logger.info("GenerateWilcoxonTestTablesWithR. Creating " + rDirectoryName + " directory");
     }
-    for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
+    for (QualityIndicator indicator : experiment.getIndicatorList()) {
       String rFileName = rDirectoryName + "/" + indicator.getName() + ".Wilcoxon" + ".R";
       String latexFileName = indicator.getName() + ".Wilcoxon" + ".tex";
 
@@ -92,7 +92,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printTableHeader(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
+  private void printTableHeader(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     String latexTableLabel = "";
@@ -139,7 +139,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printLines(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
+  private void printLines(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     String output ;
@@ -209,7 +209,7 @@ public class GenerateWilcoxonTestTablesWithR<Result extends List<? extends Solut
     }
   }
 
-  private void printGenerateMainScript(GenericIndicator<?> indicator, String rFileName, String latexFileName) throws IOException {
+  private void printGenerateMainScript(QualityIndicator indicator, String rFileName, String latexFileName) throws IOException {
     try(FileWriter os = new FileWriter(rFileName, true)){
 
     // Start of the R script

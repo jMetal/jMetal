@@ -121,7 +121,7 @@ public class R2 extends QualityIndicator {
 
   @Override
   public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
     return r2(front);
   }
 

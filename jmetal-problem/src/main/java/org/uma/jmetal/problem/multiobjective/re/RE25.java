@@ -40,9 +40,9 @@ public class RE25 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = Math.rint(solution.getVariable(0));
-    double x2 = solution.getVariable(1);
-    double x3 = getClosestValue(diameterFeasibleIntergers, solution.getVariable(2));
+    double x1 = Math.rint(solution.variables().get(0));
+    double x2 = solution.variables().get(1);
+    double x3 = getClosestValue(diameterFeasibleIntergers, solution.variables().get(2));
 
     double[] g = new double[numberOfOriginalConstraints];
 
@@ -70,8 +70,8 @@ public class RE25 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(0, (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0);
-    solution.setObjective(1, g[0] + g[1] + g[2] + g[3] + g[4] + g[5]);
+    solution.objectives()[0] = (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0;
+    solution.objectives()[1] = g[0] + g[1] + g[2] + g[3] + g[4] + g[5];
 
     return solution;
   }

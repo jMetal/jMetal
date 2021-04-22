@@ -3,21 +3,23 @@ package org.uma.jmetal.algorithm.multiobjective.gde3;
 import org.uma.jmetal.algorithm.impl.AbstractDifferentialEvolution;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.DensityEstimator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
-import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.ranking.Ranking;
+import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 /** This class implements the GDE3 algorithm */
-@SuppressWarnings("serial")
 public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
   protected int maxEvaluations;
   protected int evaluations;
@@ -44,9 +46,9 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     this.crossoverOperator = crossover;
     this.selectionOperator = selection;
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
-    ranking = new DominanceRanking<DoubleSolution>();
-    crowdingDistance = new CrowdingDistance<DoubleSolution>();
+    dominanceComparator = new DominanceComparator<>();
+    ranking = new FastNonDominatedSortRanking<>();
+    crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
     this.evaluator = evaluator;
   }
@@ -152,65 +154,18 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
         tmpList.add(population.get(i));
       }
     }
-    Ranking<DoubleSolution> ranking =  new DominanceRanking<DoubleSolution>(dominanceComparator);
-    ranking.computeRanking(tmpList) ;
+    Ranking<DoubleSolution> ranking =  new FastNonDominatedSortRanking<>(dominanceComparator);
+    ranking.compute(tmpList) ;
 
-    return crowdingDistanceSelection(ranking);
+    RankingAndCrowdingSelection<DoubleSolution> rankingAndCrowdingSelection ;
+    rankingAndCrowdingSelection = new RankingAndCrowdingSelection<>(getMaxPopulationSize(), dominanceComparator) ;
+
+    return rankingAndCrowdingSelection.execute(tmpList) ;
   }
 
   @Override
   public List<DoubleSolution> getResult() {
     return getNonDominatedSolutions(getPopulation());
-  }
-
-  protected List<DoubleSolution> crowdingDistanceSelection(Ranking<DoubleSolution> ranking) {
-    CrowdingDistance<DoubleSolution> crowdingDistance = new CrowdingDistance<DoubleSolution>();
-    List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
-    int rankingIndex = 0;
-    while (populationIsNotFull(population)) {
-      if (subfrontFillsIntoThePopulation(ranking, rankingIndex, population)) {
-        addRankedSolutionsToPopulation(ranking, rankingIndex, population);
-        rankingIndex++;
-      } else {
-        crowdingDistance.computeDensityEstimator(ranking.getSubFront(rankingIndex));
-        addLastRankedSolutionsToPopulation(ranking, rankingIndex, population);
-      }
-    }
-
-    return population;
-  }
-
-  protected boolean populationIsNotFull(List<DoubleSolution> population) {
-    return population.size() < getMaxPopulationSize();
-  }
-
-  protected boolean subfrontFillsIntoThePopulation(
-      Ranking<DoubleSolution> ranking, int rank, List<DoubleSolution> population) {
-    return ranking.getSubFront(rank).size() < (getMaxPopulationSize() - population.size());
-  }
-
-  protected void addRankedSolutionsToPopulation(
-      Ranking<DoubleSolution> ranking, int rank, List<DoubleSolution> population) {
-    List<DoubleSolution> front;
-
-    front = ranking.getSubFront(rank);
-
-    for (DoubleSolution solution : front) {
-      population.add(solution);
-    }
-  }
-
-  protected void addLastRankedSolutionsToPopulation(
-      Ranking<DoubleSolution> ranking, int rank, List<DoubleSolution> population) {
-    List<DoubleSolution> currentRankedFront = ranking.getSubFront(rank);
-
-    Collections.sort(currentRankedFront, new CrowdingDistanceComparator<DoubleSolution>());
-
-    int i = 0;
-    while (population.size() < getMaxPopulationSize()) {
-      population.add(currentRankedFront.get(i));
-      i++;
-    }
   }
 
   protected List<DoubleSolution> getNonDominatedSolutions(List<DoubleSolution> solutionList) {

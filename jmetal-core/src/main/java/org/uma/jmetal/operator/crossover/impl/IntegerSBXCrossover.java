@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.crossover.impl;
 
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -90,9 +90,9 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
     int valueX1, valueX2;
 
     if (randomGenerator.getRandomValue() <= probability) {
-      for (i = 0; i < parent1.getNumberOfVariables(); i++) {
-        valueX1 = parent1.getVariable(i);
-        valueX2 = parent2.getVariable(i);
+      for (i = 0; i < parent1.variables().size(); i++) {
+        valueX1 = parent1.variables().get(i);
+        valueX2 = parent2.variables().get(i);
         if (randomGenerator.getRandomValue() <= 0.5) {
           if (Math.abs(valueX1 - valueX2) > EPS) {
 
@@ -148,19 +148,19 @@ public class IntegerSBXCrossover implements CrossoverOperator<IntegerSolution> {
             }
 
             if (randomGenerator.getRandomValue() <= 0.5) {
-              offspring.get(0).setVariable(i, (int)c2);
-              offspring.get(1).setVariable(i, (int)c1);
+              offspring.get(0).variables().set(i, (int)c2);
+              offspring.get(1).variables().set(i, (int)c1);
             } else {
-              offspring.get(0).setVariable(i, (int)c1);
-              offspring.get(1).setVariable(i, (int)c2);
+              offspring.get(0).variables().set(i, (int)c1);
+              offspring.get(1).variables().set(i, (int)c2);
             }
           } else {
-            offspring.get(0).setVariable(i, valueX1);
-            offspring.get(1).setVariable(i, valueX2);
+            offspring.get(0).variables().set(i, valueX1);
+            offspring.get(1).variables().set(i, valueX2);
           }
         } else {
-          offspring.get(0).setVariable(i, valueX2);
-          offspring.get(1).setVariable(i, valueX1);
+          offspring.get(0).variables().set(i, valueX2);
+          offspring.get(1).variables().set(i, valueX1);
         }
       }
     }

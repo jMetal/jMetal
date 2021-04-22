@@ -37,7 +37,7 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     for (int i = 0; i < boundsList.size(); i++) {
       Bounds<Integer> bounds = boundsList.get(i);
-      setVariable(
+      variables().set(
           i, JMetalRandom.getInstance().nextInt(bounds.getLowerBound(), bounds.getUpperBound()));
     }
   }
@@ -63,18 +63,18 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
   /** Copy constructor */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints());
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      setVariable(i, solution.getVariable(i));
+    for (int i = 0; i < solution.variables().size(); i++) {
+      variables().set(i, solution.variables().get(i));
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < solution.objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < solution.constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     bounds = solution.bounds;

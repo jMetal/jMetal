@@ -43,9 +43,9 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    assertEquals(values[0], solution.getObjective(0), EPSILON) ;
-    assertEquals(values[1], solution.getObjective(1), EPSILON) ;
-    assertEquals(values[2], solution.getObjective(2), EPSILON) ;
+    assertEquals(values[0], solution.objectives()[0], EPSILON) ;
+    assertEquals(values[1], solution.objectives()[1], EPSILON) ;
+    assertEquals(values[2], solution.objectives()[2], EPSILON) ;
   }
 
   @Test public void shouldSetObjectiveAssignTheTheCorrectValue() {
@@ -53,9 +53,9 @@ public class PointSolutionTest {
     double [] values = {1.0, 2.0, 3.0} ;
 
     PointSolution solution = new PointSolution(numberOfObjectives) ;
-    solution.setObjective(0, values[0]);
-    solution.setObjective(1, values[1]);
-    solution.setObjective(2, values[2]);
+    solution.objectives()[0] = values[0];
+    solution.objectives()[1] = values[1];
+    solution.objectives()[2] = values[2];
 
     double [] resultValues = (double [])ReflectionTestUtils.getField(solution, "objectives") ;
     assertArrayEquals(values, resultValues, EPSILON) ;
@@ -67,7 +67,7 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    assertEquals(numberOfObjectives, solution.getNumberOfObjectives()) ;
+    assertEquals(numberOfObjectives, solution.objectives().length) ;
   }
 
   @Test public void shouldCopyReturnACopyOfTheSolution() {
@@ -79,18 +79,6 @@ public class PointSolutionTest {
     PointSolution newSolution = (PointSolution)solution.copy() ;
     assertEquals(solution, newSolution) ;
   }
-
-  @Test public void idleTestToCoverTheUnusedMethods() {
-    PointSolution solution = new PointSolution(3) ;
-
-    solution.setVariable(0, 0.0);
-    solution.setAttribute(null, null);
-
-    assertNull(solution.getVariable(0)) ;
-    assertEquals(0, solution.getNumberOfVariables()) ;
-    assertNull(solution.getAttribute(null)) ;
-  }
-
 
   @Test
   public void shouldEqualsReturnTrueIfTheSolutionsAreIdentical() {
@@ -126,8 +114,8 @@ public class PointSolutionTest {
     PointSolution solution = new PointSolution(numberOfObjectives) ;
     ReflectionTestUtils.setField(solution, "objectives", values);
 
-    PointSolution newSolution = (PointSolution)solution.copy() ;
-    newSolution.setObjective(0, 23424);
+    PointSolution newSolution = solution.copy() ;
+    newSolution.objectives()[0] = 23424;
 
     assertFalse(solution.equals(newSolution));
   }
@@ -164,7 +152,7 @@ public class PointSolutionTest {
 
 		PointSolution solution = new PointSolution(3);
 
-		assertTrue(solution.getAttributes().isEmpty());
+		assertTrue(solution.attributes().isEmpty());
 	}
 
 	@Test
@@ -172,11 +160,11 @@ public class PointSolutionTest {
 
 		PointSolution solution = new PointSolution(3);
 
-		solution.setAttribute("fake-atribute-1", 1);
-		solution.setAttribute("fake-atribute-2", 2);
+		solution.attributes().put("fake-atribute-1", 1);
+		solution.attributes().put("fake-atribute-2", 2);
 
-		assertFalse(solution.getAttributes().isEmpty());
-		assertEquals((int) solution.getAttributes().get("fake-atribute-1"), 1);
-		assertEquals((int) solution.getAttributes().get("fake-atribute-2"), 2);
+		assertFalse(solution.attributes().isEmpty());
+		assertEquals((int) solution.attributes().get("fake-atribute-1"), 1);
+		assertEquals((int) solution.attributes().get("fake-atribute-2"), 2);
 	}
 }

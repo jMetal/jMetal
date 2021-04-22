@@ -1,9 +1,9 @@
 package org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.impl;
 
-import org.uma.jmetal.experimental.qualityIndicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 
@@ -40,16 +40,6 @@ public class PISAHypervolume extends Hypervolume {
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public PISAHypervolume(String referenceParetoFrontFile) {
-    super(referenceParetoFrontFile);
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    * @throws FileNotFoundException
    */
@@ -65,7 +55,7 @@ public class PISAHypervolume extends Hypervolume {
    */
   @Override
   public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return hypervolume(front, referenceFront);
   }

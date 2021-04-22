@@ -3,7 +3,7 @@ package org.uma.jmetal.lab.experiment.component.impl;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 
 import java.io.File;
@@ -68,7 +68,7 @@ public class GenerateBoxplotsWithR<Result extends List<? extends Solution<?>>> i
       new File(rDirectoryName).mkdirs();
       System.out.println("Creating " + rDirectoryName + " directory");
     }
-    for (GenericIndicator<? extends Solution<?>> indicator : experiment.getIndicatorList()) {
+    for (QualityIndicator indicator : experiment.getIndicatorList()) {
      String rFileName = rDirectoryName + "/" + indicator.getName() + ".Boxplot" + ".R";
 
      try(FileWriter os = new FileWriter(rFileName, false)){

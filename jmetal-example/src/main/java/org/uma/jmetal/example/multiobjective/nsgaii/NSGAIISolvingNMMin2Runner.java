@@ -15,9 +15,9 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.NMMin2;
 import org.uma.jmetal.solution.integerdoublesolution.IntegerDoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 import java.util.List;

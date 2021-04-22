@@ -54,17 +54,17 @@ public class LZ09F4 extends AbstractDoubleProblem {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
     List<Double> x = new ArrayList<Double>(getNumberOfVariables());
-    List<Double> y = new ArrayList<Double>(getNumberOfObjectives());
+    List<Double> y = new ArrayList<Double>(solution.objectives().length);
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x.add(solution.getVariable(i));
+      x.add(solution.variables().get(i));
       y.add(0.0);
     }
 
     lz09.objective(x, y);
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.setObjective(i, y.get(i));
+    for (int i = 0; i < solution.objectives().length; i++) {
+      solution.objectives()[i] = y.get(i);
     }
     return solution ;
   }

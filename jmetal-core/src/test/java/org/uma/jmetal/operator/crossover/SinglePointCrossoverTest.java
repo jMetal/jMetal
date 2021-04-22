@@ -127,9 +127,9 @@ public class SinglePointCrossoverTest {
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0).get(0),
-        resultSolutions.get(1).getVariable(0).get(0)) ;
-    assertEquals(solutions.get(1).getVariable(0).get(0), resultSolutions.get(0).getVariable(0).get(
+    assertEquals(solutions.get(0).variables().get(0).get(0),
+        resultSolutions.get(1).variables().get(0).get(0)) ;
+    assertEquals(solutions.get(1).variables().get(0).get(0), resultSolutions.get(0).variables().get(0).get(
         0)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
@@ -161,10 +161,10 @@ public class SinglePointCrossoverTest {
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
-        resultSolutions.get(1).getVariable(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
-    assertEquals(solutions.get(1).getVariable(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
-        resultSolutions.get(0).getVariable(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
+    assertEquals(solutions.get(0).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
+        resultSolutions.get(1).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
+    assertEquals(solutions.get(1).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1),
+        resultSolutions.get(0).variables().get(0).get(BITS_OF_MOCKED_BINARY_PROBLEM - 1)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
   }
@@ -200,10 +200,10 @@ public class SinglePointCrossoverTest {
     //System.out.println("solution 2: " + resultSolutions.get(0).getVariableValueString(0)) ;
     //System.out.println("solution 3: " + resultSolutions.get(1).getVariableValueString(0)) ;
 
-    assertEquals(solutions.get(0).getVariable(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2),
-        resultSolutions.get(1).getVariable(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
-    assertEquals(solutions.get(1).getVariable(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2),
-        resultSolutions.get(0).getVariable(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
+    assertEquals(solutions.get(0).variables().get(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2),
+        resultSolutions.get(1).variables().get(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
+    assertEquals(solutions.get(1).variables().get(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2),
+        resultSolutions.get(0).variables().get(0).get((BITS_OF_MOCKED_BINARY_PROBLEM - 1)/2)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM - 1);
   }
@@ -234,13 +234,13 @@ public class SinglePointCrossoverTest {
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0), resultSolutions.get(0).getVariable(0)) ;
-    assertEquals(solutions.get(1).getVariable(0), resultSolutions.get(1).getVariable(0)) ;
-    assertEquals(solutions.get(0).getVariable(1), resultSolutions.get(1).getVariable(1)) ;
-    assertEquals(solutions.get(1).getVariable(1), resultSolutions.get(0).getVariable(1)) ;
+    assertEquals(solutions.get(0).variables().get(0), resultSolutions.get(0).variables().get(0)) ;
+    assertEquals(solutions.get(1).variables().get(0), resultSolutions.get(1).variables().get(0)) ;
+    assertEquals(solutions.get(0).variables().get(1), resultSolutions.get(1).variables().get(1)) ;
+    assertEquals(solutions.get(1).variables().get(1), resultSolutions.get(0).variables().get(1)) ;
 
-    assertEquals(solutions.get(0).getVariable(2), resultSolutions.get(1).getVariable(2)) ;
-    assertEquals(solutions.get(1).getVariable(2), resultSolutions.get(0).getVariable(2)) ;
+    assertEquals(solutions.get(0).variables().get(2), resultSolutions.get(1).variables().get(2)) ;
+    assertEquals(solutions.get(1).variables().get(2), resultSolutions.get(0).variables().get(2)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
   }
@@ -272,22 +272,22 @@ public class SinglePointCrossoverTest {
 
     List<BinarySolution> resultSolutions = crossover.execute(solutions) ;
 
-    assertEquals(solutions.get(0).getVariable(0), resultSolutions.get(0).getVariable(0)) ;
-    assertEquals(solutions.get(1).getVariable(0), resultSolutions.get(1).getVariable(0)) ;
+    assertEquals(solutions.get(0).variables().get(0), resultSolutions.get(0).variables().get(0)) ;
+    assertEquals(solutions.get(1).variables().get(0), resultSolutions.get(1).variables().get(0)) ;
 
     int cuttingBitInSecondVariable = cuttingBit - BITS_OF_MOCKED_BINARY_PROBLEM ;
-    assertEquals(solutions.get(0).getVariable(1).get(0, cuttingBitInSecondVariable),
-        resultSolutions.get(0).getVariable(1).get(0, cuttingBitInSecondVariable)) ;
-    assertEquals(solutions.get(1).getVariable(1).get(0, cuttingBitInSecondVariable),
-        resultSolutions.get(1).getVariable(1).get(0, cuttingBitInSecondVariable)) ;
+    assertEquals(solutions.get(0).variables().get(1).get(0, cuttingBitInSecondVariable),
+        resultSolutions.get(0).variables().get(1).get(0, cuttingBitInSecondVariable)) ;
+    assertEquals(solutions.get(1).variables().get(1).get(0, cuttingBitInSecondVariable),
+        resultSolutions.get(1).variables().get(1).get(0, cuttingBitInSecondVariable)) ;
 
-    assertEquals(solutions.get(0).getVariable(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM),
-        resultSolutions.get(1).getVariable(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM)) ;
-    assertEquals(solutions.get(1).getVariable(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM),
-        resultSolutions.get(0).getVariable(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM)) ;
+    assertEquals(solutions.get(0).variables().get(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM),
+        resultSolutions.get(1).variables().get(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM)) ;
+    assertEquals(solutions.get(1).variables().get(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM),
+        resultSolutions.get(0).variables().get(1).get(cuttingBitInSecondVariable, BITS_OF_MOCKED_BINARY_PROBLEM)) ;
 
-    assertEquals(solutions.get(0).getVariable(2), resultSolutions.get(1).getVariable(2)) ;
-    assertEquals(solutions.get(1).getVariable(2), resultSolutions.get(0).getVariable(2)) ;
+    assertEquals(solutions.get(0).variables().get(2), resultSolutions.get(1).variables().get(2)) ;
+    assertEquals(solutions.get(1).variables().get(2), resultSolutions.get(0).variables().get(2)) ;
     verify(crossoverRandomGenerator, times(1)).getRandomValue();
     verify(pointRandomGenerator, times(1)).getRandomValue(0, BITS_OF_MOCKED_BINARY_PROBLEM*3 - 1);
   }
@@ -329,8 +329,8 @@ public class SinglePointCrossoverTest {
     /** Evaluate() method */
     @Override
     public BinarySolution evaluate(BinarySolution solution) {
-      solution.setObjective(0, 0);
-      solution.setObjective(1, 1);
+      solution.objectives()[0] = 0;
+      solution.objectives()[1] = 1;
 
       return solution ;
     }
@@ -342,8 +342,8 @@ public class SinglePointCrossoverTest {
 		double crossoverProbability = 1.0;
 
 		List<BinarySolution> parentSolutions = new LinkedList<>();
-		parentSolutions.add(new DefaultBinarySolution(Arrays.asList(2), 2));
-		parentSolutions.add(new DefaultBinarySolution(Arrays.asList(2), 2));
+		parentSolutions.add(new DefaultBinarySolution(List.of(2), 2));
+		parentSolutions.add(new DefaultBinarySolution(List.of(2), 2));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

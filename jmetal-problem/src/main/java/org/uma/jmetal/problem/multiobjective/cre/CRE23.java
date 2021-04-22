@@ -31,13 +31,13 @@ public class CRE23 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x4 = solution.getVariable(3);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
 
-    solution.setObjective(0, 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0));
-    solution.setObjective(1, ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1)));
+    solution.objectives()[0] = 4.9 * 1e-5 * (x2 * x2 - x1 * x1) * (x4 - 1.0);
+    solution.objectives()[1] = ((9.82 * 1e6) * (x2 * x2 - x1 * x1)) / (x3 * x4 * (x2 * x2 * x2 - x1 * x1 * x1));
 
     evaluateConstraints(solution);
 
@@ -49,10 +49,10 @@ public class CRE23 extends AbstractDoubleProblem {
     double[] constraint = new double[this.getNumberOfConstraints()];
     double x1, x2, x3, x4;
 
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
 
     constraint[0] = (x2 - x1) - 20.0;
     constraint[1] = 0.4 - (x3 / (3.14 * (x2 * x2 - x1 * x1)));
@@ -68,7 +68,7 @@ public class CRE23 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

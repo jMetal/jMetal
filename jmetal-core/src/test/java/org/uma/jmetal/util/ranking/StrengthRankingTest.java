@@ -33,28 +33,28 @@ public class StrengthRankingTest {
     DoubleSolution solution3 = problem.createSolution() ;
     DoubleSolution solution4 = problem.createSolution() ;
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] = 1.0;
+    solution1.objectives()[1] = 5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] = 2.0;
+    solution2.objectives()[1] = 4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] = 3.0;
+    solution3.objectives()[1] = 3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] = 5.0;
+    solution4.objectives()[1] = 1.0;
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3, solution4) ;
 
     Ranking<Solution<?>> ranking = new StrengthRanking<>() ;
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
-    assertEquals(0, solution1.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution3.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(solution1));
+    assertEquals(0, ranking.getRank(solution2));
+    assertEquals(0, ranking.getRank(solution3));
+    assertEquals(0, ranking.getRank(solution4));
   }
 
   @Test
@@ -78,59 +78,31 @@ public class StrengthRankingTest {
     DoubleSolution solution4 = problem.createSolution();
     DoubleSolution solution5 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] = 1.0;
+    solution1.objectives()[1] = 5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] = 2.0;
+    solution2.objectives()[1] = 4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] = 3.0;
+    solution3.objectives()[1] = 3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] = 5.0;
+    solution4.objectives()[1] = 1.0;
 
-    solution5.setObjective(0, 3);
-    solution5.setObjective(1, 2);
+    solution5.objectives()[0] = 3;
+    solution5.objectives()[1] = 2;
 
     List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
     Ranking<DoubleSolution> ranking = new StrengthRanking<>() ;
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
-    assertEquals(0, solution1.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
-    assertEquals(1, solution3.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution5.getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(solution1));
+    assertEquals(0, ranking.getRank(solution2));
+    assertEquals(1, ranking.getRank(solution3));
+    assertEquals(0, ranking.getRank(solution4));
+    assertEquals(0, ranking.getRank(solution5));
   }
-
-
-  /*
-  private class MockDoubleProblem extends AbstractDoubleProblem {
-
-    public MockDoubleProblem(Integer numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(2);
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(0.0);
-        upperLimit.add(5.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    @Override
-    public void evaluate(DoubleSolution solution) {
-      solution.setObjective(0, 0.0);
-      solution.setObjective(1, 1.0);
-    }
-  }
-
-   */
 }

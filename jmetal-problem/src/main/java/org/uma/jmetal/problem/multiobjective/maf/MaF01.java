@@ -50,14 +50,14 @@ public class MaF01 extends AbstractDoubleProblem {
    */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfVariables = solution.variables().size();
+    int numberOfObjectives = solution.objectives().length;
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double g = 0, subf1 = 1, subf3;
@@ -74,7 +74,7 @@ public class MaF01 extends AbstractDoubleProblem {
     f[0] = (1 - subf1 * x[numberOfObjectives - 2]) * subf3;
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

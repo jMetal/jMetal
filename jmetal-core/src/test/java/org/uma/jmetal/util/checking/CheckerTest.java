@@ -11,7 +11,7 @@ public class CheckerTest {
 
   @Test (expected = NullParameterException.class)
   public void shouldIsNotNullRaiseAnExceptionIfTheObjectIsNull() {
-    Check.isNotNull(null);
+    Check.notNull(null);
   }
 
   @Test (expected = InvalidProbabilityValueException.class)

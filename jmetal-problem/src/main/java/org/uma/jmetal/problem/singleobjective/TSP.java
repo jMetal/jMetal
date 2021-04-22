@@ -38,20 +38,20 @@ public class TSP extends AbstractIntegerPermutationProblem {
       int x ;
       int y ;
 
-      x = solution.getVariable(i) ;
-      y = solution.getVariable(i+1) ;
+      x = solution.variables().get(i) ;
+      y = solution.variables().get(i+1) ;
 
       fitness1 += distanceMatrix[x][y] ;
     }
     int firstCity ;
     int lastCity  ;
 
-    firstCity = solution.getVariable(0) ;
-    lastCity = solution.getVariable(numberOfCities - 1) ;
+    firstCity = solution.variables().get(0) ;
+    lastCity = solution.variables().get(numberOfCities - 1) ;
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
 
-    solution.setObjective(0, fitness1);
+    solution.objectives()[0] = fitness1;
 
     return solution ;
   }

@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.densityestimator;
 
-import org.uma.jmetal.solution.util.attribute.Attribute;
-
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -9,8 +8,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface DensityEstimator<S> extends Attribute<S> {
-  void computeDensityEstimator(List<S> solutionSet) ;
+public interface DensityEstimator<S> {
+  void compute(List<S> solutionSet) ;
 
-  List<S> sort(List<S> solutionList) ;
+  Double getValue(S solution) ;
+  Comparator<S> getComparator() ;
 }

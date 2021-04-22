@@ -2,7 +2,7 @@ package org.uma.jmetal.lab.experiment;
 
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
 
   private String referenceFrontDirectory;
 
-  private List<GenericIndicator<S>> indicatorList;
+  private List<QualityIndicator> indicatorList;
 
   private int numberOfCores;
 
@@ -80,7 +80,7 @@ public class Experiment<S extends Solution<?>, Result extends List<S>> {
     return referenceFrontDirectory;
   }
 
-  public List<GenericIndicator<S>> getIndicatorList() {
+  public List<QualityIndicator> getIndicatorList() {
     return indicatorList;
   }
 

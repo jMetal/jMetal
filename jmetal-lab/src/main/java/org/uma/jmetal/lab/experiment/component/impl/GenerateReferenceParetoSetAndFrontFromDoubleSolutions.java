@@ -8,13 +8,13 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.Front;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 
 import java.io.File;
@@ -219,10 +219,10 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     for (int i = 0; i < frontWithVariableValues.getNumberOfPoints(); i++) {
       DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
       for (int vars = 0; vars < numberOfVariables; vars++) {
-        solution.setVariable(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
+        solution.variables().set(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
       }
       for (int objs = 0; objs < numberOfObjectives; objs++) {
-        solution.setObjective(objs, frontWithObjectiveValues.getPoint(i).getValues()[objs]);
+        solution.objectives()[objs] = frontWithObjectiveValues.getPoint(i).getValues()[objs];
       }
 
       solutionAttribute.setAttribute(solution, algorithmName);

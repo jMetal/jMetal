@@ -41,8 +41,8 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
       int x ;
       int y ;
 
-      x = solution.getVariable(i) ;
-      y = solution.getVariable(i+1) ;
+      x = solution.variables().get(i) ;
+      y = solution.variables().get(i+1) ;
 
       fitness1 += distanceMatrix[x][y] ;
       fitness2 += costMatrix[x][y];
@@ -50,14 +50,15 @@ public class MultiobjectiveTSP extends AbstractIntegerPermutationProblem {
     int firstCity ;
     int lastCity  ;
 
-    firstCity = solution.getVariable(0) ;
-    lastCity = solution.getVariable(numberOfCities - 1) ;
+    firstCity = solution.variables().get(0) ;
+    lastCity = solution.variables().get(numberOfCities - 1) ;
 
     fitness1 += distanceMatrix[firstCity][lastCity] ;
     fitness2 += costMatrix[firstCity][lastCity];
 
-    solution.setObjective(0, fitness1);
-    solution.setObjective(1, fitness2);
+
+    solution.objectives()[0] = fitness1 ;
+    solution.objectives()[1] = fitness2 ;
 
     return solution ;
   }

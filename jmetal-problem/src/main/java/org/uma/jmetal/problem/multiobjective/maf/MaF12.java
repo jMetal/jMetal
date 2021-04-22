@@ -55,14 +55,14 @@ public class MaF12 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables_ = solution.getNumberOfVariables();
-    int numberOfObjectives_ = solution.getNumberOfObjectives();
+    int numberOfVariables_ = solution.variables().size();
+    int numberOfObjectives_ = solution.objectives().length;
 
     double[] x = new double[numberOfVariables_];
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     double subf1 = 1;
@@ -153,7 +153,7 @@ public class MaF12 extends AbstractDoubleProblem {
         y[numberOfObjectives_ - 1] + 2 * subf1 * Math.sin(Math.PI * y[numberOfObjectives_ - 2] / 2);
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

@@ -1,11 +1,8 @@
 package org.uma.jmetal.experimental.qualityIndicator.impl;
 
 import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.io.FileNotFoundException;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points
@@ -32,20 +29,10 @@ public class ErrorRatio extends QualityIndicator {
   /**
    * Constructor
    *
-   * @param referenceFrontFile
-   * @throws FileNotFoundException
-   */
-  public ErrorRatio(String referenceFrontFile)  {
-    referenceFront = VectorUtils.readVectors(referenceFrontFile);
-  }
-
-  /**
-   * Constructor
-   *
    * @param referenceFront
    */
   public ErrorRatio(double[][] referenceFront) {
-    Check.isNotNull(referenceFront);
+    Check.notNull(referenceFront);
     this.referenceFront = referenceFront ;
   }
 
@@ -55,7 +42,7 @@ public class ErrorRatio extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return errorRatio(front, referenceFront);
   }

@@ -31,12 +31,12 @@ public class CRE32 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x_L = solution.getVariable(0);
-    double x_B = solution.getVariable(1);
-    double x_D = solution.getVariable(2);
-    double x_T = solution.getVariable(3);
-    double x_Vk = solution.getVariable(4);
-    double x_CB = solution.getVariable(5);
+    double x_L = solution.variables().get(0);
+    double x_B = solution.variables().get(1);
+    double x_D = solution.variables().get(2);
+    double x_T = solution.variables().get(3);
+    double x_Vk = solution.variables().get(4);
+    double x_CB = solution.variables().get(5);
 
     double displacement = 1.025 * x_L * x_B * x_T * x_CB;
     double V = 0.5144 * x_Vk;
@@ -78,9 +78,9 @@ public class CRE32 extends AbstractDoubleProblem {
     double annual_costs = capital_costs + running_costs + voyage_costs;
     double annual_cargo = cargo_DWT * RTPA;
 
-    solution.setObjective(0, annual_costs / annual_cargo);
-    solution.setObjective(1, light_ship_weight);
-    solution.setObjective(2, -annual_cargo);
+    solution.objectives()[0] = annual_costs / annual_cargo;
+    solution.objectives()[1] = light_ship_weight;
+    solution.objectives()[2] = -annual_cargo ;
 
     evaluateConstraints(solution, DWT, Fn);
 
@@ -91,12 +91,12 @@ public class CRE32 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution, double DWT, double Fn) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x_L = solution.getVariable(0);
-    double x_B = solution.getVariable(1);
-    double x_D = solution.getVariable(2);
-    double x_T = solution.getVariable(3);
-    double x_Vk = solution.getVariable(4);
-    double x_CB = solution.getVariable(5);
+    double x_L = solution.variables().get(0);
+    double x_B = solution.variables().get(1);
+    double x_D = solution.variables().get(2);
+    double x_T = solution.variables().get(3);
+    double x_Vk = solution.variables().get(4);
+    double x_CB = solution.variables().get(5);
 
     constraint[0] = (x_L / x_B) - 6.0;
     constraint[1] = -(x_L / x_D) + 15.0;
@@ -121,7 +121,7 @@ public class CRE32 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

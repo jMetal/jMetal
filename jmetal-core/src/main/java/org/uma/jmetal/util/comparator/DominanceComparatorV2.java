@@ -25,15 +25,15 @@ public class DominanceComparatorV2<S extends Solution<?>> implements Comparator<
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.isNotNull(solution1);
-    Check.isNotNull(solution2);
+    Check.notNull(solution1);
+    Check.notNull(solution2);
     Check.that(
-        solution1.getNumberOfObjectives() == solution2.getNumberOfObjectives(),
+        solution1.objectives().length == solution2.objectives().length,
         "Cannot compare because solution1 has "
-            + solution1.getNumberOfObjectives()
+            + solution1.objectives().length
             + " objectives and solution2 has "
-            + solution2.getNumberOfObjectives());
+            + solution2.objectives().length);
 
-    return VectorUtils.dominanceTest(solution1.getObjectives(), solution2.getObjectives()) ;
+    return VectorUtils.dominanceTest(solution1.objectives(), solution2.objectives()) ;
   }
 }

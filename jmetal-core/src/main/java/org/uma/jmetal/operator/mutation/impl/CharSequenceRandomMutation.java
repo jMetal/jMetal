@@ -36,7 +36,7 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
   /* Execute() method */
   @Override
   public CharSequenceSolution execute(CharSequenceSolution solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(solution);
     return solution;
@@ -44,13 +44,13 @@ public class CharSequenceRandomMutation implements MutationOperator<CharSequence
 
   /** Performs the operation */
   public void doMutation(CharSequenceSolution solution) {
-    int sequenceLength = solution.getNumberOfVariables();
+    int sequenceLength = solution.variables().size();
 
     for (int i = 0; i < sequenceLength; i++) {
       if (JMetalRandom.getInstance().nextDouble() < mutationProbability) {
         int positionToChange = JMetalRandom.getInstance().nextInt(0, sequenceLength - 1);
         char newCharValue = alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length - 1)];
-        solution.setVariable(positionToChange, newCharValue);
+        solution.variables().set(positionToChange, newCharValue);
       }
     }
   }

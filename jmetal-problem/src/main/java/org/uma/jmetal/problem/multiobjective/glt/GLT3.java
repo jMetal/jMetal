@@ -49,11 +49,11 @@ public class GLT3 extends AbstractDoubleProblem {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    solution.setObjective(0, (1.0 + g(solution))*solution.getVariable(0));
-    if (solution.getObjective(0) < 0.05) {
-      solution.setObjective(1, (1.0 + g(solution))*(1.0 - 19.0*solution.getVariable(0))) ;
+    solution.objectives()[0] = (1.0 + g(solution))*solution.objectives()[0];
+    if (solution.objectives()[0] < 0.05) {
+      solution.objectives()[1] = (1.0 + g(solution))*(1.0 - 19.0*solution.objectives()[0]) ;
     } else {
-      solution.setObjective(1, (1.0 + g(solution))*(1.0/19.0 - solution.getVariable(0)/19.0)) ;
+      solution.objectives()[1] = (1.0 + g(solution))*(1.0/19.0 - solution.objectives()[0]/19.0) ;
     }
     return solution ;
   }
@@ -61,9 +61,9 @@ public class GLT3 extends AbstractDoubleProblem {
   private double g(DoubleSolution solution) {
     double result = 0.0 ;
 
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      double value =solution.getVariable(i)
-          - Math.sin(2*Math.PI*solution.getVariable(0)+i*Math.PI/solution.getNumberOfVariables()) ;
+    for (int i = 1; i < solution.variables().size(); i++) {
+      double value =solution.objectives()[i]
+          - Math.sin(2*Math.PI*solution.objectives()[0]+i*Math.PI/solution.variables().size()) ;
 
       result += value * value ;
     }

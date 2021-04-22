@@ -59,7 +59,7 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
 
     JMetalLogger.logger.info(
         "Best found string: '"
-            + solution.getVariables().stream().map(String::valueOf).collect(Collectors.joining())
+            + solution.variables().stream().map(String::valueOf).collect(Collectors.joining())
             + "'");
 
     new SolutionListOutput(population)

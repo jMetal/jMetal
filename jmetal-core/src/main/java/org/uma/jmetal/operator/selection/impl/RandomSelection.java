@@ -16,7 +16,7 @@ public class RandomSelection<S> implements SelectionOperator<List<S>, S> {
 
   /** Execute() method */
   public S execute(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
 
     List<S> list = SolutionListUtils.selectNRandomDifferentSolutions(1, solutionList);

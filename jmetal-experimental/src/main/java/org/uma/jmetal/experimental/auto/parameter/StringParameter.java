@@ -12,7 +12,7 @@ public class StringParameter extends Parameter<String> {
   @Override
   public void check() {
     Check.that(!getName().equals(""), "The parameter name cannot be the empty string");
-    Check.isNotNull(getName()) ;
+    Check.notNull(getName()) ;
   }
 
   @Override

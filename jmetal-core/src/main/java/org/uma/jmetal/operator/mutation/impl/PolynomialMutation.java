@@ -5,9 +5,9 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -113,7 +113,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) throws JMetalException {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(solution);
     /*
@@ -176,9 +176,9 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
-        y = solution.getVariable(i);
+        y = solution.variables().get(i);
         Bounds<Double> bounds = solution.getBounds(i);
         yl = bounds.getLowerBound();
         yu = bounds.getUpperBound();
@@ -201,7 +201,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
           y = y + deltaq * (yu - yl);
           y = solutionRepair.repairSolutionVariableValue(y, yl, yu);
         }
-        solution.setVariable(i, y);
+        solution.variables().set(i, y);
       }
     }
   }

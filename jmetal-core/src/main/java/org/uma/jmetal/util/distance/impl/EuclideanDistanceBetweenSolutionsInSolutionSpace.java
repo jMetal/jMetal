@@ -16,11 +16,11 @@ public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution
 
   @Override
   public double compute(S solution1, S solution2) {
-    double[] vector1 = new double[solution1.getNumberOfVariables()] ;
-    double[] vector2 = new double[solution1.getNumberOfVariables()] ;
-    for (int i = 0 ; i < solution1.getNumberOfVariables(); i++) {
-      vector1[i] = solution1.getVariable(i) ;
-      vector2[i] = solution2.getVariable(i) ;
+    double[] vector1 = new double[solution1.variables().size()] ;
+    double[] vector2 = new double[solution1.variables().size()] ;
+    for (int i = 0 ; i < solution1.variables().size(); i++) {
+      vector1[i] = solution1.variables().get(i) ;
+      vector2[i] = solution2.variables().get(i) ;
     }
 
     return distance.compute(vector1, vector2) ;

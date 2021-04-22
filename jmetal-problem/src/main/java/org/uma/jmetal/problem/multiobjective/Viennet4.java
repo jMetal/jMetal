@@ -32,11 +32,11 @@ public class Viennet4 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables();
 
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
     double[] x = new double[numberOfVariables];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     f[0] = (x[0] - 2.0) * (x[0] - 2.0) / 2.0 + (x[1] + 1.0) * (x[1] + 1.0) / 13.0 + 3.0;
@@ -51,8 +51,8 @@ public class Viennet4 extends AbstractDoubleProblem {
             + (x[0] - x[1] + 1.0) * (x[0] - x[1] + 1.0) / 27.0
             + 15.0;
 
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.setObjective(i, f[i]);
+    for (int i = 0; i < solution.objectives().length; i++) {
+      solution.objectives()[i] = f[i];
     }
 
     evaluateConstraints(solution);
@@ -63,15 +63,15 @@ public class Viennet4 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
 
     constraint[0] = -x2 - (4.0 * x1) + 4.0;
     constraint[1] = x1 + 1.0;
     constraint[2] = x2 - x1 + 2.0;
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

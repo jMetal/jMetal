@@ -31,7 +31,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
   public void shouldTheRankingOfAnEmptyPopulationReturnZeroSubfronts() {
     List<Solution<?>> population = Collections.emptyList();
     Ranking<Solution<?>> ranking = new ExperimentalFastNonDominanceRanking<>();
-    ranking.computeRanking(population);
+    ranking.compute(population);
 
     assertEquals(0, ranking.getNumberOfSubFronts());
   }
@@ -43,25 +43,25 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     List<DoubleSolution> population = new ArrayList<>();
 
     DoubleSolution solution = problem.createSolution();
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives()[0] =  2.0;
+    solution.objectives()[1] =  3.0;
     DoubleSolution solution2 = problem.createSolution();
-    solution2.setObjective(0, 1.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives()[0] =  1.0;
+    solution2.objectives()[1] =  6.0;
 
     population.add(solution);
     population.add(solution2);
 
-    ranking.computeRanking(population);
+    ranking.compute(population);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
     assertEquals(2, ranking.getSubFront(0).size());
 
-    assertEquals(0, population.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(0, population.get(1).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(population.get(0)));
+    assertEquals(0, ranking.getRank(population.get(1)));
 
     List<DoubleSolution> subfront = ranking.getSubFront(0);
-    assertEquals(0, subfront.get(0).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(subfront.get(0)));
   }
 
   @Test
@@ -71,16 +71,16 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     List<DoubleSolution> population = new ArrayList<>();
 
     DoubleSolution solution = problem.createSolution();
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives()[0] =  2.0;
+    solution.objectives()[1] =  3.0;
     DoubleSolution solution2 = problem.createSolution();
-    solution2.setObjective(0, 3.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives()[0] =  3.0;
+    solution2.objectives()[1] =  6.0;
 
     population.add(solution);
     population.add(solution2);
 
-    ranking.computeRanking(population);
+    ranking.compute(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
 
@@ -88,14 +88,14 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     assertEquals(1, ranking.getSubFront(0).size());
     assertEquals(1, ranking.getSubFront(1).size());
 
-    assertEquals(0, population.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(1, population.get(1).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(population.get(0)));
+    assertEquals(1, ranking.getRank(population.get(1)));
 
     List<DoubleSolution> subfront = ranking.getSubFront(0);
     List<DoubleSolution> subfront1 = ranking.getSubFront(1);
 
-    assertEquals(0, subfront.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(1, subfront1.get(0).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(subfront.get(0)));
+    assertEquals(1, ranking.getRank(subfront1.get(0)));
   }
 
   @Test
@@ -105,20 +105,20 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     List<DoubleSolution> population = new ArrayList<>();
 
     DoubleSolution solution = problem.createSolution();
-    solution.setObjective(0, 2.0);
-    solution.setObjective(1, 3.0);
+    solution.objectives()[0] =  2.0;
+    solution.objectives()[1] =  3.0;
     DoubleSolution solution2 = problem.createSolution();
-    solution2.setObjective(0, 3.0);
-    solution2.setObjective(1, 6.0);
+    solution2.objectives()[0] =  3.0;
+    solution2.objectives()[1] =  6.0;
     DoubleSolution solution3 = problem.createSolution();
-    solution3.setObjective(0, 4.0);
-    solution3.setObjective(1, 8.0);
+    solution3.objectives()[0] =  4.0;
+    solution3.objectives()[1] =  8.0;
 
     population.add(solution);
     population.add(solution2);
     population.add(solution3);
 
-    ranking.computeRanking(population);
+    ranking.compute(population);
 
     assertEquals(3, ranking.getNumberOfSubFronts());
 
@@ -127,16 +127,16 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     assertEquals(1, ranking.getSubFront(1).size());
     assertEquals(1, ranking.getSubFront(2).size());
 
-    assertEquals(0, population.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(1, population.get(1).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(population.get(0)));
+    assertEquals(1, ranking.getRank(population.get(1)));
 
     List<DoubleSolution> subfront = ranking.getSubFront(0);
     List<DoubleSolution> subfront1 = ranking.getSubFront(1);
     List<DoubleSolution> subfront2 = ranking.getSubFront(2);
 
-    assertEquals(0, subfront.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(1, subfront1.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(2, subfront2.get(0).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(subfront.get(0)));
+    assertEquals(1, ranking.getRank(subfront1.get(0)));
+    assertEquals(2, ranking.getRank(subfront2.get(0)));
   }
 
   @Test
@@ -146,20 +146,20 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     List<DoubleSolution> population = new ArrayList<>();
 
     DoubleSolution solution = problem.createSolution();
-    solution.setObjective(0, 1.0);
-    solution.setObjective(1, 0.0);
+    solution.objectives()[0] =  1.0;
+    solution.objectives()[1] =  0.0;
     DoubleSolution solution2 = problem.createSolution();
-    solution2.setObjective(0, 0.6);
-    solution2.setObjective(1, 0.6);
+    solution2.objectives()[0] =  0.6;
+    solution2.objectives()[1] =  0.6;
     DoubleSolution solution3 = problem.createSolution();
-    solution3.setObjective(0, 0.5);
-    solution3.setObjective(1, 0.5);
+    solution3.objectives()[0] =  0.5;
+    solution3.objectives()[1] =  0.5;
     DoubleSolution solution4 = problem.createSolution();
-    solution4.setObjective(0, 1.1);
-    solution4.setObjective(1, 0.0);
+    solution4.objectives()[0] =  1.1;
+    solution4.objectives()[1] =  0.0;
     DoubleSolution solution5 = problem.createSolution();
-    solution5.setObjective(0, 0.0);
-    solution5.setObjective(1, 1.0);
+    solution5.objectives()[0] =  0.0;
+    solution5.objectives()[1] =  1.0;
 
     population.add(solution);
     population.add(solution2);
@@ -167,7 +167,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     population.add(solution4);
     population.add(solution5);
 
-    ranking.computeRanking(population);
+    ranking.compute(population);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
 
@@ -178,8 +178,8 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     List<DoubleSolution> subfront = ranking.getSubFront(0);
     List<DoubleSolution> subfront1 = ranking.getSubFront(1);
 
-    assertEquals(0, subfront.get(0).getAttribute(ranking.getAttributeId()));
-    assertEquals(1, subfront1.get(0).getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(subfront.get(0)));
+    assertEquals(1, ranking.getRank(subfront1.get(0)));
   }
 
   @Test
@@ -198,27 +198,28 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     DoubleSolution solution3 = problem.createSolution();
     DoubleSolution solution4 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] =  1.0;
+    solution1.objectives()[1] =  5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] =  2.0;
+    solution2.objectives()[1] =  4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] =  3.0;
+    solution3.objectives()[1] =  3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] =  5.0;
+    solution4.objectives()[1] =  1.0;
 
     List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4);
 
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(1, ranking.getNumberOfSubFronts());
-    assertEquals(0, solution1.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution3.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(solution1));
+    assertEquals(0, ranking.getRank(solution2));
+    assertEquals(0, ranking.getRank(solution3));
+    assertEquals(0, ranking.getRank(solution4));
+
   }
 
   @Test
@@ -241,32 +242,32 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
     DoubleSolution solution4 = problem.createSolution();
     DoubleSolution solution5 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution1.setObjective(1, 5.0);
+    solution1.objectives()[0] =  1.0;
+    solution1.objectives()[1] =  5.0;
 
-    solution2.setObjective(0, 2.0);
-    solution2.setObjective(1, 4.0);
+    solution2.objectives()[0] =  2.0;
+    solution2.objectives()[1] =  4.0;
 
-    solution3.setObjective(0, 3.0);
-    solution3.setObjective(1, 3.0);
+    solution3.objectives()[0] =  3.0;
+    solution3.objectives()[1] =  3.0;
 
-    solution4.setObjective(0, 5.0);
-    solution4.setObjective(1, 1.0);
+    solution4.objectives()[0] =  5.0;
+    solution4.objectives()[1] =  1.0;
 
-    solution5.setObjective(0, 3);
-    solution5.setObjective(1, 2);
+    solution5.objectives()[0] =  3;
+    solution5.objectives()[1] =  2;
 
     List<DoubleSolution> solutionList =
         Arrays.asList(solution1, solution2, solution4, solution3, solution5);
 
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(2, ranking.getNumberOfSubFronts());
-    assertEquals(0, solution1.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution2.getAttribute(ranking.getAttributeId()));
-    assertEquals(1, solution3.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution4.getAttribute(ranking.getAttributeId()));
-    assertEquals(0, solution5.getAttribute(ranking.getAttributeId()));
+    assertEquals(0, ranking.getRank(solution1));
+    assertEquals(0, ranking.getRank(solution2));
+    assertEquals(1, ranking.getRank(solution3));
+    assertEquals(0, ranking.getRank(solution4));
+    assertEquals(0, ranking.getRank(solution5));
   }
 
   @Test
@@ -293,13 +294,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
         .forEach(
             i -> {
               DoubleSolution solution = problem.createSolution();
-              solution.setObjective(0, objectiveValues[i][0]);
-              solution.setObjective(1, objectiveValues[i][1]);
-              solution.setObjective(2, objectiveValues[i][2]);
+              solution.objectives()[0] =  objectiveValues[i][0];
+              solution.objectives()[1] =  objectiveValues[i][1];
+              solution.objectives()[2] =  objectiveValues[i][2];
               solutionList.add(solution);
             });
 
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(11, solutionList.size());
     assertEquals(3, ranking.getNumberOfSubFronts());
@@ -332,13 +333,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
             .forEach(
                     i -> {
                       DoubleSolution solution = problem.createSolution();
-                      solution.setObjective(0, objectiveValues[i][0]);
-                      solution.setObjective(1, objectiveValues[i][1]);
-                      solution.setObjective(2, objectiveValues[i][2]);
+                      solution.objectives()[0] =  objectiveValues[i][0];
+                      solution.objectives()[1] =  objectiveValues[i][1];
+                      solution.objectives()[2] =  objectiveValues[i][2];
                       solutionList.add(solution);
                     });
 
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(10, solutionList.size());
     assertEquals(2, ranking.getNumberOfSubFronts());
@@ -380,13 +381,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
         .forEach(
             i -> {
               DoubleSolution solution = problem.createSolution();
-              solution.setObjective(0, objectiveValues[i][0]);
-              solution.setObjective(1, objectiveValues[i][1]);
-              solution.setObjective(2, objectiveValues[i][2]);
+              solution.objectives()[0] =  objectiveValues[i][0];
+              solution.objectives()[1] =  objectiveValues[i][1];
+              solution.objectives()[2] =  objectiveValues[i][2];
               solutionList.add(solution);
             });
 
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
 
     assertEquals(20, solutionList.size());
     assertEquals(5, ranking.getNumberOfSubFronts());

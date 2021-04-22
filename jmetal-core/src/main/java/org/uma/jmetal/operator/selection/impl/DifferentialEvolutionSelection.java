@@ -60,7 +60,7 @@ public class DifferentialEvolutionSelection
   /** Execute() method */
   @Override
   public List<DoubleSolution> execute(List<DoubleSolution> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
     Check.that(
         (currentSolutionIndex >= 0) && (currentSolutionIndex <= solutionList.size()),
         "Index value invalid: " + currentSolutionIndex);

@@ -43,7 +43,7 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
 
     for (int i = 0 ; i < boundsList.size(); i++) {
       Bounds<Double> bounds = boundsList.get(i);
-      setVariable(i, JMetalRandom.getInstance().nextDouble(bounds.getLowerBound(), bounds.getUpperBound())); ;
+      variables().set(i, JMetalRandom.getInstance().nextDouble(bounds.getLowerBound(), bounds.getUpperBound())); ;
     }
   }
 
@@ -68,18 +68,18 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
 
   /** Copy constructor */
   public DefaultDoubleSolution(DefaultDoubleSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      setVariable(i, solution.getVariable(i));
+    for (int i = 0; i < solution.variables().size(); i++) {
+      variables().set(i, solution.variables().get(i));
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
+    for (int i = 0; i < solution.objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < solution.constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     bounds = solution.bounds ;

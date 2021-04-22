@@ -60,7 +60,7 @@ public class PolynomialMutationExample {
     MutationOperator<DoubleSolution> mutation = new PolynomialMutation(1.0, distributionIndex) ;
 
     DoubleSolution solution = problem.createSolution() ;
-    solution.setVariable(0, 0.0);
+    solution.variables().set(0, 0.0);
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints) ;
     for (int i = 0 ; i < numberOfPoints ; i++) {
@@ -90,7 +90,7 @@ public class PolynomialMutationExample {
       boolean found = false ;
       int index = 0 ;
       while (!found) {
-        if (solution.getVariable(0) <= classifier[index][0]) {
+        if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1] ++ ;
           found = true ;
         } else {

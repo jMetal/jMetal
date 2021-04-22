@@ -33,7 +33,7 @@ public class SetCoverage extends QualityIndicator {
 
   @Override
   public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return compute(front, referenceFront);
   }

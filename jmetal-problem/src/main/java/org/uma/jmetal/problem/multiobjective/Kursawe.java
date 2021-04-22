@@ -45,14 +45,14 @@ public class Kursawe extends AbstractDoubleProblem {
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution){
     double aux, xi, xj;
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[solution.objectives().length];
     double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i) ;
+    for (int i = 0; i < solution.variables().size(); i++) {
+      x[i] = solution.variables().get(i) ;
     }
 
     fx[0] = 0.0;
-    for (int var = 0; var < solution.getNumberOfVariables() - 1; var++) {
+    for (int var = 0; var < solution.variables().size() - 1; var++) {
       xi = x[var] * x[var];
       xj = x[var + 1] * x[var + 1];
       aux = (-0.2) * Math.sqrt(xi + xj);
@@ -61,13 +61,14 @@ public class Kursawe extends AbstractDoubleProblem {
 
     fx[1] = 0.0;
 
-    for (int var = 0; var < solution.getNumberOfVariables(); var++) {
+    for (int var = 0; var < solution.variables().size(); var++) {
       fx[1] += Math.pow(Math.abs(x[var]), 0.8) +
         5.0 * Math.sin(Math.pow(x[var], 3.0));
     }
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] = fx[1];
+
     return solution ;
   }
 }

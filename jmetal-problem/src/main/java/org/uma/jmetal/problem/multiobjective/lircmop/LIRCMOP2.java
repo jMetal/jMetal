@@ -19,17 +19,17 @@ public class LIRCMOP2 extends LIRCMOP1 {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[solution.objectives().length];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     fx[0] = x[0] + g1(x);
     fx[1] = 1 - Math.sqrt(x[0]) + g2(x);
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] = fx[1];
 
     evaluateConstraints(solution);
     return solution ;

@@ -48,7 +48,7 @@ public class GeneticAlgorithmTestIT {
     algorithm.run();
 
     BinarySolution solution = algorithm.getResult().get(0) ;
-    assertEquals(NUMBER_OF_BITS, -1 * (int)solution.getObjective(0)) ;
+    assertEquals(NUMBER_OF_BITS, -1 * (int)solution.objectives()[0]) ;
   }
 
   @Test
@@ -82,6 +82,6 @@ public class GeneticAlgorithmTestIT {
     algorithm.run();
 
     BinarySolution solution = algorithm.getResult().get(0) ;
-    assertEquals(NUMBER_OF_BITS, -1 * (int)solution.getObjective(0)) ;
+    assertEquals(NUMBER_OF_BITS, -1 * (int)solution.objectives()[0]) ;
   }
 }

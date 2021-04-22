@@ -40,11 +40,11 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
-    solution.setObjective(0, x[0] + g1(x));
-    solution.setObjective(1, 1 - x[0] * x[0] + g2(x));
+    solution.objectives()[0] = x[0] + g1(x);
+    solution.objectives()[1] = 1 - x[0] * x[0] + g2(x);
 
     evaluateConstraints(solution);
     return solution ;
@@ -54,14 +54,14 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     final double a = 0.51;
     final double b = 0.5;
 
-    solution.setConstraint(0, (a - g1(x)) * (g1(x) - b));
-    solution.setConstraint(1, (a - g2(x)) * (g2(x) - b));
+    solution.constraints()[0] = (a - g1(x)) * (g1(x) - b);
+    solution.constraints()[1] = (a - g2(x)) * (g2(x) - b);
   }
 
   protected double g1(double[] x) {

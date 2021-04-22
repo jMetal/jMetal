@@ -40,7 +40,7 @@ public class Rosenbrock extends AbstractDoubleProblem {
     double[] x = new double[numberOfVariables] ;
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i) ;
+      x[i] = solution.variables().get(i) ;
     }
 
     double sum = 0.0;
@@ -51,7 +51,7 @@ public class Rosenbrock extends AbstractDoubleProblem {
       sum += (100.0 * temp1 * temp1) + (temp2 * temp2);
     }
 
-    solution.setObjective(0, sum);
+    solution.objectives()[0] = sum;
 
     return solution ;
   }

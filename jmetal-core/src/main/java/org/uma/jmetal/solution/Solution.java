@@ -11,27 +11,10 @@ import java.util.Map;
  * @param <T> Type (Double, Integer, etc.)
  */
 public interface Solution<T> extends Serializable {
-  void setObjective(int index, double value) ;
-  double getObjective(int index) ;
-  double[] getObjectives() ;
-
-  T getVariable(int index) ;
-  List<T> getVariables() ;
-  void setVariable(int index, T variable) ;
-
-  double[] getConstraints() ;
-  double getConstraint(int index) ;
-  void setConstraint(int index, double value) ;
-
-  int getNumberOfVariables() ;
-  int getNumberOfObjectives() ;
-  int getNumberOfConstraints() ;
+  List<T> variables() ;
+  double[] objectives() ;
+  double[] constraints() ;
+  Map<Object,Object> attributes() ;
 
   Solution<T> copy() ;
-
-  void setAttribute(Object id, Object value) ;
-  Object getAttribute(Object id) ;
-  boolean hasAttribute(Object id) ;
-  
-  Map<Object, Object> getAttributes();
 }

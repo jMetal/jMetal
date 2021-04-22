@@ -28,24 +28,24 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    *                  number of objectives and constraints.
    */
   public CompositeSolution(List<Solution<?>> solutions) {
-    super(solutions.size(), solutions.get(0).getNumberOfObjectives(), solutions.get(0).getNumberOfConstraints());
-    Check.isNotNull(solutions);
+    super(solutions.size(), solutions.get(0).objectives().length, solutions.get(0).constraints().length);
+    Check.notNull(solutions);
     Check.collectionIsNotEmpty(solutions);
-    int numberOfObjectives = solutions.get(0).getNumberOfObjectives();
-    int numberOfConstraints = solutions.get(0).getNumberOfConstraints();
+    int numberOfObjectives = solutions.get(0).objectives().length;
+    int numberOfConstraints = solutions.get(0).constraints().length;
     for (Solution<?> solution : solutions) {
       Check.that(
-          solution.getNumberOfObjectives() == numberOfObjectives,
+          solution.objectives().length == numberOfObjectives,
           "The solutions in the list must have the same number of objectives: "
               + numberOfObjectives);
       Check.that(
-              solution.getNumberOfConstraints() == numberOfConstraints,
+              solution.constraints().length == numberOfConstraints,
               "The solutions in the list must have the same number of constraints: "
                       + numberOfConstraints);
     }
 
     for (int i = 0 ; i < solutions.size(); i++) {
-      setVariable(i, solutions.get(i)) ;
+      variables().set(i, solutions.get(i)) ;
     }
   }
 
@@ -54,18 +54,18 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
    * @param solution
    */
   public CompositeSolution(CompositeSolution solution) {
-    super(solution.getNumberOfVariables(), solution.getNumberOfObjectives(), solution.getNumberOfConstraints()) ;
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      setVariable(i, solution.getVariable(i).copy());
+    for (int i = 0; i < solution.variables().size(); i++) {
+      variables().set(i, solution.variables().get(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i)) ;
+    for (int i = 0; i < solution.objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < solution.constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;

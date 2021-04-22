@@ -1,7 +1,5 @@
 package org.uma.jmetal.util.ranking;
 
-import org.uma.jmetal.solution.util.attribute.Attribute;
-
 import java.util.List;
 
 /**
@@ -9,8 +7,10 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public interface Ranking<S> extends Attribute<S> {
-  Ranking<S> computeRanking(List<S> solutionList) ;
+public interface Ranking<S> {
+  Ranking<S> compute(List<S> solutionList) ;
   List<S> getSubFront(int rank) ;
   int getNumberOfSubFronts() ;
+  Integer getRank(S solution) ;
+  Object getAttributedId() ;
 }

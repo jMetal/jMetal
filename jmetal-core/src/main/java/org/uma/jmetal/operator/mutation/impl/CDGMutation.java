@@ -18,8 +18,8 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -108,9 +108,9 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
     double rnd, deltaq, tempDelta;
     double y, yl, yu;
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
       if (randomGenerator.nextDouble() <= probability) {
-        y = solution.getVariable(i);
+        y = solution.variables().get(i);
         Bounds<Double> bounds = solution.getBounds(i);
         yl = bounds.getLowerBound() ;
         yu = bounds.getUpperBound() ;
@@ -121,7 +121,7 @@ public class CDGMutation implements MutationOperator<DoubleSolution> {
           
         y = y + deltaq * (yu - yl);
         y = solutionRepair.repairSolutionVariableValue(y, yl, yu);
-        solution.setVariable(i, y);
+        solution.variables().set(i, y);
       }
     }
   }

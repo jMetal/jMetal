@@ -17,7 +17,7 @@ public class RandomMatingPoolSelection<S extends Solution<?>> implements MatingP
   }
 
   public List<S> select(List<S> solutionList) {
-    Check.isNotNull(solutionList);
+    Check.notNull(solutionList);
 
     List<S> matingPool = new ArrayList<>();
     IntStream.range(0, matingPoolSize)

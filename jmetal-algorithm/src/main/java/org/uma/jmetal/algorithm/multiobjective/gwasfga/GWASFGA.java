@@ -10,7 +10,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.solutionattribute.Ranking;
+import org.uma.jmetal.util.ranking.Ranking;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class GWASFGA<S extends Solution<?>> extends WASFGA<S> {
 
   protected Ranking<S> computeRanking(List<S> solutionList) {
     Ranking<S> ranking = new GWASFGARanking<>(this.achievementScalarizingUtopia, this.achievementScalarizingNadir);
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
     return ranking;
   }
 

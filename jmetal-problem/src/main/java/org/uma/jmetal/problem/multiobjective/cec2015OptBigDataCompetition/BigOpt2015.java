@@ -61,7 +61,7 @@ public class BigOpt2015 extends AbstractDoubleProblem {
     for (int i = 0; i < dTypeG; i++) {
       s1Temp = new ArrayList<>();
       for (int j = 0; j < icaComponent.get(0).size(); j++) {
-        s1Temp.add(solution.getVariable(i * (icaComponent.get(0).size()) + j));
+        s1Temp.add(solution.variables().get(i * (icaComponent.get(0).size()) + j));
       }
       s1.add(s1Temp);
     }
@@ -96,8 +96,8 @@ public class BigOpt2015 extends AbstractDoubleProblem {
       obj2 = (obj2 - f2min) * (f1max - f1min) / (f2max - f2min) + f1min;
     }
 
-    solution.setObjective(0, obj1);
-    solution.setObjective(1, obj2);
+    solution.objectives()[0] = obj1;
+    solution.objectives()[1] = obj2;
 
     return solution;
   }

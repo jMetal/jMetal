@@ -33,7 +33,7 @@ public class IntegerDoubleSBXCrossover implements CrossoverOperator<IntegerDoubl
   /** Execute() method */
   @Override
   public List<IntegerDoubleSolution> execute(List<IntegerDoubleSolution> parentSolutions) {
-    Check.isNotNull(parentSolutions);
+    Check.notNull(parentSolutions);
     Check.that(
         parentSolutions.size() == 2,
         "There must be two parents instead of " + parentSolutions.size());

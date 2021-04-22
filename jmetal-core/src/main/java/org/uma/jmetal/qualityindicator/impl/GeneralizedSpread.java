@@ -1,17 +1,14 @@
 package org.uma.jmetal.qualityindicator.impl;
 
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.front.util.FrontUtils;
-import org.uma.jmetal.util.point.Point;
-import org.uma.jmetal.util.point.impl.ArrayPoint;
-import org.uma.jmetal.util.point.util.comparator.LexicographicalPointComparator;
-import org.uma.jmetal.util.point.util.comparator.PointDimensionComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * This class implements the generalized spread metric for two or more dimensions.
@@ -24,7 +21,7 @@ import java.util.List;
  * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S> {
+public class GeneralizedSpread extends QualityIndicator {
 
   /**
    * Default constructor
@@ -35,30 +32,22 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
   /**
    * Constructor
    *
-   * @param referenceParetoFrontFile
+   * @param referenceFront
    * @throws FileNotFoundException
    */
-  public GeneralizedSpread(String referenceParetoFrontFile) throws FileNotFoundException {
-    super(referenceParetoFrontFile) ;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param referenceParetoFront
-   * @throws FileNotFoundException
-   */
-  public GeneralizedSpread(Front referenceParetoFront) {
-    super(referenceParetoFront) ;
+  public GeneralizedSpread(double[][] referenceFront) {
+    super(referenceFront) ;
   }
 
   /**
    * Evaluate() method
-   * @param solutionList
+   * @param front
    * @return
    */
-  @Override public Double evaluate(List<S> solutionList) {
-    return generalizedSpread(new ArrayFront(solutionList), referenceParetoFront);
+  @Override public double compute(double[][] front) {
+    Check.notNull(front);
+
+    return generalizedSpread(front, referenceFront);
   }
 
   /**
@@ -70,57 +59,57 @@ public class GeneralizedSpread<S extends Solution<?>> extends GenericIndicator<S
    *  @param referenceFront The reference pareto front.
    *  @return the value of the generalized spread metric
    **/
-  public double generalizedSpread(Front front, Front referenceFront) {
-    int numberOfObjectives = front.getPoint(0).getDimension() ;
+  public double generalizedSpread(double[][] front, double[][] referenceFront) {
+    int numberOfObjectives = front[0].length ;
 
-    Point[] extremeValues = new Point[numberOfObjectives] ;
+    double[][] extremeValues = new double[numberOfObjectives][] ;
     for (int i = 0; i < numberOfObjectives; i++) {
-      referenceFront.sort(new PointDimensionComparator(i));
-      Point newPoint = new ArrayPoint(numberOfObjectives) ;
+      //Arrays.sort(referenceFront, new VectorPositionComparator(i));
+      int finalI = i;
+      Arrays.sort(referenceFront, Comparator.comparingDouble(x -> x[finalI])) ;
+      double[] newPoint = new double[numberOfObjectives] ;
       for (int j = 0 ; j < numberOfObjectives; j++) {
-        newPoint.setValue(j,
-            referenceFront.getPoint(referenceFront.getNumberOfPoints()-1).getValue(j));
+        newPoint[j] = referenceFront[referenceFront.length -1][j];
       }
       extremeValues[i] = newPoint ;
     }
 
-    int numberOfPoints = front.getNumberOfPoints();
+    int numberOfPoints = front.length;
 
-    front.sort(new LexicographicalPointComparator());
+    Arrays.sort(front, new LexicographicalVectorComparator());
+    // front.sort(new LexicographicalPointComparator());
 
-    if (new EuclideanDistanceBetweenVectors().compute(front.getPoint(0).getValues(),
-        front.getPoint(front.getNumberOfPoints() - 1).getValues()) == 0.0) {
+    if (new EuclideanDistanceBetweenVectors().compute(front[0], front[front.length - 1]) == 0.0) {
       return 1.0;
     } else {
       double dmean = 0.0;
 
-      for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
-        dmean += FrontUtils.distanceToNearestPoint(front.getPoint(i), front);
+      for (int i = 0 ; i < front.length; i++) {
+        dmean += VectorUtils.distanceToNearestVector(front[i], front);
       }
 
       dmean = dmean / (numberOfPoints);
 
       double dExtrems = 0.0;
       for (int i = 0 ; i < extremeValues.length; i++) {
-        dExtrems += FrontUtils.distanceToClosestPoint(extremeValues[i], front);
+        dExtrems += VectorUtils.distanceToClosestVector(extremeValues[i], front);
       }
 
       double mean = 0.0;
-      for (int i = 0; i < front.getNumberOfPoints(); i++) {
-        mean += Math.abs(FrontUtils.distanceToNearestPoint(front.getPoint(i), front) -
-            dmean);
+      for (int i = 0; i < front.length; i++) {
+        mean += Math.abs(VectorUtils.distanceToNearestVector(front[i], front) - dmean);
       }
 
       return (dExtrems + mean) / (dExtrems + (numberOfPoints*dmean));
     }
   }
 
-  @Override public String getName() {
-    return "GSPREAD" ;
-  }
-
   @Override public String getDescription() {
     return "Generalized Spread quality indicator" ;
+  }
+
+  @Override public String getName() {
+    return "GSPREAD" ;
   }
 
   @Override

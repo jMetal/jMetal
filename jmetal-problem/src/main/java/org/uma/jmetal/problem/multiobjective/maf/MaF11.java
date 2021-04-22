@@ -57,14 +57,14 @@ public class MaF11 extends AbstractDoubleProblem {
    */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfVariables = solution.variables().size();
+    int numberOfObjectives = solution.objectives().length;
 
     double[] x = new double[numberOfVariables];
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     // evaluate zi,t1i,t2i,t3i,t4i,yi
@@ -125,7 +125,7 @@ public class MaF11 extends AbstractDoubleProblem {
         .cos(Math.PI * y[numberOfObjectives - 2] / 2));
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

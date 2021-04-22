@@ -8,12 +8,12 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.CrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
+import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,8 +27,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   SolutionListEvaluator<DoubleSolution> evaluator;
 
-  private int swarmSize;
-  private int archiveSize;
+  private final int swarmSize;
   private int maxIterations;
   private int currentIteration;
 
@@ -38,16 +37,16 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
   private double[][] speed;
 
-  private Comparator<DoubleSolution> dominanceComparator;
-  private Comparator<DoubleSolution> crowdingDistanceComparator;
+  private final Comparator<DoubleSolution> dominanceComparator;
+  private final Comparator<DoubleSolution> crowdingDistanceComparator;
 
-  private UniformMutation uniformMutation;
-  private NonUniformMutation nonUniformMutation;
+  private final UniformMutation uniformMutation;
+  private final NonUniformMutation nonUniformMutation;
 
   private double eta = 0.0075;
 
   private JMetalRandom randomGenerator;
-  private CrowdingDistance<DoubleSolution> crowdingDistance;
+  private DensityEstimator<DoubleSolution> crowdingDistance;
 
   /** Constructor */
   public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator,
@@ -58,33 +57,33 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     this.swarmSize = swarmSize ;
     this.maxIterations = maxIterations ;
-    this.archiveSize = archiveSize ;
 
     this.uniformMutation = uniformMutation ;
     this.nonUniformMutation = nonUniformMutation ;
 
     localBest = new DoubleSolution[swarmSize];
-    leaderArchive = new CrowdingDistanceArchive<DoubleSolution>(this.archiveSize);
-    epsilonArchive = new NonDominatedSolutionListArchive<DoubleSolution>(new EpsilonDominanceComparator<DoubleSolution>(eta));
+    leaderArchive = new CrowdingDistanceArchive<>(archiveSize);
+    epsilonArchive = new NonDominatedSolutionListArchive<>(new EpsilonDominanceComparator<>(eta));
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
-    crowdingDistanceComparator = new CrowdingDistanceComparator<DoubleSolution>();
+    crowdingDistance = new CrowdingDistanceDensityEstimator<>();
+
+    dominanceComparator = new DominanceComparator<>();
+    crowdingDistanceComparator = crowdingDistance.getComparator();
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 
     randomGenerator = JMetalRandom.getInstance() ;
-    crowdingDistance = new CrowdingDistance<DoubleSolution>();
   }
 
 
   @Override protected void initProgress() {
     currentIteration = 1;
-    crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.getSolutionList());
   }
 
   @Override protected void updateProgress() {
     currentIteration += 1;
-    crowdingDistance.computeDensityEstimator(leaderArchive.getSolutionList());
+    crowdingDistance.compute(leaderArchive.getSolutionList());
   }
 
   @Override protected boolean isStoppingConditionReached() {
@@ -164,11 +163,11 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
       W = randomGenerator.nextDouble(0.1, 0.5);
       //
 
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
+      for (int var = 0; var < particle.variables().size(); var++) {
         //Computing the velocity of this particle
-        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.getVariable(var) -
-            particle.getVariable(var)) +
-            C2 * r2 * (bestGlobal.getVariable(var) - particle.getVariable(var));
+        speed[i][var] = W * speed[i][var] + C1 * r1 * (bestParticle.variables().get(var) -
+            particle.variables().get(var)) +
+            C2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var));
       }
     }
   }
@@ -178,17 +177,17 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   protected void updatePosition(List<DoubleSolution> swarm)  {
     for (int i = 0; i < swarmSize; i++) {
       DoubleSolution particle = swarm.get(i);
-      for (int var = 0; var < particle.getNumberOfVariables(); var++) {
-        particle.setVariable(var, particle.getVariable(var) + speed[i][var]);
+      for (int var = 0; var < particle.variables().size(); var++) {
+        particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
         Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
-        if (particle.getVariable(var) < lowerBound) {
-          particle.setVariable(var, lowerBound);
+        if (particle.variables().get(var) < lowerBound) {
+          particle.variables().set(var, lowerBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
-        if (particle.getVariable(var) > upperBound) {
-          particle.setVariable(var, upperBound);
+        if (particle.variables().get(var) > upperBound) {
+          particle.variables().set(var, upperBound);
           speed[i][var] = speed[i][var] * -1.0;
         }
       }
@@ -239,10 +238,6 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
         epsilonArchive.add((DoubleSolution) particle.copy());
       }
     }
-  }
-
-  protected void tearDown() {
-    evaluator.shutdown();
   }
 
   @Override public String getName() {

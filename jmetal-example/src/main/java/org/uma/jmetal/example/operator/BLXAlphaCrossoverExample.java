@@ -61,8 +61,8 @@ public class BLXAlphaCrossoverExample {
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
-    solution1.setVariable(0, -2.0);
-    solution2.setVariable(0, 2.0);
+    solution1.variables().set(0, -2.0);
+    solution2.variables().set(0, 2.0);
     List<DoubleSolution> parents = Arrays.asList(solution1, solution2);
 
     List<DoubleSolution> population = new ArrayList<>(numberOfPoints);
@@ -98,7 +98,7 @@ public class BLXAlphaCrossoverExample {
       boolean found = false;
       int index = 0;
       while (!found) {
-        if (solution.getVariable(0) <= classifier[index][0]) {
+        if (solution.variables().get(0) <= classifier[index][0]) {
           classifier[index][1]++;
           found = true;
         } else {

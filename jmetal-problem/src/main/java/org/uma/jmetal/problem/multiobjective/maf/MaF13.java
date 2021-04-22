@@ -54,14 +54,14 @@ public class MaF13 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
 
-    int numberOfVariables_ = solution.getNumberOfVariables();
-    int numberOfObjectives_ = solution.getNumberOfObjectives();
+    int numberOfVariables_ = solution.variables().size();
+    int numberOfObjectives_ = solution.objectives().length;
 
     double[] x = new double[numberOfVariables_];
     double[] f = new double[numberOfObjectives_];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     // evaluate J,y,sub1,sub2,sub3,sub4
@@ -104,7 +104,7 @@ public class MaF13 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < numberOfObjectives_; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

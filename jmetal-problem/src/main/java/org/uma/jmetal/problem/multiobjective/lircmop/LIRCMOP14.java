@@ -25,15 +25,15 @@ public class LIRCMOP14 extends LIRCMOP13 {
     double[] constraint = new double[getNumberOfConstraints()];
 
     double f = 0;
-    for (int i = 0; i < getNumberOfObjectives(); i++) {
-      f += Math.pow(solution.getObjective(i), 2);
+    for (int i = 0; i < solution.objectives().length; i++) {
+      f += Math.pow(solution.objectives()[i], 2);
     }
     constraint[0] = (f - 3 * 3) * (f - 2 * 2);
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);
     constraint[2] = (f - 1.75 * 1.75) * (f - 1.6 * 1.6);
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 
   protected double g1(double[] x) {

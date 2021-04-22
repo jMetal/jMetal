@@ -4,9 +4,9 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -272,7 +272,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   public List<DoubleSolution> execute(List<DoubleSolution> parentSolutions) {
     DoubleSolution child = (DoubleSolution) currentSolution.copy();
 
-    int numberOfVariables = parentSolutions.get(0).getNumberOfVariables();
+    int numberOfVariables = parentSolutions.get(0).variables().size();
     int jrand = jRandomGenerator.getRandomValue(0, numberOfVariables - 1);
 
     Double[][] parent = new Double[getNumberOfRequiredParents()][];
@@ -281,7 +281,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         .forEach(
             i -> {
               parent[i] = new Double[numberOfVariables];
-              parentSolutions.get(i).getVariables().toArray(parent[i]);
+              parentSolutions.get(i).variables().toArray(parent[i]);
             });
 
     if (crossoverType.equals(DE_CROSSOVER_TYPE.BIN)) {
@@ -289,7 +289,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
         if (crRandomGenerator.getRandomValue(0.0, 1.0) < cr || j == jrand) {
           double value = mutate(parent, j);
 
-          child.setVariable(j, value);
+          child.variables().set(j, value);
         }
       }
     } else if (crossoverType.equals(DE_CROSSOVER_TYPE.EXP)) {
@@ -299,7 +299,7 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
       do {
         double value = mutate(parent, j);
 
-        child.setVariable(j, value);
+        child.variables().set(j, value);
 
         j = (j + 1) % numberOfVariables;
         l++;
@@ -314,14 +314,14 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private void repairVariableValues(DoubleSolution solution) {
-    IntStream.range(0, solution.getNumberOfVariables())
+    IntStream.range(0, solution.variables().size())
         .forEach(
             i -> {
               Bounds<Double> bounds = solution.getBounds(i);
-              solution.setVariable(
+              solution.variables().set(
                   i,
                   solutionRepair.repairSolutionVariableValue(
-                      solution.getVariable(i), bounds.getLowerBound(), bounds.getUpperBound()));
+                      solution.variables().get(i), bounds.getLowerBound(), bounds.getUpperBound()));
             });
   }
 
@@ -352,11 +352,11 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestMutation(Double[][] parent, int index, int numberOfDifferenceVectors) {
-    Check.isNotNull(bestSolution);
+    Check.notNull(bestSolution);
     if (numberOfDifferenceVectors == 1) {
-      return bestSolution.getVariable(index) + f * (parent[0][index] - parent[1][index]);
+      return bestSolution.variables().get(index) + f * (parent[0][index] - parent[1][index]);
     } else if (numberOfDifferenceVectors == 2) {
-      return bestSolution.getVariable(index)
+      return bestSolution.variables().get(index)
           + f * (parent[0][index] - parent[1][index])
           + f * (parent[2][index] - parent[3][index]);
     } else {
@@ -366,10 +366,10 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private double bestRandToBestMutation(Double[][] parent, int index) {
-    Check.isNotNull(bestSolution);
-    Check.isNotNull(currentSolution);
-    return currentSolution.getVariable(index)
-        + f * (bestSolution.getVariable(index) - currentSolution.getVariable(index))
+    Check.notNull(bestSolution);
+    Check.notNull(currentSolution);
+    return currentSolution.variables().get(index)
+        + f * (bestSolution.variables().get(index) - currentSolution.variables().get(index))
         + f * (parent[0][index] - parent[1][index]);
   }
 

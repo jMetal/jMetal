@@ -25,8 +25,8 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 0.1);
-    solution2.setObjective(0, 0.1);
+    solution1.objectives()[0] =  0.1;
+    solution2.objectives()[0] =  0.1;
 
     assertEquals(0.0, SolutionUtils.distanceBetweenObjectives(solution1, solution2), EPSILON);
   }
@@ -38,8 +38,8 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 0.1);
-    solution2.setObjective(0, 0.3);
+    solution1.objectives()[0] =  0.1;
+    solution2.objectives()[0] =  0.3;
 
     assertEquals(0.2, SolutionUtils.distanceBetweenObjectives(solution1, solution2), EPSILON);
   }
@@ -51,10 +51,10 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 0.1);
-    solution1.setObjective(0, 0.2);
-    solution2.setObjective(0, 0.1);
-    solution2.setObjective(0, 0.2);
+    solution1.objectives()[0] =  0.1;
+    solution1.objectives()[1] =  0.2;
+    solution2.objectives()[0] =  0.1;
+    solution2.objectives()[1] =  0.2;
 
     assertEquals(0.0, SolutionUtils.distanceBetweenObjectives(solution1, solution2), EPSILON);
   }
@@ -66,12 +66,12 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 0.1);
-    solution1.setObjective(0, 0.1);
-    solution2.setObjective(0, 0.4);
-    solution2.setObjective(0, 0.4);
+    solution1.objectives()[0] =  0.1;
+    solution1.objectives()[1] =  0.1;
+    solution2.objectives()[0] =  0.4;
+    solution2.objectives()[1] =  0.4;
 
-    assertEquals(0.3, SolutionUtils.distanceBetweenObjectives(solution1, solution2), EPSILON);
+    assertEquals(0.42426406871192857, SolutionUtils.distanceBetweenObjectives(solution1, solution2), EPSILON);
   }
 
   /** Case A. Solution = [1], solutionList = [1]] */
@@ -81,8 +81,8 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution2.setObjective(0, 1.0);
+    solution1.objectives()[0] =  1.0;
+    solution2.objectives()[0] =  1.0;
     List<DoubleSolution> solutionList = new ArrayList<>();
     solutionList.add(solution2);
 
@@ -97,8 +97,8 @@ public class SolutionUtilsTest {
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution2.setObjective(0, 2.0);
+    solution1.objectives()[0] =  1.0;
+    solution2.objectives()[0] =  2.0;
     List<DoubleSolution> solutionList = new ArrayList<>();
     solutionList.add(solution2);
 
@@ -113,9 +113,9 @@ public class SolutionUtilsTest {
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
 
-    solution1.setObjective(0, 1.0);
-    solution2.setObjective(0, 1.0);
-    solution3.setObjective(0, 2.0);
+    solution1.objectives()[0] =  1.0;
+    solution2.objectives()[0] =  1.0;
+    solution3.objectives()[0] =  2.0;
     List<DoubleSolution> solutionList = new ArrayList<>();
     solutionList.add(solution2);
     solutionList.add(solution3);
@@ -188,8 +188,8 @@ public class SolutionUtilsTest {
 
     DoubleSolution solution = new DefaultDoubleSolution(2, 0, List.of(Bounds.create(0.0, 1.0)));
 
-    solution.setObjective(0, 10);
-    solution.setObjective(1, 20);
+    solution.objectives()[0] = 10;
+    solution.objectives()[1] = 20;
 
     double[] minValue = new double[] {10, 10};
     double[] maxValue = new double[] {20, 20};
@@ -198,8 +198,8 @@ public class SolutionUtilsTest {
         (DoubleSolution) SolutionUtils.normalize(solution, minValue, maxValue);
 
     assertNotSame(normalized, solution);
-    assertEquals(0.0, normalized.getObjective(0), EPSILON);
-    assertEquals(1.0, normalized.getObjective(1), EPSILON);
+    assertEquals(0.0, normalized.objectives()[0], EPSILON);
+    assertEquals(1.0, normalized.objectives()[1], EPSILON);
   }
 
   /*
@@ -212,11 +212,11 @@ public class SolutionUtilsTest {
       DoubleSolution solution2 = problem.createSolution() ;
       DoubleSolution solution3 = problem.createSolution() ;
 
-      solution1.setObjective(0, 0.0);
+      solution1.objectives()[0] =  0.0);
       solution1.setObjective(1, 1.0);
-      solution2.setObjective(0, 0.1);
+      solution2.objectives()[0] =  0.1);
       solution2.setObjective(1, 0.9);
-      solution3.setObjective(0, 0.3);
+      solution3.objectives()[0] =  0.3);
       solution3.setObjective(1, 0.7);
 
       List<DoubleSolution> solutionList = new ArrayList<>() ;

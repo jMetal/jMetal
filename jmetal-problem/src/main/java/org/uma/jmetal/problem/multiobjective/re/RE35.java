@@ -31,23 +31,22 @@ public class RE35 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = Math.rint(solution.getVariable(2));
-    double x4 = solution.getVariable(3);
-    double x5 = solution.getVariable(4);
-    double x6 = solution.getVariable(5);
-    double x7 = solution.getVariable(6);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = Math.rint(solution.variables().get(2));
+    double x4 = solution.variables().get(3);
+    double x5 = solution.variables().get(4);
+    double x6 = solution.variables().get(5);
+    double x7 = solution.variables().get(6);
 
-    solution.setObjective(
-        0,
+    solution.objectives()[0] =
         0.7854 * x1 * (x2 * x2) * (((10.0 * x3 * x3) / 3.0) + (14.933 * x3) - 43.0934)
             - 1.508 * x1 * (x6 * x6 + x7 * x7)
             + 7.477 * (x6 * x6 * x6 + x7 * x7 * x7)
-            + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7));
+            + 0.7854 * (x4 * x6 * x6 + x5 * x7 * x7);
 
     double tmpVar = Math.pow((745.0 * x4) / (x2 * x3), 2.0) + 1.69 * 1e7;
-    solution.setObjective(1, Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6));
+    solution.objectives()[1] = Math.sqrt(tmpVar) / (0.1 * x6 * x6 * x6);
 
     double[] g = new double[numberOfOriginalConstraints];
     g[0] = -(1.0 / (x1 * x2 * x2 * x3)) + 1.0 / 27.0;
@@ -59,7 +58,7 @@ public class RE35 extends AbstractDoubleProblem {
     g[6] = -5.0 + (x1 / x2);
     g[7] = -1.9 + x4 - 1.5 * x6;
     g[8] = -1.9 + x5 - 1.1 * x7;
-    g[9] = -solution.getObjective(1) + 1300.0;
+    g[9] = -solution.objectives()[1] + 1300.0;
     tmpVar = Math.pow((745.0 * x5) / (x2 * x3), 2.0) + 1.575 * 1e8;
     g[10] = -Math.sqrt(tmpVar) / (0.1 * x7 * x7 * x7) + 1100.0;
 
@@ -68,8 +67,7 @@ public class RE35 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.setObjective(
-        2, g[0] + g[1] + g[2] + g[3] + g[4] + g[5] + g[6] + g[7] + g[8] + g[9] + g[10]);
+    solution.objectives()[2] = g[0] + g[1] + g[2] + g[3] + g[4] + g[5] + g[6] + g[7] + g[8] + g[9] + g[10];
 
     return solution;
   }

@@ -34,7 +34,7 @@ public class RE91 extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[11];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     x[7] = 0.006 * (random.nextGaussian()) + 0.345;
@@ -42,8 +42,7 @@ public class RE91 extends AbstractDoubleProblem {
     x[9] = 10 * (random.nextGaussian()) + 0.0;
     x[10] = 10 * (random.nextGaussian()) + 0.0;
 
-    solution.setObjective(
-        0,
+    solution.objectives()[0] =
         1.98
             + 4.9 * x[0]
             + 6.67 * x[1]
@@ -51,9 +50,8 @@ public class RE91 extends AbstractDoubleProblem {
             + 4.01 * x[3]
             + 1.75 * x[4]
             + 0.00001 * x[5]
-            + 2.73 * x[6]);
-    solution.setObjective(
-        1,
+            + 2.73 * x[6];
+    solution.objectives()[1] =
         Math.max(
             0.0,
             (1.16
@@ -61,9 +59,8 @@ public class RE91 extends AbstractDoubleProblem {
                     - 0.00931 * x[1] * x[9]
                     - 0.484 * x[2] * x[8]
                     + 0.01343 * x[5] * x[9])
-                / 1.0));
-    solution.setObjective(
-        2,
+                / 1.0);
+    solution.objectives()[2] =
         Math.max(
             0.0,
             (0.261
@@ -75,9 +72,8 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.08045 * x[5] * x[8]
                     + 0.00139 * x[7] * x[10]
                     + 0.00001575 * x[9] * x[10])
-                / 0.32));
-    solution.setObjective(
-        3,
+                / 0.32);
+    solution.objectives()[3] =
         Math.max(
             0.0,
             (0.214
@@ -94,9 +90,8 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.00121 * x[7] * x[10]
                     + 0.00184 * x[8] * x[9]
                     - 0.018 * x[1] * x[1])
-                / 0.32));
-    solution.setObjective(
-        4,
+                / 0.32);
+    solution.objectives()[4] =
         Math.max(
             0.0,
             (0.74
@@ -105,7 +100,7 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.001232 * x[2] * x[9]
                     - 0.166 * x[6] * x[8]
                     + 0.227 * x[1] * x[1])
-                / 0.32));
+                / 0.32);
 
     double temp =
         ((28.98
@@ -126,9 +121,8 @@ public class RE91 extends AbstractDoubleProblem {
                 + (46.36 - 9.9 * x[1] - 12.9 * x[0] * x[7] + 0.1107 * x[2] * x[9]))
             / 3;
 
-    solution.setObjective(5, Math.max(0.0, temp / 32));
-    solution.setObjective(
-        6,
+    solution.objectives()[5] = Math.max(0.0, temp / 32);
+    solution.objectives()[6] =
         Math.max(
             0.0,
             (4.72
@@ -137,10 +131,9 @@ public class RE91 extends AbstractDoubleProblem {
                     - 0.0122 * x[3] * x[9]
                     + 0.009325 * x[5] * x[9]
                     + 0.000191 * x[10] * x[10])
-                / 4.0));
-    solution.setObjective(
-        7,
-        Math.max(
+                / 4.0);
+    solution.objectives()[7] =
+    Math.max(
             0.0,
             (10.58
                     - 0.674 * x[0] * x[1]
@@ -148,10 +141,9 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.02054 * x[2] * x[9]
                     - 0.0198 * x[3] * x[9]
                     + 0.028 * x[5] * x[9])
-                / 9.9));
-    solution.setObjective(
-        8,
-        Math.max(
+                / 9.9);
+    solution.objectives()[8] =
+    Math.max(
             0.0,
             (16.45
                     - 0.489 * x[2] * x[6]
@@ -159,7 +151,7 @@ public class RE91 extends AbstractDoubleProblem {
                     + 0.0432 * x[8] * x[9]
                     - 0.0556 * x[8] * x[10]
                     - 0.000786 * x[10] * x[10])
-                / 15.7));
+                / 15.7);
 
     return solution;
   }

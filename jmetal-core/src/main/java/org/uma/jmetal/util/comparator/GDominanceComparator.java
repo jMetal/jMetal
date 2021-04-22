@@ -39,10 +39,10 @@ public class GDominanceComparator<S extends Solution<?>> implements Comparator<S
       throw new JMetalException("Solution1 is null") ;
     } else if (solution2 == null) {
       throw new JMetalException("Solution2 is null") ;
-    } else if (solution1.getNumberOfObjectives() != solution2.getNumberOfObjectives()) {
+    } else if (solution1.objectives().length != solution2.objectives().length) {
       throw new JMetalException("Cannot compare because solution1 has " +
-          solution1.getNumberOfObjectives()+ " objectives and solution2 has " +
-          solution2.getNumberOfObjectives()) ;
+          solution1.objectives().length+ " objectives and solution2 has " +
+          solution2.objectives().length) ;
     }
 
     int result = flagComparison(solution1, solution2);
@@ -65,15 +65,15 @@ public class GDominanceComparator<S extends Solution<?>> implements Comparator<S
 
   private int flag(S solution) {
     int result = 1 ;
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      if (solution.getObjective(i) > referencePoint.get(i)) {
+    for (int i = 0; i < solution.objectives().length; i++) {
+      if (solution.objectives()[i] > referencePoint.get(i)) {
         result = 0 ;
       }
     }
     if (result == 0) {
       result = 1 ;
-      for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-        if (solution.getObjective(i) < referencePoint.get(i)) {
+      for (int i = 0; i < solution.objectives().length; i++) {
+        if (solution.objectives()[i] < referencePoint.get(i)) {
           result = 0 ;
         }
       }

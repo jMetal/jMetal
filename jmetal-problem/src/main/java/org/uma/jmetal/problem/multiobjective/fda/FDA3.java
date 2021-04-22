@@ -45,13 +45,13 @@ public class FDA3 extends FDA implements Serializable {
 
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
     f[0] = this.evalF(solution, limitInfI, limitSupI);
     double g = this.evalG(solution, limitInfII);
     double h = this.evalH(f[0], g);
     f[1] = g * h;
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
     return solution ;
   }
 
@@ -60,7 +60,7 @@ public class FDA3 extends FDA implements Serializable {
     double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
     double Ft = Math.pow(10.0d, aux);
     for (int i = limitInf; i < limitSup; i++) {
-      f += Math.pow(solution.getVariable(i), Ft);
+      f += Math.pow(solution.variables().get(i), Ft);
     }
     return f;
   }
@@ -74,8 +74,8 @@ public class FDA3 extends FDA implements Serializable {
 
     double g = 0.0d;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-    for (int i = limitInf; i < solution.getNumberOfVariables(); i++) {
-      g += Math.pow((solution.getVariable(i) - Gt), 2.0);
+    for (int i = limitInf; i < solution.variables().size(); i++) {
+      g += Math.pow((solution.variables().get(i) - Gt), 2.0);
     }
     g = g + 1.0 + Gt;
     return g;

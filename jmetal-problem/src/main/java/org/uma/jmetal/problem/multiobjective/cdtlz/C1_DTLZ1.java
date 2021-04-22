@@ -34,10 +34,10 @@ public class C1_DTLZ1 extends DTLZ1 {
 
   public void evaluateConstraints(DoubleSolution solution) {
     double sum = 0 ;
-    for (int i = 0; i < getNumberOfObjectives() - 2; i++) {
-      sum += solution.getObjective(i) / 0.5 ;
+    for (int i = 0; i < solution.objectives().length - 2; i++) {
+      sum += solution.objectives()[i] / 0.5 ;
     }
 
-    solution.setConstraint(0, 1.0 - solution.getObjective(getNumberOfObjectives()-1) - sum) ;
+    solution.constraints()[0] = 1.0 - solution.objectives()[(solution.objectives().length-1)] - sum ;
   }
 }

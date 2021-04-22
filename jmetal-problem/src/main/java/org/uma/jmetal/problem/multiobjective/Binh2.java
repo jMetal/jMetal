@@ -26,28 +26,28 @@ public class Binh2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[solution.objectives().length];
     double[] x = new double[getNumberOfVariables()];
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
     fx[1] = (x[0] - 5.0) * (x[0] - 5.0) + (x[1] - 5.0) * (x[1] - 5.0);
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] =  fx[1];
 
     this.evaluateConstraints(solution);
-    return solution ;
+    return solution;
   }
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double x0 = solution.getVariable(0);
-    double x1 = solution.getVariable(1);
+    double x0 = solution.variables().get(0);
+    double x1 = solution.variables().get(1);
 
-    solution.setConstraint(0, -1.0 * (x0 - 5) * (x0 - 5) - x1 * x1 + 25.0);
-    solution.setConstraint(1, (x0 - 8) * (x0 - 8) + (x1 + 3) * (x1 + 3) - 7.7);
+    solution.constraints()[0] = -1.0 * (x0 - 5) * (x0 - 5) - x1 * x1 + 25.0;
+    solution.constraints()[1] = (x0 - 8) * (x0 - 8) + (x1 + 3) * (x1 + 3) - 7.7;
   }
 }

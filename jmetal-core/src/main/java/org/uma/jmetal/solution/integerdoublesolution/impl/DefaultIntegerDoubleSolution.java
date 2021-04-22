@@ -34,9 +34,9 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
       int numberOfConstraints) {
     super(2, numberOfObjectives, numberOfConstraints);
 
-    setVariable(
+    variables().set(
         0, new DefaultIntegerSolution(integerBounds, numberOfObjectives, numberOfConstraints));
-    setVariable(
+    variables().set(
         1, new DefaultDoubleSolution(doubleBounds, numberOfObjectives, numberOfConstraints));
   }
 
@@ -51,35 +51,35 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
   /** Constructor */
   public DefaultIntegerDoubleSolution(
       IntegerSolution integerSolution, DoubleSolution doubleSolution) {
-    super(2, integerSolution.getNumberOfObjectives(), integerSolution.getNumberOfConstraints());
+    super(2, integerSolution.objectives().length, integerSolution.constraints().length);
     Check.that(
-        integerSolution.getNumberOfObjectives() == doubleSolution.getNumberOfObjectives(),
+        integerSolution.objectives().length == doubleSolution.objectives().length,
         "The two solutions must have the same number of objectives");
     Check.that(
-        integerSolution.getNumberOfConstraints() == doubleSolution.getNumberOfConstraints(),
+        integerSolution.constraints().length == doubleSolution.constraints().length,
         "The two solutions must have the same number of constraints");
 
-    setVariable(0, integerSolution);
-    setVariable(1, doubleSolution);
+    variables().set(0, integerSolution);
+    variables().set(1, doubleSolution);
   }
 
   /** Copy constructor */
   public DefaultIntegerDoubleSolution(DefaultIntegerDoubleSolution solution) {
     super(
-        solution.getNumberOfVariables(),
-        solution.getNumberOfObjectives(),
-        solution.getNumberOfConstraints());
+        solution.variables().size(),
+        solution.objectives().length,
+        solution.constraints().length);
 
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      setVariable(i, solution.getVariable(i).copy());
+    for (int i = 0; i < solution.variables().size(); i++) {
+      variables().set(i, solution.variables().get(i).copy());
     }
 
-    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-      setObjective(i, solution.getObjective(i));
+    for (int i = 0; i < solution.objectives().length; i++) {
+      objectives()[i] = solution.objectives()[i];
     }
 
-    for (int i = 0; i < solution.getNumberOfConstraints(); i++) {
-      setConstraint(i, solution.getConstraint(i));
+    for (int i = 0; i < solution.constraints().length; i++) {
+      constraints()[i] =  solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);
@@ -87,12 +87,12 @@ public class DefaultIntegerDoubleSolution extends AbstractSolution<Solution<?>>
 
   @Override
   public IntegerSolution getIntegerSolution() {
-    return (IntegerSolution) getVariable(0);
+    return (IntegerSolution) variables().get(0);
   }
 
   @Override
   public DoubleSolution getDoubleSolution() {
-    return (DoubleSolution) getVariable(1);
+    return (DoubleSolution) variables().get(1);
   }
 
   @Override

@@ -7,8 +7,8 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -44,7 +44,7 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-    JMetalLogger.logger.info("Fitness: " + population.get(0).getObjective(0)) ;
-    JMetalLogger.logger.info("Solution: " + population.get(0).getVariable(0)) ;
+    JMetalLogger.logger.info("Fitness: " + population.get(0).objectives()[0]) ;
+    JMetalLogger.logger.info("Solution: " + population.get(0).variables().get(0)) ;
   }
 }

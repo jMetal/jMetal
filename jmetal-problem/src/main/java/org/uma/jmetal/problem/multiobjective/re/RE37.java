@@ -36,13 +36,12 @@ public class RE37 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double xAlpha = solution.getVariable(0);
-    double xHA = solution.getVariable(1);
-    double xOA = solution.getVariable(2);
-    double xOPTT = solution.getVariable(3);
+    double xAlpha = solution.variables().get(0);
+    double xHA = solution.variables().get(1);
+    double xOA = solution.variables().get(2);
+    double xOPTT = solution.variables().get(3);
 
-    solution.setObjective(
-        0,
+    solution.objectives()[0] =
         0.692
             + (0.477 * xAlpha)
             - (0.687 * xHA)
@@ -57,9 +56,8 @@ public class RE37 extends AbstractDoubleProblem {
             - (0.0521 * xOPTT * xAlpha)
             + (0.00156 * xOPTT * xHA)
             + (0.00198 * xOPTT * xOA)
-            + (0.0184 * xOPTT * xOPTT));
-    solution.setObjective(
-        1,
+            + (0.0184 * xOPTT * xOPTT);
+    solution.objectives()[1] =
         0.153
             - (0.322 * xAlpha)
             + (0.396 * xHA)
@@ -74,9 +72,8 @@ public class RE37 extends AbstractDoubleProblem {
             + (0.0134 * xOPTT * xAlpha)
             + (0.0296 * xOPTT * xHA)
             + (0.0752 * xOPTT * xOA)
-            + (0.0192 * xOPTT * xOPTT));
-    solution.setObjective(
-        2,
+            + (0.0192 * xOPTT * xOPTT);
+    solution.objectives()[2] =
         0.370
             - (0.205 * xAlpha)
             + (0.0307 * xHA)
@@ -97,7 +94,7 @@ public class RE37 extends AbstractDoubleProblem {
             - (0.245 * xHA * xHA * xOA)
             + (0.281 * xOA * xOA * xHA)
             - (0.184 * xOPTT * xOPTT * xAlpha)
-            - (0.281 * xHA * xAlpha * xOA));
+            - (0.281 * xHA * xAlpha * xOA);
 
     return solution;
   }

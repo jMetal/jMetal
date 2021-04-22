@@ -142,14 +142,14 @@ public class MaF09 extends AbstractDoubleProblem {
    */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    int numberOfVariables_ = solution.getNumberOfVariables();
-    int numberOfObjectives = solution.getNumberOfObjectives();
+    int numberOfVariables_ = solution.variables().size();
+    int numberOfObjectives = solution.objectives().length;
 
     double[] x = new double[numberOfVariables_];
     double[] f = new double[numberOfObjectives];
 
     for (int i = 0; i < numberOfVariables_; i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
     // check if the point is infeasible
@@ -160,7 +160,7 @@ public class MaF09 extends AbstractDoubleProblem {
       for (int i = 0; i < numberOfVariables_; i++) {
         Bounds<Double> bounds = getBoundsForVariables().get(i) ;
         x[i] = generV(bounds.getLowerBound(), bounds.getUpperBound());
-        solution.setVariable(i, x[i]);
+        solution.variables().set(i, x[i]);
       }
       infeasible = if_infeasible(x);
     }
@@ -183,7 +183,7 @@ public class MaF09 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < numberOfObjectives; i++) {
-      solution.setObjective(i, f[i]);
+      solution.objectives()[i] = f[i];
     }
     return solution ;
   }

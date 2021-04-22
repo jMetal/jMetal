@@ -62,7 +62,7 @@ public class NormalizeUtils {
    * @return A matrix with normalized values for each of its rows
    */
   public static double[][] normalize(double[][] matrix) {
-    Check.isNotNull(matrix);
+    Check.notNull(matrix);
 
     double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
 
@@ -85,16 +85,16 @@ public class NormalizeUtils {
    * @return A matrix with normalized values for each of its rows
    */
   public static double[][] normalize(double[][] matrix, double[] minRangeValue, double[] maxRangeValue) {
-    Check.isNotNull(matrix);
+    Check.notNull(matrix);
 
     double[][] normalizedMatrix = new double[matrix.length][matrix[0].length];
 
-    double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
-    double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
+    //double[] minValue = getMinValuesOfTheColumnsOfAMatrix(matrix) ;
+    //double[] maxValue = getMaxValuesOfTheColumnsOfAMatrix(matrix) ;
 
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix[0].length; j++) {
-        normalizedMatrix[i][j] = normalize(matrix[i][j], minRangeValue[i], maxRangeValue[i], minValue[j], maxValue[j]) ;
+        normalizedMatrix[i][j] = normalize(matrix[i][j], minRangeValue[j], maxRangeValue[j]) ;
       }
     }
 

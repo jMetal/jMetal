@@ -63,14 +63,14 @@ public class ZDT5 extends AbstractBinaryProblem {
 
   /** Evaluate() method */
   public BinarySolution evaluate(BinarySolution solution) {
-    double[] f = new double[solution.getNumberOfObjectives()];
-    f[0] = 1 + u(solution.getVariable(0));
+    double[] f = new double[solution.objectives().length];
+    f[0] = 1 + u(solution.variables().get(0));
     double g = evalG(solution);
     double h = evalH(f[0], g);
     f[1] = h * g;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution;
   }
@@ -82,8 +82,8 @@ public class ZDT5 extends AbstractBinaryProblem {
    */
   public double evalG(BinarySolution solution) {
     double res = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      res += evalV(u(solution.getVariable(i)));
+    for (int i = 1; i < solution.variables().size(); i++) {
+      res += evalV(u(solution.variables().get(i)));
     }
 
     return res;

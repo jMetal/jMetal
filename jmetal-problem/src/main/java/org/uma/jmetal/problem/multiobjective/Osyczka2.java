@@ -26,15 +26,15 @@ public class Osyczka2 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] fx = new double[getNumberOfObjectives()];
+    double[] fx = new double[solution.objectives().length];
 
     double x1, x2, x3, x4, x5, x6;
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
-    x5 = solution.getVariable(4);
-    x6 = solution.getVariable(5);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
+    x5 = solution.variables().get(4);
+    x6 = solution.variables().get(5);
 
     fx[0] =
         -(25.0 * (x1 - 2.0) * (x1 - 2.0)
@@ -45,8 +45,8 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
     fx[1] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4 + x5 * x5 + x6 * x6;
 
-    solution.setObjective(0, fx[0]);
-    solution.setObjective(1, fx[1]);
+    solution.objectives()[0] = fx[0];
+    solution.objectives()[1] = fx[1];
 
     evaluateConstraints(solution);
     return solution ;
@@ -57,12 +57,12 @@ public class Osyczka2 extends AbstractDoubleProblem {
     double[] constraint = new double[this.getNumberOfConstraints()];
 
     double x1, x2, x3, x4, x5, x6;
-    x1 = solution.getVariable(0);
-    x2 = solution.getVariable(1);
-    x3 = solution.getVariable(2);
-    x4 = solution.getVariable(3);
-    x5 = solution.getVariable(4);
-    x6 = solution.getVariable(5);
+    x1 = solution.variables().get(0);
+    x2 = solution.variables().get(1);
+    x3 = solution.variables().get(2);
+    x4 = solution.variables().get(3);
+    x5 = solution.variables().get(4);
+    x6 = solution.variables().get(5);
 
     constraint[0] = (x1 + x2) / 2.0 - 1.0;
     constraint[1] = (6.0 - x1 - x2) / 6.0;
@@ -72,7 +72,7 @@ public class Osyczka2 extends AbstractDoubleProblem {
     constraint[5] = ((x5 - 3.0) * (x5 - 3.0) + x6 - 4.0) / 4.0;
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

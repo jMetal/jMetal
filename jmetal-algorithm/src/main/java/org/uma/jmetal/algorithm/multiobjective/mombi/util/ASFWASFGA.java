@@ -64,9 +64,9 @@ public class ASFWASFGA<S extends Solution<?>> extends AbstractUtilityFunctionsSe
 
 		
 		List<Double> weightVector 	 =  this.getWeightVector(vector);
-		List<Double> objectiveValues =  new ArrayList<>(solution.getNumberOfObjectives());
-		for (int i = 0; i < solution.getNumberOfObjectives();i++) 			
-				objectiveValues.add(solution.getObjective(i));
+		List<Double> objectiveValues =  new ArrayList<>(solution.objectives().length);
+		for (int i = 0; i < solution.objectives().length;i++) 			
+				objectiveValues.add(solution.objectives()[i]);
 		
 		double result = -1e10;
 		double secondSum = 0.0;

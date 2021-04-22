@@ -1,9 +1,9 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -47,7 +47,7 @@ public class VectorUtils {
    * @return referenceVectors. referenceVectors[i][j] means the i-th vector's j-th value
    * @throws JMetalException if error while read file
    */
-  public static double[][] readVectors(String filePath) {
+  public static double[][] readVectors(String filePath, String separator) throws IOException {
     double[][] referenceVectors;
     String path = filePath;
 
@@ -60,16 +60,12 @@ public class VectorUtils {
       }
     }
 
-    List<String> vectorStrList = null;
-    try {
-      vectorStrList = Files.readAllLines(Paths.get(path));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    List<String> vectorStrList = Files.readAllLines(Paths.get(path));
+
     referenceVectors = new double[vectorStrList.size()][];
     for (int i = 0; i < vectorStrList.size(); i++) {
       String vectorStr = vectorStrList.get(i);
-      String[] objectArray = vectorStr.split("\\s+");
+      String[] objectArray = vectorStr.split(separator);
       referenceVectors[i] = new double[objectArray.length];
       for (int j = 0; j < objectArray.length; j++) {
         referenceVectors[i][j] = Double.parseDouble(objectArray[j]);
@@ -77,6 +73,10 @@ public class VectorUtils {
     }
 
     return referenceVectors;
+  }
+
+  public static double[][] readVectors(String filePath) throws IOException {
+    return readVectors(filePath, "\\s+") ;
   }
 
   /**
@@ -106,8 +106,8 @@ public class VectorUtils {
 
   public static double distanceToClosestVector(
       double[] vector, double[][] front, Distance<double[], double[]> distance) {
-    Check.isNotNull(vector);
-    Check.isNotNull(front);
+    Check.notNull(vector);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     double minDistance = distance.compute(vector, front[0]);
@@ -128,8 +128,8 @@ public class VectorUtils {
 
   public static double distanceToNearestVector(
       double[] vector, double[][] front, Distance<double[], double[]> distance) {
-    Check.isNotNull(vector);
-    Check.isNotNull(front);
+    Check.notNull(vector);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     double minDistance = Double.MAX_VALUE;
@@ -152,7 +152,7 @@ public class VectorUtils {
    * @return The inverted front
    */
   public static double[][] getInvertedFront(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
     Check.that(front.length > 0, "The front is empty");
 
     int numberOfDimensions = front[0].length;

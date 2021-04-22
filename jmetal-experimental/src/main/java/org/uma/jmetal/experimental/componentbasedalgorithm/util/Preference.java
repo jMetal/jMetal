@@ -25,7 +25,7 @@ public class Preference<S> {
 
   /** Constructor */
   public Preference(
-      Ranking<S> ranking, DensityEstimator<S> densityEstimator, Preference<S> relatedPreference) {
+          Ranking<S> ranking, DensityEstimator<S> densityEstimator, Preference<S> relatedPreference) {
     this.ranking = ranking;
     this.densityEstimator = densityEstimator;
     this.relatedPreference = relatedPreference;
@@ -51,23 +51,21 @@ public class Preference<S> {
   }
 
   private boolean densityEstimatorsAreDifferent() {
-    return !densityEstimator
-        .getAttributeId()
-        .equals(relatedPreference.getDensityEstimator().getAttributeId());
+    return densityEstimator.getClass() != relatedPreference.getDensityEstimator().getClass() ;
   }
 
   private void recomputeDensityEstimator() {
     for (int i = 0; i < ranking.getNumberOfSubFronts(); i++) {
-      densityEstimator.computeDensityEstimator(ranking.getSubFront(i));
+      densityEstimator.compute(ranking.getSubFront(i));
     }
   }
 
   private void recomputeRanking(List<S> solutionList) {
-    ranking.computeRanking(solutionList);
+    ranking.compute(solutionList);
   }
 
   private boolean rankingsAreDifferent() {
-    return !ranking.getAttributeId().equals(relatedPreference.getRanking().getAttributeId());
+    return !ranking.getClass().equals(relatedPreference.getRanking().getClass());
   }
 
   public Ranking<S> getRanking() {
@@ -81,6 +79,6 @@ public class Preference<S> {
   public Comparator<S> getComparator() {
     return new MultiComparator<>(
         List.of(
-            getRanking().getSolutionComparator(), getDensityEstimator().getSolutionComparator()));
+            Comparator.comparing(getRanking()::getRank), Comparator.comparing(getDensityEstimator()::getValue).reversed()));
   }
 }

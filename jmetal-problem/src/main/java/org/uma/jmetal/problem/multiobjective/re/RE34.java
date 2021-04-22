@@ -36,22 +36,20 @@ public class RE34 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double x1 = solution.getVariable(0);
-    double x2 = solution.getVariable(1);
-    double x3 = solution.getVariable(2);
-    double x4 = solution.getVariable(3);
-    double x5 = solution.getVariable(4);
+    double x1 = solution.variables().get(0);
+    double x2 = solution.variables().get(1);
+    double x3 = solution.variables().get(2);
+    double x4 = solution.variables().get(3);
+    double x5 = solution.variables().get(4);
 
-    solution.setObjective(
-        0,
+    solution.objectives()[0] =
         1640.2823
             + (2.3573285 * x1)
             + (2.3220035 * x2)
             + (4.5688768 * x3)
             + (7.7213633 * x4)
-            + (4.4559504 * x5));
-    solution.setObjective(
-        1,
+            + (4.4559504 * x5);
+    solution.objectives()[1] =
         6.5856
             + (1.15 * x1)
             - (1.0427 * x2)
@@ -62,9 +60,8 @@ public class RE34 extends AbstractDoubleProblem {
             + (0.3628 * x2 * x4)
             - (0.1106 * x1 * x1)
             - (0.3437 * x3 * x3)
-            + (0.1764 * x4 * x4));
-    solution.setObjective(
-        2,
+            + (0.1764 * x4 * x4);
+    solution.objectives()[2] =
         -0.0551
             + (0.0181 * x1)
             + (0.1024 * x2)
@@ -75,7 +72,7 @@ public class RE34 extends AbstractDoubleProblem {
             - (0.0204 * x3 * x4)
             - (0.008 * x3 * x5)
             - (0.0241 * x2 * x2)
-            + (0.0109 * x4 * x4));
+            + (0.0109 * x4 * x4);
 
     return solution;
   }

@@ -23,8 +23,8 @@ class CRE23Test {
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);
 
-    assertEquals(4, solution.getNumberOfVariables());
-    assertEquals(2, solution.getNumberOfObjectives());
-    assertEquals(4, solution.getNumberOfConstraints());
+    assertEquals(4, solution.variables().size());
+    assertEquals(2, solution.objectives().length);
+    assertEquals(4, solution.constraints().length);
   }
 }

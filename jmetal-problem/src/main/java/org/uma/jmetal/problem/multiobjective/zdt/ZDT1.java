@@ -38,15 +38,15 @@ public class ZDT1 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
 
-    f[0] = solution.getVariable(0);
+    f[0] = solution.variables().get(0);
     double g = this.evalG(solution);
     double h = this.evalH(f[0], g);
     f[1] = h * g;
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
 
     return solution ;
   }
@@ -58,10 +58,10 @@ public class ZDT1 extends AbstractDoubleProblem {
    */
   protected double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      g += solution.getVariable(i);
+    for (int i = 1; i < solution.variables().size(); i++) {
+      g += solution.variables().get(i);
     }
-    double constant = 9.0 / (solution.getNumberOfVariables() - 1);
+    double constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;
   }

@@ -46,15 +46,15 @@ public class MOP4 extends AbstractDoubleProblem {
 
   /** Evaluate() method */
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] f = new double[getNumberOfObjectives()];
+    double[] f = new double[solution.objectives().length];
 
     double g = this.evalG(solution);
-    f[0] = (1 + g) * solution.getVariable(0);
-    f[1] = (1 + g) * (1- Math.sqrt(solution.getVariable(0)) *
-    		Math.pow(Math.cos(solution.getVariable(0) * Math.PI * 2), 2));
+    f[0] = (1 + g) * solution.variables().get(0);
+    f[1] = (1 + g) * (1- Math.sqrt(solution.variables().get(0)) *
+    		Math.pow(Math.cos(solution.variables().get(0) * Math.PI * 2), 2));
 
-    solution.setObjective(0, f[0]);
-    solution.setObjective(1, f[1]);
+    solution.objectives()[0] = f[0];
+    solution.objectives()[1] = f[1];
     return solution ;
   }
 
@@ -65,11 +65,11 @@ public class MOP4 extends AbstractDoubleProblem {
    */
   private double evalG(DoubleSolution solution) {
     double g = 0.0;
-    for (int i = 1; i < solution.getNumberOfVariables(); i++) {
-      double t = solution.getVariable(i) - Math.sin(0.5 * Math.PI * solution.getVariable(0));
+    for (int i = 1; i < solution.variables().size(); i++) {
+      double t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
       g += Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
     }
-    g = 1 + 10 * Math.sin(Math.PI * solution.getVariable(0)) * g;
+    g = 1 + 10 * Math.sin(Math.PI * solution.variables().get(0)) * g;
     return g;
   }
 

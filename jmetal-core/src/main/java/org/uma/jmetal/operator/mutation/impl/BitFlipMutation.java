@@ -2,8 +2,8 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
@@ -45,7 +45,7 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
   /** Execute() method */
   @Override
   public BinarySolution execute(BinarySolution solution) {
-    Check.isNotNull(solution);
+    Check.notNull(solution);
 
     doMutation(mutationProbability, solution);
     return solution;
@@ -58,10 +58,10 @@ public class BitFlipMutation implements MutationOperator<BinarySolution> {
    * @param solution The solution to mutate
    */
   public void doMutation(double probability, BinarySolution solution) {
-    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-      for (int j = 0; j < solution.getVariable(i).getBinarySetLength(); j++) {
+    for (int i = 0; i < solution.variables().size(); i++) {
+      for (int j = 0; j < solution.variables().get(i).getBinarySetLength(); j++) {
         if (randomGenerator.getRandomValue() <= probability) {
-          solution.getVariable(i).flip(j);
+          solution.variables().get(i).flip(j);
         }
       }
     }

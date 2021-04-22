@@ -22,8 +22,8 @@ public class LIRCMOP12 extends LIRCMOP9 {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double f0 = solution.getObjective(0);
-    double f1 = solution.getObjective(1);
+    double f0 = solution.objectives()[0];
+    double f1 = solution.objectives()[1];
     double N = 4.0, theta = 0.25 * Math.PI;
     double[] constraint = new double[getNumberOfConstraints()];
     constraint[0] =
@@ -38,7 +38,7 @@ public class LIRCMOP12 extends LIRCMOP9 {
                 ((f0 - xOffset) * Math.sin(-theta) + (f1 - yOffset) * Math.cos(-theta)) / b, 2)
             - r;
 
-    solution.setConstraint(0, constraint[0]);
-    solution.setConstraint(1, constraint[1]);
+    solution.constraints()[0] = constraint[0];
+    solution.constraints()[1] = constraint[1];
   }
 }

@@ -36,9 +36,9 @@ public class StoredSolutionsUtils {
         String[] textNumbers = line.split(DEFAULT_REGEX, numberOfObjectives + 1);
         PointSolution solution = new PointSolution(numberOfObjectives);
         for (int i = 0; i < numberOfObjectives; i++) {
-          solution.setObjective(i, Double.parseDouble(textNumbers[i]));
+          solution.objectives()[i] = Double.parseDouble(textNumbers[i]);
         }
-        solution.setAttribute(textRepresentation, line);
+        solution.attributes().put(textRepresentation, line);
 
         return solution;
       })
@@ -54,9 +54,9 @@ public class StoredSolutionsUtils {
 
     try {
       for (Solution<?> s : archive.getSolutionList()) {
-        String formatedTextRepresentation = (String)s.getAttribute(SolutionTextRepresentation.getAttribute());
+        String formatedTextRepresentation = (String)s.attributes().get(SolutionTextRepresentation.getAttribute());
         if (formatedTextRepresentation != null) {
-          bufferedWriter.write((String) s.getAttribute(SolutionTextRepresentation.getAttribute()));
+          bufferedWriter.write((String) s.attributes().get(SolutionTextRepresentation.getAttribute()));
           bufferedWriter.newLine();
         } else {
           throw new JMetalException("Formatted text representation of the solution not stored as attribute");

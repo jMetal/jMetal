@@ -12,12 +12,12 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -66,13 +66,13 @@ public class GMOCellRunner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+        new BinaryTournamentSelection<>(
+            new RankingAndCrowdingDistanceComparator<>());
 
     List<Double> referencePoint = Arrays.asList(0.3, 0.8);
 
     ArchiveWithReferencePoint<DoubleSolution> archive =
-        new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(100, referencePoint);
+        new CrowdingDistanceArchiveWithReferencePoint<>(100, referencePoint);
 
     algorithm =
         new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)

@@ -1,15 +1,12 @@
 package org.uma.jmetal.qualityindicator.impl;
 
 import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.front.Front;
-import org.uma.jmetal.util.front.impl.ArrayFront;
-import org.uma.jmetal.util.naming.impl.SimpleDescribedEntity;
-import org.uma.jmetal.util.point.Point;
 
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * The Error Ratio (ER) quality indicator reports the ratio of solutions in a front of points
@@ -24,51 +21,44 @@ import java.util.List;
  * TODO: using an epsilon value
  */
 @SuppressWarnings("serial")
-public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
-    extends SimpleDescribedEntity
-    implements QualityIndicator<Evaluate, Double> {
-  private Front referenceParetoFront ;
+public class ErrorRatio extends QualityIndicator {
+  private double[][] referenceFront ;
 
   /**
    * Constructor
-   *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
    */
-  public ErrorRatio(String referenceParetoFrontFile) throws FileNotFoundException {
-    super("ER", "Error ratio quality indicator") ;
-    if (referenceParetoFrontFile == null) {
-      throw new JMetalException("The pareto front object is null");
-    }
-
-    Front front = new ArrayFront(referenceParetoFrontFile);
-    referenceParetoFront = front ;
+  public ErrorRatio() {
   }
 
   /**
    * Constructor
    *
-   * @param referenceParetoFront
+   * @param referenceFrontFile
+   * @throws FileNotFoundException
    */
-  public ErrorRatio(Front referenceParetoFront) {
-    super("ER", "Error ratio quality indicator") ;
-    if (referenceParetoFront == null) {
-      throw new JMetalException("\"The Pareto front approximation is null");
-    }
+  public ErrorRatio(String referenceFrontFile) throws IOException {
+    referenceFront = VectorUtils.readVectors(referenceFrontFile);
+  }
 
-    this.referenceParetoFront = referenceParetoFront ;
+  /**
+   * Constructor
+   *
+   * @param referenceFront
+   */
+  public ErrorRatio(double[][] referenceFront) {
+    Check.notNull(referenceFront);
+    this.referenceFront = referenceFront ;
   }
 
   /**
    * Evaluate() method
-   * @param solutionList
+   * @param front
    * @return
    */
-  @Override public Double evaluate(Evaluate solutionList) {
-    if (solutionList == null) {
-      throw new JMetalException("The solution list is null") ;
-    }
-    return er(new ArrayFront(solutionList), referenceParetoFront);
+  @Override public double compute(double[][] front) {
+    Check.notNull(front);
+
+    return errorRatio(front, referenceFront);
   }
 
   /**
@@ -80,18 +70,18 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
    * @return the value of the error ratio indicator
    * @throws JMetalException
    */
-  private double er(Front front, Front referenceFront) throws JMetalException {
-    int numberOfObjectives = referenceFront.getPointDimensions() ;
+  private double errorRatio(double[][] front, double[][] referenceFront) {
+    int numberOfObjectives = referenceFront[0].length ;
     double sum = 0;
 
-    for (int i = 0; i < front.getNumberOfPoints(); i++) {
-      Point currentPoint = front.getPoint(i);
+    for (int i = 0; i < front.length; i++) {
+      double[] currentPoint = front[i];
       boolean thePointIsInTheParetoFront = false;
-      for (int j = 0; j < referenceFront.getNumberOfPoints(); j++) {
-        Point currentParetoFrontPoint = referenceFront.getPoint(j);
+      for (int j = 0; j < referenceFront.length; j++) {
+        double[] currentParetoFrontPoint = referenceFront[j];
         boolean found = true;
         for (int k = 0; k < numberOfObjectives; k++) {
-          if(currentPoint.getValue(k) != currentParetoFrontPoint.getValue(k)){
+          if(currentPoint[k] != currentParetoFrontPoint[k]){
             found = false;
             break;
           }
@@ -106,10 +96,23 @@ public class ErrorRatio<Evaluate extends List<? extends Solution<?>>>
       }
     }
 
-    return sum / front.getNumberOfPoints();
+    return sum / front.length;
+  }
+
+  public void setReferenceFront(double[][] referenceFront) {
+    this.referenceFront = referenceFront;
+  }
+
+  @Override public String getDescription() {
+    return "Error ratio" ;
   }
 
   @Override public String getName() {
-    return super.getName() ;
+    return "ER" ;
+  }
+
+  @Override
+  public boolean isTheLowerTheIndicatorValueTheBetter() {
+    return true ;
   }
 }

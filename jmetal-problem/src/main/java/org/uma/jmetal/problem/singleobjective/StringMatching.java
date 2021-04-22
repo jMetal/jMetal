@@ -38,13 +38,13 @@ public class StringMatching extends CharSequenceProblem {
     int counter = 0;
 
     for (int i = 0; i < targetString.length(); i++) {
-      if (targetString.charAt(i) != solution.getVariable(i)) {
+      if (targetString.charAt(i) != solution.variables().get(i)) {
         counter++;
-        // counter += Math.abs(targetString.charAt(i) - solution.getVariable(i)) ;
+        // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
       }
     }
 
-    solution.setObjective(0, counter);
+    solution.objectives()[0] = counter;
 
     return solution ;
   }
@@ -53,7 +53,7 @@ public class StringMatching extends CharSequenceProblem {
   public CharSequenceSolution createSolution() {
     CharSequenceSolution solution = new CharSequenceSolution(targetString.length(), getNumberOfObjectives()) ;
     for (int i = 0 ; i < targetString.length(); i++) {
-      solution.setVariable(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
+      solution.variables().set(i, alphabet[JMetalRandom.getInstance().nextInt(0, alphabet.length-1)]);
     }
 
     return solution ;

@@ -1,15 +1,15 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
 import org.junit.Test;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class KNearestNeighborhoodTest {
 
@@ -18,23 +18,23 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseA() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(1) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(1) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(1, neighbors.size());
-    assertSame(point2, neighbors.get(0));
+    assertSame(solution2, neighbors.get(0));
   }
 
   /**
@@ -42,32 +42,28 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseB() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getNumberOfObjectives()).thenReturn(2) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getNumberOfObjectives()).thenReturn(2) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    Solution<?> point3 = mock(Solution.class) ;
-    when(point3.getNumberOfObjectives()).thenReturn(2) ;
-    when(point3.getObjective(0)).thenReturn(2.0) ;
-    when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.objectives()[0] = 2.0 ;
+    solution3.objectives()[1] = 2.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(2, neighbors.size());
-    assertSame(point2, neighbors.get(0));
-    assertSame(point3, neighbors.get(1));
+    assertSame(solution2, neighbors.get(0));
+    assertSame(solution3, neighbors.get(1));
   }
 
   /**
@@ -75,32 +71,28 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseC() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getNumberOfObjectives()).thenReturn(2) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getNumberOfObjectives()).thenReturn(2) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    Solution<?> point3 = mock(Solution.class) ;
-    when(point3.getNumberOfObjectives()).thenReturn(2) ;
-    when(point3.getObjective(0)).thenReturn(2.0) ;
-    when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.objectives()[0] = 2.0 ;
+    solution3.objectives()[1] = 2.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 1) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 1) ;
 
     assertEquals(2, neighbors.size());
-    assertSame(point1, neighbors.get(0));
-    assertSame(point3, neighbors.get(1));
+    assertSame(solution1, neighbors.get(0));
+    assertSame(solution3, neighbors.get(1));
   }
 
   /**
@@ -108,32 +100,28 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseD() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getNumberOfObjectives()).thenReturn(2) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getNumberOfObjectives()).thenReturn(2) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    Solution<?> point3 = mock(Solution.class) ;
-    when(point3.getNumberOfObjectives()).thenReturn(2) ;
-    when(point3.getObjective(0)).thenReturn(2.0) ;
-    when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.objectives()[0] = 2.0 ;
+    solution3.objectives()[1] = 2.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(2) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(2) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
 
     assertEquals(2, neighbors.size());
-    assertSame(point2, neighbors.get(0));
-    assertSame(point1, neighbors.get(1));
+    assertSame(solution2, neighbors.get(0));
+    assertSame(solution1, neighbors.get(1));
   }
 
   /**
@@ -141,45 +129,37 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseE() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getNumberOfObjectives()).thenReturn(2) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getNumberOfObjectives()).thenReturn(2) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    Solution<?> point3 = mock(Solution.class) ;
-    when(point3.getNumberOfObjectives()).thenReturn(2) ;
-    when(point3.getObjective(0)).thenReturn(2.0) ;
-    when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    Solution<?> point4 = mock(Solution.class) ;
-    when(point4.getNumberOfObjectives()).thenReturn(2) ;
-    when(point4.getObjective(0)).thenReturn(3.0) ;
-    when(point4.getObjective(1)).thenReturn(3.0) ;
-    when(point4.getObjectives()).thenReturn(new double[]{3.0, 3.0}) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.objectives()[0] = 2.0 ;
+    solution3.objectives()[1] = 2.0 ;
 
-    Solution<?> point5 = mock(Solution.class) ;
-    when(point5.getNumberOfObjectives()).thenReturn(2) ;
-    when(point5.getObjective(0)).thenReturn(4.0) ;
-    when(point5.getObjective(1)).thenReturn(4.0) ;
-    when(point5.getObjectives()).thenReturn(new double[]{4.0, 4.0}) ;
+    DoubleSolution solution4 = problem.createSolution() ;
+    solution4.objectives()[0] = 3.0 ;
+    solution4.objectives()[1] = 3.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3, point4, point5) ;
+    DoubleSolution solution5 = problem.createSolution() ;
+    solution5.objectives()[0] = 4.0 ;
+    solution5.objectives()[1] = 4.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(3) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(3) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 0) ;
 
     assertEquals(3, neighbors.size());
-    assertSame(point2, neighbors.get(0));
-    assertSame(point3, neighbors.get(1));
-    assertSame(point4, neighbors.get(2));
+    assertSame(solution2, neighbors.get(0));
+    assertSame(solution3, neighbors.get(1));
+    assertSame(solution4, neighbors.get(2));
   }
 
   /**
@@ -187,44 +167,36 @@ public class KNearestNeighborhoodTest {
    */
   @Test
   public void shouldGetNeighborsWorkProperlyCaseF() {
-    Solution<?> point1 = mock(Solution.class) ;
-    when(point1.getNumberOfObjectives()).thenReturn(2) ;
-    when(point1.getObjective(0)).thenReturn(0.0) ;
-    when(point1.getObjective(1)).thenReturn(0.0) ;
-    when(point1.getObjectives()).thenReturn(new double[]{0.0, 0.0}) ;
+    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
 
-    Solution<?> point2 = mock(Solution.class) ;
-    when(point2.getNumberOfObjectives()).thenReturn(2) ;
-    when(point2.getObjective(0)).thenReturn(1.0) ;
-    when(point2.getObjective(1)).thenReturn(1.0) ;
-    when(point2.getObjectives()).thenReturn(new double[]{1.0, 1.0}) ;
+    DoubleSolution solution1 = problem.createSolution() ;
+    solution1.objectives()[0] = 0.0 ;
+    solution1.objectives()[1] = 0.0 ;
 
-    Solution<?> point3 = mock(Solution.class) ;
-    when(point3.getNumberOfObjectives()).thenReturn(2) ;
-    when(point3.getObjective(0)).thenReturn(2.0) ;
-    when(point3.getObjective(1)).thenReturn(2.0) ;
-    when(point3.getObjectives()).thenReturn(new double[]{2.0, 2.0}) ;
+    DoubleSolution solution2 = problem.createSolution() ;
+    solution2.objectives()[0] = 1.0 ;
+    solution2.objectives()[1] = 1.0 ;
 
-    Solution<?> point4 = mock(Solution.class) ;
-    when(point4.getNumberOfObjectives()).thenReturn(2) ;
-    when(point4.getObjective(0)).thenReturn(3.0) ;
-    when(point4.getObjective(1)).thenReturn(3.0) ;
-    when(point4.getObjectives()).thenReturn(new double[]{3.0, 3.0}) ;
+    DoubleSolution solution3 = problem.createSolution() ;
+    solution3.objectives()[0] = 2.0 ;
+    solution3.objectives()[1] = 2.0 ;
 
-    Solution<?> point5 = mock(Solution.class) ;
-    when(point5.getNumberOfObjectives()).thenReturn(2) ;
-    when(point5.getObjective(0)).thenReturn(4.0) ;
-    when(point5.getObjective(1)).thenReturn(4.0) ;
-    when(point5.getObjectives()).thenReturn(new double[]{4.0, 4.0}) ;
+    DoubleSolution solution4 = problem.createSolution() ;
+    solution4.objectives()[0] = 3.0 ;
+    solution4.objectives()[1] = 3.0 ;
 
-    List<Solution<?>> solutionList = Arrays.asList(point1, point2, point3, point4, point5) ;
+    DoubleSolution solution5 = problem.createSolution() ;
+    solution5.objectives()[0] = 4.0 ;
+    solution5.objectives()[1] = 4.0 ;
 
-    KNearestNeighborhood<Solution<?>> neighborhood = new KNearestNeighborhood<>(3) ;
-    List<Solution<?>> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
+    List<DoubleSolution> solutionList = Arrays.asList(solution1, solution2, solution3, solution4, solution5) ;
+
+    KNearestNeighborhood<DoubleSolution> neighborhood = new KNearestNeighborhood<>(3) ;
+    List<DoubleSolution> neighbors = neighborhood.getNeighbors(solutionList, 2) ;
 
     assertEquals(3, neighbors.size());
-    assertSame(point2, neighbors.get(0));
-    assertSame(point4, neighbors.get(1));
-    assertSame(point1, neighbors.get(2));
+    assertSame(solution2, neighbors.get(0));
+    assertSame(solution4, neighbors.get(1));
+    assertSame(solution1, neighbors.get(2));
   }
 }

@@ -34,13 +34,13 @@ public class RE61 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] x = new double[getNumberOfVariables()];
-    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.getVariable(i);
+    for (int i = 0; i < getNumberOfVariables(); i++) x[i] = solution.variables().get(i);
 
-    solution.setObjective(0, 106780.37 * (x[1] + x[2]) + 61704.67);
-    solution.setObjective(1, 3000 * x[0]);
-    solution.setObjective(2, 305700 * 2289 * x[1] / Math.pow(0.06 * 2289, 0.65));
-    solution.setObjective(3, 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74));
-    solution.setObjective(4, 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80));
+    solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
+    solution.objectives()[1] = 3000 * x[0];
+    solution.objectives()[2] = 305700 * 2289 * x[1] / Math.pow(0.06 * 2289, 0.65);
+    solution.objectives()[3] = 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74);
+    solution.objectives()[4] = 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80);
 
     double[] g = new double[numberOfOriginalConstraints];
     g[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
@@ -59,7 +59,7 @@ public class RE61 extends AbstractDoubleProblem {
       }
     }
 
-    solution.setObjective(5, Arrays.stream(g).sum());
+    solution.objectives()[5] = Arrays.stream(g).sum();
 
     return solution;
   }

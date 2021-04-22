@@ -47,12 +47,12 @@ public class SMPSORunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1] ;
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-      referenceParetoFront = "resources/referenceFronts/ZDT1.csv" ;
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<DoubleSolution>(100) ;
+    BoundedArchive<DoubleSolution> archive = new CrowdingDistanceArchive<>(100) ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
     double mutationDistributionIndex = 20.0 ;

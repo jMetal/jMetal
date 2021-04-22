@@ -5,6 +5,7 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * This class implements the generational distance indicator.
@@ -33,19 +34,9 @@ public class GenerationalDistance extends QualityIndicator {
    * @param p
    * @throws FileNotFoundException
    */
-  public GenerationalDistance(String referenceParetoFrontFile, double p) {
+  public GenerationalDistance(String referenceParetoFrontFile, double p) throws IOException {
     super(referenceParetoFrontFile) ;
     pow = p ;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param referenceParetoFrontFile
-   * @throws FileNotFoundException
-   */
-  public GenerationalDistance(String referenceParetoFrontFile) {
-    this(referenceParetoFrontFile, 2.0) ;
   }
 
   /**
@@ -63,7 +54,7 @@ public class GenerationalDistance extends QualityIndicator {
    * @return
    */
   @Override public double compute(double[][] front) {
-    Check.isNotNull(front);
+    Check.notNull(front);
 
     return generationalDistance(front, referenceFront);
   }

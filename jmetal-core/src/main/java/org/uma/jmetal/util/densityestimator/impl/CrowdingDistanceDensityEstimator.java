@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.densityestimator.impl;
 
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
-import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.DoubleValueAttributeComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
+import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,12 +16,8 @@ import java.util.List;
  */
 public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements DensityEstimator<S> {
 
-  private String attributeId = getClass().getName();
-  private Comparator<S> solutionComparator ;
+  private final String attributeId = getClass().getName();
 
-  public CrowdingDistanceDensityEstimator() {
-    solutionComparator = new DoubleValueAttributeComparator<>(attributeId, AttributeComparator.Ordering.DESCENDING) ;
-  }
   /**
    * Assigns crowding distances to all population in a <code>SolutionSet</code>.
    *
@@ -30,7 +25,7 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
    */
 
   @Override
-  public void computeDensityEstimator(List<S> solutionList) {
+  public void compute(List<S> solutionList) {
     int size = solutionList.size();
 
     if (size == 0) {
@@ -38,13 +33,13 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
     }
 
     if (size == 1) {
-      solutionList.get(0).setAttribute(attributeId, Double.POSITIVE_INFINITY);
+      solutionList.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
       return;
     }
 
     if (size == 2) {
-      solutionList.get(0).setAttribute(attributeId, Double.POSITIVE_INFINITY);
-      solutionList.get(1).setAttribute(attributeId, Double.POSITIVE_INFINITY);
+      solutionList.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
+      solutionList.get(1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
       return;
     }
 
@@ -52,10 +47,10 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
     List<S> front = new ArrayList<>(solutionList);
 
     for (int i = 0; i < size; i++) {
-      front.get(i).setAttribute(attributeId, 0.0);
+      front.get(i).attributes().put(attributeId, 0.0);
     }
 
-    int numberOfObjectives = solutionList.get(0).getNumberOfObjectives() ;
+    int numberOfObjectives = solutionList.get(0).objectives().length ;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       // Sort the population by Obj n
@@ -66,39 +61,39 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
       //   we also don't update the crowding distance, as they all will "go to eleven",
       //   which makes no sense as this objective just appears to be non-discriminating.
 
-      double minObjective = front.get(0).getObjective(i);
-      double maxObjective = front.get(front.size() - 1).getObjective(i);
+      double minObjective = front.get(0).objectives()[i];
+      double maxObjective = front.get(front.size() - 1).objectives()[i];
       if (minObjective == maxObjective) {
         continue; // otherwise all crowding distances will be NaN = 0.0 / 0.0 except for two
       }
 
       // Set the crowding distance for the extreme points
-      front.get(0).setAttribute(attributeId, Double.POSITIVE_INFINITY);
-      front.get(size - 1).setAttribute(attributeId, Double.POSITIVE_INFINITY);
+      front.get(0).attributes().put(attributeId, Double.POSITIVE_INFINITY);
+      front.get(size - 1).attributes().put(attributeId, Double.POSITIVE_INFINITY);
 
       // Increase the crowding distances for all the intermediate points
       for (int j = 1; j < size - 1; j++) {
-        double distance = front.get(j + 1).getObjective(i) - front.get(j - 1).getObjective(i);
+        double distance = front.get(j + 1).objectives()[i] - front.get(j - 1).objectives()[i];
         distance = distance / (maxObjective - minObjective);
-        distance += (double) front.get(j).getAttribute(attributeId);
-        front.get(j).setAttribute(attributeId, distance);
+        distance += (double) front.get(j).attributes().get(attributeId);
+        front.get(j).attributes().put(attributeId, distance);
       }
     }
   }
 
   @Override
-  public String getAttributeId() {
-    return attributeId ;
+  public Double getValue(S solution) {
+    Check.notNull(solution);
+
+    Double result = 0.0 ;
+    if (solution.attributes().get(attributeId) != null) {
+      result = (Double) solution.attributes().get(attributeId) ;
+    }
+    return result ;
   }
 
   @Override
-  public Comparator<S> getSolutionComparator() {
-    return solutionComparator ;
-  }
-
-  @Override
-  public List<S> sort(List<S> solutionList) {
-    solutionList.sort(getSolutionComparator());
-    return solutionList ;
+  public Comparator<S> getComparator() {
+    return Comparator.comparing(this::getValue).reversed() ;
   }
 }

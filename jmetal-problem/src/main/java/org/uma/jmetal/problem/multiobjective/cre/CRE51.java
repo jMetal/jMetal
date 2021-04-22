@@ -34,14 +34,14 @@ public class CRE51 extends AbstractDoubleProblem {
     double[] x = new double[getNumberOfVariables()];
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
-      x[i] = solution.getVariable(i);
+      x[i] = solution.variables().get(i);
     }
 
-    solution.setObjective(0, 106780.37 * (x[1] + x[2]) + 61704.67);
-    solution.setObjective(1, 3000 * x[0]);
-    solution.setObjective(2, 305700 * 2289 * x[1] / Math.pow(0.06 * 2289, 0.65));
-    solution.setObjective(3, 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74));
-    solution.setObjective(4, 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80));
+    solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
+    solution.objectives()[1] = 3000 * x[0];
+    solution.objectives()[2] = 305700 * 2289 * x[1] / Math.pow(0.06 * 2289, 0.65);
+    solution.objectives()[3] = 250 * 2289 * Math.exp(-39.75 * x[1] + 9.9 * x[2] + 2.74);
+    solution.objectives()[4] = 25 * (1.39 / (x[0] * x[1]) + 4940 * x[2] - 80);
 
     evaluateConstraints(solution, x);
 
@@ -69,7 +69,7 @@ public class CRE51 extends AbstractDoubleProblem {
     }
 
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.setConstraint(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
   }
 }

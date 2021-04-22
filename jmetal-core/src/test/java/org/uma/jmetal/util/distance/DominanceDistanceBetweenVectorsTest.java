@@ -2,9 +2,9 @@ package org.uma.jmetal.util.distance;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 
 import static org.junit.Assert.assertEquals;
 

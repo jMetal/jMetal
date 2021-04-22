@@ -20,6 +20,6 @@ public class LocationAttribute <S extends Solution<?>>
 	public LocationAttribute(List<S> solutionList) {
 		int location = 0;
 		for (S solution : solutionList)
-			solution.setAttribute(getAttributeIdentifier(), location++);
+			solution.attributes().put(getAttributeIdentifier(), location++);
 	}
 }
