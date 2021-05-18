@@ -1,7 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.moead;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead.MOEAD;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByComputingTime;
+import org.uma.jmetal.util.termination.impl.TerminationByComputingTime;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;

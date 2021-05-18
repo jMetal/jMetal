@@ -1,13 +1,13 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl;
+package org.uma.jmetal.util.termination.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
+import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Class that allows to isMet the termination condition based on introducing a character by keyboard.
+ * Class that allows to check the termination condition based on introducing a character by keyboard.
  *
  *  @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

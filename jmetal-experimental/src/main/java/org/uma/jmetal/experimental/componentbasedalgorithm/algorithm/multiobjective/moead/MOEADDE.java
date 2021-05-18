@@ -7,7 +7,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
+import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
