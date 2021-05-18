@@ -55,4 +55,8 @@ public class TerminationByQualityIndicator implements Termination {
   public double getComputedIndicatorValue() {
     return computedIndicatorValue ;
   }
+
+  public double getReferenceFrontIndicatorValue() {
+    return referenceFrontIndicatorValue ;
+  }
 }
