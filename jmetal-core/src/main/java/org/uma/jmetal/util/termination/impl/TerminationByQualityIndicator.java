@@ -56,7 +56,7 @@ public class TerminationByQualityIndicator implements Termination {
 
     computedIndicatorValue = qualityIndicator.compute(normalizedFront);
 
-    boolean unsuccessfulStopCondition = evaluationsLimit < evaluations ;
+    boolean unsuccessfulStopCondition = evaluationsLimit <= evaluations ;
     boolean successfulStopCondition = computedIndicatorValue >= percentage * referenceFrontIndicatorValue ;
 
     if (unsuccessfulStopCondition) {
