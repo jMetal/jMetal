@@ -21,14 +21,19 @@ public class TerminationByQualityIndicator implements Termination {
   private double[][] referenceFront;
   private double percentage;
   private double referenceFrontIndicatorValue;
-
+  private int evaluationsLimit ;
+  private int evaluations ;
+  private boolean evaluationsLimitReached ;
   private double computedIndicatorValue ;
 
   public TerminationByQualityIndicator(
-      QualityIndicator qualityIndicator, double[][] referenceFront, double percentage) {
+      QualityIndicator qualityIndicator, double[][] referenceFront, double percentage, int evaluationsLimit) {
     this.qualityIndicator = qualityIndicator;
     this.percentage = percentage;
     this.referenceFront = referenceFront;
+    this.evaluationsLimit = evaluationsLimit ;
+    evaluations = 0 ;
+    evaluationsLimitReached = false ;
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     qualityIndicator.setReferenceFront(normalizedReferenceFront);
@@ -38,6 +43,8 @@ public class TerminationByQualityIndicator implements Termination {
   @Override
   public boolean isMet(Map<String, Object> algorithmStatusData) {
     List<Solution<?>> population = (List<Solution<?>>) algorithmStatusData.get("POPULATION");
+    evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
+
     Check.notNull(population);
 
     double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(population);
@@ -49,7 +56,14 @@ public class TerminationByQualityIndicator implements Termination {
 
     computedIndicatorValue = qualityIndicator.compute(normalizedFront);
 
-    return computedIndicatorValue >= percentage * referenceFrontIndicatorValue;
+    boolean unsuccessfulStopCondition = evaluationsLimit < evaluations ;
+    boolean successfulStopCondition = computedIndicatorValue >= percentage * referenceFrontIndicatorValue ;
+
+    if (unsuccessfulStopCondition) {
+      evaluationsLimitReached = true ;
+    }
+
+    return (successfulStopCondition || unsuccessfulStopCondition);
   }
 
   public double getComputedIndicatorValue() {
@@ -58,5 +72,13 @@ public class TerminationByQualityIndicator implements Termination {
 
   public double getReferenceFrontIndicatorValue() {
     return referenceFrontIndicatorValue ;
+  }
+
+  public double getEvaluations() {
+    return evaluations ;
+  }
+
+  public boolean evaluationsLimitReached() {
+    return evaluationsLimitReached ;
   }
 }
