@@ -56,15 +56,15 @@ public class WFGStudy {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG4()).setReferenceFront("WFG4.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG5()).setReferenceFront("WFG5.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG6()).setReferenceFront("WFG6.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG7()).setReferenceFront("WFG7.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.pf"));
-    problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.pf"));
+    problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG4()).setReferenceFront("WFG4.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG5()).setReferenceFront("WFG5.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG6()).setReferenceFront("WFG6.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG7()).setReferenceFront("WFG7.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.csv"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
