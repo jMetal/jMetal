@@ -2,6 +2,8 @@ package org.uma.jmetal.problem.multiobjective.lsmop;
 
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Rastrigin;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Rosenbrock;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -10,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing problem LSMOP1
+ * Class representing problem LSMOP3
  */
 
-public class LSMOP1 extends LSMOP {
+public class LSMOP3 extends LSMOP {
 
 
     /**
      * Creates a default LSMOP1 problem (7 variables and 3 objectives)
      */
-    public LSMOP1() {
+    public LSMOP3() {
         this(5, 300, 3);
     }
 
@@ -32,9 +34,9 @@ public class LSMOP1 extends LSMOP {
      */
 
 
-    public LSMOP1(int nk, int numberOfVariables, int numberOfObjectives) throws JMetalException {
+    public LSMOP3(int nk, int numberOfVariables, int numberOfObjectives) throws JMetalException {
         super(nk,numberOfVariables,numberOfObjectives);
-        setName("LSMOP1");
+        setName("LSMOP3");
 
         List<Double> lowerLimit = new ArrayList<Double>(getNumberOfVariables()) ;
         List<Double> upperLimit = new ArrayList<Double>(getNumberOfVariables()) ;
@@ -60,7 +62,7 @@ public class LSMOP1 extends LSMOP {
         for (int i = 0; i < getNumberOfVariables(); i++) {
             variables.add(solution.variables().get(i));
         }
-        List<Double> y = evaluate(variables,new Sphere(),new Sphere());
+        List<Double> y = evaluate(variables,new Rastrigin(),new Rosenbrock());
 
         for (int i = 0; i < getNumberOfObjectives(); i++) {
             solution.objectives()[i] = y.get(i);
