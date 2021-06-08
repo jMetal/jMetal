@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -13,7 +12,7 @@ import java.util.List;
  * Class representing problem LSMOP1
  */
 
-public class LSMOP1 extends LSMOP {
+public class LSMOP1 extends AbstractLSMOP1_4 {
 
 
     /**
@@ -36,36 +35,17 @@ public class LSMOP1 extends LSMOP {
         super(nk,numberOfVariables,numberOfObjectives);
         setName("LSMOP1");
 
-        List<Double> lowerLimit = new ArrayList<Double>(getNumberOfVariables()) ;
-        List<Double> upperLimit = new ArrayList<Double>(getNumberOfVariables()) ;
-
-        for (int i = 0; i < getNumberOfObjectives()-1; i++) {
-            lowerLimit.add(0.0);
-            upperLimit.add(1.0);
-        }
-
-        for (int i = getNumberOfObjectives()-1; i < getNumberOfVariables(); i++) {
-            lowerLimit.add(0.0);
-            upperLimit.add(10.0);
-        }
-
-        setVariableBounds(lowerLimit, upperLimit);
     }
 
-
-    @java.lang.Override
-    public DoubleSolution evaluate(DoubleSolution solution) {
-        List<Double> variables = new ArrayList<>(getNumberOfVariables());
-
-        for (int i = 0; i < getNumberOfVariables(); i++) {
-            variables.add(solution.variables().get(i));
-        }
-        List<Double> y = evaluate(variables,new Sphere(),new Sphere());
-
-        for (int i = 0; i < getNumberOfObjectives(); i++) {
-            solution.objectives()[i] = y.get(i);
-        }
-        return solution;
+    @Override
+    protected Function getOddFunction() {
+        return new Sphere();
     }
+
+    @Override
+    protected Function getEvenFunction() {
+        return new Sphere();
+    }
+
 
 }
