@@ -20,7 +20,7 @@ public class LSMOP6 extends AbstractLSMOP5_8 {
     }
 
     /**
-     * Creates a LSMOP4 problem instance
+     * Creates a LSMOP6 problem instance
      *
      * @param nk Number of subcomponents in each variable group
      * @param numberOfVariables  Number of variables
