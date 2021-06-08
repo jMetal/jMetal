@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 /**
- * This class implements the spread quality indicator. It must be only to two bi-objective problem.
+ * This class implements the spread quality indicator. It must be only applied to two bi-objective problems.
  * Reference: Deb, K., Pratap, A., Agarwal, S., Meyarivan, T.: A fast and
  * elitist multiobjective genetic algorithm: NSGA-II. IEEE Trans. on Evol. Computation 6 (2002) 182-197
  *

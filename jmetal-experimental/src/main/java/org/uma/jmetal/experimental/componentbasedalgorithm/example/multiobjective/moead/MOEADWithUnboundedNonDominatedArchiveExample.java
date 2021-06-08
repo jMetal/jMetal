@@ -46,7 +46,7 @@ public class MOEADWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
-    int populationSize = 91;
+    int populationSize = 100;
 
     crossover = new SBXCrossover(1.0, 20.0);
 

@@ -41,7 +41,7 @@ public class MOEAD3DProblemWithChartExample extends AbstractAlgorithmRunner {
     MutationOperator<DoubleSolution> mutation;
     CrossoverOperator<DoubleSolution> crossover;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
