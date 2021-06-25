@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -44,15 +45,15 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(2500000);
 
     algorithm =
         new NSGAII<>(
             problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    EvaluationObserver evaluationObserver = new EvaluationObserver(10000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, referenceParetoFront);
+        new RunTimeChartObserver<>("NSGA-II", 80, 10000, null);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);

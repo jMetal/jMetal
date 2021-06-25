@@ -38,7 +38,6 @@ public class SBXCrossover implements CrossoverOperator<DoubleSolution> {
   public SBXCrossover(double crossoverProbability, double distributionIndex) {
     this(crossoverProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
   }
-
   /** Constructor */
   public SBXCrossover(
       double crossoverProbability,

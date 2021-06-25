@@ -1,6 +1,9 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.moead;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP2;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP3;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -32,6 +35,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = new LSMOP3(5, 100, 2) ;
 
     int populationSize = 300;
 
@@ -55,11 +59,11 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
                     maximumNumberOfReplacedSolutions,
                     neighborhoodSize,
                     "resources/weightVectorFiles/moead",
-                    new TerminationByEvaluations(1500000));
+                    new TerminationByEvaluations(150000));
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("MOEA/D", 80, 1000, referenceParetoFront);
+        new RunTimeChartObserver<>("MOEA/D", 80, 1000, null);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
