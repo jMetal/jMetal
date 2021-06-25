@@ -35,7 +35,7 @@ public class PAESRunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.ConstrEx";
+      problemName = "org.uma.jmetal.problem.multiobjective.Kursawe";
       referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
     }
 
