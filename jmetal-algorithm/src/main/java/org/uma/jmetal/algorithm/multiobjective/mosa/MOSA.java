@@ -21,9 +21,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro
  * @version 1.0
- * <p>This class implements the PAES algorithm. This implementation is not restricted to use the
- * {@link AdaptiveGridArchive} class, but other bounder archives can be used (e.g., the {@link
- * CrowdingDistanceArchive})
+ * This class implements the a multi-objective simulated annealing algorithm.
  */
 @SuppressWarnings("serial")
 public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {

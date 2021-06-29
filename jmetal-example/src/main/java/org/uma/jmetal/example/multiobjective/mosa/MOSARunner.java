@@ -25,16 +25,11 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * Class for configuring and running the PAES algorithm
+ * Class for configuring and running the {@link MOSA} algorithm
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class MOSARunner extends AbstractAlgorithmRunner {
-  /**
-   * @param args Command line arguments.
-   * @throws SecurityException Invoking command: java
-   *     org.uma.jmetal.runner.multiobjective.PAESRunner problemName [referenceFront]
-   */
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
     String  problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
     String  referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
