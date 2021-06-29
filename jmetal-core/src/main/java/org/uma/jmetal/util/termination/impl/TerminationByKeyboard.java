@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.termination.impl;
 
-import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.termination.Termination;
 
 import java.util.Map;
 import java.util.Scanner;
