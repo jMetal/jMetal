@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro
  * @version 1.0
- * This class implements the a multi-objective simulated annealing algorithm.
+ * This class implements a multi-objective simulated annealing algorithm.
  */
 @SuppressWarnings("serial")
 public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, List<S>> {
@@ -187,11 +187,11 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
 
   @Override
   public String getName() {
-    return "PAES";
+    return "MOSA";
   }
 
   @Override
   public String getDescription() {
-    return "Pareto-Archived Evolution Strategy";
+    return "Multi-objective Simulated Annealing";
   }
 }
