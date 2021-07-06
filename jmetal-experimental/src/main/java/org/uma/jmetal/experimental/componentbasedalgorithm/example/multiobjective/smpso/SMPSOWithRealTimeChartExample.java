@@ -34,11 +34,10 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.lsmop.LSMOP8_2_20";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ8.2D.csv" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
-    //problem = new LSMOP3(5, 100, 2) ;
 
     int swarmSize = 100 ;
     BoundedArchive<DoubleSolution> leadersArchive = new CrowdingDistanceArchive<DoubleSolution>(swarmSize) ;
@@ -48,7 +47,7 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
-    Termination termination = new TerminationByEvaluations(50000) ;
+    Termination termination = new TerminationByEvaluations(25000) ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
 
