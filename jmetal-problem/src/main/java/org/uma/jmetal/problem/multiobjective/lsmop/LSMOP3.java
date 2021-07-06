@@ -24,7 +24,7 @@ public class LSMOP3 extends AbstractLSMOP1_4 {
     }
 
     /**
-     * Creates a LSMOP1 problem instance
+     * Creates a LSMOP3 problem instance
      *
      * @param nk Number of subcomponents in each variable group
      * @param numberOfVariables  Number of variables
