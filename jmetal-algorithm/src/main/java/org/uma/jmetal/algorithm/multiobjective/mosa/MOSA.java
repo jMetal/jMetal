@@ -31,11 +31,11 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   protected BoundedArchive<S> archive;
   protected Comparator<S> comparator;
 
-  private static final double minimumTemperature = 0.000001;
-  private double temperature;
+  protected static final double minimumTemperature = 0.000001;
+  protected double temperature;
 
-  private CoolingScheme coolingScheme;
-  private int numberOfWorstAcceptedSolutions = 0;
+  protected CoolingScheme coolingScheme;
+  protected int numberOfWorstAcceptedSolutions = 0;
 
   /**
    * Constructor
