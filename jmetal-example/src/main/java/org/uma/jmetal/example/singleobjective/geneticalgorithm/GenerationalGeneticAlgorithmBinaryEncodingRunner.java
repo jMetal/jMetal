@@ -35,7 +35,7 @@ public class GenerationalGeneticAlgorithmBinaryEncodingRunner {
     MutationOperator<BinarySolution> mutation;
     SelectionOperator<List<BinarySolution>, BinarySolution> selection;
 
-    problem = new OneMax(1024) ;
+    problem = new OneMax(512) ;
 
     crossover = new SinglePointCrossover(0.9) ;
 

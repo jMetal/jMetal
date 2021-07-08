@@ -15,10 +15,12 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
+    String referenceFrontFileName = "LSMOP12D.csv" ;
+
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
-                + "--maximumNumberOfEvaluations 25000 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20 "
+                + "--referenceFrontFileName "+ referenceFrontFileName + " "
+                + "--maximumNumberOfEvaluations 75000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
@@ -49,7 +51,7 @@ public class NSGAIIConfiguredFromAParameterString {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "resources/referenceFrontsCSV/ZDT1.csv");
+            "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
     //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);

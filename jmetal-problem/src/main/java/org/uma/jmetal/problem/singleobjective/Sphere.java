@@ -41,7 +41,7 @@ public class Sphere extends AbstractDoubleProblem {
       sum += v * v;
     }
 
-    solution.objectives()[0] =  sum;
+    solution.objectives()[0] = sum;
 
     return solution ;
   }

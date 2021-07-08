@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination;
+package org.uma.jmetal.util.termination;
 
 import java.util.Map;
 

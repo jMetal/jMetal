@@ -2,7 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F6;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

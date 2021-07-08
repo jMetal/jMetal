@@ -1,8 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl.TerminationByEvaluations;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -39,7 +41,7 @@ public class NSGAIIWithChartExample extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = new ZDT2() ;
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

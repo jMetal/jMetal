@@ -1,11 +1,11 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl;
+package org.uma.jmetal.util.termination.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
+import org.uma.jmetal.util.termination.Termination;
 
 import java.util.Map;
 
 /**
- * Class that allows to isMet the termination condition based on a maximum number of indicated
+ * Class that allows to check the termination condition based on a maximum number of indicated
  * evaluations.
  *
  *  @author Antonio J. Nebro <antonio@lcc.uma.es>

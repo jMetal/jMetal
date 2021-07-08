@@ -14,6 +14,7 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -94,6 +95,8 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       S solution = selectionOperator.execute(population);
       matingPopulation.add(solution);
     }
+
+    List<S> newList = population.stream().map(solution -> (S)solution.copy()).collect(Collectors.toList());
 
     return matingPopulation;
   }

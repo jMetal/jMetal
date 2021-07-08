@@ -1,11 +1,11 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.impl;
+package org.uma.jmetal.util.termination.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.termination.Termination;
+import org.uma.jmetal.util.termination.Termination;
 
 import java.util.Map;
 
 /**
- * Class that allows to isMet the termination condition when the computing time of an algorithm
+ * Class that allows to check the termination condition when the computing time of an algorithm
  * gets higher than a given threshold.
  *
  *  @author Antonio J. Nebro <antonio@lcc.uma.es>
