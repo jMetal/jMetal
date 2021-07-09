@@ -66,8 +66,8 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
       problemName = args[0];
     } else if (args.length == 3) {
       problemName = args[0];
-      archiveSize = Integer.valueOf(args[1]);
-      evaluations = Integer.valueOf(args[2]);
+      archiveSize = Integer.parseInt(args[1]);
+      evaluations = Integer.parseInt(args[2]);
     }
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
