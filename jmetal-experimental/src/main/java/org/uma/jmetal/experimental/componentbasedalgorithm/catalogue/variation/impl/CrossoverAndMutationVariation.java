@@ -4,6 +4,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.V
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
@@ -59,6 +60,15 @@ public class CrossoverAndMutationVariation<S extends Solution<?>> implements Var
         }
       }
     }
+
+    Check.that(
+            offspringPopulation.size() == offspringPopulationSize,
+            "The size of the"
+                    + "offspring population is not correct: "
+                    + offspringPopulation.size()
+                    + " instead of "
+                    + offspringPopulationSize);
+
     return offspringPopulation;
   }
 

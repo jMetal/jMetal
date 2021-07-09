@@ -45,15 +45,15 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(2500000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     algorithm =
         new NSGAII<>(
             problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(10000);
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 10000, null);
+        new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
