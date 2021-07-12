@@ -12,19 +12,13 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
 /**
- * This class implements a polynomial mutation operator
+ * This class implements the linked polynomial mutation operator presented in: https://doi.org/10.1109/SSCI.2016.7850214
  *
- * <p>The implementation is based on the NSGA-II code available in
- * http://www.iitk.ac.in/kangal/codes.shtml
- *
- * <p>If the lower and upper bounds of a variable are the same, no mutation is carried out and the
- * bound value is returned.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
- * @author Juan J. Durillo
  */
 @SuppressWarnings("serial")
-public class PolynomialMutation implements MutationOperator<DoubleSolution> {
+public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution> {
   private static final double DEFAULT_PROBABILITY = 0.01;
   private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0;
   private double distributionIndex;
@@ -34,29 +28,29 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   private RandomGenerator<Double> randomGenerator;
 
   /** Constructor */
-  public PolynomialMutation() {
+  public LinkedPolynomialMutation() {
     this(DEFAULT_PROBABILITY, DEFAULT_DISTRIBUTION_INDEX);
   }
 
   /** Constructor */
-  public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
+  public LinkedPolynomialMutation(DoubleProblem problem, double distributionIndex) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
   }
 
   /** Constructor */
-  public PolynomialMutation(
+  public LinkedPolynomialMutation(
       DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
     this.randomGenerator = randomGenerator;
   }
 
   /** Constructor */
-  public PolynomialMutation(double mutationProbability, double distributionIndex) {
+  public LinkedPolynomialMutation(double mutationProbability, double distributionIndex) {
     this(mutationProbability, distributionIndex, new RepairDoubleSolutionWithBoundValue());
   }
 
   /** Constructor */
-  public PolynomialMutation(
+  public LinkedPolynomialMutation(
       double mutationProbability,
       double distributionIndex,
       RandomGenerator<Double> randomGenerator) {
@@ -68,7 +62,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
-  public PolynomialMutation(
+  public LinkedPolynomialMutation(
       double mutationProbability, double distributionIndex, RepairDoubleSolution solutionRepair) {
     this(
         mutationProbability,
@@ -78,7 +72,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
-  public PolynomialMutation(
+  public LinkedPolynomialMutation(
       double mutationProbability,
       double distributionIndex,
       RepairDoubleSolution solutionRepair,
@@ -124,6 +118,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     double rnd, delta1, delta2, mutPow, deltaq;
     double y, yl, yu, val, xy;
 
+    rnd = randomGenerator.getRandomValue();
     for (int i = 0; i < x.length; i++) {
       if (randomGenerator.getRandomValue() <= mutationProbability) {
         y = x[i];
@@ -134,7 +129,6 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
         } else {
           delta1 = (y - yl) / (yu - yl);
           delta2 = (yu - y) / (yu - yl);
-          rnd = randomGenerator.getRandomValue();
           mutPow = 1.0 / (distributionIndex + 1.0);
           if (rnd <= 0.5) {
             xy = 1.0 - delta1;
