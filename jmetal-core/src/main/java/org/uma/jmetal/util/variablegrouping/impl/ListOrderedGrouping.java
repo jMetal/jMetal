@@ -9,10 +9,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Class that groups a list of {@link Comparable} entities by ascending order. The number of
+ * groups is a constructor parameter and the group size is computed by dividing the list size
+ * by the number of groups. If the remainder of this division is not zero, the last group will
+ * contains the remaining index values (so its size will be higher than the size of the rest of
+ * groups).
+ *
+ * @author Antonio J. Nebro
+ *
+ * @param <C>
+ */
 public class ListOrderedGrouping<C extends Comparable<C>> implements VariableGrouping<List<C>> {
-  private int numberOfGroups;
+  private final int numberOfGroups;
   private List<Integer> indices;
-  public List<List<Integer>> groups;
+  private List<List<Integer>> groups;
 
   public ListOrderedGrouping(int numberOfGroups) {
     this.numberOfGroups = numberOfGroups;
@@ -30,7 +41,19 @@ public class ListOrderedGrouping<C extends Comparable<C>> implements VariableGro
   }
 
   private void createGroups() {
-    int groupSize = indices.size() / numberOfGroups;
+    int groupSize = computeGroupSize();
+    int index = groupValues(groupSize);
+
+    fillRemainingIndices(index);
+  }
+
+  /**
+   * Method that groups the values and return the index counter
+   *
+   * @param groupSize
+   * @return the position of the index after the grouping
+   */
+  private int groupValues(int groupSize) {
     int index = 0 ;
     for (int i = 0; i < numberOfGroups; i++) {
       groups.add(new ArrayList<>());
@@ -38,11 +61,24 @@ public class ListOrderedGrouping<C extends Comparable<C>> implements VariableGro
         groups.get(i).add(indices.get(index++));
       }
     }
+    return index;
+  }
 
+  /**
+   * If the indices length is not divisible by the number of groups, the remaining indices
+   * are added to the last group
+   * @param index
+   */
+  private void fillRemainingIndices(int index) {
     int lastGroupIndex = groups.size() - 1 ;
     while (index < indices.size()) {
       groups.get(lastGroupIndex).add(indices.get(index++)) ;
     }
+  }
+
+
+  private int computeGroupSize() {
+    return indices.size() / numberOfGroups;
   }
 
   @Override

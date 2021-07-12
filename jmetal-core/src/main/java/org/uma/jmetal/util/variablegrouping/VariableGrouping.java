@@ -1,9 +1,14 @@
 package org.uma.jmetal.util.variablegrouping;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
 
+/**
+ * Interface representing objects that group collections according to some criterion
+ *
+ * @author Antonio J. Nebro
+ *
+ * @param <S>
+ */
 public interface VariableGrouping<S> {
   int numberOfGroups();
   void computeGroups(S itemsToGroup) ;

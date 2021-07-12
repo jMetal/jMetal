@@ -2,6 +2,7 @@ package org.uma.jmetal.util.variablegrouping;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.variablegrouping.impl.ListOrderedGrouping;
 
 import java.util.List;
 
