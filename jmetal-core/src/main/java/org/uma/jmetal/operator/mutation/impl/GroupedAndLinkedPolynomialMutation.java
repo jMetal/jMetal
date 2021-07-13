@@ -9,7 +9,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
-import org.uma.jmetal.util.variablegrouping.CollectionGrouping;
+import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 import java.util.List;
 

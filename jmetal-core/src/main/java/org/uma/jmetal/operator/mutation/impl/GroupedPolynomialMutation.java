@@ -1,19 +1,15 @@
 package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
-import org.uma.jmetal.util.variablegrouping.CollectionGrouping;
-import org.uma.jmetal.util.variablegrouping.impl.ListOrderedGrouping;
+import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 import java.util.List;
 
