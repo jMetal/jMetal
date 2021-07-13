@@ -1,7 +1,7 @@
 package org.uma.jmetal.util.variablegrouping.impl;
 
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.variablegrouping.VariableGrouping;
+import org.uma.jmetal.util.variablegrouping.CollectionGrouping;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
  *
  * @param <C>
  */
-public class ListOrderedGrouping<C extends Comparable<C>> implements VariableGrouping<List<C>> {
+public class ListOrderedGrouping<C extends Comparable<C>> implements CollectionGrouping<List<C>> {
   private final int numberOfGroups;
   private List<Integer> indices;
   private List<List<Integer>> groups;

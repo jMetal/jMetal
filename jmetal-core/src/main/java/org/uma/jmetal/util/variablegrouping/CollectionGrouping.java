@@ -7,9 +7,9 @@ import java.util.List;
  *
  * @author Antonio J. Nebro
  *
- * @param <S>
+ * @param <S> The items to group (e.g., a list, an array, etc.)
  */
-public interface VariableGrouping<S> {
+public interface CollectionGrouping<S> {
   int numberOfGroups();
   void computeGroups(S itemsToGroup) ;
   List<Integer> getGroup(int groupIndex);

@@ -12,7 +12,7 @@ class ListOrderedGroupingTest {
   @Test
   public void shouldConstructorWorkProperly() {
     int numberOfGroups = 4;
-    ListOrderedGrouping<Double> grouping = new ListOrderedGrouping<Double>(numberOfGroups);
+    CollectionGrouping<List<Double>> grouping = new ListOrderedGrouping<Double>(numberOfGroups);
 
     assertEquals(numberOfGroups, grouping.numberOfGroups());
   }

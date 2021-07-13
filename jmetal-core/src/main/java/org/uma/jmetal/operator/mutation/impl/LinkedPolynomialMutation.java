@@ -33,11 +33,6 @@ public class LinkedPolynomialMutation implements MutationOperator<DoubleSolution
   }
 
   /** Constructor */
-  public LinkedPolynomialMutation(DoubleProblem problem, double distributionIndex) {
-    this(1.0 / problem.getNumberOfVariables(), distributionIndex);
-  }
-
-  /** Constructor */
   public LinkedPolynomialMutation(
       DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
