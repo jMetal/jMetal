@@ -51,7 +51,7 @@ public class PolynomialMutationTest {
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
     DoubleProblem problem = new MockDoubleProblem(4) ;
-    PolynomialMutation mutation = new PolynomialMutation(problem, 10.0) ;
+    PolynomialMutation mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
     assertEquals(10.0, (Double) ReflectionTestUtils
