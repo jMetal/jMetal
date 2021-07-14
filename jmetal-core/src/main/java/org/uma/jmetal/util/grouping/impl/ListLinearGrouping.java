@@ -11,26 +11,34 @@ import java.util.stream.IntStream;
 
 /**
  * Class that groups a list of {@link Comparable} entities by order in the collection. The number of
- * groups is a constructor parameter and the group size is computed by dividing the list size
- * by the number of groups. If the remainder of this division is not zero, the last group will
- * contains the remaining index values (so, its size would be higher than the size of the rest of
- * groups).
+ * groups is a constructor parameter and the group size is computed by dividing the list size by the
+ * number of groups. If the remainder of this division is not zero, the last group will contains the
+ * remaining index values (so, its size would be higher than the size of the rest of groups).
+ *
+ * To avoid unnecessary recomputing of the groups, the state variable {@link #lastListSize} records
+ * the size of the last list that was grouped and only recomputes the groups if the size of the new list
+ * is different.
  *
  * @author Antonio J. Nebro
- *
  * @param <C>
  */
 public class ListLinearGrouping<C extends Comparable<C>> extends ListGrouping<C> {
+  private int lastListSize = 0;
+
   public ListLinearGrouping(int numberOfGroups) {
-    super(numberOfGroups) ;
+    super(numberOfGroups);
   }
 
   @Override
   public void computeGroups(List<C> list) {
     Check.notNull(list);
-    indices = new ArrayList<>(list.size());
-    IntStream.range(0, list.size()).forEach(i -> indices.add(i));
 
-    createGroups();
+    if (lastListSize != list.size()) {
+      indices = new ArrayList<>(list.size());
+      IntStream.range(0, list.size()).forEach(i -> indices.add(i));
+
+      createGroups();
+      lastListSize = list.size();
+    }
   }
 }

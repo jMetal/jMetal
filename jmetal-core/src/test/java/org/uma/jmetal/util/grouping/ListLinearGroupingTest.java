@@ -104,4 +104,32 @@ class ListLinearGroupingTest {
     List<Integer> fourthGroup = List.of(6, 7, 8);
     assertEquals(fourthGroup, grouping.getGroup(3));
   }
+
+  @Test
+  public void shouldCreateGroupReturnTheSameGroupsIfItIsInvokedTwiceWithListsOfEqualSize() {
+    List<String> values = List.of("B", "C", "V", "AC", "CE", "CD", "A", "L", "G");
+    int numberOfGroups = 3;
+
+    CollectionGrouping<List<String>> grouping = new ListLinearGrouping<>(numberOfGroups);
+    grouping.computeGroups(values);
+
+    assertEquals(numberOfGroups, grouping.numberOfGroups());
+    List<Integer> firstGroup = List.of(0, 1, 2);
+    assertEquals(firstGroup, grouping.getGroup(0));
+    List<Integer> secondGroup = List.of(3, 4, 5);
+    assertEquals(secondGroup, grouping.getGroup(1));
+    List<Integer> thirdGroup = List.of(6, 7, 8);
+    assertEquals(thirdGroup, grouping.getGroup(2));
+
+    List<String> moreValues = List.of("CB", "AD", "AH", "H", "B", "EFG", "Y", "AD", "YG");
+    grouping.computeGroups(moreValues);
+
+    assertEquals(numberOfGroups, grouping.numberOfGroups());
+    firstGroup = List.of(0, 1, 2);
+    assertEquals(firstGroup, grouping.getGroup(0));
+    secondGroup = List.of(3, 4, 5);
+    assertEquals(secondGroup, grouping.getGroup(1));
+    thirdGroup = List.of(6, 7, 8);
+    assertEquals(thirdGroup, grouping.getGroup(2));
+  }
 }
