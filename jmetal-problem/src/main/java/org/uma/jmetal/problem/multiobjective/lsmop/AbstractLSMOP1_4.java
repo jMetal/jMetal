@@ -1,7 +1,5 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
-import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
-
 import java.util.ArrayList;
 import java.util.List;
 

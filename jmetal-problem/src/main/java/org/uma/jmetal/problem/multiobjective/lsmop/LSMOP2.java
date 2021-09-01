@@ -3,11 +3,7 @@ package org.uma.jmetal.problem.multiobjective.lsmop;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Griewank;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Schwefel;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing problem LSMOP2

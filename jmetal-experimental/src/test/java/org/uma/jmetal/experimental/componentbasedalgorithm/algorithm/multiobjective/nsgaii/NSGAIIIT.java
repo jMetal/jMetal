@@ -2,8 +2,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -18,6 +16,8 @@ import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.util.List;
 

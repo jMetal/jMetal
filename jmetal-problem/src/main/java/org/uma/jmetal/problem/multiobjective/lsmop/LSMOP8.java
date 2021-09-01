@@ -1,11 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
-import org.uma.jmetal.problem.multiobjective.lsmop.functions.*;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Griewank;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LSMOP8 extends AbstractLSMOP5_8 {
 

@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.grouping.impl;
 
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 import java.util.ArrayList;
 import java.util.Comparator;

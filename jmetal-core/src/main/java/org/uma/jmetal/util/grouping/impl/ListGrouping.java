@@ -4,10 +4,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Abstract class that groups a list of {@link Comparable} entities by some order in the collection. The number of

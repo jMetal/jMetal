@@ -1,10 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
-import org.uma.jmetal.problem.multiobjective.re.RE21;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
