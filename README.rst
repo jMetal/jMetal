@@ -39,6 +39,8 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [9/6/2021] The jMetal project adopts Java 13.
+
 * [7/6/2021] The `LSMOP benchmark <https://doi.org/10.1109/TCYB.2016.2600577>`_ is available. 
 
 * [2/19/2021] The `Solution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/Solution.java>`_ interface has been refactorized.
