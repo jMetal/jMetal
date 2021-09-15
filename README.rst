@@ -1,8 +1,8 @@
 jMetal project Web site
 =======================
-.. image:: https://travis-ci.org/jMetal/jMetal.svg?branch=master
+.. image:: https://github.com/jMetal/jMetal/actions/workflows/maven.yml/badge.svg
     :alt: Build Status
-    :target: https://travis-ci.org/jMetal/jMetal
+    :target: https://github.com/jMetal/jMetal
 
 .. image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
    :alt: Documentation Status
