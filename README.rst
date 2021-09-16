@@ -8,7 +8,6 @@ jMetal project Web site
     :alt: Test Status
     :target: https://github.com/jMetal/jMetal/actions/workflows/test.yml
 
-
 .. image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
    :alt: Documentation Status
    :target: https://jmetal.readthedocs.io/?badge=latest
