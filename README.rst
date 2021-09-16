@@ -2,7 +2,7 @@ jMetal project Web site
 =======================
 .. image:: https://github.com/jMetal/jMetal/actions/workflows/maven.yml/badge.svg
     :alt: Build Status
-    :target: https://github.com/jMetal/jMetal/actions
+    :target: https://github.com/jMetal/jMetal/actions/workflows/maven.yml
 
 .. image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
    :alt: Documentation Status
