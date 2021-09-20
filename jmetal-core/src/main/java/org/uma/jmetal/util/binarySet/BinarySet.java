@@ -9,12 +9,12 @@ import java.util.BitSet;
  */
 @SuppressWarnings("serial")
 public class BinarySet extends BitSet {
-  private int numberOfBits;
+  private final int numberOfBits;
 
   /**
    * Constructor
    *
-   * @param numberOfBits
+   * @param numberOfBits Number of bits of the binary string
    */
   public BinarySet(int numberOfBits) {
     super(numberOfBits);
@@ -24,7 +24,7 @@ public class BinarySet extends BitSet {
   /**
    * Returns the total number of bits
    *
-   * @return the number of bits of the binary set
+   * @return The number of bits of the binary set
    */
   public int getBinarySetLength() {
     return numberOfBits;
@@ -32,14 +32,14 @@ public class BinarySet extends BitSet {
 
   @Override
   public String toString() {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 0; i < numberOfBits; i++) {
       if (get(i)) {
-        result += "1";
+        result.append("1");
       } else {
-        result += "0";
+        result.append("0");
       }
     }
-    return result;
+    return result.toString();
   }
 }
