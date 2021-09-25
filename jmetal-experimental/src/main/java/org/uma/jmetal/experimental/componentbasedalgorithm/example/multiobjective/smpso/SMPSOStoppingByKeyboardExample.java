@@ -3,8 +3,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByKeyboard;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -17,6 +15,8 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByKeyboard;
 
 import java.util.List;
 

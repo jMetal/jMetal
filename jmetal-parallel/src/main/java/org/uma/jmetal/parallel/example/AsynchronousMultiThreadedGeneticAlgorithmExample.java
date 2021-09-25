@@ -2,7 +2,6 @@ package org.uma.jmetal.parallel.example;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.MuPlusLambdaReplacement;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.UniformCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -17,6 +16,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.PrintObjectivesObserver;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.util.List;
 

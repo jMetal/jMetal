@@ -1,8 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.singleobjective.cellulargeneticalgorithm;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.singleobjective.geneticalgorithm.SynchronousCellularGeneticAlgorithm;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -18,6 +16,8 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.C9;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.util.List;
 

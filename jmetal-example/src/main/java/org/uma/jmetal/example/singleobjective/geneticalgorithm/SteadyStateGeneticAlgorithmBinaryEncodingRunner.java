@@ -1,49 +1,22 @@
 package org.uma.jmetal.example.singleobjective.geneticalgorithm;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.impl.DefaultLocalSearch;
-import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
-import org.uma.jmetal.algorithm.singleobjective.coralreefsoptimization.CoralReefsOptimizationBuilder;
-import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
-import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
-import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
-import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2007;
-import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
-import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
-import org.uma.jmetal.problem.singleobjective.Rosenbrock;
-import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.comparator.ObjectiveComparator;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**

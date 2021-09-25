@@ -2,8 +2,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa.SMSEMOA;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa.SMSEMOAWithArchive;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -21,6 +19,8 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.io.FileNotFoundException;
 import java.util.List;

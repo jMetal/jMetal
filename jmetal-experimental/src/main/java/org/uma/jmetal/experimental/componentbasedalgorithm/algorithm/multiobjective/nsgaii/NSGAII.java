@@ -9,7 +9,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.M
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -21,6 +20,7 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.termination.Termination;
 
 import java.util.Arrays;
 import java.util.Comparator;

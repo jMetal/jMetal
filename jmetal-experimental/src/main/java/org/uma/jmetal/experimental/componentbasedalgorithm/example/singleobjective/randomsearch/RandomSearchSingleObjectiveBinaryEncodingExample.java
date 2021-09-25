@@ -5,8 +5,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
@@ -17,6 +15,8 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.util.List;
 

@@ -2,8 +2,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -22,6 +20,8 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.io.FileNotFoundException;
 import java.util.List;

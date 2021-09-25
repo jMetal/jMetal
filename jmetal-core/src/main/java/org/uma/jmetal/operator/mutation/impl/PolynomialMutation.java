@@ -39,11 +39,6 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
   }
 
   /** Constructor */
-  public PolynomialMutation(DoubleProblem problem, double distributionIndex) {
-    this(1.0 / problem.getNumberOfVariables(), distributionIndex);
-  }
-
-  /** Constructor */
   public PolynomialMutation(
       DoubleProblem problem, double distributionIndex, RandomGenerator<Double> randomGenerator) {
     this(1.0 / problem.getNumberOfVariables(), distributionIndex);
@@ -116,23 +111,7 @@ public class PolynomialMutation implements MutationOperator<DoubleSolution> {
     Check.notNull(solution);
 
     doMutation(solution);
-    /*
-    double[] x = new double[solution.getNumberOfVariables()] ;
-    double[] lb = new double[solution.getNumberOfVariables()] ;
-    double[] ub = new double[solution.getNumberOfVariables()] ;
 
-    for (int i = 0; i < x.length; i++) {
-      x[i] = solution.getVariable(i) ;
-      lb[i] = solution.getLowerBound(i) ;
-      ub[i] = solution.getUpperBound(i) ;
-    }
-
-    execute(x, lb, ub) ;
-
-    for (int i = 0; i < x.length; i++) {
-      solution.setVariable(i, x[i]);
-    }
-    */
     return solution;
   }
 

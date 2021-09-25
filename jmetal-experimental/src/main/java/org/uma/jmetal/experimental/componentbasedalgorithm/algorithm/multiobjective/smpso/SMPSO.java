@@ -2,7 +2,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -14,6 +13,7 @@ import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+import org.uma.jmetal.util.termination.Termination;
 
 import java.util.*;
 

@@ -3,7 +3,6 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjec
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.SMSEMOAReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.RandomMatingPoolSelection;
-import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -12,6 +11,7 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
+import org.uma.jmetal.util.termination.Termination;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 @SuppressWarnings("serial")

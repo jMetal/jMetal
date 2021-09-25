@@ -1,9 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -15,6 +12,8 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
  * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each
@@ -45,15 +44,15 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = 100;
 
-    Termination termination = new TerminationByEvaluations(2500000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     algorithm =
         new NSGAII<>(
             problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(10000);
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 10000, null);
+        new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);

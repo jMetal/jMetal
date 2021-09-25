@@ -8,8 +8,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -28,6 +26,8 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
