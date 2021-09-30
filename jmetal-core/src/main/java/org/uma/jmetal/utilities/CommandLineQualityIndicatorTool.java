@@ -14,8 +14,10 @@ import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailable
 import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
 
 /**
- * Class for executing quality indicators from the command line. An optional argument allows to
- * indicate whether the fronts are to be normalized by the quality indicators.
+ * Class for executing quality indicators from the command line. The program requires two arguments:
+ * - the name of the quality indicator (HV, EP, etc., o ALL to compute all of them
+ * - the file containing a reference front
+ * - the file whose Pareto front approximation is going to be analyzed
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -32,6 +34,7 @@ public class CommandLineQualityIndicatorTool {
    */
   private static void checkArguments(String[] args) {
     if (args.length != 3) {
+      JMetalLogger.logger.info("Invalid arguments");
       printOptions();
       throw new JMetalException("Incorrect arguments");
     }
@@ -40,7 +43,7 @@ public class CommandLineQualityIndicatorTool {
   /** Prints the command line options in the screen */
   private static void printOptions() {
     JMetalLogger.logger.info(
-        "Parameters: indicatorName referenceFront front \" \n\n"
+        "Parameters: indicatorName referenceFrontFile frontFile \n"
             + "Where indicatorValue can be one of these:\n"
             + "GD   - Generational distance\n"
             + "IGD  - Inverted generational distance\n"

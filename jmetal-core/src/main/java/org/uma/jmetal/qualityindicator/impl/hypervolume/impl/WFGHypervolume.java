@@ -543,6 +543,6 @@ public class WFGHypervolume extends Hypervolume {
 
   @Override
   public String getName() {
-    return "WFG implementation of the hypervolume quality indicator";
+    return "HV";
   }
 }
