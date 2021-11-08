@@ -4,7 +4,7 @@
 
     <groupId>org.uma.jmetal</groupId>
     <artifactId>jmetal</artifactId>
-    <version>5.11</version>
+    <version>5.12-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -246,37 +246,37 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-core</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-example</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-problem</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-algorithm</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-lab</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-experimental</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-parallel</artifactId>
-                <version>5.11</version>
+                <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
