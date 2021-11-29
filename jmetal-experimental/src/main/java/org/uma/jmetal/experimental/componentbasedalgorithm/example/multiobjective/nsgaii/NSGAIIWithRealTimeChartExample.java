@@ -28,8 +28,8 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
 
     problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -42,7 +42,7 @@ public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 100;
+    int offspringPopulationSize = 1;
 
     Termination termination = new TerminationByEvaluations(25000);
 
