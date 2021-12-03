@@ -9,6 +9,6 @@ public class Logarithmic implements CoolingScheme {
 
   @Override
   public double updateTemperature(double temperature, int iteration) {
-    return Math.log(iteration) / Math.log(iteration + 1) * temperature ;
+    return Math.log(iteration) / Math.log(iteration + 1D ) * temperature ;
   }
 }
