@@ -31,6 +31,7 @@ public class PlotSmile implements PlotFront {
       canvas.window() ;
     } catch (InterruptedException e) {
       e.printStackTrace();
+      Thread.currentThread().interrupt();
     } catch (InvocationTargetException e) {
       e.printStackTrace();
     }
