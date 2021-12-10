@@ -15,7 +15,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.PrintObjectivesObserver;
+import org.uma.jmetal.util.observer.impl.FitnessObserver;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class AsynchronousMultiThreadedGeneticAlgorithmExample {
         new AsynchronousMultiThreadedGeneticAlgorithm<>(
             numberOfCores, problem, populationSize, crossover, mutation, selection, replacement, new TerminationByEvaluations(maxEvaluations));
 
-    PrintObjectivesObserver printObjectivesObserver = new PrintObjectivesObserver(100) ;
+    FitnessObserver printObjectivesObserver = new FitnessObserver(100) ;
     geneticAlgorithm.getObservable().register(printObjectivesObserver);
 
     geneticAlgorithm.run();

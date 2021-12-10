@@ -52,7 +52,7 @@ public class GeneticAlgorithmExample extends AbstractAlgorithmRunner {
     Termination termination = new TerminationByEvaluations(150000);
 
     algorithm =
-            new GeneticAlgorithm<DoubleSolution>(
+            new GeneticAlgorithm<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
