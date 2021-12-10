@@ -48,10 +48,10 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   }
 
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-    Collections.sort(population, comparator);
+    population.sort(comparator);
     offspringPopulation.add(population.get(0));
     offspringPopulation.add(population.get(1));
-    Collections.sort(offspringPopulation, comparator) ;
+    offspringPopulation.sort(comparator);
     offspringPopulation.remove(offspringPopulation.size() - 1);
     offspringPopulation.remove(offspringPopulation.size() - 1);
 
@@ -65,7 +65,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   }
 
   @Override public S getResult() {
-    Collections.sort(getPopulation(), comparator) ;
+    getPopulation().sort(comparator);
     return getPopulation().get(0);
   }
 
