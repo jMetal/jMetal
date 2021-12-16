@@ -97,10 +97,12 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
 
     // --------- Step 2. Random radius
 
-    double r = randomGenerator.nextDouble(0, 1);
+    if (length > 0) {
+      double r = randomGenerator.nextDouble(0, 1);
 
-    for (int i = 0; i < D; i++) {
-      x[i] = r * x[i] / length;
+      for (int i = 0; i < D; i++) {
+        x[i] = r * x[i] / length;
+      }
     }
 
     return x;

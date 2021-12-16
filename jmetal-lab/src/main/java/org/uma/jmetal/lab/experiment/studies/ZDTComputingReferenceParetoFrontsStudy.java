@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class ZDTComputingReferenceParetoFrontsStudy {
 
-  private static final int INDEPENDENT_RUNS = 25;
+  private static final int INDEPENDENT_RUNS = 25 ;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
