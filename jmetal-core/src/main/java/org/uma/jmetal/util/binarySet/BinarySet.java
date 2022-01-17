@@ -4,25 +4,27 @@ import java.util.BitSet;
 
 /**
  * Class representing a bit set including a method to get the total number of bits
+ *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class BinarySet extends BitSet {
-  private int numberOfBits ;
+  private final int numberOfBits;
 
   /**
    * Constructor
    *
-   * @param numberOfBits
+   * @param numberOfBits Number of bits of the binary string
    */
   public BinarySet(int numberOfBits) {
-    super(numberOfBits) ;
-    this.numberOfBits = numberOfBits ;
+    super(numberOfBits);
+    this.numberOfBits = numberOfBits;
   }
 
   /**
    * Returns the total number of bits
-   * @return the number of bits of the binary set
+   *
+   * @return The number of bits of the binary set
    */
   public int getBinarySetLength() {
     return numberOfBits;
@@ -30,15 +32,14 @@ public class BinarySet extends BitSet {
 
   @Override
   public String toString() {
-    String result = "" ;
-    for (int i = 0; i < numberOfBits ; i++) {
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < numberOfBits; i++) {
       if (get(i)) {
-        result += "1" ;
-      }
-      else {
-        result+= "0" ;
+        result.append("1");
+      } else {
+        result.append("0");
       }
     }
-    return result ;
+    return result.toString();
   }
 }

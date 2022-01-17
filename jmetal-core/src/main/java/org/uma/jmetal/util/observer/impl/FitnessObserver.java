@@ -8,12 +8,12 @@ import org.uma.jmetal.util.observer.Observer;
 import java.util.Map;
 
 /**
- * This observer prints the current evaluation number of an algorithm. It requires a pair
- * (EVALUATIONS, int) in the map used in the update() method.
+ * This observer prints the current best fitness of an algorithm. It requires a pair
+ * (EVALUATIONS, int) and another pair (BEST_SOLUTION, solution) in the map used in the update() method.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
+public class FitnessObserver implements Observer<Map<String, Object>> {
 
   private Integer frequency ;
   /**
@@ -21,11 +21,11 @@ public class PrintObjectivesObserver implements Observer<Map<String, Object>> {
    * value.
    */
 
-  public PrintObjectivesObserver(Integer frequency) {
+  public FitnessObserver(Integer frequency) {
     this.frequency = frequency ;
   }
 
-  public PrintObjectivesObserver() {
+  public FitnessObserver() {
     this(1) ;
   }
 

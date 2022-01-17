@@ -498,11 +498,11 @@ public class Ebes extends AbstractDoubleProblem {
   double[] pi =
       new double
           [numberOfLibertyDegree_]; // variable auxiliar carga equivalente en nudo i referida al eje
-                                    // local
+  // local
   double[] pj =
       new double
           [numberOfLibertyDegree_]; // variable auciliar carga equivalente en nudo j referida al eje
-                                    // local
+  // local
 
   double[][] PQ;
   double Reaction_[][];
@@ -974,7 +974,7 @@ public class Ebes extends AbstractDoubleProblem {
     // END NOT USED ------------------------------------------------------------------------------
 
     this.evaluateConstraints(solution);
-    return solution ;
+    return solution;
   } // evaluate
 
   /**
@@ -1040,14 +1040,12 @@ public class Ebes extends AbstractDoubleProblem {
         // relaciÃƒÂ³n entre espesor de la placa y altura de lados
         constraint[con - 2] =
             Math.min(
-                tb1,
-                tb2); // -x1/x3+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2)); //
-                      // relaciÃƒÂ³n entre espesor de la placa y altura de lados
+                tb1, tb2); // -x1/x3+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2)); //
+        // relaciÃƒÂ³n entre espesor de la placa y altura de lados
         constraint[con - 1] =
             Math.min(
-                ta1,
-                ta2); // -x2/x4+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2.0)); //
-                      // relaciÃƒÂ³n entre espesor de la placa y altura de lados
+                ta1, ta2); // -x2/x4+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2.0)); //
+        // relaciÃƒÂ³n entre espesor de la placa y altura de lados
 
       } else if (Groups_[gr][SHAPE] == I_SINGLE) {
         x1 = x[var - 4]; // height (y axis)
@@ -1074,14 +1072,12 @@ public class Ebes extends AbstractDoubleProblem {
         // relaciÃƒÂ³n entre espesor de la placa y altura de lados
         constraint[con - 2] =
             Math.min(
-                tb1,
-                tb2); // -x1/x3+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2)); //
-                      // relaciÃƒÂ³n entre espesor de la placa y altura de lados
+                tb1, tb2); // -x1/x3+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2)); //
+        // relaciÃƒÂ³n entre espesor de la placa y altura de lados
         constraint[con - 1] =
             Math.min(
-                ta1,
-                ta2); // -x2/x4+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2.0)); //
-                      // relaciÃƒÂ³n entre espesor de la placa y altura de lados
+                ta1, ta2); // -x2/x4+1.12*Math.sqrt(Groups_[gr][E_]/(Groups_[gr][STRESS]*2.0)); //
+        // relaciÃƒÂ³n entre espesor de la placa y altura de lados
 
       } else if (Groups_[gr][SHAPE] == I_DOUBLE) {
         x1 = x[var - 4]; // height (y axis)
@@ -1100,7 +1096,7 @@ public class Ebes extends AbstractDoubleProblem {
                         Groups_[gr][E_]
                             / (Groups_[gr][
                                 STRESS])); // relaciÃƒÂ³n entre espesor de la placa y altura de
-                                           // lados
+        // lados
         constraint[con - 1] =
             -x2 / x4
                 + 0.35
@@ -2220,35 +2216,26 @@ public class Ebes extends AbstractDoubleProblem {
 
     int i, j;
     // cosenos directores de x local respecto al sistema global
-    double
-        lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje X Global
-    double
-        mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje Y Global
-    double
-        nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje Z Global
+    double lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje X Global
+    double mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje Y Global
+    double nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje Z Global
     // cosenos directores de y local respecto al sistema global
-    double
-        ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
-            // eje X Global
-    double
-        my; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
-            // eje Y Global
-    double
-        ny; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
-            // eje Z Global
+    double ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    // eje X Global
+    double my; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    // eje Y Global
+    double ny; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    // eje Z Global
     // cosenos directores de z local respecto al sistema global
-    double
-        lz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje X Global
-    double
-        mz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje Y Global
-    double
-        nz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje Z Global
+    double lz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje X Global
+    double mz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje Y Global
+    double nz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje Z Global
 
     int idx = (int) Element_[e][INDEX_];
     double beta = Groups_[idx][BETA];
@@ -3319,36 +3306,28 @@ public class Ebes extends AbstractDoubleProblem {
     // matriz de rotaciÃƒÂ³n 3D de desplazamientos de ejes Locales a Generales
     int i, j;
     // cosenos directores de x local respecto al sistema global
-    double
-        lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje X Global
-    double
-        mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje Y Global
-    double
-        nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
-            // eje Z Global
+    double lx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje X Global
+    double mx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje Y Global
+    double nx; // cosenos directo respecto del eje local x (coincidente con el eje de la barra) y el
+    // eje Z Global
     // cosenos directores de y local respecto al sistema global
     double D;
-    double
-        ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
-            // eje X Global
+    double ly; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    // eje X Global
     double
         my; // Single 'cosenos directo respecto del eje local y (coincidente con el eje de la barra)
-            // y el eje Y Global
-    double
-        ny; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
-            // eje Z Global
+    // y el eje Y Global
+    double ny; // cosenos directo respecto del eje local y (coincidente con el eje de la barra) y el
+    // eje Z Global
     // cosenos directores de z local respecto al sistema global
-    double
-        lz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje X Global
-    double
-        mz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje Y Global
-    double
-        nz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
-            // eje Z Global
+    double lz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje X Global
+    double mz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje Y Global
+    double nz; // cosenos directo respecto del eje local z (coincidente con el eje de la barra) y el
+    // eje Z Global
     int sgn;
 
     // cosenos directores de x local respecto al sistema global XYZ
@@ -5144,11 +5123,11 @@ public class Ebes extends AbstractDoubleProblem {
     BufferedReader br = new BufferedReader(isr);
 
     try (Scanner input = new Scanner(br)) {
-  
+
       // java.util.Scanner input = new java.util.Scanner(file);
       // Read name problems EBEs
       line = input.nextLine();
-  
+
       // count spaces
       j = 0;
       for (i = line.length() - 1; i >= 0; i--) {
@@ -5159,7 +5138,7 @@ public class Ebes extends AbstractDoubleProblem {
       }
       OF_ = new String[j];
       int indOF = j - 1;
-  
+
       j = 0;
       for (i = line.length() - 1; i >= 0; i--) {
         ch = line.charAt(i);
@@ -5194,7 +5173,7 @@ public class Ebes extends AbstractDoubleProblem {
         OF_[indOF] = line.substring(n, m - 1);
         indOF--;
       }
-  
+
       int o = 0;
       if (indOF >= 0) {
         for (i = n - 2; i >= 0; i--) {
@@ -5207,7 +5186,7 @@ public class Ebes extends AbstractDoubleProblem {
         OF_[indOF] = line.substring(o, n - 1);
         indOF--;
       }
-  
+
       int p = 0;
       if (indOF >= 0) {
         for (i = o - 2; i >= 0; i--) {
@@ -5220,7 +5199,7 @@ public class Ebes extends AbstractDoubleProblem {
         OF_[indOF] = line.substring(p, o - 1);
         indOF--;
       }
-  
+
       line = line.substring(0, i);
       j = 0;
       for (i = line.length() - 1; i >= 0; i--) {
@@ -5231,7 +5210,7 @@ public class Ebes extends AbstractDoubleProblem {
         }
       }
       var1 = line.substring(j);
-  
+
       if (i == -1) {
         txt = var1;
       } else {

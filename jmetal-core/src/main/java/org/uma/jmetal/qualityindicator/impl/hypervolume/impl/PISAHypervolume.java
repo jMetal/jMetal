@@ -205,6 +205,6 @@ public class PISAHypervolume extends Hypervolume {
 
   @Override
   public String getName() {
-    return "HV (PISA)";
+    return "HV";
   }
 }

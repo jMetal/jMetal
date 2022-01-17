@@ -15,6 +15,7 @@ import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
@@ -26,7 +27,7 @@ import java.util.List;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class GeneticAlgorithmExample extends AbstractAlgorithmRunner {
+public class GeneticAlgorithmPrintingEvaluationsExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException {
     Problem<DoubleSolution> problem;
     GeneticAlgorithm<DoubleSolution> algorithm;
@@ -60,6 +61,8 @@ public class GeneticAlgorithmExample extends AbstractAlgorithmRunner {
                     crossover,
                     mutation,
                     termination);
+
+    algorithm.getObservable().register(new EvaluationObserver(1000));
 
     algorithm.run();
 
