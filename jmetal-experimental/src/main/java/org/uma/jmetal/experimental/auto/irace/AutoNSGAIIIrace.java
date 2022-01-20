@@ -11,8 +11,11 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.M
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -30,10 +33,13 @@ import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 public class AutoNSGAIIIrace {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
@@ -192,7 +198,7 @@ public class AutoNSGAIIIrace {
     return nsgaii;
   }
 
-  public static void main(String[] args) throws FileNotFoundException {
+  public static void main(String[] args) throws IOException {
     AutoNSGAIIIrace nsgaiiWithParameters = new AutoNSGAIIIrace();
     nsgaiiWithParameters.parseAndCheckParameters(args);
 
@@ -201,22 +207,18 @@ public class AutoNSGAIIIrace {
 
     String referenceFrontFile =
         "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
-    Front referenceFront = new ArrayFront(referenceFrontFile);
 
-    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
-    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
-    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(nsgaII.getResult()));
-    List<PointSolution> normalizedPopulation =
-        FrontUtils.convertFrontToSolutionList(normalizedFront);
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
 
-    double referenceFrontHV =
-        new PISAHypervolume<PointSolution>(normalizedReferenceFront)
-            .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
-    double obtainedFrontHV =
-        new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-    System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[][] normalizedFront =
+            NormalizeUtils.normalize(
+                    front,
+                    NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+                    NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-
-
+    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront) ;
+    System.out.println(qualityIndicator.compute(normalizedFront)) ;
   }
 }

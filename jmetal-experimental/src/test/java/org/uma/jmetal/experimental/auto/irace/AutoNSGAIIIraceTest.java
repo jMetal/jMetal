@@ -2,7 +2,6 @@ package org.uma.jmetal.experimental.auto.irace;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.qualityIndicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
@@ -18,50 +17,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 class AutoNSGAIIIraceTest {
-
-@Test
-public void shouldTheProgramRunProperly() throws FileNotFoundException {
-  String[] arguments = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-          + "--referenceFrontFileName ZDT1.csv "
-          + "--maximumNumberOfEvaluations 75000 "
-          + "--populationSize 100 --algorithmResult population --createInitialSolutions scatterSearch --variation crossoverAndMutationVariation --offspringPopulationSize 205 --crossover BLX_ALPHA --crossoverProbability 0.3286 --crossoverRepairStrategy round --blxAlphaCrossoverAlphaValue 0.9043 --mutation polynomial --mutationProbability 0.4431 --mutationRepairStrategy random --polynomialMutationDistributionIndex 86.8901 --selection tournament --selectionTournamentSize 2 ")
-          .split("\\s+");
-
-  AutoNSGAIIIrace autoNSGAIIIrace = new AutoNSGAIIIrace();
-  autoNSGAIIIrace.parseAndCheckParameters(arguments);
-
-  EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAIIIrace.create();
-  nsgaII.run();
-
-  String referenceFrontFile = "../resources/referenceFrontsCSV/ZDT1.csv" ;
-  Front referenceFront = new ArrayFront(referenceFrontFile);
-
-  FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
-  Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
-  Front normalizedFront = frontNormalizer.normalize(new ArrayFront(nsgaII.getResult()));
-  List<PointSolution> normalizedPopulation =
-          FrontUtils.convertFrontToSolutionList(normalizedFront);
-
-  double referenceFrontHV =
-          new PISAHypervolume<PointSolution>(normalizedReferenceFront)
-                  .evaluate(FrontUtils.convertFrontToSolutionList(normalizedReferenceFront));
-  double obtainedFrontHV =
-          new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
-  System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
-
-
-  assertNotNull(nsgaII.getResult());
-
-}
-@Test
-public void shouldTheProgramRunProperlyV2() throws IOException {
+  @Test
+  public void shouldTheProgramRunProperlyV2() throws IOException {
     String[] arguments = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
-            + "--maximumNumberOfEvaluations 75000 "
+            + "--maximumNumberOfEvaluations 25000 "
             + "--algorithmResult population "
             + "--populationSize 100 "
             + "--offspringPopulationSize 100 "
@@ -88,7 +53,7 @@ public void shouldTheProgramRunProperlyV2() throws IOException {
     nsgaII.run();
 
     double[][] referenceFront = VectorUtils.readVectors("../resources/referenceFrontsCSV/ZDT1.csv", ",");
-    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult());
 
     double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
     double[][] normalizedFront =
@@ -97,13 +62,11 @@ public void shouldTheProgramRunProperlyV2() throws IOException {
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront) ;
-    double value = qualityIndicator.compute(normalizedFront) ;
+    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront);
+    double value = qualityIndicator.compute(normalizedFront);
 
-  System.out.println("NHV: "+ value);
-
-  assertNotNull(nsgaII.getResult());
-
+    assertNotNull(nsgaII.getResult());
+    assertTrue(value < 0.015);
   }
 
 }
