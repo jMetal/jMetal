@@ -71,11 +71,14 @@ public class AutoNSGAIIIraceParameterFileGenerator {
 
 
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
-    String dependenceString = parameter.getName() ;
+    StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
-      dependenceString = ((CategoricalParameter) parentParameter).getValidValues().toString() ;
-      dependenceString = dependenceString.replace("[", "");
-      dependenceString = dependenceString.replace("]", "");
+      var validValues = ((CategoricalParameter) parentParameter).getValidValues() ;
+      dependenceString = new StringBuilder();
+      for (String value: validValues) {
+        dependenceString.append("\"").append(value).append("\"").append(",");
+      }
+      dependenceString = new StringBuilder(dependenceString.substring(0, dependenceString.length() - 1));
     }
 
     stringBuilder.append(
@@ -85,7 +88,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
                 "\""+"--" + parameter.getName()+" \"",
             decodeType(parameter),
             decodeValidValues(parameter),
-            "| " + parentParameter.getName() + " %in% c(\"" + dependenceString + "\")"));
+            "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
