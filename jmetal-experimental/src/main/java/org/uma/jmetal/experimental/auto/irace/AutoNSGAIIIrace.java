@@ -21,18 +21,11 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-import org.uma.jmetal.util.legacy.front.Front;
-import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
-import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
-import org.uma.jmetal.util.legacy.front.util.FrontUtils;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

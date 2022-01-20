@@ -6,16 +6,8 @@ import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.legacy.front.Front;
-import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
-import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
-import org.uma.jmetal.util.legacy.front.util.FrontUtils;
-import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-import org.uma.jmetal.util.point.PointSolution;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
