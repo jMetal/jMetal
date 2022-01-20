@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class AutoNSGAIIirace {
+public class AutoNSGAIIIrace {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -124,8 +124,7 @@ public class AutoNSGAIIirace {
     differentialEvolutionCrossover.addGlobalParameter(f);
     differentialEvolutionCrossover.addGlobalParameter(cr);
 
-    offspringPopulationSizeParameter =
-            populationSizeWithArchiveParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
+    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 600) ;
 
     variationParameter = new VariationParameter(args, List.of("crossoverAndMutationVariation"));
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
@@ -194,7 +193,7 @@ public class AutoNSGAIIirace {
   }
 
   public static void main(String[] args) throws FileNotFoundException {
-    AutoNSGAIIirace nsgaiiWithParameters = new AutoNSGAIIirace();
+    AutoNSGAIIIrace nsgaiiWithParameters = new AutoNSGAIIIrace();
     nsgaiiWithParameters.parseAndCheckParameters(args);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
@@ -216,5 +215,8 @@ public class AutoNSGAIIirace {
     double obtainedFrontHV =
         new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
     System.out.println((referenceFrontHV - obtainedFrontHV) / referenceFrontHV);
+
+
+
   }
 }
