@@ -11,32 +11,32 @@ public class AutoNSGAIIIraceParameterFileGenerator {
 
   public void generateConfigurationFile() {
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
-                + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult population "
-                + "--populationSize 100 "
-                + "--offspringPopulationSize 100 "
-                + "--createInitialSolutions random "
-                + "--variation crossoverAndMutationVariation "
-                + "--selection tournament "
-                + "--selectionTournamentSize 2 "
-                + "--crossover SBX "
-                + "--crossoverProbability 0.9 "
-                + "--crossoverRepairStrategy bounds "
-                + "--sbxDistributionIndex 20.0 "
-                + "--mutation polynomial "
-                + "--mutationProbability 0.01 "
-                + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 ")
-            .split("\\s+");
+            ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+                    + "--referenceFrontFileName ZDT1.csv "
+                    + "--maximumNumberOfEvaluations 25000 "
+                    + "--algorithmResult population "
+                    + "--populationSize 100 "
+                    + "--offspringPopulationSize 100 "
+                    + "--createInitialSolutions random "
+                    + "--variation crossoverAndMutationVariation "
+                    + "--selection tournament "
+                    + "--selectionTournamentSize 2 "
+                    + "--crossover SBX "
+                    + "--crossoverProbability 0.9 "
+                    + "--crossoverRepairStrategy bounds "
+                    + "--sbxDistributionIndex 20.0 "
+                    + "--mutation polynomial "
+                    + "--mutationProbability 0.01 "
+                    + "--mutationRepairStrategy bounds "
+                    + "--polynomialMutationDistributionIndex 20.0 ")
+                    .split("\\s+");
 
     AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
     nsgaiiWithParameters.parseAndCheckParameters(parameters);
 
     AutoNSGAIIIraceParameterFileGenerator nsgaiiiraceParameterFile = new AutoNSGAIIIraceParameterFileGenerator();
     nsgaiiiraceParameterFile.generateConfigurationFile(
-        nsgaiiWithParameters.autoConfigurableParameterList);
+            nsgaiiWithParameters.autoConfigurableParameterList);
   }
 
   public void generateConfigurationFile(List<Parameter<?>> parameterList) {
@@ -52,13 +52,13 @@ public class AutoNSGAIIIraceParameterFileGenerator {
 
   private void decodeParameter(Parameter<?> parameter, StringBuilder stringBuilder) {
     stringBuilder.append(
-        String.format(
-            formatString,
-            parameter.getName(),
-            "\""+"--" + parameter.getName()+" \"",
-            decodeType(parameter),
-            decodeValidValues(parameter),
-            ""));
+            String.format(
+                    formatString,
+                    parameter.getName(),
+                    "\"" + "--" + parameter.getName() + " \"",
+                    decodeType(parameter),
+                    decodeValidValues(parameter),
+                    ""));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
@@ -73,22 +73,22 @@ public class AutoNSGAIIIraceParameterFileGenerator {
   private void decodeParameterGlobal(Parameter<?> parameter, StringBuilder stringBuilder, Parameter<?> parentParameter) {
     StringBuilder dependenceString = new StringBuilder("\"" + parameter.getName() + "\"");
     if (parentParameter instanceof CategoricalParameter) {
-      var validValues = ((CategoricalParameter) parentParameter).getValidValues() ;
+      var validValues = ((CategoricalParameter) parentParameter).getValidValues();
       dependenceString = new StringBuilder();
-      for (String value: validValues) {
+      for (String value : validValues) {
         dependenceString.append("\"").append(value).append("\"").append(",");
       }
       dependenceString = new StringBuilder(dependenceString.substring(0, dependenceString.length() - 1));
     }
 
     stringBuilder.append(
-        String.format(
-            formatString,
-            parameter.getName(),
-                "\""+"--" + parameter.getName()+" \"",
-            decodeType(parameter),
-            decodeValidValues(parameter),
-            "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
+            String.format(
+                    formatString,
+                    parameter.getName(),
+                    "\"" + "--" + parameter.getName() + " \"",
+                    decodeType(parameter),
+                    decodeValidValues(parameter),
+                    "| " + parentParameter.getName() + " %in% c(" + dependenceString + ")"));
 
     for (Parameter<?> globalParameter : parameter.getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, parameter);
@@ -101,15 +101,15 @@ public class AutoNSGAIIIraceParameterFileGenerator {
 
 
   private void decodeParameterSpecific(
-      Pair<String, Parameter<?>> pair, StringBuilder stringBuilder, Parameter<?> parentParameter) {
+          Pair<String, Parameter<?>> pair, StringBuilder stringBuilder, Parameter<?> parentParameter) {
     stringBuilder.append(
-        String.format(
-            formatString,
-            pair.getRight().getName(),
-                "\""+"--" + pair.getRight().getName()+" \"",
-            decodeType(pair.getRight()),
-            decodeValidValues(pair.getRight()),
-            "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
+            String.format(
+                    formatString,
+                    pair.getRight().getName(),
+                    "\"" + "--" + pair.getRight().getName() + " \"",
+                    decodeType(pair.getRight()),
+                    decodeValidValues(pair.getRight()),
+                    "| " + parentParameter.getName() + " %in% c(\"" + pair.getLeft() + "\")"));
 
     for (Parameter<?> globalParameter : pair.getValue().getGlobalParameters()) {
       decodeParameterGlobal(globalParameter, stringBuilder, pair.getValue());

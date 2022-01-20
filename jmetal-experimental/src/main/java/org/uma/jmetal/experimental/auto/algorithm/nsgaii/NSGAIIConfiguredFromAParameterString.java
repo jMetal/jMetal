@@ -15,10 +15,10 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class NSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "LSMOP12D.csv" ;
+    String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 75000 "
                 + "--algorithmResult population "
