@@ -47,6 +47,9 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [1/20/2022] The autoconfiguration of NSGA-II with irace has been revised, including fixing a bug and updating the
+documentation.
+
 * [9/6/2021] Release 5.11
 
 * [9/6/2021] The jMetal project adopts Java 13.
