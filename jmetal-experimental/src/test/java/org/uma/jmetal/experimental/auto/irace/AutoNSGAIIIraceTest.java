@@ -15,7 +15,7 @@ import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues
 
 class AutoNSGAIIIraceTest {
   @Test
-  public void shouldTheProgramRunProperlyV2() throws IOException {
+  public void shouldTheProgramRunProperly() throws IOException {
     String[] arguments = ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
             + "--referenceFrontFileName ZDT1.csv "
             + "--maximumNumberOfEvaluations 25000 "
@@ -60,5 +60,4 @@ class AutoNSGAIIIraceTest {
     assertNotNull(nsgaII.getResult());
     assertTrue(value < 0.015);
   }
-
 }
