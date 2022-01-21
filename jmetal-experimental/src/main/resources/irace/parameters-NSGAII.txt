@@ -3,8 +3,7 @@ populationSize                           "--populationSize "                    
 algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)                      
 populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                      | algorithmResult %in% c("externalArchive")
 #
-#maximumNumberOfEvaluations               "--maximumNumberOfEvaluations "          c       (25000)
-createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)                     
+createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)
 #
 variation                                "--variation "                           c       (crossoverAndMutationVariation)                     
 offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)                       | variation %in% c("crossoverAndMutationVariation")
