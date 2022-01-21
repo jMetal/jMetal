@@ -3,6 +3,9 @@
 Auto-configuration of evolutionary algorithms: NSGA-II
 ======================================================
 
+:Author: Antonio J. Nebro <ajnebro@uma.es>
+:Date: 2022-1-21
+
 Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832). This tutorial is intended as a guide to replicate the experimentation conducted in that paper. Please, take into account that this is a work in progress. Comments, suggestions, and bugs reporting are welcome. The source code is located in the ``org.uma.jmetal.experimental.auto`` package in the ``jmetal-experimental`` submodule.
 
 Motivation
