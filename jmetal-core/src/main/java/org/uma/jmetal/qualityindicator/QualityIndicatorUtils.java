@@ -17,7 +17,6 @@ public class QualityIndicatorUtils {
    * @return
    */
   public static List<QualityIndicator> getAvailableIndicators(double[][] referenceFront) {
-
     List<QualityIndicator> list = new ArrayList<>();
     list.add(new Epsilon(referenceFront));
     list.add(new PISAHypervolume(referenceFront));
