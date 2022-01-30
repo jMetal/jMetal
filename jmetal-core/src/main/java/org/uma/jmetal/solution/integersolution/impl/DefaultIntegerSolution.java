@@ -82,26 +82,6 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
     attributes = new HashMap<>(solution.attributes);
   }
 
-  /**
-   * @deprecated Use {@link #getBounds(int)}{@link Bounds#getLowerBound()
-   *             .getLowerBound()} instead.
-   */
-  @Override
-  @Deprecated
-  public Integer getLowerBound(int index) {
-    return this.bounds.get(index).getLowerBound();
-  }
-
-  /**
-   * @deprecated Use {@link #getBounds(int)}{@link Bounds#getUpperBound()
-   *             .getUpperBound()} instead.
-   */
-  @Override
-  @Deprecated
-  public Integer getUpperBound(int index) {
-    return this.bounds.get(index).getUpperBound();
-  }
-  
   @Override
   public Bounds<Integer> getBounds(int index) {
     return this.bounds.get(index);
