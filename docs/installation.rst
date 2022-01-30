@@ -1,10 +1,10 @@
 Installation
 ============
-jMetal is a Maven project hosted in GitHub, so there are two ways of getting the software: adding it as a dependence in your own Maven project, or getting the source code from https://github.com/jMetal/jMetal.
+jMetal is a Maven project hosted in GitHub, so there are two ways of getting the software: getting the source code from https://github.com/jMetal/jMetal or adding it as a dependence in your own Maven project. The sub-projects of jMetal can be obtained from the Maven Central Repository (https://search.maven.org/search?q=jmetal) or from MvnRepository (https://mvnrepository.com/search?q=jmetal).
 
 The software requirements to use jMetal are:
 
-* Java 11 JDK 
+* Java 13+ JDK 
 * Maven
 * Optional: R, Latex.
 
