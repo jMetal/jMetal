@@ -11,27 +11,30 @@ import org.uma.jmetal.util.bounds.Bounds;
 public interface DoubleSolution extends Solution<Double> {
   /**
    * @deprecated Use {@link #getBounds(int)}{@link Bounds#getLowerBound()
-   *             .getLowerBound()} instead.
+   * .getLowerBound()} instead.
    */
-  @Deprecated
-  Double getLowerBound(int index) ;
+  //@Deprecated
+  //Double getLowerBound(int index);
+
   /**
    * @deprecated Use {@link #getBounds(int)}{@link Bounds#getLowerBound()
-   *             .getLowerBound()} instead.
+   * .getLowerBound()} instead.
    */
-  @Deprecated
-  Double getUpperBound(int index) ;
-  
+  //@Deprecated
+  //Double getUpperBound(int index);
+
+  Bounds<Double> getBounds(int index) ;
+
   /**
    * It is often the case that we use both bounds together. Searching twice the
    * same index may be counter productive in this case. This methods allows to
    * offer this optimization, although its default implementation just delegates
    * to the separate methods.
    */
-  default Bounds<Double> getBounds(int index) {
-    DoubleSolution solution = this;
-    Double lowerBound = solution.getLowerBound(index);
-    Double upperBound = solution.getUpperBound(index);
-    return Bounds.create(lowerBound, upperBound);
-  }
+//  default Bounds<Double> getBounds(int index) {
+//    DoubleSolution solution = this;
+//    Double lowerBound = solution.getLowerBound(index);
+//    Double upperBound = solution.getUpperBound(index);
+//    return Bounds.create(lowerBound, upperBound);
+//  }
 }

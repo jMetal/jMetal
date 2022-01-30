@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution;
 
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
@@ -89,9 +90,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null) {
-      throw new JMetalException("The solution to compare is null");
-    }
+    Check.notNull(o) ;
 
     Solution<T> solution = (Solution<T>) o;
 

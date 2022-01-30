@@ -90,21 +90,21 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
    * @deprecated Use {@link #getBounds(int)}{@link Bounds#getLowerBound()
    *             .getLowerBound()} instead.
    */
-  @Deprecated
-  @Override
-  public Double getLowerBound(int index) {
-    return this.bounds.get(index).getLowerBound() ;
-  }
+  //@Deprecated
+  //@Override
+  //public Double getLowerBound(int index) {
+ //   return this.bounds.get(index).getLowerBound() ;
+  //}
 
   /**
    * @deprecated Use {@link #getBounds(int)}{@link Bounds#getUpperBound()
    *             .getUpperBound()} instead.
    */
-  @Deprecated
-  @Override
-  public Double getUpperBound(int index) {
-    return this.bounds.get(index).getUpperBound() ;
-  }
+  //@Deprecated
+  //@Override
+  //public Double getUpperBound(int index) {
+  //  return this.bounds.get(index).getUpperBound() ;
+  //}
   
   @Override
   public Bounds<Double> getBounds(int index) {
