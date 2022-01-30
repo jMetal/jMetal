@@ -1,5 +1,6 @@
 jMetal project Web site
 =======================
+
 .. image:: https://github.com/jMetal/jMetal/actions/workflows/build.yml/badge.svg
     :alt: Build Status
     :target: https://github.com/jMetal/jMetal/actions/workflows/build.yml

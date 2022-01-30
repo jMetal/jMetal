@@ -1,6 +1,5 @@
 package org.uma.jmetal.solution.doublesolution.impl;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -8,50 +7,55 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Defines an implementation of a double solution. Each variable is given by a pair <lower bound, upper bound>.
+ * Defines an implementation of the {@Link DoubleSolution} interface
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class DefaultDoubleSolution extends AbstractSolution<Double> implements DoubleSolution {
-  protected List<Bounds<Double>> bounds ;
+  protected List<Bounds<Double>> bounds;
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public DefaultDoubleSolution(
-      int numberOfObjectives,
-      int numberOfConstraints,
-      List<Bounds<Double>> boundsList) {
-    super(boundsList.size(), numberOfObjectives, numberOfConstraints) ;
+          int numberOfObjectives,
+          int numberOfConstraints,
+          List<Bounds<Double>> boundsList) {
+    super(boundsList.size(), numberOfObjectives, numberOfConstraints);
 
-    this.bounds = boundsList ;
+    this.bounds = boundsList;
 
-    for (int i = 0 ; i < boundsList.size(); i++) {
-      Bounds<Double> bounds = boundsList.get(i);
-      variables().set(i, JMetalRandom.getInstance().nextDouble(bounds.getLowerBound(), bounds.getUpperBound())); ;
+    for (int i = 0; i < boundsList.size(); i++) {
+      variables().set(i, JMetalRandom.getInstance().nextDouble(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
+      ;
     }
   }
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public DefaultDoubleSolution(
-      int numberOfObjectives,
-      List<Bounds<Double>> boundsList) {
-    this(numberOfObjectives, 0, boundsList) ;
+          int numberOfObjectives,
+          List<Bounds<Double>> boundsList) {
+    this(numberOfObjectives, 0, boundsList);
   }
 
-  /** Copy constructor */
+  /**
+   * Copy constructor
+   */
   public DefaultDoubleSolution(DefaultDoubleSolution solution) {
-    super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
+    super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
     IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
     IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
     IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
 
-    bounds = solution.bounds ;
-    attributes = new HashMap<>(solution.attributes) ;
+    bounds = solution.bounds;
+    attributes = new HashMap<>(solution.attributes);
   }
 
   @Override

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * Defines an implementation of an integer solution
+ * Defines an implementation of the {@Link IntegerSolution} interface
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -26,11 +26,8 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     this.bounds = boundsList;
 
-    for (int i = 0; i < boundsList.size(); i++) {
-      Bounds<Integer> bounds = boundsList.get(i);
-      variables().set(
-              i, JMetalRandom.getInstance().nextInt(bounds.getLowerBound(), bounds.getUpperBound()));
-    }
+    IntStream.range(0, bounds.size()).forEach(i -> variables().set(
+            i, JMetalRandom.getInstance().nextInt(this.bounds.get(i).getLowerBound(), this.bounds.get(i).getUpperBound())));
   }
 
   /**
