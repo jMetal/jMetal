@@ -9,6 +9,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Defines an implementation of an integer solution
@@ -65,17 +66,9 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
-    for (int i = 0; i < solution.variables().size(); i++) {
-      variables().set(i, solution.variables().get(i));
-    }
-
-    for (int i = 0; i < solution.objectives().length; i++) {
-      objectives()[i] = solution.objectives()[i];
-    }
-
-    for (int i = 0; i < solution.constraints().length; i++) {
-      constraints()[i] =  solution.constraints()[i];
-    }
+    IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
+    IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
+    IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
 
     bounds = solution.bounds;
 
