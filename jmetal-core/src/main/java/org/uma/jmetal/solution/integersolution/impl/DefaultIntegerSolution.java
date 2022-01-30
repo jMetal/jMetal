@@ -1,6 +1,5 @@
 package org.uma.jmetal.solution.integersolution.impl;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -8,7 +7,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -22,47 +20,31 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
   /**
    * Constructor
-   * 
-   * @deprecated Use {@link #DefaultIntegerSolution(int, int, List)} instead.
    */
-  @Deprecated
-  public DefaultIntegerSolution(List<Pair<Integer, Integer>> bounds, int numberOfObjectives, int numberOfConstraints) {
-    this(numberOfObjectives, numberOfConstraints, bounds.stream().map(Bounds::fromPair).collect(Collectors.toList()));
-  }
-
-  /** Constructor */
   public DefaultIntegerSolution(int numberOfObjectives, int numberOfConstraints, List<Bounds<Integer>> boundsList) {
     super(boundsList.size(), numberOfObjectives, numberOfConstraints);
 
-    this.bounds = boundsList ;
+    this.bounds = boundsList;
 
     for (int i = 0; i < boundsList.size(); i++) {
       Bounds<Integer> bounds = boundsList.get(i);
       variables().set(
-          i, JMetalRandom.getInstance().nextInt(bounds.getLowerBound(), bounds.getUpperBound()));
+              i, JMetalRandom.getInstance().nextInt(bounds.getLowerBound(), bounds.getUpperBound()));
     }
   }
 
   /**
    * Constructor
-   * 
-   * @deprecated Use {@link #DefaultIntegerSolution(int, List)} instead.
    */
-  @Deprecated
   public DefaultIntegerSolution(
-      List<Pair<Integer, Integer>> bounds,
-      int numberOfObjectives) {
-    this(bounds, numberOfObjectives, 0) ;
+          int numberOfObjectives,
+          List<Bounds<Integer>> bounds) {
+    this(numberOfObjectives, 0, bounds);
   }
 
-  /** Constructor */
-  public DefaultIntegerSolution(
-      int numberOfObjectives,
-      List<Bounds<Integer>> bounds) {
-    this(numberOfObjectives, 0, bounds) ;
-  }
-
-  /** Copy constructor */
+  /**
+   * Copy constructor
+   */
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
@@ -84,4 +66,4 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   public DefaultIntegerSolution copy() {
     return new DefaultIntegerSolution(this);
   }
-  }
+}

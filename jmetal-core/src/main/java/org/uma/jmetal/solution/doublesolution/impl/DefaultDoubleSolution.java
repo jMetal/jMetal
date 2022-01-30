@@ -20,19 +20,6 @@ import java.util.stream.IntStream;
 public class DefaultDoubleSolution extends AbstractSolution<Double> implements DoubleSolution {
   protected List<Bounds<Double>> bounds ;
 
-  /**
-   * Constructor
-   * 
-   * @deprecated Use {@link #DefaultDoubleSolution(int, int, List)} instead.
-   */
-  @Deprecated
-  public DefaultDoubleSolution(
-      List<Pair<Double, Double>> bounds,
-      int numberOfObjectives,
-      int numberOfConstraints) {
-    this(numberOfObjectives, numberOfConstraints, bounds.stream().map(Bounds::fromPair).collect(Collectors.toList())) ;
-  }
-
   /** Constructor */
   public DefaultDoubleSolution(
       int numberOfObjectives,
@@ -46,18 +33,6 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
       Bounds<Double> bounds = boundsList.get(i);
       variables().set(i, JMetalRandom.getInstance().nextDouble(bounds.getLowerBound(), bounds.getUpperBound())); ;
     }
-  }
-
-  /**
-   * Constructor
-   * 
-   * @deprecated Use {@link #DefaultDoubleSolution(int, List)} instead.
-   */
-  @Deprecated
-  public DefaultDoubleSolution(
-      List<Pair<Double, Double>> bounds,
-      int numberOfObjectives) {
-    this(bounds, numberOfObjectives, 0) ;
   }
 
   /** Constructor */
