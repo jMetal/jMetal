@@ -252,7 +252,7 @@ The contents of irace folder are the following:
 Just note that the stopping condition of the algorithm (i.e., the maximum number of evaluations) is set in this file.
 
 4. ``scenario-NSGAII.txt``: default irace parameters (we usually keep this file unchanged)
-5. ``target-runner``. Bash script which is executed in every run of irace.
+5. ``target-runner``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner`` in a terminal).
 6. ``run.sh``. Bash script to run irace. VERY IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
 
 Running everything
