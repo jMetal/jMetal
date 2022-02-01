@@ -3,7 +3,6 @@ package org.uma.jmetal.experimental.auto.irace;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
-import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.lab.experiment.Experiment;
@@ -11,10 +10,12 @@ import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.*;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
+import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.dtlz.*;
 import org.uma.jmetal.problem.multiobjective.wfg.*;
 import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
@@ -29,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Gecco2019Experiment {
-  private static final int INDEPENDENT_RUNS = 15;
+  private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
@@ -47,12 +48,19 @@ public class Gecco2019Experiment {
     problemList.add(new ExperimentProblem<>(new WFG7()).setReferenceFront("WFG7.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG8()).setReferenceFront("WFG8.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG9()).setReferenceFront("WFG9.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ1_2D()).setReferenceFront("DTLZ1.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ2_2D()).setReferenceFront("DTLZ2.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ3_2D()).setReferenceFront("DTLZ3.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ4_2D()).setReferenceFront("DTLZ4.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ5_2D()).setReferenceFront("DTLZ5.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
 
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("WFGStudy")
+            new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("Gecco2019Study")
                     .setAlgorithmList(algorithmList)
                     .setProblemList(problemList)
                     .setReferenceFrontDirectory("resources/referenceFrontsCSV")
@@ -77,6 +85,7 @@ public class Gecco2019Experiment {
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).setDisplayNotch().run();
+    new GenerateHtmlPages<>(experiment, StudyVisualizer.TYPE_OF_FRONT_TO_SHOW.MEDIAN).run();
   }
 
   /**
@@ -87,6 +96,16 @@ public class Gecco2019Experiment {
           List<ExperimentProblem<DoubleSolution>> problemList) {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
+      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
+                experimentProblem.getProblem(),
+                new SBXCrossover(1.0, 20.0),
+                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                        20.0),
+                100)
+                .build();
+        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
+      }
 
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         double mutationProbability = 1.0 / experimentProblem.getProblem().getNumberOfVariables();
@@ -103,37 +122,29 @@ public class Gecco2019Experiment {
       }
 
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-        Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<DoubleSolution>(
-                experimentProblem.getProblem(),
-                new SBXCrossover(1.0, 20.0),
-                new PolynomialMutation(1.0 / experimentProblem.getProblem().getNumberOfVariables(),
-                        20.0),
-                100)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
-      }
-
-      for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
         String[] parameters =
                 ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                        + "--referenceFrontFileName "+ experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 75000 "
-                        + "--algorithmResult population "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--algorithmResult externalArchive "
+                        + "--populationSizeWithArchive 79 "
                         + "--populationSize 100 "
-                        + "--offspringPopulationSize 100 "
-                        + "--createInitialSolutions random "
+                        + "--offspringPopulationSize 158 "
+                        + "--createInitialSolutions scatterSearch "
                         + "--variation crossoverAndMutationVariation "
                         + "--selection tournament "
-                        + "--selectionTournamentSize 2 "
+                        + "--selectionTournamentSize 8 "
                         + "--rankingForSelection dominanceRanking "
                         + "--densityEstimatorForSelection crowdingDistance "
-                        + "--crossover SBX "
-                        + "--crossoverProbability 0.9 "
+                        + "--crossover BLX_ALPHA "
+                        + "--crossoverProbability 0.9562 "
                         + "--crossoverRepairStrategy bounds "
+                        + "--blxAlphaCrossoverAlphaValue 0.6316 "
                         + "--sbxDistributionIndex 20.0 "
-                        + "--mutation polynomial "
-                        + "--mutationProbability 0.01 "
-                        + "--mutationRepairStrategy bounds "
+                        + "--mutation uniform "
+                        + "--mutationProbability 0.004 "
+                        + "--mutationRepairStrategy round "
+                        + "--uniformMutationPerturbation 0.6972 "
                         + "--polynomialMutationDistributionIndex 20.0 ")
                         .split("\\s+");
 
@@ -141,7 +152,7 @@ public class Gecco2019Experiment {
         autoNSGAII.parseAndCheckParameters(parameters);
         EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
-        algorithms.add(new ExperimentAlgorithm<>(nsgaII, experimentProblem, run));
+        algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
       }
     }
     return algorithms;
