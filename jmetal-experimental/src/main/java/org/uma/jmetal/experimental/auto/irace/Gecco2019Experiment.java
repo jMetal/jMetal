@@ -21,6 +21,7 @@ import org.uma.jmetal.qualityindicator.impl.*;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
@@ -29,13 +30,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class reproduce the experimental study detailed in:
+ * Antonio J. Nebro, Manuel López-Ibáñez, Cristóbal Barba-González, José García-Nieto
+ * Automatic configuration of NSGA-II with jMetal and irace.
+ * GECCO (Companion) 2019: 1374-1381
+ * DOI: https://doi.org/10.1145/3319619.3326832
+ *
+ * @author Antonio J. Nebro
+ * @author Daniel Doblas
+ */
 public class Gecco2019Experiment {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 1) {
-      throw new JMetalException("Missing argument: experimentBaseDirectory");
-    }
+    Check.that(args.length == 1, "Missing argument: experimentBaseDirectory") ;
+
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
