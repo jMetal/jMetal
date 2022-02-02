@@ -4,7 +4,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initial
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

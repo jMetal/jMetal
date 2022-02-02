@@ -1,12 +1,9 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.impl;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.InitializeVelocity;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -15,8 +12,6 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultVelocityInitializationTest {
-
-  //  double[][] initialize(List<DoubleSolution> swarm) ;
 
   @Test
   public void shouldInitializeRaiseAnExceptionIfTheSwarmIsNull() {
