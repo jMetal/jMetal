@@ -1,6 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.InitializeVelocity;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.VelocityInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Antonio J. Nebro
  */
-public class DefaultVelocityInitialization implements InitializeVelocity {
+public class DefaultVelocityInitialization implements VelocityInitialization {
   @Override
   public double[][] initialize(List<DoubleSolution> swarm) {
     Check.notNull(swarm);

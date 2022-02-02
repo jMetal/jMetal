@@ -9,6 +9,6 @@ import java.util.List;
  * @author Daniel Doblas
  * @author Antonio J. Nebro
  */
-public interface InitializeVelocity {
+public interface VelocityInitialization {
   double[][] initialize(List<DoubleSolution> solutionList) ;
 }

@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.auto.algorithm;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.InitializeVelocity;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializelocalbest.LocalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
@@ -27,7 +27,7 @@ public class ParticleSwarmOptimizationAlgorithm
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
-  private InitializeVelocity initializeVelocity ;
+  private VelocityInitialization initializeVelocity ;
   private LocalBestInitialization initializeLocalBest ;
   //private InitializeGlobalBest initializeGlobalBest ;
   //private UpdateVelocity updateVelocity;
