@@ -14,12 +14,16 @@ public class DefaultVelocityInitialization implements InitializeVelocity {
   @Override
   public double[][] initialize(List<DoubleSolution> swarm) {
     Check.notNull(swarm);
-    Check.that(swarm.size() > 0, "The swarm size is lower than 1: " + swarm.size());
+    Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
     int numberOfVariables = swarm.get(0).variables().size() ;
     double[][] speed = new double[swarm.size()][numberOfVariables] ;
 
-    Arrays.fill(speed, 0.0);
+    for (int i = 0 ; i < speed.length; i++) {
+      for (int j = 0; j < speed[0].length; j++) {
+        speed[i][j] = 0.0 ;
+      }
+    }
 
     return speed;
   }
