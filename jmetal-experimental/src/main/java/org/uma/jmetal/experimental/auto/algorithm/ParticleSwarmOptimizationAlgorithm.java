@@ -1,14 +1,10 @@
 package org.uma.jmetal.experimental.auto.algorithm;
 
-import org.netlib.lapack.Dlabad;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.InitializeVelocity;
-import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializelocalbest.LocalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
@@ -25,13 +21,14 @@ public class ParticleSwarmOptimizationAlgorithm
     implements Algorithm<List<DoubleSolution>>, ObservableEntity {
   private List<DoubleSolution> swarm;
   private double[][] speed ;
+  private DoubleSolution[] localBest ;
   private Archive<DoubleSolution> externalArchive;
 
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
   private InitializeVelocity initializeVelocity ;
-  //private InitializeParticleBest initializeParticleBest ;
+  private LocalBestInitialization initializeLocalBest ;
   //private InitializeGlobalBest initializeGlobalBest ;
   //private UpdateVelocity updateVelocity;
   //private UpdatePosition updatePosition;
@@ -78,6 +75,7 @@ public class ParticleSwarmOptimizationAlgorithm
     swarm = createInitialSwarm.create() ;
     swarm = evaluation.evaluate(swarm);
     speed = initializeVelocity.initialize(swarm);
+    localBest = initializeLocalBest.initialize(swarm) ;
     //initializeParticleBest(swarm) ;
     //initializeGlobalBest(swarm) ;
     initProgress();
