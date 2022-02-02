@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation;
 
 import org.junit.jupiter.api.Test;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 
