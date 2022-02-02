@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
+ * @author Antonio J. Nebro
  */
 public class DefaultVelocityInitialization implements InitializeVelocity {
   @Override
