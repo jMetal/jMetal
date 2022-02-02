@@ -2,14 +2,11 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initia
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.*;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeVelocity.impl.DefaultVelocityInitialization;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
