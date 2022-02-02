@@ -6,6 +6,12 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.List;
 
+/**
+ * TODO: comment the class
+ *
+ * @author Antonio J. Nebro
+ * @author Daniel Doblas
+ */
 public class DefaultLocalBestInitialization implements LocalBestInitialization {
   public DoubleSolution[] initialize(List<DoubleSolution> swarm) {
     Check.notNull(swarm);
