@@ -10,6 +10,8 @@ import java.util.List;
 /**
  * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
  *
+ * TODO How to compute deltaMax and deltaMin
+ *
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */

@@ -6,11 +6,15 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 
 import java.util.List;
 
+/**
+ * @author Antonio J. Nebro
+ * @authro Daniel Doblas
+ */
 public class DefaultGlobalBestInitialization implements GlobalBestInitialization {
   @Override
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
     swarm.forEach(globalBest::add);
-    
+
     return globalBest;
   }
 }
