@@ -3,10 +3,12 @@ package org.uma.jmetal.experimental.auto.algorithm;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
@@ -22,14 +24,14 @@ public class ParticleSwarmOptimizationAlgorithm
   private List<DoubleSolution> swarm;
   private double[][] speed ;
   private DoubleSolution[] localBest ;
-  private Archive<DoubleSolution> externalArchive;
+  private BoundedArchive<DoubleSolution> globalBest;
 
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
   private VelocityInitialization initializeVelocity ;
-  private LocalBestInitialization initializeLocalBest ;
-  //private InitializeGlobalBest initializeGlobalBest ;
+  private LocalBestInitialization localBestInitialization ;
+  private GlobalBestInitialization globalBestInitialization ;
   //private UpdateVelocity updateVelocity;
   //private UpdatePosition updatePosition;
   //private Perturbation perturbation;
@@ -58,12 +60,12 @@ public class ParticleSwarmOptimizationAlgorithm
       Evaluation<DoubleSolution> evaluation,
       SolutionsCreation<DoubleSolution> createInitialSwarm,
       Termination termination,
-      Archive<DoubleSolution> externalArchive) {
+      BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialSwarm = createInitialSwarm;
     this.termination = termination;
-    this.externalArchive = externalArchive;
+    this.globalBest = externalArchive;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -75,8 +77,8 @@ public class ParticleSwarmOptimizationAlgorithm
     swarm = createInitialSwarm.create() ;
     swarm = evaluation.evaluate(swarm);
     speed = initializeVelocity.initialize(swarm);
-    localBest = initializeLocalBest.initialize(swarm) ;
-    //initializeParticleBest(swarm) ;
+    localBest = localBestInitialization.initialize(swarm) ;
+    globalBest = globalBestInitialization.initialize(swarm, globalBest) ;
     //initializeGlobalBest(swarm) ;
     initProgress();
 
@@ -95,9 +97,9 @@ public class ParticleSwarmOptimizationAlgorithm
 
 
   private void updateArchive(List<DoubleSolution> population) {
-    if (externalArchive != null) {
+    if (globalBest != null) {
       for (DoubleSolution solution : population) {
-        externalArchive.add(solution);
+        globalBest.add(solution);
       }
     }
   }
@@ -139,8 +141,8 @@ public class ParticleSwarmOptimizationAlgorithm
 
   @Override
   public List<DoubleSolution> getResult() {
-    if (externalArchive != null) {
-      return externalArchive.getSolutionList();
+    if (globalBest != null) {
+      return globalBest.getSolutionList();
     } else {
       return swarm;
     }
