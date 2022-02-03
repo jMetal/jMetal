@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeLeader.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

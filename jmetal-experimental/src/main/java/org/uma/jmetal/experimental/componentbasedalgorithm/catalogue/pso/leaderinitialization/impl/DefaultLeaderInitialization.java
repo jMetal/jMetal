@@ -1,6 +1,6 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeLeader.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializeLeader.InitializeLeader;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.LeaderInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -13,7 +13,7 @@ import java.util.List;
  * TODO: Tests
  */
 
-public class DefaultLeaderInitialization implements InitializeLeader {
+public class DefaultLeaderInitialization implements LeaderInitialization {
     @Override
     public BoundedArchive<DoubleSolution> initializeLeader(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> leaders) {
         Check.notNull(swarm);
