@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializelocalbest.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

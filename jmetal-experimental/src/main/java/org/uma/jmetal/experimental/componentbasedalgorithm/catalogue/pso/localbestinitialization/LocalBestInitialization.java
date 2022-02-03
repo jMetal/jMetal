@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.initializelocalbest;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
