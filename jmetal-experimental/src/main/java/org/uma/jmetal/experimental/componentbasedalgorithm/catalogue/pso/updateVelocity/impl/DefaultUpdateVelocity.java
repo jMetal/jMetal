@@ -48,7 +48,7 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
       double wmax,
       double wmin,
       DoubleSolution bestGlobal,
-      GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest,
+      DoubleSolution[] localBest,
       double[] deltaMax,
       double[] deltaMin,
       int variableIndex,
@@ -56,7 +56,7 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
       int maxIterations) {
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution) localBest.getAttribute(swarm.get(i)).copy();
+      DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
       double r1 = randomGenerator.nextDouble(r1Min, r1Max);
       double r2 = randomGenerator.nextDouble(r2Min, r2Max);
@@ -91,8 +91,7 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
    * @param variableIndex
    * @return velocity Constriction
    */
-  @Override
-  public double velocityConstriction(
+  private double velocityConstriction(
       double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
     double result;
 
@@ -119,8 +118,7 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
    * @param wmin
    * @return Inertia Weigth
    */
-  @Override
-  public double inertiaWeight(int iter, int miter, double wma, double wmin) {
+  private double inertiaWeight(int iter, int miter, double wma, double wmin) {
     return wma;
   }
 
@@ -130,8 +128,7 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
    * @param c2
    * @return Constriction Coefficient
    */
-  @Override
-  public double constrictionCoefficient(double c1, double c2) {
+  private double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
     if (rho <= 4) {
       return 1.0;

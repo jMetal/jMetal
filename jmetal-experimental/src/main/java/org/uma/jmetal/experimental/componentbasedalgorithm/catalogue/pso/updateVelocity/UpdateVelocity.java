@@ -21,17 +21,12 @@ public interface UpdateVelocity {
       double wmax,
       double wmin,
       DoubleSolution bestGlobal,
-      GenericSolutionAttribute<DoubleSolution, DoubleSolution> localBest,
+      DoubleSolution[] localBest,
       double deltaMax[],
       double deltaMin[],
       int variableIndex,
       int iterations,
       int maxIterations);
 
-  public double velocityConstriction(
-      double v, double deltaMax[], double deltaMin[], int variableIndex);
 
-  public double inertiaWeight(int iter, int miter, double wma, double wmin);
-
-  public double constrictionCoefficient(double c1, double c2);
 }
