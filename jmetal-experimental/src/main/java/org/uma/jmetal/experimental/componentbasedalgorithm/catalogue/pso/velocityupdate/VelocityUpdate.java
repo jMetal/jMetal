@@ -6,5 +6,5 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import java.util.List;
 
 public interface VelocityUpdate {
-  double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest, BoundedArchive<DoubleSolution> leaders) ;
+  double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest, BoundedArchive<DoubleSolution> globalBest) ;
 }

@@ -1,8 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import java.util.List;
@@ -54,7 +56,8 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
                                    double c2Min,
                                    double c2Max,
                                    double weightMin,
-                                   double weightMax) {
+                                   double weightMax,
+                                   DoubleProblem problem) {
     this.r1Max = r1Max;
     this.r1Min = r1Min;
     this.r2Max = r2Max;
@@ -67,6 +70,14 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     this.weightMin = weightMin;
 
     this.randomGenerator = JMetalRandom.getInstance() ;
+
+    deltaMax = new double[problem.getNumberOfVariables()];
+    deltaMin = new double[problem.getNumberOfVariables()];
+    for (int i = 0; i < problem.getNumberOfVariables(); i++) {
+      Bounds<Double> bounds = problem.getBoundsForVariables().get(i);
+      deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0;
+      deltaMin[i] = -deltaMax[i];
+    }
   }
 
   @Override
