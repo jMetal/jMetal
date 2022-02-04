@@ -4,13 +4,13 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
@@ -23,22 +23,22 @@ import java.util.Map;
 
 @SuppressWarnings("serial")
 public class ParticleSwarmOptimizationAlgorithm
-    implements Algorithm<List<DoubleSolution>>, ObservableEntity {
+        implements Algorithm<List<DoubleSolution>>, ObservableEntity {
   private List<DoubleSolution> swarm;
-  private double[][] speed ;
-  private DoubleSolution[] localBest ;
+  private double[][] speed;
+  private DoubleSolution[] localBest;
   private BoundedArchive<DoubleSolution> globalBest;
 
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
-  private VelocityInitialization velocityInitialization ;
-  private LocalBestInitialization localBestInitialization ;
-  private GlobalBestInitialization globalBestInitialization ;
-  private VelocityUpdate velocityUpdate ;
+  private VelocityInitialization velocityInitialization;
+  private LocalBestInitialization localBestInitialization;
+  private GlobalBestInitialization globalBestInitialization;
+  private VelocityUpdate velocityUpdate;
   private PositionUpdate positionUpdate;
   private Perturbation perturbation;
-  //private UpdateGlobalBest updateGlobalBest;
+  private GlobalBestUpdate globalBestUpdate;
   //private UpdateParticleBest updateParticleBest ;
 
   private Map<String, Object> attributes;
@@ -53,61 +53,63 @@ public class ParticleSwarmOptimizationAlgorithm
   /**
    * Constructor
    *
-   * @param name Algorithm name
+   * @param name            Algorithm name
    * @param evaluation
    * @param termination
    * @param externalArchive
    */
   public ParticleSwarmOptimizationAlgorithm(
-      String name,
-      SolutionsCreation<DoubleSolution> createInitialSwarm,
-      Evaluation<DoubleSolution> evaluation,
-      Termination termination,
-      VelocityInitialization velocityInitialization,
-      LocalBestInitialization localBestInitialization,
-      GlobalBestInitialization globalBestInitialization,
-      VelocityUpdate velocityUpdate,
-      PositionUpdate positionUpdate,
-      Perturbation perturbation,
-      BoundedArchive<DoubleSolution> externalArchive) {
+          String name,
+          SolutionsCreation<DoubleSolution> createInitialSwarm,
+          Evaluation<DoubleSolution> evaluation,
+          Termination termination,
+          VelocityInitialization velocityInitialization,
+          LocalBestInitialization localBestInitialization,
+          GlobalBestInitialization globalBestInitialization,
+          VelocityUpdate velocityUpdate,
+          PositionUpdate positionUpdate,
+          Perturbation perturbation,
+          GlobalBestUpdate globalBestUpdate,
+          BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialSwarm = createInitialSwarm;
     this.termination = termination;
     this.globalBest = externalArchive;
 
-    this.velocityInitialization = velocityInitialization ;
-    this.localBestInitialization = localBestInitialization ;
-    this.globalBestInitialization = globalBestInitialization ;
-    this.velocityUpdate = velocityUpdate ;
-    this.positionUpdate = positionUpdate ;
-    this.perturbation = perturbation ;
+    this.velocityInitialization = velocityInitialization;
+    this.localBestInitialization = localBestInitialization;
+    this.globalBestInitialization = globalBestInitialization;
+    this.velocityUpdate = velocityUpdate;
+    this.positionUpdate = positionUpdate;
+    this.perturbation = perturbation;
+    this.globalBestUpdate = globalBestUpdate;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
   }
 
   public void run() {
-    initTime = System.currentTimeMillis() ;
+    initTime = System.currentTimeMillis();
 
-    swarm = createInitialSwarm.create() ;
+    swarm = createInitialSwarm.create();
     swarm = evaluation.evaluate(swarm);
     speed = velocityInitialization.initialize(swarm);
-    localBest = localBestInitialization.initialize(swarm) ;
-    globalBest = globalBestInitialization.initialize(swarm, globalBest) ;
+    localBest = localBestInitialization.initialize(swarm);
+    globalBest = globalBestInitialization.initialize(swarm, globalBest);
     initProgress();
 
     while (!termination.isMet(attributes)) {
       velocityUpdate.update(swarm, speed, localBest, globalBest);
-      positionUpdate.update(swarm, speed) ;
+      positionUpdate.update(swarm, speed);
       swarm = perturbation.perturbate(swarm);
-      swarm = evaluation.evaluate(swarm) ;
-      //updateGlobalBest.update(swarm) ;
+      swarm = evaluation.evaluate(swarm);
+      globalBest = globalBestUpdate.update(swarm,globalBest) ;
       //updateParticleBest.update(swarm) ;
       updateProgress();
     }
 
-    totalComputingTime = System.currentTimeMillis() - initTime ;
+    totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
 
@@ -130,7 +132,7 @@ public class ParticleSwarmOptimizationAlgorithm
   }
 
   protected void updateProgress() {
-    evaluations += swarm.size() ;
+    evaluations += swarm.size();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", swarm);
@@ -139,7 +141,7 @@ public class ParticleSwarmOptimizationAlgorithm
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime() ;
+    totalComputingTime = getCurrentComputingTime();
   }
 
   public long getCurrentComputingTime() {
