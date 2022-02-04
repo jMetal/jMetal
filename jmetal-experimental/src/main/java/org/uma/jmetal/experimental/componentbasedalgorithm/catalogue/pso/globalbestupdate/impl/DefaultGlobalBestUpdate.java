@@ -9,9 +9,7 @@ import java.util.List;
 public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
   @Override
   public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
-    for (DoubleSolution particle: swarm) {
-      globalBest.add((DoubleSolution)particle.copy()) ;
-    }
+    swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(globalBest::add);
     return globalBest;
   }
 }

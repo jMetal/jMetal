@@ -33,7 +33,7 @@ public class MutationBasedPerturbation implements Perturbation {
   }
 
   @Override
-  public List<DoubleSolution> perturbate(List<DoubleSolution> swarm) {
+  public List<DoubleSolution> perturb(List<DoubleSolution> swarm) {
     for (DoubleSolution particle : swarm) {
       if (randomGenerator.nextDouble() < percentageOfApplication) {
         mutationOperator.execute(particle) ;

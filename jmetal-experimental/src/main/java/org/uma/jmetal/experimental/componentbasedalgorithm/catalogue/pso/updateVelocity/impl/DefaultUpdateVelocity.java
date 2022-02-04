@@ -85,25 +85,26 @@ public class DefaultUpdateVelocity implements UpdateVelocity {
 
   /**
    * Get the velocity constriction for velocity update
-   * @param v
+   * @param velocity
    * @param deltaMax
    * @param deltaMin
    * @param variableIndex
    * @return velocity Constriction
    */
   private double velocityConstriction(
-      double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
+      double velocity, double[] deltaMax, double[] deltaMin, int variableIndex) {
     double result;
 
     double dmax = deltaMax[variableIndex];
     double dmin = deltaMin[variableIndex];
 
-    result = v;
+    result = velocity;
 
-    if (v >= dmax) {
+    if (velocity >= dmax) {
       result = dmax;
     }
-    if (v <= dmin) {
+
+    if (velocity <= dmin) {
       result = dmin;
     }
 

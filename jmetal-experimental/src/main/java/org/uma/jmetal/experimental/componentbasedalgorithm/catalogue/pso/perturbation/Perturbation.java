@@ -5,5 +5,5 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import java.util.List;
 
 public interface Perturbation {
-  List<DoubleSolution> perturbate(List<DoubleSolution> swarm) ;
+  List<DoubleSolution> perturb(List<DoubleSolution> swarm) ;
 }

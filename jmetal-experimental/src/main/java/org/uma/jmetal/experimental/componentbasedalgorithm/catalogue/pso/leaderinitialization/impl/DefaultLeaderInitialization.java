@@ -15,13 +15,12 @@ import java.util.List;
 
 public class DefaultLeaderInitialization implements LeaderInitialization {
     @Override
-    public BoundedArchive<DoubleSolution> initializeLeader(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> leaders) {
+    public BoundedArchive<DoubleSolution> initializeLeader(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
         Check.notNull(swarm);
         Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
-        var leaders_bounded_archive = leaders;
         for(DoubleSolution particle: swarm){
-            leaders_bounded_archive.add(particle);
+            globalBest.add(particle);
         }
-        return leaders_bounded_archive;
+        return globalBest;
     }
 }

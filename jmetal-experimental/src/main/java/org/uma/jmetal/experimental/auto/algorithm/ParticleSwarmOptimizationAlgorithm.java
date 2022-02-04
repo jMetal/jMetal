@@ -105,7 +105,7 @@ public class ParticleSwarmOptimizationAlgorithm
     while (!termination.isMet(attributes)) {
       velocityUpdate.update(swarm, speed, localBest, globalBest);
       positionUpdate.update(swarm, speed);
-      swarm = perturbation.perturbate(swarm);
+      swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);
       globalBest = globalBestUpdate.update(swarm,globalBest) ;
       localBest = localBestUpdate.update(swarm, localBest) ;
