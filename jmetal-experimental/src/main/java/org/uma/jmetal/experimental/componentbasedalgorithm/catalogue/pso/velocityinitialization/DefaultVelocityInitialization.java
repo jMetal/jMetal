@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

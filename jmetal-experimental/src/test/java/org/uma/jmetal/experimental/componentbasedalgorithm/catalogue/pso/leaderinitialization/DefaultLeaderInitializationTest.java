@@ -1,15 +1,10 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
  * Test for Default Leader Intialization

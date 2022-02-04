@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

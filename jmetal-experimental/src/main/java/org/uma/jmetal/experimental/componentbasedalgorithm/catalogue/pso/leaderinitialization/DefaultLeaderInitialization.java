@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.impl;
+package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization.LeaderInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
