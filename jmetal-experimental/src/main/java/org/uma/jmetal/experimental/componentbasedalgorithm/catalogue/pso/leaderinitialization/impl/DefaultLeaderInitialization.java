@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Initialize the leaders particles.
- * @author D Doblas Jiménez
+ * @author Daniel Doblas
  * TODO: Tests
  */
 

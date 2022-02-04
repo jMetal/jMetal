@@ -9,12 +9,13 @@ import java.util.List;
 
 /**
  * @author Antonio J. Nebro
- * @authro Daniel Doblas
+ * @author Daniel Doblas
  */
 public class DefaultGlobalBestInitialization implements GlobalBestInitialization {
   @Override
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
+    Check.notNull(globalBest);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
     swarm.forEach(globalBest::add);
