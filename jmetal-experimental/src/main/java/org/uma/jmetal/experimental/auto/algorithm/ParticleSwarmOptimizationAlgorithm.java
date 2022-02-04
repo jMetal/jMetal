@@ -58,10 +58,12 @@ public class ParticleSwarmOptimizationAlgorithm
    */
   public ParticleSwarmOptimizationAlgorithm(
       String name,
-      Evaluation<DoubleSolution> evaluation,
       SolutionsCreation<DoubleSolution> createInitialSwarm,
+      Evaluation<DoubleSolution> evaluation,
       Termination termination,
       VelocityInitialization velocityInitialization,
+      LocalBestInitialization localBestInitialization,
+      GlobalBestInitialization globalBestInitialization,
       BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
@@ -70,6 +72,8 @@ public class ParticleSwarmOptimizationAlgorithm
     this.globalBest = externalArchive;
 
     this.velocityInitialization = velocityInitialization ;
+    this.localBestInitialization = localBestInitialization ;
+    this.globalBestInitialization = globalBestInitialization ;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -83,7 +87,6 @@ public class ParticleSwarmOptimizationAlgorithm
     speed = velocityInitialization.initialize(swarm);
     localBest = localBestInitialization.initialize(swarm) ;
     globalBest = globalBestInitialization.initialize(swarm, globalBest) ;
-    //initializeGlobalBest(swarm) ;
     initProgress();
 
     while (!termination.isMet(attributes)) {
