@@ -100,8 +100,8 @@ public class ParticleSwarmOptimizationAlgorithm
     speed = velocityInitialization.initialize(swarm);
     localBest = localBestInitialization.initialize(swarm);
     globalBest = globalBestInitialization.initialize(swarm, globalBest);
-    initProgress();
 
+    initProgress();
     while (!termination.isMet(attributes)) {
       velocityUpdate.update(swarm, speed, localBest, globalBest);
       positionUpdate.update(swarm, speed);

@@ -29,6 +29,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 public class ComponentBasedSMPSO {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
@@ -75,7 +76,7 @@ public class ComponentBasedSMPSO {
             localBestUpdate,
             externalArchive);
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO", 80, 1000, null);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceFrontFileName);
     smpso.getObservable().register(runTimeChartObserver);
 
     smpso.run();
