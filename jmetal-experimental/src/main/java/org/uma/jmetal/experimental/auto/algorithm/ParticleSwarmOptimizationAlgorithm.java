@@ -6,6 +6,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solu
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -29,10 +30,10 @@ public class ParticleSwarmOptimizationAlgorithm
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
-  private VelocityInitialization initializeVelocity ;
+  private VelocityInitialization velocityInitialization ;
   private LocalBestInitialization localBestInitialization ;
   private GlobalBestInitialization globalBestInitialization ;
-  //private UpdateVelocity updateVelocity;
+  private VelocityUpdate velocityUpdate ;
   //private UpdatePosition updatePosition;
   //private Perturbation perturbation;
   //private UpdateGlobalBest updateGlobalBest;
@@ -60,12 +61,15 @@ public class ParticleSwarmOptimizationAlgorithm
       Evaluation<DoubleSolution> evaluation,
       SolutionsCreation<DoubleSolution> createInitialSwarm,
       Termination termination,
+      VelocityInitialization velocityInitialization,
       BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialSwarm = createInitialSwarm;
     this.termination = termination;
     this.globalBest = externalArchive;
+
+    this.velocityInitialization = velocityInitialization ;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -76,14 +80,14 @@ public class ParticleSwarmOptimizationAlgorithm
 
     swarm = createInitialSwarm.create() ;
     swarm = evaluation.evaluate(swarm);
-    speed = initializeVelocity.initialize(swarm);
+    speed = velocityInitialization.initialize(swarm);
     localBest = localBestInitialization.initialize(swarm) ;
     globalBest = globalBestInitialization.initialize(swarm, globalBest) ;
     //initializeGlobalBest(swarm) ;
     initProgress();
 
     while (!termination.isMet(attributes)) {
-      //updateVelocity.update(swarm);
+      velocityUpdate.update(swarm, speed, localBest, globalBest);
       //updatePosition.update(swarm);
       //swarm = perturbation.perturbate(swarm);
       swarm = evaluation.evaluate(swarm) ;
