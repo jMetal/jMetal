@@ -1,8 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -12,6 +12,7 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultGlobalBestInitializationTest {
   @Test
   public void shouldInitializeRaiseAnExceptionIfTheSwarmIsNull() {
-    assertThrows(NullParameterException.class, () -> new DefaultGlobalBestInitialization().initialize(null, new CrowdingDistanceArchive<>(1))) ;
+    assertThrows(NullParameterException.class, () -> new DefaultGlobalBestInitialization().initialize(null, Mockito.mock(BoundedArchive.class))) ;
   }
 
   @Test
@@ -29,7 +30,7 @@ class DefaultGlobalBestInitializationTest {
 
   @Test
   public void shouldInitializeRaiseAnExceptionIfTheSwarmIsEmpty() {
-    assertThrows(InvalidConditionException.class, () -> new DefaultGlobalBestInitialization().initialize(new ArrayList<>(), new CrowdingDistanceArchive<>(1))) ;
+    assertThrows(InvalidConditionException.class, () -> new DefaultGlobalBestInitialization().initialize(new ArrayList<>(), Mockito.mock(BoundedArchive.class))) ;
   }
 
   @Test
@@ -40,7 +41,11 @@ class DefaultGlobalBestInitializationTest {
     DoubleSolution particle = problem.createSolution() ;
     swarm.add(particle);
 
-    BoundedArchive<DoubleSolution> globalBest = new DefaultGlobalBestInitialization().initialize(swarm, new CrowdingDistanceArchive<>(10)) ;
+    BoundedArchive<DoubleSolution> archive = Mockito.mock(BoundedArchive.class) ;
+    List<DoubleSolution> archiveList = List.of(particle) ;
+    Mockito.when(archive.getSolutionList()).thenReturn(archiveList) ;
+
+    BoundedArchive<DoubleSolution> globalBest = new DefaultGlobalBestInitialization().initialize(swarm, archive) ;
 
     assertEquals(1, globalBest.getSolutionList().size());
     assertSame(particle, globalBest.getSolutionList().get(0));

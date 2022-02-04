@@ -18,7 +18,9 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
     Check.notNull(globalBest);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    swarm.forEach(globalBest::add);
+    for (DoubleSolution doubleSolution : swarm) {
+      globalBest.add(doubleSolution);
+    }
 
     return globalBest;
   }
