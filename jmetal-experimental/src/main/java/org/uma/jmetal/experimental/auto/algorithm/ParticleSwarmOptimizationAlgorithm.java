@@ -6,6 +6,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solu
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
@@ -39,7 +40,7 @@ public class ParticleSwarmOptimizationAlgorithm
   private PositionUpdate positionUpdate;
   private Perturbation perturbation;
   private GlobalBestUpdate globalBestUpdate;
-  //private UpdateParticleBest updateParticleBest ;
+  private LocalBestUpdate localBestUpdate ;
 
   private Map<String, Object> attributes;
 
@@ -70,6 +71,7 @@ public class ParticleSwarmOptimizationAlgorithm
           PositionUpdate positionUpdate,
           Perturbation perturbation,
           GlobalBestUpdate globalBestUpdate,
+          LocalBestUpdate localBestUpdate,
           BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
@@ -84,6 +86,7 @@ public class ParticleSwarmOptimizationAlgorithm
     this.positionUpdate = positionUpdate;
     this.perturbation = perturbation;
     this.globalBestUpdate = globalBestUpdate;
+    this.localBestUpdate = localBestUpdate ;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -105,13 +108,12 @@ public class ParticleSwarmOptimizationAlgorithm
       swarm = perturbation.perturbate(swarm);
       swarm = evaluation.evaluate(swarm);
       globalBest = globalBestUpdate.update(swarm,globalBest) ;
-      //updateParticleBest.update(swarm) ;
+      localBest = localBestUpdate.update(swarm, localBest) ;
       updateProgress();
     }
 
     totalComputingTime = System.currentTimeMillis() - initTime;
   }
-
 
   private void updateArchive(List<DoubleSolution> population) {
     if (globalBest != null) {
