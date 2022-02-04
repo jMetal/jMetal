@@ -4,6 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
@@ -34,7 +35,7 @@ public class ParticleSwarmOptimizationAlgorithm
   private LocalBestInitialization localBestInitialization ;
   private GlobalBestInitialization globalBestInitialization ;
   private VelocityUpdate velocityUpdate ;
-  //private UpdatePosition updatePosition;
+  private PositionUpdate positionUpdate;
   //private Perturbation perturbation;
   //private UpdateGlobalBest updateGlobalBest;
   //private UpdateParticleBest updateParticleBest ;
@@ -64,6 +65,8 @@ public class ParticleSwarmOptimizationAlgorithm
       VelocityInitialization velocityInitialization,
       LocalBestInitialization localBestInitialization,
       GlobalBestInitialization globalBestInitialization,
+      VelocityUpdate velocityUpdate,
+      PositionUpdate positionUpdate,
       BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
@@ -74,6 +77,8 @@ public class ParticleSwarmOptimizationAlgorithm
     this.velocityInitialization = velocityInitialization ;
     this.localBestInitialization = localBestInitialization ;
     this.globalBestInitialization = globalBestInitialization ;
+    this.velocityUpdate = velocityUpdate ;
+    this.positionUpdate = positionUpdate ;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -91,6 +96,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
     while (!termination.isMet(attributes)) {
       velocityUpdate.update(swarm, speed, localBest, globalBest);
+      positionUpdate.update(swarm, speed) ;
       //updatePosition.update(swarm);
       //swarm = perturbation.perturbate(swarm);
       swarm = evaluation.evaluate(swarm) ;
