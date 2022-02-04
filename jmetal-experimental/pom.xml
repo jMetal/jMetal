@@ -38,7 +38,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.uma.jmetal.experimental.auto.irace.AutoNSGAIIirace</mainClass>
+                            <mainClass>org.uma.jmetal.experimental.auto.irace.AutoNSGAIIIrace</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

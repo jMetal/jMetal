@@ -9,7 +9,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

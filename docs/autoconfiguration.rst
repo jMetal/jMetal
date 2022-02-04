@@ -3,7 +3,10 @@
 Auto-configuration of evolutionary algorithms: NSGA-II
 ======================================================
 
-Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832). This tutorial is intended as a guide to replicate the experimentation conducted in that paper. Please, take into account that this is a work in progress. Comments, suggestions, and bugs reporting are welcome. The source code is located in the ``org.uma.jmetal.auto`` package of the ``jmetal-experimental`` submodule.
+:Author: Antonio J. Nebro <ajnebro@uma.es>
+:Date: 2022-1-21
+
+Before reading this section, readers are referred to the paper "Automatic configuration of NSGA-II with jMetal and irace", presented in GECCO 2019 (DOI: https://doi.org/10.1145/3319619.3326832). This tutorial is intended as a guide to replicate the experimentation conducted in that paper. Please, take into account that this is a work in progress. Comments, suggestions, and bugs reporting are welcome. The source code is located in the ``org.uma.jmetal.experimental.auto`` package in the ``jmetal-experimental`` submodule.
 
 Motivation
 ----------
@@ -44,9 +47,9 @@ The parameters or components of NSGA-II that can be adjusted are included in thi
 +---------------------------------------+-----------------------------------------------------+
 | *populationSize*                      | 100                                                 |
 +---------------------------------------+-----------------------------------------------------+
-| *populationSizeWithArchive*           | 10,20,50,100,200,400                                |
+| *populationSizeWithArchive*           | [10, 200]                                           |
 +---------------------------------------+-----------------------------------------------------+
-| *offspringPopulationSize*             | 1,5,10,20,50,100,200,400                            |
+| *offspringPopulationSize*             | [1, 400]                                            |
 +---------------------------------------+-----------------------------------------------------+
 | *createInitialSolutions*              | *random*, *latinHypercubeSampling*, *scatterSearch* |
 +---------------------------------------+-----------------------------------------------------+
@@ -77,7 +80,7 @@ The parameters or components of NSGA-II that can be adjusted are included in thi
 | *selectionTournamentSize*             | [2, 10]                                             |
 +---------------------------------------+-----------------------------------------------------+
 
-Our *autoNSGAII* can optionally adopt an external archive to store the non-dominated solutions found during the search process. The archive size of bounded and the crowding distance estimator is used to remove solutions with the archive is full. Then, in case of using no archive, the result of the algorithm is the population, which is configured with the *populationSize* parameter; otherwise, the output is the external archive, whose maximum size is *populationSize* parameter value, but then the population size can be tuned by taking values from the set (10, 20, 50, 100, 200, 400).
+Our *autoNSGAII* can optionally adopt an external archive to store the non-dominated solutions found during the search process. The archive size of bounded and the crowding distance estimator is used to remove solutions with the archive is full. Then, in case of using no archive, the result of the algorithm is the population, which is configured with the *populationSize* parameter; otherwise, the output is the external archive, whose maximum size is *populationSize* parameter value, but then the population size can be tuned by taking values in the range [10, 200]).
 
 In the classical NSGA-II, the offspring population size is equal to the population size, but we can set its value from 1 (which leads to a steady-state selection scheme) to 400.
 
@@ -92,13 +95,13 @@ As we intend to use irace as auto-tuning package, it requires a text file contai
 
   algorithmResult                          "--algorithmResult "                     c       (externalArchive,population)
   populationSize                           "--populationSize "                      o       (100)
-  populationSizeWithArchive                "--populationSizeWithArchive "           o       (10,20,50,100,200)         | algorithmResult %in% c("externalArchive")
+  populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                   | algorithmResult %in% c("externalArchive")
   #
   maximumNumberOfEvaluations               "--maximumNumberOfEvaluations "          c       (25000)
   createInitialSolutions                   "--createInitialSolutions "              c       (random,latinHypercubeSampling,scatterSearch)
   #
   variation                                "--variation "                           c       (crossoverAndMutationVariation)
-  offspringPopulationSize                  "--offspringPopulationSize "             o       (1,10,50,100)
+  offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)
   crossover                                "--crossover "                           c       (SBX,BLX_ALPHA)
   crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
   crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA")
@@ -176,7 +179,7 @@ The following code snippet include the most relevant parts of the ``Evolutionary
     }
   }
 
-To configure NSGA-II, we have developed a package ``org.uma.jmetal.auto.component`` which provides components that can be used with the ``EvolutionaryAlgorithm`` class. Each component has an interface and a number of implementations. It is worth mentioning that two of the components, ``evaluation`` and ``termination``, will not typically be used in the auto-configuration of the algorithm, but the ``termination`` is particularly interesting because it allows to define different stopping conditions: by number of evaluations, by computing time, and when the user presses a key.
+To configure NSGA-II, we have developed a package ``org.uma.jmetal.experimental.componentbasedalgorithm.catalogue`` which provides components that can be used with the ``EvolutionaryAlgorithm`` class. Each component has an interface and a number of implementations. It is worth mentioning that two of the components, ``evaluation`` and ``termination``, will not typically be used in the auto-configuration of the algorithm, but the ``termination`` is particularly interesting because it allows to define different stopping conditions: by number of evaluations, by computing time, and when the user presses a key.
 
 
 The ``AutoNSGAII`` class
@@ -188,7 +191,7 @@ The approach we have adopted is to get a sequence of pairs <parameter, value> as
 .. code-block:: text
 
                 --problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.pf "
+                + "--referenceFrontFileName ZDT1.csv "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
@@ -208,7 +211,7 @@ The approach we have adopted is to get a sequence of pairs <parameter, value> as
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
 
-We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.NSGAWithParameters" showing how to use this parameter string with ``AutoNSGAII``.
+We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.NSGAIIConfiguredFromAParameterString`` showing how to use this parameter string with ``AutoNSGAII``.
 
 Stuff required
 --------------
@@ -216,16 +219,17 @@ Stuff required
 To replicate the results presented in https://doi.org/10.1145/3319619.3326832 we need:
 
 * R
-* The jar file `jmetal-experimental-5.11-SNAPSHOT-jar-with-dependencies.jar`.
+* The jar file ``jmetal-experimental-5.12-SNAPSHOT-jar-with-dependencies.jar``.
 * The contents of folder ``jmetal-experimental/src/main/resources/irace``.
+* Copy the ``resources`` folder of the jMetal project into the ``execdir`` directory that is generated by irace. This is needed to allow the algorithm to find the reference fronts.
 
-To generate the `jmetal-experimetal-5.11-SNAPSHOT-jar-with-dependencies.jar` file, just type the following command at the root of the jMetal project:
+To generate the ``jmetal-experimetal-5.12-SNAPSHOT-jar-with-dependencies.jar`` file, just type the following command at the root of the jMetal project:
 
 .. code-block:: bash
 
-  mvn clean package -DskipTests=tournament
+  mvn clean package -DskipTests=true
 
-If everything goes fine, the file will be generated in the `jmetal-experimental/target` folder.
+If everything goes fine, the file will be generated in the ``jmetal-experimental/target`` folder.
 
 The contents of irace folder are the following:
 
@@ -234,27 +238,27 @@ The contents of irace folder are the following:
 3. ``instances-list.txt``: the problems to be solved and their reference Pareto fronts are included here. It currently contains the following:
 
 .. code-block:: text
+  
+  org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.csv --maximumNumberOfEvaluations 25000
+  org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.csv --maximumNumberOfEvaluations 25000
 
-  org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.pf
-  org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.pf
-
-We must note that **currently we can only auto-configure NSGA-II with benchmark problems** included in jMetal.
+Just note that the stopping condition of the algorithm (i.e., the maximum number of evaluations) is set in this file.
 
 4. ``scenario-NSGAII.txt``: default irace parameters (we usually keep this file unchanged)
-5. ``target-runner``. Bash script which is executed in every run of irace.
+5. ``target-runner``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner`` in a terminal).
 6. ``run.sh``. Bash script to run irace. VERY IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
 
 Running everything
 ------------------
 
-Once you have all the needed resources, just create a folder in the machine where you are going to run the experiment and copy  the contents of the `irace` folder and the `jmetal-experimental-5.11-SNAPSHOT-jar-with-dependencies.jar` file into it. Take into account that irace will generate thousands of configurations, so using a multi-core machine is advisable (we use a Linux virtual machine with 24 cores). We have tested the software in Linux, macOS, and Windows 10 (in the Ubuntu Bash console).
+Once you have all the needed resources, just create a folder in the machine where you are going to run the experiment and copy  the contents of the `irace` folder and the ``jmetal-experimental-5.12-SNAPSHOT-jar-with-dependencies.jar`` file into it. Take into account that irace will generate thousands of configurations, so using a multi-core machine is advisable (we use a Linux virtual machine with 32 cores). We have tested the software in Linux, macOS, and Windows 10 (in the Ubuntu Bash console).
 
 To run irace simply run the following command:
 
@@ -271,7 +275,7 @@ irace will create a directory called ``execdir`` where it will write a number of
 
 .. code-block:: bash
 
-  cat execdir/irace.stdout.out
+  cat execdir/irace.stderr.out
 
 The second file contains a lot of information about the run of irace, including the configurations being tested. We are particularly interested in the best found configurations, which are written at the end of the file (just below the line starting by "# Best configuration as command lines"). For example, a result is the following:
 
@@ -282,13 +286,5 @@ The second file contains a lot of information about the run of irace, including 
 
 This configuration can be used with the ``NSGAWithParameters`` program to run NSGA-II with those settings.
 
-Some examples of Pareto front approximations produced with NSGA-II with standard settings and with the tuned configuration are included next:
-
-.. figure:: ./resources/figures/NSGAII_STD_ZDT1.png
-.. figure:: ./resources/figures/NSGAII_Tun_ZDT1.png
-.. figure:: ./resources/figures/NSGAII_STD_DTLZ4.png
-.. figure:: ./resources/figures/NSGAII_Tun_DTLZ4.png
-.. figure:: ./resources/figures/NSGAII_STD_WFG3.png
-.. figure:: ./resources/figures/NSGAII_Tun_WFG3.png
-
+NOTE: we fixed a bug in the selection operator, so the best configuration reported in https://doi.org/10.1145/3319619.3326832 will be different to the one that irace can get now. Anyway, the results of AutoNSGAII with the settings found by irace should be very similar to those in the paper.
 

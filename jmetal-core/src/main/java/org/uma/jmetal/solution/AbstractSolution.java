@@ -1,11 +1,13 @@
 package org.uma.jmetal.solution;
 
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * Abstract class representing a generic solution
@@ -50,21 +52,15 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     attributes = new HashMap<>();
 
     variables = new ArrayList<>(numberOfVariables);
-    for (int i = 0; i < numberOfVariables; i++) {
-      variables.add(i, null);
-    }
+    IntStream.range(0, numberOfVariables).forEach(i -> variables.add(i, null));
 
     objectives = new double[numberOfObjectives];
-    for (int i = 0; i < numberOfObjectives; i++) {
-      objectives[i] = 0.0;
-    }
+    IntStream.range(0, numberOfObjectives).forEach(i -> objectives[i] = 0.0);
 
     constraints = new double[numberOfConstraints];
-    for (int i = 0; i < numberOfConstraints; i++) {
-      constraints[i] = 0.0;
-    }
+    IntStream.range(0, numberOfConstraints).forEach(i -> constraints[i] = 0.0);
 
-    attributes = new HashMap<Object, Object>();
+    attributes = new HashMap<>();
   }
 
   @Override
@@ -89,10 +85,7 @@ public abstract class AbstractSolution<T> implements Solution<T> {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null) {
-      throw new JMetalException("The solution to compare is null");
-    }
-
+    Check.notNull(o) ;
     Solution<T> solution = (Solution<T>) o;
 
     return this.variables().equals(solution.variables());

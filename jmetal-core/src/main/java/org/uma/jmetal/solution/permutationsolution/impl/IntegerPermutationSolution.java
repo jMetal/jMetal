@@ -15,9 +15,11 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class IntegerPermutationSolution extends AbstractSolution<Integer>
-    implements PermutationSolution<Integer> {
+        implements PermutationSolution<Integer> {
 
-  /** Constructor */
+  /**
+   * Constructor
+   */
   public IntegerPermutationSolution(int permutationLength, int numberOfObjectives) {
     super(permutationLength, numberOfObjectives);
 
@@ -34,7 +36,9 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     }
   }
 
-  /** Copy Constructor */
+  /**
+   * Copy Constructor
+   */
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
     super(solution.getLength(), solution.objectives().length);
 
@@ -47,7 +51,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     }
 
     for (int i = 0; i < constraints().length; i++) {
-      constraints()[i] =  solution.constraints()[i];
+      constraints()[i] = solution.constraints()[i];
     }
 
     attributes = new HashMap<Object, Object>(solution.attributes);

@@ -132,6 +132,7 @@ public class WFGStudy {
       }
 
       for (int i = 0; i < problemList.size(); i++) {
+
         Algorithm<List<DoubleSolution>> algorithm = new SPEA2Builder<DoubleSolution>(
                 problemList.get(i).getProblem(),
                 new SBXCrossover(1.0, 10.0),
