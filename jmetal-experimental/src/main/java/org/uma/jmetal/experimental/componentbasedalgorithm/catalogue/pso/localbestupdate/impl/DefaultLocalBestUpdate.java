@@ -9,6 +9,11 @@ import java.util.List;
 public class DefaultLocalBestUpdate implements LocalBestUpdate {
   private DominanceComparator<DoubleSolution> dominanceComparator ;
 
+  /**
+   * TODO: Terminar documentacion
+   * Constructor
+   * @param dominanceComparator
+   */
   public DefaultLocalBestUpdate(DominanceComparator<DoubleSolution> dominanceComparator) {
     this.dominanceComparator = dominanceComparator ;
   }

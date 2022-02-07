@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class DefaultVelocityInitialization implements VelocityInitialization {
   @Override
+  /**
+   * Initialize the velocity of the particles.
+   * @param swarm: List of possible solutions.
+   * @return A matrix with the initial velocity of the particles
+   */
   public double[][] initialize(List<DoubleSolution> swarm) {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
- **
+ ** TODO: Finalizar documentacion
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
@@ -34,16 +34,16 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
   /**
    * Constructor
-   * @param r1Min
-   * @param r1Max
-   * @param r2Min
-   * @param r2Max
-   * @param c1Min
-   * @param c1Max
-   * @param c2Min
-   * @param c2Max
-   * @param weightMin
-   * @param weightMax
+   * @param r1Min double min value of uniformly distributed random number. Usually number in range [0,1].
+   * @param r1Max double max value of uniformly distributed random number. Usually number in range [0,1].
+   * @param r2Min double min value of uniformly distributed random number. Usually number in range [0,1].
+   * @param r2Max double max value of uniformly distributed random number. Usually number in range [0,1].
+   * @param c1Min: Min value for c1.
+   * @param c1Max: Max value for c1.
+   * @param c2Min: Min value for c2.
+   * @param c2Max: Max value for c2.
+   * @param weightMin: Min value for inertia.
+   * @param weightMax: Max value for inertia.
    */
   public ConstrainedVelocityUpdate(double r1Min,
                                    double r1Max,
@@ -79,6 +79,14 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   }
 
   @Override
+  /**
+   * Update the velocity of the particle.
+   * @param swarm: List of possible solutions.
+   * @param speed: Matrix for particle speed.
+   * @param localBest: List of local best particles.
+   * @param leaders: List of global best particles.
+   * @return Updated speed.
+   */
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest, BoundedArchive<DoubleSolution> leaders) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
@@ -110,6 +118,11 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     return speed ;
   }
 
+  /**
+   *
+   * @param leaders: List of global best particles.
+   * @return Best Solution's list updated.
+   */
   protected DoubleSolution selectGlobalBest(BoundedArchive<DoubleSolution> leaders)  {
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
@@ -127,6 +140,14 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     return bestGlobal;
   }
 
+  /**
+   *
+   * @param v
+   * @param deltaMax
+   * @param deltaMin
+   * @param variableIndex
+   * @return
+   */
   private double velocityConstriction(
           double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
     double result;
@@ -147,6 +168,12 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     return result;
   }
 
+  /**
+   *
+   * @param c1
+   * @param c2
+   * @return Coefficient constriction
+   */
   protected double constrictionCoefficient(double c1, double c2) {
     double rho = c1 + c2;
     if (rho <= 4) {

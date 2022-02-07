@@ -27,12 +27,12 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
 
   /**
    * Constructor
-   * @param c1Min
-   * @param c1Max
-   * @param c2Min
-   * @param c2Max
-   * @param weightMin
-   * @param weightMax
+   * @param c1Min: Min value for c1.
+   * @param c1Max: Max value for c1.
+   * @param c2Min: Min value for c2.
+   * @param c2Max: Max value for c2.
+   * @param weightMin: Min value for inertia.
+   * @param weightMax: Max value for inertia.
    */
   public DefaultVelocityUpdate(double c1Min,
                                double c1Max,
@@ -51,6 +51,14 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
   }
 
   @Override
+  /**
+   * Update the velocity of the particle.
+   * @param swarm: List of possible solutions.
+   * @param speed: Matrix for particle speed.
+   * @param localBest: List of local best particles.
+   * @param leaders: List of global best particles.
+   * @return Updated speed.
+   */
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest, BoundedArchive<DoubleSolution> leaders) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
@@ -78,6 +86,11 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
     return speed ;
   }
 
+  /**
+   *
+   * @param leaders: List of global best particles.
+   * @return Best Solution's list updated.
+   */
   protected DoubleSolution selectGlobalBest(BoundedArchive<DoubleSolution> leaders)  {
     DoubleSolution one, two;
     DoubleSolution bestGlobal;

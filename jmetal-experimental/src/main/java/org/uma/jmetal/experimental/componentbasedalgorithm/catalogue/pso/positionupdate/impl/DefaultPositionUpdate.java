@@ -7,11 +7,20 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 import java.util.List;
 
+/**
+ * @author Antonio J. Nebro
+ */
 public class DefaultPositionUpdate implements PositionUpdate {
   protected double velocityChangeWhenLowerLimitIsReached;
   protected double velocityChangeWhenUpperLimitIsReached;
   List<Bounds<Double>> positionBounds;
 
+  /**
+   * Constructor
+   * @param velocityChangeWhenLowerLimitIsReached: Double value which represent the lower position limit to reach.
+   * @param velocityChangeWhenUpperLimitIsReached: Double value which represent the upper position limit to reach.
+   * @param positionBounds: List of positions.
+   */
   public DefaultPositionUpdate(double velocityChangeWhenLowerLimitIsReached, double velocityChangeWhenUpperLimitIsReached,
                                List<Bounds<Double>> positionBounds) {
     this.velocityChangeWhenLowerLimitIsReached = velocityChangeWhenLowerLimitIsReached;
@@ -22,6 +31,11 @@ public class DefaultPositionUpdate implements PositionUpdate {
   }
 
   @Override
+  /** Update the position of the particles.
+   * @param swarm: List of possible solutions.
+   * @param speed: Speed of the particle.
+   * @return swarm updated.
+   */
   public List<DoubleSolution> update(List<DoubleSolution> swarm, double[][] speed) {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is not > 0: " + swarm.size());
@@ -52,10 +66,16 @@ public class DefaultPositionUpdate implements PositionUpdate {
     return swarm;
   }
 
+  /**
+   * Getter of velocityChangeWhenLowerLimitIsReached variable
+   */
   public double getVelocityChangeWhenLowerLimitIsReached() {
     return velocityChangeWhenLowerLimitIsReached;
   }
 
+  /**
+   * Getter of velocityChangeWhenUpperLimitIsReached variable
+   */
   public double getVelocityChangeWhenUpperLimitIsReached() {
     return velocityChangeWhenUpperLimitIsReached;
   }

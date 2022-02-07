@@ -13,6 +13,12 @@ import java.util.List;
  */
 public class DefaultGlobalBestInitialization implements GlobalBestInitialization {
   @Override
+  /**
+   * Initialize the Global Best solution.
+   * @param: swarm: List of possibles solutions
+   * @param: globalBest: List or Empty List of auxiliar solutions
+   * @return: globalBest: List with differents global solutions.
+   */
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
