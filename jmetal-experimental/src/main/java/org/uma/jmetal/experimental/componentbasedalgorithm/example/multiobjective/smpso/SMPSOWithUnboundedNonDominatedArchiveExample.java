@@ -13,6 +13,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -34,8 +35,8 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     SMPSOWithArchive algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ3.3D.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -49,20 +50,20 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(50000) ;
 
-    Archive<DoubleSolution> externalArchive = new NonDominatedSolutionListArchive<>() ;
+    Archive<DoubleSolution> externalArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), swarmSize) ;
 
     algorithm = new SMPSOWithArchive(problem, swarmSize, leadersArchive, mutation, evaluation, termination, externalArchive) ;
 
     algorithm.run();
 
-    List<DoubleSolution> population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+    List<DoubleSolution> population = algorithm.getResult() ;
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
 
     new SolutionListOutput(population)
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv"))
+            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
             .print();
 
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
