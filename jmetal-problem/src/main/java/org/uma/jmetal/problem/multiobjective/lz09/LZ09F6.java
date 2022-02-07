@@ -15,7 +15,7 @@ public class LZ09F6 extends AbstractDoubleProblem {
   private LZ09 lz09;
 
   /**
-   * Creates a default LZ09F6 problem (30 variables and 2 objectives)
+   * Creates a default LZ09F6 problem (30 variables and 3 objectives)
    */
   public LZ09F6() {
     this(31, 1, 32);
