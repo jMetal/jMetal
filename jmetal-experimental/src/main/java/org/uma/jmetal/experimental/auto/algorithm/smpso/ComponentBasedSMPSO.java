@@ -14,6 +14,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocit
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -28,8 +29,8 @@ public class ComponentBasedSMPSO {
   public static void main(String[] args) {
     JMetalRandom.getInstance().setSeed(1);
 
-    DoubleProblem problem = new ZDT1();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
+    DoubleProblem problem = new ZDT4();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 

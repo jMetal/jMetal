@@ -129,7 +129,7 @@ public class ParticleSwarmOptimizationAlgorithm
     updateArchive(swarm);
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", swarm);
+    attributes.put("POPULATION", globalBest.getSolutionList());
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
 
@@ -137,7 +137,7 @@ public class ParticleSwarmOptimizationAlgorithm
     evaluations += swarm.size();
 
     attributes.put("EVALUATIONS", evaluations);
-    attributes.put("POPULATION", swarm);
+    attributes.put("POPULATION", globalBest.getSolutionList());
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
     observable.setChanged();
