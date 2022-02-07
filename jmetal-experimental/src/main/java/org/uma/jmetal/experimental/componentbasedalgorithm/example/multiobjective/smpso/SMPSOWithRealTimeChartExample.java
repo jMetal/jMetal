@@ -29,12 +29,13 @@ import java.util.List;
  */
 public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
+    JMetalRandom.getInstance().setSeed(1);
     DoubleProblem problem;
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv" ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
 

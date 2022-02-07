@@ -21,10 +21,13 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 public class ComponentBasedSMPSO {
   public static void main(String[] args) {
+    JMetalRandom.getInstance().setSeed(1);
+
     DoubleProblem problem = new ZDT1();
     String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
     int swarmSize = 100;
@@ -73,7 +76,7 @@ public class ComponentBasedSMPSO {
             localBestUpdate,
             externalArchive);
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceFrontFileName);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO", 80, 100, referenceFrontFileName);
     smpso.getObservable().register(runTimeChartObserver);
 
     smpso.run();
