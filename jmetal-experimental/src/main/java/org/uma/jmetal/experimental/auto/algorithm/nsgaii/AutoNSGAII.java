@@ -44,6 +44,7 @@ public class AutoNSGAII {
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
+  private CategoricalParameter externalArchiveTypeParameter ;
   private PopulationSizeParameter populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
@@ -148,10 +149,16 @@ public class AutoNSGAII {
 
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
-        new CategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
+        new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
     populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
+    externalArchiveTypeParameter = new CategoricalParameter("externalArchiveType", args, List.of("crowdingDistanceArchvive", "bestSolutionsArchive")) ;
+    algorithmResultParameter.addSpecificParameter(
+            "externalArchive", externalArchiveTypeParameter);
+    IntegerParameter archiveSize = new IntegerParameter("archiveSize", args, populationSizeParameter.getValue(), populationSizeParameter.getValue()) ;
+    algorithmResultParameter.addSpecificParameter(
+            "externalArchive", archiveSize);
   }
 
   /**
