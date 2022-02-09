@@ -1,7 +1,6 @@
-package org.uma.jmetal.util.checking;
+package org.uma.jmetal.util.errorchecking;
 
 import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
