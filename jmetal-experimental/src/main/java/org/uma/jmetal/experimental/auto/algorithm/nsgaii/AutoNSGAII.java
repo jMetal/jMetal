@@ -44,7 +44,7 @@ public class AutoNSGAII {
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
-  private CategoricalParameter externalArchiveParameter;
+  private ExternalArchiveParameter externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
@@ -151,7 +151,7 @@ public class AutoNSGAII {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", args, Arrays.asList("externalArchive", "population"));
     populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
-    externalArchiveParameter = new CategoricalParameter("externalArchive", args, List.of("crowdingDistanceArchive","unboundedExternalArchive")) ;
+    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedExternalArchive")) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
     algorithmResultParameter.addSpecificParameter(
@@ -170,7 +170,9 @@ public class AutoNSGAII {
     Archive<DoubleSolution> archive = null;
 
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
+      //archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
+      externalArchiveParameter.setSize(populationSizeParameter.getValue());
+      archive = externalArchiveParameter.getParameter() ;
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
