@@ -42,7 +42,7 @@ public class AutoNSGAIIIrace {
   private StringParameter referenceFrontFilename;
   private IntegerParameter maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
-  private PopulationSizeParameter populationSizeParameter;
+  private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
@@ -51,7 +51,7 @@ public class AutoNSGAIIIrace {
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
-    populationSizeParameter = new PopulationSizeParameter(args);
+    populationSizeParameter = new PositiveIntegerValue("populationSize", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
         new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
