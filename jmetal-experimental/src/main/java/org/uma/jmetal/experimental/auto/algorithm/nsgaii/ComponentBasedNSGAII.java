@@ -34,7 +34,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class NSGAII {
+public class ComponentBasedNSGAII {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT1();
 

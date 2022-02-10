@@ -211,7 +211,7 @@ The approach we have adopted is to get a sequence of pairs <parameter, value> as
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
 
-We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.NSGAIIConfiguredFromAParameterString`` showing how to use this parameter string with ``AutoNSGAII``.
+We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.ComponentBasedNSGAIIConfiguredFromAParameterString`` showing how to use this parameter string with ``AutoNSGAII``.
 
 Stuff required
 --------------

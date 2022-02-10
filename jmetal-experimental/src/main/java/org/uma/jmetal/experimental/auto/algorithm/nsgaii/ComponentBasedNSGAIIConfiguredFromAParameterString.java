@@ -12,20 +12,18 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class NSGAIIConfiguredFromAParameterStringWithCrowdingArchive {
+public class ComponentBasedNSGAIIConfiguredFromAParameterString {
 
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT1.csv" ;
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult externalArchive "
-                + "--externalArchive unboundedExternalArchive "
+                + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
-                + "--populationSizeWithArchive 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "

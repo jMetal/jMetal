@@ -180,7 +180,7 @@ public class AutoNSGAIIIrace {
 
     var nsgaii =
         new EvolutionaryAlgorithm<>(
-            "NSGAII",
+            "ComponentBasedNSGAII",
             evaluation,
             initialSolutionsCreation,
             termination,
