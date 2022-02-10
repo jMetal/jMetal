@@ -39,8 +39,6 @@ public class SMPSOWithUnboundedNonDominatedArchiveExample extends AbstractAlgori
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
-    referenceParetoFront = null ;
-    problem = new DTLZ2Minus() ;
 
     int swarmSize = 100 ;
     BoundedArchive<DoubleSolution> leadersArchive = new CrowdingDistanceArchive<DoubleSolution>(swarmSize) ;
