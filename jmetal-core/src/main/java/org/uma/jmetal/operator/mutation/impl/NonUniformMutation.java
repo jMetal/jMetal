@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
@@ -64,9 +65,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   /* Setters */
   public void setCurrentIteration(int currentIteration) {
-    if (currentIteration < 0) {
-      throw new JMetalException("Iteration number cannot be a negative value: " + currentIteration) ;
-    }
+    Check.that(currentIteration >= 0, "The iteration number cannot be a negative value: " + currentIteration);
 
     this.currentIteration = currentIteration;
   }
@@ -86,9 +85,7 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
   /** Execute() method */
   @Override
   public DoubleSolution execute(DoubleSolution solution) {
-    if (null == solution) {
-      throw new JMetalException("Null parameter") ;
-    }
+    Check.notNull(solution);
 
     doMutation(mutationProbability, solution);
 
