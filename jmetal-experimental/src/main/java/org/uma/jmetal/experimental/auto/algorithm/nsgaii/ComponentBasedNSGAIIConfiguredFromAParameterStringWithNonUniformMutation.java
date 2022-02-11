@@ -12,7 +12,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchive {
+public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMutation {
 
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT1.csv" ;
@@ -21,11 +21,9 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchi
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
                 + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
-                + "--algorithmResult externalArchive "
-                + "--externalArchive unboundedExternalArchive "
+                + "--algorithmResult population "
                 + "--populationSize 100 "
                 + "--offspringPopulationSize 100 "
-                + "--populationSizeWithArchive 100 "
                 + "--createInitialSolutions random "
                 + "--variation crossoverAndMutationVariation "
                 + "--selection tournament "
@@ -36,10 +34,10 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithCrowdingArchi
                 + "--crossoverProbability 0.9 "
                 + "--crossoverRepairStrategy bounds "
                 + "--sbxDistributionIndex 20.0 "
-                + "--mutation polynomial "
+                + "--mutation nonUniform "
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 ")
+                + "--nonUniformMutationPerturbation 0.5 ")
             .split("\\s+");
 
     AutoNSGAII NSGAII = new AutoNSGAII();

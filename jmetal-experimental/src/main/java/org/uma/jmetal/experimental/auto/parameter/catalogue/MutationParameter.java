@@ -35,8 +35,9 @@ public class MutationParameter extends CategoricalParameter {
         break;
       case "nonUniform":
         perturbation = (Double) findSpecificParameter("nonUniformMutationPerturbation").getValue();
+        int maxIterations = (Integer) getNonConfigurableParameter("maxIterations") ;
         result =
-                new NonUniformMutation(mutationProbability, perturbation, 100, repairDoubleSolution.getParameter());
+                new NonUniformMutation(mutationProbability, perturbation, maxIterations, repairDoubleSolution.getParameter());
         break;
       default:
         throw new RuntimeException("Mutation operator does not exist: " + getName());

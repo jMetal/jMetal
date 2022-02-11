@@ -42,7 +42,7 @@ public class AutoNSGAII {
 
   private StringParameter problemNameParameter;
   private StringParameter referenceFrontFilename;
-  private IntegerParameter maximumNumberOfEvaluationsParameter;
+  private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
@@ -56,7 +56,7 @@ public class AutoNSGAII {
     problemNameParameter = new StringParameter("problemName", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
-        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
+        new PositiveIntegerValue("maximumNumberOfEvaluations", args);
 
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilename);
@@ -100,7 +100,7 @@ public class AutoNSGAII {
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonuniform"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
@@ -119,7 +119,7 @@ public class AutoNSGAII {
 
     RealParameter nonUniformMutationPerturbation =
             new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
-    mutation.addSpecificParameter("nonuniform", uniformMutationPerturbation);
+    mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
     //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
     //    new DifferentialEvolutionCrossoverParameter(args);
@@ -190,8 +190,14 @@ public class AutoNSGAII {
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
-    Variation<DoubleSolution> variation =
-        (Variation<DoubleSolution>) variationParameter.getParameter();
+    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter("mutation") ;
+    if (mutationParameter.getValue().equals("nonUniform")) {
+      mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
+      mutationParameter.addNonConfigurableParameter("maxIterations",
+              maximumNumberOfEvaluationsParameter.getValue()/populationSizeParameter.getValue());
+    }
+    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
+
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
