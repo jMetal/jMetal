@@ -100,7 +100,7 @@ public class AutoNSGAII {
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonuniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
@@ -116,6 +116,10 @@ public class AutoNSGAII {
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
+
+    RealParameter nonUniformMutationPerturbation =
+            new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
+    mutation.addSpecificParameter("nonuniform", uniformMutationPerturbation);
 
     //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
     //    new DifferentialEvolutionCrossoverParameter(args);

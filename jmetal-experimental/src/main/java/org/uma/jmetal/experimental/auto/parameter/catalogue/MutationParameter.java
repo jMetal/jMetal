@@ -2,6 +2,7 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -31,6 +32,11 @@ public class MutationParameter extends CategoricalParameter {
         Double perturbation = (Double) findSpecificParameter("uniformMutationPerturbation").getValue();
         result =
                 new UniformMutation(mutationProbability, perturbation, repairDoubleSolution.getParameter());
+        break;
+      case "nonUniform":
+        perturbation = (Double) findSpecificParameter("nonUniformMutationPerturbation").getValue();
+        result =
+                new NonUniformMutation(mutationProbability, perturbation, 100, repairDoubleSolution.getParameter());
         break;
       default:
         throw new RuntimeException("Mutation operator does not exist: " + getName());

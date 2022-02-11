@@ -2,6 +2,8 @@ package org.uma.jmetal.operator.mutation.impl;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
+import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -21,17 +23,24 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
 
   private int currentIteration;
   private RandomGenerator<Double> randomGenenerator ;
+  private RepairDoubleSolution solutionRepair;
 
   /** Constructor */
   public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations) {
-	  this(mutationProbability, perturbation, maxIterations, () -> JMetalRandom.getInstance().nextDouble());
+	  this(mutationProbability, perturbation, maxIterations, new RepairDoubleSolutionWithBoundValue(), () -> JMetalRandom.getInstance().nextDouble());
   }
 
   /** Constructor */
-  public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations, RandomGenerator<Double> randomGenenerator) {
+  public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations, RepairDoubleSolution solutionRepair) {
+    this(mutationProbability, perturbation, maxIterations, solutionRepair, () -> JMetalRandom.getInstance().nextDouble());
+  }
+
+  /** Constructor */
+  public NonUniformMutation(double mutationProbability, double perturbation, int maxIterations, RepairDoubleSolution solutionRepair, RandomGenerator<Double> randomGenenerator) {
     this.perturbation = perturbation ;
     this.mutationProbability = mutationProbability ;
     this.maxIterations = maxIterations ;
+    this.solutionRepair = solutionRepair ;
 
     this.randomGenenerator = randomGenenerator ;
   }
@@ -109,7 +118,9 @@ public class NonUniformMutation implements MutationOperator<DoubleSolution> {
           tmp += solution.variables().get(i);
         }
 
-        tmp = bounds.restrict(tmp);
+        tmp = solutionRepair.repairSolutionVariableValue(
+                        tmp, bounds.getLowerBound(), bounds.getUpperBound());
+
         solution.variables().set(i, tmp);
       }
     }
