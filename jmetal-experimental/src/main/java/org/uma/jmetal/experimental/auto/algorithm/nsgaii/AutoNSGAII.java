@@ -100,7 +100,7 @@ public class AutoNSGAII {
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
@@ -109,9 +109,13 @@ public class AutoNSGAII {
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForMutation =
+    RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
+    mutation.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
+
+    RealParameter distributionIndexForLinkedPolynomialMutation =
+            new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
+    mutation.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);

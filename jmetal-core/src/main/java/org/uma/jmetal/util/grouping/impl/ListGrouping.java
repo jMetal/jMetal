@@ -10,7 +10,7 @@ import java.util.List;
  * Abstract class that groups a list of {@link Comparable} entities by some order in the collection. The number of
  * groups is a constructor parameter and the group size is computed by dividing the list size
  * by the number of groups. If the remainder of this division is not zero, the last group will
- * contains the remaining index values (so, its size would be higher than the size of the rest of
+ * contain the remaining index values (so, its size would be higher than the size of the rest of
  * groups).
  *
  * @author Antonio J. Nebro
@@ -54,7 +54,7 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   }
 
   /**
-   * If the indices length is not divisible by the number of groups, the remaining indices
+   * If the indexes length is not divisible by the number of groups, the remaining indices
    * are added to the last group
    * @param index
    */

@@ -2,6 +2,7 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.mutation.impl.LinkedPolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
@@ -26,6 +27,13 @@ public class MutationParameter extends CategoricalParameter {
                 (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
         result =
                 new PolynomialMutation(
+                        mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
+        break;
+      case "linkedPolynomial":
+        distributionIndex =
+                (Double) findSpecificParameter("linkedPolynomialMutationDistributionIndex").getValue();
+        result =
+                new LinkedPolynomialMutation(
                         mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":
