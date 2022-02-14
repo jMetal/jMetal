@@ -19,6 +19,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -30,12 +32,15 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
+/**
+ * @author  Daniel Doblas Jiménez <dandobjim@uma.es>
+ */
 public class ComponentBasedOMOPSO {
   public static void main(String[] args) {
     JMetalRandom.getInstance().setSeed(1);
 
-    DoubleProblem problem = new ZDT1();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
+    DoubleProblem problem = new ZDT3();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT3.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 

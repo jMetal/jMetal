@@ -16,6 +16,7 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * solutions inside the composite solutions.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author  Daniel Doblas Jiménez <dandobjim@uma.es>
  */
 @SuppressWarnings("serial")
 public class CompositeDoubleSolutionMutation implements MutationOperator<DoubleSolution> {
