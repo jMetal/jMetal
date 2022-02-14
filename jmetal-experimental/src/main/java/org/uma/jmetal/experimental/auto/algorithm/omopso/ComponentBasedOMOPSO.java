@@ -15,9 +15,11 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocit
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -33,7 +35,7 @@ public class ComponentBasedOMOPSO {
     JMetalRandom.getInstance().setSeed(1);
 
     DoubleProblem problem = new ZDT1();
-    String referenceFrontFileName = "resource/referenceFrontCSV/ZDT1.csv";
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
@@ -82,7 +84,7 @@ public class ComponentBasedOMOPSO {
         localBestUpdate,
         externalArchive);
 
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO",
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("OMOPSO",
         80, 100, referenceFrontFileName);
 
     omopso.getObservable().register(runTimeChartObserver);

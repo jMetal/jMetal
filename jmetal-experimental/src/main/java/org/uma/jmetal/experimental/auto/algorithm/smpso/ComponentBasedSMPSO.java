@@ -31,8 +31,8 @@ public class ComponentBasedSMPSO {
   public static void main(String[] args) {
     JMetalRandom.getInstance().setSeed(1);
 
-    DoubleProblem problem = new ZDT4();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv" ;
+    DoubleProblem problem = new ZDT1();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
