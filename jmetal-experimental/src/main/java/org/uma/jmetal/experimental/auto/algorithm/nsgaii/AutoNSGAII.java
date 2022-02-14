@@ -1,6 +1,10 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
+
+import java.io.IOException;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.irace.AutoNSGAIIIrace;
 import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -13,8 +17,11 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variatio
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -41,7 +48,7 @@ public class AutoNSGAII {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private StringParameter problemNameParameter;
-  private StringParameter referenceFrontFilename;
+  public StringParameter referenceFrontFilename;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
   private ExternalArchiveParameter externalArchiveParameter;
@@ -232,4 +239,30 @@ public class AutoNSGAII {
   public static void print(List<Parameter<?>> parameterList) {
     parameterList.forEach(System.out::println);
   }
+
+  /*
+  public static void main(String[] args) throws IOException {
+    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
+    nsgaiiWithParameters.parseAndCheckParameters(args);
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
+    nsgaII.run();
+
+    String referenceFrontFile =
+        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
+
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[][] normalizedFront =
+        NormalizeUtils.normalize(
+            front,
+            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront) ;
+    System.out.println(qualityIndicator.compute(normalizedFront)) ;
+  }
+  */
 }
