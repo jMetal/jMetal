@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * @param <Source> The solution class of the solution to be mutated
  */
 public interface MutationOperator<Source> extends Operator<Source, Source> {
-    Object execute(DoubleSolution solution);
+    Source execute(Source solution);
 
     double getMutationProbability() ;
 }
