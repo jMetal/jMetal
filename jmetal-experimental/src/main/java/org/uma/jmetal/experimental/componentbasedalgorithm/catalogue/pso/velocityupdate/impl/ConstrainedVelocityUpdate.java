@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
- ** TODO: Finalizar documentacion
+ **
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
@@ -119,7 +119,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   }
 
   /**
-   *
+   * Select the best solution
    * @param leaders: List of global best particles.
    * @return Best Solution's list updated.
    */
@@ -141,11 +141,11 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   }
 
   /**
-   *
+   * Generate the velocity constriction value
    * @param v
-   * @param deltaMax
-   * @param deltaMin
-   * @param variableIndex
+   * @param deltaMax: Max value of delta parameter.
+   * @param deltaMin: Min value of delta parameter
+   * @param variableIndex: Integer number. Index of a list.
    * @return
    */
   private double velocityConstriction(
@@ -169,9 +169,9 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   }
 
   /**
-   *
-   * @param c1
-   * @param c2
+   * Generate the coefficient constriction value
+   * @param c1 value for c1.
+   * @param c2 value for c2
    * @return Coefficient constriction
    */
   protected double constrictionCoefficient(double c1, double c2) {

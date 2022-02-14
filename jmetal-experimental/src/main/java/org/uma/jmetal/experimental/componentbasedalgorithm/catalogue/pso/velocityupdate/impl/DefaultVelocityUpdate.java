@@ -52,7 +52,7 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
 
   @Override
   /**
-   * Update the velocity of the particle.
+   * Update the velocity of the particle. We assume that r1 and r2 have a random number between 0.0 and 1.0.
    * @param swarm: List of possible solutions.
    * @param speed: Matrix for particle speed.
    * @param localBest: List of local best particles.
@@ -69,8 +69,8 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
 
       bestGlobal = selectGlobalBest(leaders);
 
-      r1 = randomGenerator.nextDouble();
-      r2 = randomGenerator.nextDouble();
+      r1 = randomGenerator.nextDouble(0, 1);
+      r2 = randomGenerator.nextDouble(0, 1);
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
