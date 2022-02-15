@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.global
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
@@ -18,13 +19,13 @@ public class TournamentGlobalBestSelection implements GlobalBestSelection {
 
   @Override
   public DoubleSolution select(List<DoubleSolution> globalBestList) {
-    /*
+
     NaryTournamentSelection<DoubleSolution> tournament = new NaryTournamentSelection<>(
-        tournamentSize, globalBestArchive.getComparator().reversed());
+        tournamentSize, comparator);
 
-    return tournament.execute(globalBestArchive.getSolutionList());
-    */
+    return tournament.execute(globalBestList);
 
+/*
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
     int pos1 = JMetalRandom.getInstance().nextInt(0, globalBestList.size() - 1);
@@ -39,5 +40,7 @@ public class TournamentGlobalBestSelection implements GlobalBestSelection {
     }
 
     return bestGlobal;
+
+ */
   }
 }

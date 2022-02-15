@@ -40,8 +40,8 @@ public class ComponentBasedOMOPSO {
   public static void main(String[] args) {
     JMetalRandom.getInstance().setSeed(1);
 
-    DoubleProblem problem = new ZDT3();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT3.csv" ;
+    DoubleProblem problem = new ZDT1();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
@@ -53,7 +53,7 @@ public class ComponentBasedOMOPSO {
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
+    var globalBestSelection = new TournamentGlobalBestSelection(4, externalArchive.getComparator()) ;
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
@@ -94,7 +94,7 @@ public class ComponentBasedOMOPSO {
         externalArchive);
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("OMOPSO",
-        80, 100, referenceFrontFileName);
+        80, 500, referenceFrontFileName);
 
     omopso.getObservable().register(runTimeChartObserver);
     omopso.run();
