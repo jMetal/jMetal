@@ -4,6 +4,8 @@ import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgor
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.RandomGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
@@ -44,7 +46,8 @@ public class ComponentBasedSMPSO {
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
-    var globalBestSelection = new TournamentGlobalBestSelection(2) ;
+    GlobalBestSelection globalBestSelection = new TournamentGlobalBestSelection(2) ;
+    //globalBestSelection = new RandomGlobalBestSelection() ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;
