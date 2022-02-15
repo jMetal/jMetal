@@ -19,6 +19,8 @@ import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -34,10 +36,8 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  */
 public class ComponentBasedOMOPSO {
   public static void main(String[] args) {
-    JMetalRandom.getInstance().setSeed(1);
-
-    DoubleProblem problem = new ZDT1();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
+    DoubleProblem problem = new ZDT2();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
@@ -49,7 +49,7 @@ public class ComponentBasedOMOPSO {
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    var globalBestSelection = new TournamentGlobalBestSelection(4, externalArchive.getComparator()) ;
+    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));

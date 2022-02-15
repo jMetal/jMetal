@@ -18,11 +18,18 @@ public class TournamentGlobalBestSelection implements GlobalBestSelection {
 
   @Override
   public DoubleSolution select(List<DoubleSolution> globalBestList) {
-
     NaryTournamentSelection<DoubleSolution> tournament = new NaryTournamentSelection<>(
         tournamentSize, comparator);
 
-    return tournament.execute(globalBestList);
+    DoubleSolution result ;
+    if (globalBestList.size() < tournamentSize) {
+      result = globalBestList.get(0) ;
+    } else {
+      result = tournament.execute(globalBestList);
+    }
+
+
+    return result ;
 
 /*
     DoubleSolution one, two;
