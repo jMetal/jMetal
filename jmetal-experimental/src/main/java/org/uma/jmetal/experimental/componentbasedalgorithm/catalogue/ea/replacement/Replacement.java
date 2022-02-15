@@ -1,8 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
 
 @FunctionalInterface
 public interface Replacement<S extends Solution<?>> {

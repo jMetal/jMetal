@@ -5,7 +5,6 @@ import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class TournamentGlobalBestSelection implements GlobalBestSelection {
 

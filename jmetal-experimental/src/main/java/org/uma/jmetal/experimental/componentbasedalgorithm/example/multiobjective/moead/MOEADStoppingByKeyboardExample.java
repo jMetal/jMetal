@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.moead;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead.MOEAD;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -16,9 +18,6 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByKeyboard;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the MOEA/D-DE algorithm

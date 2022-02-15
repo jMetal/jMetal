@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
@@ -11,9 +13,6 @@ import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
-
-import java.util.Comparator;
-import java.util.List;
 
 public class ReplacementParameter extends CategoricalParameter {
   public ReplacementParameter(String args[], List<String> selectionStrategies) {

@@ -1,11 +1,13 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.moead;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead.MOEADDE;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -24,9 +26,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the MOEA/D-DE algorithm using class {@link MOEADDE} and the

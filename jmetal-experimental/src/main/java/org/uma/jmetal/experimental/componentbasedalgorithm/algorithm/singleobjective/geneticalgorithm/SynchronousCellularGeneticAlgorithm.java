@@ -1,14 +1,15 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.singleobjective.geneticalgorithm;
 
+import java.util.HashMap;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.PairwiseReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.NeighborhoodMatingPoolSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -21,8 +22,6 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.HashMap;
 
 /**
  * Class representing genetic algorithms which are implemented using the {@link

@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -11,7 +13,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -23,9 +24,6 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm configured with standard settings.

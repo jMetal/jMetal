@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     implements Replacement<S> {

@@ -1,29 +1,37 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
-import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
-
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.auto.irace.AutoNSGAIIIrace;
-import org.uma.jmetal.experimental.auto.parameter.*;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
+import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
+import org.uma.jmetal.experimental.auto.parameter.Parameter;
+import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
+import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.StringParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CrossoverParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.VariationParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
@@ -32,11 +40,6 @@ import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Class to configure NSGA-II with an argument string using class {@link EvolutionaryAlgorithm}

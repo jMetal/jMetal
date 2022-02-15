@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

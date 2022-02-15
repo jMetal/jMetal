@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
@@ -10,10 +13,6 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 public class SelectionParameter extends CategoricalParameter {
   public SelectionParameter(String args[], List<String> selectionStrategies) {

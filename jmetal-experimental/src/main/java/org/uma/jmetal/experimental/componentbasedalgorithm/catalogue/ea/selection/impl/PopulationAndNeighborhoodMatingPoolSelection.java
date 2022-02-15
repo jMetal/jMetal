@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
@@ -8,8 +9,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.List;
 
 /**
  * This class allows to select N different solutions that can be taken from a solution list (i.e, population or swarm) or

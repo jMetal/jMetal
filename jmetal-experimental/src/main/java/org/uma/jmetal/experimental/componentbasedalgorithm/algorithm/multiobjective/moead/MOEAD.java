@@ -1,13 +1,15 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead;
 
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.RandomMatingPoolSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -19,9 +21,6 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.io.FileNotFoundException;
-import java.util.HashMap;
 
 /**
  * This class is intended to provide an implementation of the MOEA/D algorithm.

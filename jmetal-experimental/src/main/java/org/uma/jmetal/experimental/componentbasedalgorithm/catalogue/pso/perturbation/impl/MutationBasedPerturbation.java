@@ -1,14 +1,11 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-
-import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * @author Antonio J. Nebro

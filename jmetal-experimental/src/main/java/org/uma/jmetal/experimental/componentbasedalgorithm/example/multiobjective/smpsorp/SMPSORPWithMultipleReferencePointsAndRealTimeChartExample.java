@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.smpsorp;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSORP;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -18,9 +20,6 @@ import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SMPSORPWithMultipleReferencePointsAndRealTimeChartExample {
   /**

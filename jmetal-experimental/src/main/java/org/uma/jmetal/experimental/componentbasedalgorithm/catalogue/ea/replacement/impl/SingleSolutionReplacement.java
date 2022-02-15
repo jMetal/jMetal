@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Given an offspring population composed of a single solution, this solution is compared against a particular solution

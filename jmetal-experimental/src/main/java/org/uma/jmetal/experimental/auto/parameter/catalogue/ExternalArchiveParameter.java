@@ -1,17 +1,12 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
-import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-
-import java.util.List;
 
 public class ExternalArchiveParameter extends CategoricalParameter {
   private int size ;

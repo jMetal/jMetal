@@ -1,15 +1,14 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /** @param <S> */
 public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implements Variation<S> {

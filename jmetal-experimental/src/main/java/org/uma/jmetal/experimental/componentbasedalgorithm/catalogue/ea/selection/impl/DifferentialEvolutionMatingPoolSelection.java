@@ -1,13 +1,12 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DifferentialEvolutionMatingPoolSelection
     implements MatingPoolSelection<DoubleSolution> {

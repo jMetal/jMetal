@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.util;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * A preference is a list composed of a ranking and a density estimator that specifies preferences

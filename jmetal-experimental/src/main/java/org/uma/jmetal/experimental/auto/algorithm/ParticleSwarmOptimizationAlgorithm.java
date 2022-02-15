@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.auto.algorithm;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
@@ -18,10 +21,6 @@ import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("serial")
 public class ParticleSwarmOptimizationAlgorithm

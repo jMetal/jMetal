@@ -1,8 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import java.util.List;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * TODO: description missing

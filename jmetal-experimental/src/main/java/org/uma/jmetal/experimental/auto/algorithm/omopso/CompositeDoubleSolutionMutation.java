@@ -3,12 +3,10 @@ package org.uma.jmetal.experimental.auto.algorithm.omopso;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * This class allows to apply a list of crossover operator on the solutions belonging to a list of

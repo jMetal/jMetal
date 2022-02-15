@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleSolution> {
   private final int numberOfSolutionsToCreate;

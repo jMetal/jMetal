@@ -1,12 +1,11 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Given two populations of equal size, the returned population is composed of the result of the
