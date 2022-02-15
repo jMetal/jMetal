@@ -1,8 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection;
 
+import java.util.List;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.archive.BoundedArchive;
 
 public interface GlobalBestSelection {
-  DoubleSolution select(BoundedArchive<DoubleSolution> globalBestArchive) ;
+  DoubleSolution select(List<DoubleSolution> globalBestList) ;
 }

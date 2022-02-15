@@ -51,7 +51,9 @@ public class ComponentBasedOMOPSO {
     var velocityInitialization = new DefaultVelocityInitialization();
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
-    var globalBestSelection = new TournamentGlobalBestSelection(2) ;
+
+    BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
+    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
@@ -76,8 +78,6 @@ public class ComponentBasedOMOPSO {
     var perturbation = new MutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
-
-    BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
 
     var omopso = new ParticleSwarmOptimizationAlgorithm("OMOPSO", swarmInitialization,
         evaluation,

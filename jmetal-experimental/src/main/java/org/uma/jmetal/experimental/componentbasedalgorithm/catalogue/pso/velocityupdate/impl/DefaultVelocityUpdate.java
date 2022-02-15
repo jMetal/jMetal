@@ -70,7 +70,7 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
-      bestGlobal = globalBestSelection.select(leaders) ;
+      bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
 
       r1 = randomGenerator.nextDouble(0, 1);
       r2 = randomGenerator.nextDouble(0, 1);
