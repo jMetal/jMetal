@@ -4,6 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
@@ -42,6 +43,8 @@ public class ParticleSwarmOptimizationAlgorithm
   private GlobalBestUpdate globalBestUpdate;
   private LocalBestUpdate localBestUpdate ;
 
+  private GlobalBestSelection globalBestSelection ;
+
   private Map<String, Object> attributes;
 
   private long initTime;
@@ -72,6 +75,7 @@ public class ParticleSwarmOptimizationAlgorithm
           Perturbation perturbation,
           GlobalBestUpdate globalBestUpdate,
           LocalBestUpdate localBestUpdate,
+          GlobalBestSelection globalBestSelection,
           BoundedArchive<DoubleSolution> externalArchive) {
     this.name = name;
     this.evaluation = evaluation;
@@ -87,6 +91,7 @@ public class ParticleSwarmOptimizationAlgorithm
     this.perturbation = perturbation;
     this.globalBestUpdate = globalBestUpdate;
     this.localBestUpdate = localBestUpdate ;
+    this.globalBestSelection = globalBestSelection ;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -103,7 +108,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest);
+      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection);
       positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);

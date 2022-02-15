@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl;
 
+import java.util.List;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -7,15 +9,14 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import java.util.List;
-
 /**
- * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO.
- **
+ * Method implementing a constrained velocity update. This scheme is used in, for example, SMPSO. *
+ *
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
 public class ConstrainedVelocityUpdate implements VelocityUpdate {
+
   protected double c1Max;
   protected double c1Min;
   protected double c2Max;
@@ -34,28 +35,33 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
   /**
    * Constructor
-   * @param r1Min double min value of uniformly distributed random number. Usually number in range [0,1].
-   * @param r1Max double max value of uniformly distributed random number. Usually number in range [0,1].
-   * @param r2Min double min value of uniformly distributed random number. Usually number in range [0,1].
-   * @param r2Max double max value of uniformly distributed random number. Usually number in range [0,1].
-   * @param c1Min: Min value for c1.
-   * @param c1Max: Max value for c1.
-   * @param c2Min: Min value for c2.
-   * @param c2Max: Max value for c2.
+   *
+   * @param r1Min      double min value of uniformly distributed random number. Usually number in
+   *                   range [0,1].
+   * @param r1Max      double max value of uniformly distributed random number. Usually number in
+   *                   range [0,1].
+   * @param r2Min      double min value of uniformly distributed random number. Usually number in
+   *                   range [0,1].
+   * @param r2Max      double max value of uniformly distributed random number. Usually number in
+   *                   range [0,1].
+   * @param c1Min:     Min value for c1.
+   * @param c1Max:     Max value for c1.
+   * @param c2Min:     Min value for c2.
+   * @param c2Max:     Max value for c2.
    * @param weightMin: Min value for inertia.
    * @param weightMax: Max value for inertia.
    */
   public ConstrainedVelocityUpdate(double r1Min,
-                                   double r1Max,
-                                   double r2Min,
-                                   double r2Max,
-                                   double c1Min,
-                                   double c1Max,
-                                   double c2Min,
-                                   double c2Max,
-                                   double weightMin,
-                                   double weightMax,
-                                   DoubleProblem problem) {
+      double r1Max,
+      double r2Min,
+      double r2Max,
+      double c1Min,
+      double c1Max,
+      double c2Min,
+      double c2Max,
+      double weightMin,
+      double weightMax,
+      DoubleProblem problem) {
     this.r1Max = r1Max;
     this.r1Min = r1Min;
     this.r2Max = r2Max;
@@ -67,7 +73,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     this.weightMax = weightMax;
     this.weightMin = weightMin;
 
-    this.randomGenerator = JMetalRandom.getInstance() ;
+    this.randomGenerator = JMetalRandom.getInstance();
 
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
@@ -87,15 +93,16 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @param leaders: List of global best particles.
    * @return Updated speed.
    */
-  public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest, BoundedArchive<DoubleSolution> leaders) {
+  public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest,
+      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
     for (int i = 0; i < swarm.size(); i++) {
       DoubleSolution particle = (DoubleSolution) swarm.get(i).copy();
-      DoubleSolution bestParticle = (DoubleSolution)localBest[i].copy();
+      DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
-      bestGlobal = selectGlobalBest(leaders);
+      bestGlobal = globalBestSelection.select(leaders) ;
 
       r1 = randomGenerator.nextDouble(r1Min, r1Max);
       r2 = randomGenerator.nextDouble(r2Min, r2Max);
@@ -104,26 +111,27 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
       for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
-                velocityConstriction(
-                        constrictionCoefficient(c1, c2)
-                                * (weightMax * speed[i][var]
-                                + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
-                                + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
-                        deltaMax,
-                        deltaMin,
-                        var);
+            velocityConstriction(
+                constrictionCoefficient(c1, c2)
+                    * (weightMax * speed[i][var]
+                    + c1 * r1 * (bestParticle.variables().get(var) - particle.variables().get(var))
+                    + c2 * r2 * (bestGlobal.variables().get(var) - particle.variables().get(var))),
+                deltaMax,
+                deltaMin,
+                var);
       }
     }
 
-    return speed ;
+    return speed;
   }
 
   /**
    * Select the best solution
+   *
    * @param leaders: List of global best particles.
    * @return Best Solution's list updated.
    */
-  protected DoubleSolution selectGlobalBest(BoundedArchive<DoubleSolution> leaders)  {
+  protected DoubleSolution selectGlobalBest(BoundedArchive<DoubleSolution> leaders) {
     DoubleSolution one, two;
     DoubleSolution bestGlobal;
     int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
@@ -142,14 +150,15 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
   /**
    * Generate the velocity constriction value
+   *
    * @param v
-   * @param deltaMax: Max value of delta parameter.
-   * @param deltaMin: Min value of delta parameter
+   * @param deltaMax:      Max value of delta parameter.
+   * @param deltaMin:      Min value of delta parameter
    * @param variableIndex: Integer number. Index of a list.
    * @return
    */
   private double velocityConstriction(
-          double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
+      double v, double[] deltaMax, double[] deltaMin, int variableIndex) {
     double result;
 
     double dmax = deltaMax[variableIndex];
@@ -170,6 +179,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
 
   /**
    * Generate the coefficient constriction value
+   *
    * @param c1 value for c1.
    * @param c2 value for c2
    * @return Coefficient constriction

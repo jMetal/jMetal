@@ -4,6 +4,7 @@ import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgor
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
@@ -31,8 +32,8 @@ public class ComponentBasedSMPSO {
   public static void main(String[] args) {
     JMetalRandom.getInstance().setSeed(1);
 
-    DoubleProblem problem = new ZDT1();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT1.csv" ;
+    DoubleProblem problem = new ZDT4();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
@@ -42,6 +43,8 @@ public class ComponentBasedSMPSO {
     var velocityInitialization = new DefaultVelocityInitialization();
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
+
+    var globalBestSelection = new TournamentGlobalBestSelection(2) ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;
@@ -77,6 +80,7 @@ public class ComponentBasedSMPSO {
             perturbation,
             globalBestUpdate,
             localBestUpdate,
+            globalBestSelection,
             externalArchive);
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("SMPSO", 80, 100, referenceFrontFileName);

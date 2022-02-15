@@ -5,6 +5,7 @@ import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgor
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
@@ -50,6 +51,8 @@ public class ComponentBasedOMOPSO {
     var velocityInitialization = new DefaultVelocityInitialization();
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
+    var globalBestSelection = new TournamentGlobalBestSelection(2) ;
+
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
     operators.add(new NonUniformMutation(1.0 / problem.getNumberOfVariables(), 0.5, 250));
@@ -87,6 +90,7 @@ public class ComponentBasedOMOPSO {
         perturbation,
         globalBestUpdate,
         localBestUpdate,
+        globalBestSelection,
         externalArchive);
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("OMOPSO",
