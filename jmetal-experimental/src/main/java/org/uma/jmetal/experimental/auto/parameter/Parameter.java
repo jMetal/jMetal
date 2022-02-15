@@ -4,10 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.util.errorchecking.Check;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -25,6 +22,7 @@ public abstract class Parameter<T> {
   private final String[] args;
   private final List<Pair<String, Parameter<?>>> specificParameters = new ArrayList<>() ;
   private final List<Parameter<?>> globalParameters = new ArrayList<>();
+  private final Map<String, Object> nonConfigurableParameters = new HashMap<>();
 
   public Parameter(String name, String[] args) {
     this.name = name;
@@ -83,6 +81,14 @@ public abstract class Parameter<T> {
     globalParameters.add(parameter);
   }
 
+  public void addNonConfigurableParameter(String parameterName, Object value) {
+    nonConfigurableParameters.put(parameterName, value) ;
+  }
+
+  public Object getNonConfigurableParameter(String parameterName) {
+    return nonConfigurableParameters.get(parameterName) ;
+  }
+
   public T getValue() {
     return value;
   }
@@ -95,7 +101,7 @@ public abstract class Parameter<T> {
     return args;
   }
 
-  protected Parameter<?> findGlobalParameter(String parameterName) {
+  public Parameter<?> findGlobalParameter(String parameterName) {
 
     return getGlobalParameters().stream()
         .filter(parameter -> parameter.getName().equals(parameterName))
@@ -103,7 +109,7 @@ public abstract class Parameter<T> {
         .orElse(null);
   }
 
-  protected Parameter<?> findSpecificParameter(String parameterName) {
+  public Parameter<?> findSpecificParameter(String parameterName) {
 
     return Objects.requireNonNull(getSpecificParameters().stream()
             .filter(pair -> pair.getRight().getName().equals(parameterName))

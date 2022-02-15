@@ -137,6 +137,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     updateArchive(population);
 
     attributes.put("EVALUATIONS", evaluations);
+    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
@@ -145,6 +146,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     evaluations += variation.getOffspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
+    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 

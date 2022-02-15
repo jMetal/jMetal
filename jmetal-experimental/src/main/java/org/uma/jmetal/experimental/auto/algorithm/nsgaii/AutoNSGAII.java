@@ -1,6 +1,10 @@
 package org.uma.jmetal.experimental.auto.algorithm.nsgaii;
 
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
+
+import java.io.IOException;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.irace.AutoNSGAIIIrace;
 import org.uma.jmetal.experimental.auto.parameter.*;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
@@ -13,8 +17,11 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variatio
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -41,11 +48,11 @@ public class AutoNSGAII {
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
   private StringParameter problemNameParameter;
-  private StringParameter referenceFrontFilename;
-  private IntegerParameter maximumNumberOfEvaluationsParameter;
+  public StringParameter referenceFrontFilename;
+  private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
-  private CategoricalParameter externalArchiveTypeParameter ;
-  private PopulationSizeParameter populationSizeParameter;
+  private ExternalArchiveParameter externalArchiveParameter;
+  private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
@@ -56,7 +63,7 @@ public class AutoNSGAII {
     problemNameParameter = new StringParameter("problemName", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
     maximumNumberOfEvaluationsParameter =
-        new IntegerParameter("maximumNumberOfEvaluations", args, 1, 10000000);
+        new PositiveIntegerValue("maximumNumberOfEvaluations", args);
 
     fixedParameterList.add(problemNameParameter);
     fixedParameterList.add(referenceFrontFilename);
@@ -65,7 +72,7 @@ public class AutoNSGAII {
     for (Parameter<?> parameter : fixedParameterList) {
       parameter.parse().check();
     }
-    populationSizeParameter = new PopulationSizeParameter(args);
+    populationSizeParameter = new PositiveIntegerValue("populationSize", args);
 
     algorithmResult(args);
     createInitialSolution(args);
@@ -100,7 +107,7 @@ public class AutoNSGAII {
     crossover.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
@@ -109,13 +116,21 @@ public class AutoNSGAII {
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
 
-    RealParameter distributionIndexForMutation =
+    RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutation.addSpecificParameter("polynomial", distributionIndexForMutation);
+    mutation.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
+
+    RealParameter distributionIndexForLinkedPolynomialMutation =
+            new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
+    mutation.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
+
+    RealParameter nonUniformMutationPerturbation =
+            new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
+    mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
     //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
     //    new DifferentialEvolutionCrossoverParameter(args);
@@ -151,14 +166,20 @@ public class AutoNSGAII {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
     populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
+    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedExternalArchive")) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
+/*<<<<<<< HEAD
     externalArchiveTypeParameter = new CategoricalParameter("externalArchiveType", args, List.of("crowdingDistanceArchvive", "bestSolutionsArchive")) ;
     algorithmResultParameter.addSpecificParameter(
             "externalArchive", externalArchiveTypeParameter);
     IntegerParameter archiveSize = new IntegerParameter("archiveSize", args, populationSizeParameter.getValue(), populationSizeParameter.getValue()) ;
     algorithmResultParameter.addSpecificParameter(
             "externalArchive", archiveSize);
+
+ */
+    algorithmResultParameter.addSpecificParameter(
+            "externalArchive", externalArchiveParameter);
   }
 
   /**
@@ -173,7 +194,9 @@ public class AutoNSGAII {
     Archive<DoubleSolution> archive = null;
 
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
+      //archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
+      externalArchiveParameter.setSize(populationSizeParameter.getValue());
+      archive = externalArchiveParameter.getParameter() ;
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
@@ -187,8 +210,14 @@ public class AutoNSGAII {
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
         createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
 
-    Variation<DoubleSolution> variation =
-        (Variation<DoubleSolution>) variationParameter.getParameter();
+    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter("mutation") ;
+    if (mutationParameter.getValue().equals("nonUniform")) {
+      mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
+      mutationParameter.addNonConfigurableParameter("maxIterations",
+              maximumNumberOfEvaluationsParameter.getValue()/populationSizeParameter.getValue());
+    }
+    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
+
     MatingPoolSelection<DoubleSolution> selection =
         (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
@@ -219,4 +248,30 @@ public class AutoNSGAII {
   public static void print(List<Parameter<?>> parameterList) {
     parameterList.forEach(System.out::println);
   }
+
+  /*
+  public static void main(String[] args) throws IOException {
+    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
+    nsgaiiWithParameters.parseAndCheckParameters(args);
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
+    nsgaII.run();
+
+    String referenceFrontFile =
+        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
+
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
+    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
+
+    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
+    double[][] normalizedFront =
+        NormalizeUtils.normalize(
+            front,
+            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront) ;
+    System.out.println(qualityIndicator.compute(normalizedFront)) ;
+  }
+  */
 }

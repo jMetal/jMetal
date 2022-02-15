@@ -1,46 +1,41 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
+
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 
 import java.util.List;
 
 public class ExternalArchiveParameter extends CategoricalParameter {
-  public ExternalArchiveParameter(String[] args, List<String> externalArchiveTypes) {
-    super("variation", args, externalArchiveTypes);
+  private int size ;
+  public ExternalArchiveParameter(String[] args, List<String> archiveTypes) {
+    super("externalArchive", args, archiveTypes);
   }
 
-  public Variation<?> getParameter() {
-    Variation<?> result;
-    int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
+  public Archive<DoubleSolution> getParameter() {
+    Archive<DoubleSolution> archive;
 
     switch (getValue()) {
       case "crowdingDistanceArchive":
-        CrossoverParameter crossoverParameter =
-            (CrossoverParameter) findSpecificParameter("crossover");
-        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
-
-        CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
-        MutationOperator<DoubleSolution> mutationOperatorOperator =
-            mutationParameter.getParameter();
-
-        result =
-            new CrossoverAndMutationVariation<>(
-                offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
+        archive = new CrowdingDistanceArchive<>(size) ;
+        break;
+      case "unboundedExternalArchive":
+        archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;
         break;
       default:
-        throw new RuntimeException("Variation component unknown: " + getValue());
+        throw new RuntimeException("Archive type does not exist: " + getName());
     }
-
-    return result;
+    return archive;
   }
 
-  @Override
-  public String getName() {
-    return "variation";
+  public void setSize(int size) {
+    this.size = size ;
   }
 }
