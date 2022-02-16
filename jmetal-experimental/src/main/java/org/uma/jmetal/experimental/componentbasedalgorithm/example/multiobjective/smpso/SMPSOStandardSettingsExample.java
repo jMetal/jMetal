@@ -29,8 +29,6 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  */
 public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
-    JMetalRandom.getInstance().setSeed(1);
-
     DoubleProblem problem;
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
