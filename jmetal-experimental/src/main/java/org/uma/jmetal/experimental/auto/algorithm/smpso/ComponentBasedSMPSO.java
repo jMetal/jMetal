@@ -16,7 +16,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocit
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -24,13 +23,11 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 public class ComponentBasedSMPSO {
 
   public static void main(String[] args) {
-    JMetalRandom.getInstance().setSeed(1);
     DoubleProblem problem = new ZDT2();
     String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
     int swarmSize = 100;
@@ -66,8 +63,9 @@ public class ComponentBasedSMPSO {
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
 
+    int frequencyOfMutation = 7;
     var perturbation = new MutationBasedPerturbation(
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0));
+        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
 

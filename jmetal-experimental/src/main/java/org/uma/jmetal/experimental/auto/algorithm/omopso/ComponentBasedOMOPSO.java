@@ -16,11 +16,13 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocit
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT3;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -71,7 +73,10 @@ public class ComponentBasedOMOPSO {
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
-    var perturbation = new MutationBasedPerturbation(mutation);
+    int frequencyOfMutation = 7;
+    var perturbation = new MutationBasedPerturbation(
+        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
+    //var perturbation = new MutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
 

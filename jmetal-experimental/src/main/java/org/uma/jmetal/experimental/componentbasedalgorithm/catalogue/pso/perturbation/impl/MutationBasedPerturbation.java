@@ -14,16 +14,17 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class MutationBasedPerturbation implements Perturbation {
   private MutationOperator<DoubleSolution> mutationOperator ;
-  private double percentageOfApplication ;
+  private int frequencyOfApplication ;
   private JMetalRandom randomGenerator ;
 
   /**
    * Constructor
    * @param mutationOperator : Operator of mutation
-   * @param percentageOfApplication: Probability of the mutation
+   * @param frequencyOfApplication
    */
-  public MutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator, double percentageOfApplication) {
+  public MutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator, int frequencyOfApplication) {
     this.mutationOperator = mutationOperator ;
+    this.frequencyOfApplication = frequencyOfApplication ;
     randomGenerator = JMetalRandom.getInstance() ;
   }
 
@@ -32,7 +33,7 @@ public class MutationBasedPerturbation implements Perturbation {
    * @param mutationOperator: Operator of mutation
    */
   public MutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator) {
-    this(mutationOperator, 0.18) ;
+    this(mutationOperator, 7) ;
   }
 
   @Override
@@ -44,11 +45,12 @@ public class MutationBasedPerturbation implements Perturbation {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    for (DoubleSolution particle : swarm) {
-      if (randomGenerator.nextDouble() < percentageOfApplication) {
-        mutationOperator.execute(particle) ;
+    for (int i = 0; i < swarm.size(); i++) {
+      if ((i % frequencyOfApplication) == 0) {
+        mutationOperator.execute(swarm.get(i));
       }
     }
+
     return swarm;
   }
 
@@ -64,7 +66,7 @@ public class MutationBasedPerturbation implements Perturbation {
    * Get the percentage of application for mutation operator
    * @return Pertentage of application for mutation operator
    */
-  public double getPercentageOfApplication() {
-    return percentageOfApplication;
+  public double getFrequencyOfApplication() {
+    return frequencyOfApplication;
   }
 }
