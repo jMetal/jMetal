@@ -30,6 +30,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 public class ComponentBasedSMPSO {
 
   public static void main(String[] args) {
+    JMetalRandom.getInstance().setSeed(1);
     DoubleProblem problem = new ZDT2();
     String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
     int swarmSize = 100;
@@ -44,7 +45,7 @@ public class ComponentBasedSMPSO {
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
     GlobalBestSelection globalBestSelection = new TournamentGlobalBestSelection(2,
-        externalArchive.getComparator().reversed());
+        externalArchive.getComparator());
     //globalBestSelection = new RandomGlobalBestSelection() ;
 
     double r1Min = 0.0;

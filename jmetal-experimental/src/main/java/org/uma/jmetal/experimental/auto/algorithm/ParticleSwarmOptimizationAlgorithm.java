@@ -119,18 +119,9 @@ public class ParticleSwarmOptimizationAlgorithm
     totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
-  private void updateArchive(List<DoubleSolution> population) {
-    if (globalBest != null) {
-      for (DoubleSolution solution : population) {
-        globalBest.add(solution);
-      }
-    }
-  }
-
   protected void initProgress() {
     evaluations = swarm.size();
-
-    updateArchive(swarm);
+    globalBest.computeDensityEstimator();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", globalBest.getSolutionList());
@@ -139,6 +130,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
   protected void updateProgress() {
     evaluations += swarm.size();
+    globalBest.computeDensityEstimator();
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", globalBest.getSolutionList());

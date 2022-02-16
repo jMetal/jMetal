@@ -23,7 +23,7 @@ public class DefaultVelocityInitialization implements VelocityInitialization {
     double[][] speed = new double[swarm.size()][numberOfVariables] ;
 
     for (int i = 0 ; i < speed.length; i++) {
-      for (int j = 0; j < speed[0].length; j++) {
+      for (int j = 0; j < numberOfVariables; j++) {
         speed[i][j] = 0.0 ;
       }
     }

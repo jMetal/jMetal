@@ -34,12 +34,10 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
     SMPSO algorithm;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
-    referenceParetoFront = null ;
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv" ;
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
-    problem = new DTLZ2Minus() ;
 
     int swarmSize = 100 ;
     BoundedArchive<DoubleSolution> leadersArchive = new CrowdingDistanceArchive<DoubleSolution>(swarmSize) ;
@@ -55,7 +53,7 @@ public class SMPSOWithRealTimeChartExample extends AbstractAlgorithmRunner {
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(100);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-            new RunTimeChartObserver<>("SMPSO", 80, 1000, referenceParetoFront);
+            new RunTimeChartObserver<>("SMPSO", 80, 100, referenceParetoFront);
 
     algorithm.getObservable().register(evaluationObserver);
     algorithm.getObservable().register(runTimeChartObserver);
