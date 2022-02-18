@@ -13,7 +13,9 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturb
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
+import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -64,8 +66,9 @@ public class ComponentBasedSMPSO {
         velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
 
     int frequencyOfMutation = 7;
-    var perturbation = new MutationBasedPerturbation(
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
+    MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
+    //mutationOperator = new UniformMutation(1.0/problem.getNumberOfVariables(), 0.5) ;
+    var perturbation = new MutationBasedPerturbation(mutationOperator, frequencyOfMutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
 
