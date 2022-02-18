@@ -32,7 +32,7 @@ public class ComponentBasedSMPSO {
   public static void main(String[] args) {
     DoubleProblem problem = new ZDT2();
     String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
-    int swarmSize = 100;
+    int swarmSize = 10;
     int maximumNumberOfEvaluations = 25000;
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);

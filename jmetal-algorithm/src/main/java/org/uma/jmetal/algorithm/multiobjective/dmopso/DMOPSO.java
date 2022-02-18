@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
+import java.io.FileInputStream;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -222,22 +223,33 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   /**
    * initUniformWeight
    */
-  private void initUniformWeight() {
-    if ((problem.getNumberOfObjectives() == 2) && (swarmSize < 300)) {
+  protected void initializeUniformWeight() {
+    if ((problem.getNumberOfObjectives() == 2) && (swarmSize <= 300)) {
       for (int n = 0; n < swarmSize; n++) {
         double a = 1.0 * n / (swarmSize - 1);
         lambda[n][0] = a;
         lambda[n][1] = 1 - a;
       }
-    }
-    else {
+    } else {
       String dataFileName;
       dataFileName = "W" + problem.getNumberOfObjectives() + "D_" +
-              swarmSize + ".dat";
+          swarmSize + ".dat";
 
       try {
-        InputStream in = getClass().getResourceAsStream("/" + dataDirectory + "/" + dataFileName);
-        InputStreamReader isr = new InputStreamReader(in);
+
+        //       String path =
+        // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
+        // ();
+        String path = "/" + dataDirectory + "/" + dataFileName;
+
+        InputStream inputStream =
+            getClass()
+                .getClassLoader()
+                .getResourceAsStream(path);
+        if (inputStream == null) {
+          inputStream = new FileInputStream(dataDirectory + "/" + dataFileName);
+        }
+        InputStreamReader isr = new InputStreamReader(inputStream);
         BufferedReader br = new BufferedReader(isr);
 
         int i = 0;
@@ -256,7 +268,8 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         }
         br.close();
       } catch (Exception e) {
-        throw new JMetalException("initUniformWeight: failed when reading for file: " + dataDirectory + "/" + dataFileName);
+        throw new JMetalException("initializeUniformWeight: failed when reading for file: "
+            + dataDirectory + "/" + dataFileName, e);
       }
     }
   }
@@ -475,7 +488,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     evaluateSwarm(swarm) ;
     initializeVelocity(getSwarm());
 
-    initUniformWeight();
+    initializeUniformWeight();
     initIdealPoint();
 
     initializeLeaders(getSwarm());
