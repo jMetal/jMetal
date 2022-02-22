@@ -8,11 +8,15 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
+ * This perturbation applies a mutation operator to a fixed set of solutions according to a
+ * frequency parameter. Given a frequency of application parameter f and a list of solutions,
+ * the mutation will be applied to solutions in position p such as p % f == 0.
+ *
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
 
-public class MutationBasedPerturbation implements Perturbation {
+public class FrequencySelectionMutationBasedPerturbation implements Perturbation {
   private MutationOperator<DoubleSolution> mutationOperator ;
   private int frequencyOfApplication ;
   private JMetalRandom randomGenerator ;
@@ -22,7 +26,7 @@ public class MutationBasedPerturbation implements Perturbation {
    * @param mutationOperator : Operator of mutation
    * @param frequencyOfApplication
    */
-  public MutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator, int frequencyOfApplication) {
+  public FrequencySelectionMutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator, int frequencyOfApplication) {
     this.mutationOperator = mutationOperator ;
     this.frequencyOfApplication = frequencyOfApplication ;
     randomGenerator = JMetalRandom.getInstance() ;
@@ -32,7 +36,7 @@ public class MutationBasedPerturbation implements Perturbation {
    * Constructor
    * @param mutationOperator: Operator of mutation
    */
-  public MutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator) {
+  public FrequencySelectionMutationBasedPerturbation(MutationOperator<DoubleSolution> mutationOperator) {
     this(mutationOperator, 7) ;
   }
 
