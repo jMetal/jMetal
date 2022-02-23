@@ -116,6 +116,7 @@ public class AutoOMOPSO {
 
   private void selection(String[] args) {
     globalSelectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
+    velocityUpdate.addGlobalParameter(globalSelectionParameter);
     IntegerParameter selectionTournamentSize =
             new IntegerParameter("selectionTournamentSize", args, 2, 10);
     globalSelectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
@@ -140,7 +141,7 @@ public class AutoOMOPSO {
     RealParameter nonUniformMutationPerturbation =
             new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
-    perturbationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
+    perturbationParameter.addSpecificParameter("mutationBasedPerturbation", mutation);
   }
 
   public static void print(List<Parameter<?>> parameterList) {
