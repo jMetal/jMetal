@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.auto.irace;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.experimental.auto.algorithm.omopso.AutoOMOPSO;
 import org.uma.jmetal.experimental.auto.parameter.*;
 
@@ -44,12 +45,12 @@ public class AutoMOPSOIraceFileGenerator {
                 )
                         .split("\\s+");
 
-        AutoOMOPSO autoOMOPSOwithParameters = new AutoOMOPSO();
-        autoOMOPSOwithParameters.parseAndCheckParameters(parameters);
+        AutoMOPSO autoMOPSOwithParameters = new AutoMOPSO();
+        autoMOPSOwithParameters.parseAndCheckParameters(parameters);
 
         AutoMOPSOIraceFileGenerator ompsoiraceParameterFile = new AutoMOPSOIraceFileGenerator();
         ompsoiraceParameterFile.generateConfigurationFile(
-                autoOMOPSOwithParameters.autoConfigurableParameterList);
+            autoMOPSOwithParameters.autoConfigurableParameterList);
     }
 
     public void generateConfigurationFile(List<Parameter<?>> parameterList) {
