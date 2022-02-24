@@ -6,7 +6,10 @@ import org.uma.jmetal.experimental.auto.parameter.*;
 
 import java.util.List;
 
-public class AutoOMOPSOIraceFileGenerator {
+/**
+ * @author Daniel Doblas
+ */
+public class AutoMOPSOIraceFileGenerator {
     private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";
 
     public void generateConfigurationFile() {
@@ -44,7 +47,7 @@ public class AutoOMOPSOIraceFileGenerator {
         AutoOMOPSO autoOMOPSOwithParameters = new AutoOMOPSO();
         autoOMOPSOwithParameters.parseAndCheckParameters(parameters);
 
-        AutoOMOPSOIraceFileGenerator ompsoiraceParameterFile = new AutoOMOPSOIraceFileGenerator();
+        AutoMOPSOIraceFileGenerator ompsoiraceParameterFile = new AutoMOPSOIraceFileGenerator();
         ompsoiraceParameterFile.generateConfigurationFile(
                 autoOMOPSOwithParameters.autoConfigurableParameterList);
     }
@@ -173,6 +176,6 @@ public class AutoOMOPSOIraceFileGenerator {
     }
 
     public static void main(String[] args) {
-        new AutoOMOPSOIraceFileGenerator().generateConfigurationFile();
+        new AutoMOPSOIraceFileGenerator().generateConfigurationFile();
     }
 }
