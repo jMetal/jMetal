@@ -177,12 +177,6 @@ public class AutoMOPSO {
     }
   }
 
-  private void createSwarm(String[] args) {
-    swarmInitializationParameter =
-        new CreateInitialSolutionsParameter("swarmInitialization",
-            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
-  }
-
   private void selection(String[] args) {
     globalSelectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
     velocityUpdateParameter.addGlobalParameter(globalSelectionParameter);
@@ -261,7 +255,7 @@ public class AutoMOPSO {
 
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
 
-    /////////
+    ///////// TO IMPLEMENT USING PARAMETERS
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
