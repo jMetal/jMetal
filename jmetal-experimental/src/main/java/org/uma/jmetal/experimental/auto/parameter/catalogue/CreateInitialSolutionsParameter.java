@@ -12,7 +12,11 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 
   public CreateInitialSolutionsParameter(String[] args, List<String> validValues) {
-    super("createInitialSolutions", args, validValues) ;
+    this("createInitialSolutions", args, validValues) ;
+  }
+
+  public CreateInitialSolutionsParameter(String parameterName, String[] args, List<String> validValues) {
+    super(parameterName, args, validValues) ;
   }
 
   public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
