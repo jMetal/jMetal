@@ -196,13 +196,6 @@ public class AutoOMOPSO {
   /** Create an instance of OMOPSO from the parsed parameters */
   public ParticleSwarmOptimizationAlgorithm create() {
 
-    double c1Min = c1MinParameter.getValue();
-    double c1Max = c1MaxParameter.getValue();
-    double c2Min = c2MinParameter.getValue();
-    double c2Max = c2MaxParameter.getValue();
-    double wMin = wMinParameter.getValue();
-    double wMax = wMaxParameter.getValue();
-
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
 
     SolutionsCreation<DoubleSolution> createInitialSolution =
@@ -219,6 +212,13 @@ public class AutoOMOPSO {
     LocalBestInitialization localBestInit = new DefaultLocalBestInitialization();
 
     GlobalBestInitialization globalBestInit = new DefaultGlobalBestInitialization();
+
+    double c1Min = c1MinParameter.getValue();
+    double c1Max = c1MaxParameter.getValue();
+    double c2Min = c2MinParameter.getValue();
+    double c2Max = c2MaxParameter.getValue();
+    double wMin = wMinParameter.getValue();
+    double wMax = wMaxParameter.getValue();
 
     VelocityUpdateParameter velUpdate =
         (VelocityUpdateParameter)
@@ -254,6 +254,7 @@ public class AutoOMOPSO {
     archive = externalArchive.getParameter();
     swarmSize.setValue(100);
 
+    /*
     var omopso =
         new ParticleSwarmOptimizationAlgorithm(
             "OMOPSO",
@@ -268,9 +269,9 @@ public class AutoOMOPSO {
             (Perturbation) perturb,
             globalBestUpd,
             localBestUpd,
-            (GlobalBestSelection) /* TODO: Falta global selection*/,
+            (GlobalBestSelection) //TODO: Falta global selection
             (BoundedArchive<DoubleSolution>) archive);
-
+*/
     return null;
   }
 
