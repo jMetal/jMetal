@@ -172,15 +172,7 @@ public class AutoNSGAII {
     externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedExternalArchive")) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
-/*<<<<<<< HEAD
-    externalArchiveTypeParameter = new CategoricalParameter("externalArchiveType", args, List.of("crowdingDistanceArchvive", "bestSolutionsArchive")) ;
-    algorithmResultParameter.addSpecificParameter(
-            "externalArchive", externalArchiveTypeParameter);
-    IntegerParameter archiveSize = new IntegerParameter("archiveSize", args, populationSizeParameter.getValue(), populationSizeParameter.getValue()) ;
-    algorithmResultParameter.addSpecificParameter(
-            "externalArchive", archiveSize);
 
- */
     algorithmResultParameter.addSpecificParameter(
             "externalArchive", externalArchiveParameter);
   }
