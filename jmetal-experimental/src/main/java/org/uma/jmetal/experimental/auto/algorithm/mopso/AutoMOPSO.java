@@ -19,6 +19,7 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter
 import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameterDaniVersion;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
@@ -26,6 +27,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalb
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.MutationBasedPerturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
@@ -65,7 +67,7 @@ public class AutoMOPSO {
   private CategoricalParameter localBestInitializationParameter;
   private CategoricalParameter globalBestInitializationParameter;
   private SelectionParameter globalSelectionParameter;
-  private CategoricalParameter perturbationParameter;
+  private PerturbationParameter perturbationParameter;
   private CategoricalParameter positionUpdateParameter;
   private CategoricalParameter globalBestUpdateParameter;
   private CategoricalParameter localBestUpdateParameter;
@@ -103,6 +105,8 @@ public class AutoMOPSO {
     velocityInitializationParameter =
         new CategoricalParameter(
             "velocityInitialization", args, List.of("defaultVelocityInitialization"));
+
+    velocityUpdate(args);
 /*
     velocityInitializationParameter =
         new CategoricalParameter(
@@ -123,7 +127,7 @@ public class AutoMOPSO {
     localBestUpdateParameter =
         new CategoricalParameter("localBestUpdate", args, List.of("defaultLocalBestUpdate"));
     velocityUpdateParameter =
-        new VelocityUpdateParameter(
+        new VelocityUpdateParameterDaniVersion(
             args, List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
     c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
     c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
@@ -167,6 +171,7 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(swarmInitializationParameter);
     autoConfigurableParameterList.add(velocityInitializationParameter);
     autoConfigurableParameterList.add(perturbationParameter);
+    autoConfigurableParameterList.add(velocityUpdateParameter) ;
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
@@ -219,8 +224,25 @@ public class AutoMOPSO {
         frequencyOfApplicationParameter);
   }
 
+  private void velocityUpdate(String[] args) {
+    c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
+    c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
+    c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
+    c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
+    wMinParameter = new RealParameter("wMin", args, 0.1, 0.5);
+    wMaxParameter = new RealParameter("wMax", args, 0.5, 1.0);
+
+    velocityUpdateParameter = new VelocityUpdateParameter(args, List.of("defaultVelocityUpdate")) ;
+    velocityUpdateParameter.addGlobalParameter(c1MinParameter);
+    velocityUpdateParameter.addGlobalParameter(c1MaxParameter);
+    velocityUpdateParameter.addGlobalParameter(c2MinParameter);
+    velocityUpdateParameter.addGlobalParameter(c2MaxParameter);
+    velocityUpdateParameter.addGlobalParameter(wMinParameter);
+    velocityUpdateParameter.addGlobalParameter(wMaxParameter);
+  }
+
   /**
-   * Create an instance of OMOPSO from the parsed parameters
+   * Create an instance of MOPSO from the parsed parameters
    */
   public ParticleSwarmOptimizationAlgorithm create() {
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
@@ -237,6 +259,8 @@ public class AutoMOPSO {
     BoundedArchive<DoubleSolution> externalArchive = (BoundedArchive<DoubleSolution>) externalArchiveParameter.getParameter();
     var velocityInitialization = new DefaultVelocityInitialization();
 
+    var velocityUpdate = velocityUpdateParameter.getParameter() ;
+
     /////////
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
@@ -249,23 +273,12 @@ public class AutoMOPSO {
     operators.add(new NullMutation<>());
     CompositeDoubleSolutionMutation mutation = new CompositeDoubleSolutionMutation(operators);
 
-    double c1Min = 1.5;
-    double c1Max = 2.0;
-    double c2Min = 1.5;
-    double c2Max = 2.0;
-    double weightMin = 0.1;
-    double weightMax = 0.5;
-
-    var velocityUpdate = new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max, weightMin,
-        weightMax);
-
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, ((DoubleProblem) problem).getBoundsForVariables());
-    int frequencyOfMutation = 7;
-    var perturbation = new MutationBasedPerturbation(
-        new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
+    Perturbation perturbation = perturbationParameter.getParameter() ;
+
     //var perturbation = new MutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
