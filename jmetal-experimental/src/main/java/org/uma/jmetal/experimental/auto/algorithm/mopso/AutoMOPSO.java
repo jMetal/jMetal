@@ -1,6 +1,5 @@
 package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,30 +11,23 @@ import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
 import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 import org.uma.jmetal.experimental.auto.parameter.StringParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateSwarmInitialSolutions;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.MutationBasedPerturbation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -46,15 +38,9 @@ import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
-import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
-import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
@@ -64,6 +50,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  * @autor Daniel Doblas
  */
 public class AutoMOPSO {
+
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -74,7 +61,7 @@ public class AutoMOPSO {
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
   private IntegerParameter swarmSizeParameter;
-  private CreateSwarmInitialSolutions createSwarmInitializationParameter;
+  private CreateInitialSolutionsParameter swarmInitializationParameter;
   private CategoricalParameter localBestInitializationParameter;
   private CategoricalParameter globalBestInitializationParameter;
   private SelectionParameter globalSelectionParameter;
@@ -82,7 +69,7 @@ public class AutoMOPSO {
   private CategoricalParameter positionUpdateParameter;
   private CategoricalParameter globalBestUpdateParameter;
   private CategoricalParameter localBestUpdateParameter;
-  private VelocityUpdateParameter velocityUpdateParameter ;
+  private VelocityUpdateParameter velocityUpdateParameter;
   private RealParameter c1MinParameter;
   private RealParameter c1MaxParameter;
   private RealParameter c2MinParameter;
@@ -105,8 +92,17 @@ public class AutoMOPSO {
       parameter.parse().check();
     }
 
-    swarmSizeParameter = new IntegerParameter("swarmSize", args, 2, 200) ;
+    swarmSizeParameter = new IntegerParameter("swarmSize", args, 2, 200);
     archiveSizeParameter = new PositiveIntegerValue("archiveSize", args);
+
+    swarmInitializationParameter =
+        new CreateInitialSolutionsParameter("swarmInitialization",
+            args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
+    //createSwarm(args); ;
+
+    velocityInitializationParameter =
+        new CategoricalParameter(
+            "velocityInitialization", args, List.of("defaultVelocityInitialization"));
 /*
     velocityInitializationParameter =
         new CategoricalParameter(
@@ -160,16 +156,25 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(wMinParameter);
     autoConfigurableParameterList.add(wMaxParameter);
 */
-    autoConfigurableParameterList.add(swarmSizeParameter) ;
-    autoConfigurableParameterList.add(archiveSizeParameter) ;
+
+    externalArchiveParameter = new ExternalArchiveParameter(args,
+        List.of("crowdingDistanceArchive"));
+    perturbation(args);
+
+    autoConfigurableParameterList.add(swarmSizeParameter);
+    autoConfigurableParameterList.add(archiveSizeParameter);
+    autoConfigurableParameterList.add(externalArchiveParameter);
+    autoConfigurableParameterList.add(swarmInitializationParameter);
+    autoConfigurableParameterList.add(velocityInitializationParameter);
+    autoConfigurableParameterList.add(perturbationParameter);
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
   }
 
-  private void createSwarmInitialization(String[] args) {
-    createSwarmInitializationParameter =
-        new CreateSwarmInitialSolutions(
+  private void createSwarm(String[] args) {
+    swarmInitializationParameter =
+        new CreateInitialSolutionsParameter("swarmInitialization",
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
   }
 
@@ -191,9 +196,11 @@ public class AutoMOPSO {
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
     mutation.addGlobalParameter(mutationRepairStrategy);
+
     RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
     mutation.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
+
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
@@ -201,26 +208,40 @@ public class AutoMOPSO {
     RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+
+    // TODO: the upper bound  must be the swarm size
+    IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
+        "frequencyOfApplicationOfMutationOperator", args, 1, 100);
+
+    perturbationParameter = new PerturbationParameter(args, List.of("mutationBasedPerturbation"));
     perturbationParameter.addSpecificParameter("mutationBasedPerturbation", mutation);
+    perturbationParameter.addSpecificParameter("mutationBasedPerturbation",
+        frequencyOfApplicationParameter);
   }
 
-  /** Create an instance of OMOPSO from the parsed parameters */
+  /**
+   * Create an instance of OMOPSO from the parsed parameters
+   */
   public ParticleSwarmOptimizationAlgorithm create() {
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
-    int swarmSize = swarmSizeParameter.getValue() ;
-    int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue() ;
-    String referenceFrontFileName = referenceFrontFilenameParameter.getValue() ;
+    int swarmSize = swarmSizeParameter.getValue();
+    int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
+    String referenceFrontFileName = referenceFrontFilenameParameter.getValue();
 
-    /////////
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
+
     var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
+
+    externalArchiveParameter.setSize(archiveSizeParameter.getValue());
+    BoundedArchive<DoubleSolution> externalArchive = (BoundedArchive<DoubleSolution>) externalArchiveParameter.getParameter();
     var velocityInitialization = new DefaultVelocityInitialization();
+
+    /////////
     var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
-    BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator()) ;
+    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator());
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
@@ -241,7 +262,7 @@ public class AutoMOPSO {
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
-        velocityChangeWhenUpperLimitIsReached, ((DoubleProblem)problem).getBoundsForVariables());
+        velocityChangeWhenUpperLimitIsReached, ((DoubleProblem) problem).getBoundsForVariables());
     int frequencyOfMutation = 7;
     var perturbation = new MutationBasedPerturbation(
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
@@ -269,20 +290,5 @@ public class AutoMOPSO {
 
   public static void print(List<Parameter<?>> parameterList) {
     parameterList.forEach(System.out::println);
-  }
-
-  public static void main(String[] args) throws IOException {
-    AutoMOPSO mopsoWithParameters = new AutoMOPSO();
-    mopsoWithParameters.parseAndCheckParameters(args);
-
-    ParticleSwarmOptimizationAlgorithm mopso = mopsoWithParameters.create();
-
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver = new RunTimeChartObserver<>("AutoMOPSO",
-        80, 500, null);
-
-    mopso.getObservable().register(runTimeChartObserver);
-    mopso.run();
-
-    System.out.println("Total computing time: " + mopso.getTotalComputingTime());
   }
 }
