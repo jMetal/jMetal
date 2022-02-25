@@ -5,7 +5,7 @@ import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.MutationBasedPerturbation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -19,7 +19,7 @@ public class PerturbationParameter extends CategoricalParameter {
     Perturbation result;
 
     switch (getValue()) {
-      case "mutationBasedPerturbation":
+      case "frequencySelectionMutationBasedPerturbation":
         MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
         MutationOperator<DoubleSolution> mutationOperator =
             mutationParameter.getParameter();
@@ -27,7 +27,7 @@ public class PerturbationParameter extends CategoricalParameter {
         int frequencyOfApplication = (int)findSpecificParameter("frequencyOfApplicationOfMutationOperator").getValue() ;
 
         result =
-            new MutationBasedPerturbation(mutationOperator, frequencyOfApplication) ;
+            new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfApplication) ;
 
         break;
       default:

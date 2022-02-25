@@ -175,7 +175,7 @@ public class AutoOMOPSO {
     RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
-    perturbationParameter.addSpecificParameter("mutationBasedPerturbation", mutation);
+    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutation);
   }
 
   /** Create an instance of OMOPSO from the parsed parameters */

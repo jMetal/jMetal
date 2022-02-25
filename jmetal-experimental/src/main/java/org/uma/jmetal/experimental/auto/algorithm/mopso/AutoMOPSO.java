@@ -28,10 +28,8 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalb
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.MutationBasedPerturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
@@ -212,9 +210,9 @@ public class AutoMOPSO {
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
         "frequencyOfApplicationOfMutationOperator", args, 1, 100);
 
-    perturbationParameter = new PerturbationParameter(args, List.of("mutationBasedPerturbation"));
-    perturbationParameter.addSpecificParameter("mutationBasedPerturbation", mutation);
-    perturbationParameter.addSpecificParameter("mutationBasedPerturbation",
+    perturbationParameter = new PerturbationParameter(args, List.of("frequencySelectionMutationBasedPerturbation"));
+    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutation);
+    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
         frequencyOfApplicationParameter);
   }
 

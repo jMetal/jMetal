@@ -27,7 +27,7 @@ public class AutoMOPSOIraceFileGenerator {
                         + "--globalBestInitialization defaultGlobalBestInitialization "
                         + "--selection tournament "
                         + "--selectionTournamentSize 2 "
-                        + "--perturbation mutationBasedPerturbation "
+                        + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 6 "
                         + "--mutation polynomial "
                         + "--mutationProbability 0.01 "
