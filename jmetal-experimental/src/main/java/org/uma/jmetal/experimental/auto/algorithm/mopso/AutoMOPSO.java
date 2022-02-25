@@ -19,7 +19,6 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter
 import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameterDaniVersion;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
@@ -33,7 +32,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocit
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

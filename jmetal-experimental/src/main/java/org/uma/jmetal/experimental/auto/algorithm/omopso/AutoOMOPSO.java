@@ -1,8 +1,22 @@
 package org.uma.jmetal.experimental.auto.algorithm.omopso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
-import org.uma.jmetal.experimental.auto.parameter.*;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
+import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
+import org.uma.jmetal.experimental.auto.parameter.Parameter;
+import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
+import org.uma.jmetal.experimental.auto.parameter.RealParameter;
+import org.uma.jmetal.experimental.auto.parameter.StringParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateSwarmInitialSolutions;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameterDaniVersion;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
@@ -30,10 +44,6 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Class to configure OMOPSO with an argument string using class {@link

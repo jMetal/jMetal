@@ -3,9 +3,7 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 
 public class VelocityUpdateParameter extends CategoricalParameter {
 
