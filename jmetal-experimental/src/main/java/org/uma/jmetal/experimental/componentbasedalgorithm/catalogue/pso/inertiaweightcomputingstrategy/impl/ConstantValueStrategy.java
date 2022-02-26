@@ -13,4 +13,8 @@ public class ConstantValueStrategy implements InertiaWeightComputingStrategy {
   public double compute() {
     return inertiaWeightValue ;
   }
+
+  public double getInertiaWeightValue() {
+    return inertiaWeightValue;
+  }
 }

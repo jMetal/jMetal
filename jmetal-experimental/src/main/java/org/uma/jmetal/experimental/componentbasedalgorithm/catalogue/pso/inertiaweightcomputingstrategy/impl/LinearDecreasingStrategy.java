@@ -23,4 +23,20 @@ public class LinearDecreasingStrategy implements InertiaWeightComputingStrategy 
 
     return weight ;
   }
+
+  public double getMinimumWeight() {
+    return minimumWeight;
+  }
+
+  public double getMaximumWeight() {
+    return maximumWeight;
+  }
+
+  public int getMaximumNumberOfIterations() {
+    return maximumNumberOfIterations;
+  }
+
+  public int getCurrentIteration() {
+    return currentIteration;
+  }
 }

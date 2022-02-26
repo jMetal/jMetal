@@ -21,4 +21,12 @@ public class RandomSelectedValueStrategy implements InertiaWeightComputingStrate
   public double compute() {
     return JMetalRandom.getInstance().nextDouble(lowerBound, upperBound);
   }
+
+  public double getLowerBound() {
+    return lowerBound;
+  }
+
+  public double getUpperBound() {
+    return upperBound;
+  }
 }
