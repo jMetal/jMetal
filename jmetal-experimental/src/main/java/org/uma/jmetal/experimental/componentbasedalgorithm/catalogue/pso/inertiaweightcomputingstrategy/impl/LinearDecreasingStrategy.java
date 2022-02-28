@@ -1,25 +1,32 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class LinearDecreasingStrategy implements InertiaWeightComputingStrategy {
-  private final double minimumWeight ;
-  private final double maximumWeight ;
-  private final int maximumNumberOfIterations;
-  private int currentIteration ;
+  protected final double minimumWeight ;
+  protected final double maximumWeight ;
+  protected final int maximumNumberOfIterations;
+  protected int computeCounter ;
+  protected final int swamSize ;
 
-  public LinearDecreasingStrategy(double minimumWeight, double maximumWeight, int maximumNumberOfIterations) {
+  public LinearDecreasingStrategy(double minimumWeight, double maximumWeight, int maximumNumberOfIterations, int swamSize) {
+    Check.that(maximumWeight >= minimumWeight, "The maximum weight " + maximumWeight +
+        " is not higher or equal than minimum weight " + maximumWeight);
+    Check.that(swamSize > 0, "The swarm size is zero");
     this.minimumWeight = minimumWeight ;
     this.maximumWeight = maximumWeight ;
     this.maximumNumberOfIterations = maximumNumberOfIterations;
-    this.currentIteration = 1;
+    this.swamSize = swamSize ;
+    this.computeCounter = 0 ;
   }
 
   @Override
   public double compute() {
+    computeCounter++ ;
+    int currentIteration = (computeCounter % swamSize) ;
     double weight = maximumWeight - (maximumWeight - minimumWeight) * currentIteration/maximumNumberOfIterations ;
-    currentIteration ++ ;
 
     return weight ;
   }
@@ -36,7 +43,7 @@ public class LinearDecreasingStrategy implements InertiaWeightComputingStrategy 
     return maximumNumberOfIterations;
   }
 
-  public int getCurrentIteration() {
-    return currentIteration;
+  public int getComputeCounter() {
+    return computeCounter;
   }
 }

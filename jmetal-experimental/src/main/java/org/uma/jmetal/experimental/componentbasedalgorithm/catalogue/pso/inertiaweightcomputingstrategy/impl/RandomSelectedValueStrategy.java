@@ -1,6 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class RandomSelectedValueStrategy implements InertiaWeightComputingStrategy {
@@ -13,6 +14,8 @@ public class RandomSelectedValueStrategy implements InertiaWeightComputingStrate
   }
 
   public RandomSelectedValueStrategy(double lowerBound, double upperBound) {
+    Check.that(upperBound >= lowerBound, "The upper bound " + upperBound +
+        " is not higher or equal than lower bound" + lowerBound);
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
   }
