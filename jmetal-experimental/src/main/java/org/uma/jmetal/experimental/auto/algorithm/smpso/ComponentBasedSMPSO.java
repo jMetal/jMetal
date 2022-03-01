@@ -5,6 +5,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.eval
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
@@ -17,6 +18,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -29,9 +31,9 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 public class ComponentBasedSMPSO {
 
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT2();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv";
-    int swarmSize = 10;
+    DoubleProblem problem = new ZDT4();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT4.csv";
+    int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
@@ -42,8 +44,8 @@ public class ComponentBasedSMPSO {
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     BoundedArchive<DoubleSolution> externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    GlobalBestSelection globalBestSelection = new TournamentGlobalBestSelection(2,
-        externalArchive.getComparator());
+    GlobalBestSelection globalBestSelection ; //= new TournamentGlobalBestSelection(2, externalArchive.getComparator());
+    globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator()) ;
     //globalBestSelection = new RandomGlobalBestSelection() ;
 
     double r1Min = 0.0;

@@ -107,13 +107,14 @@ public class AutoMOPSO {
         new CategoricalParameter(
             "velocityInitialization", args, List.of("defaultVelocityInitialization"));
 
-    velocityUpdate(args);
+    velocityUpdateParameter = configureVelocityUpdate(args);
 
     localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
     globalBestInitializationParameter = new GlobalBestInitializationParameter(args, List.of("defaultGlobalBestInitialization")) ;
     globalBestSelectionParameter = new GlobalBestSelectionParameter(args, List.of("binaryTournament", "random")) ;
     globalBestSelectionParameter = new GlobalBestSelectionParameter(args, Arrays.asList("binaryTournament", "random"));
 
+    perturbationParameter = configurePerturbation(args) ;
 /*
     velocityInitializationParameter =
         new CategoricalParameter(
@@ -170,7 +171,6 @@ public class AutoMOPSO {
 
     externalArchiveParameter = new ExternalArchiveParameter(args,
         List.of("crowdingDistanceArchive"));
-    perturbation(args);
 
     autoConfigurableParameterList.add(swarmSizeParameter);
     autoConfigurableParameterList.add(archiveSizeParameter);
@@ -182,13 +182,14 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(localBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestSelectionParameter) ;
+    autoConfigurableParameterList.add(perturbationParameter) ;
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
   }
 
-  private void perturbation(String[] args) {
+  private PerturbationParameter configurePerturbation(String[] args) {
     MutationParameter mutation =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
@@ -219,9 +220,11 @@ public class AutoMOPSO {
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutation);
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
         frequencyOfApplicationParameter);
+
+    return perturbationParameter ;
   }
 
-  private void velocityUpdate(String[] args) {
+  private VelocityUpdateParameter configureVelocityUpdate(String[] args) {
     c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
     c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
     c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
@@ -236,6 +239,8 @@ public class AutoMOPSO {
     velocityUpdateParameter.addGlobalParameter(c2MaxParameter);
     velocityUpdateParameter.addGlobalParameter(wMinParameter);
     velocityUpdateParameter.addGlobalParameter(wMaxParameter);
+
+    return velocityUpdateParameter ;
   }
 
   /**
@@ -266,13 +271,6 @@ public class AutoMOPSO {
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(externalArchive.getComparator());
 
     ///////// TO IMPLEMENT USING PARAMETERS
-
-
-    ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
-    operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
-    operators.add(new NonUniformMutation(1.0 / problem.getNumberOfVariables(), 0.5, 250));
-    operators.add(new NullMutation<>());
-    CompositeDoubleSolutionMutation mutation = new CompositeDoubleSolutionMutation(operators);
 
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
