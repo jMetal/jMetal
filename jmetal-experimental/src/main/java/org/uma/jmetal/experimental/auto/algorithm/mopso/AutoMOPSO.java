@@ -269,6 +269,7 @@ public class AutoMOPSO {
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(externalArchive.getComparator());
+    Perturbation perturbation = perturbationParameter.getParameter() ;
 
     ///////// TO IMPLEMENT USING PARAMETERS
 
@@ -276,7 +277,6 @@ public class AutoMOPSO {
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, ((DoubleProblem) problem).getBoundsForVariables());
-    Perturbation perturbation = perturbationParameter.getParameter() ;
 
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
