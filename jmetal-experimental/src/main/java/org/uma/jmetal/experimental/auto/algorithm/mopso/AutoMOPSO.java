@@ -12,6 +12,7 @@ import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
 import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 import org.uma.jmetal.experimental.auto.parameter.StringParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestInitializationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestInitializationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
@@ -22,11 +23,10 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
@@ -63,7 +63,7 @@ public class AutoMOPSO {
   private IntegerParameter swarmSizeParameter;
   private CreateInitialSolutionsParameter swarmInitializationParameter;
   private LocalBestInitializationParameter localBestInitializationParameter;
-  private CategoricalParameter globalBestInitializationParameter;
+  private GlobalBestInitializationParameter globalBestInitializationParameter;
   private SelectionParameter globalSelectionParameter;
   private PerturbationParameter perturbationParameter;
   private CategoricalParameter positionUpdateParameter;
@@ -107,6 +107,7 @@ public class AutoMOPSO {
     velocityUpdate(args);
 
     localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
+    globalBestInitializationParameter = new GlobalBestInitializationParameter(args, List.of("defaultGlobalBestInitialization")) ;
 
 /*
     velocityInitializationParameter =
@@ -174,6 +175,7 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(perturbationParameter);
     autoConfigurableParameterList.add(velocityUpdateParameter) ;
     autoConfigurableParameterList.add(localBestInitializationParameter) ;
+    autoConfigurableParameterList.add(globalBestInitializationParameter) ;
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
@@ -262,10 +264,9 @@ public class AutoMOPSO {
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
 
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
+    GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
 
     ///////// TO IMPLEMENT USING PARAMETERS
-    var globalBestInitialization = new DefaultGlobalBestInitialization();
-
     var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator());
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
