@@ -84,6 +84,16 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     }
   }
 
+  public ConstrainedVelocityUpdate(double c1Min, double c1Max,
+      double c2Min,
+      double c2Max,
+      double weightMin,
+      double weightMax,
+      DoubleProblem problem) {
+    this(0.0, 1.0, 0.0, 1.0, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, problem);
+  }
+
+
   @Override
   /**
    * Update the velocity of the particle.
@@ -103,14 +113,14 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       DoubleSolution bestParticle = (DoubleSolution) localBest[i].copy();
 
       //bestGlobal = globalBestSelection.select(leaders.getSolutionList()) ;
-      bestGlobal = selectGlobalBest(leaders) ;
+      bestGlobal = selectGlobalBest(leaders);
 
       r1 = randomGenerator.nextDouble(r1Min, r1Max);
       r2 = randomGenerator.nextDouble(r2Min, r2Max);
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      double inertiaWeight = weightMax ;
+      double inertiaWeight = weightMax;
 
       for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
