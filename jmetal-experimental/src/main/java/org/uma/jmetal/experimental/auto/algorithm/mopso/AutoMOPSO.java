@@ -13,6 +13,7 @@ import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 import org.uma.jmetal.experimental.auto.parameter.StringParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestInitializationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
@@ -24,6 +25,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solu
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
@@ -60,7 +62,7 @@ public class AutoMOPSO {
   private PositiveIntegerValue archiveSizeParameter;
   private IntegerParameter swarmSizeParameter;
   private CreateInitialSolutionsParameter swarmInitializationParameter;
-  private CategoricalParameter localBestInitializationParameter;
+  private LocalBestInitializationParameter localBestInitializationParameter;
   private CategoricalParameter globalBestInitializationParameter;
   private SelectionParameter globalSelectionParameter;
   private PerturbationParameter perturbationParameter;
@@ -103,6 +105,9 @@ public class AutoMOPSO {
             "velocityInitialization", args, List.of("defaultVelocityInitialization"));
 
     velocityUpdate(args);
+
+    localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
+
 /*
     velocityInitializationParameter =
         new CategoricalParameter(
@@ -168,6 +173,8 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(velocityInitializationParameter);
     autoConfigurableParameterList.add(perturbationParameter);
     autoConfigurableParameterList.add(velocityUpdateParameter) ;
+    autoConfigurableParameterList.add(localBestInitializationParameter) ;
+
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
@@ -254,8 +261,9 @@ public class AutoMOPSO {
     };
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
 
+    LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
+
     ///////// TO IMPLEMENT USING PARAMETERS
-    var localBestInitialization = new DefaultLocalBestInitialization();
     var globalBestInitialization = new DefaultGlobalBestInitialization();
 
     var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator());

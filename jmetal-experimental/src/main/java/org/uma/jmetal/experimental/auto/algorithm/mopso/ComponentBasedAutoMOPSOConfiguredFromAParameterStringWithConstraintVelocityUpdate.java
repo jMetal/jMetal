@@ -23,7 +23,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
         + "--swarmInitialization random "
         + "--velocityInitialization defaultVelocityInitialization "
         + "--externalArchive crowdingDistanceArchive "
-        + "--localBestInitialization defaultLocalBestInitialiation "
+        + "--localBestInitialization defaultLocalBestInitialization "
         + "--globalBestInitialization defaultGlobalBestInitialization "
         + "--selection tournament "
         + "--selectionTournamentSize 2 "
