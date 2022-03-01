@@ -263,9 +263,10 @@ public class AutoMOPSO {
 
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
-    GlobalBestSelection globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator());
+    GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(externalArchive.getComparator());
 
     ///////// TO IMPLEMENT USING PARAMETERS
+
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
