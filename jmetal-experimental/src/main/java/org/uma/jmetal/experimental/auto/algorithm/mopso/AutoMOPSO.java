@@ -222,7 +222,7 @@ public class AutoMOPSO {
     wMinParameter = new RealParameter("wMin", args, 0.1, 0.5);
     wMaxParameter = new RealParameter("wMax", args, 0.5, 1.0);
 
-    velocityUpdateParameter = new VelocityUpdateParameter(args, List.of("defaultVelocityUpdate")) ;
+    velocityUpdateParameter = new VelocityUpdateParameter(args, List.of("defaultVelocityUpdate", "constrainedVelocityUpdate")) ;
     velocityUpdateParameter.addGlobalParameter(c1MinParameter);
     velocityUpdateParameter.addGlobalParameter(c1MaxParameter);
     velocityUpdateParameter.addGlobalParameter(c2MinParameter);
@@ -249,6 +249,9 @@ public class AutoMOPSO {
     BoundedArchive<DoubleSolution> externalArchive = (BoundedArchive<DoubleSolution>) externalArchiveParameter.getParameter();
     var velocityInitialization = new DefaultVelocityInitialization();
 
+    if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
+      velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
+    };
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
 
     ///////// TO IMPLEMENT USING PARAMETERS
