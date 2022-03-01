@@ -269,7 +269,6 @@ public class AutoMOPSO {
         velocityChangeWhenUpperLimitIsReached, ((DoubleProblem) problem).getBoundsForVariables());
     Perturbation perturbation = perturbationParameter.getParameter() ;
 
-    //var perturbation = new MutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
     var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
 
