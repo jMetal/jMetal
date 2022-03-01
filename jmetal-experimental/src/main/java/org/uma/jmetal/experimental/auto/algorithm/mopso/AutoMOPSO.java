@@ -14,6 +14,7 @@ import org.uma.jmetal.experimental.auto.parameter.StringParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestInitializationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestSelectionParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestInitializationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
@@ -24,6 +25,8 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParame
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
@@ -64,7 +67,7 @@ public class AutoMOPSO {
   private CreateInitialSolutionsParameter swarmInitializationParameter;
   private LocalBestInitializationParameter localBestInitializationParameter;
   private GlobalBestInitializationParameter globalBestInitializationParameter;
-  private SelectionParameter globalSelectionParameter;
+  private GlobalBestSelectionParameter globalBestSelectionParameter ;
   private PerturbationParameter perturbationParameter;
   private CategoricalParameter positionUpdateParameter;
   private CategoricalParameter globalBestUpdateParameter;
@@ -108,6 +111,8 @@ public class AutoMOPSO {
 
     localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
     globalBestInitializationParameter = new GlobalBestInitializationParameter(args, List.of("defaultGlobalBestInitialization")) ;
+    globalBestSelectionParameter = new GlobalBestSelectionParameter(args, List.of("binaryTournament", "random")) ;
+    globalBestSelectionParameter = new GlobalBestSelectionParameter(args, Arrays.asList("binaryTournament", "random"));
 
 /*
     velocityInitializationParameter =
@@ -176,18 +181,11 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(velocityUpdateParameter) ;
     autoConfigurableParameterList.add(localBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestInitializationParameter) ;
+    autoConfigurableParameterList.add(globalBestSelectionParameter) ;
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
     }
-  }
-
-  private void selection(String[] args) {
-    globalSelectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
-    velocityUpdateParameter.addGlobalParameter(globalSelectionParameter);
-    IntegerParameter selectionTournamentSize =
-        new IntegerParameter("selectionTournamentSize", args, 2, 10);
-    globalSelectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
   }
 
   private void perturbation(String[] args) {
@@ -265,9 +263,9 @@ public class AutoMOPSO {
 
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
+    GlobalBestSelection globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator());
 
     ///////// TO IMPLEMENT USING PARAMETERS
-    var globalBestSelection = new TournamentGlobalBestSelection(2, externalArchive.getComparator());
 
     ArrayList<MutationOperator<DoubleSolution>> operators = new ArrayList<>();
     operators.add(new UniformMutation(1.0 / problem.getNumberOfVariables(), 0.5));
