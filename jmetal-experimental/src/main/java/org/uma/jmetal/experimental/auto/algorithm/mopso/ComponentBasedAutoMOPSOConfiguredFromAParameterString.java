@@ -29,7 +29,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
                 + "--globalBestSelection random "
                 + "--perturbation frequencySelectionMutationBasedPerturbation "
                 + "--frequencyOfApplicationOfMutationOperator 6 "
-                + "--mutation nonUniform "
+                + "--mutation polynomial "
                 + "--mutationProbability 0.01 "
                 + "--mutationRepairStrategy bounds "
                 + "--polynomialMutationDistributionIndex 20.0 "
