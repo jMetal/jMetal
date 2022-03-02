@@ -2,6 +2,7 @@ package org.uma.jmetal.experimental.auto.algorithm.omopso;
 
 import java.util.ArrayList;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CompositeDoubleSolutionMutation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;

@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.auto.algorithm.omopso;
+package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.ArrayList;
 import java.util.List;

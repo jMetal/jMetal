@@ -48,20 +48,17 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
     AutoMOPSO autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);
 
-    AutoNSGAII.print(autoMOPSO.fixedParameterList);
-    AutoNSGAII.print(autoMOPSO.autoConfigurableParameterList);
+    AutoMOPSO.print(autoMOPSO.fixedParameterList);
+    AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
     ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
-    //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
+            "MOPSO Constrained", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    //mopso.getObservable().register(evaluationObserver);
     mopso.getObservable().register(runTimeChartObserver);
-    //nsgaII.getObservable().register(writeSolutionsToFilesObserver);
 
     mopso.run();
 
