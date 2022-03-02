@@ -79,7 +79,7 @@ public class AutoMOPSO {
       parameter.parse().check();
     }
 
-    swarmSizeParameter = new IntegerParameter("swarmSize", args, 2, 200);
+    swarmSizeParameter = new IntegerParameter("swarmSize", args, 10, 200);
     archiveSizeParameter = new PositiveIntegerValue("archiveSize", args);
 
     swarmInitializationParameter =
@@ -151,7 +151,7 @@ public class AutoMOPSO {
 
     // TODO: the upper bound  must be the swarm size
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
-        "frequencyOfApplicationOfMutationOperator", args, 1, 100);
+        "frequencyOfApplicationOfMutationOperator", args, 1, 10);
 
     perturbationParameter = new PerturbationParameter(args, List.of("frequencySelectionMutationBasedPerturbation"));
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutationParameter);
