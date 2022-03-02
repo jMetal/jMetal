@@ -62,6 +62,7 @@ public class AutoMOPSO {
   private RealParameter c2MaxParameter;
   private RealParameter wMinParameter;
   private RealParameter wMaxParameter;
+  private MutationParameter mutationParameter;
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
@@ -126,34 +127,34 @@ public class AutoMOPSO {
   }
 
   private PerturbationParameter configurePerturbation(String[] args) {
-    MutationParameter mutation =
+    mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
-    mutation.addGlobalParameter(mutationProbability);
+    mutationParameter.addGlobalParameter(mutationProbability);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
-    mutation.addGlobalParameter(mutationRepairStrategy);
+    mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutation.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
+    mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
-    mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
+    mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
-    mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+    mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
     // TODO: the upper bound  must be the swarm size
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
         "frequencyOfApplicationOfMutationOperator", args, 1, 100);
 
     perturbationParameter = new PerturbationParameter(args, List.of("frequencySelectionMutationBasedPerturbation"));
-    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutation);
+    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutationParameter);
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
         frequencyOfApplicationParameter);
 
@@ -202,11 +203,17 @@ public class AutoMOPSO {
     };
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
 
-
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(externalArchive.getComparator());
-    Perturbation perturbation = perturbationParameter.getParameter() ;
+
+    if (mutationParameter.getValue().equals("nonUniform")) {
+      mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
+      mutationParameter.addNonConfigurableParameter("maxIterations",
+              maximumNumberOfEvaluationsParameter.getValue()/swarmSizeParameter.getValue());
+    }
+
+    var perturbation = perturbationParameter.getParameter() ;
 
     ///////// TO IMPLEMENT USING PARAMETERS
     if(positionUpdateParameter.getValue().equals("defaultPositionUpdate")){

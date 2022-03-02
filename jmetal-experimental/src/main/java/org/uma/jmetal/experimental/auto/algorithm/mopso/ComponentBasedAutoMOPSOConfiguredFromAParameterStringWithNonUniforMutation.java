@@ -55,7 +55,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithNonUniforM
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOPSO Constrained", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "MOPSO With Non Uniform Mutation", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
     mopso.getObservable().register(runTimeChartObserver);
 
