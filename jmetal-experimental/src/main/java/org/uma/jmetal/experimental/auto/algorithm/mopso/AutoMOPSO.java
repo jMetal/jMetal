@@ -116,7 +116,6 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(localBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestSelectionParameter) ;
-    autoConfigurableParameterList.add(perturbationParameter) ;
     autoConfigurableParameterList.add(globalBestUpdateParameter);
     autoConfigurableParameterList.add(localBestUpdateParameter);
     autoConfigurableParameterList.add(positionUpdateParameter);
