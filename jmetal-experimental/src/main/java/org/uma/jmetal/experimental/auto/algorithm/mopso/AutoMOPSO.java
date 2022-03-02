@@ -127,7 +127,7 @@ public class AutoMOPSO {
 
   private PerturbationParameter configurePerturbation(String[] args) {
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
@@ -201,6 +201,7 @@ public class AutoMOPSO {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
     };
     var velocityUpdate = velocityUpdateParameter.getParameter() ;
+
 
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
