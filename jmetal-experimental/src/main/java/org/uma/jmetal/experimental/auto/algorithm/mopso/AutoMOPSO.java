@@ -11,27 +11,20 @@ import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
 import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 import org.uma.jmetal.experimental.auto.parameter.StringParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestInitializationParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestSelectionParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestInitializationParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -69,9 +62,9 @@ public class AutoMOPSO {
   private GlobalBestInitializationParameter globalBestInitializationParameter;
   private GlobalBestSelectionParameter globalBestSelectionParameter ;
   private PerturbationParameter perturbationParameter;
-  private CategoricalParameter positionUpdateParameter;
-  private CategoricalParameter globalBestUpdateParameter;
-  private CategoricalParameter localBestUpdateParameter;
+  private PositionUpdateParameter positionUpdateParameter;
+  private GlobalBestUpdateParameter globalBestUpdateParameter;
+  private LocalBestUpdateParameter localBestUpdateParameter;
   private VelocityUpdateParameter velocityUpdateParameter;
   private RealParameter c1MinParameter;
   private RealParameter c1MaxParameter;
@@ -110,64 +103,15 @@ public class AutoMOPSO {
     velocityUpdateParameter = configureVelocityUpdate(args);
 
     localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
+    localBestUpdateParameter = new LocalBestUpdateParameter(args, Arrays.asList("defaultLocalBestUpdate"));
     globalBestInitializationParameter = new GlobalBestInitializationParameter(args, List.of("defaultGlobalBestInitialization")) ;
     globalBestSelectionParameter = new GlobalBestSelectionParameter(args, List.of("binaryTournament", "random")) ;
     globalBestSelectionParameter = new GlobalBestSelectionParameter(args, Arrays.asList("binaryTournament", "random"));
+    globalBestUpdateParameter = new GlobalBestUpdateParameter(args, Arrays.asList("defaultGlobalBestUpdate"));
+
+    positionUpdateParameter = new PositionUpdateParameter(args, Arrays.asList("defaultPositionUpdate"));
 
     perturbationParameter = configurePerturbation(args) ;
-/*
-    velocityInitializationParameter =
-        new CategoricalParameter(
-            "velocityInitialization", args, List.of("defaultVelocityInitialization"));
-    localBestInitializationParameter =
-        new CategoricalParameter(
-            "localBestInitialization", args, List.of("defaultLocalBestInitialiation"));
-    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive"));
-    globalBestInitializationParameter =
-        new CategoricalParameter(
-            "globalBestInitialization", args, List.of("defaultGlobalBestInitialization"));
-    perturbationParameter =
-        new CategoricalParameter("perturbation", args, List.of("mutationBasedPerturbation"));
-    positionUpdateParameter =
-        new CategoricalParameter("positionUpdate", args, List.of("defaultPositionUpdate"));
-    globalBestUpdateParameter =
-        new CategoricalParameter("globalBestUpdate", args, List.of("defaultGlobalBestUpdate"));
-    localBestUpdateParameter =
-        new CategoricalParameter("localBestUpdate", args, List.of("defaultLocalBestUpdate"));
-    velocityUpdateParameter =
-        new VelocityUpdateParameterDaniVersion(
-            args, List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
-    c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
-    c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
-    c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
-    c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
-    wMinParameter = new RealParameter("wMin", args, 0.1, 0.5);
-    wMaxParameter = new RealParameter("wMax", args, 0.5, 1.0);
-
-    createSwarmInitialization(args);
-    selection(args);
-    perturbation(args);
-
-    autoConfigurableParameterList.add(swarmSizeParameter);
-    autoConfigurableParameterList.add(archiveSizeParameter);
-    autoConfigurableParameterList.add(createSwarmInitializationParameter);
-    autoConfigurableParameterList.add(velocityInitializationParameter);
-    autoConfigurableParameterList.add(externalArchiveParameter);
-    autoConfigurableParameterList.add(localBestInitializationParameter);
-    autoConfigurableParameterList.add(globalBestInitializationParameter);
-    autoConfigurableParameterList.add(globalSelectionParameter);
-    autoConfigurableParameterList.add(perturbationParameter);
-    autoConfigurableParameterList.add(positionUpdateParameter);
-    autoConfigurableParameterList.add(globalBestUpdateParameter);
-    autoConfigurableParameterList.add(localBestUpdateParameter);
-    autoConfigurableParameterList.add(velocityUpdateParameter);
-    autoConfigurableParameterList.add(c1MaxParameter);
-    autoConfigurableParameterList.add(c1MaxParameter);
-    autoConfigurableParameterList.add(c2MinParameter);
-    autoConfigurableParameterList.add(c2MaxParameter);
-    autoConfigurableParameterList.add(wMinParameter);
-    autoConfigurableParameterList.add(wMaxParameter);
-*/
 
     externalArchiveParameter = new ExternalArchiveParameter(args,
         List.of("crowdingDistanceArchive"));
@@ -183,6 +127,9 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(globalBestInitializationParameter) ;
     autoConfigurableParameterList.add(globalBestSelectionParameter) ;
     autoConfigurableParameterList.add(perturbationParameter) ;
+    autoConfigurableParameterList.add(globalBestUpdateParameter);
+    autoConfigurableParameterList.add(localBestUpdateParameter);
+    autoConfigurableParameterList.add(positionUpdateParameter);
 
     for (Parameter<?> parameter : autoConfigurableParameterList) {
       parameter.parse().check();
@@ -272,14 +219,16 @@ public class AutoMOPSO {
     Perturbation perturbation = perturbationParameter.getParameter() ;
 
     ///////// TO IMPLEMENT USING PARAMETERS
+    if(positionUpdateParameter.getValue().equals("defaultPositionUpdate")){
+      positionUpdateParameter.addNonConfigurableParameter("positionBounds", ((DoubleProblem) problem).getBoundsForVariables());
+      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached", -1.0);
+      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached", -1.0);
+    }
 
-    double velocityChangeWhenLowerLimitIsReached = -1.0;
-    double velocityChangeWhenUpperLimitIsReached = -1.0;
-    var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
-        velocityChangeWhenUpperLimitIsReached, ((DoubleProblem) problem).getBoundsForVariables());
+    PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
 
-    var globalBestUpdate = new DefaultGlobalBestUpdate();
-    var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
+    GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
+    LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(new DominanceComparator());
 
     ////
     var mopso = new ParticleSwarmOptimizationAlgorithm("OMOPSO",

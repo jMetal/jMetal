@@ -16,7 +16,6 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.SelectionParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameterDaniVersion;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
