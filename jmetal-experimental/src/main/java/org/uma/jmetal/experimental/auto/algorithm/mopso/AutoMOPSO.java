@@ -127,7 +127,7 @@ public class AutoMOPSO {
 
   private PerturbationParameter configurePerturbation(String[] args) {
     MutationParameter mutation =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
+        new MutationParameter(args, Arrays.asList("uniform", "polynomial"));
     ProbabilityParameter mutationProbability =
         new ProbabilityParameter("mutationProbability", args);
     mutation.addGlobalParameter(mutationProbability);
