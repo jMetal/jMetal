@@ -167,7 +167,7 @@ public class AutoMOPSO {
     c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
     c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
     wMinParameter = new RealParameter("wMin", args, 0.1, 0.5);
-    wMaxParameter = new RealParameter("wMax", args, 0.5, 1.0);
+    wMaxParameter = new RealParameter("wMax", args, 0.1, 1.0);
 
     velocityUpdateParameter = new VelocityUpdateParameter(args, List.of("defaultVelocityUpdate", "constrainedVelocityUpdate")) ;
     velocityUpdateParameter.addGlobalParameter(c1MinParameter);

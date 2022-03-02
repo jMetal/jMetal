@@ -27,7 +27,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
         + "--globalBestInitialization defaultGlobalBestInitialization "
         + "--globalBestSelection binaryTournament "
         + "--perturbation frequencySelectionMutationBasedPerturbation "
-        + "--frequencyOfApplicationOfMutationOperator 6 "
+        + "--frequencyOfApplicationOfMutationOperator 7 "
         + "--mutation polynomial "
         + "--mutationProbability 0.01 "
         + "--mutationRepairStrategy bounds "
@@ -36,12 +36,12 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
         + "--globalBestUpdate defaultGlobalBestUpdate "
         + "--localBestUpdate defaultLocalBestUpdate "
         + "--velocityUpdate constrainedVelocityUpdate "
-        + "--c1Min 1.0 "
-        + "--c1Max 2.0 "
-        + "--c2Min 1.0 "
-        + "--c2Max 2.0 "
+        + "--c1Min 1.5 "
+        + "--c1Max 2.5 "
+        + "--c2Min 1.5 "
+        + "--c2Max 2.5 "
         + "--wMin 0.1 "
-        + "--wMax 0.5 "
+        + "--wMax 0.1 "
     )
         .split("\\s+");
 

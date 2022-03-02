@@ -56,7 +56,7 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+                "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
     mopso.getObservable().register(runTimeChartObserver);
 
