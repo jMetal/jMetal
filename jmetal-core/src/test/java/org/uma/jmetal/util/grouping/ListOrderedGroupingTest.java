@@ -2,7 +2,8 @@ package org.uma.jmetal.util.grouping;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-import org.uma.jmetal.util.grouping.impl.ListOrderedGrouping;
+import org.uma.jmetal.util.naming.grouping.CollectionGrouping;
+import org.uma.jmetal.util.naming.grouping.impl.ListOrderedGrouping;
 
 import java.util.List;
 
