@@ -8,6 +8,8 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
@@ -41,6 +43,7 @@ import org.uma.jmetal.problem.multiobjective.wfg.WFG6;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG7;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG8;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG9;
+import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -72,7 +75,7 @@ public class Gecco2019Experiment {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
+    /*problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG4()).setReferenceFront("WFG4.2D.csv"));
@@ -87,7 +90,12 @@ public class Gecco2019Experiment {
     problemList.add(new ExperimentProblem<>(new DTLZ4_2D()).setReferenceFront("DTLZ4.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ5_2D()).setReferenceFront("DTLZ5.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));*/
+    problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
+    /*problemList.add(new ExperimentProblem<>(new ZDT2()).setReferenceFront("ZDT2.csv"));
+    problemList.add(new ExperimentProblem<>(new ZDT3()).setReferenceFront("ZDT3.csv"));
+    problemList.add(new ExperimentProblem<>(new ZDT4()).setReferenceFront("ZDT4.csv"));
+    problemList.add(new ExperimentProblem<>(new ZDT6()).setReferenceFront("ZDT6.csv"));*/
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
@@ -155,6 +163,8 @@ public class Gecco2019Experiment {
       }
 
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+
+        /* AutoNSGAII */
         String[] parameters =
                 ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
@@ -178,7 +188,8 @@ public class Gecco2019Experiment {
                         + "--mutationProbability 0.004 "
                         + "--mutationRepairStrategy round "
                         + "--uniformMutationPerturbation 0.6972 "
-                        + "--polynomialMutationDistributionIndex 20.0 ")
+                        + "--polynomialMutationDistributionIndex 20.0 "
+                        + "--externalArchive crowdingDistanceArchive ")
                         .split("\\s+");
 
         AutoNSGAII autoNSGAII = new AutoNSGAII();
@@ -186,7 +197,44 @@ public class Gecco2019Experiment {
         EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
         algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
+
+        /* AutoMOPSO */
+        String[] parametersMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                + "--maximumNumberOfEvaluations 25000 "
+                + "--swarmSize 72 "
+                + "--archiveSize 100 "
+                + "--swarmInitialization random "
+                + "--velocityInitialization defaultVelocityInitialization "
+                + "--externalArchive crowdingDistanceArchive "
+                + "--localBestInitialization defaultLocalBestInitialization "
+                + "--globalBestInitialization defaultGlobalBestInitialization "
+                + "--globalBestSelection binaryTournament "
+                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                + "--frequencyOfApplicationOfMutationOperator 6 "
+                + "--mutation polynomial "
+                + "--mutationProbability 0.0108 "
+                + "--mutationRepairStrategy round "
+                + "--polynomialMutationDistributionIndex 84.965 "
+                + "--positionUpdate defaultPositionUpdate "
+                + "--globalBestUpdate defaultGlobalBestUpdate "
+                + "--localBestUpdate defaultLocalBestUpdate "
+                + "--velocityUpdate defaultVelocityUpdate "
+                + "--c1Min 1.6003 "
+                + "--c1Max 2.4511 "
+                + "--c2Min 1.2224 "
+                + "--c2Max 2.1119 "
+                + "--wMin 0.1041  "
+                + "--wMax 0.288 "
+        )
+                .split("\\s+");
+        AutoMOPSO autoMOPSO = new AutoMOPSO();
+        autoMOPSO.parseAndCheckParameters(parametersMOPSO);
+        ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+
+        algorithms.add(new ExperimentAlgorithm<>(mopso, "AutoMOPSO", experimentProblem, run));
       }
+
     }
     return algorithms;
   }
