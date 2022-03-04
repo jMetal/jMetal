@@ -11,37 +11,37 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv";
+    String referenceFrontFileName = "ZDT6.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT6 "
                 + "--referenceFrontFileName "
                 + referenceFrontFileName
                 + " "
                 + "--maximumNumberOfEvaluations 25000 "
-                + "--swarmSize 173 "
-                + "--archiveSize 100 "
-                + "--swarmInitialization latinHypercubeSampling "
+                + "--swarmSize 100 "
+                + "--arch<iveSize 100 "
+                + "--swarmInitialization random "
                 + "--velocityInitialization defaultVelocityInitialization "
                 + "--externalArchive crowdingDistanceArchive "
                 + "--localBestInitialization defaultLocalBestInitialization "
                 + "--globalBestInitialization defaultGlobalBestInitialization "
-                + "--globalBestSelection random "
+                + "--globalBestSelection binaryTournament "
                 + "--perturbation frequencySelectionMutationBasedPerturbation "
-                + "--frequencyOfApplicationOfMutationOperator 6 "
+                + "--frequencyOfApplicationOfMutationOperator 7 "
                 + "--mutation polynomial "
-                + "--mutationProbability 0.01 "
-                + "--mutationRepairStrategy bounds "
+                + "--mutationProbability 1.0 "
+                + "--mutationRepairStrategy round "
                 + "--polynomialMutationDistributionIndex 20.0 "
                 + "--positionUpdate defaultPositionUpdate "
                 + "--globalBestUpdate defaultGlobalBestUpdate "
                 + "--localBestUpdate defaultLocalBestUpdate "
                 + "--velocityUpdate defaultVelocityUpdate "
-                + "--c1Min 1.0 "
+                + "--c1Min 1.5 "
                 + "--c1Max 2.0 "
-                + "--c2Min 1.0 "
+                + "--c2Min 1.5 "
                 + "--c2Max 2.0 "
-                + "--wMin 0.1 "
+                + "--wMin 0.1  "
                 + "--wMax 0.5 ")
             .split("\\s+");
 

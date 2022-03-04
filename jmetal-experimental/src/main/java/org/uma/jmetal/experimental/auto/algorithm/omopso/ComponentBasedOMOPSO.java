@@ -20,7 +20,9 @@ import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
+import org.uma.jmetal.problem.multiobjective.wfg.WFG1;
+import org.uma.jmetal.problem.multiobjective.wfg.WFG2;
+import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -35,8 +37,8 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  */
 public class ComponentBasedOMOPSO {
   public static void main(String[] args) {
-    DoubleProblem problem = new ZDT2();
-    String referenceFrontFileName = "resources/referenceFrontsCSV/ZDT2.csv" ;
+    DoubleProblem problem = new WFG2();
+    String referenceFrontFileName = "resources/referenceFrontsCSV/WFG2.2D.csv" ;
     int swarmSize = 100;
     int maximumNumberOfEvaluations = 25000;
 

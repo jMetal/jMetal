@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.omopso.OMOPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
@@ -43,7 +44,6 @@ import org.uma.jmetal.problem.multiobjective.wfg.WFG6;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG7;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG8;
 import org.uma.jmetal.problem.multiobjective.wfg.WFG9;
-import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -59,7 +59,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * This class reproduce the experimental study detailed in:
  * Antonio J. Nebro, Manuel López-Ibáñez, Cristóbal Barba-González, José García-Nieto
- * Automatic configuration of NSGA-II with jMetal and irace.
+ * Automatic configuration of NSGA-II and MOPSO with jMetal and irace.
  * GECCO (Companion) 2019: 1374-1381
  * DOI: https://doi.org/10.1145/3319619.3326832
  *
@@ -75,7 +75,7 @@ public class Gecco2019Experiment {
     String experimentBaseDirectory = args[0];
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    /*problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
+    problemList.add(new ExperimentProblem<>(new WFG1()).setReferenceFront("WFG1.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG2()).setReferenceFront("WFG2.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG3()).setReferenceFront("WFG3.2D.csv"));
     problemList.add(new ExperimentProblem<>(new WFG4()).setReferenceFront("WFG4.2D.csv"));
@@ -90,12 +90,7 @@ public class Gecco2019Experiment {
     problemList.add(new ExperimentProblem<>(new DTLZ4_2D()).setReferenceFront("DTLZ4.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ5_2D()).setReferenceFront("DTLZ5.2D.csv"));
     problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
-    problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));*/
-    problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
-    /*problemList.add(new ExperimentProblem<>(new ZDT2()).setReferenceFront("ZDT2.csv"));
-    problemList.add(new ExperimentProblem<>(new ZDT3()).setReferenceFront("ZDT3.csv"));
-    problemList.add(new ExperimentProblem<>(new ZDT4()).setReferenceFront("ZDT4.csv"));
-    problemList.add(new ExperimentProblem<>(new ZDT6()).setReferenceFront("ZDT6.csv"));*/
+    problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
             configureAlgorithmList(problemList);
@@ -162,6 +157,8 @@ public class Gecco2019Experiment {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
+
+
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
 
         /* AutoNSGAII */
@@ -198,8 +195,10 @@ public class Gecco2019Experiment {
 
         algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
 
+
+
         /* AutoMOPSO */
-        String[] parametersMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+        String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                 + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--swarmSize 72 "
@@ -228,11 +227,47 @@ public class Gecco2019Experiment {
                 + "--wMax 0.288 "
         )
                 .split("\\s+");
-        AutoMOPSO autoMOPSO = new AutoMOPSO();
-        autoMOPSO.parseAndCheckParameters(parametersMOPSO);
-        ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+        AutoMOPSO AutoMOPSO = new AutoMOPSO();
+        AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
+        ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
 
-        algorithms.add(new ExperimentAlgorithm<>(mopso, "AutoMOPSO", experimentProblem, run));
+        algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
+
+        /* OMOPSO */
+        String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                + "--maximumNumberOfEvaluations 25000 "
+                + "--swarmSize 100 "
+                + "--archiveSize 100 "
+                + "--swarmInitialization random "
+                + "--velocityInitialization defaultVelocityInitialization "
+                + "--externalArchive crowdingDistanceArchive "
+                + "--localBestInitialization defaultLocalBestInitialization "
+                + "--globalBestInitialization defaultGlobalBestInitialization "
+                + "--globalBestSelection binaryTournament "
+                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                + "--frequencyOfApplicationOfMutationOperator 7 "
+                + "--mutation polynomial "
+                + "--mutationProbability 1.0 "
+                + "--mutationRepairStrategy round "
+                + "--polynomialMutationDistributionIndex 20.0 "
+                + "--positionUpdate defaultPositionUpdate "
+                + "--globalBestUpdate defaultGlobalBestUpdate "
+                + "--localBestUpdate defaultLocalBestUpdate "
+                + "--velocityUpdate defaultVelocityUpdate "
+                + "--c1Min 1.5 "
+                + "--c1Max 2.0 "
+                + "--c2Min 1.5 "
+                + "--c2Max 2.0 "
+                + "--wMin 0.1  "
+                + "--wMax 0.5 "
+        )
+                .split("\\s+");
+        AutoMOPSO OMOPSO = new AutoMOPSO();
+        OMOPSO.parseAndCheckParameters(parametersOMOPSO);
+        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+
+        algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
       }
 
     }
