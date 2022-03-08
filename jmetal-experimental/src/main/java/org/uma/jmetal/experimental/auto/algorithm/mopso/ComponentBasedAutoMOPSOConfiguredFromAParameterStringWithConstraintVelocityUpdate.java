@@ -36,12 +36,12 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
         + "--globalBestUpdate defaultGlobalBestUpdate "
         + "--localBestUpdate defaultLocalBestUpdate "
         + "--velocityUpdate constrainedVelocityUpdate "
+        + "--inertiaWeightComputingStrategy constantValue "
         + "--c1Min 1.5 "
         + "--c1Max 2.5 "
         + "--c2Min 1.5 "
         + "--c2Max 2.5 "
-        + "--wMin 0.1 "
-        + "--wMax 0.1 "
+        + "--weight 0.1 "
     )
         .split("\\s+");
 

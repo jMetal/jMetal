@@ -8,6 +8,8 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solu
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.ConstantValueStrategy;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
@@ -65,8 +67,9 @@ public class ComponentBasedOMOPSO {
     double weightMin = 0.1;
     double weightMax = 0.5;
 
-    var velocityUpdate = new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max, weightMin,
-        weightMax);
+    var inertiaWeightStrategy = new RandomSelectedValueStrategy(weightMin, weightMax) ;
+
+    var velocityUpdate = new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max);
 
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
@@ -85,6 +88,7 @@ public class ComponentBasedOMOPSO {
         velocityInitialization,
         localBestInitialization,
         globalBestInitialization,
+        inertiaWeightStrategy,
         velocityUpdate,
         positionUpdate,
         perturbation,

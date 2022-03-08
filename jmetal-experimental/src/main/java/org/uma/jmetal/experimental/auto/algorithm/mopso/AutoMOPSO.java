@@ -10,15 +10,28 @@ import org.uma.jmetal.experimental.auto.parameter.Parameter;
 import org.uma.jmetal.experimental.auto.parameter.PositiveIntegerValue;
 import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 import org.uma.jmetal.experimental.auto.parameter.StringParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.*;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.CreateInitialSolutionsParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ExternalArchiveParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestInitializationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestSelectionParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.GlobalBestUpdateParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.InertiaWeightComputingParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestInitializationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestUpdateParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.PositionUpdateParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
+import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.problem.Problem;
@@ -50,7 +63,7 @@ public class AutoMOPSO {
   private CreateInitialSolutionsParameter swarmInitializationParameter;
   private LocalBestInitializationParameter localBestInitializationParameter;
   private GlobalBestInitializationParameter globalBestInitializationParameter;
-  private GlobalBestSelectionParameter globalBestSelectionParameter ;
+  private GlobalBestSelectionParameter globalBestSelectionParameter;
   private PerturbationParameter perturbationParameter;
   private PositionUpdateParameter positionUpdateParameter;
   private GlobalBestUpdateParameter globalBestUpdateParameter;
@@ -62,7 +75,10 @@ public class AutoMOPSO {
   private RealParameter c2MaxParameter;
   private RealParameter wMinParameter;
   private RealParameter wMaxParameter;
+  private RealParameter weightParameter;
   private MutationParameter mutationParameter;
+
+  private InertiaWeightComputingParameter inertiaWeightComputingParameter;
 
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
@@ -93,19 +109,36 @@ public class AutoMOPSO {
 
     velocityUpdateParameter = configureVelocityUpdate(args);
 
-    localBestInitializationParameter = new LocalBestInitializationParameter(args, List.of("defaultLocalBestInitialization")) ;
-    localBestUpdateParameter = new LocalBestUpdateParameter(args, Arrays.asList("defaultLocalBestUpdate"));
-    globalBestInitializationParameter = new GlobalBestInitializationParameter(args, List.of("defaultGlobalBestInitialization")) ;
-    globalBestSelectionParameter = new GlobalBestSelectionParameter(args, List.of("binaryTournament", "random")) ;
-    globalBestSelectionParameter = new GlobalBestSelectionParameter(args, Arrays.asList("binaryTournament", "random"));
-    globalBestUpdateParameter = new GlobalBestUpdateParameter(args, Arrays.asList("defaultGlobalBestUpdate"));
+    localBestInitializationParameter = new LocalBestInitializationParameter(args,
+        List.of("defaultLocalBestInitialization"));
+    localBestUpdateParameter = new LocalBestUpdateParameter(args,
+        Arrays.asList("defaultLocalBestUpdate"));
+    globalBestInitializationParameter = new GlobalBestInitializationParameter(args,
+        List.of("defaultGlobalBestInitialization"));
+    globalBestSelectionParameter = new GlobalBestSelectionParameter(args,
+        List.of("binaryTournament", "random"));
+    globalBestSelectionParameter = new GlobalBestSelectionParameter(args,
+        Arrays.asList("binaryTournament", "random"));
+    globalBestUpdateParameter = new GlobalBestUpdateParameter(args,
+        Arrays.asList("defaultGlobalBestUpdate"));
 
-    positionUpdateParameter = new PositionUpdateParameter(args, Arrays.asList("defaultPositionUpdate"));
+    positionUpdateParameter = new PositionUpdateParameter(args,
+        Arrays.asList("defaultPositionUpdate"));
 
-    perturbationParameter = configurePerturbation(args) ;
+    perturbationParameter = configurePerturbation(args);
 
     externalArchiveParameter = new ExternalArchiveParameter(args,
         List.of("crowdingDistanceArchive"));
+
+    inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
+        List.of("constantValue", "randomSelectedValue", "linearIncreasingStrategy", "linearDecreasingStrategy"));
+
+    weightParameter = new RealParameter("weight", args, 0.1, 1.0);
+    wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
+    wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
+    inertiaWeightComputingParameter.addSpecificParameter("constantValue", weightParameter);
+    inertiaWeightComputingParameter.addGlobalParameter(wMinParameter);
+    inertiaWeightComputingParameter.addGlobalParameter(wMaxParameter);
 
     autoConfigurableParameterList.add(swarmSizeParameter);
     autoConfigurableParameterList.add(archiveSizeParameter);
@@ -113,10 +146,11 @@ public class AutoMOPSO {
     autoConfigurableParameterList.add(swarmInitializationParameter);
     autoConfigurableParameterList.add(velocityInitializationParameter);
     autoConfigurableParameterList.add(perturbationParameter);
-    autoConfigurableParameterList.add(velocityUpdateParameter) ;
-    autoConfigurableParameterList.add(localBestInitializationParameter) ;
-    autoConfigurableParameterList.add(globalBestInitializationParameter) ;
-    autoConfigurableParameterList.add(globalBestSelectionParameter) ;
+    autoConfigurableParameterList.add(inertiaWeightComputingParameter);
+    autoConfigurableParameterList.add(velocityUpdateParameter);
+    autoConfigurableParameterList.add(localBestInitializationParameter);
+    autoConfigurableParameterList.add(globalBestInitializationParameter);
+    autoConfigurableParameterList.add(globalBestSelectionParameter);
     autoConfigurableParameterList.add(globalBestUpdateParameter);
     autoConfigurableParameterList.add(localBestUpdateParameter);
     autoConfigurableParameterList.add(positionUpdateParameter);
@@ -153,12 +187,14 @@ public class AutoMOPSO {
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
         "frequencyOfApplicationOfMutationOperator", args, 1, 10);
 
-    perturbationParameter = new PerturbationParameter(args, List.of("frequencySelectionMutationBasedPerturbation"));
-    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation", mutationParameter);
+    perturbationParameter = new PerturbationParameter(args,
+        List.of("frequencySelectionMutationBasedPerturbation"));
+    perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
+        mutationParameter);
     perturbationParameter.addSpecificParameter("frequencySelectionMutationBasedPerturbation",
         frequencyOfApplicationParameter);
 
-    return perturbationParameter ;
+    return perturbationParameter;
   }
 
   private VelocityUpdateParameter configureVelocityUpdate(String[] args) {
@@ -166,18 +202,15 @@ public class AutoMOPSO {
     c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
     c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
     c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
-    wMinParameter = new RealParameter("wMin", args, 0.1, 0.5);
-    wMaxParameter = new RealParameter("wMax", args, 0.1, 1.0);
 
-    velocityUpdateParameter = new VelocityUpdateParameter(args, List.of("defaultVelocityUpdate", "constrainedVelocityUpdate")) ;
+    velocityUpdateParameter = new VelocityUpdateParameter(args,
+        List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
     velocityUpdateParameter.addGlobalParameter(c1MinParameter);
     velocityUpdateParameter.addGlobalParameter(c1MaxParameter);
     velocityUpdateParameter.addGlobalParameter(c2MinParameter);
     velocityUpdateParameter.addGlobalParameter(c2MaxParameter);
-    velocityUpdateParameter.addGlobalParameter(wMinParameter);
-    velocityUpdateParameter.addGlobalParameter(wMaxParameter);
 
-    return velocityUpdateParameter ;
+    return velocityUpdateParameter;
   }
 
   /**
@@ -200,34 +233,46 @@ public class AutoMOPSO {
 
     if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
-    };
-    var velocityUpdate = velocityUpdateParameter.getParameter() ;
+    }
 
-    LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter() ;
-    GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter() ;
-    GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(externalArchive.getComparator());
+    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
+    if ((inertiaWeightComputingStrategy.equals("linearIncreasingStrategy") ||
+        inertiaWeightComputingStrategy.equals("linearDecreasingStrategy"))) {
+      inertiaWeightComputingParameter.addNonConfigurableParameter("maxIterations",
+          maximumNumberOfEvaluationsParameter.getValue() / swarmSizeParameter.getValue());
+      inertiaWeightComputingParameter.addNonConfigurableParameter("swarmSize", swarmSizeParameter.getValue());
+    }
+
+    var velocityUpdate = velocityUpdateParameter.getParameter();
+
+    LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter();
+    GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
+    GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(
+        externalArchive.getComparator());
 
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
-              maximumNumberOfEvaluationsParameter.getValue()/swarmSizeParameter.getValue());
+          maximumNumberOfEvaluationsParameter.getValue() / swarmSizeParameter.getValue());
     }
 
-    var perturbation = perturbationParameter.getParameter() ;
+    var perturbation = perturbationParameter.getParameter();
 
-    ///////// TO IMPLEMENT USING PARAMETERS
-    if(positionUpdateParameter.getValue().equals("defaultPositionUpdate")){
-      positionUpdateParameter.addNonConfigurableParameter("positionBounds", ((DoubleProblem) problem).getBoundsForVariables());
-      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached", -1.0);
-      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached", -1.0);
+    if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
+      positionUpdateParameter.addNonConfigurableParameter("positionBounds",
+          ((DoubleProblem) problem).getBoundsForVariables());
+      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached",
+          -1.0);
+      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached",
+          -1.0);
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
 
     GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
-    LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(new DominanceComparator());
+    LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
+        new DominanceComparator());
 
-    ////
     var mopso = new ParticleSwarmOptimizationAlgorithm("OMOPSO",
         swarmInitialization,
         evaluation,
@@ -235,6 +280,7 @@ public class AutoMOPSO {
         velocityInitialization,
         localBestInitialization,
         globalBestInitialization,
+        inertiaWeightComputingStrategy,
         velocityUpdate,
         positionUpdate,
         perturbation,

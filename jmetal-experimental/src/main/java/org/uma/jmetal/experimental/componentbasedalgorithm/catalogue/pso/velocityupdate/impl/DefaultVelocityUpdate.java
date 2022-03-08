@@ -2,6 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.veloci
 
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
@@ -21,8 +22,6 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
   protected double c1Min;
   protected double c2Max;
   protected double c2Min;
-  protected double weightMax;
-  protected double weightMin;
 
   protected JMetalRandom randomGenerator;
 
@@ -33,21 +32,15 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
    * @param c1Max:     Max value for c1.
    * @param c2Min:     Min value for c2.
    * @param c2Max:     Max value for c2.
-   * @param weightMin: Min value for inertia.
-   * @param weightMax: Max value for inertia.
    */
   public DefaultVelocityUpdate(double c1Min,
       double c1Max,
       double c2Min,
-      double c2Max,
-      double weightMin,
-      double weightMax) {
+      double c2Max) {
     this.c1Max = c1Max;
     this.c1Min = c1Min;
     this.c2Max = c2Max;
     this.c2Min = c2Min;
-    this.weightMax = weightMax;
-    this.weightMin = weightMin;
 
     this.randomGenerator = JMetalRandom.getInstance();
   }
@@ -62,7 +55,8 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
    * @return Updated speed.
    */
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest,
-      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection) {
+      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection,
+      InertiaWeightComputingStrategy inertiaWeightComputingStrategy) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
@@ -77,7 +71,7 @@ public class DefaultVelocityUpdate implements VelocityUpdate {
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      double inertiaWeight = randomGenerator.nextDouble(weightMin, weightMax);
+      double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
       for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] = inertiaWeight * speed[i][var]

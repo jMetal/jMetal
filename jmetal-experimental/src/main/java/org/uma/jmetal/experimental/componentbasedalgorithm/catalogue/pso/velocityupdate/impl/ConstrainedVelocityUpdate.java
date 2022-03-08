@@ -2,6 +2,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.veloci
 
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -25,8 +26,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   protected double r1Min;
   protected double r2Max;
   protected double r2Min;
-  protected double weightMax;
-  protected double weightMin;
 
   protected JMetalRandom randomGenerator;
 
@@ -48,8 +47,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @param c1Max:     Max value for c1.
    * @param c2Min:     Min value for c2.
    * @param c2Max:     Max value for c2.
-   * @param weightMin: Min value for inertia.
-   * @param weightMax: Max value for inertia.
    */
   public ConstrainedVelocityUpdate(double r1Min,
       double r1Max,
@@ -59,8 +56,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       double c1Max,
       double c2Min,
       double c2Max,
-      double weightMin,
-      double weightMax,
       DoubleProblem problem) {
     this.r1Max = r1Max;
     this.r1Min = r1Min;
@@ -70,8 +65,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     this.c1Min = c1Min;
     this.c2Max = c2Max;
     this.c2Min = c2Min;
-    this.weightMax = weightMax;
-    this.weightMin = weightMin;
 
     this.randomGenerator = JMetalRandom.getInstance();
 
@@ -87,10 +80,8 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
   public ConstrainedVelocityUpdate(double c1Min, double c1Max,
       double c2Min,
       double c2Max,
-      double weightMin,
-      double weightMax,
       DoubleProblem problem) {
-    this(0.0, 1.0, 0.0, 1.0, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, problem);
+    this(0.0, 1.0, 0.0, 1.0, c1Min, c1Max, c2Min, c2Max, problem);
   }
 
 
@@ -104,7 +95,8 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
    * @return Updated speed.
    */
   public double[][] update(List<DoubleSolution> swarm, double[][] speed, DoubleSolution[] localBest,
-      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection) {
+      BoundedArchive<DoubleSolution> leaders, GlobalBestSelection globalBestSelection,
+      InertiaWeightComputingStrategy inertiaWeightComputingStrategy) {
     double r1, r2, c1, c2;
     DoubleSolution bestGlobal;
 
@@ -120,7 +112,7 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
       c1 = randomGenerator.nextDouble(c1Min, c1Max);
       c2 = randomGenerator.nextDouble(c2Min, c2Max);
 
-      double inertiaWeight = weightMax;
+      double inertiaWeight = inertiaWeightComputingStrategy.compute() ;
 
       for (int var = 0; var < particle.variables().size(); var++) {
         speed[i][var] =
@@ -136,29 +128,6 @@ public class ConstrainedVelocityUpdate implements VelocityUpdate {
     }
 
     return speed;
-  }
-
-  /**
-   * Select the best solution
-   *
-   * @param leaders: List of global best particles.
-   * @return Best Solution's list updated.
-   */
-  protected DoubleSolution selectGlobalBest(BoundedArchive<DoubleSolution> leaders) {
-    DoubleSolution one, two;
-    DoubleSolution bestGlobal;
-    int pos1 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    int pos2 = randomGenerator.nextInt(0, leaders.getSolutionList().size() - 1);
-    one = leaders.getSolutionList().get(pos1);
-    two = leaders.getSolutionList().get(pos2);
-
-    if (leaders.getComparator().compare(one, two) < 1) {
-      bestGlobal = (DoubleSolution) one.copy();
-    } else {
-      bestGlobal = (DoubleSolution) two.copy();
-    }
-
-    return bestGlobal;
   }
 
   /**

@@ -9,6 +9,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solu
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.Perturbation;
@@ -41,6 +42,7 @@ public class ParticleSwarmOptimizationAlgorithm
   private Perturbation perturbation;
   private GlobalBestUpdate globalBestUpdate;
   private LocalBestUpdate localBestUpdate ;
+  private InertiaWeightComputingStrategy inertiaWeightComputingStrategy ;
 
   private GlobalBestSelection globalBestSelection ;
 
@@ -69,6 +71,7 @@ public class ParticleSwarmOptimizationAlgorithm
           VelocityInitialization velocityInitialization,
           LocalBestInitialization localBestInitialization,
           GlobalBestInitialization globalBestInitialization,
+          InertiaWeightComputingStrategy inertiaWeightComputingStrategy,
           VelocityUpdate velocityUpdate,
           PositionUpdate positionUpdate,
           Perturbation perturbation,
@@ -85,6 +88,7 @@ public class ParticleSwarmOptimizationAlgorithm
     this.velocityInitialization = velocityInitialization;
     this.localBestInitialization = localBestInitialization;
     this.globalBestInitialization = globalBestInitialization;
+    this.inertiaWeightComputingStrategy = inertiaWeightComputingStrategy ;
     this.velocityUpdate = velocityUpdate;
     this.positionUpdate = positionUpdate;
     this.perturbation = perturbation;
@@ -107,7 +111,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection);
+      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection, inertiaWeightComputingStrategy);
       positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);

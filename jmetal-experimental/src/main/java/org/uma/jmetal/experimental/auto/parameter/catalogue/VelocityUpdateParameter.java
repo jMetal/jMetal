@@ -20,18 +20,14 @@ public class VelocityUpdateParameter extends CategoricalParameter {
         double c1Max = (double) findGlobalParameter("c1Max").getValue();
         double c2Min = (double) findGlobalParameter("c2Min").getValue();
         double c2Max = (double) findGlobalParameter("c2Max").getValue();
-        double wMin = (double) findGlobalParameter("wMin").getValue();
-        double wMax = (double) findGlobalParameter("wMax").getValue();
-        return new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max, wMin, wMax);
+        return new DefaultVelocityUpdate(c1Min, c1Max, c2Min, c2Max);
       case "constrainedVelocityUpdate":
         c1Min = (double) findGlobalParameter("c1Min").getValue();
         c1Max = (double) findGlobalParameter("c1Max").getValue();
         c2Min = (double) findGlobalParameter("c2Min").getValue();
         c2Max = (double) findGlobalParameter("c2Max").getValue();
-        wMin = (double) findGlobalParameter("wMin").getValue();
-        wMax = (double) findGlobalParameter("wMax").getValue();
         DoubleProblem problem = (DoubleProblem) getNonConfigurableParameter("problem");
-        return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, wMin, wMax, problem) {
+        return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       default:
         throw new RuntimeException(getValue() + " is not a valid velocity update strategy");

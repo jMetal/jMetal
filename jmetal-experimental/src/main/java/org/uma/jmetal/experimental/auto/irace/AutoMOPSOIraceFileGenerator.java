@@ -38,13 +38,13 @@ public class AutoMOPSOIraceFileGenerator {
                         + "--globalBestUpdate defaultGlobalBestUpdate "
                         + "--localBestUpdate defaultLocalBestUpdate "
                         + "--velocityUpdate defaultVelocityUpdate "
+                        + "--inertiaWeightComputingStrategy randomSelectedValue "
                         + "--c1Min 1.0 "
                         + "--c1Max 2.0 "
                         + "--c2Min 1.0 "
                         + "--c2Max 2.0 "
-                        + "--wMin 0.1 "
-                        + "--wMax 0.5 "
-                )
+                        + "--weightMin 0.1 "
+                        + "--weightMax 0.5 ")
                         .split("\\s+");
 
         AutoMOPSO autoMOPSOwithParameters = new AutoMOPSO();

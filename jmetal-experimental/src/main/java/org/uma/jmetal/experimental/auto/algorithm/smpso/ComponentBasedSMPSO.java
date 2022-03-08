@@ -8,6 +8,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalb
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.BinaryTournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestselection.impl.TournamentGlobalBestSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.ConstantValueStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
@@ -57,8 +58,10 @@ public class ComponentBasedSMPSO {
     double c2Max = 2.5;
     double weightMin = 0.1;
     double weightMax = 0.1;
+    var inertiaWeightStrategy = new ConstantValueStrategy(weightMax) ;
+
     var velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
-        c2Min, c2Max, weightMin, weightMax, problem);
+        c2Min, c2Max, problem);
 
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
@@ -79,6 +82,7 @@ public class ComponentBasedSMPSO {
         velocityInitialization,
         localBestInitialization,
         globalBestInitialization,
+        inertiaWeightStrategy,
         velocityUpdate,
         positionUpdate,
         perturbation,
