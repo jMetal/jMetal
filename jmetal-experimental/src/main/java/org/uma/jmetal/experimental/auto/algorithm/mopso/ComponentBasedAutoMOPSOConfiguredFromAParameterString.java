@@ -11,39 +11,39 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT6.csv";
+    String referenceFrontFileName = "LSMOP1.2D.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT6 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20 "
                 + "--referenceFrontFileName "
                 + referenceFrontFileName
                 + " "
-                + "--maximumNumberOfEvaluations 25000 "
-                + "--swarmSize 100 "
-                + "--arch<iveSize 100 "
-                + "--swarmInitialization random "
+                + "--maximumNumberOfEvaluations 200000 "
+                + "--swarmSize 71 "
+                + "--archiveSize 100 "
+                + "--swarmInitialization scatterSearch "
                 + "--velocityInitialization defaultVelocityInitialization "
                 + "--externalArchive crowdingDistanceArchive "
                 + "--localBestInitialization defaultLocalBestInitialization "
                 + "--globalBestInitialization defaultGlobalBestInitialization "
                 + "--globalBestSelection binaryTournament "
                 + "--perturbation frequencySelectionMutationBasedPerturbation "
-                + "--frequencyOfApplicationOfMutationOperator 7 "
+                + "--frequencyOfApplicationOfMutationOperator 1 "
                 + "--mutation polynomial "
-                + "--mutationProbability 1.0 "
+                + "--mutationProbability 0.0245 "
                 + "--mutationRepairStrategy round "
-                + "--polynomialMutationDistributionIndex 20.0 "
+                + "--polynomialMutationDistributionIndex 17.19 "
                 + "--positionUpdate defaultPositionUpdate "
                 + "--globalBestUpdate defaultGlobalBestUpdate "
                 + "--localBestUpdate defaultLocalBestUpdate "
                 + "--velocityUpdate defaultVelocityUpdate "
-                + "--c1Min 1.5 "
-                + "--c1Max 2.0 "
-                + "--c2Min 1.5 "
-                + "--c2Max 2.0 "
-                + "--wMin 0.1  "
-                + "--wMax 0.5 ")
-            .split("\\s+");
+                + "--c1Min 1.6495 "
+                + "--c1Max 2.779 "
+                + "--c2Min 1.0244 "
+                + "--c2Max 2.0143 "
+                + "--wMin 0.1278  "
+                + "--wMax 0.1337 ")
+                .split("\\s+");
 
     AutoMOPSO autoMOPSO = new AutoMOPSO();
     autoMOPSO.parseAndCheckParameters(parameters);

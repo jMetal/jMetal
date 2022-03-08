@@ -28,6 +28,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_200;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -233,7 +235,6 @@ public class lsmop1With200variablesExperiment {
 
         algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
       }
-
     }
     return algorithms;
   }
