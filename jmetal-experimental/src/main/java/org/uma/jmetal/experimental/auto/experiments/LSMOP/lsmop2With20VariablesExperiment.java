@@ -17,9 +17,8 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
 import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_200;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP2_2_20;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -42,7 +41,7 @@ import java.util.List;
  *
  * @author Daniel Doblas
  */
-public class lsmop1With200variablesExperiment {
+public class lsmop2With20VariablesExperiment {
     private static final int INDEPENDENT_RUNS = 25;
 
     public static void main(String[] args) throws IOException {
@@ -51,14 +50,14 @@ public class lsmop1With200variablesExperiment {
         String experimentBaseDirectory = args[0];
 
         List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-        problemList.add(new ExperimentProblem<>(new LSMOP1_2_200()).setReferenceFront("LSMOP1.2D.csv"));
+        problemList.add(new ExperimentProblem<>(new LSMOP2_2_20()).setReferenceFront("LSMOP1.2D.csv"));
 
 
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
         Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP1With200VariablesAutoAlgorithmExperiments")
+                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP2With20VariablesAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
                         .setReferenceFrontDirectory("resources/referenceFrontsCSV")
@@ -162,7 +161,7 @@ public class lsmop1With200variablesExperiment {
                 String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 200000 "
-                        + "--swarmSize 71 "
+                        + "--swarmSize 88 "
                         + "--archiveSize 100 "
                         + "--swarmInitialization scatterSearch "
                         + "--velocityInitialization defaultVelocityInitialization "
@@ -173,19 +172,19 @@ public class lsmop1With200variablesExperiment {
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 1 "
                         + "--mutation polynomial "
-                        + "--mutationProbability 0.0245 "
+                        + "--mutationProbability 0.5754 "
                         + "--mutationRepairStrategy round "
-                        + "--polynomialMutationDistributionIndex 17.19 "
+                        + "--polynomialMutationDistributionIndex 115.3242 "
                         + "--positionUpdate defaultPositionUpdate "
                         + "--globalBestUpdate defaultGlobalBestUpdate "
                         + "--localBestUpdate defaultLocalBestUpdate "
-                        + "--velocityUpdate defaultVelocityUpdate "
-                        + "--c1Min 1.6495 "
-                        + "--c1Max 2.779 "
-                        + "--c2Min 1.0244 "
-                        + "--c2Max 2.0143 "
-                        + "--wMin 0.1278  "
-                        + "--wMax 0.1337 "
+                        + "--velocityUpdate constrainedVelocityUpdate "
+                        + "--c1Min 1.5546 "
+                        + "--c1Max 2.1638 "
+                        + "--c2Min 1.1976 "
+                        + "--c2Max 2.0482 "
+                        + "--wMin 0.1552  "
+                        + "--wMax 0.1222 "
                 )
                         .split("\\s+");
                 AutoMOPSO AutoMOPSO = new AutoMOPSO();
@@ -235,4 +234,3 @@ public class lsmop1With200variablesExperiment {
         return algorithms;
     }
 }
-

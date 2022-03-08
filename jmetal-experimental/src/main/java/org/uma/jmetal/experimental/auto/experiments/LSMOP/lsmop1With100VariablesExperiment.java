@@ -17,9 +17,7 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_20;
-import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_200;
+import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP1_2_100;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -42,7 +40,7 @@ import java.util.List;
  *
  * @author Daniel Doblas
  */
-public class lsmop1With200variablesExperiment {
+public class lsmop1With100VariablesExperiment {
     private static final int INDEPENDENT_RUNS = 25;
 
     public static void main(String[] args) throws IOException {
@@ -51,14 +49,14 @@ public class lsmop1With200variablesExperiment {
         String experimentBaseDirectory = args[0];
 
         List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-        problemList.add(new ExperimentProblem<>(new LSMOP1_2_200()).setReferenceFront("LSMOP1.2D.csv"));
+        problemList.add(new ExperimentProblem<>(new LSMOP1_2_100()).setReferenceFront("LSMOP1.2D.csv"));
 
 
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
         Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP1With200VariablesAutoAlgorithmExperiments")
+                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("LSMOP1With100VariablesAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
                         .setReferenceFrontDirectory("resources/referenceFrontsCSV")
