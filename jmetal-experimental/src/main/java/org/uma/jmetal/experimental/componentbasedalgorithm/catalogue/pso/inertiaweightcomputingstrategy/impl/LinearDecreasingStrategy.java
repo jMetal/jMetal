@@ -4,7 +4,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertia
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-public class LinearDecreasingStrategy implements InertiaWeightComputingStrategy {
+public class LinearDecreasingStrategy implements InertiaWeightRangeBasedComputingStrategy {
   protected final double minimumWeight ;
   protected final double maximumWeight ;
   protected final int maximumNumberOfIterations;
@@ -31,10 +31,12 @@ public class LinearDecreasingStrategy implements InertiaWeightComputingStrategy 
     return weight ;
   }
 
+  @Override
   public double getMinimumWeight() {
     return minimumWeight;
   }
 
+  @Override
   public double getMaximumWeight() {
     return maximumWeight;
   }

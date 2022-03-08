@@ -35,12 +35,13 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithNonUniforM
         + "--globalBestUpdate defaultGlobalBestUpdate "
         + "--localBestUpdate defaultLocalBestUpdate "
         + "--velocityUpdate constrainedVelocityUpdate "
-        + "--c1Min 1.5 "
-        + "--c1Max 2.5 "
-        + "--c2Min 1.5 "
-        + "--c2Max 2.5 "
-        + "--wMin 0.1 "
-        + "--wMax 0.1 "
+        + "--inertiaWeightComputingStrategy linearDecreasingValue "
+        + "--c1Min 1.6495 "
+        + "--c1Max 2.779 "
+        + "--c2Min 1.0244 "
+        + "--c2Max 2.0143 "
+        + "--weightMin 0.1 "
+        + "--weightMax 0.5 "
     )
         .split("\\s+");
 

@@ -32,14 +32,14 @@ public class InertiaWeightComputingParameter extends CategoricalParameter {
       case "randomSelectedValue":
         result = new RandomSelectedValueStrategy(weightMin, weightMax) ;
         break;
-      case "linearDecreasingStrategy":
-        int iterations = (Integer) findSpecificParameter("maxIterations").getValue();
-        int swarmSize = (Integer) findSpecificParameter("swarmSize").getValue();
+      case "linearDecreasingValue":
+        int iterations = (Integer) getNonConfigurableParameter("maxIterations") ;
+        int swarmSize = (Integer) getNonConfigurableParameter("swarmSize") ;
         result = new LinearDecreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
-      case "linearIncreasingStrategy":
-        iterations = (Integer) findSpecificParameter("maxIterations").getValue();
-        swarmSize = (Integer) findSpecificParameter("swarmSize").getValue();
+      case "linearIncreasingValue":
+        iterations = (Integer) getNonConfigurableParameter("maxIterations");
+        swarmSize = (Integer) getNonConfigurableParameter("swarmSize");
         result =new LinearIncreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
       default:

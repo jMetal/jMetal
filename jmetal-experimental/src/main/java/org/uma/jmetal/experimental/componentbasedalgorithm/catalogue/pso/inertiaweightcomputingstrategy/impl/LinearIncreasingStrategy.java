@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inerti
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.util.errorchecking.Check;
 
-public class LinearIncreasingStrategy implements InertiaWeightComputingStrategy {
+public class LinearIncreasingStrategy implements InertiaWeightRangeBasedComputingStrategy {
   protected final double minimumWeight ;
   protected final double maximumWeight ;
   protected final int maximumNumberOfIterations;
@@ -31,10 +31,12 @@ public class LinearIncreasingStrategy implements InertiaWeightComputingStrategy 
     return weight ;
   }
 
+  @Override
   public double getMinimumWeight() {
     return minimumWeight;
   }
 
+  @Override
   public double getMaximumWeight() {
     return maximumWeight;
   }

@@ -131,7 +131,7 @@ public class AutoMOPSO {
         List.of("crowdingDistanceArchive"));
 
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
-        List.of("constantValue", "randomSelectedValue", "linearIncreasingStrategy", "linearDecreasingStrategy"));
+        List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));
 
     weightParameter = new RealParameter("weight", args, 0.1, 1.0);
     wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
@@ -235,13 +235,13 @@ public class AutoMOPSO {
       velocityUpdateParameter.addNonConfigurableParameter("problem", problem);
     }
 
-    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
-    if ((inertiaWeightComputingStrategy.equals("linearIncreasingStrategy") ||
-        inertiaWeightComputingStrategy.equals("linearDecreasingStrategy"))) {
+    if ((inertiaWeightComputingParameter.getValue().equals("linearIncreasingValue") ||
+        inertiaWeightComputingParameter.getValue().equals("linearDecreasingValue"))) {
       inertiaWeightComputingParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.getValue() / swarmSizeParameter.getValue());
       inertiaWeightComputingParameter.addNonConfigurableParameter("swarmSize", swarmSizeParameter.getValue());
     }
+    InertiaWeightComputingStrategy inertiaWeightComputingStrategy = inertiaWeightComputingParameter.getParameter() ;
 
     var velocityUpdate = velocityUpdateParameter.getParameter();
 
