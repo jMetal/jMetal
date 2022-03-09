@@ -21,8 +21,6 @@ public class InertiaWeightComputingParameter extends CategoricalParameter {
 
   public InertiaWeightComputingStrategy getParameter() {
     InertiaWeightComputingStrategy result;
-    Double weightMin = (Double) findGlobalParameter("weightMin").getValue();
-    Double weightMax = (Double) findGlobalParameter("weightMax").getValue();
 
     switch (getValue()) {
       case "constantValue":
@@ -30,14 +28,20 @@ public class InertiaWeightComputingParameter extends CategoricalParameter {
         result = new ConstantValueStrategy(weight) ;
         break;
       case "randomSelectedValue":
+        Double weightMin = (Double) findSpecificParameter("weightMin").getValue();
+        Double weightMax = (Double) findSpecificParameter("weightMax").getValue();
         result = new RandomSelectedValueStrategy(weightMin, weightMax) ;
         break;
       case "linearDecreasingValue":
+        weightMin = (Double) findSpecificParameter("weightMin").getValue();
+        weightMax = (Double) findSpecificParameter("weightMax").getValue();
         int iterations = (Integer) getNonConfigurableParameter("maxIterations") ;
         int swarmSize = (Integer) getNonConfigurableParameter("swarmSize") ;
         result = new LinearDecreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
       case "linearIncreasingValue":
+        weightMin = (Double) findSpecificParameter("weightMin").getValue();
+        weightMax = (Double) findSpecificParameter("weightMax").getValue();
         iterations = (Integer) getNonConfigurableParameter("maxIterations");
         swarmSize = (Integer) getNonConfigurableParameter("swarmSize");
         result =new LinearIncreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;

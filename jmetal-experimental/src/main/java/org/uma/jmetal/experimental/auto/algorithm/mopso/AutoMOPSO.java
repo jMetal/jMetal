@@ -137,8 +137,12 @@ public class AutoMOPSO {
     wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
     wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
     inertiaWeightComputingParameter.addSpecificParameter("constantValue", weightParameter);
-    inertiaWeightComputingParameter.addGlobalParameter(wMinParameter);
-    inertiaWeightComputingParameter.addGlobalParameter(wMaxParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMinParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMaxParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("linearIncreasingValue", wMinParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("linearIncreasingValue", wMaxParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("linearDecreasingValue", wMinParameter);
+    inertiaWeightComputingParameter.addSpecificParameter("linearDecreasingValue", wMaxParameter);
 
     autoConfigurableParameterList.add(swarmSizeParameter);
     autoConfigurableParameterList.add(archiveSizeParameter);
