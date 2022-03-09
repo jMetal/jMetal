@@ -34,6 +34,8 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
             + "--mutationRepairStrategy round "
             + "--polynomialMutationDistributionIndex 17.19 "
             + "--positionUpdate defaultPositionUpdate "
+            + "--velocityChangeWhenLowerLimitIsReached -1.0 "
+            + "--velocityChangeWhenUpperLimitIsReached -1.0 "
             + "--globalBestUpdate defaultGlobalBestUpdate "
             + "--localBestUpdate defaultLocalBestUpdate "
             + "--velocityUpdate defaultVelocityUpdate "

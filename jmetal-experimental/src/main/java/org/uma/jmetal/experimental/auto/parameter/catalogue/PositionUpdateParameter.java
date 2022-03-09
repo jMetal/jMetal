@@ -18,8 +18,8 @@ public class PositionUpdateParameter extends CategoricalParameter {
         switch (getValue()){
             case "defaultPositionUpdate":
                 List<Bounds<Double>> positionBounds = (List<Bounds<Double>>) getNonConfigurableParameter("positionBounds");
-                double velocityChangeWhenLowerLimitIsReached = (double) getNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached");
-                double velocityChangeWhenUpperLimitIsReached = (double) getNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached");
+                double velocityChangeWhenLowerLimitIsReached = (double) findSpecificParameter("velocityChangeWhenLowerLimitIsReached").getValue();
+                double velocityChangeWhenUpperLimitIsReached = (double) findSpecificParameter("velocityChangeWhenUpperLimitIsReached").getValue();
 
                 result = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached, velocityChangeWhenUpperLimitIsReached, positionBounds);
                 break;

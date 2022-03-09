@@ -33,6 +33,8 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithConstraint
         + "--mutationRepairStrategy bounds "
         + "--polynomialMutationDistributionIndex 20.0 "
         + "--positionUpdate defaultPositionUpdate "
+        + "--velocityChangeWhenLowerLimitIsReached -1.0 "
+        + "--velocityChangeWhenUpperLimitIsReached -1.0 "
         + "--globalBestUpdate defaultGlobalBestUpdate "
         + "--localBestUpdate defaultLocalBestUpdate "
         + "--velocityUpdate constrainedVelocityUpdate "

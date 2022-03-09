@@ -124,6 +124,10 @@ public class AutoMOPSO {
 
     positionUpdateParameter = new PositionUpdateParameter(args,
         Arrays.asList("defaultPositionUpdate"));
+    var velocityChangeWhenLowerLimitIsReachedParameter = new RealParameter("velocityChangeWhenLowerLimitIsReached",args, -1.0, 1.0) ;
+    var velocityChangeWhenUpperLimitIsReachedParameter = new RealParameter("velocityChangeWhenUpperLimitIsReached",args, -1.0, 1.0) ;
+    positionUpdateParameter.addSpecificParameter("defaultPositionUpdate", velocityChangeWhenLowerLimitIsReachedParameter);
+    positionUpdateParameter.addSpecificParameter("defaultPositionUpdate", velocityChangeWhenUpperLimitIsReachedParameter);
 
     perturbationParameter = configurePerturbation(args);
 
@@ -265,10 +269,10 @@ public class AutoMOPSO {
     if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
       positionUpdateParameter.addNonConfigurableParameter("positionBounds",
           ((DoubleProblem) problem).getBoundsForVariables());
-      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached",
-          -1.0);
-      positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached",
-          -1.0);
+      //positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached",
+      //    -1.0);
+      //positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached",
+      //    -1.0);
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();

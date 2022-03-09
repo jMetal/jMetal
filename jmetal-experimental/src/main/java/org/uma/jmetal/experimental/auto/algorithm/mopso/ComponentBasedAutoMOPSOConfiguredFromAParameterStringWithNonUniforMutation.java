@@ -32,6 +32,8 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterStringWithNonUniforM
         + "--mutationRepairStrategy bounds "
         + "--nonUniformMutationPerturbation 0.5 "
         + "--positionUpdate defaultPositionUpdate "
+        + "--velocityChangeWhenLowerLimitIsReached -1.0 "
+        + "--velocityChangeWhenUpperLimitIsReached -1.0 "
         + "--globalBestUpdate defaultGlobalBestUpdate "
         + "--localBestUpdate defaultLocalBestUpdate "
         + "--velocityUpdate constrainedVelocityUpdate "
