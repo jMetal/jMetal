@@ -49,11 +49,11 @@ public class StoredSolutionsUtils {
     return solutions;
   }
 
-  public static void writeToOutput(NonDominatedSolutionListArchive<PointSolution> archive, FileOutputContext context) {
+  public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, FileOutputContext context) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
-      for (Solution<?> s : archive.getSolutionList()) {
+      for (Solution<?> s : solutionList) {
         String formatedTextRepresentation = (String)s.attributes().get(SolutionTextRepresentation.getAttribute());
         if (formatedTextRepresentation != null) {
           bufferedWriter.write((String) s.attributes().get(SolutionTextRepresentation.getAttribute()));

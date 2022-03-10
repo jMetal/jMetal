@@ -57,7 +57,7 @@ public class GenerateReferenceFrontFromFile {
       archive.addAll(StoredSolutionsUtils.readSolutionsFromFile(fileName,numberOfObjectives)) ;
     }
 
-    StoredSolutionsUtils.writeToOutput(archive, new DefaultFileOutputContext(outputFileName));
+    StoredSolutionsUtils.writeToOutput(archive.getSolutionList(), new DefaultFileOutputContext(outputFileName));
   }
 
 
