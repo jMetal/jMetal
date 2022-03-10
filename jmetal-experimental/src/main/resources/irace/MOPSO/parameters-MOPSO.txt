@@ -39,3 +39,5 @@ globalBestUpdate                         "--globalBestUpdate "                  
 localBestUpdate                          "--localBestUpdate "                     c       (defaultLocalBestUpdate)
 #
 positionUpdate                           "--positionUpdate "                      c       (defaultPositionUpdate)
+velocityChangeWhenLowerLimitIsReached    "--velocityChangeWhenLowerLimitIsReached " r       (-1.0, 1.0)                    | positionUpdate %in% c("defaultPositionUpdate")
+velocityChangeWhenUpperLimitIsReached    "--velocityChangeWhenUpperLimitIsReached " r       (-1.0, 1.0)                    | positionUpdate %in% c("defaultPositionUpdate")

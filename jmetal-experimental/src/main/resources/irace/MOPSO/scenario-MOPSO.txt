@@ -106,6 +106,7 @@ testInstancesFile = "" #TODO COMPLETA
 # nbExperimentsPerIteration = 0
 
 ## Sample the instances or take them always in the same order.
+## Sample the instances or take them always in the same order.
 # sampleInstances = 1
 sampleInstances = 0
 
@@ -115,7 +116,7 @@ sampleInstances = 0
 ## Specifies how many instances are seen before the first elimination
 ## test. It must be a multiple of eachTest.
 # firstTest = 5
-firstTest = 9
+firstTest = 9 * 5
 
 ## Specifies how many instances are seen between elimination tests.
 # eachTest = 1

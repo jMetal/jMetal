@@ -10,7 +10,7 @@ RUN=$2
 shift 2
 # RUN in condor starts at 0
 let SEED=1234567+RUN
-IRACE_PARAMS="--scenario scenario-${SCENARIO}.txt --debug-level 3 --parallel 24  --seed ${SEED}"
+IRACE_PARAMS="--scenario scenario-${SCENARIO}.txt --debug-level 3 --parallel 32  --seed ${SEED}"
 
 #tar axf condor-input.tar.gz
 
