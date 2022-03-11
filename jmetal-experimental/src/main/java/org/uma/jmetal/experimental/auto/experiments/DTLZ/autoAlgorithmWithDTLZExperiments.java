@@ -117,7 +117,7 @@ public class autoAlgorithmWithDTLZExperiments {
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
                         .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
-                        .setMaxIterations(250)
+                        .setMaxIterations(500)
                         .setSwarmSize(100)
                         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                         .build();
@@ -131,28 +131,28 @@ public class autoAlgorithmWithDTLZExperiments {
                 String[] parameters =
                         ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                                 + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                                + "--maximumNumberOfEvaluations 25000 "
+                                + "--maximumNumberOfEvaluations 50000 "
                                 + "--algorithmResult externalArchive "
-                                + "--populationSizeWithArchive 79 "
+                                + "--populationSizeWithArchive 28 "
                                 + "--populationSize 100 "
-                                + "--offspringPopulationSize 158 "
+                                + "--offspringPopulationSize 26 "
                                 + "--createInitialSolutions scatterSearch "
                                 + "--variation crossoverAndMutationVariation "
                                 + "--selection tournament "
-                                + "--selectionTournamentSize 8 "
+                                + "--selectionTournamentSize 5 "
                                 + "--rankingForSelection dominanceRanking "
                                 + "--densityEstimatorForSelection crowdingDistance "
                                 + "--crossover BLX_ALPHA "
-                                + "--crossoverProbability 0.9562 "
+                                + "--crossoverProbability 0.9437 "
                                 + "--crossoverRepairStrategy bounds "
-                                + "--blxAlphaCrossoverAlphaValue 0.6316 "
+                                + "--blxAlphaCrossoverAlphaValue 0.5928 "
                                 + "--sbxDistributionIndex 20.0 "
-                                + "--mutation uniform "
-                                + "--mutationProbability 0.004 "
-                                + "--mutationRepairStrategy round "
-                                + "--uniformMutationPerturbation 0.6972 "
+                                + "--mutation nonUniform "
+                                + "--mutationProbability 0.0109 "
+                                + "--mutationRepairStrategy bounds "
+                                + "--nonUniformMutationPerturbation 0.6115 "
                                 + "--polynomialMutationDistributionIndex 20.0 "
-                                + "--externalArchive crowdingDistanceArchive ")
+                                + "--externalArchive unboundedExternalArchive ")
                                 .split("\\s+");
 
                 AutoNSGAII autoNSGAII = new AutoNSGAII();
@@ -166,7 +166,7 @@ public class autoAlgorithmWithDTLZExperiments {
                 /* AutoMOPSO */
                 String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--maximumNumberOfEvaluations 50000 "
                         + "--swarmSize 59 "
                         + "--archiveSize 100 "
                         + "--swarmInitialization random "
@@ -202,7 +202,7 @@ public class autoAlgorithmWithDTLZExperiments {
                 /* OMOPSO */
                 String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--maximumNumberOfEvaluations 50000 "
                         + "--swarmSize 100 "
                         + "--archiveSize 100 "
                         + "--swarmInitialization random "
