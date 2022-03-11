@@ -1,17 +1,6 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.lab.experiment.Experiment;
-import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
-import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
-import org.uma.jmetal.qualityindicator.QualityIndicator;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.NormalizeUtils;
-import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,8 +13,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.lab.experiment.Experiment;
+import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
+import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.NormalizeUtils;
+import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * This class computes the {@link QualityIndicator}s of an org.uma.jmetal.experiment. Once the algorithms of an

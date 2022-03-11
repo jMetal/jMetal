@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.singleobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -14,9 +16,6 @@ import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to configure and run a differential evolution algorithm. The algorithm can be configured to

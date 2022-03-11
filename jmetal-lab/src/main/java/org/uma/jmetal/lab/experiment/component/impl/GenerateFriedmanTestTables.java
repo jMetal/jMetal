@@ -1,5 +1,16 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -8,9 +19,6 @@ import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.*;
-import java.util.*;
 
 /**
  * This class computes the Friedman test ranking and generates a Latex script that produces a table per

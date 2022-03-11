@@ -13,6 +13,13 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.problem.Problem;
@@ -20,8 +27,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.*;
 
 /**
  * Abstract class for implementing versions of the CDG algorithm.

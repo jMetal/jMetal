@@ -1,17 +1,16 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MuCommaLambdaReplacement;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MuCommaLambdaReplacementTest   {
 

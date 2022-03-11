@@ -1,8 +1,5 @@
 package org.uma.jmetal.util.point.impl;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.point.Point;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.point.Point;
 
 /**
  * Class representing a point (i.e, an array of double values)

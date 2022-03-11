@@ -1,5 +1,8 @@
 package org.uma.jmetal.example.multiobjective;
 
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -18,10 +21,6 @@ import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Class to configure and run the MOCell algorithm with DM support applying the concept of

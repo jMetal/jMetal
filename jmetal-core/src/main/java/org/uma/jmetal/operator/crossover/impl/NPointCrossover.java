@@ -1,14 +1,13 @@
 package org.uma.jmetal.operator.crossover.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** Created by FlapKap on 23-03-2017. */
 @SuppressWarnings("serial")

@@ -1,13 +1,12 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 
 public class RosenbrockTest {
     @Test

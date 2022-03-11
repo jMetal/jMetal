@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.omopso;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
@@ -14,10 +17,6 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /** Class implementing the OMOPSO algorithm */
 @SuppressWarnings("serial")

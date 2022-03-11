@@ -1,17 +1,16 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
-import org.junit.Test;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 /**
  * Created by ajnebro on 20/12/17.

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
-import org.uma.jmetal.algorithm.multiobjective.omopso.OMOPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;

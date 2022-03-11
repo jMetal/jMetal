@@ -1,11 +1,10 @@
 package org.uma.jmetal.qualityindicator.impl;
 
+import java.io.FileNotFoundException;
+import java.util.Arrays;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.comparator.LexicographicalVectorComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 /**
  * This class implements the spread quality indicator. It must be only applied to two bi-objective problems.

@@ -1,9 +1,8 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class responsible for normalizing values

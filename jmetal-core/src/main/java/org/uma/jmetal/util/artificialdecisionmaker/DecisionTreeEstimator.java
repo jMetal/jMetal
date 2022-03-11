@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.artificialdecisionmaker;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import weka.classifiers.Classifier;
@@ -11,9 +13,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DecisionTreeEstimator<S extends Solution<?>> {
 

@@ -1,5 +1,8 @@
 package org.uma.jmetal.operator.selection.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
@@ -7,10 +10,6 @@ import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimato
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class implements a selection for selecting a number of solutions from

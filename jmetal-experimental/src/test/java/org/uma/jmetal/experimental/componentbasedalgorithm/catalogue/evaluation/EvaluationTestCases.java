@@ -1,15 +1,14 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 
 public abstract class EvaluationTestCases<S extends Solution<?>> {
 

@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.chartcontainer.GenericChartContainer;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This observer prints a chart in real time showing the current Pareto front approximation produced

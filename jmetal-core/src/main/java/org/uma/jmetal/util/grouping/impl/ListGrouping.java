@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.grouping.impl;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.grouping.CollectionGrouping;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 /**
  * Abstract class that groups a list of {@link Comparable} entities by some order in the collection. The number of

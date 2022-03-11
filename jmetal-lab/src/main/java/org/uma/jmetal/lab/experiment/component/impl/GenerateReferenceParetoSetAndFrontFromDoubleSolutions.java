@@ -1,5 +1,11 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -16,13 +22,6 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This class computes the reference Pareto set and front from a set of data files containing the

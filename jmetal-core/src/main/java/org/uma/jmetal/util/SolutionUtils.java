@@ -1,14 +1,13 @@
 package org.uma.jmetal.util;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.BinaryOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.BinaryOperator;
 
 /** Created by Antonio J. Nebro on 6/12/14. */
 public class SolutionUtils {

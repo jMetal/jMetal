@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * This observer add the solutions of population to an archive. It expects a pair

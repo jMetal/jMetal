@@ -1,9 +1,8 @@
 package org.uma.jmetal.solution.sequencesolution.impl;
 
+import java.util.HashMap;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.sequencesolution.SequenceSolution;
-
-import java.util.HashMap;
 
 /**
  * Defines an implementation of solution representing sequences of chars.

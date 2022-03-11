@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.grouping.impl;
 
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Class that groups a list of {@link Comparable} entities by ascending order. The number of

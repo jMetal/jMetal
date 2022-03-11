@@ -1,12 +1,11 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import java.io.IOException;
+import java.util.List;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.visualization.StudyVisualizer;
 import org.uma.jmetal.solution.Solution;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * This class executes a StudyVisualizer on the experiment provided.

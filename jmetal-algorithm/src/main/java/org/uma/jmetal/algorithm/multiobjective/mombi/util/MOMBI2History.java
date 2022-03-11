@@ -1,11 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Created by ajnebro on 10/9/15.

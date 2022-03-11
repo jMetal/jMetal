@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class implements a neighborhood that select the k-nearest solutions according to a

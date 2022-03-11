@@ -1,9 +1,8 @@
 package org.uma.jmetal.lab.visualization.html.impl;
 
-import org.uma.jmetal.lab.visualization.html.HtmlComponent;
-
 import java.util.LinkedList;
 import java.util.List;
+import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 /**
  * This class makes possible to group elements inside the HTML file using the flexbox technology.
  *

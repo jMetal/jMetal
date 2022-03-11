@@ -1,5 +1,10 @@
 package org.uma.jmetal.operator.selection.impl;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -7,10 +12,6 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BestSolutionSelectionTest {
   @Test

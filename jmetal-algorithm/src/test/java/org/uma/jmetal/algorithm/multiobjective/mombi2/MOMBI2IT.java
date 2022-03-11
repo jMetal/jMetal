@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi2;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.MOMBI2;
@@ -18,10 +21,6 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 public class MOMBI2IT {
   Algorithm<List<DoubleSolution>> algorithm;

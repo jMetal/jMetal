@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -18,10 +21,6 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class NSGAIIIT {

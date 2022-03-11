@@ -1,12 +1,10 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.PositionUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.util.bounds.Bounds;
-
-import java.util.List;
 
 public class PositionUpdateParameter extends CategoricalParameter {
     public PositionUpdateParameter(String[] args, List<String> positionUpdateStrategies){

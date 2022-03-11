@@ -1,10 +1,9 @@
 package org.uma.jmetal.util;
 
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.List;
 
 /**
  * This class defines an adaptive grid over a list of solutions as the one used by algorithm PAES.

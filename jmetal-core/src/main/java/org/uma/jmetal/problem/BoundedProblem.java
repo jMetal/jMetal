@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.util.bounds.Bounds;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.util.bounds.Bounds;
 
 /**
  * A {@link BoundedProblem} is a {@link Problem} for which solution boundaries

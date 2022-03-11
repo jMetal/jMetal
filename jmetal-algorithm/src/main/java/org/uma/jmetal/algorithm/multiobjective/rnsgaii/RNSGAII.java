@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -16,9 +18,6 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

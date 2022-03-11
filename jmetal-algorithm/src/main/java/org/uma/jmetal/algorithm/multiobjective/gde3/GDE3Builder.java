@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -9,8 +10,6 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.util.List;
 
 /**
  * This class implements the GDE3 algorithm

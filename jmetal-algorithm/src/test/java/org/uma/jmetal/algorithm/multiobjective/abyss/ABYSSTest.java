@@ -1,5 +1,11 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -15,13 +21,6 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /** Created by ajnebro on 11/6/15. */
 public class ABYSSTest {

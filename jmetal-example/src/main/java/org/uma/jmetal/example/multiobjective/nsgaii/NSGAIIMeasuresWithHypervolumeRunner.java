@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
@@ -21,9 +23,6 @@ import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm (variant with measures)

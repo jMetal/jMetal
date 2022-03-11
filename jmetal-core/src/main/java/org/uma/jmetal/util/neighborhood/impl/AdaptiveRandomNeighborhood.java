@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.neighborhood.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class implements the adaptive random neighborhood (topology) defined by M. Clerc.

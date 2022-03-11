@@ -1,9 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.re;
 
+import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.List;
 
 /**
  * Class representing problem RE35. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use

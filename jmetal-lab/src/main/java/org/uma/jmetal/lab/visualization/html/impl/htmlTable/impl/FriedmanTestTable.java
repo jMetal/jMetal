@@ -1,11 +1,10 @@
 package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
+import java.text.DecimalFormat;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
-import java.text.DecimalFormat;
 /**
  * This class transforms the results of FriedmanTest into a {@link HtmlTable}.
  *

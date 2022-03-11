@@ -1,5 +1,11 @@
 package org.uma.jmetal.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
@@ -15,9 +21,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.*;
-import java.util.stream.IntStream;
 
 /** @author Antonio J. Nebro */
 public class SolutionListUtils {

@@ -1,5 +1,7 @@
 package org.uma.jmetal.operator.crossover.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
@@ -7,9 +9,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class allows to apply a HUX crossover operator using two parent solutions. NOTE: the

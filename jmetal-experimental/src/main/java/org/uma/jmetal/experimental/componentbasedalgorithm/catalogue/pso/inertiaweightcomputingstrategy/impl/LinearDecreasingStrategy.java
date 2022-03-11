@@ -1,8 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 public class LinearDecreasingStrategy implements InertiaWeightRangeBasedComputingStrategy {
   protected final double minimumWeight ;

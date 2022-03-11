@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.pseudorandom;
 
-import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
-
 import java.io.Serializable;
+import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

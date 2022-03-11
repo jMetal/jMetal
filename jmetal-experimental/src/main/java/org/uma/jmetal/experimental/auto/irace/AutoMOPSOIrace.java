@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.auto.irace;
 
+import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
+
+import java.io.IOException;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
-
-import java.io.IOException;
-
-import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 public class AutoMOPSOIrace {
     public static void main(String[] args) throws IOException{

@@ -1,11 +1,10 @@
 package org.uma.jmetal.solution.compositesolution;
 
+import java.util.HashMap;
+import java.util.List;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Class representing solutions composed of a list of solutions. The idea is that each decision

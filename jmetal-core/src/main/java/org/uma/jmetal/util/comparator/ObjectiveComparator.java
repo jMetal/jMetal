@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * This class implements a comparator based on a given objective

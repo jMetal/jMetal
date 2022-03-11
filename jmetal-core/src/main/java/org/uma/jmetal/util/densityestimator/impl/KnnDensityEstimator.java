@@ -1,5 +1,8 @@
 package org.uma.jmetal.util.densityestimator.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -8,10 +11,6 @@ import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class implements the a density estimator based on the distance to the k-th nearest solution

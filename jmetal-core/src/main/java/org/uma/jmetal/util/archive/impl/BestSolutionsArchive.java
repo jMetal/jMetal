@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.archive.impl;
 
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
-
-import java.util.List;
 
 /**
  * Archive that select the best solutions of another archive by applying the

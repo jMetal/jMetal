@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.impl.DefaultLocalBestUpdate;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.List;
 
 public class LocalBestUpdateParameter extends CategoricalParameter {
   public LocalBestUpdateParameter(String[] args, List<String> localBestUpdateStrategies) {

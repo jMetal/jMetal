@@ -1,8 +1,13 @@
 package org.uma.jmetal.util.naming.impl;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import org.uma.jmetal.util.naming.DescribedEntity;
-
-import java.util.*;
 
 public class DescribedEntitySet<Entity extends DescribedEntity> implements Set<Entity> {
 

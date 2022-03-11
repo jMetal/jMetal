@@ -2,11 +2,8 @@ package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
 import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.VelocityInitialization;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 
 public class LocalBestInitializationParameter extends CategoricalParameter {
   public LocalBestInitializationParameter(String[] args, List<String> localBestInitializationStrategies) {

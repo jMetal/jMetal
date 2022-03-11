@@ -1,12 +1,6 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.fileoutput.FileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
-import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
-import org.uma.jmetal.util.solutionattribute.impl.SolutionTextRepresentation;
+import static java.util.stream.Collectors.toList;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,8 +9,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileoutput.FileOutputContext;
+import org.uma.jmetal.util.point.PointSolution;
+import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
+import org.uma.jmetal.util.solutionattribute.impl.SolutionTextRepresentation;
 
 public class StoredSolutionsUtils {
   private static final String DEFAULT_REGEX = "[ \t,]";

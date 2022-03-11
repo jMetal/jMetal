@@ -1,20 +1,19 @@
 package org.uma.jmetal.util.ranking;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
 
 public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolution>> {
   private R ranking;

@@ -1,13 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.ensemble;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class AlgorithmEnsemble<S extends Solution<?>> implements Algorithm<List<S>> {

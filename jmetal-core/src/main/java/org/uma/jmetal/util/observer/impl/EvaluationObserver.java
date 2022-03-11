@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.util.Map;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.util.Map;
 
 /**
  * This observer prints the current evaluation number of an algorithm. It expects a pair

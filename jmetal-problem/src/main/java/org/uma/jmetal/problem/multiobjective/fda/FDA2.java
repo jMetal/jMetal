@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
 @SuppressWarnings("serial")

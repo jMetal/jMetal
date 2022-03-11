@@ -1,7 +1,6 @@
 package org.uma.jmetal.operator.mutation;
 
 import org.uma.jmetal.operator.Operator;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Interface representing mutation operators

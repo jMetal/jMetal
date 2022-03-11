@@ -1,14 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class shows a version of NSGA-II having a stopping condition depending on run-time

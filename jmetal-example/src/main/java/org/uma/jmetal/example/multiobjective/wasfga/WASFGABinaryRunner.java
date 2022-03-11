@@ -1,5 +1,8 @@
 package org.uma.jmetal.example.multiobjective.wasfga;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGA;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -16,10 +19,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WASFGABinaryRunner extends AbstractAlgorithmRunner {
   /**

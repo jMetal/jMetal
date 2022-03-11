@@ -1,11 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.randomsearch;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-
-import java.util.List;
 
 /**
  * This class implements a simple random search algorithm.

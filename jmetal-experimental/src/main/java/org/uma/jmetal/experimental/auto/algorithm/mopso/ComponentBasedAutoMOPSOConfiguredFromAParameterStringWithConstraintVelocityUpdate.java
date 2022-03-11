@@ -2,7 +2,6 @@ package org.uma.jmetal.experimental.auto.algorithm.mopso;
 
 
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
-import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;

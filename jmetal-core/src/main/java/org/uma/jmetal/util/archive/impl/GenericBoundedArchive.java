@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.archive.impl;
 
+import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
-
-import java.util.Comparator;
 
 /**
  * This class implements a generic bound archive.

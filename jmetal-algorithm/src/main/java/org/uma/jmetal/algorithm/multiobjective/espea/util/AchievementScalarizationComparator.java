@@ -1,8 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Compares solutions based on their achievement scalarization value (ASV). The

@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.bounds;
 
+import java.io.Serializable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-
-import java.io.Serializable;
 
 /**
  * Describes a pair of lower and upper bounds for a {@link Comparable} value.

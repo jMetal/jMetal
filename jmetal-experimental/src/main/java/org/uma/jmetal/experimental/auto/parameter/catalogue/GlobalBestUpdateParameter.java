@@ -1,12 +1,9 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.GlobalBestUpdate;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestUpdate;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.archive.BoundedArchive;
-
-import java.util.List;
 
 public class GlobalBestUpdateParameter extends CategoricalParameter {
   public GlobalBestUpdateParameter(String args[], List<String> updateStrategies) {

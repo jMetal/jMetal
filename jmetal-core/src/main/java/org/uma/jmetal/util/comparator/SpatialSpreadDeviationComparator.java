@@ -13,11 +13,10 @@
 
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;
 
 /**
  * Compares two solutions according to the Spatial Spread Deviation attribute. T

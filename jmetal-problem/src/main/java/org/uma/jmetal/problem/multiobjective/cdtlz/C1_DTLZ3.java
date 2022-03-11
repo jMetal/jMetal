@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.cdtlz;
 
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Problem C1-DTLZ3, defined in:

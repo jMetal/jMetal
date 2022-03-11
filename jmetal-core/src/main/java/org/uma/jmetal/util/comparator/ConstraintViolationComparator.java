@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
+import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
-
-import java.util.Comparator;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing <code>Solution</code> objects)

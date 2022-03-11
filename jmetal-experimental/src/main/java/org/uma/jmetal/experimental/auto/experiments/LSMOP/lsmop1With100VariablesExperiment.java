@@ -1,5 +1,9 @@
 package org.uma.jmetal.experimental.auto.experiments.LSMOP;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -9,7 +13,13 @@ import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
-import org.uma.jmetal.lab.experiment.component.impl.*;
+import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
+import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanTestTables;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.lab.visualization.StudyVisualizer;
@@ -29,11 +39,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Automatic configuration of NSGA-II and MOPSO with jMetal and irace.

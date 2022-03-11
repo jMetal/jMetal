@@ -4,6 +4,7 @@ package org.uma.jmetal.algorithm.multiobjective.mochc;
  * Created by ajnebro on 21/11/14.
  */
 
+import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -12,8 +13,6 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.util.List;
 
 /**
  * Builder class

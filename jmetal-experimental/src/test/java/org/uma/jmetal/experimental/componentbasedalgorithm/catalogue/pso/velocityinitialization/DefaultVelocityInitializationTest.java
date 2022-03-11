@@ -1,5 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -7,10 +12,6 @@ import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultVelocityInitializationTest {
 

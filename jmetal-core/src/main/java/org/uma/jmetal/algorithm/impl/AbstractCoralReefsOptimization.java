@@ -1,14 +1,13 @@
 package org.uma.jmetal.algorithm.impl;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.operator.mutation.MutationOperator;
+import org.uma.jmetal.operator.selection.SelectionOperator;
 
 /**
  * Abstract class representing a Coral Reefs Optimization Algorithm

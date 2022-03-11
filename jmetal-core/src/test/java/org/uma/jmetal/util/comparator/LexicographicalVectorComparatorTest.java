@@ -1,10 +1,10 @@
 package org.uma.jmetal.util.comparator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

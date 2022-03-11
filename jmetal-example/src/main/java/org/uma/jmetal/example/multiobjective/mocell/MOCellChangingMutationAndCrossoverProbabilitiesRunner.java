@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.mocell;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCell;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -22,9 +24,6 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.C9;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the MOCell algorithm

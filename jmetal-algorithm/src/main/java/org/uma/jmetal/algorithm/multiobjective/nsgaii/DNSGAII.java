@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -7,10 +10,6 @@ import org.uma.jmetal.operator.selection.impl.RankingAndDirScoreSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * created at 10:45 am, 2019/1/29 This algorithm (DIR-Enhanced NSGA-II [DNSGA-II]) is according to

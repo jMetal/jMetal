@@ -13,6 +13,10 @@
 
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.rnsgaii.RNSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -26,14 +30,13 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.*;
+import org.uma.jmetal.util.AbstractAlgorithmRunner;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to configure and run the R-NSGA-II algorithm

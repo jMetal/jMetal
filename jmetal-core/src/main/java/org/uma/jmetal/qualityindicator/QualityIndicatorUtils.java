@@ -1,13 +1,18 @@
 package org.uma.jmetal.qualityindicator;
 
-import org.uma.jmetal.qualityindicator.impl.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.uma.jmetal.qualityindicator.impl.Epsilon;
+import org.uma.jmetal.qualityindicator.impl.GeneralizedSpread;
+import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
+import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
+import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
+import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class QualityIndicatorUtils {
   /**

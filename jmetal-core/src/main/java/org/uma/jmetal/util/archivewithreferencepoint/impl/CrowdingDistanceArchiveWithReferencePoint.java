@@ -13,13 +13,12 @@
 
 package org.uma.jmetal.util.archivewithreferencepoint.impl;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Class representing a {@link ArchiveWithReferencePoint} archive using a crowding distance based density estimator

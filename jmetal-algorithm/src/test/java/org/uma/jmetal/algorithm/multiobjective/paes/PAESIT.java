@@ -1,5 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.paes;
 
+import static org.junit.Assert.assertTrue;
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
+
+import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -17,11 +21,6 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 public class PAESIT {
   Algorithm<List<DoubleSolution>> algorithm;

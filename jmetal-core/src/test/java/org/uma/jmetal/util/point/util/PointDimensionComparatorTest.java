@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.point.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,8 +9,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
 import org.uma.jmetal.util.point.util.comparator.PointDimensionComparator;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro

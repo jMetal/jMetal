@@ -1,17 +1,16 @@
 package org.uma.jmetal.util.densityestimator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KnnDensityEstimatorTest {
   private double EPSILON = 0.00000000000001;

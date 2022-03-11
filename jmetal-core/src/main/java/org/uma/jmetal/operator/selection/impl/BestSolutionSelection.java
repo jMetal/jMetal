@@ -1,10 +1,9 @@
 package org.uma.jmetal.operator.selection.impl;
 
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements a selection operator used for selecting the best solution

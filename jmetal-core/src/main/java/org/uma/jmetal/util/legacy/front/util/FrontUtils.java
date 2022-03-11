@@ -1,5 +1,7 @@
 package org.uma.jmetal.util.legacy.front.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -7,9 +9,6 @@ import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A Front is a  list of points. This class includes utilities to work with {@link Front} objects.

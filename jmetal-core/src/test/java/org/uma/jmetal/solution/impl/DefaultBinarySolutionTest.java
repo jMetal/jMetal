@@ -1,13 +1,12 @@
 package org.uma.jmetal.solution.impl;
 
-import org.junit.Test;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 
 public class DefaultBinarySolutionTest {
 

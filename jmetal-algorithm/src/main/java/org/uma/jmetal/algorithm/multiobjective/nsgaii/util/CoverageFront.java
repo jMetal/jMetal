@@ -1,10 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii.util;
 
+import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-
-import java.util.List;
 
 public class CoverageFront<S extends Solution<?>> {
 

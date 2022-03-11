@@ -1,5 +1,8 @@
 package org.uma.jmetal.parallel.example;
 
+import static java.lang.Math.sin;
+
+import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -23,10 +26,6 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.List;
-
-import static java.lang.Math.sin;
 
 /**
  * Class to configure and run the NSGA-II algorithm using a {@link SparkEvaluation} object.

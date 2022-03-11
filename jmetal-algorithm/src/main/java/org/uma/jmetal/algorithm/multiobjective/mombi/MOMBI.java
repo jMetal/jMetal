@@ -1,17 +1,20 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi;
 
-import org.uma.jmetal.algorithm.multiobjective.mombi.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2Ranking;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2RankingAttribute;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.R2SolutionData;
+import org.uma.jmetal.algorithm.multiobjective.mombi.util.TchebycheffUtilityFunctionsSet;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class MOMBI<S extends Solution<?>> extends AbstractMOMBI<S> {

@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.example.multiobjective;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.microfame.MicroFAME;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.HVTournamentSelection;
@@ -28,9 +30,6 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the Micro-FAME algorithm

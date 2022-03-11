@@ -1,5 +1,9 @@
 package org.uma.jmetal.example.operator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -10,11 +14,6 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.IntegerVariableComparator;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

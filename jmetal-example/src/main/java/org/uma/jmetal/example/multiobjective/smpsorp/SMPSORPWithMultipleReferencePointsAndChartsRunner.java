@@ -1,5 +1,9 @@
 package org.uma.jmetal.example.multiobjective.smpsorp;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSORP;
@@ -21,11 +25,6 @@ import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
   /**

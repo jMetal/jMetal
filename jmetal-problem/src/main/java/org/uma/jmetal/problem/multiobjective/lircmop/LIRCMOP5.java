@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import static java.lang.Math.sqrt;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.Math.sqrt;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Class representing problem LIR-CMOP3, defined in: An Improved epsilon-constrained Method in

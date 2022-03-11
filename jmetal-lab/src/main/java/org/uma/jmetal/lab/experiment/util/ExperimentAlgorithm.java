@@ -1,14 +1,13 @@
 package org.uma.jmetal.lab.experiment.util;
 
+import java.io.File;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Class defining tasks for the execution of algorithms in parallel.

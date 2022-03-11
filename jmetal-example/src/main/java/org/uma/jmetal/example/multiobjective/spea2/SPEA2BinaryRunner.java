@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.spea2;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -15,9 +17,6 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the SPEA2 algorithm (binary encoding)

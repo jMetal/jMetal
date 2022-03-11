@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.observable;
 
-import org.uma.jmetal.util.observer.Observer;
-
 import java.util.Collection;
+import org.uma.jmetal.util.observer.Observer;
 
 /**
  * Interface representing observable entities according to the Observer Pattern

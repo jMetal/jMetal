@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.espea.util;
 
+import java.util.Comparator;
 import org.uma.jmetal.algorithm.multiobjective.espea.util.ScalarizationWrapper.ScalarizationType;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
@@ -7,8 +8,6 @@ import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.comparator.FitnessComparator;
 import org.uma.jmetal.util.legacy.front.util.FrontNormalizer;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
-
-import java.util.Comparator;
 
 /**
  * The archive that is used within the {@link ESPEA} algorithm. The archive is

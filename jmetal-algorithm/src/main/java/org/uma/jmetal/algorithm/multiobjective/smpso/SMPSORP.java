@@ -13,6 +13,9 @@
 
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -29,10 +32,6 @@ import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class implements the SMPSORP algorithm described in:

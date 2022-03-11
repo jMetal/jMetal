@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.singleobjective.geneticalgorithm;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -8,9 +10,6 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

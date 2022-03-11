@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.singleobjective;
 
-import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.

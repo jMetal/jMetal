@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.legacy.front.util;
 
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
-
-import java.util.List;
 
 /**
  * Class for normalizing {@link Front} objects

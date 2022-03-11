@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
+import java.util.Comparator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.Comparator;
 
 public class DoubleVariableComparator implements Comparator<DoubleSolution> {
   private int variableIndex ;

@@ -1,9 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.leaderinitialization;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**

@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractLSMOP extends AbstractDoubleProblem {
     protected int nk; // Number of subcomponents in each variable group

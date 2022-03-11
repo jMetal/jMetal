@@ -1,5 +1,9 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -27,11 +31,6 @@ import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Class for configuring and running the NSGA-II algorithm (parallel version)

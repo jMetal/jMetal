@@ -7,12 +7,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertia
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearDecreasingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearIncreasingStrategy;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
-import org.uma.jmetal.operator.mutation.MutationOperator;
-import org.uma.jmetal.operator.mutation.impl.LinkedPolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
-import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.mutation.impl.UniformMutation;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class InertiaWeightComputingParameter extends CategoricalParameter {
   public InertiaWeightComputingParameter(String[] args, List<String> mutationOperators) {

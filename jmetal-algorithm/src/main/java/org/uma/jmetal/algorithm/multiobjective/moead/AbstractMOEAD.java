@@ -1,5 +1,14 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import static java.lang.Double.parseDouble;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -10,16 +19,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 import org.uma.jmetal.util.point.impl.NadirPoint;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import static java.lang.Double.parseDouble;
 
 /**
  * Abstract class for implementing versions of the MOEA/D algorithm.

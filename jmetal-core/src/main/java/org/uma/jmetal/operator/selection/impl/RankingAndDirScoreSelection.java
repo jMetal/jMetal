@@ -1,5 +1,8 @@
 package org.uma.jmetal.operator.selection.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DirScoreComparator;
@@ -7,10 +10,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.DirScore;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * created at 11:47 am, 2019/1/29 Used for DIR-enhanced NSGA-II (D-NSGA-II) to select the joint
