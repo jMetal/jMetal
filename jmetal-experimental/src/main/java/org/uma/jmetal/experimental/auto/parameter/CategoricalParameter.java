@@ -1,9 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.List;
 import java.util.function.Function;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class CategoricalParameter extends Parameter<String> {
   private final List<String> validValues;

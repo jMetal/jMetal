@@ -1,14 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.SolutionAttribute;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 
 @SuppressWarnings("serial")
 public class EnvironmentalSelection<S extends Solution<?>>

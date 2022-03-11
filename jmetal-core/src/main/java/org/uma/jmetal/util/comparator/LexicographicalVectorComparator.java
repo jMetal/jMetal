@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.Comparator;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements the Comparator interface for comparing two vectors.

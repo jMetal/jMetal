@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.fileoutput.impl;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.fileoutput.FileOutputContext;
-
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileoutput.FileOutputContext;
 
 /**
  * Class using the default method for getting a buffered writer

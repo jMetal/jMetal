@@ -1,5 +1,8 @@
 package org.uma.jmetal.util.ranking.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
@@ -7,10 +10,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
 import ru.ifmo.nds.NonDominatedSorting;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This is an implementation of the {@link Ranking} interface using non-dominated sorting algorithms

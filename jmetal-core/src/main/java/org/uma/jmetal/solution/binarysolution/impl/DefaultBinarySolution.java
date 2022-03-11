@@ -1,12 +1,11 @@
 package org.uma.jmetal.solution.binarysolution.impl;
 
+import java.util.HashMap;
+import java.util.List;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * This defines an implementation of a binary solution. These solutions are composed of a number

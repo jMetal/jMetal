@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead;
 
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
@@ -18,9 +20,6 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.io.FileNotFoundException;
-import java.util.HashMap;
 
 /**
  * This class is intended to provide an implementation of the MOEA/D-DE algorithm.

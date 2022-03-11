@@ -6,6 +6,9 @@ import com.fuzzylite.rule.RuleBlock;
 import com.fuzzylite.term.Triangle;
 import com.fuzzylite.variable.InputVariable;
 import com.fuzzylite.variable.OutputVariable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -22,10 +25,6 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * This class implements the FAME algorithm described in: A. Santiago, B. Dorronsoro, A.J. Nebro,

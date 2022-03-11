@@ -1,8 +1,7 @@
 package org.uma.jmetal.operator.crossover;
 
-import org.uma.jmetal.operator.Operator;
-
 import java.util.List;
+import org.uma.jmetal.operator.Operator;
 
 /**
  * Interface representing crossover operators. They will receive a list of solutions and return

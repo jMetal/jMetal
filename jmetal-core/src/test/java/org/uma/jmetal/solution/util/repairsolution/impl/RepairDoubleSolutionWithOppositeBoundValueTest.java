@@ -1,11 +1,11 @@
 package org.uma.jmetal.solution.util.repairsolution.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
-import static org.junit.Assert.assertEquals;
 
 public class RepairDoubleSolutionWithOppositeBoundValueTest {
   private static final double EPSILON = 0.0000000000001 ;

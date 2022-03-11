@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEA;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -14,8 +15,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the IBEA algorithm

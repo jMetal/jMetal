@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
+import java.util.Comparator;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.Comparator;
 
 public class IntegerVariableComparator implements Comparator<IntegerSolution> {
   private int variableIndex ;

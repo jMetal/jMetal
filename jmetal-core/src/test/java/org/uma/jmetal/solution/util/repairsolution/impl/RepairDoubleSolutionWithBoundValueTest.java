@@ -1,10 +1,10 @@
 package org.uma.jmetal.solution.util.repairsolution.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro

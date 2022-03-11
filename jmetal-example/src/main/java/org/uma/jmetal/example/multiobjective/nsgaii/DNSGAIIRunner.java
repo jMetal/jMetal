@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -17,9 +19,6 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.comparator.RankingAndDirScoreDistanceComparator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * created at 2:50 pm, 2019/1/29

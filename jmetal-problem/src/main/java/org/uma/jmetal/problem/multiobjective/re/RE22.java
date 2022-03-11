@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.re;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
 
 import java.util.List;
-
-import static org.uma.jmetal.problem.multiobjective.re.Util.getClosestValue;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Class representing problem RE22. Source: Ryoji Tanabe and Hisao Ishibuchi, An easy-to-use

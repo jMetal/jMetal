@@ -1,15 +1,14 @@
 package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.util.measure.Measure;
-import org.uma.jmetal.util.measure.MeasureManager;
-import org.uma.jmetal.util.measure.PullMeasure;
-import org.uma.jmetal.util.measure.PushMeasure;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.uma.jmetal.util.measure.Measure;
+import org.uma.jmetal.util.measure.MeasureManager;
+import org.uma.jmetal.util.measure.PullMeasure;
+import org.uma.jmetal.util.measure.PushMeasure;
 
 /**
  * This {@link SimpleMeasureManager} provides a basic implementation to manage a

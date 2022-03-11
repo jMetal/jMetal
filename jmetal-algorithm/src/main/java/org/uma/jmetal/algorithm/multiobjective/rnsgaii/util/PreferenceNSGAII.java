@@ -1,9 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii.util;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
 
 public class PreferenceNSGAII<S extends Solution<?>> {
   private List<Double> interestPoint;

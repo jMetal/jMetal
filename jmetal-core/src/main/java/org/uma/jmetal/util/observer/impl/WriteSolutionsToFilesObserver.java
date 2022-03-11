@@ -1,15 +1,14 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This observer stores a solution list in files. Concretely, the variables and objectives are written in files called

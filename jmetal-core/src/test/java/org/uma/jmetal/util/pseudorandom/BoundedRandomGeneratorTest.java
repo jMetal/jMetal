@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.pseudorandom;
 
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 public class BoundedRandomGeneratorTest {
 

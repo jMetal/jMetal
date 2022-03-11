@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.lz09;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing problem LZ09F5

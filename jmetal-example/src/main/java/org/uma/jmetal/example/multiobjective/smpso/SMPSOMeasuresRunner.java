@@ -1,5 +1,8 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
@@ -20,10 +23,6 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class to configure and run the NSGA-II algorithm (variant with measures)

@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.gde3;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -10,10 +13,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 /** Created by ajnebro on 3/11/15. */
 public class GDE3TestIT {

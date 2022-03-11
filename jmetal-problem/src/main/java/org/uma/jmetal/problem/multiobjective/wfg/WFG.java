@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.wfg;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 
 /**
  * Implements a reference abstract class for all wfg org.uma.test problem

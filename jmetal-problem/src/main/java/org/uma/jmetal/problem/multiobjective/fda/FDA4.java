@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
 @SuppressWarnings("serial")

@@ -1,13 +1,12 @@
 package org.uma.jmetal.solution.doublesolution.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Defines an implementation of the {@Link DoubleSolution} interface

@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints

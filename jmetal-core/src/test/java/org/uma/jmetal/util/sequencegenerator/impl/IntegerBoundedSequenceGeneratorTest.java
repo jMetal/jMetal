@@ -1,15 +1,14 @@
 package org.uma.jmetal.util.sequencegenerator.impl;
 
-import org.junit.jupiter.api.Test;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.stream.IntStream;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.stream.IntStream;
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
 public class IntegerBoundedSequenceGeneratorTest {
 

@@ -1,10 +1,10 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by Antonio J. Nebro on 17/09/14.

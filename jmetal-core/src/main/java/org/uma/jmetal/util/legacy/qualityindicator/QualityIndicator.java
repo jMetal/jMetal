@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.legacy.qualityindicator;
 
-import org.uma.jmetal.util.naming.DescribedEntity;
-
 import java.io.Serializable;
+import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

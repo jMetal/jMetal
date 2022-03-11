@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.smsemoa;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -11,9 +13,6 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

@@ -1,10 +1,6 @@
 package org.uma.jmetal.utilities;
 
-import org.uma.jmetal.util.StoredSolutionsUtils;
-import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.point.PointSolution;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,8 +9,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
+import org.uma.jmetal.util.StoredSolutionsUtils;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.point.PointSolution;
 
 /**
  * This utility reads a file or the files in a directory and creates a reference front.

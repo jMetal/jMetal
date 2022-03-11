@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.archivewithreferencepoint;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class defines a bounded archive that has associated a reference point as described in the paper

@@ -1,5 +1,10 @@
 package org.uma.jmetal.operator.crossover;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
@@ -8,12 +13,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 
 /**
  * Created by ajnebro on 10/6/15.

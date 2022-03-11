@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -15,8 +16,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm (parallel version)

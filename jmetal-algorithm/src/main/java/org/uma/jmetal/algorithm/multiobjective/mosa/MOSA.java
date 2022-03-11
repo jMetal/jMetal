@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.mosa;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -11,10 +14,6 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

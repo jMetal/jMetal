@@ -13,6 +13,8 @@
 
 package org.uma.jmetal.example.multiobjective;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.cdg.CDGBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -22,9 +24,6 @@ import org.uma.jmetal.problem.multiobjective.glt.GLT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the CDG algorithm The paper and Matlab code can be download at

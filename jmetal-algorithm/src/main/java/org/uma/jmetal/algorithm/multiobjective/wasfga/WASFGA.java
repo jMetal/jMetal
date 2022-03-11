@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.mombi.AbstractMOMBI;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
@@ -16,9 +18,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Implementation of the preference based algorithm named WASF-GA on jMetal5.0

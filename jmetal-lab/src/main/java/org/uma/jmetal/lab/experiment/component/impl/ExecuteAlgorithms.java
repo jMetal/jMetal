@@ -1,15 +1,14 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class executes the algorithms the have been configured with a instance of class {@link

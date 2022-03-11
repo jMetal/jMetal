@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.smpso;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
@@ -20,8 +21,6 @@ import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm

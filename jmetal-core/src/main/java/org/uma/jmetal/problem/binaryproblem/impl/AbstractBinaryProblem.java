@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.binaryproblem.impl;
 
+import java.util.List;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
-
-import java.util.List;
 
 @SuppressWarnings("serial")
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>

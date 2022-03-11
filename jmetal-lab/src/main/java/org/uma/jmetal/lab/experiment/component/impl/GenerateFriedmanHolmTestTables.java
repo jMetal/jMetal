@@ -1,5 +1,12 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.List;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.component.ExperimentComponent;
 import org.uma.jmetal.lab.experiment.util.FriedmanTest;
@@ -8,14 +15,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class computes the Friedman test ranking and generates a Latex script that produces a table

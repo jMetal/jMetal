@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.restartstrategy.impl;
 
+import java.util.List;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.restartstrategy.RemoveSolutionsStrategy;
-
-import java.util.List;
 
 /**
  * Created by antonio on 6/06/17.

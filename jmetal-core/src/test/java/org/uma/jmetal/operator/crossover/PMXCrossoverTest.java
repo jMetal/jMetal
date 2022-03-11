@@ -1,5 +1,10 @@
 package org.uma.jmetal.operator.crossover;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.PMXCrossover;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
@@ -7,12 +12,6 @@ import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutation
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import static org.junit.Assert.assertTrue;
 
 public class PMXCrossoverTest {
 

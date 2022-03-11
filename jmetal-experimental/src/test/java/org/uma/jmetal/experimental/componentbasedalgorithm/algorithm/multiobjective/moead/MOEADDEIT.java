@@ -1,5 +1,9 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.multiobjective.lz09.LZ09F2;
@@ -11,11 +15,6 @@ import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MOEADDEIT {
 

@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.DynamicAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.DynamicNSGAII;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.util.CoverageFront;
@@ -19,8 +20,6 @@ import org.uma.jmetal.util.observer.impl.RunTimeForDynamicProblemsChartObserver;
 import org.uma.jmetal.util.restartstrategy.impl.CreateNRandomSolutions;
 import org.uma.jmetal.util.restartstrategy.impl.DefaultRestartStrategy;
 import org.uma.jmetal.util.restartstrategy.impl.RemoveNRandomSolutions;
-
-import java.util.List;
 
 public class DynamicNSGAIIRunner {
   /**

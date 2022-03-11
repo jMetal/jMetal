@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Antonio J. Nebro on 03/07/14.

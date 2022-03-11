@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIStoppingByTime;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -18,9 +20,6 @@ import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm (version NSGAIIStoppingByTime)

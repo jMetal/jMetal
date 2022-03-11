@@ -1,5 +1,8 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -7,10 +10,6 @@ import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Bi-objective problem for testing class {@link CompositeSolution )}. This problem requires an encoding where a

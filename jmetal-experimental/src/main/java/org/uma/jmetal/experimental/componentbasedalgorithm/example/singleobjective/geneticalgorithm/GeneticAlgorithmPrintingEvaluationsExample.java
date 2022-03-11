@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.singleobjective.geneticalgorithm;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -19,8 +20,6 @@ import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.List;
 
 /**
  * Class to configure and run the a generational genetic algorithm.

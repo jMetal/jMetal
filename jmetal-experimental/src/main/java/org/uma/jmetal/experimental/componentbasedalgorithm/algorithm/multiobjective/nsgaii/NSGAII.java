@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
@@ -21,10 +24,6 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 @SuppressWarnings("serial")

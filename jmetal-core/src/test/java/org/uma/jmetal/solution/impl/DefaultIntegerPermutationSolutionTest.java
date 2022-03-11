@@ -1,14 +1,13 @@
 package org.uma.jmetal.solution.impl;
 
-import org.junit.Test;
-import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
-import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
+import static org.junit.Assert.assertArrayEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.junit.Assert.assertArrayEquals;
+import org.junit.Test;
+import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class DefaultIntegerPermutationSolutionTest {

@@ -1,10 +1,10 @@
 package org.uma.jmetal.util.aggregativefunction.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-
-import static org.junit.Assert.assertEquals;
 
 public class WeightedSumTest {
 

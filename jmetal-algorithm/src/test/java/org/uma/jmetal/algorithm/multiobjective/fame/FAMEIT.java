@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.fame;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -13,10 +16,6 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 public class FAMEIT {
 

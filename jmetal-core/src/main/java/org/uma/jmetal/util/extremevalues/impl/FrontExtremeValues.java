@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.extremevalues.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.extremevalues.ExtremeValuesFinder;
 import org.uma.jmetal.util.legacy.front.Front;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class for finding the extreme values of front objects

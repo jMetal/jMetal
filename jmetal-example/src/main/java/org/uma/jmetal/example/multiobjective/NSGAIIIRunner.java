@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -20,8 +21,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
-
-import java.util.List;
 
 /** Class to configure and run the NSGA-III algorithm */
 public class NSGAIIIRunner extends AbstractAlgorithmRunner {

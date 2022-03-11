@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.evaluator;
 
-import org.uma.jmetal.problem.Problem;
-
 import java.io.Serializable;
 import java.util.List;
+import org.uma.jmetal.problem.Problem;
 
 /**
  * Created by Antonio J. Nebro on 30/05/14.

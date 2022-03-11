@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa;
 
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
@@ -10,8 +11,6 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHyp
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.List;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 @SuppressWarnings("serial")

@@ -3,6 +3,9 @@ package org.uma.jmetal.algorithm.multiobjective.microfame;
 import generic.Input;
 import generic.Output;
 import generic.Tuple;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import org.uma.jmetal.algorithm.multiobjective.microfame.util.WFGHypervolumeV2;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.SteadyStateNSGAII;
 import org.uma.jmetal.operator.Operator;
@@ -24,10 +27,6 @@ import type1.system.T1_Antecedent;
 import type1.system.T1_Consequent;
 import type1.system.T1_Rule;
 import type1.system.T1_Rulebase;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /** @author Alejandro Santiago <aurelio.santiago@upalt.edu.mx> Micro-FAME */
 public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {

@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSO;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
@@ -17,8 +18,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm to solve a problem of the CEC2015

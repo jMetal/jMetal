@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -14,9 +16,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 /** @author Cristobal Barba */
 public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {

@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import java.util.List;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -11,8 +12,6 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
-
-import java.util.List;
 
 /**
  * This class implements a version of SMPSO using measures

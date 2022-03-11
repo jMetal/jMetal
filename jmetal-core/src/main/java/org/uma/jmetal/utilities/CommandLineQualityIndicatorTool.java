@@ -1,17 +1,16 @@
 package org.uma.jmetal.utilities;
 
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
+
+import java.io.IOException;
+import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
-import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
 
 /**
  * Class for executing quality indicators from the command line. The program requires two arguments:

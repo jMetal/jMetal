@@ -1,13 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.dmopso;
 
-import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import static java.lang.Double.parseDouble;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,8 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import static java.lang.Double.parseDouble;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 @SuppressWarnings("serial")
 public class DMOPSO implements Algorithm<List<DoubleSolution>> {

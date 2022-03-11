@@ -1,12 +1,11 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.List;
 
 public class MutationParameter extends CategoricalParameter {
   public MutationParameter(String[] args, List<String> mutationOperators) {

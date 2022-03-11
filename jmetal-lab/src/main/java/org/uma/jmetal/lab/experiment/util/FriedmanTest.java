@@ -1,11 +1,10 @@
 package org.uma.jmetal.lab.experiment.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FriedmanTest {
 

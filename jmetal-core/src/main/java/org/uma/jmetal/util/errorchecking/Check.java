@@ -1,8 +1,11 @@
 package org.uma.jmetal.util.errorchecking;
 
-import org.uma.jmetal.util.errorchecking.exception.*;
-
 import java.util.Collection;
+import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
+import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
+import org.uma.jmetal.util.errorchecking.exception.ValueOutOfRangeException;
 
 /**
  * Static class for error checking

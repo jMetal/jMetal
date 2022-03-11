@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
@@ -10,8 +11,6 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the DMOPSO algorithm

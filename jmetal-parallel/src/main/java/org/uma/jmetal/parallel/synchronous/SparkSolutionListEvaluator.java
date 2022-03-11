@@ -1,11 +1,10 @@
 package org.uma.jmetal.parallel.synchronous;
 
+import java.util.List;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.List;
 
 /**
  * Class implementing an {@link SolutionListEvaluator} based on Apache Spark.

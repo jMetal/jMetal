@@ -1,12 +1,15 @@
 package org.uma.jmetal.util.ranking.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.*;
 
 /**
  * This class implements a solution list ranking based on dominance ranking. Given a collection of

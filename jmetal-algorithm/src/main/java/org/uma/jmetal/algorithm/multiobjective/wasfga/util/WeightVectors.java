@@ -1,6 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.wasfga.util;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
+import static java.lang.Double.parseDouble;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -8,8 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-import static java.lang.Double.parseDouble;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * @author Rubén Saborido Infantes

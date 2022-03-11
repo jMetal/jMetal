@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Assign to each solution in a solution list an attribute containing the position of

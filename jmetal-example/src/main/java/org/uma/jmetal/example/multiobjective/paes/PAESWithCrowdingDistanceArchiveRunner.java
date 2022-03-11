@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.paes;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.paes.PAES;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -12,9 +14,6 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the PAES algorithm

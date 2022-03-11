@@ -1,13 +1,12 @@
 package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Collections;
 /**
  * This class shows the mean values of the executions with each algorithm and each problem. It also
  * highlights the best and second best algorithms for each problem.

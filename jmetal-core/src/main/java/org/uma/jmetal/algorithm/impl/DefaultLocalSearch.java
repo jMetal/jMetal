@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.impl;
 
+import java.util.Comparator;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
@@ -7,8 +8,6 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.Comparator;
 
 /**
  * Abstract class representing a local search algorithm

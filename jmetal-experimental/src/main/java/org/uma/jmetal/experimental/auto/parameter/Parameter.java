@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * Abstract class representing generic parameters. Any parameter has a name and a value that is

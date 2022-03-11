@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.EnvironmentalSelection;
 import org.uma.jmetal.algorithm.multiobjective.nsgaiii.util.ReferencePoint;
@@ -9,10 +12,6 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by ajnebro on 30/10/14.

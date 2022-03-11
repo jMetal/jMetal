@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.legacy.front;
 
-import org.uma.jmetal.util.point.Point;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.util.point.Point;
 
 /**
  * A front is a list of points

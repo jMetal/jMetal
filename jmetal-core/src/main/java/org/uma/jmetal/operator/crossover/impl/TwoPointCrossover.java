@@ -1,9 +1,8 @@
 package org.uma.jmetal.operator.crossover.impl;
 
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.List;
 
 /**
  * Created by FlapKap on 27-05-2017.

@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.evaluator.impl;
 
+import java.util.List;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

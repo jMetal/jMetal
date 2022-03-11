@@ -1,12 +1,11 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 
-import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
-import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.Hypervolume;
+import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * This class implements the hypervolume indicator developed by the WFG

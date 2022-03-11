@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -9,9 +11,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class implements the IBEA algorithm

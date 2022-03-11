@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -18,9 +20,6 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * Class for configuring and running the NSGA-II algorithm to solve a problem of the CEC 2015

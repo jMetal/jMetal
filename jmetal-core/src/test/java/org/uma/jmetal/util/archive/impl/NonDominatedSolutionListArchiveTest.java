@@ -1,14 +1,17 @@
 package org.uma.jmetal.util.archive.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Antonio J. Nebro <ajnebro@uma.es>.

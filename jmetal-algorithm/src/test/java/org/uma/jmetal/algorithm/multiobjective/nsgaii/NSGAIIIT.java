@@ -1,5 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import static org.junit.Assert.assertTrue;
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
@@ -18,11 +22,6 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 public class NSGAIIIT {
   Algorithm<List<DoubleSolution>> algorithm;

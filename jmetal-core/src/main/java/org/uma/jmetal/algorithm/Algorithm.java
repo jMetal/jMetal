@@ -1,8 +1,7 @@
 package org.uma.jmetal.algorithm;
 
-import org.uma.jmetal.util.naming.DescribedEntity;
-
 import java.io.Serializable;
+import org.uma.jmetal.util.naming.DescribedEntity;
 
 /**
  * Interface representing an algorithm
