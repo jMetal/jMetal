@@ -29,7 +29,7 @@ trainInstancesFile = "instances-list.txt"
 
 ## A file containing a list of initial configurations.
 ## If empty or NULL, do not use a file.
-# configurationsFile = ""
+configurationsFile = "configurations.txt"
 
 ## The script called for each configuration that launches the program to be
 ## tuned.  See templates/target-runner.tmpl
