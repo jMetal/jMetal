@@ -55,9 +55,8 @@ public class ComponentBasedSMPSO {
     double c1Max = 2.5;
     double c2Min = 1.5;
     double c2Max = 2.5;
-    double weightMin = 0.1;
-    double weightMax = 0.1;
-    var inertiaWeightStrategy = new ConstantValueStrategy(weightMax) ;
+    double weight = 0.1;
+    var inertiaWeightStrategy = new ConstantValueStrategy(weight) ;
 
     var velocityUpdate = new ConstrainedVelocityUpdate(r1Min, r1Max, r2Min, r2Max, c1Min, c1Max,
         c2Min, c2Max, problem);
@@ -67,7 +66,7 @@ public class ComponentBasedSMPSO {
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
         velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
 
-    int frequencyOfMutation = 7;
+    int frequencyOfMutation = 6;
     MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
     //mutationOperator = new UniformMutation(1.0/problem.getNumberOfVariables(), 0.5) ;
     var perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfMutation);
