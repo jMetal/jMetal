@@ -1,6 +1,9 @@
 package org.uma.jmetal.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.uma.jmetal.util.ConstraintHandling.feasibilityRatio;
 import static org.uma.jmetal.util.ConstraintHandling.isFeasible;
 import static org.uma.jmetal.util.ConstraintHandling.numberOfViolatedConstraints;
@@ -9,27 +12,29 @@ import static org.uma.jmetal.util.ConstraintHandling.overallConstraintViolationD
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 
 public class ConstraintHandlingTest {
+  private static final double EPSILON = 0.0000000001 ;
 
   @Test
   public void shouldIsFeasibleReturnTrueIfTheSolutionHasNoConstraints() {
     DoubleSolution solution = new DummyDoubleProblem(2, 2, 0).createSolution() ;
 
-    assertEquals(true, isFeasible(solution));
+    assertTrue(isFeasible(solution));
   }
 
   @Test
-  public void shouldIsFeasibleReturnTrueIfTheSolutionHasConstraintsAndItIsFeasble() {
+  public void shouldIsFeasibleReturnTrueIfTheSolutionHasConstraintsAndItIsFeasible() {
     DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = 0.0 ;
 
-    assertEquals(true, isFeasible(solution));
+    assertTrue(isFeasible(solution));
   }
 
   @Test
@@ -37,7 +42,7 @@ public class ConstraintHandlingTest {
     DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = -1.0 ;
 
-    assertEquals(false, isFeasible(solution));
+    assertFalse(isFeasible(solution));
   }
 
   @Test
@@ -69,7 +74,7 @@ public class ConstraintHandlingTest {
     DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = 0.0 ;
 
-    assertEquals(0.0, overallConstraintViolationDegree(solution), 0.000000001);
+    assertEquals(0.0, overallConstraintViolationDegree(solution), EPSILON);
   }
 
   @Test
@@ -78,14 +83,12 @@ public class ConstraintHandlingTest {
     solution.constraints()[0] = -1.0 ;
     solution.constraints()[1] = -2.0 ;
 
-    assertEquals(-3, overallConstraintViolationDegree(solution), 0.00000000001);
+    assertEquals(-3, overallConstraintViolationDegree(solution), EPSILON);
   }
 
-  @Test (expected = EmptyCollectionException.class)
+  @Test
   public void shouldFeasibilityRatioRaiseAndExceptionIfTheSolutionListIsEmpty() {
-    List<DoubleSolution> solutionList = new ArrayList<>() ;
-
-    feasibilityRatio(solutionList);
+    assertThrows(EmptyCollectionException.class, () -> feasibilityRatio(new ArrayList<>()));
   }
 
   @Test
@@ -100,7 +103,7 @@ public class ConstraintHandlingTest {
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2) ;
 
-    assertEquals(0.0, feasibilityRatio(solutionList), 0.00000000001) ;
+    assertEquals(0.0, feasibilityRatio(solutionList), EPSILON) ;
   }
 
   @Test
@@ -115,7 +118,7 @@ public class ConstraintHandlingTest {
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2) ;
 
-    assertEquals(1.0, feasibilityRatio(solutionList), 0.00000000001) ;
+    assertEquals(1.0, feasibilityRatio(solutionList), EPSILON) ;
   }
 
   @Test
@@ -134,6 +137,15 @@ public class ConstraintHandlingTest {
 
     List<Solution<?>> solutionList = Arrays.asList(solution1, solution2, solution3) ;
 
-    assertEquals(1.0/3, feasibilityRatio(solutionList), 0.00000000001) ;
+    assertEquals(1.0/3, feasibilityRatio(solutionList), EPSILON) ;
+  }
+
+  @Test
+  public void shouldOverallConstraintViolationDegreeWorkProperly() {
+    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    double overallConstraintViolationDegree = -4.0 ;
+    ConstraintHandling.overallConstraintViolationDegree(solution, overallConstraintViolationDegree);
+
+    assertEquals(overallConstraintViolationDegree, ConstraintHandling.overallConstraintViolationDegree(solution), EPSILON);
   }
 }
