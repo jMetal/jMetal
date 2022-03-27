@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.aggregativefunction.impl;
+package org.uma.jmetal.util.aggregativefunction;
 
 import static org.junit.Assert.assertEquals;
 

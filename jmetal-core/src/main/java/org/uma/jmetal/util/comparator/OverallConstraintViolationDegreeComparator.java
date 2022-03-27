@@ -23,17 +23,14 @@ public class OverallConstraintViolationDegreeComparator<S extends Solution<?>> i
    * the higher the value the better.
    */
   public int compare(S solution1, S solution2) {
-    double violationDegreeSolution1 ;
-    double violationDegreeSolution2;
+    var violationDegreeSolution1 = ConstraintHandling.overallConstraintViolationDegree(solution1);
+    var violationDegreeSolution2 = ConstraintHandling.overallConstraintViolationDegree(solution2);
 
-    violationDegreeSolution1 = ConstraintHandling.overallConstraintViolationDegree(solution1);
-    violationDegreeSolution2 = ConstraintHandling.overallConstraintViolationDegree(solution2);
-
-    if ((violationDegreeSolution1 < 0) && (violationDegreeSolution2 < 0)) {
+    if ((violationDegreeSolution1 < 0.0) && (violationDegreeSolution2 < 0.0)) {
       return Double.compare(violationDegreeSolution2, violationDegreeSolution1);
-    } else if ((violationDegreeSolution1 == 0) && (violationDegreeSolution2 < 0)) {
+    } else if ((violationDegreeSolution1 == 0.0) && (violationDegreeSolution2 < 0.0)) {
       return -1;
-    } else if ((violationDegreeSolution1 < 0) && (violationDegreeSolution2 == 0)) {
+    } else if ((violationDegreeSolution1 < 0.0) && (violationDegreeSolution2 == 0.0)) {
       return 1;
     } else {
       return 0;
