@@ -11,7 +11,7 @@ import org.uma.jmetal.util.ConstraintHandling;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class ConstraintViolationComparator<S extends Solution<?>> implements Comparator<S> {
+public class OverallConstraintViolationDegreeComparator<S extends Solution<?>> implements Comparator<S> {
   /**
    * Compares two solutions. If the solutions has no constraints the method return 0
    *

@@ -46,7 +46,7 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareReturnTheValueReturnedByTheConstraintViolationComparator() {
-    ConstraintViolationComparator<DoubleSolution> violationComparator = new ConstraintViolationComparator<>() ;
+    OverallConstraintViolationDegreeComparator<DoubleSolution> violationComparator = new OverallConstraintViolationDegreeComparator<>() ;
 
     DoubleProblem problem = new DummyDoubleProblem(2, 2, 1) ;
 
@@ -85,7 +85,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    var comparator = new DominanceComparator<>(new ConstraintViolationComparator<>());
+    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(1, comparator.compare(solution1, solution2));
   }
@@ -99,7 +99,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    var comparator = new DominanceComparator<>(new ConstraintViolationComparator<>());
+    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(-1, comparator.compare(solution1, solution2));
   }
@@ -143,7 +143,7 @@ public class DominanceComparatorTest {
     solution2.objectives()[1] = 5.0;
     solution2.objectives()[2] = 10.0;
 
-    var comparator = new DominanceComparator<>(new ConstraintViolationComparator<>());
+    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(-1, comparator.compare(solution1, solution2));
   }
@@ -153,7 +153,7 @@ public class DominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
-    ConstraintViolationComparator<DoubleSolution> violationComparator = new ConstraintViolationComparator<>();
+    OverallConstraintViolationDegreeComparator<DoubleSolution> violationComparator = new OverallConstraintViolationDegreeComparator<>();
 
     DoubleProblem problem = new DummyDoubleProblem(2, 3, 0) ;
 
@@ -177,7 +177,7 @@ public class DominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseD() {
-    ConstraintViolationComparator<DoubleSolution> violationComparator = new ConstraintViolationComparator<>();
+    OverallConstraintViolationDegreeComparator<DoubleSolution> violationComparator = new OverallConstraintViolationDegreeComparator<>();
 
     DoubleProblem problem = new DummyDoubleProblem(2, 3, 0) ;
 

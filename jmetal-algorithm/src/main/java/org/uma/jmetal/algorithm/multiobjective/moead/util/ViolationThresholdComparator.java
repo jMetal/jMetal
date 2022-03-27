@@ -25,8 +25,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
   @Override
   public int compare(S solution1, S solution2) {
     double overall1, overall2;
-    overall1 = ConstraintHandling.setNumberOfViolatedConstraints(solution1) * ConstraintHandling.setOverallConstraintViolationDegree(solution1);
-    overall2 = ConstraintHandling.setNumberOfViolatedConstraints(solution2) * ConstraintHandling.setOverallConstraintViolationDegree(solution2);
+    overall1 = ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1);
+    overall2 = ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2);
 
     if ((overall1 < 0) && (overall2 < 0)) {
       return Double.compare(overall2, overall1);
@@ -46,8 +46,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
   public boolean needToCompare(S solution1, S solution2) {
     boolean needToCompare;
     double overall1, overall2;
-    overall1 = Math.abs(ConstraintHandling.setNumberOfViolatedConstraints(solution1) * ConstraintHandling.setOverallConstraintViolationDegree(solution1));
-    overall2 = Math.abs(ConstraintHandling.setNumberOfViolatedConstraints(solution2) * ConstraintHandling.setOverallConstraintViolationDegree(solution2));
+    overall1 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution1) * ConstraintHandling.overallConstraintViolationDegree(solution1));
+    overall2 = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution2) * ConstraintHandling.overallConstraintViolationDegree(solution2));
 
     needToCompare = (overall1 > this.threshold) || (overall2 > this.threshold);
 
@@ -61,7 +61,7 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
   public double feasibilityRatio(List<S> solutionSet) {
     double aux = 0.0;
     for (S solution : solutionSet) {
-      if (ConstraintHandling.setNumberOfViolatedConstraints(solution) < 0) {
+      if (ConstraintHandling.numberOfViolatedConstraints(solution) < 0) {
         aux = aux + 1.0;
       }
     }
@@ -75,8 +75,8 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
   public double meanOverallViolation(List<S> solutionSet) {
     double aux = 0.0;
     for (S solution : solutionSet) {
-      aux += Math.abs(ConstraintHandling.setNumberOfViolatedConstraints(solution) *
-              ConstraintHandling.setOverallConstraintViolationDegree(solution));
+      aux += Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
+              ConstraintHandling.overallConstraintViolationDegree(solution));
     }
     return aux / (double) solutionSet.size();
   }

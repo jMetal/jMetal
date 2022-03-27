@@ -12,15 +12,15 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 @SuppressWarnings("serial")
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-  private ConstraintViolationComparator<S> constraintViolationComparator;
+  private OverallConstraintViolationDegreeComparator<S> constraintViolationComparator;
 
   /** Constructor */
   public DominanceComparator() {
-    this(new ConstraintViolationComparator<S>());
+    this(new OverallConstraintViolationDegreeComparator<S>());
   }
 
   /** Constructor */
-  public DominanceComparator(ConstraintViolationComparator<S> constraintComparator) {
+  public DominanceComparator(OverallConstraintViolationDegreeComparator<S> constraintComparator) {
     this.constraintViolationComparator = constraintComparator;
   }
 
