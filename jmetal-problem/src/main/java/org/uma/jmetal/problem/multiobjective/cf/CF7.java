@@ -119,7 +119,7 @@ public class CF7 extends AbstractDoubleProblem {
 
     // Step 5. Set objectives
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.objectives().set(i, (1 + t) * f[i]);
+      solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
 
@@ -137,7 +137,7 @@ public class CF7 extends AbstractDoubleProblem {
 
     // Set constraints
     IntStream.range(0, getNumberOfConstraints())
-        .forEach(i -> solution.constraints().set(i, constraint[i]));
+        .forEach(i -> solution.constraints()[i] = constraint[i]);
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }

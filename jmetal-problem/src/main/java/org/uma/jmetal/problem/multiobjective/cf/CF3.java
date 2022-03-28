@@ -1,23 +1,26 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.VectorUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
-
 /**
- * Class representing the constrained function CF3: A-type constraint + r = 1/2 + Convex PF + Ackley
+ * Class representing the constrained function CF3: A-type constraint + r = 1/2 + Convex PF +
+ * Ackley
  *
  * @author Yi Xiang Email: xiangyi@scut.edu.cn or gzhuxiang_yi@163.com
  * @author Code adapted by Antonio J. Nebro
  */
 public class CF3 extends AbstractDoubleProblem {
+
   private final double r = 1.0 / 2.0; // The parameter determines the radius
 
-  /** Create a default CF3 problem (3 variables and 3 objectives) */
+  /**
+   * Create a default CF3 problem (3 variables and 3 objectives)
+   */
   public CF3() {
     this(3, 3);
   }
@@ -25,7 +28,7 @@ public class CF3 extends AbstractDoubleProblem {
   /**
    * Creates a CF3 problem instance
    *
-   * @param numberOfVariables Number of variables
+   * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
    */
   public CF3(Integer numberOfVariables, Integer numberOfObjectives) {
@@ -105,7 +108,7 @@ public class CF3 extends AbstractDoubleProblem {
 
     // Step 5. Set objectives
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.objectives().set(i, (1 + t) * f[i]);
+      solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
 
@@ -117,7 +120,7 @@ public class CF3 extends AbstractDoubleProblem {
 
     // Set constraints
     IntStream.range(0, getNumberOfConstraints())
-        .forEach(i -> solution.constraints().set(i, constraint[i]));
+        .forEach(i -> solution.constraints()[i] = constraint[i]);
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }

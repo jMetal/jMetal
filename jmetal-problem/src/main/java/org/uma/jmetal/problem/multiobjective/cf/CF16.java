@@ -1,13 +1,12 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.VectorUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Class representing the constrained function CF16: D-type constraint + r=3/4 + convex PF + Sphere
@@ -16,12 +15,15 @@ import java.util.stream.IntStream;
  * @author Code adapted by Antonio J. Nebro
  */
 public class CF16 extends AbstractDoubleProblem {
+
   private int k; // The parameter determines the number of constraints
   private double alpha = 1.0 / 4.0;
   private double belta = 3.0 / 4.0;
   private double r = 3.0 / 4.0; // The parameter determines the radius
 
-  /** Create a default CF16 problem (3 variables and 3 objectives) */
+  /**
+   * Create a default CF16 problem (3 variables and 3 objectives)
+   */
   public CF16() {
     this(3, 3);
   }
@@ -29,7 +31,7 @@ public class CF16 extends AbstractDoubleProblem {
   /**
    * Creates a CF16 problem instance
    *
-   * @param numberOfVariables Number of variables
+   * @param numberOfVariables  Number of variables
    * @param numberOfObjectives Number of objective functions
    */
   public CF16(Integer numberOfVariables, Integer numberOfObjectives) {
@@ -109,7 +111,7 @@ public class CF16 extends AbstractDoubleProblem {
 
     // Step 5. Set objectives
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.objectives().set(i, (1 + t) * f[i]);
+      solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
 
@@ -129,7 +131,7 @@ public class CF16 extends AbstractDoubleProblem {
 
     // Set constraints
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.constraints().set(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
 
     double overallConstraintViolation = 0.0; // Overall Constraint Violation
