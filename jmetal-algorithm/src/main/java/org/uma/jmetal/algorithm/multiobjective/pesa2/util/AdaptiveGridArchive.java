@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AdaptiveGrid;
 import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 
 /**
  * This class implements an archive (solution list) based on an adaptive grid used in PAES
@@ -30,7 +30,7 @@ public class AdaptiveGridArchive<S extends Solution<?>> extends AbstractBoundedA
    */
   public AdaptiveGridArchive(int maxSize, int bisections, int objectives) {
     super(maxSize);
-    dominanceComparator = new DominanceComparator<S>();
+    dominanceComparator = new DominanceWithConstraintsComparator<S>();
     grid = new AdaptiveGrid<S>(bisections, objectives);
   }
 

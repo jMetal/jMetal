@@ -3,26 +3,16 @@ package org.uma.jmetal.util.comparator;
 import java.io.Serializable;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
- * This class implements a solution comparator taking into account the violation constraints
+ * This class implements a solution comparator for dominance checking
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-  private OverallConstraintViolationDegreeComparator<S> constraintViolationComparator;
-
-  /** Constructor */
-  public DominanceComparator() {
-    this(new OverallConstraintViolationDegreeComparator<S>());
-  }
-
-  /** Constructor */
-  public DominanceComparator(OverallConstraintViolationDegreeComparator<S> constraintComparator) {
-    this.constraintViolationComparator = constraintComparator;
-  }
 
   /**
    * Compares two solutions.
@@ -43,32 +33,6 @@ public class DominanceComparator<S extends Solution<?>> implements Comparator<S>
             + " objectives and solution2 has "
             + solution2.objectives().length);
 
-    int result;
-    result = constraintViolationComparator.compare(solution1, solution2);
-    if (result == 0) {
-      result = dominanceTest(solution1, solution2);
-    }
-
-    return result;
-  }
-
-  private int dominanceTest(S solution1, S solution2) {
-    int bestIsOne = 0;
-    int bestIsTwo = 0;
-    int result;
-    for (int i = 0; i < solution1.objectives().length; i++) {
-      double value1 = solution1.objectives()[i];
-      double value2 = solution2.objectives()[i];
-      if (value1 != value2) {
-        if (value1 < value2) {
-          bestIsOne = 1;
-        }
-        if (value2 < value1) {
-          bestIsTwo = 1;
-        }
-      }
-    }
-    result = Integer.compare(bestIsTwo, bestIsOne);
-    return result;
+    return VectorUtils.dominanceTest(solution1.objectives(), solution2.objectives()) ;
   }
 }

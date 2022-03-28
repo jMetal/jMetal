@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -68,7 +68,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
     this.crossoverOperator = crossoverOperator;
     this.mutationOperator = mutationOperator;
     this.selectionOperator = selectionOperator;
-    this.dominanceComparator = new DominanceComparator<S>();
+    this.dominanceComparator = new DominanceWithConstraintsComparator<S>();
 
     this.evaluator = evaluator;
   }

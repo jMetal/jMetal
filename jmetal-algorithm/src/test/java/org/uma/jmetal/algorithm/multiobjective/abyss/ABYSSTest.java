@@ -19,7 +19,7 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** Created by ajnebro on 11/6/15. */
@@ -34,7 +34,7 @@ public class ABYSSTest {
     problem = new MockProblem();
     archive = new CrowdingDistanceArchive<>(10);
     mutation = new PolynomialMutation(1.0, 20.0);
-    localSearch = new BasicLocalSearch<>(2, mutation, new DominanceComparator<>(), problem);
+    localSearch = new BasicLocalSearch<>(2, mutation, new DominanceWithConstraintsComparator<>(), problem);
   }
 
   @Test

@@ -11,7 +11,7 @@ import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -45,7 +45,7 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
     this.crossoverOperator = crossover;
     this.selectionOperator = selection;
 
-    dominanceComparator = new DominanceComparator<>();
+    dominanceComparator = new DominanceWithConstraintsComparator<>();
     ranking = new FastNonDominatedSortRanking<>();
     crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 

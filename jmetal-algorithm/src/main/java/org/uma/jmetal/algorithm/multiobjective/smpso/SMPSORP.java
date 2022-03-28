@@ -23,7 +23,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -121,7 +121,7 @@ public class SMPSORP
     randomGenerator = JMetalRandom.getInstance();
     this.evaluator = evaluator;
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    dominanceComparator = new DominanceWithConstraintsComparator<DoubleSolution>();
     localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 

@@ -19,7 +19,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.SpatialSpreadDeviationComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -61,7 +61,7 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
         null,
         null,
         selectionOperator,
-        new DominanceComparator<>(),
+        new DominanceWithConstraintsComparator<>(),
         evaluator);
     archiveSSD = new SpatialSpreadDeviationArchive<S>(archiveSize);
     OpProb = new double[operators];

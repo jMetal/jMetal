@@ -16,12 +16,12 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 public class GDominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
 
   private List<Double> referencePoint ;
-  private DominanceComparator<S> dominanceComparator ;
+  private DominanceWithConstraintsComparator<S> dominanceComparator ;
 
   /** Constructor */
   public GDominanceComparator(List<Double> referencePoint) {
     this.referencePoint = referencePoint ;
-    dominanceComparator = new DominanceComparator<>() ;
+    dominanceComparator = new DominanceWithConstraintsComparator<>() ;
   }
 
   /**

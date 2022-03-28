@@ -18,7 +18,7 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
-    var comparator = new DominanceComparator<>();
+    var comparator = new DominanceWithConstraintsComparator<>();
 
     DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
 
@@ -27,7 +27,7 @@ public class DominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    var comparator = new DominanceComparator<>();
+    var comparator = new DominanceWithConstraintsComparator<>();
 
     DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
 
@@ -39,7 +39,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution1 = new DummyDoubleProblem(2, 4, 0).createSolution() ;
     DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
 
-    var comparator = new DominanceComparator<>();
+    var comparator = new DominanceWithConstraintsComparator<>();
 
     assertThrows(InvalidConditionException.class, () -> comparator.compare(solution1, solution2));
   }
@@ -56,7 +56,7 @@ public class DominanceComparatorTest {
     solution1.constraints()[0] = 0.0 ;
     solution2.constraints()[0] = -1.0 ;
 
-    var comparator = new DominanceComparator<>(violationComparator);
+    var comparator = new DominanceWithConstraintsComparator<>(violationComparator);
     int obtainedValue = comparator.compare(solution1, solution2);
 
     assertEquals(-1, obtainedValue);
@@ -71,7 +71,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 4.0 ;
 
-    var comparator = new DominanceComparator<>();
+    var comparator = new DominanceWithConstraintsComparator<>();
 
     assertEquals(0, comparator.compare(solution1, solution2));
   }
@@ -85,7 +85,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
+    var comparator = new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(1, comparator.compare(solution1, solution2));
   }
@@ -99,7 +99,7 @@ public class DominanceComparatorTest {
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
+    var comparator = new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(-1, comparator.compare(solution1, solution2));
   }
@@ -121,7 +121,7 @@ public class DominanceComparatorTest {
     solution2.objectives()[1] = 6.0;
     solution2.objectives()[2] = 16.0;
 
-    var comparator = new DominanceComparator<>();
+    var comparator = new DominanceWithConstraintsComparator<>();
 
     assertEquals(-1, comparator.compare(solution1, solution2));
   }
@@ -143,7 +143,7 @@ public class DominanceComparatorTest {
     solution2.objectives()[1] = 5.0;
     solution2.objectives()[2] = 10.0;
 
-    var comparator = new DominanceComparator<>(new OverallConstraintViolationDegreeComparator<>());
+    var comparator = new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>());
 
     assertEquals(-1, comparator.compare(solution1, solution2));
   }
@@ -167,7 +167,7 @@ public class DominanceComparatorTest {
     solution2.objectives()[1] = 5.0 ;
     solution2.objectives()[1] = 9.0 ;
 
-    var comparator = new DominanceComparator<>(violationComparator);
+    var comparator = new DominanceWithConstraintsComparator<>(violationComparator);
 
     assertEquals(1, comparator.compare(solution1, solution2));
   }
@@ -191,7 +191,7 @@ public class DominanceComparatorTest {
     solution2.objectives()[1] = 5.0 ;
     solution2.objectives()[1] = 8.0 ;
 
-    var comparator = new DominanceComparator<>(violationComparator);
+    var comparator = new DominanceWithConstraintsComparator<>(violationComparator);
 
     assertEquals(1, comparator.compare(solution1, solution2));
   }

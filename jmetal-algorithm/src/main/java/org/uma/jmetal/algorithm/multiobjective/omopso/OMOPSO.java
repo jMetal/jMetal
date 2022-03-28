@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -66,7 +66,7 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
 
     crowdingDistance = new CrowdingDistanceDensityEstimator<>();
 
-    dominanceComparator = new DominanceComparator<>();
+    dominanceComparator = new DominanceWithConstraintsComparator<>();
     crowdingDistanceComparator = crowdingDistance.getComparator();
 
     speed = new double[swarmSize][problem.getNumberOfVariables()];

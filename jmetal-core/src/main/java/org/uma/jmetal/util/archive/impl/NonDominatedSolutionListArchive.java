@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.EqualSolutionsComparator;
 
 /**
@@ -25,13 +25,13 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
    * Constructor
    */
   public NonDominatedSolutionListArchive() {
-    this(new DominanceComparator<S>());
+    this(new DominanceWithConstraintsComparator<S>());
   }
 
   /**
    * Constructor
    */
-  public NonDominatedSolutionListArchive(DominanceComparator<S> comparator) {
+  public NonDominatedSolutionListArchive(DominanceWithConstraintsComparator<S> comparator) {
     dominanceComparator = comparator;
 
     solutionList = new ArrayList<>();

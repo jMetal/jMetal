@@ -10,7 +10,8 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class EpsilonDominanceComparator<S extends Solution<?>> extends DominanceComparator<S> {
+public class EpsilonDominanceComparator<S extends Solution<?>> extends
+    DominanceWithConstraintsComparator<S> {
   private OverallConstraintViolationDegreeComparator<S> constraintViolationComparator;
   private double epsilon = 0.0 ;
 

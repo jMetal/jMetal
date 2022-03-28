@@ -11,7 +11,7 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 
 /**
@@ -41,7 +41,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     this.archive = archive;
     this.mutationOperator = mutationOperator;
 
-    comparator = new DominanceComparator<S>();
+    comparator = new DominanceWithConstraintsComparator<S>();
   }
 
   public PAES(

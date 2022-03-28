@@ -9,7 +9,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
 
 /**
@@ -181,7 +181,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         B = new ArrayList<>(1);
         B.add(solution);
 
-        int flag = (new DominanceComparator<S>()).compare(A.get(0), B.get(0));
+        int flag = (new DominanceWithConstraintsComparator<S>()).compare(A.get(0), B.get(0));
 
         double value;
         if (flag == -1) {
