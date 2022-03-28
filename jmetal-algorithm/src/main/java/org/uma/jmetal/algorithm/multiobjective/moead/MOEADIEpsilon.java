@@ -72,7 +72,7 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
 
     double[] constraints = new double[populationSize];
     for (int i = 0; i < populationSize; i++) {
-      constraints[i] = ConstraintHandling.setOverallConstraintViolationDegree(population.get(i));
+      constraints[i] = ConstraintHandling.overallConstraintViolationDegree(population.get(i));
       }
     Arrays.sort(constraints);
     double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
@@ -120,8 +120,8 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
         evaluations++;
 
         // Update PhiMax
-        if (phiMax < Math.abs((double) ConstraintHandling.setOverallConstraintViolationDegree(child))) {
-          phiMax = ConstraintHandling.setOverallConstraintViolationDegree(child);
+        if (phiMax < Math.abs((double) ConstraintHandling.overallConstraintViolationDegree(child))) {
+          phiMax = ConstraintHandling.overallConstraintViolationDegree(child);
         }
 
         idealPoint.update(child.objectives());
@@ -173,9 +173,9 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
       f2 = fitnessFunction(individual, lambda[k]);
 
       double cons1 =
-          Math.abs(ConstraintHandling.setOverallConstraintViolationDegree(population.get(k))) ;
+          Math.abs(ConstraintHandling.overallConstraintViolationDegree(population.get(k))) ;
       double cons2 =
-          Math.abs(ConstraintHandling.setOverallConstraintViolationDegree(individual));
+          Math.abs(ConstraintHandling.overallConstraintViolationDegree(individual));
 
       if (cons1 < epsilonK && cons2 <= epsilonK) {
         if (f2 < f1) {

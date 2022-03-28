@@ -15,7 +15,7 @@ public class ConstraintHandling {
    * The computing of the constraints can be precomputed when evaluating a solution. In that case
    * the components of this enum type can be used as a key of a solution attribute indicating such
    * situation (see methods {@link #overallConstraintViolationDegree(Solution, double)} and
-   * {@link #numberOfViolatedConstraints(Solution, double) (Solution, double)} )
+   * {@link #numberOfViolatedConstraints(Solution, int)}
    */
   public enum PRECOMPUTED {
     OVERALL_CONSTRAINT_VIOLATION,
