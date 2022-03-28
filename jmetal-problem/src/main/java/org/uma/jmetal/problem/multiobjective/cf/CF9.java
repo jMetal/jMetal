@@ -121,7 +121,7 @@ public class CF9 extends AbstractDoubleProblem {
 
     // Step 5. Set objectives
     for (int i = 0; i < getNumberOfObjectives(); i++) {
-      solution.objectives().set(i, (1 + t) * f[i]);
+      solution.objectives()[i] = (1 + t) * f[i];
     }
     /* ----------------------Evaluate objectives (end)--------------------------*/
 
@@ -137,7 +137,7 @@ public class CF9 extends AbstractDoubleProblem {
 
     // Set constraints
     for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.constraints().set(i, constraint[i]);
+      solution.constraints()[i] = constraint[i];
     }
 
     double overallConstraintViolation = 0.0;
