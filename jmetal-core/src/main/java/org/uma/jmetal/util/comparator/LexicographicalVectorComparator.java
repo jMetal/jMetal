@@ -34,13 +34,8 @@ public class LexicographicalVectorComparator implements Comparator<double[]> {
     int result;
     if ((index >= x.length) || (index >= y.length)) {
       result = 0 ;
-    } else if (x[index] < y[index]) {
-      result = -1;
-    } else if (x[index] > y[index]) {
-      result = 1;
-    } else {
-      result = 0 ;
-    }
+    } else
+      result = Double.compare(x[index], y[index]);
     return result ;
   }
 }
