@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.auto.experiments.DTLZ;
+package org.uma.jmetal.experimental.auto.experiments.ZDT;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,10 +7,8 @@ import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
-import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
-import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
 import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
@@ -27,13 +25,7 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ3_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ4_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ5_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ6_2D;
-import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ7_2D;
+import org.uma.jmetal.problem.multiobjective.zdt.*;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
@@ -49,10 +41,10 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * Automatic configuration of NSGA-II and MOPSO with jMetal and irace.
  *
- * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
-public class autoAlgorithmWithDTLZExperiments {
+public class zdtExperiment {
+
     private static final int INDEPENDENT_RUNS = 25;
 
     public static void main(String[] args) throws IOException {
@@ -61,20 +53,18 @@ public class autoAlgorithmWithDTLZExperiments {
         String experimentBaseDirectory = args[0];
 
         List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-        problemList.add(new ExperimentProblem<>(new DTLZ1_2D()).setReferenceFront("DTLZ1.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ2_2D()).setReferenceFront("DTLZ2.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ3_2D()).setReferenceFront("DTLZ3.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ4_2D()).setReferenceFront("DTLZ4.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ5_2D()).setReferenceFront("DTLZ5.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ6_2D()).setReferenceFront("DTLZ6.2D.csv"));
-        problemList.add(new ExperimentProblem<>(new DTLZ7_2D()).setReferenceFront("DTLZ7.2D.csv"));
+        problemList.add(new ExperimentProblem<>(new ZDT1()).setReferenceFront("ZDT1.csv"));
+        problemList.add(new ExperimentProblem<>(new ZDT2()).setReferenceFront("ZDT2.csv"));
+        problemList.add(new ExperimentProblem<>(new ZDT3()).setReferenceFront("ZDT3.csv"));
+        problemList.add(new ExperimentProblem<>(new ZDT4()).setReferenceFront("ZDT4.csv"));
+        problemList.add(new ExperimentProblem<>(new ZDT6()).setReferenceFront("ZDT6.csv"));
 
 
         List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
                 configureAlgorithmList(problemList);
 
         Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("DTLZAutoAlgorithmExperiments")
+                new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ZDTAutoAlgorithmExperiments")
                         .setAlgorithmList(algorithmList)
                         .setProblemList(problemList)
                         .setReferenceFrontDirectory("resources/referenceFrontsCSV")
@@ -128,7 +118,7 @@ public class autoAlgorithmWithDTLZExperiments {
                         (DoubleProblem) experimentProblem.getProblem(),
                         new CrowdingDistanceArchive<DoubleSolution>(100))
                         .setMutation(new PolynomialMutation(mutationProbability, mutationDistributionIndex))
-                        .setMaxIterations(500)
+                        .setMaxIterations(250)
                         .setSwarmSize(100)
                         .setSolutionListEvaluator(new SequentialSolutionListEvaluator<DoubleSolution>())
                         .build();
@@ -137,79 +127,81 @@ public class autoAlgorithmWithDTLZExperiments {
 
 
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-
-                /* AutoNSGAII */
-                String[] parameters =
-                        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                                + "--maximumNumberOfEvaluations 50000 "
-                                + "--algorithmResult externalArchive "
-                                + "--populationSizeWithArchive 28 "
-                                + "--populationSize 100 "
-                                + "--offspringPopulationSize 14 "
-                                + "--createInitialSolutions scatterSearch "
-                                + "--variation crossoverAndMutationVariation "
-                                + "--selection tournament "
-                                + "--selectionTournamentSize 6 "
-                                + "--rankingForSelection dominanceRanking "
-                                + "--densityEstimatorForSelection crowdingDistance "
-                                + "--crossover BLX_ALPHA "
-                                + "--crossoverProbability 0.9862  "
-                                + "--crossoverRepairStrategy bounds "
-                                + "--blxAlphaCrossoverAlphaValue 0.6383 "
-                                + "--sbxDistributionIndex 20.0 "
-                                + "--mutation uniform "
-                                + "--mutationProbability 0.0140 "
-                                + "--mutationRepairStrategy bounds "
-                                + "--uniformMutationPerturbation 0.8200 "
-                                + "--polynomialMutationDistributionIndex 20.0 "
-                                + "--externalArchive unboundedExternalArchive ")
-                                .split("\\s+");
-
-                AutoNSGAII autoNSGAII = new AutoNSGAII();
-                autoNSGAII.parseAndCheckParameters(parameters);
-                EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
-
-                algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
-
-
-
-                /* AutoMOPSO */
-                String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                /* AutoMOPSO With config.txt */
+                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
-                        + "--swarmSize 109 --archiveSize 100 "
+                        + "--swarmSize 37 --archiveSize 100 "
                         + "--externalArchive crowdingDistanceArchive "
-                        + "--swarmInitialization random "
+                        + "--swarmInitialization scatterSearch "
                         + "--velocityInitialization defaultVelocityInitialization "
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
-                        + "--mutation uniform "
-                        + "--mutationProbability 0.4716 "
-                        + "--mutationRepairStrategy round "
-                        + "--uniformMutationPerturbation 0.3557 "
-                        + "--frequencyOfApplicationOfMutationOperator 6 "
-                        + "--inertiaWeightComputingStrategy constantValue "
-                        + "--weight 0.9698 "
-                        + "--velocityUpdate constrainedVelocityUpdate "
-                        + "--c1Min 1.9028 "
-                        + "--c1Max 2.0387 "
-                        + "--c2Min 1.9519 "
-                        + "--c2Max 2.1047 "
+                        + "--mutation nonUniform "
+                        + "--mutationProbability 0.2903 "
+                        + "--mutationRepairStrategy bounds "
+                        + "--nonUniformMutationPerturbation 0.658 "
+                        + "--frequencyOfApplicationOfMutationOperator 8 "
+                        + "--inertiaWeightComputingStrategy linearDecreasingValue "
+                        + "--weightMin 0.2602 --weightMax 0.9899 "
+                        + "--velocityUpdate defaultVelocityUpdate "
+                        + "--c1Min 1.9551 "
+                        + "--c1Max 2.2621 "
+                        + "--c2Min 1.758 "
+                        + "--c2Max 2.5223 "
                         + "--localBestInitialization defaultLocalBestInitialization "
                         + "--globalBestInitialization defaultGlobalBestInitialization "
                         + "--globalBestSelection binaryTournament "
                         + "--globalBestUpdate defaultGlobalBestUpdate "
                         + "--localBestUpdate defaultLocalBestUpdate "
                         + "--positionUpdate defaultPositionUpdate "
-                        + "--velocityChangeWhenLowerLimitIsReached -0.8814 "
-                        + "--velocityChangeWhenUpperLimitIsReached -0.3476"
+                        + "--velocityChangeWhenLowerLimitIsReached  0.951 "
+                        + "--velocityChangeWhenUpperLimitIsReached 0.097"
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSO = new AutoMOPSO();
-                AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
-                ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
+                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+                AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
+                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
 
-                algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSOWithConfig", experimentProblem, run));
+
+
+
+                /* AutoMOPSO Without config.txt */
+                String[] parametersAutoMOPSOWithoutConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--swarmSize 87 --archiveSize 100 "
+                        + "--externalArchive crowdingDistanceArchive "
+                        + "--swarmInitialization random "
+                        + "--velocityInitialization defaultVelocityInitialization "
+                        + "--perturbation frequencySelectionMutationBasedPerturbation "
+                        + "--mutation nonUniform "
+                        + "--mutationProbability 0.0038 "
+                        + "--mutationRepairStrategy bounds "
+                        + "--nonUniformMutationPerturbation 0.7621 "
+                        + "--frequencyOfApplicationOfMutationOperator 9 "
+                        + "--inertiaWeightComputingStrategy linearDecreasingValue "
+                        + "--weightMin 0.199 --weightMax 0.9057 "
+                        + "--velocityUpdate defaultVelocityUpdate "
+                        + "--c1Min 1.6028 "
+                        + "--c1Max 2.7518 "
+                        + "--c2Min 1.0399 "
+                        + "--c2Max 2.8289 "
+                        + "--localBestInitialization defaultLocalBestInitialization "
+                        + "--globalBestInitialization defaultGlobalBestInitialization "
+                        + "--globalBestSelection binaryTournament "
+                        + "--globalBestUpdate defaultGlobalBestUpdate "
+                        + "--localBestUpdate defaultLocalBestUpdate "
+                        + "--positionUpdate defaultPositionUpdate "
+                        + "--velocityChangeWhenLowerLimitIsReached 0.9988 "
+                        + "--velocityChangeWhenUpperLimitIsReached 0.3898"
+                )
+                        .split("\\s+");
+                AutoMOPSO AutoMOPSOWithoutConfig = new AutoMOPSO();
+                AutoMOPSOWithoutConfig.parseAndCheckParameters(parametersAutoMOPSOWithoutConfig);
+                ParticleSwarmOptimizationAlgorithm automopsoWithoutConfig = AutoMOPSOWithoutConfig.create();
+
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithoutConfig, "AutoMOPSOWithoutConfig", experimentProblem, run));
 
                 /* OMOPSO */
                 String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()

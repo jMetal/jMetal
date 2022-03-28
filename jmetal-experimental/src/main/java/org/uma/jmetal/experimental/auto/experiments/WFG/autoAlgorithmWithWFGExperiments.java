@@ -141,45 +141,47 @@ public class autoAlgorithmWithWFGExperiments {
 
 
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+                /* AutoMOPSO With config.txt */
+                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--swarmSize 77 --archiveSize 100 "
+                        + "--externalArchive crowdingDistanceArchive "
+                        + "--swarmInitialization scatterSearch "
+                        + "--velocityInitialization defaultVelocityInitialization "
+                        + "--perturbation frequencySelectionMutationBasedPerturbation "
+                        + "--mutation uniform "
+                        + "--mutationProbability 0.0042 "
+                        + "--mutationRepairStrategy random "
+                        + "--uniformMutationPerturbation 0.798 "
+                        + "--frequencyOfApplicationOfMutationOperator 10 "
+                        + "--inertiaWeightComputingStrategy linearIncreasingValue "
+                        + "--weightMin 0.1889 --weightMax 0.8923 "
+                        + "--velocityUpdate defaultVelocityUpdate "
+                        + "--c1Min 1.113 "
+                        + "--c1Max 2.5039 "
+                        + "--c2Min 1.0019 "
+                        + "--c2Max 2.0541 "
+                        + "--localBestInitialization defaultLocalBestInitialization "
+                        + "--globalBestInitialization defaultGlobalBestInitialization "
+                        + "--globalBestSelection binaryTournament "
+                        + "--globalBestUpdate defaultGlobalBestUpdate "
+                        + "--localBestUpdate defaultLocalBestUpdate "
+                        + "--positionUpdate defaultPositionUpdate "
+                        + "--velocityChangeWhenLowerLimitIsReached -0.9033 "
+                        + "--velocityChangeWhenUpperLimitIsReached -0.7556"
+                )
+                        .split("\\s+");
+                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+                AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
+                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
 
-                /* AutoNSGAII */
-                String[] parameters =
-                        ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                                + "--maximumNumberOfEvaluations 25000 "
-                                + "--algorithmResult externalArchive "
-                                + "--populationSizeWithArchive 75 "
-                                + "--populationSize 100 "
-                                + "--offspringPopulationSize 65 "
-                                + "--createInitialSolutions latinHypercubeSampling "
-                                + "--variation crossoverAndMutationVariation "
-                                + "--selection tournament "
-                                + "--selectionTournamentSize 7 "
-                                + "--rankingForSelection dominanceRanking "
-                                + "--densityEstimatorForSelection crowdingDistance "
-                                + "--crossover BLX_ALPHA "
-                                + "--crossoverProbability 0.9102 "
-                                + "--crossoverRepairStrategy bounds "
-                                + "--blxAlphaCrossoverAlphaValue 0.5804 "
-                                + "--sbxDistributionIndex 20.0 "
-                                + "--mutation uniform "
-                                + "--mutationProbability 0.0110 "
-                                + "--mutationRepairStrategy round "
-                                + "--uniformMutationPerturbation 0.8564 "
-                                + "--polynomialMutationDistributionIndex 20.0 "
-                                + "--externalArchive unboundedExternalArchive ")
-                                .split("\\s+");
-
-                AutoNSGAII autoNSGAII = new AutoNSGAII();
-                autoNSGAII.parseAndCheckParameters(parameters);
-                EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
-
-                algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSOWithConfig", experimentProblem, run));
 
 
 
-                /* AutoMOPSO */
-                String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                /* AutoMOPSO Without config.txt */
+                String[] parametersAutoMOPSOWithoutConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
                         + "--swarmSize 134 --archiveSize 100 "
@@ -209,11 +211,11 @@ public class autoAlgorithmWithWFGExperiments {
                         + "--velocityChangeWhenUpperLimitIsReached 0.5508"
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSO = new AutoMOPSO();
-                AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
-                ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
+                AutoMOPSO AutoMOPSOWithoutConfig = new AutoMOPSO();
+                AutoMOPSOWithoutConfig.parseAndCheckParameters(parametersAutoMOPSOWithoutConfig);
+                ParticleSwarmOptimizationAlgorithm automopsoWithoutConfig = AutoMOPSOWithoutConfig.create();
 
-                algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithoutConfig, "AutoMOPSOWithoutConfig", experimentProblem, run));
 
                 /* OMOPSO */
                 String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
