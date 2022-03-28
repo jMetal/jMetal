@@ -12,7 +12,7 @@ import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DefaultDominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
 /**
@@ -39,7 +39,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
       CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
       SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
     this(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize,
-        crossoverOperator, mutationOperator, selectionOperator, new DominanceComparator<S>(),
+        crossoverOperator, mutationOperator, selectionOperator, new DefaultDominanceComparator<S>(),
         evaluator);
   }
 

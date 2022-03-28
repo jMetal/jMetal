@@ -2,7 +2,7 @@ package org.uma.jmetal.operator.selection.impl;
 
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**
  * Applies a binary tournament selection to return the best solution between two that have been

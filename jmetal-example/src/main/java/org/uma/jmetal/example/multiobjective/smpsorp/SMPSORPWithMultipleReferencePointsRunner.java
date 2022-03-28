@@ -14,7 +14,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DefaultDominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -76,7 +76,7 @@ public class SMPSORPWithMultipleReferencePointsRunner {
             2.5, 1.5,
             0.1, 0.1,
             -1.0, -1.0,
-            new DominanceComparator<>(),
+            new DefaultDominanceComparator<>(),
             new SequentialSolutionListEvaluator<>());
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

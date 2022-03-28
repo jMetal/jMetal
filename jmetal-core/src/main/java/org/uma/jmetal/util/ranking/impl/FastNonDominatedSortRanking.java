@@ -6,9 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
-import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 

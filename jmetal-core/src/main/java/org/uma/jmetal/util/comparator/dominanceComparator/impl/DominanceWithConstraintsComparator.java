@@ -1,18 +1,21 @@
-package org.uma.jmetal.util.comparator;
+package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 
 /**
  * This class implements a solution comparator taking into account the violation constraints
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class DominanceWithConstraintsComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
+public class DominanceWithConstraintsComparator<S extends Solution<?>> implements
+    DominanceComparator<S> {
   private final MultiComparator<S> multiComparator ;
 
   /** Constructor */
@@ -22,7 +25,7 @@ public class DominanceWithConstraintsComparator<S extends Solution<?>> implement
 
   /** Constructor */
   public DominanceWithConstraintsComparator(ConstraintComparator<S> constraintComparator) {
-    multiComparator = new MultiComparator<>(List.of(constraintComparator, new DominanceComparator<>())) ;
+    multiComparator = new MultiComparator<>(List.of(constraintComparator, new DefaultDominanceComparator<>())) ;
   }
 
   /**

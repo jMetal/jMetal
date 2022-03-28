@@ -1,9 +1,10 @@
-package org.uma.jmetal.util.comparator;
+package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
 import java.io.Serializable;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -12,7 +13,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 @SuppressWarnings("serial")
-public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
+public class DefaultDominanceComparator<S extends Solution<?>> implements DominanceComparator<S> {
   /**
    * Compares two solutions.
    *

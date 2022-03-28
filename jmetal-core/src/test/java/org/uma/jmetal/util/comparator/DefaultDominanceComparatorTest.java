@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.dominanceComparator.DefaultDominanceComparator;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -15,13 +16,13 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 1.0
  */
-public class DominanceComparatorTest {
+public class DefaultDominanceComparatorTest {
 
-  private DominanceComparator<DoubleSolution> dominanceComparator;
+  private DefaultDominanceComparator<DoubleSolution> dominanceComparator;
 
   @BeforeEach
   public void setup() {
-    dominanceComparator = new DominanceComparator<>();
+    dominanceComparator = new DefaultDominanceComparator<>();
   }
 
   @Test
