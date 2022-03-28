@@ -13,6 +13,9 @@ import java.util.stream.IntStream;
  * Class representing the constrained function CF10: C-type constraint + r = 1/4 + Convex PF +
  * Griewank
  *
+ * Problem defined in Constrained "Multiobjective Optimization: Test Problem Construction and
+ * Performance Evaluations", IEEE TEC. Feb. 2021. DOI: https://doi.org/10.1109/TEVC.2020.3011829
+ *
  * @author Yi Xiang Email: xiangyi@scut.edu.cn or gzhuxiang_yi@163.com
  * @author Code adapted by Antonio J. Nebro
  */
