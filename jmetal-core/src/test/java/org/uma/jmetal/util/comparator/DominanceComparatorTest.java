@@ -1,7 +1,6 @@
 package org.uma.jmetal.util.comparator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,76 +10,77 @@ import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 1.0
  */
 public class DominanceComparatorTest {
-  private DominanceComparator<DoubleSolution> dominanceComparator ;
 
- @BeforeEach
- public void setup() {
-   dominanceComparator = new DominanceComparator<>() ;
- }
+  private DominanceComparator<DoubleSolution> dominanceComparator;
+
+  @BeforeEach
+  public void setup() {
+    dominanceComparator = new DominanceComparator<>();
+  }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
 
     assertThrows(NullParameterException.class, () -> dominanceComparator.compare(null, solution2));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
 
     assertThrows(NullParameterException.class, () -> dominanceComparator.compare(solution2, null));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSolutionsHaveNotTheSameNumberOfObjectives() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 4, 0).createSolution() ;
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new DummyDoubleProblem(2, 4, 0).createSolution();
+    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
 
-    assertThrows(InvalidConditionException.class, () -> dominanceComparator.compare(solution1, solution2));
+    assertThrows(InvalidConditionException.class,
+        () -> dominanceComparator.compare(solution1, solution2));
   }
 
   @Test
   public void shouldCompareReturnZeroIfTheTwoSolutionsHaveOneObjectiveWithTheSameValue() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
-    solution1.objectives()[0] = 4.0 ;
+    solution1.objectives()[0] = 4.0;
     DoubleSolution solution2 = problem.createSolution();
-    solution2.objectives()[0] = 4.0 ;
+    solution2.objectives()[0] = 4.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(0) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(0);
   }
 
   @Test
   public void shouldCompareReturnOneIfTheTwoSolutionsHasOneObjectiveAndTheSecondOneIsLower() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
-    solution1.objectives()[0] = 4.0 ;
+    solution1.objectives()[0] = 4.0;
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1);
   }
 
   @Test
   public void shouldCompareReturnMinusOneIfTheTwoSolutionsHasOneObjectiveAndTheFirstOneIsLower() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
-    solution1.objectives()[0] = -1.0 ;
+    solution1.objectives()[0] = -1.0;
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1);
   }
 
   /**
@@ -88,18 +88,18 @@ public class DominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseA() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
-    solution1.objectives()[0] = -1.0 ;
-    solution1.objectives()[1] = 5.0 ;
-    solution1.objectives()[2] = 9.0 ;
+    solution1.objectives()[0] = -1.0;
+    solution1.objectives()[1] = 5.0;
+    solution1.objectives()[2] = 9.0;
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = 2.0;
     solution2.objectives()[1] = 6.0;
     solution2.objectives()[2] = 16.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1);
   }
 
   /**
@@ -108,18 +108,18 @@ public class DominanceComparatorTest {
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseB() {
     @SuppressWarnings("unchecked")
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 1) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 1);
 
     DoubleSolution solution1 = problem.createSolution();
-    solution1.objectives()[0] = -1.0 ;
-    solution1.objectives()[1] = 5.0 ;
-    solution1.objectives()[2] = 9.0 ;
+    solution1.objectives()[0] = -1.0;
+    solution1.objectives()[1] = 5.0;
+    solution1.objectives()[2] = 9.0;
     DoubleSolution solution2 = problem.createSolution();
     solution2.objectives()[0] = -1.0;
     solution2.objectives()[1] = 5.0;
     solution2.objectives()[2] = 10.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(-1);
   }
 
   /**
@@ -127,19 +127,19 @@ public class DominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
-    DoubleSolution solution1 = problem.createSolution() ;
-    solution1.objectives()[0] = -1.0 ;
-    solution1.objectives()[1] = 5.0 ;
-    solution1.objectives()[1] = 9.0 ;
+    DoubleSolution solution1 = problem.createSolution();
+    solution1.objectives()[0] = -1.0;
+    solution1.objectives()[1] = 5.0;
+    solution1.objectives()[1] = 9.0;
 
-    DoubleSolution solution2 = problem.createSolution() ;
-    solution2.objectives()[0] = -2.0 ;
-    solution2.objectives()[1] = 5.0 ;
-    solution2.objectives()[1] = 9.0 ;
+    DoubleSolution solution2 = problem.createSolution();
+    solution2.objectives()[0] = -2.0;
+    solution2.objectives()[1] = 5.0;
+    solution2.objectives()[1] = 9.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1);
   }
 
   /**
@@ -147,18 +147,18 @@ public class DominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseD() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0) ;
+    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
 
-    DoubleSolution solution1 = problem.createSolution() ;
-    solution1.objectives()[0] = -1.0 ;
-    solution1.objectives()[1] = 5.0 ;
-    solution1.objectives()[1] = 9.0 ;
+    DoubleSolution solution1 = problem.createSolution();
+    solution1.objectives()[0] = -1.0;
+    solution1.objectives()[1] = 5.0;
+    solution1.objectives()[1] = 9.0;
 
-    DoubleSolution solution2 = problem.createSolution() ;
-    solution2.objectives()[0] = -1.0 ;
-    solution2.objectives()[1] = 5.0 ;
-    solution2.objectives()[1] = 8.0 ;
+    DoubleSolution solution2 = problem.createSolution();
+    solution2.objectives()[0] = -1.0;
+    solution2.objectives()[1] = 5.0;
+    solution2.objectives()[1] = 8.0;
 
-    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1) ;
+    assertThat(dominanceComparator.compare(solution1, solution2)).isEqualTo(1);
   }
 }
