@@ -157,17 +157,8 @@ public class CF9 extends AbstractDoubleProblem {
       }
     }
 
-    solution
-        .attributes()
-        .put(
-            ConstraintHandling.PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION,
-            overallConstraintViolation);
-    solution
-        .attributes()
-        .put(
-            ConstraintHandling.PRECOMPUTED.NUMBER_OF_VIOLATED_CONSTRAINTS,
-            numberOfViolatedConstraints);
-
+    ConstraintHandling.overallConstraintViolationDegree(solution, overallConstraintViolation);
+    ConstraintHandling.numberOfViolatedConstraints(solution, numberOfViolatedConstraints) ;
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }
