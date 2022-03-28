@@ -136,7 +136,7 @@ It is assumed that a solution may have an attribute whose key value is `OVERALL_
     return overallConstraintViolation;
   }
 
-Given two, solutions, the `OverallConstraintViolationComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/OverallConstraintViolationComparator.java>`_ and `NumberOfViolatedConstraintsComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/NumberOfViolatedConstraintsComparator.java>`_ classes can be used to compare then according the constraints. The implementation of the former class is included next:
+Given two, solutions, the `OverallConstraintViolationComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/OverallConstraintViolationComparator.java>`_ and `NumberOfViolatedConstraintsComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/NumberOfViolatedConstraintsComparator.java>`_ classes can be used to compare then according the constraints. The implementation of the `OverallConstraintViolationComparator <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/util/comparator/impl/OverallConstraintViolationComparator.java>`_ class is included next:
 
 .. code-block:: java
 

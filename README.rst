@@ -47,6 +47,10 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [3/28/2022] The CF benchmark of constrained multi-objective problems, defined in `Constrained Multiobjective Optimization: Test Problem Construction and Performance Evaluations <https://doi.org/10.1109/TEVC.2020.3011829>`_, has been included. 
+
+* [3/28/2022] The constraint handling code has been refactorized and the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated accordingly.
+
 * [1/20/2022] The autoconfiguration of NSGA-II with irace has been revised, including fixing a bug and updating the documentation.
 
 * [9/6/2021] Release 5.11
