@@ -2,6 +2,7 @@ package org.uma.jmetal.util.comparator;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -13,7 +14,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 @SuppressWarnings("serial")
 public class DominanceWithConstraintsComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-  private OverallConstraintViolationDegreeComparator<S> constraintViolationComparator;
+  private MultiComparator<S> multiComparator ;
 
   /** Constructor */
   public DominanceWithConstraintsComparator() {
@@ -21,8 +22,8 @@ public class DominanceWithConstraintsComparator<S extends Solution<?>> implement
   }
 
   /** Constructor */
-  public DominanceWithConstraintsComparator(OverallConstraintViolationDegreeComparator<S> constraintComparator) {
-    this.constraintViolationComparator = constraintComparator;
+  public DominanceWithConstraintsComparator(Comparator<S> constraintComparator) {
+    multiComparator = new MultiComparator<>(List.of(new DominanceComparator<>(), constraintComparator)) ;
   }
 
   /**
@@ -35,21 +36,6 @@ public class DominanceWithConstraintsComparator<S extends Solution<?>> implement
    */
   @Override
   public int compare(S solution1, S solution2) {
-    Check.notNull(solution1);
-    Check.notNull(solution2);
-    Check.that(
-        solution1.objectives().length == solution2.objectives().length,
-        "Cannot compare because solution1 has "
-            + solution1.objectives().length
-            + " objectives and solution2 has "
-            + solution2.objectives().length);
-
-    int result;
-    result = constraintViolationComparator.compare(solution1, solution2);
-    if (result == 0) {
-      result = VectorUtils.dominanceTest(solution1.objectives(), solution2.objectives());
-    }
-
-    return result;
+    return multiComparator.compare(solution1, solution2);
   }
 }
