@@ -16,6 +16,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
+import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.OverallConstraintViolationDegreeComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -79,6 +82,7 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
         2.5, 1.5,
         0.1, 0.1,
         -1.0, -1.0,
+        new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()),
         new SequentialSolutionListEvaluator<>());
 
     /* Measure management */

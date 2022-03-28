@@ -17,6 +17,7 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.archivewithreferencepoint.impl.CrowdingDistanceArchiveWithReferencePoint;
 import org.uma.jmetal.util.chartcontainer.ChartContainerWithReferencePoints;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -89,6 +90,7 @@ public class SMPSORPWithMultipleReferencePointsAndChartsRunner {
             2.5, 1.5,
             0.1, 0.1,
             -1.0, -1.0,
+            new DominanceComparator<>(),
             new SequentialSolutionListEvaluator<>() );
 
     /* Measure management */

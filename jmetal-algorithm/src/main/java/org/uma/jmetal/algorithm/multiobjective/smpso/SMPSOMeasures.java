@@ -1,10 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -20,11 +22,12 @@ import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
  */
 @SuppressWarnings("serial")
 public class SMPSOMeasures extends SMPSO implements Measurable {
-  protected CountingMeasure iterations ;
-  protected DurationMeasure durationMeasure ;
-  protected SimpleMeasureManager measureManager ;
 
-  protected BasicMeasure<List<DoubleSolution>> solutionListMeasure ;
+  protected CountingMeasure iterations;
+  protected DurationMeasure durationMeasure;
+  protected SimpleMeasureManager measureManager;
+
+  protected BasicMeasure<List<DoubleSolution>> solutionListMeasure;
 
   /**
    * Constructor
@@ -48,10 +51,17 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
    * @param changeVelocity2
    * @param evaluator
    */
-  public SMPSOMeasures(DoubleProblem problem, int swarmSize, BoundedArchive<DoubleSolution> leaders, MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min, double r1Max, double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max, double weightMin, double weightMax, double changeVelocity1, double changeVelocity2, SolutionListEvaluator<DoubleSolution> evaluator) {
-    super(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max, r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2, evaluator);
+  public SMPSOMeasures(DoubleProblem problem, int swarmSize, BoundedArchive<DoubleSolution> leaders,
+      MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min,
+      double r1Max, double r2Min, double r2Max, double c1Min, double c1Max, double c2Min,
+      double c2Max, double weightMin, double weightMax, double changeVelocity1,
+      double changeVelocity2, Comparator<DoubleSolution> dominanceComparator,
+      SolutionListEvaluator<DoubleSolution> evaluator) {
+    super(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max, r2Min, r2Max,
+        c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1, changeVelocity2,
+        dominanceComparator, evaluator);
 
-    initMeasures() ;
+    initMeasures();
   }
 
   @Override
@@ -62,20 +72,24 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
     durationMeasure.stop();
   }
 
-  @Override protected boolean isStoppingConditionReached() {
+  @Override
+  protected boolean isStoppingConditionReached() {
     return iterations.get() >= getMaxIterations();
   }
 
-  @Override protected void initProgress() {
+  @Override
+  protected void initProgress() {
     iterations.reset(1);
     updateLeadersDensityEstimator();
   }
 
-  @Override protected void updateProgress() {
-    iterations.increment(1); ;
+  @Override
+  protected void updateProgress() {
+    iterations.increment(1);
+    ;
     updateLeadersDensityEstimator();
 
-    solutionListMeasure.push(super.getResult()) ;
+    solutionListMeasure.push(super.getResult());
   }
 
   @Override
@@ -85,11 +99,11 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
 
   /* Measures code */
   private void initMeasures() {
-    durationMeasure = new DurationMeasure() ;
-    iterations = new CountingMeasure(0) ;
-    solutionListMeasure = new BasicMeasure<>() ;
+    durationMeasure = new DurationMeasure();
+    iterations = new CountingMeasure(0);
+    solutionListMeasure = new BasicMeasure<>();
 
-    measureManager = new SimpleMeasureManager() ;
+    measureManager = new SimpleMeasureManager();
     measureManager.setPullMeasure("currentExecutionTime", durationMeasure);
     measureManager.setPullMeasure("currentIteration", iterations);
 
@@ -97,10 +111,13 @@ public class SMPSOMeasures extends SMPSO implements Measurable {
     measureManager.setPushMeasure("currentIteration", iterations);
   }
 
-  @Override public String getName() {
-    return "SMPSOMeasures" ;
+  @Override
+  public String getName() {
+    return "SMPSOMeasures";
   }
-  @Override public String getDescription() {
-    return "SMPSO. Version using measures" ;
+
+  @Override
+  public String getDescription() {
+    return "SMPSO. Version using measures";
   }
 }
