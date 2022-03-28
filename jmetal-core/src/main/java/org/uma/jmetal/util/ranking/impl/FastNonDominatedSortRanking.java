@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 import org.uma.jmetal.util.comparator.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -23,8 +24,6 @@ import org.uma.jmetal.util.ranking.Ranking;
 public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranking<S> {
   private String attributeId = getClass().getName();
   private Comparator<S> dominanceComparator;
-  private static final Comparator<Solution<?>> CONSTRAINT_VIOLATION_COMPARATOR =
-      new OverallConstraintViolationDegreeComparator<Solution<?>>();
 
   private List<ArrayList<S>> rankedSubPopulations;
 
@@ -36,7 +35,7 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
 
   /** Constructor */
   public FastNonDominatedSortRanking() {
-    this(new DominanceWithConstraintsComparator<>());
+    this(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()));
   }
 
   @Override
@@ -70,11 +69,8 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     for (int p = 0; p < (population.size() - 1); p++) {
       // For all q individuals , calculate if p dominates q or vice versa
       for (int q = p + 1; q < population.size(); q++) {
-        flagDominate =
-            CONSTRAINT_VIOLATION_COMPARATOR.compare(solutionList.get(p), solutionList.get(q));
-        if (flagDominate == 0) {
-          flagDominate = dominanceComparator.compare(solutionList.get(p), solutionList.get(q));
-        }
+        flagDominate = dominanceComparator.compare(solutionList.get(p), solutionList.get(q));
+
         if (flagDominate == -1) {
           iDominate.get(p).add(q);
           dominateMe[q]++;
