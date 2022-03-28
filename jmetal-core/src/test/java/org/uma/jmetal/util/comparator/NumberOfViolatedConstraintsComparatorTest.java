@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.NumberOfViolatedConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
