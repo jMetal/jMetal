@@ -13,7 +13,6 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 @SuppressWarnings("serial")
 public class DominanceComparator<S extends Solution<?>> implements Comparator<S>, Serializable {
-
   /**
    * Compares two solutions.
    *

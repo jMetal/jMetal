@@ -20,7 +20,7 @@ public class ObjectiveComparatorTest {
 
   @Test
   public void shouldCompareReturnOneIfTheFirstSolutionIsNull() {
-    comparator = new ObjectiveComparator<Solution<?>>(0) ;
+    comparator = new ObjectiveComparator<>(0) ;
 
     Solution<?> solution2 = mock(Solution.class) ;
 
