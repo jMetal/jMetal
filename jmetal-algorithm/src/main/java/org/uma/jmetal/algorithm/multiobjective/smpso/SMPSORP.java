@@ -23,6 +23,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archivewithreferencepoint.ArchiveWithReferencePoint;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -71,7 +72,7 @@ public class SMPSORP
   private JMetalRandom randomGenerator;
 
   public List<ArchiveWithReferencePoint<DoubleSolution>> leaders;
-  private Comparator<DoubleSolution> dominanceComparator;
+  private DominanceComparator<DoubleSolution> dominanceComparator;
 
   private MutationOperator<DoubleSolution> mutation;
 
@@ -97,7 +98,7 @@ public class SMPSORP
       double r1Max,
       double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
       double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
-      Comparator<DoubleSolution> dominanceComparator,
+      DominanceComparator<DoubleSolution> dominanceComparator,
       SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;

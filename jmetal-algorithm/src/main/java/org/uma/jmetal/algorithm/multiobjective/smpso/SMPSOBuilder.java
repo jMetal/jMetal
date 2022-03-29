@@ -7,7 +7,8 @@ import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -33,7 +34,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   private double weightMin;
   private double changeVelocity1;
   private double changeVelocity2;
-  private Comparator<DoubleSolution> dominanceComparator ;
+  private DominanceComparator<DoubleSolution> dominanceComparator ;
 
   private int swarmSize;
   private int maxIterations;
@@ -241,7 +242,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this ;
   }
 
-  public SMPSOBuilder setDominanceComparator(Comparator<DoubleSolution> dominanceComparator) {
+  public SMPSOBuilder setDominanceComparator(DominanceComparator<DoubleSolution> dominanceComparator) {
     this.dominanceComparator = dominanceComparator ;
 
     return this ;
