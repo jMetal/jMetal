@@ -164,6 +164,42 @@ public class zdtExperiment {
 
                 algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSOWithConfig", experimentProblem, run));
 
+                /* AutoMOPSO With config.txt */
+                String[] parametersAutoMOPSOWithtConfigNHVIGDPlus = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--swarmSize 190 --archiveSize 100 "
+                        + "--externalArchive crowdingDistanceArchive "
+                        + "--swarmInitialization random "
+                        + "--velocityInitialization defaultVelocityInitialization "
+                        + "--perturbation frequencySelectionMutationBasedPerturbation "
+                        + "--mutation nonUniform "
+                        + "--mutationProbability 0.0043 "
+                        + "--mutationRepairStrategy bounds "
+                        + "--nonUniformMutationPerturbation 0.7536 "
+                        + "--frequencyOfApplicationOfMutationOperator 7 "
+                        + "--inertiaWeightComputingStrategy linearIncreasingValue "
+                        + "--weightMin 0.1274 --weightMax 0.7743 "
+                        + "--velocityUpdate defaultVelocityUpdate "
+                        + "--c1Min 1.1394 "
+                        + "--c1Max 2.3893 "
+                        + "--c2Min 1.5824 "
+                        + "--c2Max 2.8309 "
+                        + "--localBestInitialization defaultLocalBestInitialization "
+                        + "--globalBestInitialization defaultGlobalBestInitialization "
+                        + "--globalBestSelection binaryTournament "
+                        + "--globalBestUpdate defaultGlobalBestUpdate "
+                        + "--localBestUpdate defaultLocalBestUpdate "
+                        + "--positionUpdate defaultPositionUpdate "
+                        + "--velocityChangeWhenLowerLimitIsReached  0.96 "
+                        + "--velocityChangeWhenUpperLimitIsReached -0.8572"
+                )
+                        .split("\\s+");
+                AutoMOPSO AutoMOPSOWithConfigNHVIGDPlus = new AutoMOPSO();
+                AutoMOPSOWithConfigNHVIGDPlus.parseAndCheckParameters(parametersAutoMOPSOWithtConfigNHVIGDPlus);
+                ParticleSwarmOptimizationAlgorithm automopsoWithConfigNHVIGDPlus = AutoMOPSOWithConfigNHVIGDPlus.create();
+
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfigNHVIGDPlus, "AutoMOPSOWithConfigNHVIGDPlus", experimentProblem, run));
 
 
                 /* AutoMOPSO Without config.txt */

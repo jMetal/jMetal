@@ -178,6 +178,43 @@ public class autoAlgorithmWithWFGExperiments {
 
                 algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSOWithConfig", experimentProblem, run));
 
+                /* AutoMOPSO With config.txt NHV IGDPlus */
+                String[] parametersAutoMOPSOWithtConfigNHVIGDPlus = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--swarmSize 54 --archiveSize 100 "
+                        + "--externalArchive crowdingDistanceArchive "
+                        + "--swarmInitialization random "
+                        + "--velocityInitialization defaultVelocityInitialization "
+                        + "--perturbation frequencySelectionMutationBasedPerturbation "
+                        + "--mutation uniform "
+                        + "--mutationProbability 0.0433 "
+                        + "--mutationRepairStrategy round "
+                        + "--uniformMutationPerturbation 0.332 "
+                        + "--frequencyOfApplicationOfMutationOperator 9 "
+                        + "--inertiaWeightComputingStrategy constantValue "
+                        + "--weight 0.1782 "
+                        + "--velocityUpdate defaultVelocityUpdate "
+                        + "--c1Min 1.9597 "
+                        + "--c1Max 2.7337 "
+                        + "--c2Min 1.1452 "
+                        + "--c2Max 2.2359 "
+                        + "--localBestInitialization defaultLocalBestInitialization "
+                        + "--globalBestInitialization defaultGlobalBestInitialization "
+                        + "--globalBestSelection binaryTournament "
+                        + "--globalBestUpdate defaultGlobalBestUpdate "
+                        + "--localBestUpdate defaultLocalBestUpdate "
+                        + "--positionUpdate defaultPositionUpdate "
+                        + "--velocityChangeWhenLowerLimitIsReached -0.7171 "
+                        + "--velocityChangeWhenUpperLimitIsReached 0.4141"
+                )
+                        .split("\\s+");
+                AutoMOPSO AutoMOPSOWithConfigNHVIGDPlus = new AutoMOPSO();
+                AutoMOPSOWithConfigNHVIGDPlus.parseAndCheckParameters(parametersAutoMOPSOWithtConfigNHVIGDPlus);
+                ParticleSwarmOptimizationAlgorithm automopsoWithConfigNHVIGDPlus = AutoMOPSOWithConfigNHVIGDPlus.create();
+
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfigNHVIGDPlus, "AutoMOPSOWithConfigNHVIGDPlus", experimentProblem, run));
+
 
 
                 /* AutoMOPSO Without config.txt */
