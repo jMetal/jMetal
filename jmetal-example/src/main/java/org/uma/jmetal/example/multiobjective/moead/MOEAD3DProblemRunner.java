@@ -40,8 +40,8 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F6";
-      referenceParetoFront = "referenceFronts/LZ09_F6.pf";
+      problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+      referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -67,7 +67,7 @@ public class MOEAD3DProblemRunner extends AbstractAlgorithmRunner {
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-            .setDataDirectory("MOEAD_Weights")
+            .setDataDirectory("resources/weightVectorFiles/moead")
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();

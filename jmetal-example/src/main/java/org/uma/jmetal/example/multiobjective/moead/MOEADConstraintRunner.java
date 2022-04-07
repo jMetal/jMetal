@@ -42,7 +42,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.Tanaka";
-      referenceParetoFront = "referenceFronts/Tanaka.pf";
+      referenceParetoFront = "resources/referenceFrontsCSV/Tanaka.csv";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -68,7 +68,7 @@ public class MOEADConstraintRunner extends AbstractAlgorithmRunner {
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
-            .setDataDirectory("MOEAD_Weights")
+            .setDataDirectory("resources/weightVectorFiles/moead/")
             .build();
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
