@@ -49,7 +49,6 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  * @autor Daniel Doblas
  */
 public class AutoMOPSO {
-
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
