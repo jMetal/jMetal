@@ -130,7 +130,7 @@ public class AutoMOPSO {
     perturbationParameter = configurePerturbation(args);
 
     externalArchiveParameter = new ExternalArchiveParameter(args,
-        List.of("crowdingDistanceArchive", "hypervolumeArchive"));
+        List.of("crowdingDistanceArchive", "hypervolumeArchive", "spatialSpreadDeviationArchive"));
 
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
         List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));

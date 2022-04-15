@@ -8,6 +8,7 @@ import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHypervolume;
 
@@ -26,6 +27,9 @@ public class ExternalArchiveParameter extends CategoricalParameter {
         break;
       case "hypervolumeArchive":
         archive = new HypervolumeArchive<>(size, new WFGHypervolume<>()) ;
+        break;
+      case "spatialSpreadDeviationArchive":
+        archive = new SpatialSpreadDeviationArchive<>(size) ;
         break;
       case "unboundedExternalArchive":
         archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;
