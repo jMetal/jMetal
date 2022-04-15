@@ -295,6 +295,7 @@ public class AutoMOPSO {
         localBestUpdate,
         globalBestSelection,
         externalArchive);
+
     return mopso;
   }
 
