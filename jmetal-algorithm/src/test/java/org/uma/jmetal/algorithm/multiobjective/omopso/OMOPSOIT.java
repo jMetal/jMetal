@@ -35,6 +35,7 @@ public class OMOPSOIT {
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
             .setMaxIterations(250)
             .setSwarmSize(100)
+            .setEta(0.0075)
             .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
             .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
             .build();
@@ -60,6 +61,7 @@ public class OMOPSOIT {
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
             .setMaxIterations(250)
             .setSwarmSize(100)
+            .setEta(0.0075)
             .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
             .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
             .build();

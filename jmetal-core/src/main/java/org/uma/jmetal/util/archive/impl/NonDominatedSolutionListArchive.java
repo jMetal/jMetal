@@ -31,7 +31,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   /**
    * Constructor
    */
-  public NonDominatedSolutionListArchive(DominanceWithConstraintsComparator<S> comparator) {
+  public NonDominatedSolutionListArchive(Comparator<S> comparator) {
     dominanceComparator = comparator;
 
     solutionList = new ArrayList<>();

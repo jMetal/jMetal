@@ -1,7 +1,8 @@
-package org.uma.jmetal.util.comparator;
+package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -11,33 +12,15 @@ import org.uma.jmetal.util.errorchecking.Check;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-@SuppressWarnings("serial")
-public class EpsilonDominanceComparator<S extends Solution<?>> extends
-    DominanceWithConstraintsComparator<S> {
-  private OverallConstraintViolationDegreeComparator<S> constraintViolationComparator;
-  private double epsilon = 0.0 ;
+public class EpsilonDominanceComparator<S extends Solution<?>> implements DominanceComparator<S> {
+  private final double epsilon ;
 
-  /** Constructor */
-  public EpsilonDominanceComparator() {
-    this(new OverallConstraintViolationDegreeComparator<S>(), 0.0) ;
-  }
-
-  /** Constructor */
   public EpsilonDominanceComparator(double epsilon) {
-    this(new OverallConstraintViolationDegreeComparator<S>(), epsilon) ;
-  }
-
-  /** Constructor */
-  public EpsilonDominanceComparator(
-      OverallConstraintViolationDegreeComparator<S> constraintComparator) {
-    this(constraintComparator, 0.0) ;
-  }
-
-  /** Constructor */
-  public EpsilonDominanceComparator(
-      OverallConstraintViolationDegreeComparator<S> constraintComparator, double epsilon) {
-    constraintViolationComparator = constraintComparator ;
     this.epsilon = epsilon ;
+  }
+
+  public EpsilonDominanceComparator() {
+    this(0.0) ;
   }
 
   /**
@@ -59,13 +42,7 @@ public class EpsilonDominanceComparator<S extends Solution<?>> extends
                     + " objectives and solution2 has "
                     + solution2.objectives().length);
 
-    int result ;
-    result = constraintViolationComparator.compare(solution1, solution2) ;
-    if (result == 0) {
-      result = dominanceTest(solution1, solution2) ;
-    }
-
-    return result ;
+    return dominanceTest(solution1, solution2) ;
   }
 
   private int dominanceTest(Solution<?> solution1, Solution<?> solution2) {

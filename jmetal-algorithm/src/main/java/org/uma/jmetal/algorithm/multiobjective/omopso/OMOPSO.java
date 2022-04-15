@@ -12,7 +12,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
-import org.uma.jmetal.util.comparator.EpsilonDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.EpsilonDominanceComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -42,20 +42,22 @@ public class OMOPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Li
   private final UniformMutation uniformMutation;
   private final NonUniformMutation nonUniformMutation;
 
-  private double eta = 0.0075;
+  private double eta ;
 
   private JMetalRandom randomGenerator;
   private DensityEstimator<DoubleSolution> crowdingDistance;
 
   /** Constructor */
   public OMOPSO(DoubleProblem problem, SolutionListEvaluator<DoubleSolution> evaluator,
-      int swarmSize, int maxIterations, int archiveSize, UniformMutation uniformMutation,
+      int swarmSize, int maxIterations, int archiveSize, double eta, UniformMutation uniformMutation,
       NonUniformMutation nonUniformMutation) {
     this.problem = problem ;
     this.evaluator = evaluator ;
 
     this.swarmSize = swarmSize ;
     this.maxIterations = maxIterations ;
+
+    this.eta = eta ;
 
     this.uniformMutation = uniformMutation ;
     this.nonUniformMutation = nonUniformMutation ;
