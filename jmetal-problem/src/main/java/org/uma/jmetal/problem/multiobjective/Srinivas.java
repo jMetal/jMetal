@@ -2,7 +2,6 @@ package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

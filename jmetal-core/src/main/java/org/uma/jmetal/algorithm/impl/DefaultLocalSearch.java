@@ -7,7 +7,6 @@ import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**

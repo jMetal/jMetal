@@ -25,7 +25,6 @@ import org.uma.jmetal.problem.multiobjective.wfg.WFG2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;

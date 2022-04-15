@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 import org.uma.jmetal.solution.Solution;
-
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;

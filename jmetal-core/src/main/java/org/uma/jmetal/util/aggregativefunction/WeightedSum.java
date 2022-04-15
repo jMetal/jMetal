@@ -1,7 +1,5 @@
 package org.uma.jmetal.util.aggregativefunction;
 
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-
 public class WeightedSum implements AggregativeFunction {
 
   @Override

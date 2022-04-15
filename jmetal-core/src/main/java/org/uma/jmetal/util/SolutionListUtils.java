@@ -13,8 +13,8 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
 import org.uma.jmetal.util.errorchecking.Check;

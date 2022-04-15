@@ -22,8 +22,8 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 
 /**

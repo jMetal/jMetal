@@ -16,7 +16,6 @@ package org.uma.jmetal.util.archive.impl;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.comparator.SpatialSpreadDeviationComparator;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.SpatialSpreadDeviation;

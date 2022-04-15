@@ -1,13 +1,12 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.VectorUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Class representing the constrained function CF13: D-type constraint + r=0 + concave PF + Griewank

@@ -1,6 +1,5 @@
 package org.uma.jmetal.experimental.auto.algorithm.smpso;
 
-import com.googlecode.jfilechooserbookmarks.example.Default;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;

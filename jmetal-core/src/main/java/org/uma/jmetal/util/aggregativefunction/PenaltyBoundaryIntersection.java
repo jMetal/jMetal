@@ -1,6 +1,5 @@
 package org.uma.jmetal.util.aggregativefunction;
 
-import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.point.impl.IdealPoint;
 
 public class PenaltyBoundaryIntersection implements AggregativeFunction {

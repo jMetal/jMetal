@@ -39,7 +39,6 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.archive.BoundedArchive;
-import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
