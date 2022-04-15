@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ConstraintHandling;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 import ru.ifmo.nds.JensenFortinBuzdalov;
@@ -32,8 +32,8 @@ public class ExperimentalFastNonDominanceRanking<S extends Solution<?>> implemen
   private final List<List<S>> subFronts = new ArrayList<>();
 
   // Constraint violation checking support.
-  private final ConstraintViolationComparator<S> constraintViolationComparator
-          = new ConstraintViolationComparator<>();
+  private final OverallConstraintViolationDegreeComparator<S> constraintViolationComparator
+          = new OverallConstraintViolationDegreeComparator<>();
 
   // Delegation.
   private NonDominatedSorting sortingInstance = null;

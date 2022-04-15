@@ -11,6 +11,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
@@ -42,8 +43,8 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
       problemName = args[0] ;
       referenceParetoFront = args[1] ;
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv" ;
+      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
+      referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
@@ -53,6 +54,7 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
     algorithm = new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<>())
         .setMaxIterations(250)
         .setSwarmSize(100)
+        .setEta(0.0075)
         .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
         .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
         .build();
@@ -60,7 +62,7 @@ public class OMOPSORunner extends AbstractAlgorithmRunner {
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
         .execute();
 
-    List<DoubleSolution> population = algorithm.getResult();
+    List<DoubleSolution> population = SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
     long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

@@ -25,7 +25,8 @@ import org.uma.jmetal.problem.multiobjective.wfg.WFG2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
@@ -77,7 +78,7 @@ public class ComponentBasedOMOPSO {
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);
     //var perturbation = new FrequencySelectionMutationBasedPerturbation(mutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
-    var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
+    var localBestUpdate = new DefaultLocalBestUpdate(new DefaultDominanceComparator<>());
 
     var omopso = new ParticleSwarmOptimizationAlgorithm("OMOPSO", swarmInitialization,
         evaluation,

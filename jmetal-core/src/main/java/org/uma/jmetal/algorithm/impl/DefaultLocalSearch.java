@@ -7,7 +7,8 @@ import org.uma.jmetal.operator.localsearch.impl.BasicLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**
  * Abstract class representing a local search algorithm
@@ -61,7 +62,7 @@ public class DefaultLocalSearch<S extends Solution<?>> implements Algorithm<S> {
 
     LocalSearchOperator<S> localSearch =
         new BasicLocalSearch<S>(
-            maxEvaluations, mutationOperator, new DominanceComparator<S>(), problem);
+            maxEvaluations, mutationOperator, new DominanceWithConstraintsComparator<S>(), problem);
 
     bestSolution = localSearch.execute(bestSolution);
   }

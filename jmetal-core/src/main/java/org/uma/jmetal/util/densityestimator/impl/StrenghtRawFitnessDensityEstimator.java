@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 
@@ -20,7 +20,7 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
   private int k;
 
   private static final Comparator<Solution<?>> DOMINANCE_COMPARATOR =
-      new DominanceComparator<Solution<?>>();
+      new DominanceWithConstraintsComparator<Solution<?>>();
 
   public StrenghtRawFitnessDensityEstimator(int k) {
     this.k = k;

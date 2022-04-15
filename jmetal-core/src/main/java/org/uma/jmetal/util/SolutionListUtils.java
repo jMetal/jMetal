@@ -13,7 +13,7 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
@@ -203,7 +203,7 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(
       S solution, List<? extends S> solutionSet) {
     boolean result = false;
-    Comparator<S> dominance = new DominanceComparator<S>();
+    Comparator<S> dominance = new DominanceWithConstraintsComparator<S>();
 
     int i = 0;
 

@@ -3,7 +3,7 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localb
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestupdate.LocalBestUpdate;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 
 public class DefaultLocalBestUpdate implements LocalBestUpdate {
   private DominanceComparator<DoubleSolution> dominanceComparator ;

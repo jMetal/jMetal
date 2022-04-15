@@ -2,6 +2,7 @@ package org.uma.jmetal.example.operator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
@@ -12,7 +13,6 @@ import org.uma.jmetal.problem.multiobjective.Kursawe;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DoubleVariableComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
@@ -73,7 +73,7 @@ public class SBXCrossoverExample {
       population.add(solutions.get(1)) ;
     }
 
-    population.sort(new DoubleVariableComparator());
+    population.sort(Comparator.comparingDouble(solution -> solution.objectives()[0])) ;
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("solutionsSBX"))

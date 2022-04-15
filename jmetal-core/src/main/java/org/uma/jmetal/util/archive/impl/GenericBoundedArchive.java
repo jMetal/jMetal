@@ -3,6 +3,7 @@ package org.uma.jmetal.util.archive.impl;
 import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.archive.impl.AbstractBoundedArchive;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 
 /**

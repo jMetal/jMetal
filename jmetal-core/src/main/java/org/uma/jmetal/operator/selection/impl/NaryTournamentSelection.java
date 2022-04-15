@@ -5,7 +5,7 @@ import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -22,7 +22,7 @@ public class NaryTournamentSelection<S extends Solution<?>>
 
   /** Constructor */
   public NaryTournamentSelection() {
-    this(2, new DominanceComparator<S>());
+    this(2, new DominanceWithConstraintsComparator<S>());
   }
 
   /** Constructor */

@@ -1,5 +1,4 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection;
-
 import java.util.List;
 import org.uma.jmetal.solution.Solution;
 

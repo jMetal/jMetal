@@ -13,8 +13,8 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.MultiComparator;
 
 /** @author Cristobal Barba */
@@ -51,7 +51,7 @@ public class ABYSSBuilder implements AlgorithmBuilder<ABYSS> {
     Comparator<DoubleSolution> comparator =
         new MultiComparator<>(
             Arrays.asList(
-                new ConstraintViolationComparator<>(), new DominanceComparator<>()));
+                new OverallConstraintViolationDegreeComparator<>(), new DominanceWithConstraintsComparator<>()));
 
     this.improvementOperator =
         new BasicLocalSearch<>(

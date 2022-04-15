@@ -41,7 +41,7 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
       referenceParetoFront = args[1];
     } else {
       problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F7";
-      referenceParetoFront = "referenceFronts/LZ09_F2.pf";
+      referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
     }
 
     problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
@@ -66,7 +66,7 @@ public class MOEADDRARunner extends AbstractAlgorithmRunner {
             .setNeighborhoodSelectionProbability(0.9)
             .setMaximumNumberOfReplacedSolutions(2)
             .setNeighborSize(20)
-            .setDataDirectory("MOEAD_Weights")
+            .setDataDirectory("resources/weightVectorFiles/moead/")
             .setFunctionType(AbstractMOEAD.FunctionType.TCHE)
             .build();
 

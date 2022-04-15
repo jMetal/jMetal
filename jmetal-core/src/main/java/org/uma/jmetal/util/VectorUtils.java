@@ -170,4 +170,14 @@ public class VectorUtils {
     }
     return invertedFront;
   }
+
+  /**
+   * Converts a list of doubles to an array
+   *
+   * @param list
+   * @return
+   */
+  public static double[] toArray(List<Double> list) {
+    return list.stream().mapToDouble(v->v).toArray() ;
+  }
 }

@@ -274,6 +274,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   }
 
 
+
   private void initIdealPoint()  {
     for (int i = 0; i < problem.getNumberOfObjectives(); i++) {
       z[i] = 1.0e+30;

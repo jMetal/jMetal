@@ -2,6 +2,7 @@ package org.uma.jmetal.example.operator;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
@@ -12,7 +13,6 @@ import org.uma.jmetal.problem.singleobjective.Sphere;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DoubleVariableComparator;
 
 /**
  * @author Antonio J. Nebro
@@ -68,7 +68,9 @@ public class PolynomialMutationExample {
       population.add(newSolution) ;
     }
 
-    population.sort(new DoubleVariableComparator());
+    population.sort(Comparator.comparingDouble(sol -> sol.objectives()[0])) ;
+
+
     double[][] classifier = classify(population, problem, granularity);
 
     PlotFront plot = new PlotSmile(classifier, "") ;

@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.smpso;
 
+import com.googlecode.jfilechooserbookmarks.example.Default;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
@@ -21,7 +22,7 @@ import org.uma.jmetal.problem.multiobjective.zdt.ZDT4;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
@@ -71,7 +72,7 @@ public class ComponentBasedSMPSO {
     //mutationOperator = new UniformMutation(1.0/problem.getNumberOfVariables(), 0.5) ;
     var perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfMutation);
     var globalBestUpdate = new DefaultGlobalBestUpdate();
-    var localBestUpdate = new DefaultLocalBestUpdate(new DominanceComparator<>());
+    var localBestUpdate = new DefaultLocalBestUpdate(new DefaultDominanceComparator<>());
 
     var smpso = new ParticleSwarmOptimizationAlgorithm("SMPSO",
         swarmInitialization,

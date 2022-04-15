@@ -9,8 +9,10 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -34,7 +36,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
   private MutationOperator<S> mutationOperator;
   private SelectionOperator<List<S>, S> selectionOperator;
   private SolutionListEvaluator<S> evaluator;
-  private Comparator<S> dominanceComparator ;
+  private DominanceComparator<S> dominanceComparator ;
 
   private NSGAIIVariant variant;
 
@@ -52,7 +54,7 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     this.mutationOperator = mutationOperator ;
     selectionOperator = new BinaryTournamentSelection<S>(new RankingAndCrowdingDistanceComparator<S>()) ;
     evaluator = new SequentialSolutionListEvaluator<S>();
-    dominanceComparator = new DominanceComparator<>()  ;
+    dominanceComparator = new DefaultDominanceComparator<>()  ;
 
     this.variant = NSGAIIVariant.NSGAII ;
   }
@@ -103,10 +105,8 @@ public class NSGAIIBuilder<S extends Solution<?>> implements AlgorithmBuilder<NS
     return this;
   }
 
-  public NSGAIIBuilder<S> setDominanceComparator(Comparator<S> dominanceComparator) {
-    if (dominanceComparator == null) {
-      throw new JMetalException("dominanceComparator is null");
-    }
+  public NSGAIIBuilder<S> setDominanceComparator(DominanceComparator<S> dominanceComparator) {
+    Check.notNull(dominanceComparator);
     this.dominanceComparator = dominanceComparator ;
 
     return this;
