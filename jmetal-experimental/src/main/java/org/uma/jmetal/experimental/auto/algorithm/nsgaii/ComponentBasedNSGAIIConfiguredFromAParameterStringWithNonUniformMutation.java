@@ -35,7 +35,7 @@ public class ComponentBasedNSGAIIConfiguredFromAParameterStringWithNonUniformMut
                 + "--crossoverRepairStrategy bounds "
                 + "--sbxDistributionIndex 20.0 "
                 + "--mutation nonUniform "
-                + "--mutationProbability 0.01 "
+                + "--mutationProbabilityFactor 1.0 "
                 + "--mutationRepairStrategy bounds "
                 + "--nonUniformMutationPerturbation 0.5 ")
             .split("\\s+");

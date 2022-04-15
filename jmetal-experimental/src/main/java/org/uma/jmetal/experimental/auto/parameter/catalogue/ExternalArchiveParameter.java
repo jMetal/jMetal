@@ -6,7 +6,10 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
+import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHypervolume;
 
 public class ExternalArchiveParameter extends CategoricalParameter {
   private int size ;
@@ -20,6 +23,9 @@ public class ExternalArchiveParameter extends CategoricalParameter {
     switch (getValue()) {
       case "crowdingDistanceArchive":
         archive = new CrowdingDistanceArchive<>(size) ;
+        break;
+      case "hypervolumeArchive":
+        archive = new HypervolumeArchive<>(size, new WFGHypervolume<>()) ;
         break;
       case "unboundedExternalArchive":
         archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;

@@ -94,46 +94,49 @@ public class AutoNSGAII {
   }
 
   private void variation(String[] args) {
-    CrossoverParameter crossover = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
+    CrossoverParameter crossoverParameter = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
-    crossover.addGlobalParameter(crossoverProbability);
+    crossoverParameter.addGlobalParameter(crossoverProbability);
     RepairDoubleSolutionStrategyParameter crossoverRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "crossoverRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
-    crossover.addGlobalParameter(crossoverRepairStrategy);
+    crossoverParameter.addGlobalParameter(crossoverRepairStrategy);
 
     RealParameter distributionIndex = new RealParameter("sbxDistributionIndex", args, 5.0, 400.0);
-    crossover.addSpecificParameter("SBX", distributionIndex);
+    crossoverParameter.addSpecificParameter("SBX", distributionIndex);
 
     RealParameter alpha = new RealParameter("blxAlphaCrossoverAlphaValue", args, 0.0, 1.0);
-    crossover.addSpecificParameter("BLX_ALPHA", alpha);
+    crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
-    MutationParameter mutation =
+    MutationParameter mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
-    ProbabilityParameter mutationProbability =
-        new ProbabilityParameter("mutationProbability", args);
-    mutation.addGlobalParameter(mutationProbability);
+
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0, 2) ;
+    mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
-    mutation.addGlobalParameter(mutationRepairStrategy);
+    mutationParameter.addGlobalParameter(mutationRepairStrategy);
 
     RealParameter distributionIndexForPolynomialMutation =
         new RealParameter("polynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutation.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
+    mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter distributionIndexForLinkedPolynomialMutation =
             new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutation.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
+    mutationParameter.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
-    mutation.addSpecificParameter("uniform", uniformMutationPerturbation);
+    mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
             new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
-    mutation.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+    mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
     //    new DifferentialEvolutionCrossoverParameter(args);
@@ -148,8 +151,8 @@ public class AutoNSGAII {
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossover);
-    variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutation);
+    variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
+    variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
   }
 
   private void selection(String[] args) {

@@ -30,7 +30,7 @@ public class ComponentBasedAutoMOPSOLSMOP2 {
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 1 "
                         + "--mutation polynomial "
-                        + "--mutationProbability 0.5754 "
+                        + "--mutationProbabilityFactor 0.1 "
                         + "--mutationRepairStrategy round "
                         + "--polynomialMutationDistributionIndex 115.3242 "
                         + "--positionUpdate defaultPositionUpdate "

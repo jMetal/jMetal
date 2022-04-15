@@ -32,7 +32,7 @@ public class ComponentBasedAutoMOPSOLSMOP1 {
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 1 "
                         + "--mutation polynomial "
-                        + "--mutationProbability 0.0245 "
+                        + "--mutationProbabilityFactor 1.0 "
                         + "--mutationRepairStrategy round "
                         + "--polynomialMutationDistributionIndex 17.19 "
                         + "--positionUpdate defaultPositionUpdate "

@@ -30,7 +30,7 @@ public class ComponentBasedAutoMOPSODTLZ {
             + "--perturbation frequencySelectionMutationBasedPerturbation "
             + "--frequencyOfApplicationOfMutationOperator 7 "
             + "--mutation polynomial "
-            + "--mutationProbability 0.0152 "
+            + "--mutationProbabilityFactor 1.0 "
             + "--mutationRepairStrategy round "
             + "--polynomialMutationDistributionIndex 285.3716 "
             + "--positionUpdate defaultPositionUpdate "

@@ -2,7 +2,7 @@ swarmSize                                "--swarmSize "                         
 #
 archiveSize                              "--archiveSize "                         o       (100)
 #
-externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive)
+externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive, hypervolumeArchive)
 #
 swarmInitialization                      "--swarmInitialization "                 c       (random, latinHypercubeSampling, scatterSearch)
 #
@@ -10,7 +10,7 @@ velocityInitialization                   "--velocityInitialization "            
 #
 perturbation                             "--perturbation "                        c       (frequencySelectionMutationBasedPerturbation)
 mutation                                 "--mutation "                            c       (uniform, polynomial, nonUniform) | perturbation %in% c("frequencySelectionMutationBasedPerturbation")
-mutationProbability                      "--mutationProbability "                 r       (0.0, 1.0)                     | mutation %in% c("uniform","polynomial","nonUniform")
+mutationProbabilityFactor                "--mutationProbabilityFactor "           r       (0.0, 2.0)                     | mutation %in% c("uniform","polynomial","nonUniform")
 mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial","nonUniform")
 polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
 uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")

@@ -100,7 +100,6 @@ public class AutoMOPSO {
     swarmInitializationParameter =
         new CreateInitialSolutionsParameter("swarmInitialization",
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
-    //createSwarm(args); ;
 
     velocityInitializationParameter =
         new CategoricalParameter(
@@ -131,7 +130,7 @@ public class AutoMOPSO {
     perturbationParameter = configurePerturbation(args);
 
     externalArchiveParameter = new ExternalArchiveParameter(args,
-        List.of("crowdingDistanceArchive"));
+        List.of("crowdingDistanceArchive", "hypervolumeArchive"));
 
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
         List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));
@@ -170,9 +169,10 @@ public class AutoMOPSO {
   private PerturbationParameter configurePerturbation(String[] args) {
     mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
-    ProbabilityParameter mutationProbability =
-        new ProbabilityParameter("mutationProbability", args);
-    mutationParameter.addGlobalParameter(mutationProbability);
+    //ProbabilityParameter mutationProbability =
+    //    new ProbabilityParameter("mutationProbability", args);
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0, 2) ;
+    mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
             "mutationRepairStrategy", args, Arrays.asList("random", "round", "bounds"));
@@ -189,6 +189,9 @@ public class AutoMOPSO {
     RealParameter nonUniformMutationPerturbation =
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
+
+    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     // TODO: the upper bound  must be the swarm size
     IntegerParameter frequencyOfApplicationParameter = new IntegerParameter(
@@ -268,10 +271,6 @@ public class AutoMOPSO {
     if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
       positionUpdateParameter.addNonConfigurableParameter("positionBounds",
           ((DoubleProblem) problem).getBoundsForVariables());
-      //positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenLowerLimitIsReached",
-      //    -1.0);
-      //positionUpdateParameter.addNonConfigurableParameter("velocityChangeWhenUpperLimitIsReached",
-      //    -1.0);
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();
