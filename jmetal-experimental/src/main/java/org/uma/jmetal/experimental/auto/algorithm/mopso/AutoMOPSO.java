@@ -171,7 +171,7 @@ public class AutoMOPSO {
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "nonUniform"));
     //ProbabilityParameter mutationProbability =
     //    new ProbabilityParameter("mutationProbability", args);
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0, 2) ;
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
