@@ -29,7 +29,7 @@ public class AutoNSGAIIIraceParameterFileGenerator {
                     + "--crossoverRepairStrategy bounds "
                     + "--sbxDistributionIndex 20.0 "
                     + "--mutation polynomial "
-                    + "--mutationProbability 0.01 "
+                    + "--mutationProbabilityFactor 1.0 "
                     + "--mutationRepairStrategy bounds "
                     + "--polynomialMutationDistributionIndex 20.0 ")
                     .split("\\s+");

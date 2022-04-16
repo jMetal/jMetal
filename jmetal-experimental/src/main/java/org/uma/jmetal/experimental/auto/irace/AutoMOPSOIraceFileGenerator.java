@@ -31,7 +31,7 @@ public class AutoMOPSOIraceFileGenerator {
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 6 "
                         + "--mutation polynomial "
-                        + "--mutationProbability 0.01 "
+                        + "--mutationProbabilityFactor 1.0 "
                         + "--mutationRepairStrategy bounds "
                         + "--polynomialMutationDistributionIndex 20.0 "
                         + "--positionUpdate defaultPositionUpdate "

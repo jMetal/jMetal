@@ -112,7 +112,7 @@ public class AutoNSGAII {
     MutationParameter mutationParameter =
         new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 0.0) ;
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
