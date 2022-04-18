@@ -131,117 +131,6 @@ public class zdtExperiment {
 
 
             for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
-                /* AutoMOPSO With config.txt */
-                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 25000 "
-                        + "--swarmSize 37 --archiveSize 100 "
-                        + "--externalArchive crowdingDistanceArchive "
-                        + "--swarmInitialization scatterSearch "
-                        + "--velocityInitialization defaultVelocityInitialization "
-                        + "--perturbation frequencySelectionMutationBasedPerturbation "
-                        + "--mutation nonUniform "
-                        + "--mutationProbability 0.2903 "
-                        + "--mutationRepairStrategy bounds "
-                        + "--nonUniformMutationPerturbation 0.658 "
-                        + "--frequencyOfApplicationOfMutationOperator 8 "
-                        + "--inertiaWeightComputingStrategy linearDecreasingValue "
-                        + "--weightMin 0.2602 --weightMax 0.9899 "
-                        + "--velocityUpdate defaultVelocityUpdate "
-                        + "--c1Min 1.9551 "
-                        + "--c1Max 2.2621 "
-                        + "--c2Min 1.758 "
-                        + "--c2Max 2.5223 "
-                        + "--localBestInitialization defaultLocalBestInitialization "
-                        + "--globalBestInitialization defaultGlobalBestInitialization "
-                        + "--globalBestSelection binaryTournament "
-                        + "--globalBestUpdate defaultGlobalBestUpdate "
-                        + "--localBestUpdate defaultLocalBestUpdate "
-                        + "--positionUpdate defaultPositionUpdate "
-                        + "--velocityChangeWhenLowerLimitIsReached  0.951 "
-                        + "--velocityChangeWhenUpperLimitIsReached 0.097"
-                )
-                        .split("\\s+");
-                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
-                AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
-                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
-
-                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSOWithConfig", experimentProblem, run));
-
-                /* AutoMOPSO With config.txt */
-                String[] parametersAutoMOPSOWithtConfigNHVIGDPlus = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 25000 "
-                        + "--swarmSize 190 --archiveSize 100 "
-                        + "--externalArchive crowdingDistanceArchive "
-                        + "--swarmInitialization random "
-                        + "--velocityInitialization defaultVelocityInitialization "
-                        + "--perturbation frequencySelectionMutationBasedPerturbation "
-                        + "--mutation nonUniform "
-                        + "--mutationProbability 0.0043 "
-                        + "--mutationRepairStrategy bounds "
-                        + "--nonUniformMutationPerturbation 0.7536 "
-                        + "--frequencyOfApplicationOfMutationOperator 7 "
-                        + "--inertiaWeightComputingStrategy linearIncreasingValue "
-                        + "--weightMin 0.1274 --weightMax 0.7743 "
-                        + "--velocityUpdate defaultVelocityUpdate "
-                        + "--c1Min 1.1394 "
-                        + "--c1Max 2.3893 "
-                        + "--c2Min 1.5824 "
-                        + "--c2Max 2.8309 "
-                        + "--localBestInitialization defaultLocalBestInitialization "
-                        + "--globalBestInitialization defaultGlobalBestInitialization "
-                        + "--globalBestSelection binaryTournament "
-                        + "--globalBestUpdate defaultGlobalBestUpdate "
-                        + "--localBestUpdate defaultLocalBestUpdate "
-                        + "--positionUpdate defaultPositionUpdate "
-                        + "--velocityChangeWhenLowerLimitIsReached  0.96 "
-                        + "--velocityChangeWhenUpperLimitIsReached -0.8572"
-                )
-                        .split("\\s+");
-                AutoMOPSO AutoMOPSOWithConfigNHVIGDPlus = new AutoMOPSO();
-                AutoMOPSOWithConfigNHVIGDPlus.parseAndCheckParameters(parametersAutoMOPSOWithtConfigNHVIGDPlus);
-                ParticleSwarmOptimizationAlgorithm automopsoWithConfigNHVIGDPlus = AutoMOPSOWithConfigNHVIGDPlus.create();
-
-                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfigNHVIGDPlus, "AutoMOPSOWithConfigNHVIGDPlus", experimentProblem, run));
-
-
-                /* AutoMOPSO Without config.txt */
-                String[] parametersAutoMOPSOWithoutConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
-                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
-                        + "--maximumNumberOfEvaluations 25000 "
-                        + "--swarmSize 87 --archiveSize 100 "
-                        + "--externalArchive crowdingDistanceArchive "
-                        + "--swarmInitialization random "
-                        + "--velocityInitialization defaultVelocityInitialization "
-                        + "--perturbation frequencySelectionMutationBasedPerturbation "
-                        + "--mutation nonUniform "
-                        + "--mutationProbability 0.0038 "
-                        + "--mutationRepairStrategy bounds "
-                        + "--nonUniformMutationPerturbation 0.7621 "
-                        + "--frequencyOfApplicationOfMutationOperator 9 "
-                        + "--inertiaWeightComputingStrategy linearDecreasingValue "
-                        + "--weightMin 0.199 --weightMax 0.9057 "
-                        + "--velocityUpdate defaultVelocityUpdate "
-                        + "--c1Min 1.6028 "
-                        + "--c1Max 2.7518 "
-                        + "--c2Min 1.0399 "
-                        + "--c2Max 2.8289 "
-                        + "--localBestInitialization defaultLocalBestInitialization "
-                        + "--globalBestInitialization defaultGlobalBestInitialization "
-                        + "--globalBestSelection binaryTournament "
-                        + "--globalBestUpdate defaultGlobalBestUpdate "
-                        + "--localBestUpdate defaultLocalBestUpdate "
-                        + "--positionUpdate defaultPositionUpdate "
-                        + "--velocityChangeWhenLowerLimitIsReached 0.9988 "
-                        + "--velocityChangeWhenUpperLimitIsReached 0.3898"
-                )
-                        .split("\\s+");
-                AutoMOPSO AutoMOPSOWithoutConfig = new AutoMOPSO();
-                AutoMOPSOWithoutConfig.parseAndCheckParameters(parametersAutoMOPSOWithoutConfig);
-                ParticleSwarmOptimizationAlgorithm automopsoWithoutConfig = AutoMOPSOWithoutConfig.create();
-
-                algorithms.add(new ExperimentAlgorithm<>(automopsoWithoutConfig, "AutoMOPSOWithoutConfig", experimentProblem, run));
 
                 /* OMOPSO */
                 String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass()
@@ -259,7 +148,7 @@ public class zdtExperiment {
                         + "--perturbation frequencySelectionMutationBasedPerturbation "
                         + "--frequencyOfApplicationOfMutationOperator 7 "
                         + "--mutation polynomial "
-                        + "--mutationProbability 1.0 "
+                        + "--mutationProbabilityFactor 1.0 "
                         + "--mutationRepairStrategy round "
                         + "--polynomialMutationDistributionIndex 20.0 "
                         + "--positionUpdate defaultPositionUpdate "
@@ -282,6 +171,46 @@ public class zdtExperiment {
                 ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
+
+                /* AutoMOPSO With config.txt */
+                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                        + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                        + "--maximumNumberOfEvaluations 25000 "
+                        + "--swarmSize 22 " +
+                        "--archiveSize 100 " +
+                        "--externalArchive hypervolumeArchive " +
+                        "--swarmInitialization random " +
+                        "--velocityInitialization defaultVelocityInitialization " +
+                        "--perturbation frequencySelectionMutationBasedPerturbation " +
+                        "--mutation uniform " +
+                        "--mutationProbabilityFactor 0.0638 " +
+                        "--mutationRepairStrategy random " +
+                        "--uniformMutationPerturbation 0.6053 " +
+                        "--frequencyOfApplicationOfMutationOperator 8 " +
+                        "--inertiaWeightComputingStrategy linearIncreasingValue " +
+                        "--weightMin 0.1941 " +
+                        "--weightMax 0.8233 " +
+                        "--velocityUpdate constrainedVelocityUpdate " +
+                        "--c1Min 1.7276 " +
+                        "--c1Max 2.4922 " +
+                        "--c2Min 1.3172 " +
+                        "--c2Max 2.1464 " +
+                        "--localBestInitialization defaultLocalBestInitialization " +
+                        "--globalBestInitialization defaultGlobalBestInitialization " +
+                        "--globalBestSelection binaryTournament " +
+                        "--globalBestUpdate defaultGlobalBestUpdate " +
+                        "--localBestUpdate defaultLocalBestUpdate " +
+                        "--positionUpdate defaultPositionUpdate " +
+                        "--velocityChangeWhenLowerLimitIsReached 0.1808 " +
+                        "--velocityChangeWhenUpperLimitIsReached -0.3183"
+                )
+                        .split("\\s+");
+                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
+                AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
+                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
+
+                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSO", experimentProblem, run));
+
             }
 
         }
