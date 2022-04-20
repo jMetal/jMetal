@@ -1,4 +1,4 @@
-package org.uma.jmetal.algorithm.multiobjective.ensemble;
+package org.uma.jmetal.experimental.ensemble;
 
 import java.util.ArrayList;
 import java.util.List;
