@@ -1,6 +1,33 @@
-package org.uma.jmetal.example.multiobjective.ensemble;
+package org.uma.jmetal.experimental.ensemble;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.moead.MOEADDE;
+import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSOWithArchive;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.maf.MaF01;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
+import org.uma.jmetal.util.aggregativefunction.Tschebyscheff;
+import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.termination.Termination;
+import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
@@ -45,7 +72,7 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
 
     Algorithm<List<DoubleSolution>> smpso =
         new SMPSOWithArchive(
-            (DoubleProblem) problem,
+             problem,
             swarmSize,
             leadersArchive,
             new PolynomialMutation(mutationProbability, mutationDistributionIndex),
@@ -99,7 +126,7 @@ public class Ensemble3DNSGAIISMPSOMOEAD extends AbstractAlgorithmRunner {
     for (Algorithm<List<DoubleSolution>> algorithm : algorithmList) {
       List<DoubleSolution> result =
           population.stream()
-              .filter(solution -> algorithm.getName() == solution.getAttribute("ALGORITHM_NAME"))
+              .filter(solution -> algorithm.getName() == solution.attributes().get("ALGORITHM_NAME"))
               .collect(Collectors.toList());
 
       new SolutionListOutput(result)

@@ -1,11 +1,12 @@
-package org.uma.jmetal.algorithm.multiobjective.ensemble;
+package org.uma.jmetal.experimental.ensemble;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -21,28 +22,30 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 public class AlgorithmEnsembleIT {
 
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheAlgorithmListIsNull() {
-    new AlgorithmEnsemble<DoubleSolution>(null, new NonDominatedSolutionListArchive<>());
+    assertThrows(NullParameterException.class,
+        () -> new AlgorithmEnsemble<DoubleSolution>(null, new NonDominatedSolutionListArchive<>()));
   }
 
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheArchiveIsNull() {
     List<Algorithm<List<DoubleSolution>>> algorithmArrayList = new ArrayList<>();
     algorithmArrayList.add(null);
-    new AlgorithmEnsemble<DoubleSolution>(algorithmArrayList, null);
+    assertThrows(NullParameterException.class,
+        () -> new AlgorithmEnsemble<DoubleSolution>(algorithmArrayList, null));
   }
 
-  @Test(expected = InvalidConditionException.class)
+  @Test
   public void shouldConstructorRaiseAnExceptionIfTheListOfAlgorithmsIsEmpty() {
     List<Algorithm<List<DoubleSolution>>> algorithmArrayList = new ArrayList<>();
-    new AlgorithmEnsemble<DoubleSolution>(
-        algorithmArrayList, new NonDominatedSolutionListArchive<>());
+    assertThrows(InvalidConditionException.class, () -> new AlgorithmEnsemble<DoubleSolution>(
+        algorithmArrayList, new NonDominatedSolutionListArchive<>()));
   }
 
   @Test
   public void shouldConstructorCreateAValidAlgorithmListWithOneAlgorithm() {
-    Problem<DoubleSolution> problem = new ZDT1();
+    var problem = new ZDT1();
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
