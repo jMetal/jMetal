@@ -46,10 +46,10 @@ public class LexicographicalVectorComparatorTest {
 
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnMinus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
-    double[] point2 = new double[]{-1.0, 0.0, 5.0, 7.0};
+    double[] point1 = new double[]{-1.0, 0.0, 5.0, 7.0};
+    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0};
 
-    assertEquals(-1, comparator.compare(point2, point1));
+    assertEquals(-1, comparator.compare(point1, point2));
   }
 
   @Test
