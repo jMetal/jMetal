@@ -186,8 +186,8 @@ public class compendiumExperiment {
 
                 algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
 
-                /* AutoMOPSO With config.txt */
-                String[] parametersAutoMOPSOWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                /* AMOPSOz */
+                String[] parametersAMOPSOzWithtConfig = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
                         + "--maximumNumberOfEvaluations 25000 "
                         + "--swarmSize 22 " +
@@ -219,12 +219,98 @@ public class compendiumExperiment {
                         "--velocityChangeWhenUpperLimitIsReached -0.3183"
                 )
                         .split("\\s+");
-                AutoMOPSO AutoMOPSOWithConfig = new AutoMOPSO();
-                AutoMOPSOWithConfig.parseAndCheckParameters(parametersAutoMOPSOWithtConfig);
-                ParticleSwarmOptimizationAlgorithm automopsoWithConfig = AutoMOPSOWithConfig.create();
+                AutoMOPSO AutoMOPSOz = new AutoMOPSO();
+                AutoMOPSOz.parseAndCheckParameters(parametersAMOPSOzWithtConfig);
+                ParticleSwarmOptimizationAlgorithm amopsoz = AutoMOPSOz.create();
 
-                algorithms.add(new ExperimentAlgorithm<>(automopsoWithConfig, "AutoMOPSO", experimentProblem, run));
+                algorithms.add(new ExperimentAlgorithm<>(amopsoz, "AMOPSOz", experimentProblem, run));
 
+                /* AMOPSOd with config*/
+                String[] parametersAMOPSOdWithConfig =
+                        ("--problemName "
+                                + experimentProblem.getProblem().getClass().getName()
+                                + " "
+                                + "--referenceFrontFileName "
+                                + experimentProblem.getReferenceFront()
+                                + " "
+                                + "--maximumNumberOfEvaluations 25000 "
+                                + "--swarmSize 11 "
+                                + "--archiveSize 100 "
+                                + "--externalArchive hypervolumeArchive "
+                                + "--swarmInitialization scatterSearch "
+                                + "--velocityInitialization defaultVelocityInitialization "
+                                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                                + "--mutation uniform "
+                                + "--mutationProbabilityFactor 0.1791 "
+                                + "--mutationRepairStrategy random "
+                                + "--uniformMutationPerturbation 0.7245 "
+                                + "--frequencyOfApplicationOfMutationOperator 8 "
+                                + "--inertiaWeightComputingStrategy constantValue "
+                                + "--weight 0.1081 "
+                                + "--velocityUpdate constrainedVelocityUpdate "
+                                + "--c1Min 1.7965 "
+                                + "--c1Max 2.4579 "
+                                + "--c2Min 1.0514 "
+                                + "--c2Max 2.5417 "
+                                + "--localBestInitialization defaultLocalBestInitialization "
+                                + "--globalBestInitialization defaultGlobalBestInitialization "
+                                + "--globalBestSelection binaryTournament "
+                                + "--globalBestUpdate defaultGlobalBestUpdate "
+                                + "--localBestUpdate defaultLocalBestUpdate "
+                                + "--positionUpdate defaultPositionUpdate "
+                                + "--velocityChangeWhenLowerLimitIsReached 0.1399 "
+                                + "--velocityChangeWhenUpperLimitIsReached -0.7488")
+                                .split("\\s+");
+                AutoMOPSO AMOPSOd = new AutoMOPSO();
+                AMOPSOd.parseAndCheckParameters(parametersAMOPSOdWithConfig);
+                ParticleSwarmOptimizationAlgorithm amopsoD = AMOPSOd.create();
+
+                algorithms.add(
+                        new ExperimentAlgorithm<>(amopsoD, "AMOPSOd", experimentProblem, run));
+
+
+                /* AMOPSOw */
+                String[] parametersAutoMOPSOwWithtConfig =
+                        ("--problemName "
+                                + experimentProblem.getProblem().getClass().getName()
+                                + " "
+                                + "--referenceFrontFileName "
+                                + experimentProblem.getReferenceFront()
+                                + " "
+                                + "--maximumNumberOfEvaluations 25000 "
+                                + "--swarmSize 76 "
+                                + "--archiveSize 100 "
+                                + "--externalArchive hypervolumeArchive "
+                                + "--swarmInitialization latinHypercubeSampling "
+                                + "--velocityInitialization defaultVelocityInitialization "
+                                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                                + "--mutation uniform --mutationProbabilityFactor 0.0542 "
+                                + "--mutationRepairStrategy round "
+                                + "--uniformMutationPerturbation 0.5199 "
+                                + "--frequencyOfApplicationOfMutationOperator 10 "
+                                + "--inertiaWeightComputingStrategy linearIncreasingValue "
+                                + "--weightMin 0.1355 "
+                                + "--weightMax 0.5875 "
+                                + "--velocityUpdate defaultVelocityUpdate "
+                                + "--c1Min 1.2307 "
+                                + "--c1Max 2.4918 "
+                                + "--c2Min 1.0697 "
+                                + "--c2Max 2.2493 "
+                                + "--localBestInitialization defaultLocalBestInitialization "
+                                + "--globalBestInitialization defaultGlobalBestInitialization "
+                                + "--globalBestSelection binaryTournament "
+                                + "--globalBestUpdate defaultGlobalBestUpdate "
+                                + "--localBestUpdate defaultLocalBestUpdate "
+                                + "--positionUpdate defaultPositionUpdate "
+                                + "--velocityChangeWhenLowerLimitIsReached -0.8592 "
+                                + "--velocityChangeWhenUpperLimitIsReached -0.6444")
+                                .split("\\s+");
+                AutoMOPSO AutoMOPSOw = new AutoMOPSO();
+                AutoMOPSOw.parseAndCheckParameters(parametersAutoMOPSOwWithtConfig);
+                ParticleSwarmOptimizationAlgorithm automopsow = AutoMOPSOw.create();
+
+                algorithms.add(
+                        new ExperimentAlgorithm<>(automopsow, "AMOPSOw", experimentProblem, run));
             }
 
         }
