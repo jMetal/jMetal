@@ -6,9 +6,7 @@ import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 
 public class DifferentialEvolutionCrossoverParameter extends CategoricalParameter {
   public DifferentialEvolutionCrossoverParameter(String[] args) {
-    super(
-        "differentialEvolutionCrossover",
-        args,
+    this(args,
         List.of(
             "RAND_1_BIN",
             "RAND_1_EXP",
@@ -21,6 +19,11 @@ public class DifferentialEvolutionCrossoverParameter extends CategoricalParamete
             "RAND_TO_BEST_1_EXP",
             "CURRENT_TO_RAND_1_BIN",
             "CURRENT_TO_RAND_1_EXP"));
+  }
+
+  public DifferentialEvolutionCrossoverParameter(String[] args, List<String> variants) {
+    super(
+        "differentialEvolutionCrossover", args, variants);
   }
 
   public DifferentialEvolutionCrossover getParameter() {

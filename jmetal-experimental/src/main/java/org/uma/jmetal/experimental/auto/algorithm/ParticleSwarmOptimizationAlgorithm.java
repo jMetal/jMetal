@@ -185,4 +185,8 @@ public class ParticleSwarmOptimizationAlgorithm
   public Observable<Map<String, Object>> getObservable() {
     return observable;
   }
+
+  public void setTermination(Termination termination) {
+    this.termination = termination ;
+  }
 }

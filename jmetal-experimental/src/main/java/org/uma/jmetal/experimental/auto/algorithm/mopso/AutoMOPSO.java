@@ -223,11 +223,15 @@ public class AutoMOPSO {
     return velocityUpdateParameter;
   }
 
+  protected Problem<DoubleSolution> getProblem() {
+    return ProblemUtils.loadProblem(problemNameParameter.getValue());
+  }
+
   /**
    * Create an instance of MOPSO from the parsed parameters
    */
   public ParticleSwarmOptimizationAlgorithm create() {
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = getProblem() ;
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
     String referenceFrontFileName = referenceFrontFilenameParameter.getValue();
