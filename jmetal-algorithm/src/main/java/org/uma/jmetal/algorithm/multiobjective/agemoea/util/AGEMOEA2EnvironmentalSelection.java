@@ -11,6 +11,11 @@ import java.util.stream.IntStream;
 
 import static java.util.Arrays.stream;
 
+/**
+ * Environmental Selection used in AGE-MOEA (Adaptive GEometry-based Many-Objective Evolutionary Algorithm)
+ *
+ * @author Annibale Panichella
+ */
 public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
     private static String attributeId = AGEMOEA2EnvironmentalSelection.class.getName();
     private double P;
@@ -25,12 +30,13 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
     public List execute(List<S> solutionList, int solutionsToSelect) throws JMetalException {
         Ranking<S> ranking = new FastNonDominatedSortRanking<>() ;
         ranking.compute(solutionList) ;
-        return survivalScore(ranking, solutionsToSelect);
+        return selectFromFronts(ranking, solutionsToSelect);
     }
 
-    protected List<S> survivalScore(Ranking<S> ranking, int solutionsToSelect) {
+    protected List<S> selectFromFronts(Ranking<S> ranking, int solutionsToSelect) {
         List<S> population = new ArrayList<>(solutionsToSelect) ;
 
+        // Apply the survival score for the first front
         this.computeSurvivalScore(ranking.getSubFront(0));
         if (ranking.getSubFront(0).size() <= solutionsToSelect){
             population.addAll(ranking.getSubFront(0));
@@ -39,6 +45,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
             population.addAll(ranking.getSubFront(0).subList(0, solutionsToSelect));
         }
 
+        // Apply the proximity score for the remaining front
         int rankingIndex = 1;
         while (population.size() < solutionsToSelect) {
             this.assignConvergenceScore(ranking.getSubFront(rankingIndex));
@@ -55,6 +62,10 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         return population ;
     }
 
+    /**
+     * This method compute/assigns the survival scores to the solutions in the given front
+     * @param front
+     */
     public void computeSurvivalScore(List<S> front){
         // list to keep track of solutions selected when assigning the survival scores
         List<Integer> selected = new ArrayList<>();
@@ -65,7 +76,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         // find extreme points
         List<S> extreme_points = this.findExtremes(front);
 
-        // set crowding distance for
+        // set crowding distance for extreme points
         for (S extreme : extreme_points){
             for (int index = 0; index<front.size(); index++){
                 if (extreme == front.get(index)){
@@ -75,6 +86,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
             }
         }
 
+        // compute intercepts for small fronts
         if (front.size() <= this.numberOfObjectives){
             intercepts = new ArrayList<>();
             for(int i=0; i<this.numberOfObjectives; i++){
@@ -91,7 +103,6 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
 
         // normalize the front
         List<double[]> normalizedFront = new ArrayList<>();
-
         intercepts = constructHyperplane(front, extreme_points);
 
         for (int i=0; i<front.size(); i++){
@@ -112,7 +123,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
             nn[i] = minkowskiDistance(normalizedFront.get(i), utopia, P);
         }
 
-        // Survival Score
+        // Diversity Score
         double[][] distances = new double[normalizedFront.size()][normalizedFront.size()];
         for (int i=0; i<normalizedFront.size()-1; i++){
             for (int j=i; j<normalizedFront.size(); j++){
@@ -124,6 +135,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
             }
         }
 
+        // Survival Score
         List<Integer> remaining = IntStream.range(0, front.size()).boxed().collect(Collectors.toList());
         remaining.removeAll(selected);
         while (remaining.size() > 0){
@@ -135,6 +147,12 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         }
     }
 
+    /**
+     * This method compute the front/shape of the front using the central point as the reference point
+     * @param normalizedFront normalized non-dominated front
+     * @param extremePoints extreme points of the non-dominated front
+     * @return
+     */
     protected double computeGeometry(List<double[]> normalizedFront, List<Integer> extremePoints) {
         // nadir point
         double[] nadir = new double[this.numberOfObjectives];
@@ -167,10 +185,9 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         try {
             average = stream(centralPoint).sum() / numberOfObjectives;
         } catch(Exception e){
-            System.out.println(centralPoint);
+            return 1; // in case of errors, we assume the front to be flat
         }
         double p = Math.log(this.numberOfObjectives) / Math.log(1.0 / average) ;
-        //System.out.println(p);
 
         if (Double.isNaN(p) || p <0.10 || Double.isInfinite(p))
             p = 1;
@@ -178,6 +195,11 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         return p;
     }
 
+    /**
+     * This method assigns only the convergence/proximity score to solution in the non-dominated front.
+     * This score is assigned to non-dominated fronts with ranking index > 0
+     * @param front
+     */
     protected void assignConvergenceScore(List<S> front){
         double[] idealPoint = new double[this.numberOfObjectives];
         for (S solution : front){
@@ -190,6 +212,11 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         }
     }
 
+    /**
+     * This method finds the extreme points in the non-dominated front using point to line (axes) distance
+     * @param front the non-dominated front under analysis
+     * @return the extreme solutions in the front
+     */
     protected List<S> findExtremes(List<S> front) {
         List<S> extremePoints = new ArrayList<>();
         for (int i=0; i<this.numberOfObjectives; i++){
@@ -243,6 +270,13 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
     }
 
 
+    /**
+     * This method compute the point to line distance
+     * @param P point to consider
+     * @param A First point delimiting the line (direction)
+     * @param B Second point delimiting the line (direction)
+     * @return the perpendicular distance between P and the line AB
+     */
     public double point2LineDistance(double[] P, double[] A, double[] B) {
         double[] pa = new double[P.length];
         double[] ba = new double[P.length];
@@ -261,6 +295,12 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         return Math.sqrt(d);
     }
 
+    /**
+     * Small method to compute the dot product between to input arrays/vectors
+     * @param array1 First vector
+     * @param array2 Second vector
+     * @return the doc product
+     */
     protected double dotProduct(double[] array1, double[] array2){
         double sum = 0;
         for (int i = 0; i < array1.length; i++) {
