@@ -2,17 +2,13 @@ package org.uma.jmetal.example.multiobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
-import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
-import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.operator.selection.SelectionOperator;
-import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
