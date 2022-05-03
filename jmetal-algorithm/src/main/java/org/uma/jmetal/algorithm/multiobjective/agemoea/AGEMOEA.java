@@ -9,7 +9,14 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
-
+/**
+ * Implementation of AGE-MOEA (Adaptive GEometry-based Many-objective Evolutionary Algorithm).
+ *
+ * Reference: A. Panichella, "An adaptive evolutionary algorithm based on non-Euclidean geometry for
+ * many-objective optimization", Proceedings of the Genetic and Evolutionary Computation Conference (GECCO). 2019.
+ *
+ * @author Annibale Panichella
+ */
 public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
   protected int iterations ;
   protected int maxIterations ;
@@ -88,13 +95,10 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
-
     List<S> jointPopulation = new ArrayList<>();
     jointPopulation.addAll(population) ;
     jointPopulation.addAll(offspringPopulation) ;
 
-    //Ranking<S> ranking = new FastNonDominatedSortRanking<S>(new RankingAndCrowdingDistanceComparator<>());
-    //ranking.compute(jointPopulation) ;
 
     AGEMOEA2EnvironmentalSelection<S> environmentalSelection;
     environmentalSelection = new AGEMOEA2EnvironmentalSelection(getProblem().getNumberOfObjectives());
@@ -126,6 +130,8 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
     population = createInitialPopulation();
     population = evaluatePopulation(population);
+
+    // compute the survival score for the initial population
     population = replacement(population, new ArrayList<>());
     initProgress();
     while (!isStoppingConditionReached()) {
