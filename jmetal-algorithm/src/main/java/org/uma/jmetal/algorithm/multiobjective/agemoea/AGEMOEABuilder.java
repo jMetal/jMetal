@@ -13,7 +13,12 @@ import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
 
-/** Builder class */
+/**
+ * Builder class for AGE-MOEA
+ *
+ * @author Annibale Panichella
+ * @version 1.0
+ */
 public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<AGEMOEA<S>>{
   // no access modifier means access from classes within the same package
   private Problem<S> problem ;
