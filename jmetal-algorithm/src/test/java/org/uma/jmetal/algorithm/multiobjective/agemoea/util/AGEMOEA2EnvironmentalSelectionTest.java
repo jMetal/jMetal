@@ -136,7 +136,7 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
         ranking.compute(front) ;
 
         AGEMOEA2EnvironmentalSelection es = new AGEMOEA2EnvironmentalSelection( 2);
-        List<DefaultDoubleSolution> selected = es.survivalScore(ranking, 4);
+        List<DefaultDoubleSolution> selected = es.selectFromFronts(ranking, 4);
 
         assertEquals(4, selected.size());
         assertEquals(front.get(0).objectives(), selected.get(0).objectives());
