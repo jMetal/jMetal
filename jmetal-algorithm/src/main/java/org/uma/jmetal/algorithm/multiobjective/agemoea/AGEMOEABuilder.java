@@ -2,9 +2,11 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
+import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -29,6 +31,7 @@ public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<A
     maxIterations = 250 ;
     populationSize = 100 ;
     evaluator = new SequentialSolutionListEvaluator<S>() ;
+    selectionOperator = new BinaryTournamentSelection<>(new SurvivalScoreComparator<>());
   }
 
   public AGEMOEABuilder<S> setMaxIterations(int maxIterations) {
@@ -51,12 +54,6 @@ public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<A
 
   public AGEMOEABuilder<S> setMutationOperator(MutationOperator<S> mutationOperator) {
     this.mutationOperator = mutationOperator ;
-
-    return this ;
-  }
-
-  public AGEMOEABuilder<S> setSelectionOperator(SelectionOperator<List<S>, S> selectionOperator) {
-    this.selectionOperator = selectionOperator ;
 
     return this ;
   }

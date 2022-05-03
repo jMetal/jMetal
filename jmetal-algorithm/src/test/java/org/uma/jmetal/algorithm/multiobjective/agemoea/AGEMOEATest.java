@@ -51,7 +51,6 @@ public class AGEMOEATest {
                 new AGEMOEABuilder<>(problem)
                         .setCrossoverOperator(crossover)
                         .setMutationOperator(mutation)
-                        .setSelectionOperator(selection)
                         .setMaxIterations(250)
                         .setPopulationSize(populationSize)
                         .build();
@@ -88,7 +87,6 @@ public class AGEMOEATest {
                 new AGEMOEABuilder<>(problem)
                         .setCrossoverOperator(crossover)
                         .setMutationOperator(mutation)
-                        .setSelectionOperator(selection)
                         .setMaxIterations(250)
                         .setPopulationSize(populationSize)
                         .build();
@@ -132,7 +130,6 @@ public class AGEMOEATest {
                 new AGEMOEABuilder<>(problem)
                         .setCrossoverOperator(crossover)
                         .setMutationOperator(mutation)
-                        .setSelectionOperator(selection)
                         .setMaxIterations(250)
                         .setPopulationSize(populationSize)
                         .build();

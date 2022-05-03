@@ -34,7 +34,6 @@ public class AGEMOEARunner extends AbstractAlgorithmRunner {
     Algorithm<List<DoubleSolution>> algorithm;
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
 
     problem = new DTLZ1();
 
@@ -46,13 +45,11 @@ public class AGEMOEARunner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<>(new SurvivalScoreComparator<>());
 
     algorithm =
         new AGEMOEABuilder<>(problem)
             .setCrossoverOperator(crossover)
             .setMutationOperator(mutation)
-            .setSelectionOperator(selection)
             .setMaxIterations(300)
             .setPopulationSize(200)
             .build();
