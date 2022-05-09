@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
-import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEA2EnvironmentalSelection;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -100,8 +100,8 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation) ;
 
 
-    AGEMOEA2EnvironmentalSelection<S> environmentalSelection;
-    environmentalSelection = new AGEMOEA2EnvironmentalSelection(getProblem().getNumberOfObjectives());
+    AGEMOEAEnvironmentalSelection<S> environmentalSelection;
+    environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().getNumberOfObjectives());
 
     return environmentalSelection.execute(jointPopulation, maxPopulationSize);
   }

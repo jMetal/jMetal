@@ -21,14 +21,14 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  */
 public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<AGEMOEA<S>>{
   // no access modifier means access from classes within the same package
-  private Problem<S> problem ;
-  private int maxIterations ;
-  private int populationSize ;
-  private CrossoverOperator<S> crossoverOperator ;
-  private MutationOperator<S> mutationOperator ;
-  private SelectionOperator<List<S>, S> selectionOperator ;
+  protected Problem<S> problem ;
+  protected int maxIterations ;
+  protected int populationSize ;
+  protected CrossoverOperator<S> crossoverOperator ;
+  protected MutationOperator<S> mutationOperator ;
+  protected SelectionOperator<List<S>, S> selectionOperator ;
 
-  private SolutionListEvaluator<S> evaluator ;
+  protected SolutionListEvaluator<S> evaluator ;
 
   /** Builder constructor */
   public AGEMOEABuilder(Problem<S> problem) {
