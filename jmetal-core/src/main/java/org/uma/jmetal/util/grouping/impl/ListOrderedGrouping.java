@@ -11,7 +11,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * Class that groups a list of {@link Comparable} entities by ascending order. The number of
  * groups is a constructor parameter and the group size is computed by dividing the list size
  * by the number of groups. If the remainder of this division is not zero, the last group will
- * contains the remaining index values (so, its size would be higher than the size of the rest of
+ * contain the remaining index values (so, its size would be higher than the size of the rest of
  * groups).
  *
  * @author Antonio J. Nebro
