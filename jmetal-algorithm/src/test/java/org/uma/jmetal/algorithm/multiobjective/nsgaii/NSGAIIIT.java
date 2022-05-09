@@ -68,10 +68,8 @@ public class NSGAIIIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm =
-            new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
-                    .setArchive(new CrowdingDistanceArchive<>(100))
-                    .build();
+    int populationSize = 100 ;
+    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).build();
 
     algorithm.run();
 
