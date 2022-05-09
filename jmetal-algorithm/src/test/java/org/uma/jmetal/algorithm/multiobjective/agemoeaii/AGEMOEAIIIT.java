@@ -80,9 +80,6 @@ public class AGEMOEAIIIT {
         double mutationDistributionIndex = 20.0;
         mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-        SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
-                new SurvivalScoreComparator<>());
-
         int populationSize = 100;
         algorithm =
                 new AGEMOEAIIBuilder<>(problem)
@@ -125,8 +122,6 @@ public class AGEMOEAIIIT {
         double mutationDistributionIndex = 20.0;
         mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-        SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<>(
-                new SurvivalScoreComparator<>());
 
         int populationSize = 100;
         algorithm =
