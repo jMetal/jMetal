@@ -15,7 +15,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.PenaltyBoundaryIntersection;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
