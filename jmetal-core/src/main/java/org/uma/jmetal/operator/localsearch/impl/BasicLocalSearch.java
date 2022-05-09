@@ -85,10 +85,8 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
       if (best == -1) {
         solution = mutatedSolution;
         numberOfImprovements++;
-      } else if (best == 0) {
-        if (randomGenerator.getRandomValue() < 0.5) {
+      } else if ((best == 0) && (randomGenerator.getRandomValue() < 0.5)) {
           solution = mutatedSolution;
-        }
       }
       i++;
     }
