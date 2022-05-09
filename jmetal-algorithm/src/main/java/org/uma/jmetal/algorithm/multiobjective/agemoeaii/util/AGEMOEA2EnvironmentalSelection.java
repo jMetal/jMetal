@@ -114,18 +114,20 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
 
     @Override
     protected double[][] pairwiseDistances(List<double[]> normalizedFront, double p) {
+        // projecting the non-dominated front on the Lp manifold
         for (int i = 0; i < normalizedFront.size(); i++) {
             normalizedFront.set(i, this.projectPoint(normalizedFront.get(i), p));
         }
 
+        // approximating the geodesic distance
         double[][] distances = new double[normalizedFront.size()][normalizedFront.size()];
         for (int i = 0; i < normalizedFront.size() - 1; i++) {
             for (int j = i + 1; j < normalizedFront.size(); j++) {
                 double[] midpoint = this.midPoint(normalizedFront.get(i), normalizedFront.get(j));
                 midpoint = this.projectPoint(midpoint, P);
 
-                distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), midpoint, P) +
-                        this.minkowskiDistance(midpoint, normalizedFront.get(j), P);
+                distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), midpoint, 2) +
+                        this.minkowskiDistance(midpoint, normalizedFront.get(j), 2);
                 distances[j][i] = distances[i][j];
             }
         }
