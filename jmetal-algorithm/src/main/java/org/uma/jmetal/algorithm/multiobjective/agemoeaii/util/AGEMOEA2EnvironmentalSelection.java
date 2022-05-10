@@ -49,6 +49,9 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
             }
         }
 
+        if (referencePoint == null)
+            return 1.0;
+
         double p = findZero(referencePoint, 0.001);
 
         if (Double.isNaN(p) || p < 0.10 || Double.isInfinite(p))
@@ -58,7 +61,7 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
     }
 
     /**
-     * Newton Raphson method for Lp curves
+     * Newton-Raphson method for Lp curves
      * @param referencePoint Point used to compute the Lp curvature
      * @param precision delta-error (precision) used as stopping-condition
      * @return the value of p (front curvature)
@@ -87,7 +90,13 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
         return x;
     }
 
-    private double derivativeFunction(double[] referencePoint, double x) {
+    /**
+     * Derivative function for teh Lp manifold. This method is used by the Newton-Raphson method
+     * @param referencePoint reference point used for the estimating the Lp curvature
+     * @param x
+     * @return value of the derivative for Lp with p=x
+     */
+    protected double derivativeFunction(double[] referencePoint, double x) {
         double numerator = 0.0;
         double denominator = 0.0;
 
@@ -104,10 +113,16 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
         return numerator / denominator;
     }
 
-    protected double originalFunction(double[] point, double p) {
+    /**
+     * Function used by the Newton-Raphson method
+     * @param point reference point used for the estimating the Lp curvature
+     * @param x
+     * @return value of the derivative for Lp with p=x
+     */
+    protected double originalFunction(double[] point, double x) {
         double f = 0.0;
         for (int i = 0; i < point.length; i++) {
-            f += Math.pow(Math.abs(point[i]), p);
+            f += Math.pow(Math.abs(point[i]), x);
         }
         return Math.log(f);
     }
@@ -134,6 +149,12 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
         return distances;
     }
 
+    /**
+     * This method project a given point into the Lp manifold
+     * @param point point to project
+     * @param p curvature of the Lp manifold
+     * @return projected point
+     */
     protected double[] projectPoint(double[] point, double p) {
         double[] projection = point.clone();
         double dist = minkowskiDistance(point, ZERO, p);
@@ -143,6 +164,12 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
         return projection;
     }
 
+    /**
+     * Utility function that returns the middle point on the line connecting the two points A and B
+     * @param A first extreme
+     * @param B second extreme
+     * @return middle point
+     */
     protected double[] midPoint(double[] A, double[] B) {
         double[] midpoint = new double[A.length];
         for (int i = 0; i < A.length; i++)
