@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotSame;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;

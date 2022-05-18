@@ -1,7 +1,5 @@
 package org.uma.jmetal.util.comparator.dominanceComparator.impl;
 
-import java.io.Serializable;
-import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
