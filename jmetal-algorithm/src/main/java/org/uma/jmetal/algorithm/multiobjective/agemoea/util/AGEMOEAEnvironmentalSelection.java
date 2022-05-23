@@ -16,14 +16,14 @@ import static java.util.Arrays.stream;
  *
  * @author Annibale Panichella
  */
-public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
-    private static String attributeId = AGEMOEA2EnvironmentalSelection.class.getName();
-    private double P;
-    private List<Double> intercepts;
-    private int numberOfObjectives;
+public class AGEMOEAEnvironmentalSelection<S extends Solution<?>> {
+    protected static String attributeId = AGEMOEAEnvironmentalSelection.class.getName();
+    protected double P;
+    protected List<Double> intercepts;
+    protected int numberOfObjectives;
 
 
-    public AGEMOEA2EnvironmentalSelection(int numberOfObjectives) {
+    public AGEMOEAEnvironmentalSelection(int numberOfObjectives) {
         this.numberOfObjectives = numberOfObjectives;
     }
 
@@ -76,6 +76,13 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         // find extreme points
         List<S> extreme_points = this.findExtremes(front);
 
+        if (extreme_points.size() == 0) {
+            for (S s : front){
+                s.attributes().put(attributeId, 0.0);
+            }
+            return;
+        }
+
         // set crowding distance for extreme points
         for (S extreme : extreme_points){
             for (int index = 0; index<front.size(); index++){
@@ -124,14 +131,11 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         }
 
         // Diversity Score
-        double[][] distances = new double[normalizedFront.size()][normalizedFront.size()];
-        for (int i=0; i<normalizedFront.size()-1; i++){
-            for (int j=i; j<normalizedFront.size(); j++){
-                distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), normalizedFront.get(j), P);
-                distances[j][i] = distances[i][j];
+        double[][] distances = pairwiseDistances(normalizedFront, P);
 
+        for (int i=0; i<normalizedFront.size(); i++) {
+            for (int j = 0; j < normalizedFront.size(); j++) {
                 distances[i][j] /= nn[i];
-                distances[j][i] /= nn[j];
             }
         }
 
@@ -145,6 +149,17 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
             selected.add(index);
             front.get(index).attributes().put(attributeId, values[1]);
         }
+    }
+
+    protected double[][] pairwiseDistances(List<double[]> normalizedFront, double P) {
+        double[][] distances = new double[normalizedFront.size()][normalizedFront.size()];
+        for (int i = 0; i< normalizedFront.size()-1; i++){
+            for (int j = i+1; j< normalizedFront.size(); j++){
+                distances[i][j] = this.minkowskiDistance(normalizedFront.get(i), normalizedFront.get(j), P);
+                distances[j][i] = distances[i][j];
+            }
+        }
+        return distances;
     }
 
     /**
@@ -205,7 +220,8 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
         for (S solution : front){
             double[] normalizedObjective = solution.objectives().clone();
             for(int i=0; i<this.numberOfObjectives; i++){
-                normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
+                if (intercepts != null && intercepts.size() == 0)
+                    normalizedObjective[i] = normalizedObjective[i] / intercepts.get(i);
             }
             double value =  this.minkowskiDistance(normalizedObjective, idealPoint, P);
             solution.attributes().put(attributeId, value);
@@ -232,12 +248,13 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> {
                     minIndex = j;
                 }
             }
-            extremePoints.add(front.get(minIndex));
+            if (minIndex != -1)
+                extremePoints.add(front.get(minIndex));
         }
         return extremePoints;
     }
 
-    private double[] findMoreDiverseSolution(double[][] distances, List<Integer> selected, List<Integer> remaining) {
+    protected double[] findMoreDiverseSolution(double[][] distances, List<Integer> selected, List<Integer> remaining) {
         double bestValue = 0;
         int bestIndex = -1;
 
