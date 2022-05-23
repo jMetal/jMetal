@@ -33,8 +33,8 @@ public class SurvivalScoreComparator<S extends Solution<?>> implements Comparato
         if (ranking.getRank(solution1) > ranking.getRank(solution2))
             return +1;
 
-        double distance1 = (double) solution1.attributes().get(AGEMOEA2EnvironmentalSelection.getAttributeId());
-        double distance2 = (double) solution2.attributes().get(AGEMOEA2EnvironmentalSelection.getAttributeId());
+        double distance1 = (double) solution1.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId());
+        double distance2 = (double) solution2.attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId());
 
         if (distance1 > distance2) {
            return -1;

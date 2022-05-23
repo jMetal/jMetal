@@ -1,31 +1,30 @@
-package org.uma.jmetal.algorithm.multiobjective.agemoea;
+package org.uma.jmetal.algorithm.multiobjective.agemoeaii;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEA;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
+import org.uma.jmetal.algorithm.multiobjective.agemoeaii.util.AGEMOEA2EnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Implementation of AGE-MOEA (Adaptive GEometry-based Many-objective Evolutionary Algorithm).
+ * Implementation of AGE-MOEA-II (Adaptive GEometry-based Many-objective Evolutionary Algorithm II).
  *
- * Reference: A. Panichella, "An adaptive evolutionary algorithm based on non-Euclidean geometry for
- * many-objective optimization", Proceedings of the Genetic and Evolutionary Computation Conference (GECCO). 2019.
+ * Reference: A. Panichella, "An Improved Pareto Front Modeling Algorithm for Large-scale Many-Objective Optimization",
+ * Proceedings of the Genetic and Evolutionary Computation Conference (GECCO). 2022.
  *
  * @author Annibale Panichella
  */
-public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, List<S>> {
-  protected int iterations ;
-  protected int maxIterations ;
-
+public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
   protected SolutionListEvaluator<S> evaluator ;
 
   /** Constructor */
-  public AGEMOEA(AGEMOEABuilder<S> builder) { // can be created from the NSGAIIIBuilder within the same package
-    super(builder.getProblem()) ;
+  public AGEMOEAII(AGEMOEAIIBuilder<S> builder) { // can be created from the AGEMOEAIIBuilder within the same package
+    super((AGEMOEABuilder<S>) builder) ;
     maxIterations = builder.getMaxIterations() ;
     crossoverOperator =  builder.getCrossoverOperator() ;
     mutationOperator  =  builder.getMutationOperator() ;
@@ -100,8 +99,8 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
     jointPopulation.addAll(offspringPopulation) ;
 
 
-    AGEMOEAEnvironmentalSelection<S> environmentalSelection;
-    environmentalSelection = new AGEMOEAEnvironmentalSelection(getProblem().getNumberOfObjectives());
+    AGEMOEA2EnvironmentalSelection<S> environmentalSelection;
+    environmentalSelection = new AGEMOEA2EnvironmentalSelection(getProblem().getNumberOfObjectives());
 
     return environmentalSelection.execute(jointPopulation, maxPopulationSize);
   }
@@ -116,11 +115,11 @@ public class AGEMOEA<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
   }
 
   @Override public String getName() {
-    return "AGE-MOEA" ;
+    return "AGE-MOEA-II" ;
   }
 
   @Override public String getDescription() {
-    return "Adaptive Geometry Estimation based MOEA" ;
+    return "Adaptive Geometry Estimation based MOEA II" ;
   }
 
   @Override

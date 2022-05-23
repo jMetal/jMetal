@@ -1,7 +1,8 @@
-package org.uma.jmetal.algorithm.multiobjective.agemoea;
+package org.uma.jmetal.algorithm.multiobjective.agemoeaii;
 
-import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEA;
+import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -12,6 +13,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
+import java.util.List;
+
 
 /**
  * Builder class for AGE-MOEA
@@ -19,19 +22,13 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  * @author Annibale Panichella
  * @version 1.0
  */
-public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<AGEMOEA<S>>{
-  // no access modifier means access from classes within the same package
-  protected Problem<S> problem ;
-  protected int maxIterations ;
-  protected int populationSize ;
-  protected CrossoverOperator<S> crossoverOperator ;
-  protected MutationOperator<S> mutationOperator ;
-  protected SelectionOperator<List<S>, S> selectionOperator ;
+public class AGEMOEAIIBuilder<S extends Solution<?>> extends AGEMOEABuilder<S> {
 
   protected SolutionListEvaluator<S> evaluator ;
 
   /** Builder constructor */
-  public AGEMOEABuilder(Problem<S> problem) {
+  public AGEMOEAIIBuilder(Problem<S> problem) {
+    super(problem);
     this.problem = problem ;
     maxIterations = 250 ;
     populationSize = 100 ;
@@ -39,31 +36,31 @@ public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<A
     selectionOperator = new BinaryTournamentSelection<>(new SurvivalScoreComparator<>());
   }
 
-  public AGEMOEABuilder<S> setMaxIterations(int maxIterations) {
+  public AGEMOEAIIBuilder<S> setMaxIterations(int maxIterations) {
     this.maxIterations = maxIterations ;
 
     return this ;
   }
 
-  public AGEMOEABuilder<S> setPopulationSize(int populationSize) {
+  public AGEMOEAIIBuilder<S> setPopulationSize(int populationSize) {
     this.populationSize = populationSize ;
 
     return this ;
   }
 
-  public AGEMOEABuilder<S> setCrossoverOperator(CrossoverOperator<S> crossoverOperator) {
+  public AGEMOEAIIBuilder<S> setCrossoverOperator(CrossoverOperator<S> crossoverOperator) {
     this.crossoverOperator = crossoverOperator ;
 
     return this ;
   }
 
-  public AGEMOEABuilder<S> setMutationOperator(MutationOperator<S> mutationOperator) {
+  public AGEMOEAIIBuilder<S> setMutationOperator(MutationOperator<S> mutationOperator) {
     this.mutationOperator = mutationOperator ;
 
     return this ;
   }
 
-  public AGEMOEABuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
+  public AGEMOEAIIBuilder<S> setSolutionListEvaluator(SolutionListEvaluator<S> evaluator) {
     this.evaluator = evaluator ;
 
     return this ;
@@ -97,7 +94,7 @@ public class AGEMOEABuilder<S extends Solution<?>> implements AlgorithmBuilder<A
     return selectionOperator;
   }
 
-  public AGEMOEA<S> build() {
-    return new AGEMOEA<>(this) ;
+  public AGEMOEAII<S> build() {
+    return new AGEMOEAII(this) ;
   }
 }
