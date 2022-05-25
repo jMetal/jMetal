@@ -61,7 +61,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     operators_desirability = new double[operators_num];
     operators_use = new double[operators_num];
     window_size = (int) Math.ceil(3.33333 * operators_num);
-    System.out.println("Window size: " + window_size);
+    //System.out.println("Window size: " + window_size);
     for (int x = 0; x < operators_num; x++) {
       operators_desirability[x] = (1.0);
       operators_use[x] = 0.0;
@@ -135,7 +135,7 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     rulebase.addRule(
         new T1_Rule(new T1_Antecedent[] {lowStagnation, lowOperatoruse}, lowProbability));
     // print out the rules
-    System.out.println("\n" + rulebase);
+    //System.out.println("\n" + rulebase);
   }
 
   @Override
