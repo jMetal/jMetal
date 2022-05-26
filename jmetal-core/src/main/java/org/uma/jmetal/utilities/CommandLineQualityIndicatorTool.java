@@ -79,17 +79,17 @@ public class CommandLineQualityIndicatorTool {
 
     if (!args[0].equals("ALL")) {
       QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
-      System.out.println(indicator.compute(normalizedFront));
+      JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
     } else {
       for (QualityIndicator indicator : indicatorList) {
-        System.out.println(indicator.getName() + ": " + indicator.compute(normalizedFront));
+        JMetalLogger.logger.info(() -> indicator.getName() + ": " + indicator.compute(normalizedFront));
       }
 
       SetCoverage sc = new SetCoverage();
       JMetalLogger.logger.info(
-          "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
+          () -> "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
       JMetalLogger.logger.info(
-          "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
+          () -> "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
     }
   }
 }
