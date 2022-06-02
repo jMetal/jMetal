@@ -7,8 +7,8 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
 /**
  * Applies a binary tournament selection to return the best solution between two that have been
  * chosen at random from a solution list.
- * Modified by Juanjo in 13.03.2015. A binary tournament is now a TournamenteSelection with 2 
- * tournaments
+ * Modified by Juanjo in 13.03.2015. A binary tournament is now a {@link NaryTournamentSelection}
+ * with tournament size equals to 2
  *
  * @author Antonio J. Nebro, Juan J. Durillo
  */

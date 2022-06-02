@@ -64,8 +64,7 @@ public class ParallelSPEA2Runner extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     selection =
-        new BinaryTournamentSelection<DoubleSolution>(
-            new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+        new BinaryTournamentSelection<DoubleSolution>();
 
     evaluator = new MultiThreadedSolutionListEvaluator<DoubleSolution>(0);
 

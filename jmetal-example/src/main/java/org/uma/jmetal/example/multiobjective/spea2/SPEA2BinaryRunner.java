@@ -59,7 +59,7 @@ public class SPEA2BinaryRunner extends AbstractAlgorithmRunner {
     double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
     mutation = new BitFlipMutation(mutationProbability) ;
 
-    selection = new BinaryTournamentSelection<BinarySolution>(new RankingAndCrowdingDistanceComparator<BinarySolution>());
+    selection = new BinaryTournamentSelection<BinarySolution>();
 
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)
         .setSelectionOperator(selection)

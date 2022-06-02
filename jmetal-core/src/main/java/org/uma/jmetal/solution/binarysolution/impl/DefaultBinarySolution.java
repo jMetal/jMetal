@@ -1,5 +1,6 @@
 package org.uma.jmetal.solution.binarysolution.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.uma.jmetal.solution.AbstractSolution;
@@ -49,13 +50,8 @@ public class DefaultBinarySolution
       variables().set(i, (BinarySet) solution.variables().get(i).clone());
     }
 
-    for (int i = 0; i < objectives().length; i++) {
-      objectives()[i] = solution.objectives()[i];
-    }
-
-    for (int i = 0; i < constraints().length; i++) {
-      constraints()[i] =  solution.constraints()[i];
-    }
+    Arrays.setAll(objectives(), i -> solution.objectives()[i]);
+    Arrays.setAll(constraints(), i -> solution.constraints()[i]);
 
     attributes = new HashMap<>(solution.attributes);
   }

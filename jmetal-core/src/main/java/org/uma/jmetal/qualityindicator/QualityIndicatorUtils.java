@@ -67,7 +67,7 @@ public class QualityIndicatorUtils {
 
     List<QualityIndicator> qualityIndicators = getAvailableIndicators(normalizedReferenceFront) ;
     for (QualityIndicator indicator: qualityIndicators) {
-      JMetalLogger.logger.info(indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
+      JMetalLogger.logger.info(() ->indicator.getName() + ": " + indicator.compute(normalizedFront)) ;
     }
   }
 }

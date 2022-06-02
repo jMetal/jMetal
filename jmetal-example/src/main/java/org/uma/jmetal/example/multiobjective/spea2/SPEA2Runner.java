@@ -52,8 +52,8 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+      referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -66,11 +66,11 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxIterations(500)
             .setPopulationSize(100)
             .setK(1)
             .build();
