@@ -1,8 +1,7 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.function.Function;
+import org.uma.jmetal.util.errorchecking.Check;
 
 public class StringParameter extends Parameter<String> {
   public StringParameter(String name, String[] args) {

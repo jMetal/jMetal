@@ -13,6 +13,7 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.moead.util.MOEADUtils;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -20,8 +21,6 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.CDGMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.List;
 
 /**
  *	Xinye Cai, Zhiwei Mei, Zhun Fan, Qingfu Zhang, 

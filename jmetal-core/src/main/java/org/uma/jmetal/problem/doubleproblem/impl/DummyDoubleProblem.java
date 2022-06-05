@@ -1,10 +1,9 @@
 package org.uma.jmetal.problem.doubleproblem.impl;
 
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Implementation of {@link DoubleProblem} that does nothing. Intended to be used in unit tests.

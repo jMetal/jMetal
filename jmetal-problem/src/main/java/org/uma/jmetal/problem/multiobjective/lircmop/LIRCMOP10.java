@@ -1,8 +1,8 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import static java.lang.Math.sqrt;
+
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /**
  * Class representing problem LIR-CMOP9, defined in: An Improved epsilon-constrained Method in

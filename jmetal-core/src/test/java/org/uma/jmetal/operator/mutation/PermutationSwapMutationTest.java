@@ -1,5 +1,8 @@
 package org.uma.jmetal.operator.mutation;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Random;
 import org.junit.Test;
 import org.uma.jmetal.operator.mutation.impl.PermutationSwapMutation;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
@@ -9,10 +12,6 @@ import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueExcept
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
-
-import java.util.Random;
-
-import static org.junit.Assert.assertTrue;
 
 public class PermutationSwapMutationTest {
 

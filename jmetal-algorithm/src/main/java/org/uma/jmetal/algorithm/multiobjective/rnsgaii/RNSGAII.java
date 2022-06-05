@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.rnsgaii;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -8,7 +10,7 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.RankingAndPreferenceSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.measure.Measurable;
 import org.uma.jmetal.util.measure.MeasureManager;
@@ -16,9 +18,6 @@ import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
 import org.uma.jmetal.util.measure.impl.DurationMeasure;
 import org.uma.jmetal.util.measure.impl.SimpleMeasureManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
@@ -44,7 +43,7 @@ public class RNSGAII<S extends Solution<?>> extends NSGAII<S> implements
                  SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator,
                  List<Double> interestPoint, double epsilon) {
     super(problem,maxEvaluations, populationSize,matingPoolSize, offspringPopulationSize, crossoverOperator,
-            mutationOperator,selectionOperator, new DominanceComparator<S>(), evaluator);
+            mutationOperator,selectionOperator, new DominanceWithConstraintsComparator<S>(), evaluator);
     this.interestPoint = interestPoint;
     this.epsilon = epsilon;
 

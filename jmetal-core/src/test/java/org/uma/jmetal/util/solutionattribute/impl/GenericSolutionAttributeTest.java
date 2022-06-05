@@ -1,11 +1,14 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import static org.junit.Assert.*;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class GenericSolutionAttributeTest {

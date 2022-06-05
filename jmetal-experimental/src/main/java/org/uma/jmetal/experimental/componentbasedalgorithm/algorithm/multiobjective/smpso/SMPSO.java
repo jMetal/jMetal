@@ -1,5 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -7,15 +12,13 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.*;
 
 /**
  * This class implements the SMPSO algorithm described in: SMPSO: A new PSO-based metaheuristic for
@@ -139,7 +142,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     this.evaluation = evaluation;
     this.termination = termination;
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    dominanceComparator = new DominanceWithConstraintsComparator<DoubleSolution>();
     localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 

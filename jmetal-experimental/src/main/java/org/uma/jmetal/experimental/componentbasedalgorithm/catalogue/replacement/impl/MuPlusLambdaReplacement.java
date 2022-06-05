@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
-import org.uma.jmetal.solution.Solution;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * (mu + lambda) replacement. Given a population of size mu and an offspring population of size lambda,

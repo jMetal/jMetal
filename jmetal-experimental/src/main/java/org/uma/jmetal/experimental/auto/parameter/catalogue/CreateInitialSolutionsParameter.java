@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
+import java.util.List;
 import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
@@ -7,8 +8,6 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscr
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
-import java.util.List;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 

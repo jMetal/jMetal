@@ -1,11 +1,10 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.List;
 
 public abstract  class AbstractEvaluation<S extends Solution<?>> implements Evaluation<S> {
   private SolutionListEvaluator<S> evaluator ;

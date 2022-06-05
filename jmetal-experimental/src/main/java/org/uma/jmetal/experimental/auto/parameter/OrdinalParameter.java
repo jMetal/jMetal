@@ -1,8 +1,7 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.List;
+import org.apache.commons.lang3.tuple.Pair;
 
 public abstract class OrdinalParameter<T> extends Parameter<T> {
   private final List<T> validValues;

@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.moead;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -12,10 +15,6 @@ import org.uma.jmetal.problem.multiobjective.Tanaka;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.legacy.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 public class ConstraintMOEADIT {
 

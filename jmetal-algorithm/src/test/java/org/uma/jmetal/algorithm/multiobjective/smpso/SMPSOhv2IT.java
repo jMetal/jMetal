@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -13,10 +16,6 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHypervolume;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 public class SMPSOhv2IT {
   private Algorithm<List<DoubleSolution>> algorithm;

@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.singleobjective;
 
+import java.util.Comparator;
 import org.uma.jmetal.algorithm.impl.DefaultLocalSearch;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
@@ -7,9 +8,7 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.Comparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /**
  * Class to configure and run a single objective local search. The target problem is OneMax.
@@ -28,7 +27,7 @@ public class LocalSearchRunner {
 
     int improvementRounds = 10000 ;
 
-    Comparator<BinarySolution> comparator = new DominanceComparator<>() ;
+    Comparator<BinarySolution> comparator = new DominanceWithConstraintsComparator<>() ;
 
     DefaultLocalSearch<BinarySolution> localSearch = new DefaultLocalSearch<BinarySolution>(
             improvementRounds,

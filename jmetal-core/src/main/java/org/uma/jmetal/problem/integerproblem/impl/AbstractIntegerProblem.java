@@ -1,5 +1,8 @@
 package org.uma.jmetal.problem.integerproblem.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
@@ -7,10 +10,6 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("serial")
 public abstract class AbstractIntegerProblem extends AbstractGenericProblem<IntegerSolution>

@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -18,11 +21,7 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 
 /** Created by ajnebro on 11/6/15. */
 public class ABYSSIT {
@@ -47,7 +46,7 @@ public class ABYSSIT {
 
     archive = new CrowdingDistanceArchive<>(100);
 
-    localSearchOperator = new BasicLocalSearch<>(1, mutation, new DominanceComparator<>(), problem);
+    localSearchOperator = new BasicLocalSearch<>(1, mutation, new DominanceWithConstraintsComparator<>(), problem);
   }
 
   @Test

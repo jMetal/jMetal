@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.distance.impl;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.distance.Distance;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.distance.Distance;
 
 /**
  * Class for calculating the Euclidean distance between two {@link DoubleSolution} objects in solution space.

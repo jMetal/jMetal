@@ -1,9 +1,8 @@
 package org.uma.jmetal.parallel.asynchronous.multithreaded;
 
-import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Function;
+import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 
 public class Worker<T extends ParallelTask<?>> extends Thread {
   private BlockingQueue<T> completedTaskQueue;

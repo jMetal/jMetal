@@ -1,13 +1,12 @@
 package org.uma.jmetal.qualityindicator.impl.hypervolume.impl;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.uma.jmetal.util.VectorUtils;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Assert;
+import org.junit.Test;
+import org.uma.jmetal.util.VectorUtils;
 
 public class PISAHypervolumeTest {
   private final double EPSILON = 0.00000001;

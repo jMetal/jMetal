@@ -1,5 +1,10 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -7,8 +12,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
-
-import java.util.*;
 
 /**
  * Class implementing the CMA-ES algorithm

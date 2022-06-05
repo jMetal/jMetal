@@ -1,15 +1,14 @@
 package org.uma.jmetal.util.ranking.impl;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.comparator.DominanceComparator;
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.ranking.Ranking;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.ranking.Ranking;
 
 /**
  * This class implements a solution list ranking based on the strength concept defined in SPEA2. The
@@ -34,7 +33,7 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
   /** Constructor */
   public StrengthRanking() {
-    this(new DominanceComparator<>());
+    this(new DominanceWithConstraintsComparator<>());
   }
 
   @Override

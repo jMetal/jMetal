@@ -1,5 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
+import static org.junit.Assert.assertTrue;
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
@@ -18,11 +22,10 @@ import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
 public class NSGAIIIT {
   Algorithm<List<DoubleSolution>> algorithm;
@@ -42,7 +45,7 @@ public class NSGAIIIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     int populationSize = 100 ;
-    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).build() ;
+    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).setMaxEvaluations(25000).build() ;
 
     algorithm.run();
 
@@ -69,10 +72,9 @@ public class NSGAIIIT {
     double mutationDistributionIndex = 20.0 ;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
-    algorithm =
-            new MOCellBuilder<DoubleSolution>(problem, crossover, mutation)
-                    .setArchive(new CrowdingDistanceArchive<>(100))
-                    .build();
+    int populationSize = 100 ;
+
+    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).setMaxEvaluations(25000).build() ;
 
     algorithm.run();
 
@@ -105,7 +107,10 @@ public class NSGAIIIT {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     int populationSize  = 100 ;
-    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize).build() ;
+    algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
+        .setMaxEvaluations(25000)
+        .setDominanceComparator(new DominanceWithConstraintsComparator<>(new OverallConstraintViolationDegreeComparator<>()))
+        .build() ;
 
     algorithm.run();
 
@@ -113,20 +118,14 @@ public class NSGAIIIT {
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
-    printFinalSolutionSet(population);
-
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
-
-    // Rationale: the default problem is DTLZ1 (3 objectives), and MOMBI2, configured with standard settings, should
-    // return find a front with a hypervolume value higher than 0.96
 
     double[][] normalizedFront =
             NormalizeUtils.normalize(
                     SolutionListUtils.getMatrixWithObjectiveValues(population),
                     NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
                     NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
-
 
     double hv = hypervolume.compute(normalizedFront);
 

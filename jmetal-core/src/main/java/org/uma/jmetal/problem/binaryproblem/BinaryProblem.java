@@ -1,9 +1,8 @@
 package org.uma.jmetal.problem.binaryproblem;
 
+import java.util.List;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
-
-import java.util.List;
 
 /**
  * Interface representing binary problems

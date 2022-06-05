@@ -1,13 +1,12 @@
 package org.uma.jmetal.operator.localsearch.impl;
 
+import java.util.Comparator;
 import org.uma.jmetal.operator.localsearch.LocalSearchOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-
-import java.util.Comparator;
 
 /**
  * This class implements a basic local search operator based in the use of a mutation operator.
@@ -86,10 +85,8 @@ public class BasicLocalSearch<S extends Solution<?>> implements LocalSearchOpera
       if (best == -1) {
         solution = mutatedSolution;
         numberOfImprovements++;
-      } else if (best == 0) {
-        if (randomGenerator.getRandomValue() < 0.5) {
+      } else if ((best == 0) && (randomGenerator.getRandomValue() < 0.5)) {
           solution = mutatedSolution;
-        }
       }
       i++;
     }

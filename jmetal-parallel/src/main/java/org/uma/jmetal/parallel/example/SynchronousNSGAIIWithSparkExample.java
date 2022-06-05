@@ -1,5 +1,9 @@
 package org.uma.jmetal.parallel.example;
 
+import static java.lang.Math.sin;
+
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -20,11 +24,6 @@ import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-
-import static java.lang.Math.sin;
 
 /**
  * Class for configuring and running the NSGA-II algorithm (parallel version)

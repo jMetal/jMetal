@@ -1,13 +1,13 @@
 package org.uma.jmetal.util.distance;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.CosineDistanceBetweenSolutionsInObjectiveSpace;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by ajnebro on 12/2/16.

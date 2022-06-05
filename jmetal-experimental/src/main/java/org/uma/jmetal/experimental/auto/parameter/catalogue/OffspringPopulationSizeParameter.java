@@ -1,8 +1,7 @@
 package org.uma.jmetal.experimental.auto.parameter.catalogue;
 
-import org.uma.jmetal.experimental.auto.parameter.OrdinalParameter;
-
 import java.util.List;
+import org.uma.jmetal.experimental.auto.parameter.OrdinalParameter;
 
 public class OffspringPopulationSizeParameter extends OrdinalParameter<Integer> {
   private final String[] args ;

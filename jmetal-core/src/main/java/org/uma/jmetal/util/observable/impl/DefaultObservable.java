@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.observable.impl;
 
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.observable.Observable;
-import org.uma.jmetal.util.observer.Observer;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.observable.Observable;
+import org.uma.jmetal.util.observer.Observer;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
 public class DefaultObservable<D> implements Observable<D> {

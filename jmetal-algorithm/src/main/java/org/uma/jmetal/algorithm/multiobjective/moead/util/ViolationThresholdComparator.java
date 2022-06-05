@@ -1,10 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.moead.util;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.ConstraintHandling;
-
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.ConstraintHandling;
 
 /**
  * This class implements the ViolationThreshold Comparator

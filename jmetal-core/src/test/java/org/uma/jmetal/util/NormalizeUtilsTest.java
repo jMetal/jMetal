@@ -1,12 +1,11 @@
 package org.uma.jmetal.util;
 
-import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
-
-import java.lang.reflect.Constructor;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.lang.reflect.Constructor;
+import org.junit.Test;
+import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 /**
  * Test Class responsible for testing {@link NormalizeUtils}

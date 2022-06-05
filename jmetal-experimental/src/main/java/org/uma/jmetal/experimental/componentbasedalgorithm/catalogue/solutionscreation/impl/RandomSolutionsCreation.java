@@ -1,12 +1,11 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Class that creates a list of randomly instantiated solutions

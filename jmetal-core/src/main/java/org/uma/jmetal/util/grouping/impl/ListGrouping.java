@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.grouping.impl;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.grouping.CollectionGrouping;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.grouping.CollectionGrouping;
 
 /**
  * Abstract class that groups a list of {@link Comparable} entities by some order in the collection. The number of
@@ -22,12 +21,10 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   protected List<Integer> indices;
   protected List<List<Integer>> groups;
 
-  public ListGrouping(int numberOfGroups) {
+  protected ListGrouping(int numberOfGroups) {
     this.numberOfGroups = numberOfGroups;
     this.groups = new ArrayList<>(numberOfGroups);
   }
-
-  public abstract void computeGroups(List<C> list) ;
 
   protected void createGroups() {
     int groupSize = computeGroupSize();
@@ -54,7 +51,7 @@ public abstract class ListGrouping<C extends Comparable<C>> implements Collectio
   }
 
   /**
-   * If the indices length is not divisible by the number of groups, the remaining indices
+   * If the index's length is not divisible by the number of groups, the remaining indices
    * are added to the last group
    * @param index
    */

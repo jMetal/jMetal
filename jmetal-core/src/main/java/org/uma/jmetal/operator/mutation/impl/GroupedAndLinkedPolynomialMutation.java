@@ -1,5 +1,6 @@
 package org.uma.jmetal.operator.mutation.impl;
 
+import java.util.List;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
@@ -10,8 +11,6 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.grouping.CollectionGrouping;
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.impl.JavaRandomGenerator;
-
-import java.util.List;
 
 /**
  * This class implements the grouped and linked polynomial mutation operator presented in:

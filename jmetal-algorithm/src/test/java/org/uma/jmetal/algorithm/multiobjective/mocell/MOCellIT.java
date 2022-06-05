@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.mocell;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -15,10 +18,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 public class MOCellIT {
   Algorithm<List<DoubleSolution>> algorithm;

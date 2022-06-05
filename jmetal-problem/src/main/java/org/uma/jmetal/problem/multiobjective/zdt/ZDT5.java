@@ -13,13 +13,12 @@
 
 package org.uma.jmetal.problem.multiobjective.zdt;
 
-import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
-import org.uma.jmetal.solution.binarysolution.BinarySolution;
-import org.uma.jmetal.util.errorchecking.Check;
-
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import org.uma.jmetal.problem.binaryproblem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
+import org.uma.jmetal.util.errorchecking.Check;
 
 /** Class representing problem ZDT5 */
 @SuppressWarnings("serial")

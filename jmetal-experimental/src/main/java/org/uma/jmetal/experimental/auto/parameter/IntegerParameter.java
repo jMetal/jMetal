@@ -1,9 +1,8 @@
 package org.uma.jmetal.experimental.auto.parameter;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class IntegerParameter extends Parameter<Integer> {
   private final Integer lowerBound;

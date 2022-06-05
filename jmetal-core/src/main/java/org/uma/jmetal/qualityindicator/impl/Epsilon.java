@@ -67,9 +67,6 @@ public class Epsilon extends QualityIndicator {
 
     eps = Double.MIN_VALUE;
 
-    int a = referenceFront.length ;
-    int b =  front.length ;
-
     for (int i = 0; i < referenceFront.length; i++) {
       for (int j = 0; j < front.length; j++) {
         for (int k = 0; k < numberOfObjectives; k++) {

@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Ackley;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Sphere;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LSMOP9 extends AbstractLSMOP {
     /**

@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
@@ -12,8 +13,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the GDE3 algorithm for solving a problem of the Big Optimization

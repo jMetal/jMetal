@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.mosa;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.CoolingScheme;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -7,14 +10,10 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro
@@ -54,7 +53,7 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     this.temperature = initialTemperature;
     this.coolingScheme = coolingScheme;
 
-    comparator = new DominanceComparator<S>();
+    comparator = new DominanceWithConstraintsComparator<S>();
   }
 
   public MOSA(

@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.solutionattribute.impl.HypervolumeContributionAttribute;
 
 /**
  * Compares two solutions according to the crowding distance attribute. The higher

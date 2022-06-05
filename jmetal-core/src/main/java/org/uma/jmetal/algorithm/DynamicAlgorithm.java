@@ -1,10 +1,9 @@
 package org.uma.jmetal.algorithm;
 
+import java.util.Map;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.restartstrategy.RestartStrategy;
-
-import java.util.Map;
 
 /**
  * @author Antonio J. Nebro <ajnebro@uma.es>

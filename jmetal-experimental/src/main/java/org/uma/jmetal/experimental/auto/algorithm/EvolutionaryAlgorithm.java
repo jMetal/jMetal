@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.auto.algorithm;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
@@ -13,16 +16,12 @@ import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.termination.Termination;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @SuppressWarnings("serial")
 public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity {
+
   private List<S> population;
   private Archive<S> externalArchive;
-
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -42,7 +41,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   /**
    * Constructor
    *
-   * @param name Algorithm name
+   * @param name                      Algorithm name
    * @param evaluation
    * @param initialPopulationCreation
    * @param termination
@@ -76,7 +75,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   /**
    * Constructor
    *
-   * @param name Algorithm name
+   * @param name                      Algorithm name
    * @param evaluation
    * @param initialPopulationCreation
    * @param termination
@@ -104,7 +103,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   }
 
   public void run() {
-    initTime = System.currentTimeMillis() ;
+    initTime = System.currentTimeMillis();
 
     population = createInitialPopulation.create();
     population = evaluation.evaluate(population);
@@ -119,7 +118,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       updateProgress();
     }
 
-    totalComputingTime = System.currentTimeMillis() - initTime ;
+    totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
 
@@ -151,7 +150,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     observable.setChanged();
     observable.notifyObservers(attributes);
 
-    totalComputingTime = getCurrentComputingTime() ;
+    totalComputingTime = getCurrentComputingTime();
   }
 
   public long getCurrentComputingTime() {

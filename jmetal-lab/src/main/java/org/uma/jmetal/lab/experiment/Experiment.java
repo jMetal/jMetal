@@ -1,12 +1,11 @@
 package org.uma.jmetal.lab.experiment;
 
+import java.util.HashSet;
+import java.util.List;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Class for describing the configuration an experimental study.

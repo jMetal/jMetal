@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.util.List;
+import java.util.Map;
 import org.knowm.xchart.style.Styler;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.chartcontainer.ChartForDynamicProblemsContainer;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * This observer prints a chart in real time showing the current Pareto front approximation produced

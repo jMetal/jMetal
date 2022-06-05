@@ -1,5 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.abyss;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Comparator;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -18,18 +22,14 @@ import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
-import org.uma.jmetal.util.comparator.ConstraintViolationComparator;
-import org.uma.jmetal.util.comparator.DominanceComparatorV2;
-import org.uma.jmetal.util.comparator.MultiComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
+import org.uma.jmetal.util.comparator.constraintcomparator.impl.OverallConstraintViolationDegreeComparator;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-
-/** Created by ajnebro on 11/6/15. */
+/**
+ * Created by ajnebro on 11/6/15.
+ */
 public class ABYSSConstrainedProblemIT {
+
   Algorithm<List<DoubleSolution>> algorithm;
   DoubleProblem problem;
   CrossoverOperator<DoubleSolution> crossover;
@@ -51,9 +51,8 @@ public class ABYSSConstrainedProblemIT {
 
     archive = new CrowdingDistanceArchive<>(100);
 
-    Comparator<DoubleSolution> comparator =
-        new MultiComparator<>(
-            Arrays.asList(new ConstraintViolationComparator<>(), new DominanceComparatorV2<>()));
+    Comparator<DoubleSolution> comparator = new DominanceWithConstraintsComparator<>(
+        new OverallConstraintViolationDegreeComparator<>());
 
     localSearchOperator = new BasicLocalSearch<>(1, mutation, comparator, problem);
   }

@@ -1,12 +1,6 @@
 package org.uma.jmetal.util.chartcontainer;
 
-import org.knowm.xchart.*;
-import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
-import org.uma.jmetal.util.legacy.front.util.FrontUtils;
-
-import java.awt.*;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.BitmapEncoder.BitmapFormat;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
+import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 
 /**
  * Class for configuring and displaying a char with a number of subpopulations and reference points. Designed to be

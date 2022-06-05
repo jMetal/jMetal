@@ -1,13 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaiii.util;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by ajnebro on 5/11/14.

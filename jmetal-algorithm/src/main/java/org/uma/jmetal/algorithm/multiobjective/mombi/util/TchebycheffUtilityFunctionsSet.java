@@ -1,10 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.mombi.util;
 
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * This class implements a set of utility functions based on the Tchebycheff aggregation approach

@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class produces a mating pool composed of solutions belonging to a neighborhood. The neighborhood is associated

@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.point;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Solution used to wrap a {@link Point} object. Only objectives are used.

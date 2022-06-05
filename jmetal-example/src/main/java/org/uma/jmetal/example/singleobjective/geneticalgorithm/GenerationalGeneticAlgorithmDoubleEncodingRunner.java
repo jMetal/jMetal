@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.singleobjective.geneticalgorithm;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -15,9 +17,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to configure and run a generational genetic algorithm. The target problem is OneMax.

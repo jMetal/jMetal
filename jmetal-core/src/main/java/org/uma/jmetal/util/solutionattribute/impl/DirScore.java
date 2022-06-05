@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.solutionattribute.impl;
 
+import java.util.List;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.solutionattribute.DensityEstimator;
-
-import java.util.List;
 
 /**
  * created at 11:09 pm, 2019/1/28

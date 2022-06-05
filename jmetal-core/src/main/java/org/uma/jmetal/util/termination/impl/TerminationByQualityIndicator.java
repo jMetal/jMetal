@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.termination.impl;
 
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class that allows to check the termination condition when current front is above a given

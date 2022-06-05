@@ -1,9 +1,8 @@
 package org.uma.jmetal.lab.visualization.html.impl;
 
+import java.util.Objects;
 import org.uma.jmetal.lab.visualization.html.HtmlComponent;
 import tech.tablesaw.plotly.components.Figure;
-
-import java.util.Objects;
 /**
  * This class provides a wrapper to include figures from Tablesaw into the HTML file.
  *

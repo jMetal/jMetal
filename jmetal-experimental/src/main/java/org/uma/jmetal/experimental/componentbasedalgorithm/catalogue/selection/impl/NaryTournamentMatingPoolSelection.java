@@ -1,13 +1,12 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
 import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     implements MatingPoolSelection<S> {

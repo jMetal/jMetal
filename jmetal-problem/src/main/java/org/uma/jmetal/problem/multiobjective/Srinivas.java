@@ -1,10 +1,10 @@
 package org.uma.jmetal.problem.multiobjective;
 
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** Class representing problem Srinivas */
 @SuppressWarnings("serial")
@@ -55,8 +55,7 @@ public class Srinivas extends AbstractDoubleProblem {
     constraint[0] = 1.0 - (x1 * x1 + x2 * x2) / 225.0;
     constraint[1] = (3.0 * x2 - x1) / 10.0 - 1.0;
 
-    for (int i = 0; i < getNumberOfConstraints(); i++) {
-      solution.constraints()[i] = constraint[i];
-    }
+    IntStream.range(0, getNumberOfConstraints())
+        .forEach(i -> solution.constraints()[i] = constraint[i]);
   }
 }

@@ -1,13 +1,12 @@
 package org.uma.jmetal.util.fileinput;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
  * created at 3:49 pm, 2019/1/29 the common util to read reference vectors/reference points/uniform

@@ -1,6 +1,8 @@
 
 package org.uma.jmetal.example.multiobjective.spea2;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -19,9 +21,6 @@ import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class for configuring and running the SPEA2 algorithm
@@ -53,8 +52,8 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
       problemName = args[0];
       referenceParetoFront = args[1];
     } else {
-      problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
-      referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";
+      problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+      referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
     }
 
     problem = ProblemUtils.loadProblem(problemName);
@@ -67,11 +66,11 @@ public class SPEA2Runner extends AbstractAlgorithmRunner {
     double mutationDistributionIndex = 20.0;
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    selection = new BinaryTournamentSelection<DoubleSolution>(new RankingAndCrowdingDistanceComparator<DoubleSolution>());
+    selection = new BinaryTournamentSelection<DoubleSolution>();
 
     algorithm = new SPEA2Builder<>(problem, crossover, mutation)
             .setSelectionOperator(selection)
-            .setMaxIterations(250)
+            .setMaxIterations(500)
             .setPopulationSize(100)
             .setK(1)
             .build();

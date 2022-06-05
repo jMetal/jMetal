@@ -1,14 +1,13 @@
 package org.uma.jmetal.operator.selection.impl;
 
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.SolutionUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Juanjo
@@ -25,7 +24,7 @@ public class TournamentSelection<S extends Solution<?>> implements SelectionOper
 
   /** Constructor */
   public TournamentSelection(int n_arity) {
-    this(new DominanceComparator<S>(), n_arity) ;
+    this(new DominanceWithConstraintsComparator<S>(), n_arity) ;
   }
 
   /** Constructor */

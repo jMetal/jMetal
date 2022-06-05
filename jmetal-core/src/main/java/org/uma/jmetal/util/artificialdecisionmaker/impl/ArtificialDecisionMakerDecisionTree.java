@@ -1,6 +1,12 @@
 package org.uma.jmetal.util.artificialdecisionmaker.impl;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
 import org.uma.jmetal.problem.BoundedProblem;
 import org.uma.jmetal.problem.Problem;
@@ -11,8 +17,6 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInObjectiveSpace;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.*;
 
 
 /**

@@ -1,5 +1,7 @@
 package org.uma.jmetal.algorithm.multiobjective.ibea;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -7,11 +9,8 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class implements the IBEA algorithm
@@ -182,7 +181,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         B = new ArrayList<>(1);
         B.add(solution);
 
-        int flag = (new DominanceComparator<S>()).compare(A.get(0), B.get(0));
+        int flag = (new DominanceWithConstraintsComparator<S>()).compare(A.get(0), B.get(0));
 
         double value;
         if (flag == -1) {

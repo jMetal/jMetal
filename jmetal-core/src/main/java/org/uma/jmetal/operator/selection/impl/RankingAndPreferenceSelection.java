@@ -1,5 +1,7 @@
 package org.uma.jmetal.operator.selection.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -7,9 +9,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.solutionattribute.impl.PreferenceDistance;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RankingAndPreferenceSelection<S extends Solution<?>>
         implements SelectionOperator<List<S>, List<S>> {

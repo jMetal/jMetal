@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.observer.impl;
 
+import java.util.Map;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observer.Observer;
-
-import java.util.Map;
 
 /**
  * This observer prints the current best fitness of an algorithm. It requires a pair

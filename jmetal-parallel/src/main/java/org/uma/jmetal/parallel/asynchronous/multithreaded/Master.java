@@ -1,11 +1,10 @@
 package org.uma.jmetal.parallel.asynchronous.multithreaded;
 
-import org.uma.jmetal.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
-import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
-
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.uma.jmetal.parallel.asynchronous.algorithm.AsynchronousParallelAlgorithm;
+import org.uma.jmetal.parallel.asynchronous.task.ParallelTask;
 
 public abstract class Master<T extends ParallelTask<?>,R>
     implements AsynchronousParallelAlgorithm<T,R> {

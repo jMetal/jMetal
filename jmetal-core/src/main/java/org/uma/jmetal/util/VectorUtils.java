@@ -1,16 +1,15 @@
 package org.uma.jmetal.util;
 
-import org.uma.jmetal.util.distance.Distance;
-import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.errorchecking.JMetalException;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import org.uma.jmetal.util.distance.Distance;
+import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VectorUtils {
   /**
@@ -170,5 +169,15 @@ public class VectorUtils {
       }
     }
     return invertedFront;
+  }
+
+  /**
+   * Converts a list of doubles to an array
+   *
+   * @param list
+   * @return
+   */
+  public static double[] toArray(List<Double> list) {
+    return list.stream().mapToDouble(v->v).toArray() ;
   }
 }

@@ -1,15 +1,14 @@
 package org.uma.jmetal.algorithm.multiobjective.spea2.util;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.densityestimator.impl.StrenghtRawFitnessDensityEstimator;
 import org.uma.jmetal.util.solutionattribute.impl.LocationAttribute;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Juanjo Durillo

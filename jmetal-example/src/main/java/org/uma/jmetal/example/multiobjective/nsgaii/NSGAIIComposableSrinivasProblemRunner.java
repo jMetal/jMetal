@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -10,11 +12,9 @@ import org.uma.jmetal.problem.doubleproblem.impl.ComposableDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * Class to configure and run the NSGA-II algorithm to solve the
@@ -55,6 +55,7 @@ public class NSGAIIComposableSrinivasProblemRunner extends AbstractAlgorithmRunn
     var algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, 100)
         .setSelectionOperator(selection)
         .setMaxEvaluations(25000)
+        .setDominanceComparator(new DominanceWithConstraintsComparator<>())
         .build() ;
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)

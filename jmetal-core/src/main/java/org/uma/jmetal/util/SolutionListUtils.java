@@ -1,5 +1,11 @@
 package org.uma.jmetal.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.util.attribute.util.attributecomparator.AttributeComparator;
@@ -7,17 +13,14 @@ import org.uma.jmetal.solution.util.attribute.util.attributecomparator.impl.Doub
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-
-import java.util.*;
-import java.util.stream.IntStream;
 
 /** @author Antonio J. Nebro */
 public class SolutionListUtils {
@@ -108,7 +111,7 @@ public class SolutionListUtils {
   }
 
   public static <S extends Solution<?>> double[][] writeObjectivesToMatrix(List<S> solutionList) {
-    if (solutionList.size() == 0) {
+    if (solutionList.isEmpty()) {
       return new double[0][0];
     }
 
@@ -200,7 +203,7 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> boolean isSolutionDominatedBySolutionList(
       S solution, List<? extends S> solutionSet) {
     boolean result = false;
-    Comparator<S> dominance = new DominanceComparator<S>();
+    Comparator<S> dominance = new DominanceWithConstraintsComparator<>();
 
     int i = 0;
 
@@ -225,16 +228,15 @@ public class SolutionListUtils {
       int numberOfSolutionsToBeReturned, List<S> solutionList) {
     JMetalRandom random = JMetalRandom.getInstance();
     return selectNRandomDifferentSolutions(
-        numberOfSolutionsToBeReturned, solutionList, (low, up) -> random.nextInt(low, up));
+        numberOfSolutionsToBeReturned, solutionList, random::nextInt);
   }
 
   /**
-   * This method receives a normalized list of non-dominated solutions and return the inverted one.
-   * This operation is needed for minimization problem
+   * This method selects N random different {@link Solution} objects from a list
    *
-   * @param solutionList The front to invert
-   * @param randomGenerator The random generator to use
-   * @return The inverted front
+   * @param solutionList The list
+   * @param randomGenerator The random number generator
+   * @return The selected solutions
    */
   public static <S> List<S> selectNRandomDifferentSolutions(
       int numberOfSolutionsToBeReturned,
@@ -290,7 +292,7 @@ public class SolutionListUtils {
   }
 
   public static <S extends Solution<?>> double[][] normalizedDistanceMatrix(
-      List<S> solutionSet, double maxs[], double mins[]) {
+      List<S> solutionSet, double[] maxs, double[] mins) {
     double[][] distance = new double[solutionSet.size()][solutionSet.size()];
     for (int i = 0; i < solutionSet.size(); i++) {
       distance[i][i] = 0.0;
@@ -306,18 +308,18 @@ public class SolutionListUtils {
   /**
    * Compares two solution lists to determine if both are equals
    *
-   * @param solutionList A <code>Solution list</code>
+   * @param solutions A <code>Solution list</code>
    * @param newSolutionList A <code>Solution list</code>
    * @return true if both are contains the same solutions, false in other case
    */
-  public static <S> boolean solutionListsAreEquals(List<S> solutionList, List<S> newSolutionList) {
+  public static <S> boolean solutionListsAreEquals(List<S> solutions, List<S> newSolutionList) {
     boolean found;
-    for (int i = 0; i < solutionList.size(); i++) {
+    for (S solution : solutions) {
 
       int j = 0;
       found = false;
       while (j < newSolutionList.size()) {
-        if (solutionList.get(i).equals(newSolutionList.get(j))) {
+        if (solution.equals(newSolutionList.get(j))) {
           found = true;
         }
         j++;
@@ -371,8 +373,8 @@ public class SolutionListUtils {
               + ")");
     }
 
-    for (int i = 0; i < numberOfSolutionsToRemove; i++) {
-      solutionList.remove(0);
+    if (numberOfSolutionsToRemove > 0) {
+      solutionList.subList(0, numberOfSolutionsToRemove).clear();
     }
   }
 

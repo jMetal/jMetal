@@ -1,8 +1,7 @@
 package org.uma.jmetal.algorithm.impl;
 
-import org.uma.jmetal.algorithm.Algorithm;
-
 import java.util.List;
+import org.uma.jmetal.algorithm.Algorithm;
 
 /**
  * Abstract class representing a PSO algorithm

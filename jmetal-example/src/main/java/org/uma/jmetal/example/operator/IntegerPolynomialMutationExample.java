@@ -1,5 +1,8 @@
 package org.uma.jmetal.example.operator;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -10,10 +13,6 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.comparator.IntegerVariableComparator;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

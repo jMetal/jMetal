@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.restartstrategy;
 
+import java.util.List;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro

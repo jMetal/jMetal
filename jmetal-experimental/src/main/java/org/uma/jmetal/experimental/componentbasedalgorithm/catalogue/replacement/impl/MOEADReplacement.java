@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl;
 
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.solution.Solution;
@@ -8,8 +9,6 @@ import org.uma.jmetal.util.neighborhood.Neighborhood;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
-
-import java.util.List;
 
 public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
   private final PopulationAndNeighborhoodMatingPoolSelection<S> matingPoolSelection;

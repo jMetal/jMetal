@@ -1,12 +1,11 @@
 package org.uma.jmetal.lab.visualization.html.impl.htmlTable.impl;
 
+import java.util.Arrays;
 import org.apache.commons.math3.stat.inference.WilcoxonSignedRankTest;
 import org.uma.jmetal.lab.visualization.html.impl.htmlTable.HtmlTable;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-
-import java.util.Arrays;
 /**
  * This class computes the Wilcoxon test for every pair of algorithms.
  *

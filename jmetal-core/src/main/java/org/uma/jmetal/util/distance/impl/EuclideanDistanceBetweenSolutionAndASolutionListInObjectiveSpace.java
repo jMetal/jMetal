@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.distance.impl;
 
+import java.util.List;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.distance.Distance;
-
-import java.util.List;
 
 /**
  * Class for calculating the Euclidean distance between a {@link Solution} object a list of {@link Solution}

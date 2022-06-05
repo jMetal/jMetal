@@ -1,14 +1,13 @@
 package org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume;
 
+import java.io.FileNotFoundException;
+import java.util.List;
 import org.uma.jmetal.util.legacy.front.Front;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.legacy.front.util.FrontUtils;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * This interface represents implementations of the Hypervolume quality indicator

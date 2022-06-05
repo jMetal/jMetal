@@ -1,5 +1,7 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
 
+import java.io.FileNotFoundException;
+import java.util.Arrays;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
 import org.uma.jmetal.operator.crossover.impl.CompositeCrossover;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
@@ -21,9 +23,6 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 /**
  * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each

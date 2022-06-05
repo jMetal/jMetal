@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.omopso;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
@@ -12,10 +15,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration tests for algorithm OMOPSO
@@ -36,6 +35,7 @@ public class OMOPSOIT {
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
             .setMaxIterations(250)
             .setSwarmSize(100)
+            .setEta(0.0075)
             .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
             .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
             .build();
@@ -61,6 +61,7 @@ public class OMOPSOIT {
         new OMOPSOBuilder(problem, new SequentialSolutionListEvaluator<DoubleSolution>())
             .setMaxIterations(250)
             .setSwarmSize(100)
+            .setEta(0.0075)
             .setUniformMutation(new UniformMutation(mutationProbability, 0.5))
             .setNonUniformMutation(new NonUniformMutation(mutationProbability, 0.5, 250))
             .build();

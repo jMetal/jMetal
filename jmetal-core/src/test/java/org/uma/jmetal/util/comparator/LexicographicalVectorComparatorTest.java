@@ -1,31 +1,34 @@
 package org.uma.jmetal.util.comparator;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  * @version 1.0
  */
 public class LexicographicalVectorComparatorTest {
-  private LexicographicalVectorComparator comparator ;
 
-  @Before
+  private LexicographicalVectorComparator comparator;
+
+  @BeforeEach
   public void startup() {
-    comparator = new LexicographicalVectorComparator() ;
+    comparator = new LexicographicalVectorComparator();
   }
 
-  @Test(expected = NullParameterException.class)
+  @Test
   public void shouldFirstPointToCompareEqualsToNullRaiseAnException() {
-    comparator.compare(null, new double[]{1, 2});
+    assertThrows(NullParameterException.class, () -> comparator.compare(null, new double[]{1, 2}));
   }
 
-  @Test (expected = NullParameterException.class)
+  @Test
   public void shouldSecondPointToCompareEqualsToNullRaiseAnException() {
-    comparator.compare(new double[]{1, 2}, null);
+    assertThrows(NullParameterException.class, () -> comparator.compare(new double[]{1, 2}, null));
   }
 
   @Test
@@ -35,32 +38,32 @@ public class LexicographicalVectorComparatorTest {
 
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnPlus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0} ;
-    double[] point2 = new double[]{-1.0, 0.0, 5.0, 7.0} ;
+    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+    double[] point2 = new double[]{-1.0, 0.0, 5.0, 7.0};
 
     assertEquals(1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheFirstValueReturnMinus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0} ;
-    double[] point2 = new double[]{-1.0, 0.0, 5.0, 7.0} ;
+    double[] point1 = new double[]{-1.0, 0.0, 5.0, 7.0};
+    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0};
 
-    assertEquals(-1, comparator.compare(point2, point1));
+    assertEquals(-1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnMinus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 0.0} ;
-    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0} ;
+    double[] point1 = new double[]{1.0, 0.0, 5.0, 0.0};
+    double[] point2 = new double[]{1.0, 0.0, 5.0, 7.0};
 
     assertEquals(-1, comparator.compare(point1, point2));
   }
 
   @Test
   public void shouldCompareIdenticalPointsButTheLastValueReturnPlus1() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0} ;
-    double[] point2 = new double[]{1.0, 0.0, 5.0, 0.0} ;
+    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+    double[] point2 = new double[]{1.0, 0.0, 5.0, 0.0};
 
     assertEquals(1, comparator.compare(point1, point2));
   }
@@ -71,9 +74,9 @@ public class LexicographicalVectorComparatorTest {
   }
 
   @Test
-  public void shouldCompareDifferentLengthPointsReturnTheCorrectValue() {
-    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0} ;
-    double[] point2 = new double[]{1.0, 0.0, 5.0} ;
+  public void shouldCompareDifferentLengthPointsWithTheSameValuesInTheCommonPositionsReturnZero() {
+    double[] point1 = new double[]{1.0, 0.0, 5.0, 7.0};
+    double[] point2 = new double[]{1.0, 0.0, 5.0};
 
     assertEquals(0, comparator.compare(point1, point2));
   }

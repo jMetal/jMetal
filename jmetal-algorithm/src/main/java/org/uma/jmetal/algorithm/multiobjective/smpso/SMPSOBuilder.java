@@ -1,11 +1,14 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import java.util.Comparator;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -31,6 +34,7 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
   private double weightMin;
   private double changeVelocity1;
   private double changeVelocity2;
+  private DominanceComparator<DoubleSolution> dominanceComparator ;
 
   private int swarmSize;
   private int maxIterations;
@@ -64,6 +68,8 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     weightMin = 0.1;
     changeVelocity1 = -1;
     changeVelocity2 = -1;
+
+    this.dominanceComparator = new DefaultDominanceComparator<>() ;
 
     mutationOperator = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 20.0) ;
     evaluator = new SequentialSolutionListEvaluator<DoubleSolution>() ;
@@ -236,6 +242,12 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     return this ;
   }
 
+  public SMPSOBuilder setDominanceComparator(DominanceComparator<DoubleSolution> dominanceComparator) {
+    this.dominanceComparator = dominanceComparator ;
+
+    return this ;
+  }
+
   public SMPSOBuilder setVariant(SMPSOVariant variant) {
     this.variant = variant;
 
@@ -246,11 +258,11 @@ public class SMPSOBuilder implements AlgorithmBuilder<SMPSO> {
     if (variant.equals(SMPSOVariant.SMPSO)) {
       return new SMPSO(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
           r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
-          changeVelocity2, evaluator);
+          changeVelocity2, dominanceComparator, evaluator);
     } else {
       return new SMPSOMeasures(problem, swarmSize, leaders, mutationOperator, maxIterations, r1Min, r1Max,
           r2Min, r2Max, c1Min, c1Max, c2Min, c2Max, weightMin, weightMax, changeVelocity1,
-          changeVelocity2, evaluator);
+          changeVelocity2, dominanceComparator, evaluator);
     }
   }
 

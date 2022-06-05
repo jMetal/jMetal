@@ -1,11 +1,10 @@
 package org.uma.jmetal.problem.multiobjective.lz09;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class representing problem LZ09F2
@@ -16,7 +15,7 @@ public class LZ09F2 extends AbstractDoubleProblem {
   private LZ09 lz09;
 
   /**
-   * Creates a default LZ09F2 problem (30 variables and 3 objectives)
+   * Creates a default LZ09F2 problem (30 variables and 2 objectives)
    */
   public LZ09F2() {
     this(21, 1, 22);

@@ -1,14 +1,13 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.NullMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** */
 public class DifferentialCrossoverVariation implements Variation<DoubleSolution> {

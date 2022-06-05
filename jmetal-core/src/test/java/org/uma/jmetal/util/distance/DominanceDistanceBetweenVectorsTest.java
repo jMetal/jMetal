@@ -1,12 +1,12 @@
 package org.uma.jmetal.util.distance;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

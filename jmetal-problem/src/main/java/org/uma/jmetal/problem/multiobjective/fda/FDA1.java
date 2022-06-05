@@ -1,12 +1,11 @@
 package org.uma.jmetal.problem.multiobjective.fda;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** @author Cristóbal Barba <cbarba@lcc.uma.es> */
 @SuppressWarnings("serial")

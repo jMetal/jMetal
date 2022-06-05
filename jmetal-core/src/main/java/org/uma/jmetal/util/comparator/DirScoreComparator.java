@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * created at 10:34 pm, 2019/1/28 The comparator of DIR score used in D-NSGA-II

@@ -1,5 +1,8 @@
 package org.uma.jmetal.example.multiobjective.wasfga;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.wasfga.WASFGAMeasures;
@@ -23,10 +26,6 @@ import org.uma.jmetal.util.measure.MeasureListener;
 import org.uma.jmetal.util.measure.MeasureManager;
 import org.uma.jmetal.util.measure.impl.BasicMeasure;
 import org.uma.jmetal.util.measure.impl.CountingMeasure;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WASFGAMeasuresRunner3D extends AbstractAlgorithmRunner {
   /**

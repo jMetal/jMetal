@@ -1,13 +1,12 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SMSEMOAReplacement<S extends Solution<?>>
     implements Replacement<S> {

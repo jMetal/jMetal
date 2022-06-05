@@ -1,5 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionaryAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
@@ -12,10 +15,6 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.termination.Termination;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class representing an evolutionary algorithm. It implements the {@link Algorithm} interface by

@@ -1,17 +1,16 @@
 package org.uma.jmetal.utilities;
 
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
+import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
+
+import java.io.IOException;
+import java.util.List;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getAvailableIndicators;
-import static org.uma.jmetal.qualityindicator.QualityIndicatorUtils.getIndicatorFromName;
 
 /**
  * Class for executing quality indicators from the command line. The program requires two arguments:
@@ -80,17 +79,17 @@ public class CommandLineQualityIndicatorTool {
 
     if (!args[0].equals("ALL")) {
       QualityIndicator indicator = getIndicatorFromName(args[0], indicatorList);
-      System.out.println(indicator.compute(normalizedFront));
+      JMetalLogger.logger.info(() -> "" + indicator.compute(normalizedFront));
     } else {
       for (QualityIndicator indicator : indicatorList) {
-        System.out.println(indicator.getName() + ": " + indicator.compute(normalizedFront));
+        JMetalLogger.logger.info(() -> indicator.getName() + ": " + indicator.compute(normalizedFront));
       }
 
       SetCoverage sc = new SetCoverage();
       JMetalLogger.logger.info(
-          "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
+          () -> "SC(refPF, front): " + sc.compute(normalizedReferenceFront, normalizedFront));
       JMetalLogger.logger.info(
-          "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
+          () -> "SC(front, refPF): " + sc.compute(normalizedFront, normalizedReferenceFront));
     }
   }
 }

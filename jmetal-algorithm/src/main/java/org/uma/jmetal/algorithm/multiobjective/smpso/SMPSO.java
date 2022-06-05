@@ -1,19 +1,17 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.bounds.Bounds;
-import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.solutionattribute.impl.GenericSolutionAttribute;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This class implements the SMPSO algorithm described in:
@@ -65,6 +63,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
                MutationOperator<DoubleSolution> mutationOperator, int maxIterations, double r1Min, double r1Max,
                double r2Min, double r2Max, double c1Min, double c1Max, double c2Min, double c2Max,
                double weightMin, double weightMax, double changeVelocity1, double changeVelocity2,
+               Comparator<DoubleSolution> dominanceComparator,
                SolutionListEvaluator<DoubleSolution> evaluator) {
     this.problem = problem;
     this.swarmSize = swarmSize;
@@ -88,7 +87,7 @@ public class SMPSO extends AbstractParticleSwarmOptimization<DoubleSolution, Lis
     randomGenerator = JMetalRandom.getInstance();
     this.evaluator = evaluator;
 
-    dominanceComparator = new DominanceComparator<DoubleSolution>();
+    this.dominanceComparator = dominanceComparator;
     localBest = new GenericSolutionAttribute<DoubleSolution, DoubleSolution>();
     speed = new double[swarmSize][problem.getNumberOfVariables()];
 

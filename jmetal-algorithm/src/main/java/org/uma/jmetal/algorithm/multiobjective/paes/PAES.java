@@ -1,5 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.paes;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.multiobjective.pesa2.util.AdaptiveGridArchive;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -8,12 +11,8 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
-import org.uma.jmetal.util.comparator.DominanceComparator;
+import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
 import org.uma.jmetal.util.densityestimator.impl.GridDensityEstimator;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Antonio J. Nebro
@@ -42,7 +41,7 @@ public class PAES<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
     this.archive = archive;
     this.mutationOperator = mutationOperator;
 
-    comparator = new DominanceComparator<S>();
+    comparator = new DominanceWithConstraintsComparator<S>();
   }
 
   public PAES(

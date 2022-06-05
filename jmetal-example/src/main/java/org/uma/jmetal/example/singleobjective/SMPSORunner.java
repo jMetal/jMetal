@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.singleobjective;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -17,8 +18,6 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm to solve a single-objective problem

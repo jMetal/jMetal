@@ -1,11 +1,12 @@
 package org.uma.jmetal.solution.permutationsolution.impl;
 
-import org.uma.jmetal.solution.AbstractSolution;
-import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
+import org.uma.jmetal.solution.AbstractSolution;
+import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 
 /**
  * Defines an implementation of solution composed of a permutation of integers. A permutation is
@@ -31,9 +32,7 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
 
     java.util.Collections.shuffle(randomSequence);
 
-    for (int i = 0; i < permutationLength; i++) {
-      variables().set(i, randomSequence.get(i));
-    }
+    IntStream.range(0, permutationLength).forEach(i -> variables().set(i, randomSequence.get(i)));
   }
 
   /**
@@ -42,17 +41,16 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   public IntegerPermutationSolution(IntegerPermutationSolution solution) {
     super(solution.getLength(), solution.objectives().length);
 
-    for (int i = 0; i < objectives().length; i++) {
-      objectives()[i] = solution.objectives()[i];
-    }
+    Arrays.setAll(objectives(), i -> solution.objectives()[i]);
 
     for (int i = 0; i < variables().size(); i++) {
       variables().set(i, solution.variables().get(i));
     }
 
-    for (int i = 0; i < constraints().length; i++) {
-      constraints()[i] = solution.constraints()[i];
-    }
+    // ?IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
+    // ??Collections.copy(variables(), solution.variables());
+
+    Arrays.setAll(constraints(), i -> solution.constraints()[i]);
 
     attributes = new HashMap<Object, Object>(solution.attributes);
   }

@@ -1,8 +1,7 @@
 package org.uma.jmetal.solution.util.attribute.util.attributecomparator;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * Compares two population according to an attribute value, which must be a double number. The higher

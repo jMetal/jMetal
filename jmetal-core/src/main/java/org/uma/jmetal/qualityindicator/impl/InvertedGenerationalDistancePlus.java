@@ -1,11 +1,10 @@
 package org.uma.jmetal.qualityindicator.impl;
 
+import java.io.FileNotFoundException;
 import org.uma.jmetal.qualityindicator.QualityIndicator;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.distance.impl.DominanceDistanceBetweenVectors;
 import org.uma.jmetal.util.errorchecking.Check;
-
-import java.io.FileNotFoundException;
 
 /**
  * This class implements the inverted generational distance metric plust (IGD+)

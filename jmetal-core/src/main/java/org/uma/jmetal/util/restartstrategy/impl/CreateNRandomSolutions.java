@@ -1,12 +1,11 @@
 package org.uma.jmetal.util.restartstrategy.impl;
 
+import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.DynamicProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.restartstrategy.CreateNewSolutionsStrategy;
-
-import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Created by antonio on 6/06/17.

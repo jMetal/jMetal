@@ -1,5 +1,7 @@
 package org.uma.jmetal.example.singleobjective;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.EvolutionStrategyBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -11,9 +13,6 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to configure and run a non elitist (mu,lamba) evolution strategy. The target problem is

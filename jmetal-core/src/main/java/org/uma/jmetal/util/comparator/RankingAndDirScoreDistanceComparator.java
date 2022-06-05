@@ -1,11 +1,10 @@
 package org.uma.jmetal.util.comparator;
 
+import java.io.Serializable;
+import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * created at 10:29 pm, 2019/1/28 Comparator combining dominance-ranking comparator and DIR-score

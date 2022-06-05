@@ -1,8 +1,7 @@
 package org.uma.jmetal.util.pseudorandom.impl;
 
-import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
-
 import java.util.Random;
+import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

@@ -1,10 +1,9 @@
 package org.uma.jmetal.util.neighborhood.util;
 
-import org.uma.jmetal.util.errorchecking.Check;
-import org.uma.jmetal.util.neighborhood.Neighborhood;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.neighborhood.Neighborhood;
 
 /**
  * Class defining a bi-dimensional mesh.

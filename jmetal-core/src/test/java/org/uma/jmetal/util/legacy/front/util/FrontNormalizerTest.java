@@ -1,5 +1,11 @@
 package org.uma.jmetal.util.legacy.front.util;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,13 +17,6 @@ import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.point.Point;
 import org.uma.jmetal.util.point.PointSolution;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>

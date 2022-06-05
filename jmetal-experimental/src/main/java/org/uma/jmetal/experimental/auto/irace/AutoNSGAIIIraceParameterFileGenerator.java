@@ -1,10 +1,13 @@
 package org.uma.jmetal.experimental.auto.irace;
 
+import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
-import org.uma.jmetal.experimental.auto.parameter.*;
-
-import java.util.List;
+import org.uma.jmetal.experimental.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.experimental.auto.parameter.IntegerParameter;
+import org.uma.jmetal.experimental.auto.parameter.OrdinalParameter;
+import org.uma.jmetal.experimental.auto.parameter.Parameter;
+import org.uma.jmetal.experimental.auto.parameter.RealParameter;
 
 public class AutoNSGAIIIraceParameterFileGenerator {
   private static String formatString = "%-40s %-40s %-7s %-30s %-20s\n";

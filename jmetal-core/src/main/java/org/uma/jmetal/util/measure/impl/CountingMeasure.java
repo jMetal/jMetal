@@ -1,13 +1,12 @@
 package org.uma.jmetal.util.measure.impl;
 
-import org.uma.jmetal.util.measure.MeasureListener;
-import org.uma.jmetal.util.measure.PullMeasure;
-import org.uma.jmetal.util.measure.PushMeasure;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.WeakHashMap;
+import org.uma.jmetal.util.measure.MeasureListener;
+import org.uma.jmetal.util.measure.PullMeasure;
+import org.uma.jmetal.util.measure.PushMeasure;
 
 /**
  * A {@link CountingMeasure} provides a simple way to evaluate a number of

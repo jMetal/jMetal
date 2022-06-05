@@ -1,5 +1,6 @@
 package org.uma.jmetal.example.multiobjective.smpso;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.example.AlgorithmRunner;
@@ -17,8 +18,6 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.impl.MersenneTwisterGenerator;
-
-import java.util.List;
 
 /**
  * Class for configuring and running the SMPSO algorithm using an HypervolumeArchive, i.e, the

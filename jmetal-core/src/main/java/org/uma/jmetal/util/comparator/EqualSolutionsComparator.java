@@ -1,9 +1,8 @@
 package org.uma.jmetal.util.comparator;
 
-import org.uma.jmetal.solution.Solution;
-
 import java.io.Serializable;
 import java.util.Comparator;
+import org.uma.jmetal.solution.Solution;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing

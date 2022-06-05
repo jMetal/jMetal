@@ -1,10 +1,14 @@
 package org.uma.jmetal.problem.multiobjective;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
 import org.uma.jmetal.problem.permutationproblem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-
-import java.io.*;
 
 /**
  * Class representing a bi-objective TSP (Traveling Salesman Problem) problem.

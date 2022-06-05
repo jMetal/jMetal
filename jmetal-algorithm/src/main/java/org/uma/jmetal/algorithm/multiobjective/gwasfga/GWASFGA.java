@@ -1,5 +1,6 @@
 package org.uma.jmetal.algorithm.multiobjective.gwasfga;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.gwasfga.util.GWASFGARanking;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.ASFWASFGA;
 import org.uma.jmetal.algorithm.multiobjective.mombi.util.AbstractUtilityFunctionsSet;
@@ -11,8 +12,6 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.ranking.Ranking;
-
-import java.util.List;
 
 /**
  * This class executes the GWASFGA algorithm described in:

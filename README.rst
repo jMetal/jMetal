@@ -47,6 +47,14 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [5/23/2022] Algorithm `AGE-MOEA-II. Contribution of Annibale Panichella (@apanichella).
+
+* [5/9/2022] Algorithm `AGE-MOEA <https://dl.acm.org/doi/10.1145/3321707.3321839>`_. Contribution of Annibale Panichella (@apanichella).
+
+* [3/28/2022] The CF benchmark of constrained multi-objective problems, defined in `Constrained Multiobjective Optimization: Test Problem Construction and Performance Evaluations <https://doi.org/10.1109/TEVC.2020.3011829>`_, has been included.
+
+* [3/28/2022] The constraint handling code has been refactorized and the `documentation <https://jmetal.readthedocs.io/en/latest/constraints.html>`_ has been updated.
+
 * [1/20/2022] The autoconfiguration of NSGA-II with irace has been revised, including fixing a bug and updating the documentation.
 
 * [9/6/2021] Release 5.11

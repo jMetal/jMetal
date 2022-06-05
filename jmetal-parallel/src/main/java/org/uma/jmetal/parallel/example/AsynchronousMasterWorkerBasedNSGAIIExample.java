@@ -1,5 +1,8 @@
 package org.uma.jmetal.parallel.example;
 
+import static java.lang.Math.sin;
+
+import java.util.List;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -13,10 +16,6 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
-
-import java.util.List;
-
-import static java.lang.Math.sin;
 
 public class AsynchronousMasterWorkerBasedNSGAIIExample {
   public static void main(String[] args) {
