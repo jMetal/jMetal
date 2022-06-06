@@ -75,7 +75,7 @@ public class SolutionUtils {
     return Math.sqrt(distance);
   }
 
-  static <S extends Solution<?>> double normalizedDistanceBetweenObjectives(
+  public static <S extends Solution<?>> double normalizedDistanceBetweenObjectives(
       S firstSolution, S secondSolution, double maxs[], double mins[]) {
 
     double diff;
