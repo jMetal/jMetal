@@ -1,5 +1,7 @@
 package org.uma.jmetal.lab.experiment.component.impl;
 
+import static org.uma.jmetal.util.VectorUtils.readVectors;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -136,7 +138,7 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @throws FileNotFoundException
    */
   private List<DummyDoubleSolution> getNonDominatedSolutions(ExperimentProblem<?> problem)
-          throws FileNotFoundException {
+      throws IOException {
     NonDominatedSolutionListArchive<DummyDoubleSolution> nonDominatedSolutionArchive =
             new NonDominatedSolutionListArchive<>();
 
@@ -164,8 +166,8 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
                       + algorithm.getRunId()
                       + ".csv";
 
-      Front frontWithObjectiveValues = new ArrayFront(frontFileName, ",");
-      Front frontWithVariableValues = new ArrayFront(paretoSetFileName, ",");
+      double[][] frontWithObjectiveValues = readVectors(frontFileName, ",");
+      double[][] frontWithVariableValues = readVectors(paretoSetFileName, ",");
       List<DummyDoubleSolution> solutionList =
               createSolutionListFrontFiles(
                       algorithm.getAlgorithmTag(), frontWithVariableValues, frontWithObjectiveValues);
@@ -201,29 +203,29 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
    * @return
    */
   private List<DummyDoubleSolution> createSolutionListFrontFiles(
-          String algorithmName, Front frontWithVariableValues, Front frontWithObjectiveValues) {
-    if (frontWithVariableValues.getNumberOfPoints()
-            != frontWithObjectiveValues.getNumberOfPoints()) {
+          String algorithmName, double[][] frontWithVariableValues, double[][] frontWithObjectiveValues) {
+    if (frontWithVariableValues.length
+            != frontWithObjectiveValues.length) {
       throw new JMetalException(
               "The number of solutions in the variable and objective fronts are not equal");
-    } else if (frontWithObjectiveValues.getNumberOfPoints() == 0) {
+    } else if (frontWithObjectiveValues.length == 0) {
       throw new JMetalException("The front of solutions is empty");
     }
 
     GenericSolutionAttribute<DummyDoubleSolution, String> solutionAttribute =
             new GenericSolutionAttribute<DummyDoubleSolution, String>();
 
-    int numberOfVariables = frontWithVariableValues.getPointDimensions();
-    int numberOfObjectives = frontWithObjectiveValues.getPointDimensions();
+    int numberOfVariables = frontWithVariableValues[0].length;
+    int numberOfObjectives = frontWithObjectiveValues[0].length;
 
     List<DummyDoubleSolution> solutionList = new ArrayList<>();
-    for (int i = 0; i < frontWithVariableValues.getNumberOfPoints(); i++) {
+    for (int i = 0; i < frontWithVariableValues.length; i++) {
       DummyDoubleSolution solution = new DummyDoubleSolution(numberOfVariables, numberOfObjectives);
       for (int vars = 0; vars < numberOfVariables; vars++) {
-        solution.variables().set(vars, frontWithVariableValues.getPoint(i).getValues()[vars]);
+        solution.variables().set(vars, frontWithVariableValues[i][vars]);
       }
       for (int objs = 0; objs < numberOfObjectives; objs++) {
-        solution.objectives()[objs] = frontWithObjectiveValues.getPoint(i).getValues()[objs];
+        solution.objectives()[objs] = frontWithObjectiveValues[i][objs];
       }
 
       solutionAttribute.setAttribute(solution, algorithmName);
