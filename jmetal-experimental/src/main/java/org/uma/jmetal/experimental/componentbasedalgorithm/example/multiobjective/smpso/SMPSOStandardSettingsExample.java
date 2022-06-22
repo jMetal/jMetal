@@ -2,13 +2,14 @@ package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjecti
 
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smpso.SMPSO;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -36,7 +37,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = new ZDT1(1000);
 
     int swarmSize = 100 ;
     BoundedArchive<DoubleSolution> leadersArchive = new CrowdingDistanceArchive<>(swarmSize) ;
@@ -46,7 +47,7 @@ public class SMPSOStandardSettingsExample extends AbstractAlgorithmRunner {
     mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex) ;
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
-    Termination termination = new TerminationByEvaluations(25000) ;
+    Termination termination = new TerminationByEvaluations(2000000) ;
 
     algorithm = new SMPSO(problem, swarmSize, leadersArchive, mutation, evaluation, termination) ;
 

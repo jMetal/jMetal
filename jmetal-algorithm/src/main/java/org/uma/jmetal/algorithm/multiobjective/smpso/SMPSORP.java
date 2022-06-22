@@ -14,7 +14,6 @@
 package org.uma.jmetal.algorithm.multiobjective.smpso;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.algorithm.impl.AbstractParticleSwarmOptimization;
 import org.uma.jmetal.operator.mutation.MutationOperator;

@@ -13,8 +13,8 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.archive.Archive;
+import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -55,7 +55,7 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
 
     Termination termination = new TerminationByEvaluations(50000);
 
-    Archive<DoubleSolution> archive = new NonDominatedSolutionListArchive<>();
+    Archive<DoubleSolution> archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
 
     Ranking<DoubleSolution> ranking = new MergeNonDominatedSortRanking<>();
 
@@ -72,8 +72,8 @@ public class NSGAIIWithUnboundedNonDominatedArchiveExample extends AbstractAlgor
 
     algorithm.run();
 
-    List<DoubleSolution> population =
-        SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
+    List<DoubleSolution> population = algorithm.getResult() ;
+       // SolutionListUtils.distanceBasedSubsetSelection(algorithm.getResult(), 100);
 
     JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 

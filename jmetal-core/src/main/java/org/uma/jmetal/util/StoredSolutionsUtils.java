@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.FileOutputContext;
 import org.uma.jmetal.util.point.PointSolution;
@@ -48,11 +47,11 @@ public class StoredSolutionsUtils {
     return solutions;
   }
 
-  public static void writeToOutput(NonDominatedSolutionListArchive<PointSolution> archive, FileOutputContext context) {
+  public static <S extends Solution<?>> void writeToOutput(List<S> solutionList, FileOutputContext context) {
     BufferedWriter bufferedWriter = context.getFileWriter();
 
     try {
-      for (Solution<?> s : archive.getSolutionList()) {
+      for (Solution<?> s : solutionList) {
         String formatedTextRepresentation = (String)s.attributes().get(SolutionTextRepresentation.getAttribute());
         if (formatedTextRepresentation != null) {
           bufferedWriter.write((String) s.attributes().get(SolutionTextRepresentation.getAttribute()));

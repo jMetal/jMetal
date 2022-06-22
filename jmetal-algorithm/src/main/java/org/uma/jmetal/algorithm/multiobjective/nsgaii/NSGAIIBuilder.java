@@ -1,6 +1,5 @@
 package org.uma.jmetal.algorithm.multiobjective.nsgaii;
 
-import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.algorithm.AlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;

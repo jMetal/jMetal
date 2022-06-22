@@ -222,7 +222,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
   /**
    * initUniformWeight
    */
-  protected void initUniformWeight() {
+  protected void initializeUniformWeight() {
     if ((problem.getNumberOfObjectives() == 2) && (swarmSize <= 300)) {
       for (int n = 0; n < swarmSize; n++) {
         double a = 1.0 * n / (swarmSize - 1);
@@ -239,7 +239,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         //       String path =
         // Paths.get(VectorFileUtils.class.getClassLoader().getResource(filePath).toURI()).toString
         // ();
-        String path = "/" + dataDirectory + "/" + dataFileName ;
+        String path = "/" + dataDirectory + "/" + dataFileName;
 
         InputStream inputStream =
             getClass()
@@ -268,7 +268,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
         br.close();
       } catch (Exception e) {
         throw new JMetalException("initializeUniformWeight: failed when reading for file: "
-            + dataDirectory + "/" + dataFileName, e) ;
+            + dataDirectory + "/" + dataFileName, e);
       }
     }
   }
@@ -488,7 +488,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     evaluateSwarm(swarm) ;
     initializeVelocity(getSwarm());
 
-    initUniformWeight();
+    initializeUniformWeight();
     initIdealPoint();
 
     initializeLeaders(getSwarm());

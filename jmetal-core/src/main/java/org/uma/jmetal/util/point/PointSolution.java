@@ -1,5 +1,6 @@
 package org.uma.jmetal.util.point;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +16,11 @@ import org.uma.jmetal.solution.Solution;
 public class PointSolution implements Solution<Double> {
   private int numberOfObjectives;
   private double[] objectives;
-  protected Map<Object, Object> attributes;
+  protected Map<Object, Object> attributes = new HashMap<>();
 
   @Override
   public List<Double> variables() {
-    return null;
+    return new ArrayList<>();
   }
 
   @Override
@@ -29,7 +30,7 @@ public class PointSolution implements Solution<Double> {
 
   @Override
   public double[] constraints() {
-    return null;
+    return new double[0];
   }
 
   @Override

@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.Replacement;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.MatingPoolSelection;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.solutionscreation.SolutionsCreation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.variation.Variation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.variation.Variation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
@@ -136,6 +136,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     updateArchive(population);
 
     attributes.put("EVALUATIONS", evaluations);
+    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
@@ -144,6 +145,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     evaluations += variation.getOffspringPopulationSize();
 
     attributes.put("EVALUATIONS", evaluations);
+    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 

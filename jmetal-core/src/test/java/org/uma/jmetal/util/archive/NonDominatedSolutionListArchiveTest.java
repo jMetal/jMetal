@@ -30,7 +30,6 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldConstructorAssignThePassedComparator() {
-    @SuppressWarnings("unchecked")
     DominanceWithConstraintsComparator<IntegerSolution> comparator = mock(
         DominanceWithConstraintsComparator.class) ;
 

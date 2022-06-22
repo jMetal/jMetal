@@ -7,6 +7,7 @@ import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
@@ -37,7 +38,7 @@ class AutoNSGAIIIraceTest {
             + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAIIIrace autoNSGAIIIrace = new AutoNSGAIIIrace();
+    AutoNSGAII autoNSGAIIIrace = new AutoNSGAII();
     autoNSGAIIIrace.parseAndCheckParameters(arguments);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAIIIrace.create();

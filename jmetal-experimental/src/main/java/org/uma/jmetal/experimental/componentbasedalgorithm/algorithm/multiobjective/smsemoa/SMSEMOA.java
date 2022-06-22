@@ -1,8 +1,8 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.smsemoa;
 
 import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement.impl.SMSEMOAReplacement;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.SMSEMOAReplacement;
+import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.selection.impl.RandomMatingPoolSelection;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;

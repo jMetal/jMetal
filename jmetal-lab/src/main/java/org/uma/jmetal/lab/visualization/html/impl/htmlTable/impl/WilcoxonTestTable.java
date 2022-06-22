@@ -89,13 +89,13 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
       html.append("<div class='horizontal'>");
       for (Difference difference : differences) {
         if (difference == Difference.BETTER) {
-          html.append("<i class='fas fa-arrow-alt-circle-up'></i>");
+          html.append("<a> + </a>");
         }
         if (difference == Difference.WORSE) {
-          html.append("<i class='far fa-arrow-alt-circle-down'></i>");
+          html.append("<a> - </a>");
         }
         if (difference == Difference.NO_DIFFERENCE) {
-          html.append("<i class='fas fa-equals'></i>");
+          html.append("<a> = </a>");
         }
       }
       html.append("</div></td>");

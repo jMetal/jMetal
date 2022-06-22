@@ -8,7 +8,7 @@ import org.uma.jmetal.util.errorchecking.Check;
 /**
  * Class that groups a list of {@link Comparable} entities by order in the collection. The number of
  * groups is a constructor parameter and the group size is computed by dividing the list size by the
- * number of groups. If the remainder of this division is not zero, the last group will contains the
+ * number of groups. If the remainder of this division is not zero, the last group will contain the
  * remaining index values (so, its size would be higher than the size of the rest of groups).
  *
  * To avoid unnecessary recomputing of the groups, the state variable {@link #lastListSize} records

@@ -8,6 +8,8 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.experimental.auto.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.experimental.auto.algorithm.nsgaii.AutoNSGAII;
 import org.uma.jmetal.lab.experiment.Experiment;
 import org.uma.jmetal.lab.experiment.ExperimentBuilder;
@@ -56,7 +58,7 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 /**
  * This class reproduce the experimental study detailed in:
  * Antonio J. Nebro, Manuel López-Ibáñez, Cristóbal Barba-González, José García-Nieto
- * Automatic configuration of NSGA-II with jMetal and irace.
+ * Automatic configuration of NSGA-II and MOPSO with jMetal and irace.
  * GECCO (Companion) 2019: 1374-1381
  * DOI: https://doi.org/10.1145/3319619.3326832
  *
@@ -154,7 +156,11 @@ public class Gecco2019Experiment {
         algorithms.add(new ExperimentAlgorithm<>(algorithm, experimentProblem, run));
       }
 
+
+
       for (ExperimentProblem<DoubleSolution> experimentProblem : problemList) {
+
+        /* AutoNSGAII */
         String[] parameters =
                 ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
                         + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
@@ -178,7 +184,8 @@ public class Gecco2019Experiment {
                         + "--mutationProbability 0.004 "
                         + "--mutationRepairStrategy round "
                         + "--uniformMutationPerturbation 0.6972 "
-                        + "--polynomialMutationDistributionIndex 20.0 ")
+                        + "--polynomialMutationDistributionIndex 20.0 "
+                        + "--externalArchive crowdingDistanceArchive ")
                         .split("\\s+");
 
         AutoNSGAII autoNSGAII = new AutoNSGAII();
@@ -186,7 +193,82 @@ public class Gecco2019Experiment {
         EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
         algorithms.add(new ExperimentAlgorithm<>(nsgaII, "AutoNSGAII", experimentProblem, run));
+
+
+
+        /* AutoMOPSO */
+        String[] parametersAutoMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                + "--maximumNumberOfEvaluations 25000 "
+                + "--swarmSize 72 "
+                + "--archiveSize 100 "
+                + "--swarmInitialization random "
+                + "--velocityInitialization defaultVelocityInitialization "
+                + "--externalArchive crowdingDistanceArchive "
+                + "--localBestInitialization defaultLocalBestInitialization "
+                + "--globalBestInitialization defaultGlobalBestInitialization "
+                + "--globalBestSelection binaryTournament "
+                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                + "--frequencyOfApplicationOfMutationOperator 6 "
+                + "--mutation polynomial "
+                + "--mutationProbability 0.0108 "
+                + "--mutationRepairStrategy round "
+                + "--polynomialMutationDistributionIndex 84.965 "
+                + "--positionUpdate defaultPositionUpdate "
+                + "--globalBestUpdate defaultGlobalBestUpdate "
+                + "--localBestUpdate defaultLocalBestUpdate "
+                + "--velocityUpdate defaultVelocityUpdate "
+                + "--c1Min 1.6003 "
+                + "--c1Max 2.4511 "
+                + "--c2Min 1.2224 "
+                + "--c2Max 2.1119 "
+                + "--wMin 0.1041  "
+                + "--wMax 0.288 "
+        )
+                .split("\\s+");
+        AutoMOPSO AutoMOPSO = new AutoMOPSO();
+        AutoMOPSO.parseAndCheckParameters(parametersAutoMOPSO);
+        ParticleSwarmOptimizationAlgorithm automopso = AutoMOPSO.create();
+
+        algorithms.add(new ExperimentAlgorithm<>(automopso, "AutoMOPSO", experimentProblem, run));
+
+        /* OMOPSO */
+        String[] parametersOMOPSO = ("--problemName " + experimentProblem.getProblem().getClass().getName() + " "
+                + "--referenceFrontFileName " + experimentProblem.getReferenceFront() + " "
+                + "--maximumNumberOfEvaluations 25000 "
+                + "--swarmSize 100 "
+                + "--archiveSize 100 "
+                + "--swarmInitialization random "
+                + "--velocityInitialization defaultVelocityInitialization "
+                + "--externalArchive crowdingDistanceArchive "
+                + "--localBestInitialization defaultLocalBestInitialization "
+                + "--globalBestInitialization defaultGlobalBestInitialization "
+                + "--globalBestSelection binaryTournament "
+                + "--perturbation frequencySelectionMutationBasedPerturbation "
+                + "--frequencyOfApplicationOfMutationOperator 7 "
+                + "--mutation polynomial "
+                + "--mutationProbability 1.0 "
+                + "--mutationRepairStrategy round "
+                + "--polynomialMutationDistributionIndex 20.0 "
+                + "--positionUpdate defaultPositionUpdate "
+                + "--globalBestUpdate defaultGlobalBestUpdate "
+                + "--localBestUpdate defaultLocalBestUpdate "
+                + "--velocityUpdate defaultVelocityUpdate "
+                + "--c1Min 1.5 "
+                + "--c1Max 2.0 "
+                + "--c2Min 1.5 "
+                + "--c2Max 2.0 "
+                + "--wMin 0.1  "
+                + "--wMax 0.5 "
+        )
+                .split("\\s+");
+        AutoMOPSO OMOPSO = new AutoMOPSO();
+        OMOPSO.parseAndCheckParameters(parametersOMOPSO);
+        ParticleSwarmOptimizationAlgorithm omopso = OMOPSO.create();
+
+        algorithms.add(new ExperimentAlgorithm<>(omopso, "OMOPSO", experimentProblem, run));
       }
+
     }
     return algorithms;
   }

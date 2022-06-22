@@ -30,8 +30,8 @@ public class SMSEMOADefaultConfigurationExample extends AbstractAlgorithmRunner 
     CrossoverOperator<DoubleSolution> crossover;
     MutationOperator<DoubleSolution> mutation;
 
-    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
     problem = ProblemUtils.loadProblem(problemName);
 
