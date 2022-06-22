@@ -1,0 +1,197 @@
+###################################################### -*- mode: r -*- #####
+## Scenario setup for Iterated Race (iRace).
+############################################################################
+
+## To use the default value of a parameter of iRace, simply do not set
+## the parameter (comment it out in this file, and do not give any
+## value on the command line).
+
+## File that contains the description of the parameters.
+parameterFile = "./parameters-NSGAII.txt"
+
+## Directory where the programs will be run.
+# execDir = "./"
+execDir = "."
+
+## File to save tuning results as an R dataset, either absolute path
+## or relative to execDir.
+# logFile = "./irace.Rdata"
+
+## Directory where tuning instances are located, either absolute path or
+## relative to current directory.
+# trainInstancesDir = "./Instances"
+trainInstancesDir = ""
+
+## File with a list of instances and (optionally) parameters.
+## If empty or NULL, do not use a file.
+# trainInstancesFile = "instances-list.txt"
+trainInstancesFile = "instances-list.txt"
+
+## A file containing a list of initial configurations.
+## If empty or NULL, do not use a file.
+# configurationsFile = ""
+
+## The script called for each configuration that launches the program to be
+## tuned.  See templates/target-runner.tmpl
+# targetRunner = "./target-runner"
+
+## Number of times to retry a call to target-runner if the call failed.
+# targetRunnerRetries = 0
+
+## Optional data passed to targetRunner. This is ignored by the default
+## targetRunner function, but it may be used by custom targetRunner functions
+## to pass persistent data around.
+# targetRunnerData = NULL
+
+## Optional R function to provide custom parallelization of target.runner.  The
+## signature of this function should be 'function(experiments, target.runner,
+## scenario)', where target.runner is an R function, 'experiments' is a list
+## such that each of its elements will be the argument to one call of
+## target.runner, and scenario will also be passed to every call. See
+## help(target.runner.default) for details.
+# targetRunnerParallel = NULL
+
+## Optional script that provides a numeric value for each configuration.
+## See templates/target-evaluator.tmpl
+# targetEvaluator = ""
+# targetEvaluator = "./target-evaluator"
+
+## The maximum number of runs (invocations of targetRunner) that will
+## performed. It determines the (maximum) budget of experiments for the tuning.
+# maxExperiments = 0
+maxExperiments = 100000
+
+## The maximum time in seconds for the runs of targetRunner that will be 
+## performed. The mean execution time is estimated to calculate the maximum number 
+## of experiments. When this is used targetRunner must return the execution time
+## as second output.
+# maxTime = 0             
+
+## The percentage of the budget used for estimating the mean execution time.
+## Only used when maxTime > 0.
+# budgetEstimation = 0.02
+
+## Directory where testing instances are located, either absolute or relative
+## to current directory.
+# testInstancesDir = ""
+
+## File containing a list of test instances and optionally additional
+## parameters for them.  If empty or NULL, do not use a file.
+# testInstancesFile = ""
+testInstancesFile = "" #TODO COMPLETA
+
+## Number of elite configurations returned by irace that will be tested
+## if test instances are provided.
+# testNbElites = 1
+
+## Enable/disable testing the elite configurations found at each iteration.
+# testIterationElites = 0
+
+## Indicates the number of decimal places to be considered for the
+## real parameters.
+# digits = 4
+
+## A value of 0 silences all debug messages. Higher values provide
+## more verbose debug messages.
+# debugLevel = 0
+
+## Number of iterations of Race. Do not use something else than the
+## default (that is, the dynamic value) unless you know exactly what
+## you are doing.
+# nbIterations = 0
+
+## Number of experiments per iteration. Do no use something else than
+## the default (that is, the dynamic value) unless you know exactly
+## what you are doing.
+# nbExperimentsPerIteration = 0
+
+## Sample the instances or take them always in the same order.
+# sampleInstances = 1
+sampleInstances = 0
+
+## Specifies the statistical test type: F-test or t-test.
+# testType = "F-test"
+
+## Specifies how many instances are seen before the first elimination
+## test. It must be a multiple of eachTest.
+# firstTest = 5
+firstTest = 9
+
+## Specifies how many instances are seen between elimination tests.
+# eachTest = 1
+eachTest = 9
+
+## The minimum number of configurations that should survive to continue one
+## iteration. Do not use something else than the default (that is, the
+## dynamic value) unless you know exactly what you are doing.
+# minNbSurvival = 0
+
+## The number of configurations that should be sampled and evaluated at
+## each iteration. Do no use something else than
+## the default (that is, the dynamic value) unless you know exactly
+## what you are doing.
+# nbConfigurations = 0
+
+## This value is used to determine the number of configurations
+## to be sampled and evaluated at each iteration. Use
+## the default unless you know exactly what you are doing.
+# mu = 5
+
+## Enable/disable deterministic algorithm mode, if enabled irace
+## will not use an instance more that once in each race. Note that
+## if the number of instances provided is less than firstTest, no
+## statistical test will be performed. 
+# deterministic = 0
+
+## Seed of the random number generator (must be a positive integer, NA
+## means use a random seed).
+# seed = NA
+
+## Number of calls to targetRunner to execute in parallel. Less than 2
+## means calls to targetRunner are sequentially executed.
+#parallel = 0
+
+## Enable/disable load-balancing when executing experiments in
+## parallel. Load-balancing makes better use of computing resources, but
+## increases communication overhead. If this overhead is large, disabling
+## load-balancing may be faster.
+# loadBalancing = 
+
+## Specify how irace waits for jobs to finish when targetRunner submits jobs to
+## a batch cluster: sge, pbs, torque or slurm (targetRunner must submit jobs to
+## the cluster using. for example, qsub).
+# batchmode = 0
+
+## Enable/disable MPI. Use MPI to execute targetRunner in parallel
+## (parameter parallel is the number of slaves).
+# mpi = 0
+
+## Enable/disable the soft restart strategy that avoids premature convergence
+## of the probabilistic model.
+# softRestart = 1
+
+## Confidence level for the elimination test.
+# confidence = 0.95
+
+## Previously saved log file to recover the execution of irace, either
+## absolute path or relative to the current directory. If empty or
+## NULL, recovery is not performed.
+# recoveryFile = ""
+
+## File containing a list of logical expressions that cannot be true
+## for any evaluated configuration. If empty or NULL, do not use a file.
+# forbiddenFile = ""
+
+## Enable/disable elitist irace.
+# elitist = 1
+
+## Number of instances to add to execution list before previous instances in
+## elitist irace.
+# elitistNewInstances  = 1
+
+## Limit for the elitist race, number of statistical test performed without 
+## elimination of configurations.
+# elitistLimit  = 2
+
+## END of scenario file
+############################################################################

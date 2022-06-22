@@ -1,0 +1,26 @@
+populationSize                           "--populationSize "                      o       (100)                                              
+#
+algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)                      
+populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                      | algorithmResult %in% c("externalArchive")
+externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive, unboundedExternalArchive) | algorithmResult %in% c("externalArchive")
+#
+createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)
+#
+variation                                "--variation "                           c       (crossoverAndMutationVariation)
+offspringPopulationSize                  "--offspringPopulationSize "             i       (1, 400)                       | variation %in% c("crossoverAndMutationVariation")
+crossover                                "--crossover "                           c       (SBX, BLX_ALPHA)               | variation %in% c("crossoverAndMutationVariation")
+crossoverProbability                     "--crossoverProbability "                r       (0.0, 1.0)                     | crossover %in% c("SBX","BLX_ALPHA")
+crossoverRepairStrategy                  "--crossoverRepairStrategy "             c       (random, round, bounds)        | crossover %in% c("SBX","BLX_ALPHA")
+sbxDistributionIndex                     "--sbxDistributionIndex "                r       (5.0, 400.0)                   | crossover %in% c("SBX")
+blxAlphaCrossoverAlphaValue              "--blxAlphaCrossoverAlphaValue "         r       (0.0, 1.0)                     | crossover %in% c("BLX_ALPHA")
+mutation                                 "--mutation "                            c       (uniform, polynomial, linkedPolynomial, nonUniform) | variation %in% c("crossoverAndMutationVariation")
+mutationProbabilityFactor                "--mutationProbabilityFactor "           r       (0.0, 2.0)                     | mutation %in% c("uniform","polynomial","linkedPolynomial","nonUniform")
+mutationRepairStrategy                   "--mutationRepairStrategy "              c       (random, round, bounds)        | mutation %in% c("uniform","polynomial","linkedPolynomial","nonUniform")
+polynomialMutationDistributionIndex      "--polynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("polynomial")
+linkedPolynomialMutationDistributionIndex "--linkedPolynomialMutationDistributionIndex " r       (5.0, 400.0)                   | mutation %in% c("linkedPolynomial")
+uniformMutationPerturbation              "--uniformMutationPerturbation "         r       (0.0, 1.0)                     | mutation %in% c("uniform")
+nonUniformMutationPerturbation           "--nonUniformMutationPerturbation "      r       (0.0, 1.0)                     | mutation %in% c("nonUniform")
+#
+selection                                "--selection "                           c       (tournament, random)                               
+selectionTournamentSize                  "--selectionTournamentSize "             i       (2, 10)                        | selection %in% c("tournament")
+#
