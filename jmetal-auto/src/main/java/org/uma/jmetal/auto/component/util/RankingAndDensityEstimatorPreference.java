@@ -12,19 +12,19 @@ import org.uma.jmetal.util.ranking.Ranking;
  *
  * @author Antonio J. Nebro
  */
-public class Preference<S> {
+public class RankingAndDensityEstimatorPreference<S> {
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
-  private Preference<S> relatedPreference;
+  private RankingAndDensityEstimatorPreference<S> relatedPreference;
   private boolean preferenceHasBeenComputedFirstTime = false;
 
-  public Preference(Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
+  public RankingAndDensityEstimatorPreference(Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
     this(ranking, densityEstimator, null);
   }
 
   /** Constructor */
-  public Preference(
-          Ranking<S> ranking, DensityEstimator<S> densityEstimator, Preference<S> relatedPreference) {
+  public RankingAndDensityEstimatorPreference(
+          Ranking<S> ranking, DensityEstimator<S> densityEstimator, RankingAndDensityEstimatorPreference<S> relatedPreference) {
     this.ranking = ranking;
     this.densityEstimator = densityEstimator;
     this.relatedPreference = relatedPreference;

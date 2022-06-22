@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.auto.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.auto.component.util.Preference;
+import org.uma.jmetal.auto.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.solution.Solution;
 
@@ -12,7 +12,7 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
     implements MatingPoolSelection<S> {
   private NaryTournamentSelection<S> selectionOperator;
   private int matingPoolSize;
-  private Preference<S> preference;
+  private RankingAndDensityEstimatorPreference<S> preference;
 
   public NaryTournamentMatingPoolSelection(NaryTournamentSelection<S> selection, int matingPoolSize) {
     this.matingPoolSize = matingPoolSize ;
@@ -27,7 +27,7 @@ public class NaryTournamentMatingPoolSelection<S extends Solution<?>>
   }
 
   public NaryTournamentMatingPoolSelection(
-      int tournamentSize, int matingPoolSize, Preference<S> preference) {
+      int tournamentSize, int matingPoolSize, RankingAndDensityEstimatorPreference<S> preference) {
     this.preference = preference ;
 
     this.selectionOperator = new NaryTournamentSelection<>(tournamentSize, preference.getComparator());

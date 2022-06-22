@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.auto.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.auto.component.util.Preference;
+import org.uma.jmetal.auto.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.ranking.Ranking;
@@ -28,7 +28,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
   }
 
   public RankingAndDensityEstimatorReplacement(
-      Preference<S> preference, RemovalPolicy removalPolicy) {
+      RankingAndDensityEstimatorPreference<S> preference, RemovalPolicy removalPolicy) {
     this.ranking = preference.getRanking();
     this.densityEstimator = preference.getDensityEstimator();
     this.removalPolicy = removalPolicy;
