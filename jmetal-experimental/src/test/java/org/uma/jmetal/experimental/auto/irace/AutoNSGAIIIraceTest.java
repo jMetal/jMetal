@@ -28,6 +28,7 @@ class AutoNSGAIIIraceTest {
             + "--selectionTournamentSize 2 "
             + "--rankingForSelection dominanceRanking "
             + "--densityEstimatorForSelection crowdingDistance "
+            + "--mutationProbabilityFactor 0.5 "
             + "--crossover SBX "
             + "--crossoverProbability 0.9 "
             + "--crossoverRepairStrategy bounds "
