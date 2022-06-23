@@ -6,6 +6,7 @@ import org.uma.jmetal.auto.component.catalogue.pso.velocityupdate.impl.Constrain
 import org.uma.jmetal.auto.component.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VelocityUpdateParameter extends CategoricalParameter {
 
@@ -30,7 +31,7 @@ public class VelocityUpdateParameter extends CategoricalParameter {
         return new ConstrainedVelocityUpdate(c1Min, c1Max, c2Min, c2Max, problem) {
         };
       default:
-        throw new RuntimeException(getValue() + " is not a valid velocity update strategy");
+        throw new JMetalException(getValue() + " is not a valid velocity update strategy");
     }
   }
 }

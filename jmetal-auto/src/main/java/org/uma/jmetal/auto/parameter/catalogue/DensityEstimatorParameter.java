@@ -6,25 +6,26 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class DensityEstimatorParameter<S extends Solution<?>> extends CategoricalParameter {
-  public DensityEstimatorParameter(String name, String[] args, List<String> validDensityEstimators) {
+
+  public DensityEstimatorParameter(String name, String[] args,
+      List<String> validDensityEstimators) {
     super(name, args, validDensityEstimators);
   }
 
   public DensityEstimator<S> getParameter() {
-    DensityEstimator<S> result ;
+    DensityEstimator<S> result;
     switch (getValue()) {
       case "crowdingDistance":
-        result = new CrowdingDistanceDensityEstimator<>() ;
+        result = new CrowdingDistanceDensityEstimator<>();
         break;
       case "knn":
-        result = new KnnDensityEstimator<>(1) ;
+        result = new KnnDensityEstimator<>(1);
         break;
-      //case "hypervolumeContribution":
-        //result = new Hyper
-        default:
-        throw new RuntimeException("Density estimator does not exist: " + getName());
+      default:
+        throw new JMetalException("Density estimator does not exist: " + getName());
     }
     return result;
   }

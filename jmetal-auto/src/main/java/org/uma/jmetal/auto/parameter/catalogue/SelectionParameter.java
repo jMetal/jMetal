@@ -11,37 +11,31 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 
-public class SelectionParameter extends CategoricalParameter {
+public class SelectionParameter<S extends Solution<?>> extends CategoricalParameter {
   public SelectionParameter(String args[], List<String> selectionStrategies) {
     super("selection", args, selectionStrategies) ;
   }
 
-  public MatingPoolSelection<?> getParameter(int matingPoolSize, Comparator<?> comparator) {
-    MatingPoolSelection<Solution<?>> result ;
+  public MatingPoolSelection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
+    MatingPoolSelection<S> result ;
     switch(getValue()) {
       case "tournament":
         int tournamentSize =
                 (Integer) findSpecificParameter("selectionTournamentSize").getValue();
 
-        Ranking<Solution<?>> ranking = new FastNonDominatedSortRanking<>();
-        DensityEstimator<Solution<?>> densityEstimator = new CrowdingDistanceDensityEstimator<>();
-
-        MultiComparator<Solution<?>> rankingAndCrowdingComparator =
-            new MultiComparator<>(
-                Arrays.asList(
-                    Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
-        result = new NaryTournamentMatingPoolSelection<>(
-                tournamentSize, matingPoolSize, rankingAndCrowdingComparator);
+        result = new NaryTournamentMatingPoolSelection<S>(
+                tournamentSize, matingPoolSize, comparator);
 
         break ;
       case "random":
         result = new RandomMatingPoolSelection<>(matingPoolSize);
         break ;
       default:
-        throw new RuntimeException("Selection component unknown: " + getValue()) ;
+        throw new JMetalException("Selection component unknown: " + getValue()) ;
     }
 
     return result ;

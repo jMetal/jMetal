@@ -8,6 +8,7 @@ import org.uma.jmetal.auto.component.catalogue.common.solutionscreation.impl.Sca
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 
@@ -28,7 +29,7 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
       case "latinHypercubeSampling":
         return new LatinHypercubeSamplingSolutionsCreation(problem, populationSize);
       default:
-        throw new RuntimeException(
+        throw new JMetalException(
             getValue() + " is not a valid initialization strategy");
     }
   }

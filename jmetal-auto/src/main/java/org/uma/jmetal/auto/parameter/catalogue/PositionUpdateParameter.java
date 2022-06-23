@@ -5,6 +5,7 @@ import org.uma.jmetal.auto.component.catalogue.pso.positionupdate.PositionUpdate
 import org.uma.jmetal.auto.component.catalogue.pso.positionupdate.impl.DefaultPositionUpdate;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.bounds.Bounds;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class PositionUpdateParameter extends CategoricalParameter {
     public PositionUpdateParameter(String[] args, List<String> positionUpdateStrategies){
@@ -22,7 +23,7 @@ public class PositionUpdateParameter extends CategoricalParameter {
                 result = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached, velocityChangeWhenUpperLimitIsReached, positionBounds);
                 break;
             default:
-                throw new RuntimeException("Position update component unknown: " + getValue());
+                throw new JMetalException("Position update component unknown: " + getValue());
         }
         return result;
     }

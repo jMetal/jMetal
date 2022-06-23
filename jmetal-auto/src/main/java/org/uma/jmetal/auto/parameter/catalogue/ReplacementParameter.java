@@ -10,6 +10,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
@@ -54,7 +55,7 @@ public class ReplacementParameter extends CategoricalParameter {
 
         break;
       default:
-        throw new RuntimeException("Replacement component unknown: " + getValue());
+        throw new JMetalException("Replacement component unknown: " + getValue());
     }
 
     return result;

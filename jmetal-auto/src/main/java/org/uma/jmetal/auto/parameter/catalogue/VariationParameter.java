@@ -7,6 +7,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VariationParameter extends CategoricalParameter {
   public VariationParameter(String[] args, List<String> variationStrategies) {
@@ -17,22 +18,20 @@ public class VariationParameter extends CategoricalParameter {
     Variation<?> result;
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
-    switch (getValue()) {
-      case "crossoverAndMutationVariation":
-        CrossoverParameter crossoverParameter =
-            (CrossoverParameter) findSpecificParameter("crossover");
-        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+    if ("crossoverAndMutationVariation".equals(getValue())) {
+      CrossoverParameter crossoverParameter =
+          (CrossoverParameter) findSpecificParameter("crossover");
+      MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
 
-        CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
-        MutationOperator<DoubleSolution> mutationOperatorOperator =
-            mutationParameter.getParameter();
+      CrossoverOperator<DoubleSolution> crossoverOperator = crossoverParameter.getParameter();
+      MutationOperator<DoubleSolution> mutationOperatorOperator =
+          mutationParameter.getParameter();
 
-        result =
-            new CrossoverAndMutationVariation<>(
-                offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
-        break;
-      default:
-        throw new RuntimeException("Variation component unknown: " + getValue());
+      result =
+          new CrossoverAndMutationVariation<>(
+              offspringPopulationSize, crossoverOperator, mutationOperatorOperator);
+    } else {
+      throw new JMetalException("Variation component unknown: " + getValue());
     }
 
     return result;

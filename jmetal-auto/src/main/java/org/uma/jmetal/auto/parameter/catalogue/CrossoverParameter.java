@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class CrossoverParameter extends CategoricalParameter {
   public CrossoverParameter(String[] args, List<String> crossoverOperators) {
@@ -32,7 +33,7 @@ public class CrossoverParameter extends CategoricalParameter {
             new BLXAlphaCrossover(crossoverProbability, alpha, repairDoubleSolution.getParameter());
         break;
       default:
-        throw new RuntimeException("Crossover operator does not exist: " + getName());
+        throw new JMetalException("Crossover operator does not exist: " + getName());
     }
     return result;
   }

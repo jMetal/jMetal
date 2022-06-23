@@ -7,6 +7,7 @@ import org.uma.jmetal.auto.component.catalogue.pso.inertiaweightcomputingstrateg
 import org.uma.jmetal.auto.component.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearIncreasingStrategy;
 import org.uma.jmetal.auto.component.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class InertiaWeightComputingParameter extends CategoricalParameter {
   public InertiaWeightComputingParameter(String[] args, List<String> mutationOperators) {
@@ -41,7 +42,7 @@ public class InertiaWeightComputingParameter extends CategoricalParameter {
         result =new LinearIncreasingStrategy(weightMin, weightMax, iterations, swarmSize) ;
         break;
       default:
-        throw new RuntimeException("Inertia weight computing strategy does not exist: " + getName());
+        throw new JMetalException("Inertia weight computing strategy does not exist: " + getName());
     }
     return result;
   }

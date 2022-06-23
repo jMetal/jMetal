@@ -4,6 +4,7 @@ import java.util.List;
 import org.uma.jmetal.auto.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.auto.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestInitializationParameter extends CategoricalParameter {
   public GlobalBestInitializationParameter(String[] args, List<String> globalBestInitializationStrategies) {
@@ -13,12 +14,10 @@ public class GlobalBestInitializationParameter extends CategoricalParameter {
   public GlobalBestInitialization getParameter() {
     GlobalBestInitialization result;
 
-    switch (getValue()) {
-      case "defaultGlobalBestInitialization":
-        result = new DefaultGlobalBestInitialization() ;
-        break;
-      default:
-        throw new RuntimeException("Global best initialization component unknown: " + getValue());
+    if ("defaultGlobalBestInitialization".equals(getValue())) {
+      result = new DefaultGlobalBestInitialization();
+    } else {
+      throw new JMetalException("Global best initialization component unknown: " + getValue());
     }
 
     return result;

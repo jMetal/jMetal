@@ -6,6 +6,7 @@ import org.uma.jmetal.solution.util.repairsolution.RepairDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithOppositeBoundValue;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithRandomValue;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter {
   public RepairDoubleSolutionStrategyParameter(String name, String args[], List<String> strategies) {
@@ -25,7 +26,7 @@ public class RepairDoubleSolutionStrategyParameter extends CategoricalParameter 
         result = new RepairDoubleSolutionWithOppositeBoundValue() ;
         break ;
       default:
-        throw new RuntimeException("Repair strategy unknown: " + getName()) ;
+        throw new JMetalException("Repair strategy unknown: " + getName()) ;
     }
 
     return result ;

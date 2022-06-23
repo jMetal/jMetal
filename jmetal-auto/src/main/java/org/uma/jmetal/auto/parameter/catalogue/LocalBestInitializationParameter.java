@@ -4,6 +4,7 @@ import java.util.List;
 import org.uma.jmetal.auto.component.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.auto.component.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class LocalBestInitializationParameter extends CategoricalParameter {
   public LocalBestInitializationParameter(String[] args, List<String> localBestInitializationStrategies) {
@@ -13,12 +14,10 @@ public class LocalBestInitializationParameter extends CategoricalParameter {
   public LocalBestInitialization getParameter() {
     LocalBestInitialization result;
 
-    switch (getValue()) {
-      case "defaultLocalBestInitialization":
-        result = new DefaultLocalBestInitialization() ;
-        break;
-      default:
-        throw new RuntimeException("Local best initialization component unknown: " + getValue());
+    if ("defaultLocalBestInitialization".equals(getValue())) {
+      result = new DefaultLocalBestInitialization();
+    } else {
+      throw new JMetalException("Local best initialization component unknown: " + getValue());
     }
 
     return result;

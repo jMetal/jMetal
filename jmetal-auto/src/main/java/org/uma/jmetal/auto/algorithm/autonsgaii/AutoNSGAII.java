@@ -59,7 +59,7 @@ public class AutoNSGAII {
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
   private CreateInitialSolutionsParameter createInitialSolutionsParameter;
-  private SelectionParameter selectionParameter;
+  private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
 
   public void parseAndCheckParameters(String[] args) {
@@ -156,7 +156,7 @@ public class AutoNSGAII {
   }
 
   private void selection(String[] args) {
-    selectionParameter = new SelectionParameter(args, Arrays.asList("tournament", "random"));
+    selectionParameter = new SelectionParameter<>(args, Arrays.asList("tournament", "random"));
     IntegerParameter selectionTournamentSize =
         new IntegerParameter("selectionTournamentSize", args, 2, 10);
     selectionParameter.addSpecificParameter("tournament", selectionTournamentSize);
@@ -217,7 +217,6 @@ public class AutoNSGAII {
     Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
 
     MatingPoolSelection<DoubleSolution> selection =
-        (MatingPoolSelection<DoubleSolution>)
             selectionParameter.getParameter(
                 variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 

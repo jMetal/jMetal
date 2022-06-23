@@ -6,6 +6,7 @@ import org.uma.jmetal.auto.component.catalogue.pso.perturbation.impl.FrequencySe
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class PerturbationParameter extends CategoricalParameter {
   public PerturbationParameter(String[] args, List<String> perturbationStrategies) {
@@ -15,20 +16,18 @@ public class PerturbationParameter extends CategoricalParameter {
   public Perturbation getParameter() {
     Perturbation result;
 
-    switch (getValue()) {
-      case "frequencySelectionMutationBasedPerturbation":
-        MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
-        MutationOperator<DoubleSolution> mutationOperator =
-            mutationParameter.getParameter();
+    if ("frequencySelectionMutationBasedPerturbation".equals(getValue())) {
+      MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
+      MutationOperator<DoubleSolution> mutationOperator =
+          mutationParameter.getParameter();
 
-        int frequencyOfApplication = (int)findSpecificParameter("frequencyOfApplicationOfMutationOperator").getValue() ;
+      int frequencyOfApplication = (int) findSpecificParameter(
+          "frequencyOfApplicationOfMutationOperator").getValue();
 
-        result =
-            new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfApplication) ;
-
-        break;
-      default:
-        throw new RuntimeException("Perturbation component unknown: " + getValue());
+      result =
+          new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfApplication);
+    } else {
+      throw new JMetalException("Perturbation component unknown: " + getValue());
     }
 
     return result;

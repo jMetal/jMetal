@@ -9,6 +9,7 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.archive.impl.HypervolumeArchive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHypervolume;
 
 public class ExternalArchiveParameter extends CategoricalParameter {
@@ -34,7 +35,7 @@ public class ExternalArchiveParameter extends CategoricalParameter {
         archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;
         break;
       default:
-        throw new RuntimeException("Archive type does not exist: " + getName());
+        throw new JMetalException("Archive type does not exist: " + getName());
     }
     return archive;
   }

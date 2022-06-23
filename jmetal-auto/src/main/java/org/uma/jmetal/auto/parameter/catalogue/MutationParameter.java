@@ -8,6 +8,7 @@ import org.uma.jmetal.operator.mutation.impl.NonUniformMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.UniformMutation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class MutationParameter extends CategoricalParameter {
   public MutationParameter(String[] args, List<String> mutationOperators) {
@@ -48,7 +49,7 @@ public class MutationParameter extends CategoricalParameter {
                 new NonUniformMutation(mutationProbability, perturbation, maxIterations, repairDoubleSolution.getParameter());
         break;
       default:
-        throw new RuntimeException("Mutation operator does not exist: " + getName());
+        throw new JMetalException("Mutation operator does not exist: " + getName());
     }
     return result;
   }

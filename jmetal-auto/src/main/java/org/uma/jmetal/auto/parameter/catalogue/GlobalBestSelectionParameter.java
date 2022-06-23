@@ -7,6 +7,7 @@ import org.uma.jmetal.auto.component.catalogue.pso.globalbestselection.impl.Bina
 import org.uma.jmetal.auto.component.catalogue.pso.globalbestselection.impl.RandomGlobalBestSelection;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestSelectionParameter extends CategoricalParameter {
   public GlobalBestSelectionParameter(String args[], List<String> selectionStrategies) {
@@ -23,7 +24,7 @@ public class GlobalBestSelectionParameter extends CategoricalParameter {
         result = new RandomGlobalBestSelection();
         break ;
       default:
-        throw new RuntimeException("Global Best Selection component unknown: " + getValue()) ;
+        throw new JMetalException("Global Best Selection component unknown: " + getValue()) ;
     }
 
     return result ;
