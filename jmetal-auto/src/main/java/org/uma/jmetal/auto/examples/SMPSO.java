@@ -1,50 +1,54 @@
-package org.uma.jmetal.experimental.auto.algorithm.mopso;
+package org.uma.jmetal.auto.examples;
 
-import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
+import org.uma.jmetal.auto.algorithm.automopso.AutoMOPSO;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 /**
  * @author Daniel Doblas
  */
-public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
+public class SMPSO {
 
   public static void main(String[] args) {
-    String referenceFrontFileName = "ZDT1.csv";
+    String referenceFrontFileName = "ZDT4.csv";
 
     String[] parameters =
-        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
             + "--referenceFrontFileName "
             + referenceFrontFileName
             + " "
-            + "--maximumNumberOfEvaluations 20000 "
-            + "--swarmSize 71 "
+            + "--maximumNumberOfEvaluations 25000 "
+            + "--swarmSize 100 "
             + "--archiveSize 100 "
-            + "--swarmInitialization scatterSearch "
+            + "--swarmInitialization random "
             + "--velocityInitialization defaultVelocityInitialization "
-            + "--externalArchive hypervolumeArchive "
+            + "--externalArchive crowdingDistanceArchive "
             + "--localBestInitialization defaultLocalBestInitialization "
             + "--globalBestInitialization defaultGlobalBestInitialization "
             + "--globalBestSelection binaryTournament "
             + "--perturbation frequencySelectionMutationBasedPerturbation "
-            + "--frequencyOfApplicationOfMutationOperator 1 "
+            + "--frequencyOfApplicationOfMutationOperator 7 "
             + "--mutation polynomial "
             + "--mutationProbabilityFactor 1.0 "
-            + "--mutationRepairStrategy round "
-            + "--polynomialMutationDistributionIndex 17.19 "
+            + "--mutationRepairStrategy bounds "
+            + "--polynomialMutationDistributionIndex 20.0 "
             + "--positionUpdate defaultPositionUpdate "
             + "--velocityChangeWhenLowerLimitIsReached -1.0 "
             + "--velocityChangeWhenUpperLimitIsReached -1.0 "
             + "--globalBestUpdate defaultGlobalBestUpdate "
             + "--localBestUpdate defaultLocalBestUpdate "
-            + "--velocityUpdate defaultVelocityUpdate "
+            + "--velocityUpdate constrainedVelocityUpdate "
             + "--inertiaWeightComputingStrategy randomSelectedValue "
-            + "--c1Min 1.6495 "
-            + "--c1Max 2.779 "
-            + "--c2Min 1.0244 "
-            + "--c2Max 2.0143 "
-            + "--weightMin 0.1  "
+            + "--c1Min 1.5 "
+            + "--c1Max 2.5 "
+            + "--c2Min 1.5 "
+            + "--c2Max 2.5 "
+            + "--weightMin 0.1 "
             + "--weightMax 0.5 ")
             .split("\\s+");
 
@@ -54,15 +58,23 @@ public class ComponentBasedAutoMOPSOConfiguredFromAParameterString {
     AutoMOPSO.print(autoMOPSO.fixedParameterList);
     AutoMOPSO.print(autoMOPSO.autoConfigurableParameterList);
 
-    ParticleSwarmOptimizationAlgorithm mopso = autoMOPSO.create();
+    ParticleSwarmOptimizationAlgorithm smpso = autoMOPSO.create();
 
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
-            "irace.MOPSO", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
+            "SMPSO", 80, 500, "resources/referenceFrontsCSV/" + referenceFrontFileName);
 
-    mopso.getObservable().register(runTimeChartObserver);
+    smpso.getObservable().register(runTimeChartObserver);
 
-    mopso.run();
+    smpso.run();
+
+    JMetalLogger.logger.info("Total computing time: " + smpso.getTotalComputingTime()); ;
+
+    new SolutionListOutput(smpso.getResult())
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
+
+    System.exit(0);
   }
 }

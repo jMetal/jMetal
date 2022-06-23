@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.example;
+package org.uma.jmetal.auto.examples;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.algorithm.autonsgaii.AutoNSGAII;
