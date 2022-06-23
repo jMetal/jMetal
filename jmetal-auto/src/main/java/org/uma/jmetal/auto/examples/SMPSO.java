@@ -6,11 +6,13 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 /**
+ * Program to configure {@link AutoMOPSO} with the parameter values of SMPSO
+ *
  * @author Daniel Doblas
+ * @author Antonio J. Nebro (ajnebro@uma.es)
  */
 public class SMPSO {
 
