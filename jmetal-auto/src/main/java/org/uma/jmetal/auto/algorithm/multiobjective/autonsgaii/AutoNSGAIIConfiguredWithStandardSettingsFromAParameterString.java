@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.multiobjective.nsgaii;
+package org.uma.jmetal.auto.algorithm.multiobjective.autonsgaii;
 
 import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
