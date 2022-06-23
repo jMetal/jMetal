@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.multiobjective.automopso;
+package org.uma.jmetal.auto.algorithm.automopso;
 
 import org.uma.jmetal.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -6,7 +6,9 @@ import org.uma.jmetal.util.observer.impl.EvaluationObserver;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 /**
+ * Example of configuring AutoMOPSO with a particular configuration
  * @author Daniel Doblas
+ * @author Antonio J. Nebro
  */
 public class AutoMOPSOConfiguredFromAParameterString {
 

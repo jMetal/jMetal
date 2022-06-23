@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.multiobjective.autonsgaii;
+package org.uma.jmetal.auto.algorithm.autonsgaii;
 
 import java.util.ArrayList;
 import java.util.Arrays;

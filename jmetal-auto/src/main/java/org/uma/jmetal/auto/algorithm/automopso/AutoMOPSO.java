@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.multiobjective.automopso;
+package org.uma.jmetal.auto.algorithm.automopso;
 
 import java.util.ArrayList;
 import java.util.Arrays;

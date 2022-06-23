@@ -2,7 +2,7 @@ package org.uma.jmetal.auto.irace;
 
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
-import org.uma.jmetal.auto.algorithm.multiobjective.autonsgaii.AutoNSGAII;
+import org.uma.jmetal.auto.algorithm.autonsgaii.AutoNSGAII;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.OrdinalParameter;
