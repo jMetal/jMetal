@@ -49,7 +49,6 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 public class AutoNSGAII {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
-
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilename;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
