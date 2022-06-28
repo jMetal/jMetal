@@ -59,6 +59,7 @@
         <module>jmetal-problem</module>
         <module>jmetal-experimental</module>
         <module>jmetal-parallel</module>
+        <module>jmetal-component</module>
     </modules>
 
     <properties>
@@ -270,6 +271,16 @@
             <dependency>
                 <groupId>org.uma.jmetal</groupId>
                 <artifactId>jmetal-parallel</artifactId>
+                <version>5.12-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-component</artifactId>
+                <version>5.12-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.uma.jmetal</groupId>
+                <artifactId>jmetal-auto</artifactId>
                 <version>5.12-SNAPSHOT</version>
             </dependency>
             <dependency>
