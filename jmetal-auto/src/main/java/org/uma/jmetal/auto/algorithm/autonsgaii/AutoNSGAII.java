@@ -1,18 +1,18 @@
 package org.uma.jmetal.auto.algorithm.autonsgaii;
 
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.variation.Variation;
+import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import org.uma.jmetal.auto.algorithm.EvolutionaryAlgorithm;
-import component.catalogue.common.evaluation.Evaluation;
-import component.catalogue.common.evaluation.impl.SequentialEvaluation;
-import component.catalogue.common.solutionscreation.SolutionsCreation;
-import component.catalogue.ea.replacement.Replacement;
-import component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
-import component.catalogue.ea.selection.MatingPoolSelection;
-import component.catalogue.ea.variation.Variation;
-import component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.auto.parameter.IntegerParameter;
 import org.uma.jmetal.auto.parameter.Parameter;

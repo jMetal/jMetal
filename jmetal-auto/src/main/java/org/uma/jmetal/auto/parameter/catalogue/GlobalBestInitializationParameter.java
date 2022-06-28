@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
-import component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
-import component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
+import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 

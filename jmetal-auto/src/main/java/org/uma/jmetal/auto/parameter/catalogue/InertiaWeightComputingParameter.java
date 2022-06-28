@@ -1,11 +1,11 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
-import component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
-import component.catalogue.pso.inertiaweightcomputingstrategy.impl.ConstantValueStrategy;
-import component.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearDecreasingStrategy;
-import component.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearIncreasingStrategy;
-import component.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.ConstantValueStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearDecreasingStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.LinearIncreasingStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
