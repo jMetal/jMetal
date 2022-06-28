@@ -23,7 +23,7 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
       BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
-    Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
+    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     for (DoubleSolution particle : swarm) {
       globalBest.add((DoubleSolution) particle.copy());

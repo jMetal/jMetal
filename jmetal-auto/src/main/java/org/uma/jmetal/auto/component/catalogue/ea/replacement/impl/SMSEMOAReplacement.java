@@ -30,17 +30,17 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     ranking.compute(jointPopulation);
 
-    List<S> lastSubfront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
+    List<S> lastSubFront = ranking.getSubFront(ranking.getNumberOfSubFronts()-1) ;
 
-    lastSubfront = hypervolume.computeHypervolumeContribution(lastSubfront, jointPopulation) ;
+    lastSubFront = hypervolume.computeHypervolumeContribution(lastSubFront, jointPopulation) ;
 
     List<S> resultPopulation = new ArrayList<>() ;
     for (int i = 0; i < ranking.getNumberOfSubFronts()-1; i++) {
       resultPopulation.addAll(ranking.getSubFront(i));
     }
 
-    for (int i = 0; i < lastSubfront.size()-1; i++) {
-      resultPopulation.add(lastSubfront.get(i)) ;
+    for (int i = 0; i < lastSubFront.size()-1; i++) {
+      resultPopulation.add(lastSubFront.get(i)) ;
     }
 
     return resultPopulation ;
