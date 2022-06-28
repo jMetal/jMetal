@@ -2,8 +2,8 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.Comparator;
 import java.util.List;
-import org.uma.jmetal.auto.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.auto.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import component.catalogue.ea.replacement.Replacement;
+import component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
-import org.uma.jmetal.auto.component.catalogue.pso.perturbation.Perturbation;
-import org.uma.jmetal.auto.component.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
+import component.catalogue.pso.perturbation.Perturbation;
+import component.catalogue.pso.perturbation.impl.FrequencySelectionMutationBasedPerturbation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

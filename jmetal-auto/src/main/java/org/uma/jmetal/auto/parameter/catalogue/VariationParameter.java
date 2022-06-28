@@ -1,8 +1,8 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
-import org.uma.jmetal.auto.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.auto.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
+import component.catalogue.ea.variation.Variation;
+import component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
