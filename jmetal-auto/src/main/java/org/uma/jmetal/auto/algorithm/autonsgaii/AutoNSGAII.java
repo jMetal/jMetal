@@ -137,14 +137,6 @@ public class AutoNSGAII {
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
-    //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
-    //    new DifferentialEvolutionCrossoverParameter(args);
-
-    //RealParameter f = new RealParameter("f", args, 0.0, 1.0);
-    //RealParameter cr = new RealParameter("cr", args, 0.0, 1.0);
-    //differentialEvolutionCrossover.addGlobalParameter(f);
-    //differentialEvolutionCrossover.addGlobalParameter(cr);
-
     offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
 
     variationParameter =
