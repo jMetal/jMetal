@@ -20,80 +20,13 @@ import org.uma.jmetal.util.pseudorandom.RandomGenerator;
  * @version 1.0
  */
 @SuppressWarnings("serial")
-public class HUXCrossover implements CrossoverOperator<BinarySolution> {
-  private double crossoverProbability;
-  private RandomGenerator<Double> randomGenerator;
-
-  /** Constructor */
+public class HUXCrossover extends GenericUniformCrossover<BinarySolution> {
   public HUXCrossover(double crossoverProbability) {
-    this(crossoverProbability, () -> JMetalRandom.getInstance().nextDouble());
+    super(crossoverProbability);
   }
 
-  /** Constructor */
-  public HUXCrossover(double crossoverProbability, RandomGenerator<Double> randomGenerator) {
-    Check.probabilityIsValid(crossoverProbability) ;
-
-    this.crossoverProbability = crossoverProbability;
-    this.randomGenerator = randomGenerator;
-  }
-
-  /* Getter */
-  @Override
-  public double getCrossoverProbability() {
-    return crossoverProbability;
-  }
-
-  /* Setter */
-  public void setCrossoverProbability(double crossoverProbability) {
-    this.crossoverProbability = crossoverProbability;
-  }
-
-  /** Execute() method */
-  public List<BinarySolution> execute(List<BinarySolution> parents) {
-    Check.that(parents.size() == 2, "HUXCrossover.execute: operator needs two parents");
-
-    return doCrossover(crossoverProbability, parents.get(0), parents.get(1));
-  }
-
-  /**
-   * Perform the crossover operation
-   *
-   * @param probability Crossover setProbability
-   * @param parent1 The first parent
-   * @param parent2 The second parent
-   * @return An array containing the two offspring
-   * @throws JMetalException
-   */
-  public List<BinarySolution> doCrossover(
-      double probability, BinarySolution parent1, BinarySolution parent2) throws JMetalException {
-    List<BinarySolution> offspring = new ArrayList<>();
-    offspring.add((BinarySolution) parent1.copy());
-    offspring.add((BinarySolution) parent2.copy());
-
-    if (randomGenerator.getRandomValue() < probability) {
-      for (int var = 0; var < parent1.variables().size(); var++) {
-        BinarySet p1 = parent1.variables().get(var);
-        BinarySet p2 = parent2.variables().get(var);
-
-        for (int bit = 0; bit < p1.size(); bit++) {
-          if (p1.get(bit) != p2.get(bit)) {
-            if (randomGenerator.getRandomValue() < 0.5) {
-              offspring.get(0).variables().get(var).set(bit, p2.get(bit));
-              offspring.get(1).variables().get(var).set(bit, p1.get(bit));
-            }
-          }
-        }
-      }
-    }
-
-    return offspring;
-  }
-
-  public int getNumberOfRequiredParents() {
-    return 2;
-  }
-
-  public int getNumberOfGeneratedChildren() {
-    return 2;
+  public HUXCrossover(double crossoverProbability,
+      RandomGenerator<Double> crossoverRandomGenerator) {
+    super(crossoverProbability, crossoverRandomGenerator);
   }
 }
