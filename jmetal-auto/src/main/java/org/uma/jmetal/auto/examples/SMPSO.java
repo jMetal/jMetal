@@ -1,7 +1,7 @@
 package org.uma.jmetal.auto.examples;
 
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
-import org.uma.jmetal.auto.algorithm.automopso.AutoMOPSO;
+import org.uma.jmetal.auto.autoconfigurablealgorithm.automopso.AutoMOPSO;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;

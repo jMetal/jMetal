@@ -128,7 +128,7 @@ The following code snippet include the most relevant parts of the ``Evolutionary
 
 .. code-block:: java
 
-  package org.uma.jmetal.auto.algorithm;
+  package org.uma.jmetal.auto.autoconfigurablealgorithm;
   ...
   public class EvolutionaryAlgorithm<S extends Solution<?>>{
     ...

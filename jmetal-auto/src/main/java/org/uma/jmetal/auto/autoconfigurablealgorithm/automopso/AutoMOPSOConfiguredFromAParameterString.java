@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.automopso;
+package org.uma.jmetal.auto.autoconfigurablealgorithm.automopso;
 
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;

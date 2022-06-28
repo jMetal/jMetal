@@ -4,7 +4,7 @@ import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues
 
 import java.io.IOException;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
-import org.uma.jmetal.auto.algorithm.automopso.AutoMOPSO;
+import org.uma.jmetal.auto.autoconfigurablealgorithm.automopso.AutoMOPSO;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.NormalizeUtils;

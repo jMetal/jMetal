@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.algorithm.autonsgaii;
+package org.uma.jmetal.auto.autoconfigurablealgorithm.autonsgaii;
 
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
