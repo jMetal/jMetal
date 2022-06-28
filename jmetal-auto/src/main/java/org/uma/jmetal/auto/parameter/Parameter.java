@@ -125,13 +125,13 @@ public abstract class Parameter<T> {
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder("Name: " + getName() + ": " + "Value: " + getValue());
-    if (globalParameters.size() > 0) {
+    if (!globalParameters.isEmpty()) {
       result.append("\n\t");
       for (Parameter<?> parameter : globalParameters) {
         result.append(" \n -> ").append(parameter.toString());
       }
     }
-    if (specificParameters.size() > 0) {
+    if (!specificParameters.isEmpty()) {
       result.append("\n\t");
 
       for (Pair<String, Parameter<?>> parameter : specificParameters) {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class RealParameter extends Parameter<Double> {
+
   private double lowerBound;
   private double upperBound;
 
@@ -41,15 +42,15 @@ public class RealParameter extends Parameter<Double> {
   @Override
   public String toString() {
     StringBuilder result =
-            new StringBuilder("Name: "
-                    + getName()
-                    + ": "
-                    + "Value: "
-                    + getValue()
-                    + ". Lower bound: "
-                    + lowerBound
-                    + ". Upper bound: "
-                    + upperBound);
+        new StringBuilder("Name: "
+            + getName()
+            + ": "
+            + "Value: "
+            + getValue()
+            + ". Lower bound: "
+            + lowerBound
+            + ". Upper bound: "
+            + upperBound);
     for (Parameter<?> parameter : getGlobalParameters()) {
       result.append("\n -> ").append(parameter.toString());
     }

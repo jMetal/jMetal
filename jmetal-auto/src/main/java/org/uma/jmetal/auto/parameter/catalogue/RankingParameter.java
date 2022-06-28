@@ -9,7 +9,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
 
 public class RankingParameter <S extends Solution<?>> extends CategoricalParameter {
-  public RankingParameter(String name, String args[], List<String> validRankings) {
+  public RankingParameter(String name, String[] args, List<String> validRankings) {
     super(name, args, validRankings);
   }
 

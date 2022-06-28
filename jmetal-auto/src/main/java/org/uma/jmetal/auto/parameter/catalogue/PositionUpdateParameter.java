@@ -8,23 +8,28 @@ import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class PositionUpdateParameter extends CategoricalParameter {
-    public PositionUpdateParameter(String[] args, List<String> positionUpdateStrategies){
-        super("positionUpdate", args, positionUpdateStrategies);
-    }
 
-    public PositionUpdate getParameter(){
-        PositionUpdate result;
-        switch (getValue()){
-            case "defaultPositionUpdate":
-                List<Bounds<Double>> positionBounds = (List<Bounds<Double>>) getNonConfigurableParameter("positionBounds");
-                double velocityChangeWhenLowerLimitIsReached = (double) findSpecificParameter("velocityChangeWhenLowerLimitIsReached").getValue();
-                double velocityChangeWhenUpperLimitIsReached = (double) findSpecificParameter("velocityChangeWhenUpperLimitIsReached").getValue();
+  public PositionUpdateParameter(String[] args, List<String> positionUpdateStrategies) {
+    super("positionUpdate", args, positionUpdateStrategies);
+  }
 
-                result = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached, velocityChangeWhenUpperLimitIsReached, positionBounds);
-                break;
-            default:
-                throw new JMetalException("Position update component unknown: " + getValue());
-        }
-        return result;
+  public PositionUpdate getParameter() {
+    PositionUpdate result;
+    switch (getValue()) {
+      case "defaultPositionUpdate":
+        List<Bounds<Double>> positionBounds = (List<Bounds<Double>>) getNonConfigurableParameter(
+            "positionBounds");
+        double velocityChangeWhenLowerLimitIsReached = (double) findSpecificParameter(
+            "velocityChangeWhenLowerLimitIsReached").getValue();
+        double velocityChangeWhenUpperLimitIsReached = (double) findSpecificParameter(
+            "velocityChangeWhenUpperLimitIsReached").getValue();
+
+        result = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
+            velocityChangeWhenUpperLimitIsReached, positionBounds);
+        break;
+      default:
+        throw new JMetalException("Position update component unknown: " + getValue());
     }
+    return result;
+  }
 }

@@ -7,7 +7,7 @@ import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestUpdateParameter extends CategoricalParameter {
-  public GlobalBestUpdateParameter(String args[], List<String> updateStrategies) {
+  public GlobalBestUpdateParameter(String[] args, List<String> updateStrategies) {
     super("globalBestUpdate", args, updateStrategies);
   }
 
