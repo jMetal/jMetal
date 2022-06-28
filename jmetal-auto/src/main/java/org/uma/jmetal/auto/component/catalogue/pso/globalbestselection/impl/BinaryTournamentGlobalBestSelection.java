@@ -11,7 +11,7 @@ public class BinaryTournamentGlobalBestSelection implements GlobalBestSelection 
   private Comparator<DoubleSolution> comparator;
 
   public BinaryTournamentGlobalBestSelection(Comparator<DoubleSolution> comparator) {
-    this.comparator = comparator ;
+    this.comparator = comparator;
   }
 
   @Override

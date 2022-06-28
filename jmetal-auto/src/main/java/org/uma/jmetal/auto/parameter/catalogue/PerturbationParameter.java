@@ -8,7 +8,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
-public class PerturbationParameter extends CategoricalParameter {
+public class  PerturbationParameter extends CategoricalParameter {
   public PerturbationParameter(String[] args, List<String> perturbationStrategies) {
     super("perturbation", args, perturbationStrategies);
   }

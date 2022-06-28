@@ -11,6 +11,7 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Daniel Doblas
  */
 public class DefaultGlobalBestInitialization implements GlobalBestInitialization {
+
   @Override
   /**
    * Initialize the Global Best solution.
@@ -18,7 +19,8 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
    * @param: globalBest: List or Empty List of auxiliar solutions
    * @return: globalBest: List with differents global solutions.
    */
-  public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm, BoundedArchive<DoubleSolution> globalBest) {
+  public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
+      BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());

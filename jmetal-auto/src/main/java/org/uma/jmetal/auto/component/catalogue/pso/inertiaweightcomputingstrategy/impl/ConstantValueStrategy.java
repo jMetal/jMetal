@@ -3,15 +3,16 @@ package org.uma.jmetal.auto.component.catalogue.pso.inertiaweightcomputingstrate
 import org.uma.jmetal.auto.component.catalogue.pso.inertiaweightcomputingstrategy.InertiaWeightComputingStrategy;
 
 public class ConstantValueStrategy implements InertiaWeightComputingStrategy {
-  private final double inertiaWeightValue ;
+
+  private final double inertiaWeightValue;
 
   public ConstantValueStrategy(double inertiaWeightValue) {
-    this.inertiaWeightValue = inertiaWeightValue ;
+    this.inertiaWeightValue = inertiaWeightValue;
   }
 
   @Override
   public double compute() {
-    return inertiaWeightValue ;
+    return inertiaWeightValue;
   }
 
   public double getInertiaWeightValue() {
