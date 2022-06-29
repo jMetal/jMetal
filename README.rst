@@ -17,9 +17,9 @@ jMetal project Web site
    :alt: Documentation Status
    :target: https://jmetal.readthedocs.io/?badge=latest
 
-jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The current stable version is 5.11 (https://github.com/jMetal/jMetal/tree/jmetal-5.11), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
+jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The current stable version is 5.12 (https://github.com/jMetal/jMetal/tree/jmetal-5.12), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
 
-The current development version (5.12-SNAPSHOT) is a Maven project structured in seven subprojects:
+The current development version (5.13-SNAPSHOT) is a Maven project structured in the following sub-projects:
 
 +---------------------+------------------------------------+
 | Sub-project         |  Contents                          | 
@@ -39,6 +39,10 @@ The current development version (5.12-SNAPSHOT) is a Maven project structured in
 | jmetal-experimental |  New features in development       |
 +---------------------+------------------------------------+
 | jmetal-parallel     |  Parallel extensions               |
++---------------------+------------------------------------+
+| jmetal-auto         |  Auto-design and configuration     |
++---------------------+------------------------------------+
+| jmetal-component    |  Component-based algorithms        |
 +---------------------+------------------------------------+
 
 The most recent documentation is hosted in https://jmetal.readthedocs.io  (the old documentation site is located in https://github.com/jMetal/jMetalDocumentation).
@@ -71,7 +75,7 @@ Changelog
 
 * [10/1/2020] Added the problems described in: Ryoji Tanabe and Hisao Ishibuchi: An Easy-to-use Real-world Multi-objective Optimization Problem Suite. Applied Soft Computing, V.89, April 2020. `DOI <https://doi.org/10.1016/j.asoc.2020.106078>`_.
 
-* [9/14/2020] New ``jmetal-auto`` sub-module. It contains asynchronous versions of a genetic algorithm and NSGA-II, and a synchronous evaluator based on Apache Spark.
+* [9/14/2020] New ``jmetal-parallel`` sub-module. It contains asynchronous versions of a genetic algorithm and NSGA-II, and a synchronous evaluator based on Apache Spark.
 
 * [7/23/2020] The former ``jmetal-auto`` sub-project and the stuff related to using a component-based evolutionary template have been moved to a new sub-project called ``jmetal-experimental``, which is intended to explore new features that can be consolidated in the project in the future.
 
