@@ -28,10 +28,10 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
  * Class to configure and build an instance of the NSGA-II algorithm
+ *
  * @param <S>
  */
 public class NSGAIIBuilder<S extends Solution<?>> {
-
   private String name;
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;

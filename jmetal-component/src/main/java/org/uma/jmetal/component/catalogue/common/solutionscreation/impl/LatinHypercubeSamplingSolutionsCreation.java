@@ -1,8 +1,8 @@
 package org.uma.jmetal.component.catalogue.common.solutionscreation.impl;
 
-import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import java.util.ArrayList;
 import java.util.List;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;

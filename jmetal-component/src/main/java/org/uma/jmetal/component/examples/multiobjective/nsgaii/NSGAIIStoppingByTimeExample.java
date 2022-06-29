@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
@@ -21,7 +20,6 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByComputingTime;
-import org.uma.jmetal.util.termination.impl.TerminationByKeyboard;
 
 /**
  * Class to configure and run the NSGA-II algorithm with a stopping condition based a maximum

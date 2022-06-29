@@ -1,9 +1,9 @@
 package org.uma.jmetal.component.catalogue.common.solutionscreation.impl;
 
-import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 

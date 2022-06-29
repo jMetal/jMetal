@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
