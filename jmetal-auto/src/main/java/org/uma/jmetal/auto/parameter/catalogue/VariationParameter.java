@@ -14,8 +14,8 @@ public class VariationParameter extends CategoricalParameter {
     super("variation", args, variationStrategies);
   }
 
-  public Variation<?> getParameter() {
-    Variation<?> result;
+  public Variation<DoubleSolution> getParameter() {
+    Variation<DoubleSolution> result;
     int offspringPopulationSize = (Integer)findGlobalParameter("offspringPopulationSize").getValue() ;
 
     if ("crossoverAndMutationVariation".equals(getValue())) {

@@ -2,7 +2,7 @@ populationSize                           "--populationSize "                    
 #
 algorithmResult                          "--algorithmResult "                     c       (externalArchive, population)                      
 populationSizeWithArchive                "--populationSizeWithArchive "           i       (10, 200)                      | algorithmResult %in% c("externalArchive")
-# externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive, unboundedExternalArchive) | algorithmResult %in% c("externalArchive")
+# externalArchive                          "--externalArchive "                   c       (crowdingDistanceArchive, unboundedArchive) | algorithmResult %in% c("externalArchive")
 externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive) | algorithmResult %in% c("externalArchive")
 #
 createInitialSolutions                   "--createInitialSolutions "              c       (random, latinHypercubeSampling, scatterSearch)

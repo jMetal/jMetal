@@ -31,7 +31,7 @@ public class ExternalArchiveParameter extends CategoricalParameter {
       case "spatialSpreadDeviationArchive":
         archive = new SpatialSpreadDeviationArchive<>(size) ;
         break;
-      case "unboundedExternalArchive":
+      case "unboundedArchive":
         archive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), size) ;
         break;
       default:

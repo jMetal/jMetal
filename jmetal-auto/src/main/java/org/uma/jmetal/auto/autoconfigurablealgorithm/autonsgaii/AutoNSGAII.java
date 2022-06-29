@@ -163,7 +163,7 @@ public class AutoNSGAII {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
     populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
-    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedExternalArchive")) ;
+    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedArchive")) ;
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
 
@@ -205,7 +205,7 @@ public class AutoNSGAII {
       mutationParameter.addNonConfigurableParameter("maxIterations",
               maximumNumberOfEvaluationsParameter.getValue()/populationSizeParameter.getValue());
     }
-    Variation<DoubleSolution> variation = (Variation<DoubleSolution>) variationParameter.getParameter();
+    Variation<DoubleSolution> variation = variationParameter.getParameter();
 
     MatingPoolSelection<DoubleSolution> selection =
             selectionParameter.getParameter(
@@ -220,7 +220,7 @@ public class AutoNSGAII {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    var nsgaii = new EvolutionaryAlgorithm<>(
+    return new EvolutionaryAlgorithm<>(
             "NSGA-II",
             evaluation,
             initialSolutionsCreation,
@@ -229,8 +229,6 @@ public class AutoNSGAII {
             variation,
             replacement,
             archive);
-
-    return nsgaii;
   }
 
   public static void print(List<Parameter<?>> parameterList) {
