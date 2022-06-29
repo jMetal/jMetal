@@ -1,32 +1,36 @@
 
 jMetal project documentation
-==============================
+============================
 
 *Author: Antonio J. Nebro* <ajnebro@uma.es>
 
-jMetal is a Java-based framework for multi-objective optimization with metaheuristics.  The current stable version is 5.11 (https://github.com/jMetal/jMetal), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
+jMetal is a Java-based framework for multi-objective optimization with metaheuristics.  The current stable version is 5.12 (https://github.com/jMetal/jMetal), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
 
-The current development version (5.12-SNAPSHOT) is a Maven project structured in seven subprojects:
+The jMetal project is a Maven project structured in the following sub-projects:
 
-+----------------------+-------------------------------------+
-| Sub-project          | Contents                            | 
-+======================+=====================================+
-| jmetal-core 	       | Core classes                        |
-+----------------------+-------------------------------------+
-| jmetal-solution      | Solution encodings                  |
-+----------------------+-------------------------------------+
-| jmetal-algorithm     | Algorithm implementations           |
-+----------------------+-------------------------------------+
-| jmetal-problem       | Benchmark problems                  |
-+----------------------+-------------------------------------+
-| jmetal-example       | Examples                            |
-+----------------------+-------------------------------------+
-| jmetal-lab           | Experimentation and visualization   |
-+----------------------+-------------------------------------+
-| jmetal-experimental  | New features under development      |
-+----------------------+-------------------------------------+
-| jmetal-parallel      | Parallel extensions                 |
-+----------------------+-------------------------------------+
++---------------------+------------------------------------+
+| Sub-project         |  Contents                          | 
++=====================+====================================+
+| jmetal-core         |  Core classes                      |
++---------------------+------------------------------------+
+| jmetal-solution     |  Solution encodings                |
++---------------------+------------------------------------+
+| jmetal-algorithm    |  Algorithm implementations         |
++---------------------+------------------------------------+
+| jmetal-problem      |  Benchmark problems                |
++---------------------+------------------------------------+
+| jmetal-example      |  Examples                          |
++---------------------+------------------------------------+
+| jmetal-lab          |  Experimentation and visualization |
++---------------------+------------------------------------+
+| jmetal-experimental |  New features in development       |
++---------------------+------------------------------------+
+| jmetal-parallel     |  Parallel extensions               |
++---------------------+------------------------------------+
+| jmetal-auto         |  Auto-design and configuration     |
++---------------------+------------------------------------+
+| jmetal-component    |  Component-based algorithms        |
++---------------------+------------------------------------+
 
 
 .. toctree::
@@ -39,5 +43,6 @@ The current development version (5.12-SNAPSHOT) is a Maven project structured in
     constraints.rst
     experimentation.rst
     parallel.rst
-    autoconfiguration.rst
+    autoconfigurationNSGAII.rst
+    autoconfigurationMOPSO.rst
     mnds.rst
