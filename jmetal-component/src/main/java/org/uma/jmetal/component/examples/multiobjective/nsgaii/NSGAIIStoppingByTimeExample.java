@@ -1,4 +1,4 @@
-package org.uma.jmetal.component.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

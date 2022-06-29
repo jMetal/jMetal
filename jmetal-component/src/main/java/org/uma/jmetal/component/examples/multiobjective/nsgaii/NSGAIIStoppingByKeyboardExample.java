@@ -1,4 +1,4 @@
-package org.uma.jmetal.component.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
 import static org.uma.jmetal.util.VectorUtils.readVectors;
 

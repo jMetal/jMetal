@@ -1,6 +1,5 @@
-package org.uma.jmetal.component.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
@@ -18,16 +17,18 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure and run the NSGA-II algorithm configured with standard settings.
+ * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is running
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
@@ -55,6 +56,13 @@ public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
                     mutation)
         .setTermination(termination)
         .build();
+
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
+
+    nsgaii.getObservable().register(evaluationObserver);
+    nsgaii.getObservable().register(runTimeChartObserver);
 
     nsgaii.run();
 
