@@ -45,4 +45,5 @@ The jMetal project is a Maven project structured in the following sub-projects:
     parallel.rst
     autoconfigurationNSGAII.rst
     autoconfigurationMOPSO.rst
+    component.rst
     mnds.rst
