@@ -1,16 +1,20 @@
 package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -24,7 +28,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+  public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
@@ -68,7 +72,9 @@ public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
+      QualityIndicatorUtils.printQualityIndicators(
+          SolutionListUtils.getMatrixWithObjectiveValues(population),
+          VectorUtils.readVectors(referenceParetoFront, ","));
     }
   }
 }

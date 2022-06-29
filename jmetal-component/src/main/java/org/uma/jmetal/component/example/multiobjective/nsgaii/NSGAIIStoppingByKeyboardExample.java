@@ -12,11 +12,14 @@ import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -73,8 +76,11 @@ public class NSGAIIStoppingByKeyboardExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Random seed: " + JMetalRandom.getInstance().getSeed());
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
+
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
+      QualityIndicatorUtils.printQualityIndicators(
+          SolutionListUtils.getMatrixWithObjectiveValues(population),
+          VectorUtils.readVectors(referenceParetoFront, ","));
     }
   }
 }
