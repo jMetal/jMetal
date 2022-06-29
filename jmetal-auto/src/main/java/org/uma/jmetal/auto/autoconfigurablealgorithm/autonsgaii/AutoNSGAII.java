@@ -236,30 +236,4 @@ public class AutoNSGAII {
   public static void print(List<Parameter<?>> parameterList) {
     parameterList.forEach(System.out::println);
   }
-
-  /*
-  public static void main(String[] args) throws IOException {
-    AutoNSGAII nsgaiiWithParameters = new AutoNSGAII();
-    nsgaiiWithParameters.parseAndCheckParameters(args);
-
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = nsgaiiWithParameters.create();
-    nsgaII.run();
-
-    String referenceFrontFile =
-        "resources/referenceFrontsCSV/" + nsgaiiWithParameters.referenceFrontFilename.getValue();
-
-    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",");
-    double[][] front = getMatrixWithObjectiveValues(nsgaII.getResult()) ;
-
-    double[][] normalizedReferenceFront = NormalizeUtils.normalize(referenceFront);
-    double[][] normalizedFront =
-        NormalizeUtils.normalize(
-            front,
-            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
-            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
-
-    var qualityIndicator = new NormalizedHypervolume(normalizedReferenceFront) ;
-    System.out.println(qualityIndicator.compute(normalizedFront)) ;
-  }
-  */
 }
