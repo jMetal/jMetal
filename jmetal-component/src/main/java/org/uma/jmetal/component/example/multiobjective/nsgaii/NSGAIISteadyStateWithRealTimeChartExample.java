@@ -1,11 +1,10 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -15,6 +14,8 @@ import org.uma.jmetal.util.ProblemUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.EvaluationObserver;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
@@ -24,45 +25,47 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
+public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    NSGAII<DoubleSolution> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = populationSize;
+    int offspringPopulationSize = 1;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(15000);
 
-    algorithm =
-            new NSGAII<>(
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
                     populationSize,
                     offspringPopulationSize,
                     crossover,
-                    mutation,
-                    termination);
+                    mutation)
+        .setTermination(termination)
+        .build();
 
-    algorithm.run();
+    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
 
-    List<DoubleSolution> population = algorithm.getResult();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
+    nsgaii.getObservable().register(evaluationObserver);
+    nsgaii.getObservable().register(runTimeChartObserver);
+
+    nsgaii.run();
+
+    List<DoubleSolution> population = nsgaii.getResult();
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getEvaluation());
 
     new SolutionListOutput(population)
             .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

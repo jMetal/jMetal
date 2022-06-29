@@ -41,7 +41,7 @@ public class NSGAIIDefaultConfigurationExample extends AbstractAlgorithmRunner {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
