@@ -1,6 +1,7 @@
 package org.uma.jmetal.qualityindicator;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import org.junit.jupiter.api.Assertions;
@@ -46,20 +47,4 @@ public class NormalizedHypervolumeTest {
 
     Assertions.assertEquals(0.0, relativeHypervolume.compute(front), EPSILON);
   }
-
-  /*
-  @Test
-  @Ignore
-  public void shouldEvaluateReturnZeroIfTheReferenceFrontIsEvaluatedWithAReferencePoint()
-      throws FileNotFoundException {
-    var normalizedHypervolume = new NormalizedHypervolume<PointSolution>(new double[] {1.0, 1.0});
-
-    Front frontToEvaluate = new ArrayFront(frontDirectory +"/ZDT1.pf");
-    assertEquals(
-        0.0,
-            normalizedHypervolume.evaluate(FrontUtils.convertFrontToSolutionList(frontToEvaluate)),
-        EPSILON);
-  }
-
-   */
 }

@@ -1,21 +1,25 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultithreadedEvaluation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemUtils;
-import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
+import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
@@ -23,47 +27,46 @@ import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure and run the NSGA-II algorithm configured with standard settings.
+ * Class to configure and run the NSGA-II algorithm using the {@link
+ * MultithreadedEvaluation} evaluator.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
-    Problem<DoubleSolution> problem;
-    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-
+public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
+  public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    Archive<DoubleSolution> archive = new CrowdingDistanceArchive<>(populationSize);
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossover,
+        mutation)
+        .setTermination(termination)
+        .setEvaluation(new MultithreadedEvaluation<>(8, problem))
+        .build();
 
-    algorithm =
-        new NSGAII<>(
-                problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
-            .withArchive(archive);
+    nsgaii.run();
 
-    algorithm.run();
-
-    List<DoubleSolution> population = algorithm.getResult();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
+    List<DoubleSolution> population = nsgaii.getResult();
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getEvaluation());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
@@ -75,7 +78,9 @@ public class NSGAIIWithCrowdingDistanceArchiveExample extends AbstractAlgorithmR
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
     if (!referenceParetoFront.equals("")) {
-      printQualityIndicators(population, referenceParetoFront);
+      QualityIndicatorUtils.printQualityIndicators(
+          SolutionListUtils.getMatrixWithObjectiveValues(population),
+          VectorUtils.readVectors(referenceParetoFront, ","));
     }
   }
 }

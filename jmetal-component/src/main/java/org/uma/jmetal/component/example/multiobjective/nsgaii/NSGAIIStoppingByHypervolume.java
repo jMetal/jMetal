@@ -27,8 +27,9 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.impl.TerminationByQualityIndicator;
 
 /**
- * Class to configure and run the NSGA-II algorithm with a stopping condition based a maximum
- * computing time.
+ * Class to configure and run the NSGA-II algorithm with a stopping condition based on finding
+ * a Pareto front approximation having a hypervolume value higher than the 95% of the hypervolume
+ * of the reference front.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

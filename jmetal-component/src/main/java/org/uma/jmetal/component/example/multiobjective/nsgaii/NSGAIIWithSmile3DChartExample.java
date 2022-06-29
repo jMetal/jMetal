@@ -1,10 +1,11 @@
 package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -18,22 +19,21 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.observer.impl.EvaluationObserver;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure a steady-state version of NSGA-II, showing the current population during
- * the execution of the algorithm
+ * Class to configure and run the NSGA-II algorithm to solve a three-objective problem and plotting
+ * the result front with Smile (https://haifengl.github.io/)
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithSmile3DChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
 
@@ -46,9 +46,9 @@ public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithm
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(15000);
+    Termination termination = new TerminationByEvaluations(22000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
@@ -58,13 +58,6 @@ public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithm
                     mutation)
         .setTermination(termination)
         .build();
-
-    EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
-    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
-
-    nsgaii.getObservable().register(evaluationObserver);
-    nsgaii.getObservable().register(runTimeChartObserver);
 
     nsgaii.run();
 
@@ -86,5 +79,8 @@ public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithm
           SolutionListUtils.getMatrixWithObjectiveValues(population),
           VectorUtils.readVectors(referenceParetoFront, ","));
     }
+
+    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)") ;
+    plot.plot();
   }
 }

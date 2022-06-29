@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
@@ -25,12 +24,11 @@ import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure a steady-state version of NSGA-II, showing the current population during
- * the execution of the algorithm
+ * Class to configure and run the NSGA-II algorithm showing the population while the algorithm is running
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithRealTimeChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
@@ -46,9 +44,9 @@ public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithm
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(15000);
+    Termination termination = new TerminationByEvaluations(25000);
 
     EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
                     problem,
@@ -61,7 +59,7 @@ public class NSGAIISteadyStateWithRealTimeChartExample extends AbstractAlgorithm
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
-        new RunTimeChartObserver<>("NSGA-II", 80, 500, referenceParetoFront);
+        new RunTimeChartObserver<>("NSGA-II", 80, 100, referenceParetoFront);
 
     nsgaii.getObservable().register(evaluationObserver);
     nsgaii.getObservable().register(runTimeChartObserver);

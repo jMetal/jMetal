@@ -112,6 +112,12 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
+  public NSGAIIBuilder<S> setEvaluation(Evaluation<S> evaluation) {
+    this.evaluation = evaluation;
+
+    return this;
+  }
+
   public EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, evaluation, createInitialPopulation, termination,
         selection, variation, replacement, externalArchive);

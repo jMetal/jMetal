@@ -1,8 +1,10 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.example.multiobjective.nsgaii;
+package org.uma.jmetal.component.example.multiobjective.nsgaii;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
+import java.util.List;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
 import org.uma.jmetal.operator.crossover.impl.CompositeCrossover;
 import org.uma.jmetal.operator.crossover.impl.IntegerSBXCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -11,10 +13,14 @@ import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.MixedIntegerDoubleProblem;
+import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.SolutionListUtils;
+import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -25,13 +31,13 @@ import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure and run the NSGA-II algorithm. A chart showing the front at the end of each
- * iteration is displayed.
+ * Class to configure and run the NSGA-II algorithm to solve a problem having a mixed-encoding.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRunner {
-  public static void main(String[] args) throws JMetalException, FileNotFoundException {
+
+  public static void main(String[] args) throws JMetalException, IOException {
     Problem<CompositeSolution> problem =
         new MixedIntegerDoubleProblem(10, 10, 100, -100, -1000, +1000);
 
@@ -49,21 +55,25 @@ public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRun
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    NSGAII<CompositeSolution> algorithm;
-    algorithm =
-        new NSGAII<>(
-            problem, populationSize, offspringPopulationSize, crossover, mutation, termination);
+    EvolutionaryAlgorithm<CompositeSolution> nsgaii = new NSGAIIBuilder<>(
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossover,
+        mutation)
+        .setTermination(termination)
+        .build();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("NSGA-II", 80, 100, null);
 
-    algorithm.getObservable().register(evaluationObserver);
-    algorithm.getObservable().register(runTimeChartObserver);
+    nsgaii.getObservable().register(evaluationObserver);
+    nsgaii.getObservable().register(runTimeChartObserver);
 
-    algorithm.run();
+    nsgaii.run();
 
-    new SolutionListOutput(algorithm.getResult())
+    new SolutionListOutput(nsgaii.getResult())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
         .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
         .print();
