@@ -94,28 +94,10 @@ public class ComposableDoubleProblem implements DoubleProblem {
   }
 
   @Override
-  @Deprecated
-  public Double getLowerBound(int index) {
-    return bounds.get(index).getLowerBound();
-  }
-
-  @Override
-  @Deprecated
-  public Double getUpperBound(int index) {
-    return bounds.get(index).getUpperBound();
-  }
-
-  @Override
   public DoubleSolution createSolution() {
     return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
   }
 
-  @Override
-  @Deprecated
-  public List<Pair<Double, Double>> getBounds() {
-    return bounds.stream().map(Bounds<Double>::toPair).collect(Collectors.toList());
-  }
-  
   @Override
   public List<Bounds<Double>> getBoundsForVariables() {
     return bounds;

@@ -13,36 +13,16 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 @SuppressWarnings("serial")
 public abstract class AbstractIntegerProblem extends AbstractGenericProblem<IntegerSolution>
-  implements IntegerProblem {
+    implements IntegerProblem {
 
   protected List<Bounds<Integer>> bounds;
-
-  /**
-   * @deprecated USe {@link #getBoundsForVariables()} instead.
-   */
-  @Deprecated
-  public List<Pair<Integer, Integer>> getVariableBounds() {
-    return bounds.stream().map(Bounds<Integer>::toPair).collect(Collectors.toList());
-  }
-
-  @Override
-  @Deprecated
-  public Integer getUpperBound(int index) {
-    return getBoundsForVariables().get(index).getUpperBound();
-  }
-
-  @Override
-  @Deprecated
-  public Integer getLowerBound(int index) {
-    return getBoundsForVariables().get(index).getLowerBound();
-  }
 
   public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
     Check.that(
-            lowerBounds.size() == upperBounds.size(),
-            "The size of the lower bound list is not equal to the size of the upper bound list");
+        lowerBounds.size() == upperBounds.size(),
+        "The size of the lower bound list is not equal to the size of the upper bound list");
 
     bounds =
         IntStream.range(0, lowerBounds.size())
@@ -56,12 +36,6 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
         getBoundsForVariables());
   }
 
-  @Override
-  @Deprecated
-  public List<Pair<Integer, Integer>> getBounds() {
-    return getVariableBounds() ;
-  }
-  
   @Override
   public List<Bounds<Integer>> getBoundsForVariables() {
     return bounds;

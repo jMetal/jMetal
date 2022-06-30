@@ -17,26 +17,6 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
 
   protected List<Bounds<Double>> bounds;
 
-  /**
-   * @deprecated Use {@link #getBoundsForVariables()} instead.
-   */
-  @Deprecated
-  public List<Pair<Double, Double>> getVariableBounds() {
-    return bounds.stream().map(Bounds<Double>::toPair).collect(Collectors.toList());
-  }
-
-  @Override
-  @Deprecated
-  public Double getUpperBound(int index) {
-    return getBoundsForVariables().get(index).getUpperBound();
-  }
-
-  @Override
-  @Deprecated
-  public Double getLowerBound(int index) {
-    return getBoundsForVariables().get(index).getLowerBound();
-  }
-
   public void setVariableBounds(List<Double> lowerBounds, List<Double> upperBounds) {
     Check.notNull(lowerBounds);
     Check.notNull(upperBounds);
@@ -55,12 +35,6 @@ public abstract class AbstractDoubleProblem extends AbstractGenericProblem<Doubl
     return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
   }
 
-  @Override
-  @Deprecated
-  public List<Pair<Double, Double>> getBounds() {
-    return getVariableBounds();
-  }
-  
   @Override
   public List<Bounds<Double>> getBoundsForVariables() {
     return bounds;
