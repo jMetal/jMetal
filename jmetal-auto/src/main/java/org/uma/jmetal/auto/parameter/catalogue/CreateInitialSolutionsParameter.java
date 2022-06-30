@@ -7,17 +7,20 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSo
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.ScatterSearchSolutionsCreation;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class CreateInitialSolutionsParameter extends CategoricalParameter {
 
   public CreateInitialSolutionsParameter(String[] args, List<String> validValues) {
-    this("createInitialSolutions", args, validValues) ;
+    this("createInitialSolutions", args, validValues);
   }
 
-  public CreateInitialSolutionsParameter(String parameterName, String[] args, List<String> validValues) {
-    super(parameterName, args, validValues) ;
+  public CreateInitialSolutionsParameter(String parameterName, String[] args,
+      List<String> validValues) {
+    super(parameterName, args, validValues);
   }
 
   public SolutionsCreation<DoubleSolution> getParameter(DoubleProblem problem, int populationSize) {
@@ -32,5 +35,9 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
         throw new JMetalException(
             getValue() + " is not a valid initialization strategy");
     }
+  }
+
+  public SolutionsCreation<IntegerSolution> getParameter(IntegerProblem problem, int populationSize) {
+    return null  ;
   }
 }

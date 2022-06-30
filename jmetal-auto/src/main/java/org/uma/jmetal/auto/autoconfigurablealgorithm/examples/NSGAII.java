@@ -1,7 +1,9 @@
-package org.uma.jmetal.auto.autoconfigurablealgorithm.autonsgaii;
+package org.uma.jmetal.auto.autoconfigurablealgorithm.examples;
 
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
@@ -12,7 +14,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString {
+public class NSGAII {
 
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT1.csv" ;
@@ -40,27 +42,25 @@ public class AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString {
                 + "--polynomialMutationDistributionIndex 20.0 ")
             .split("\\s+");
 
-    AutoNSGAII NSGAII = new AutoNSGAII();
-    NSGAII.parseAndCheckParameters(parameters);
+    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    autoNSGAII.parseAndCheckParameters(parameters);
 
-    AutoNSGAII.print(NSGAII.fixedParameterList);
-    AutoNSGAII.print(NSGAII.autoConfigurableParameterList);
+    AutoNSGAII.print(autoNSGAII.fixedParameterList);
+    AutoNSGAII.print(autoNSGAII.autoConfigurableParameterList);
 
-    EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
 
     EvaluationObserver evaluationObserver = new EvaluationObserver(1000);
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>(
             "NSGA-II", 80, "resources/referenceFrontsCSV/" + referenceFrontFileName);
-    //WriteSolutionsToFilesObserver writeSolutionsToFilesObserver = new WriteSolutionsToFilesObserver() ;
 
     nsgaII.getObservable().register(evaluationObserver);
     nsgaII.getObservable().register(runTimeChartObserver);
-    //nsgaII.getObservable().register(writeSolutionsToFilesObserver);
 
     nsgaII.run();
 
-    System.out.println("Total computing time: " + nsgaII.getTotalComputingTime()) ;
+    JMetalLogger.logger.info("Total computing time: " + nsgaII.getTotalComputingTime()); ;
 
     new SolutionListOutput(nsgaII.getResult())
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

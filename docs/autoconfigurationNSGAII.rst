@@ -72,7 +72,7 @@ The components and parameters of NSGA-II that can be tuned are included in this 
 +---------------------------------------+-----------------------------------------------------+
 | *mutation*                            | *uniform*, *polynomial*, *nonuniform*               |
 +---------------------------------------+-----------------------------------------------------+
-| *mutationProbability*                 | [0.0, 1.0]                                          |
+| *mutationProbabilityFactor*           | [0.0, 2.0]                                          |
 +---------------------------------------+-----------------------------------------------------+
 | *mutationRepairStrategy*              | *random*, *round*, *bounds*                         |
 +---------------------------------------+-----------------------------------------------------+
@@ -99,7 +99,9 @@ The initial population is typically filled with randomly created solutions, but 
 
 In the classical NSGA-II, the offspring population size is equal to the population size, but we can set its value from 1 (which leads to a steady-state selection scheme) to 400.
 
-The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_ALPHA*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value in the range [5.0, 400]) and an alpha value (in the range [0.0, 1.0]), respectively. Similarly, there are several mutation operators to choose from, including *polynomial*, *uniform*, and *nonUniform*, requiring all of them a mutation probability and a repairing strategy; the polynomial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* and *nonUniform* mutation operators need a perturbation value in the range [0.0, 1.0].
+The *autoNSGAII* has a *variation* component than can take a single value named *crossoverAndMutationVariation*. It is intended to represent the typical crossover and mutation operators of a genetic algorithm (additional values, e.g., *DifferentialiEvolutionVariation* are expected to be added in the future). The *crossover* operators included are *SBX* (simulated binary crossover) and *BLX_ALPHA*, which are featured by a given probability and a *crossoverRepairStrategy*, which defines what to do when the crossover produces a variable value out of the allowed bounds (please, refer to Section 3.2 and Figure 3 in the paper). The *SBX* and *BLX_ALPHA* require, if selected, a distribution index (a value in the range [5.0, 400]) and an alpha value (in the range [0.0, 1.0]), respectively. 
+
+Similarly, there are several mutation operators to choose from, including *polynomial*, *uniform*, and *nonUniform*, requiring all of them a mutation probability and a repairing strategy; the polynomial mutation has, as the SBX crossover, a distribution index parameter (in the range [5.0, 400]) and the *uniform* and *nonUniform* mutation operators need a perturbation value in the range [0.0, 1.0]. The mutation probability is defined by using a mutation probability factor (a value in the range [0.0, 2.0]), so that the effective mutation probability is the multiplication of that factor with 1.0/N, where N is the number of variables of the problem being optimized.
 
 Finally, the *selection* operator be *random* or *tournament*; this last one can take a value between 2 (i.e., binary tournament) and 10.
 
@@ -133,79 +135,21 @@ As we intend to use irace as auto-tuning package, it requires a text file contai
 
 To know about the syntax of irace configuration files, please refer to the irace documentation.
 
-The ``EvolutionaryAlgorithm`` class
------------------------------------
-Once we have defined the parameters of NSGA-II that can be tuned, the next issue to deal with is to have an implementation of the algorithm that can be configured with any valid combination of components and parameter values. The implementation of NSGA-II provided by jMetal is based on inheritance from the ``AbstractEvolutionaryAlgorithm`` class, so adapting it for auto-configuration is not a simple task, so our decision has been to create a new Maven subproject, called ``jmetal-auto`` from scratch and include in it all the classes related to the auto-configuration of metaheuristics. This way we do not interfere in the existing code, but with the disadvantage that we are going to have duplications of some functionalities. In particular,
-
-The following code snippet include the most relevant parts of the ``EvolutionaryAlgorithm`` class, which is the algorithm template we have defined for developing autoconfigurable metaheuristics. It is not an abstract but a regular class containing the basic components of an evolutionary algorithm, including the selection, variation and replacement steps.
-
-
-.. code-block:: java
-
-  package org.uma.jmetal.auto.autoconfigurablealgorithm;
-  ...
-  public class EvolutionaryAlgorithm<S extends Solution<?>>{
-    ...
-    public EvolutionaryAlgorithm(
-      String name,
-      Evaluation<S> evaluation,
-      InitialSolutionsCreation<S> initialPopulationCreation,
-      Termination termination,
-      MatingPoolSelection<S> selection,
-      Variation<S> variation,
-      Replacement<S> replacement,
-      Archive<S> externalArchive) {
-      ...
-   }
-
-    public void run() {
-      population = createInitialPopulation.create();
-      population = evaluation.evaluate(population);
-      initProgress();
-      while (!termination.isMet(attributes)) {
-        List<S> matingPopulation = selection.select(population);
-        List<S> offspringPopulation = variation.variate(population, matingPopulation);
-        offspringPopulation = evaluation.evaluate(offspringPopulation);
-        updateArchive(offspringPopulation);
-
-        population = replacement.replace(population, offspringPopulation);
-        updateProgress();
-      }
-    }
-
-    private void updateArchive(List<S> population) {
-      if (externalArchive != null) {
-        for (S solution : population) {
-          externalArchive.add(solution);
-        }
-      }
-    }
-
-    ...
-
-    @Override
-    public List<S> getResult() {
-      if (externalArchive != null) {
-        return externalArchive.getSolutionList();
-      } else {
-        return population;
-      }
-    }
-  }
-
-To configure NSGA-II, we have developed a package ``org.uma.jmetal.experimental.componentbasedalgorithm.catalogue`` which provides components that can be used with the ``EvolutionaryAlgorithm`` class. Each component has an interface and a number of implementations. It is worth mentioning that two of the components, ``evaluation`` and ``termination``, will not typically be used in the auto-configuration of the algorithm, but the ``termination`` is particularly interesting because it allows to define different stopping conditions: by number of evaluations, by computing time, and when the user presses a key.
-
 
 The ``AutoNSGAII`` class
 ------------------------
-An example of configuring and running NSGA-II with these ``EvolutionaryAlgorithm`` class is provided in ``NSGAII``, where that class is instantiated with the components leading to an standard NSGA-II. However, our purpose is to have the ability of automatically configure NSGA-II, so we need something more flexible.
+Without entering in implementation details, the auto-configuration of NSGA-II is based on the ``AutoNSGAII`` class located in the ``org.uma.jmetal.auto.autoconfigurablealgorithm.autonsgaii`` package. This class can parse a string defining a particular NSGA-II configuration and create an instance of the algorithm. Each parameter in the string is defined as a pair "--parameterName parameterValue ". An example can be found in the ``AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString`` class:
 
-The approach we have adopted is to get a sequence of pairs <parameter, value> as input, which is parsed to properly get a version of NSGA-II. This task is performed by class ``AutoNSGAII``. This way, to get an NSGA-II algorithm with standard settings the following string must be passed to class ``AutoNSGAII`` from the command line:
+.. code-block:: java
 
-.. code-block:: text
+  public class AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString {
 
-                --problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
-                + "--referenceFrontFileName ZDT1.csv "
+    public static void main(String[] args) {
+      String referenceFrontFileName = "ZDT1.csv" ;
+
+      String[] parameters =
+        ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT1 "
+                + "--referenceFrontFileName "+ referenceFrontFileName + " "
                 + "--maximumNumberOfEvaluations 25000 "
                 + "--algorithmResult population "
                 + "--populationSize 100 "
@@ -221,29 +165,49 @@ The approach we have adopted is to get a sequence of pairs <parameter, value> as
                 + "--crossoverRepairStrategy bounds "
                 + "--sbxDistributionIndex 20.0 "
                 + "--mutation polynomial "
-                + "--mutationProbability 0.01 "
+                + "--mutationProbabilityFactor 1.0 "
                 + "--mutationRepairStrategy bounds "
-                + "--polynomialMutationDistributionIndex 20.0 "
+                + "--polynomialMutationDistributionIndex 20.0 ")
+            .split("\\s+");
 
-We include a class named ``org.uma.jmetal.experimental.auto.algorithm.nsgaii.ComponentBasedNSGAIIConfiguredFromAParameterString`` showing how to use this parameter string with ``AutoNSGAII``.
+      AutoNSGAII NSGAII = new AutoNSGAII();
+      NSGAII.parseAndCheckParameters(parameters);
 
-Stuff required
---------------
+      EvolutionaryAlgorithm<DoubleSolution> nsgaII = NSGAII.create();
 
-To replicate the results presented in https://doi.org/10.1145/3319619.3326832 we need:
+      nsgaII.run();
 
-* R
-* The jar file ``jmetal-experimental-5.12-SNAPSHOT-jar-with-dependencies.jar``.
-* The contents of folder ``jmetal-experimental/src/main/resources/irace``.
-* Copy the ``resources`` folder of the jMetal project into the ``execdir`` directory that is generated by irace. This is needed to allow the algorithm to find the reference fronts.
+      new SolutionListOutput(nsgaII.getResult())
+        .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
+        .setFunFileOutputContext(new DefaultFileOutputContext("FUN.csv", ","))
+        .print();
+    }
+  }
 
-To generate the ``jmetal-experimetal-5.12-SNAPSHOT-jar-with-dependencies.jar`` file, just type the following command at the root of the jMetal project:
+Auto-configuration process
+--------------------------
+
+To replicate the study presented in https://doi.org/10.1145/3319619.3326832 R must be installed. The steps to follow are described next.
+
+Prepare the needed stuff
+^^^^^^^^^^^^^^^^^^^^^^^^
+The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal ``. This directory must contain:
+
+* The jar file ``jmetal-auto-5.12-jar-with-dependencies.jar``.
+* The contents of folder ``jmetal-auto/src/main/resources/irace``:
+  
+  1. FADS
+  2. ASF
+
+* A directory called ``execdir`` that must contain a copy of the ``resources`` folder of the jMetal project. This is needed to allow the algorithm to find the reference fronts.
+
+To generate the ``jmetal-auto-5.12-jar-with-dependencies.jar`` file, just type the following command at the root of the jMetal project:
 
 .. code-block:: bash
 
   mvn clean package -DskipTests=true
 
-If everything goes fine, the file will be generated in the ``jmetal-experimental/target`` folder.
+If everything goes fine, the file will be generated in the ``jmetal-auto/target`` folder.
 
 The contents of irace folder are the following:
 

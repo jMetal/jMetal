@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.autoconfigurablealgorithm.automopso;
+package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;

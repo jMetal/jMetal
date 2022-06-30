@@ -1,4 +1,4 @@
-package org.uma.jmetal.auto.autoconfigurablealgorithm.autonsgaii;
+package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
