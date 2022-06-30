@@ -14,7 +14,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
  * @author Daniel Doblas
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public class SMPSO {
+public class SMPSOConfiguredFromAParameterString {
 
   public static void main(String[] args) {
     String referenceFrontFileName = "ZDT4.csv";
