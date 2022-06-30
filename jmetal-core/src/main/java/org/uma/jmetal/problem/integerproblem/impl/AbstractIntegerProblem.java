@@ -52,7 +52,8 @@ public abstract class AbstractIntegerProblem extends AbstractGenericProblem<Inte
 
   @Override
   public IntegerSolution createSolution() {
-    return new DefaultIntegerSolution(getNumberOfObjectives(), getBoundsForVariables());
+    return new DefaultIntegerSolution(getNumberOfObjectives(), getNumberOfConstraints(),
+        getBoundsForVariables());
   }
 
   @Override
