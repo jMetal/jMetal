@@ -138,11 +138,11 @@ To know about the syntax of irace configuration files, please refer to the irace
 
 The ``AutoNSGAII`` class
 ------------------------
-Without entering in implementation details, the auto-configuration of NSGA-II is based on the ``AutoNSGAII`` class located in the ``org.uma.jmetal.auto.autoconfigurablealgorithm.autonsgaii`` package. This class can parse a string defining a particular NSGA-II configuration and create an instance of the algorithm. Each parameter in the string is defined as a pair "--parameterName parameterValue ". An example can be found in the ``AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString`` class:
+Without entering in implementation details, the auto-configuration of NSGA-II is based on the ``AutoNSGAII`` class located in the ``org.uma.jmetal.auto.autoconfigurablealgorithm`` package. This class can parse a string defining a particular NSGA-II configuration and create an instance of the algorithm. Each parameter in the string is defined as a pair "--parameterName parameterValue ". An example can be found in the ``NSGAIIConfiguredFromAParameterString`` class:
 
 .. code-block:: java
 
-  public class AutoNSGAIIConfiguredWithStandardSettingsFromAParameterString {
+  public class NSGAIIConfiguredFromAParameterString {
 
     public static void main(String[] args) {
       String referenceFrontFileName = "ZDT1.csv" ;
@@ -187,56 +187,56 @@ Without entering in implementation details, the auto-configuration of NSGA-II is
 Auto-configuration process
 --------------------------
 
-To replicate the study presented in https://doi.org/10.1145/3319619.3326832 R must be installed. The steps to follow are described next.
+To replicate the study presented in https://doi.org/10.1145/3319619.3326832 you must follow the steps indicated in this section.
+
+The software requirements are the following:
+
+* Java JDK (13+)
+* R
+
 
 Prepare the needed stuff
 ^^^^^^^^^^^^^^^^^^^^^^^^
-The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal ``. This directory must contain:
+The first step is to create a directory for the experiment. Let us called is, for example, ``iraceJMetal``. This directory must contain:
 
-* The jar file ``jmetal-auto-5.12-jar-with-dependencies.jar``.
+* File ``jmetal-auto-5.12-jar-with-dependencies.jar``. To generate this file, just type the following command at the root of the jMetal project:
+
+    .. code-block:: bash
+
+      mvn clean package -DskipTests=true
+
+  If everything goes fine, the file will be generated in the ``jmetal-auto/target`` folder.
 * The contents of folder ``jmetal-auto/src/main/resources/irace``:
   
-  1. FADS
-  2. ASF
+  1. ``irace.tar.gz``: file containing irace
+  2. ``parameters-NSGAII.txt``: file describing the parameters that can be tuned, including their allowed values and their dependences. You are free to modify some parameter values if you know their meaning.
+  3. ``instances-list.txt``: the problems to be solved and their reference Pareto fronts are included here. It currently contains the data for using the WFG benchmark problems:
+
+  .. code-block:: text
+  
+    org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.csv --maximumNumberOfEvaluations 25000
+    org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.csv --maximumNumberOfEvaluations 25000
+
+  Each line indicates the problem, the name of the file containing the reference Pareto front of the problem, and the stopping condition of the algorithm (i.e., the maximum number of evaluations of the algorithm).
+
+  1. ``scenario-NSGAII.txt``: default irace parameters (we usually keep this file unchanged)
+  2. ``target-runner``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner`` in a terminal)
+  3. ``run.sh``. Bash script to run irace. VERY IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
 
 * A directory called ``execdir`` that must contain a copy of the ``resources`` folder of the jMetal project. This is needed to allow the algorithm to find the reference fronts.
 
-To generate the ``jmetal-auto-5.12-jar-with-dependencies.jar`` file, just type the following command at the root of the jMetal project:
-
-.. code-block:: bash
-
-  mvn clean package -DskipTests=true
-
-If everything goes fine, the file will be generated in the ``jmetal-auto/target`` folder.
-
-The contents of irace folder are the following:
-
-1. ``irace.tar.gz``: file containing irace
-2. ``parameters-NSGAII.txt``: file describing the parameters that can be tuned, including their allowed values and their dependences. You are free to modify some parameter values if you know their meaning.
-3. ``instances-list.txt``: the problems to be solved and their reference Pareto fronts are included here. It currently contains the following:
-
-.. code-block:: text
-  
-  org.uma.jmetal.problem.multiobjective.wfg.WFG1 --referenceFrontFileName WFG1.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG2 --referenceFrontFileName WFG2.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG3 --referenceFrontFileName WFG3.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG4 --referenceFrontFileName WFG4.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG5 --referenceFrontFileName WFG5.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG6 --referenceFrontFileName WFG6.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG7 --referenceFrontFileName WFG7.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG8 --referenceFrontFileName WFG8.2D.csv --maximumNumberOfEvaluations 25000
-  org.uma.jmetal.problem.multiobjective.wfg.WFG9 --referenceFrontFileName WFG9.2D.csv --maximumNumberOfEvaluations 25000
-
-Just note that the stopping condition of the algorithm (i.e., the maximum number of evaluations) is set in this file.
-
-4. ``scenario-NSGAII.txt``: default irace parameters (we usually keep this file unchanged)
-5. ``target-runner``. Bash script which is executed in every run of irace. This file must have execution rights (if not, just type ``chmod +x target-runner`` in a terminal).
-6. ``run.sh``. Bash script to run irace. VERY IMPORTANT: the number of cores to be used by irace are indicated in the ``IRACE_PARAMS`` variable (the default value is 24).
 
 Running everything
-------------------
+^^^^^^^^^^^^^^^^^^
 
-Once you have all the needed resources, just create a folder in the machine where you are going to run the experiment and copy  the contents of the `irace` folder and the ``jmetal-experimental-5.12-SNAPSHOT-jar-with-dependencies.jar`` file into it. Take into account that irace will generate thousands of configurations, so using a multi-core machine is advisable (we use a Linux virtual machine with 32 cores). We have tested the software in Linux, macOS, and Windows 10 (in the Ubuntu Bash console).
+Once we have all the needed resources in the `ìraceJmetal`` directory, we are ready to execute the script that will carry out the auto-configuraton by using irace. Take into account that irace will generate thousands of configurations (the default value is 100,000), so using a multi-core machine is advisable. We have tested the software in Linux, macOS , and Windows 10 (in the Ubuntu Bash console).
 
 To run irace simply run the following command:
 
@@ -247,9 +247,9 @@ To run irace simply run the following command:
 The last parameter is used as a seed.
 
 Results
--------
+^^^^^^^
 
-irace will create a directory called ``execdir`` where it will write a number of output files. Two of those files are of particular interest: ``irace.stderr.out`` and ``irace.sdtout.out``. The first file should be empty, i.e., we should get an empty line are executing this command:
+irace will use the directory called ``execdir`` (previously created) to write a number of output files. Two of those files are of particular interest: ``irace.stderr.out`` and ``irace.sdtout.out``. The first file should be empty, i.e., we should get an empty line when executing this command:
 
 .. code-block:: bash
 
@@ -262,7 +262,4 @@ The second file contains a lot of information about the run of irace, including 
   # Best configurations as commandlines (first number is the configuration ID; same order as above):
   4646  --algorithmResult externalArchive --populationSize 100 --populationSizeWithArchive 20 --maximumNumberOfEvaluations 25000 --createInitialSolutions random --variation crossoverAndMutationVariation --offspringPopulationSize 1 --crossover BLX_ALPHA --crossoverProbability 0.876 --crossoverRepairStrategy random --blxAlphaCrossoverAlphaValue 0.5729 --mutation uniform --mutationProbability 0.0439 --mutationRepairStrategy bounds --uniformMutationPerturbation 0.9957 --selection tournament --selectionTournamentSize 8
 
-This configuration can be used with the ``NSGAWithParameters`` program to run NSGA-II with those settings.
-
-NOTE: we fixed a bug in the selection operator, so the best configuration reported in https://doi.org/10.1145/3319619.3326832 will be different to the one that irace can get now. Anyway, the results of AutoNSGAII with the settings found by irace should be very similar to those in the paper.
-
+This configuration can be used in the ``NSGAIIConfiguredFromAParameterString`` program, replacing the existing one, to run NSGA-II with those settings.
