@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.multiobjective.lsmop.functions.Function;
 
-public class AckleyTest {
+class AckleyTest {
 
   @Test
-  public void shouldEvaluateWorkProperly() {
+  void shouldEvaluateWorkProperly() {
     Function function = new org.uma.jmetal.problem.multiobjective.lsmop.functions.Ackley();
     List<Double> x = new ArrayList<>(10);
     x.add(0.0);

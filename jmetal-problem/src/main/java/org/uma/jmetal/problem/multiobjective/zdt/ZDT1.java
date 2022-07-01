@@ -6,7 +6,6 @@ import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** Class representing problem ZDT1 */
-@SuppressWarnings("serial")
 public class ZDT1 extends AbstractDoubleProblem {
 
   /** Constructor. Creates default instance of problem ZDT1 (30 decision variables) */

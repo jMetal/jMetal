@@ -9,11 +9,11 @@ import org.uma.jmetal.solution.integersolution.IntegerSolution;
 /**
  * Created by Antonio J. Nebro on 17/09/14.
  */
-public class NMMinTest {
+class NMMinTest {
   Problem<IntegerSolution> problem ;
 
   @Test
-  public void evaluateSimpleSolutions() {
+  void evaluateSimpleSolutions() {
     problem = new NMMin(1, 100, -100, -1000, 1000) ;
     IntegerSolution solution = problem.createSolution() ;
     solution.variables().set(0, 100);
@@ -34,5 +34,4 @@ public class NMMinTest {
     assertEquals(100, (int)solution.objectives()[0]) ;
     assertEquals(100, (int)solution.objectives()[1]) ;
   }
-
 }
