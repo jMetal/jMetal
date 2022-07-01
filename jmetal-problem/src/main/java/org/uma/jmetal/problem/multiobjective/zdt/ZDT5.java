@@ -21,7 +21,6 @@ import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /** Class representing problem ZDT5 */
-@SuppressWarnings("serial")
 public class ZDT5 extends AbstractBinaryProblem {
   private List<Integer> bitsPerVariable;
 
@@ -43,7 +42,7 @@ public class ZDT5 extends AbstractBinaryProblem {
     bitsPerVariable = new ArrayList<>(numberOfVariables);
 
     bitsPerVariable.add(30);
-    for (int var = 1; var < numberOfVariables; var++) {
+    for (int i = 1; i < numberOfVariables; i++) {
       bitsPerVariable.add(5);
     }
   }

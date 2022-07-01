@@ -10,8 +10,6 @@ import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 public abstract class AbstractBinaryProblem extends AbstractGenericProblem<BinarySolution>
         implements BinaryProblem {
 
-  public abstract List<Integer> getListOfBitsPerVariable();
-
   @Override
   public int getBitsFromVariable(int index) {
     return getListOfBitsPerVariable().get(index);
