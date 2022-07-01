@@ -16,15 +16,15 @@ public class RE37 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE37() {
-    setNumberOfVariables(4);
+    int numberOfVariables = 4 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
     setName("RE37");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }

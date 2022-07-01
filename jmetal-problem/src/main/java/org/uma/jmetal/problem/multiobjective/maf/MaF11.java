@@ -28,7 +28,7 @@ public class MaF11 extends AbstractDoubleProblem {
    */
   public MaF11(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfVariables((int) (
+    numberOfVariables = ((int) (
         Math.ceil((numberOfVariables - numberOfObjectives + 1) / 2.0) * 2 + numberOfObjectives
             - 1));
     setNumberOfObjectives(numberOfObjectives);
@@ -38,12 +38,12 @@ public class MaF11 extends AbstractDoubleProblem {
     K11 = numberOfObjectives - 1;
     L11 = numberOfVariables - K11;
 
-    List<Double> lower = new ArrayList<>(getNumberOfVariables()), upper = new ArrayList<>(
-        getNumberOfVariables());
+    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+        numberOfVariables);
 
-    for (int var = 0; var < numberOfVariables; var++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lower.add(0.0);
-      upper.add(2.0 * (var + 1));
+      upper.add(2.0 * (i + 1));
     }
 
     setVariableBounds(lower, upper);

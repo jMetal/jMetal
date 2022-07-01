@@ -14,15 +14,14 @@ public class Rastrigin extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables of the problem
    */
   public Rastrigin(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setNumberOfConstraints(0) ;
     setName("Rastrigin");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
     }

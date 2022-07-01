@@ -71,7 +71,7 @@ public class ComponentBasedOMOPSO {
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
-        velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
+        velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
     int frequencyOfMutation = 7;
     var perturbation = new FrequencySelectionMutationBasedPerturbation(
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0), frequencyOfMutation);

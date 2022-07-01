@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -33,18 +34,18 @@ public class BigOpt2015 extends AbstractDoubleProblem {
 
     scaling = false;
 
-    setNumberOfVariables(dTypeG * 256);
+    int numberOfVariables = dTypeG * 256;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("BigOpt2015");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    IntStream.range(0, numberOfVariables).forEach(i -> {
       lowerLimit.add(-8.0);
       upperLimit.add(8.0);
-    }
+    });
 
     setVariableBounds(lowerLimit, upperLimit);
   }

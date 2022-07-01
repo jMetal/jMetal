@@ -11,7 +11,6 @@ public class ConstrEx extends AbstractDoubleProblem {
 
   /** Constructor Creates a default instance of the ConstrEx problem */
   public ConstrEx() {
-    setNumberOfVariables(2);
     setNumberOfObjectives(2);
     setNumberOfConstraints(2);
     setName("ConstrEx");

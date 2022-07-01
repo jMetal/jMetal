@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class WeightVectorNeighborhoodTest {
@@ -60,7 +61,7 @@ public class WeightVectorNeighborhoodTest {
         new WeightVectorNeighborhood<>(populationSize, neighborSize);
 
     List<DoubleSolution> solutionList = new ArrayList<>(populationSize);
-    DoubleProblem problem = new MockedDoubleProblem(2, 2);
+    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
     IntStream.range(0, populationSize).forEach(i -> solutionList.add(problem.createSolution()));
 
     List<DoubleSolution> neighbors;
@@ -75,28 +76,5 @@ public class WeightVectorNeighborhoodTest {
     assertEquals(neighborSize, neighbors.size());
     assertSame(solutionList.get(69), neighbors.get(0));
     assertSame(solutionList.get(79), neighbors.get(19));
-  }
-
-  @SuppressWarnings("serial")
-  private static class MockedDoubleProblem extends AbstractDoubleProblem {
-    public MockedDoubleProblem(int numberOfVariables, int numberOfObjectives) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(numberOfObjectives);
-      setNumberOfConstraints(0);
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(0.0);
-        upperLimit.add(1.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    public DoubleSolution evaluate(DoubleSolution solution) {
-      return solution;
-    }
   }
 }

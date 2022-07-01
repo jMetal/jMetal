@@ -20,7 +20,7 @@ public class SolutionUtilsTest {
   /** Case A: the two solutions are the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseA() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -33,7 +33,7 @@ public class SolutionUtilsTest {
   /** Case B: the two solutions are not the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseB() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -46,7 +46,7 @@ public class SolutionUtilsTest {
   /** Case A: the two solutions are the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseA() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -61,7 +61,7 @@ public class SolutionUtilsTest {
   /** Case B: the two solutions are not the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseB() {
-    DoubleProblem problem = new MockedDoubleProblem(2);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -76,7 +76,7 @@ public class SolutionUtilsTest {
   /** Case A. Solution = [1], solutionList = [1]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseA() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -92,7 +92,7 @@ public class SolutionUtilsTest {
   /** Case B. Solution = [1], solutionList = [[2]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseB() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -107,7 +107,7 @@ public class SolutionUtilsTest {
   /** Case C. Solution = [1], solutionList = [[1], [2]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseC() {
-    DoubleProblem problem = new MockedDoubleProblem(1);
+    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
@@ -131,7 +131,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenTheMinValueIsNull() {
 
-    DoubleProblem problem = new MockedDoubleProblem(0);
+    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, null, new double[] {0.2});
@@ -140,7 +140,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenTheMaxValueIsNull() {
 
-    DoubleProblem problem = new MockedDoubleProblem(0);
+    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2}, null);
@@ -149,7 +149,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentLength() {
 
-    DoubleProblem problem = new MockedDoubleProblem(0);
+    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3});
@@ -158,7 +158,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMinIsEmpty() {
 
-    DoubleProblem problem = new MockedDoubleProblem(0, 0);
+    DoubleProblem problem = new DummyDoubleProblem(0, 0, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {}, new double[] {0.2});
@@ -230,32 +230,4 @@ public class SolutionUtilsTest {
       assertEquals(0.5, SolutionUtils.averageDistanceToSolutionList(solution1, solutionList), EPSILON) ;
     }
   */
-
-  private class MockedDoubleProblem extends AbstractDoubleProblem {
-
-    public MockedDoubleProblem(int numberOfVariables) {
-      this(2, numberOfVariables);
-    }
-
-    public MockedDoubleProblem(int numberOfObjectives, int numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(numberOfObjectives);
-      setNumberOfConstraints(0);
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(0.0);
-        upperLimit.add(10.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    @Override
-    public DoubleSolution evaluate(DoubleSolution solution) {
-      return solution;
-    }
-  }
 }

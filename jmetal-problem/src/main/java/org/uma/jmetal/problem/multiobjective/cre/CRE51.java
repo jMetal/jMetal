@@ -16,7 +16,6 @@ public class CRE51 extends AbstractDoubleProblem {
 
   /** Constructor */
   public CRE51() {
-    setNumberOfVariables(3);
     setNumberOfObjectives(5);
     setNumberOfConstraints(7);
     setName("CRE51");

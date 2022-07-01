@@ -8,9 +8,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -24,9 +22,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 public class SinglePointCrossoverTest {
   private static final double EPSILON = 0.00000000000001 ;

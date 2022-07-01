@@ -17,19 +17,19 @@ public class RE21 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE21() {
-    setNumberOfVariables(4);
+    int numberOfVariables = 4;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("RE21");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
     double f = 10;
     double sigma = 10;
     double tmpVar = (f / sigma);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       upperLimit.add(3 * tmpVar);
     }
 

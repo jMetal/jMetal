@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -29,7 +30,6 @@ public class MaF08 extends AbstractDoubleProblem {
    */
   public MaF08(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfVariables(2); // always 2
     setNumberOfObjectives(numberOfObjectives);
     setNumberOfConstraints(0);
     setName("MaF08");
@@ -37,13 +37,13 @@ public class MaF08 extends AbstractDoubleProblem {
     double r = 1;
     const8 = polygonpoints(numberOfObjectives, r);
 
-    List<Double> lower = new ArrayList<>(getNumberOfVariables()), upper = new ArrayList<>(
-        getNumberOfVariables());
+    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+        numberOfVariables);
 
-    for (int var = 0; var < numberOfVariables; var++) {
-      lower.add(-10000.0);
-      upper.add(10000.0);
-    }
+    IntStream.range(0, numberOfVariables).forEach(i -> {
+      lower.add(0.0);
+      upper.add(1.0);
+    });
 
     setVariableBounds(lower, upper);
   }

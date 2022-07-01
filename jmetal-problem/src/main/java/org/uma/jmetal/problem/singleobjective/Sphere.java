@@ -17,12 +17,11 @@ public class Sphere extends AbstractDoubleProblem {
 
   /** Constructor */
   public Sphere(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setName("Sphere");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>() ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-5.12);

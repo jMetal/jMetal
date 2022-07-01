@@ -17,7 +17,6 @@ public class CEC2005Problem extends AbstractDoubleProblem {
 
   /** Constructor */
   public CEC2005Problem(int problemID, int numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setNumberOfConstraints(0) ;
     setName("CEC2005");
@@ -25,8 +24,8 @@ public class CEC2005Problem extends AbstractDoubleProblem {
     Benchmark cec2005ProblemFactory = new Benchmark();
     testFunction = cec2005ProblemFactory.testFunctionFactory(problemID, numberOfVariables);
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     double ulimit = 0;
     double llimit = 0;

@@ -16,15 +16,15 @@ public class Viennet3 extends AbstractDoubleProblem {
   * Creates a default instance of the Viennet3 problem.
   */
   public Viennet3() {
-    setNumberOfVariables(2);
+    int numberOfVariables = 2 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
     setName("Viennet3") ;
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-3.0);
       upperLimit.add(3.0);
     }

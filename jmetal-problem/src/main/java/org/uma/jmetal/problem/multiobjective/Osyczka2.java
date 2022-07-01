@@ -11,7 +11,6 @@ public class Osyczka2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Osyczka2 problem. */
   public Osyczka2() {
-    setNumberOfVariables(6);
     setNumberOfObjectives(2);
     setNumberOfConstraints(6);
     setName("Osyczka2");

@@ -17,7 +17,6 @@ public class RE41 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE41() {
-    setNumberOfVariables(7);
     setNumberOfObjectives(4);
     setNumberOfConstraints(0);
     setName("RE41");

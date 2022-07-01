@@ -11,7 +11,6 @@ public class Binh2 extends AbstractDoubleProblem {
 
   /** Constructor Creates a default instance of the Binh2 problem */
   public Binh2() {
-    setNumberOfVariables(2);
     setNumberOfObjectives(2);
     setNumberOfConstraints(2);
     setName("Binh2");

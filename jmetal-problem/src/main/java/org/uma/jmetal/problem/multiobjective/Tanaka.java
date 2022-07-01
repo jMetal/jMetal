@@ -15,15 +15,15 @@ public class Tanaka extends AbstractDoubleProblem {
    * Creates a default instance of the problem Tanaka
    */
   public Tanaka() {
-    setNumberOfVariables(2);
+    int numberOfVariables = 2 ;
     setNumberOfObjectives(2);
     setNumberOfConstraints(2);
     setName("Tanaka") ;
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(10e-5);
       upperLimit.add(Math.PI);
     }

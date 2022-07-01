@@ -64,7 +64,7 @@ public class ComponentBasedSMPSO {
     double velocityChangeWhenLowerLimitIsReached = -1.0;
     double velocityChangeWhenUpperLimitIsReached = -1.0;
     var positionUpdate = new DefaultPositionUpdate(velocityChangeWhenLowerLimitIsReached,
-        velocityChangeWhenUpperLimitIsReached, problem.getBoundsForVariables());
+        velocityChangeWhenUpperLimitIsReached, problem.getVariableBounds());
 
     int frequencyOfMutation = 6;
     MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;

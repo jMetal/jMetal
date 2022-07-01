@@ -34,7 +34,6 @@ public class CF6 extends AbstractDoubleProblem {
    * @param numberOfObjectives Number of objective functions
    */
   public CF6(Integer numberOfVariables, Integer numberOfObjectives) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setName("CF6");
 

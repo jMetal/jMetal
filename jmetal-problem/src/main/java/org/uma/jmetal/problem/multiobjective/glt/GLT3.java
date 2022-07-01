@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.glt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -29,19 +30,18 @@ public class GLT3 extends AbstractDoubleProblem {
    * @param numberOfVariables
    */
   public GLT3(int numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(2);
     setName("GLT3");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(0.0) ;
     upperLimit.add(1.0) ;
-    for (int i = 1; i < getNumberOfVariables(); i++) {
+    IntStream.range(1, numberOfVariables).forEach(i -> {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
-    }
+    });
 
     setVariableBounds(lowerLimit, upperLimit);
   }

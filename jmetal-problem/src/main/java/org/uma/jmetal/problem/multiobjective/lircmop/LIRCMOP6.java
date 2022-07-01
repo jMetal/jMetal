@@ -9,7 +9,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class LIRCMOP6 extends LIRCMOP5 {
-
   public LIRCMOP6() {
     this(30);
   }

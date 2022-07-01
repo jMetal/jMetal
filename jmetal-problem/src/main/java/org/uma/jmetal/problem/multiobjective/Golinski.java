@@ -11,7 +11,6 @@ public class Golinski extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Golinski problem. */
   public Golinski() {
-    setNumberOfVariables(7);
     setNumberOfObjectives(2);
     setNumberOfConstraints(11);
     setName("Golinski");

@@ -513,7 +513,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       }
 
       double value = distributionMean[i] + sigma * sum;
-      Bounds<Double> bounds = ((DoubleProblem)getProblem()).getBoundsForVariables().get(i) ;
+      Bounds<Double> bounds = ((DoubleProblem)getProblem()).getVariableBounds().get(i) ;
       value = bounds.restrict(value);
 
       solution.variables().set(i, value);

@@ -123,7 +123,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     deltaMax = new double[problem.getNumberOfVariables()];
     deltaMin = new double[problem.getNumberOfVariables()];
     for (int i = 0; i < problem.getNumberOfVariables(); i++) {
-      Bounds<Double> bounds = problem.getBoundsForVariables().get(i) ;
+      Bounds<Double> bounds = problem.getVariableBounds().get(i) ;
       deltaMax[i] = (bounds.getUpperBound() - bounds.getLowerBound()) / 2.0 ;
       deltaMin[i] = -deltaMax[i];
     }
@@ -412,7 +412,7 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     DoubleSolution particle = getSwarm().get(part) ;
 
     for(int var = 0; var < particle.variables().size(); var++){
-      Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
+      Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
       Double lowerBound = bounds.getLowerBound() ;
       Double upperBound = bounds.getUpperBound() ;
       if (particle.variables().get(var) < lowerBound) {

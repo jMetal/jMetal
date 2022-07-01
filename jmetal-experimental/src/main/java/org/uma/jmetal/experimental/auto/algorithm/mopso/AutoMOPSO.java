@@ -21,7 +21,6 @@ import org.uma.jmetal.experimental.auto.parameter.catalogue.LocalBestUpdateParam
 import org.uma.jmetal.experimental.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.PerturbationParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.PositionUpdateParameter;
-import org.uma.jmetal.experimental.auto.parameter.catalogue.ProbabilityParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.RepairDoubleSolutionStrategyParameter;
 import org.uma.jmetal.experimental.auto.parameter.catalogue.VelocityUpdateParameter;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -274,7 +273,7 @@ public class AutoMOPSO {
 
     if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
       positionUpdateParameter.addNonConfigurableParameter("positionBounds",
-          ((DoubleProblem) problem).getBoundsForVariables());
+          ((DoubleProblem) problem).getVariableBounds());
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();

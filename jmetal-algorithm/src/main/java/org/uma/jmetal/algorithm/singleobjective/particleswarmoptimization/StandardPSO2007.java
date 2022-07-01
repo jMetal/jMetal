@@ -190,7 +190,7 @@ public class StandardPSO2007 extends AbstractParticleSwarmOptimization<DoubleSol
       for (int var = 0; var < particle.variables().size(); var++) {
         particle.variables().set(var, particle.variables().get(var) + speed[i][var]);
 
-        Bounds<Double> bounds = problem.getBoundsForVariables().get(var) ;
+        Bounds<Double> bounds = problem.getVariableBounds().get(var) ;
         Double lowerBound = bounds.getLowerBound() ;
         Double upperBound = bounds.getUpperBound() ;
         if (particle.variables().get(var) < lowerBound) {

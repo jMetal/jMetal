@@ -16,6 +16,7 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
@@ -31,7 +32,7 @@ public class ABYSSTest {
 
   @Before
   public void setup() {
-    problem = new MockProblem();
+    problem = new DummyDoubleProblem();
     archive = new CrowdingDistanceArchive<>(10);
     mutation = new PolynomialMutation(1.0, 20.0);
     localSearch = new BasicLocalSearch<>(2, mutation, new DominanceWithConstraintsComparator<>(), problem);
@@ -62,7 +63,7 @@ public class ABYSSTest {
   public void shouldInitializationPhaseLeadToAPopulationFilledWithEvaluatedSolutions() {
     int populationSize = 20;
     int numberOfSubRanges = 4;
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(problem, 0, populationSize, 0, 0, 0, null, localSearch, null, numberOfSubRanges);
@@ -78,7 +79,7 @@ public class ABYSSTest {
     int referenceSet1Size = 6;
     int referenceSet2Size = 4;
 
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(
@@ -110,7 +111,7 @@ public class ABYSSTest {
     int referenceSet1Size = 8;
     int referenceSet2Size = 4;
 
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(
@@ -170,7 +171,7 @@ public class ABYSSTest {
     int referenceSet1Size = 4;
     int referenceSet2Size = 4;
 
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(
@@ -207,7 +208,7 @@ public class ABYSSTest {
     int referenceSet1Size = 4;
     int referenceSet2Size = 4;
 
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(
@@ -239,7 +240,7 @@ public class ABYSSTest {
     int referenceSet1Size = 4;
     int referenceSet2Size = 4;
 
-    DoubleProblem problem = new MockProblem();
+    DoubleProblem problem = new DummyDoubleProblem();
 
     ABYSS abyss =
         new ABYSS(
@@ -265,53 +266,5 @@ public class ABYSSTest {
 
     abyss.restart();
     assertEquals(populationSize, abyss.getPopulation().size());
-  }
-
-  /** Mock problem */
-  @SuppressWarnings("serial")
-  private class MockProblem extends AbstractDoubleProblem {
-    private JMetalRandom randomGenerator = JMetalRandom.getInstance();
-
-    public MockProblem() {
-      setNumberOfVariables(3);
-      setNumberOfObjectives(2);
-      setNumberOfConstraints(0);
-      setName("Fonseca");
-
-      List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-      List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(-4.0);
-        upperLimit.add(4.0);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    @Override
-    public String getName() {
-      return null;
-    }
-
-    @Override
-    public DoubleSolution evaluate(DoubleSolution solution) {
-      solution.objectives()[0] = randomGenerator.nextDouble();
-      solution.objectives()[1] = randomGenerator.nextDouble();
-
-      return solution ;
-    }
-
-    @Override
-    @Deprecated
-    public Double getLowerBound(int index) {
-      return super.getBoundsForVariables().get(index).getUpperBound();
-    }
-
-    @Override
-    @Deprecated
-    public Double getUpperBound(int index) {
-      return super.getBoundsForVariables().get(index).getUpperBound();
-    }
   }
 }

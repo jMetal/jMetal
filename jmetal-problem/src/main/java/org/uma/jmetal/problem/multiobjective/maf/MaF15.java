@@ -51,21 +51,21 @@ public class MaF15 extends AbstractDoubleProblem {
     //re-update numberOfObjectives,numberOfVariables
     numberOfVariables = numberOfObjectives - 1 + len[numberOfObjectives];
 
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setNumberOfConstraints(0);
     setName("MaF15");
 
-    List<Double> lower = new ArrayList<>(getNumberOfVariables()), upper = new ArrayList<>(getNumberOfVariables());
+    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+        numberOfVariables);
 
-    for (int var = 0; var < numberOfObjectives - 1; var++) {
+    for (int i = 0; i < numberOfObjectives - 1; i++) {
         lower.add(0.0);
         upper.add(1.0);
-    } //for
-    for (int var = numberOfObjectives - 1; var < numberOfVariables; var++) {
+    }
+    for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
         lower.add(0.0);
         upper.add(10.0);
-    } //for
+    }
 
     setVariableBounds(lower, upper);
   }

@@ -82,7 +82,7 @@ public class IntegerSBXCrossoverExample {
   }
 
   private static double[][] classify(List<IntegerSolution> solutions, IntegerProblem problem, int granularity) {
-    Bounds<Integer> bounds = problem.getBoundsForVariables().get(0);
+    Bounds<Integer> bounds = problem.getVariableBounds().get(0);
     double grain = (bounds.getUpperBound() - bounds.getLowerBound()) / granularity ;
     double[][] classifier = new double[granularity][] ;
     for (int i = 0 ; i < granularity; i++) {

@@ -700,7 +700,7 @@ public class Ebes extends AbstractDoubleProblem {
     }
     */
     // variable position, amount variables and geometric constraints
-    setNumberOfVariables(Variable_Position());
+    int numberOfVariables = Variable_Position();
     // geomtric constraints for shape
     numberOfConstraints_ = numberOfConstraintsGeometric_;
 
@@ -727,7 +727,7 @@ public class Ebes extends AbstractDoubleProblem {
       txt = txt + OF_[i] + " ";
     }
     System.out.println("  " + txt);
-    System.out.println("  Number of Variables: " + getNumberOfVariables());
+    System.out.println("  Number of Variables: " + numberOfVariables);
     System.out.println("  Number of constraints for Geometric: " + numberOfConstraintsGeometric_);
     System.out.println("  Number of constraints for Stress: " + (numberOfGroupElements_ * 3));
     System.out.println("  Number of constraints for Deflection: " + numberOfConstraintsNodes_);
@@ -740,8 +740,8 @@ public class Ebes extends AbstractDoubleProblem {
     System.out.println("Algorithm configuration: ");
 
     // Fill lower and upper limits
-    Double[] lowerLimit_ = new Double[getNumberOfVariables()];
-    Double[] upperLimit_ = new Double[getNumberOfVariables()];
+    Double[] lowerLimit_ = new Double[numberOfVariables];
+    Double[] upperLimit_ = new Double[numberOfVariables];
     int var = 0;
     for (int gr = 0; gr < numberOfGroupElements_; gr++) {
       var += Groups_[gr][VARIABLES];

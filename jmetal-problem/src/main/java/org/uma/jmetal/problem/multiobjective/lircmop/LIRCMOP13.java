@@ -21,15 +21,14 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   }
   /** Constructor */
   public LIRCMOP13(int numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(3);
     setNumberOfConstraints(2);
     setName("LIRCMOP13");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }

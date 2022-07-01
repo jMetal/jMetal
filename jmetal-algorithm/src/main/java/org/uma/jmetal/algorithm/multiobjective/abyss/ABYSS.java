@@ -150,7 +150,7 @@ public class ABYSS extends AbstractScatterSearch<DoubleSolution, List<DoubleSolu
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      Bounds<Double> bounds = ((DoubleProblem)problem).getBoundsForVariables().get(i) ;
+      Bounds<Double> bounds = ((DoubleProblem)problem).getVariableBounds().get(i) ;
       Double lowerBound = bounds.getLowerBound() ;
       Double upperBound = bounds.getUpperBound() ;
       double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges ;

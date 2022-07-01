@@ -25,13 +25,12 @@ public class UF9 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF9(int numberOfVariables, double epsilon) {
-    setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(3) ;
     setNumberOfConstraints(0) ;
     setName("UF9") ;
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     this.epsilon = epsilon ;
 
@@ -61,7 +60,7 @@ public class UF9 extends AbstractDoubleProblem {
 		count1 = count2 = count3 = 0;
     
     for (int j = 3 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1] - 2.0*x[1]*Math.sin(2.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
+			yj = x[j-1] - 2.0*x[1]*Math.sin(2.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
 			if(j % 3 == 1) {
 				sum1  += yj*yj;
 				count1++;

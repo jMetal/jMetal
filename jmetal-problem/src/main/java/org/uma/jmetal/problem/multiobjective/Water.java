@@ -14,7 +14,6 @@ public class Water extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Water problem. */
   public Water() {
-    setNumberOfVariables(3);
     setNumberOfObjectives(5);
     setNumberOfConstraints(7);
     setName("Water");

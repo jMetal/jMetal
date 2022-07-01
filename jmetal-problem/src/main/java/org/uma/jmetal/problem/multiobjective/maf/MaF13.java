@@ -26,21 +26,21 @@ public class MaF13 extends AbstractDoubleProblem {
    */
   public MaF13(Integer numberOfVariables,
       Integer numberOfObjectives) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(numberOfObjectives);
     setNumberOfConstraints(0);
     setName("MaF13");
 
-    List<Double> lower = new ArrayList<>(getNumberOfVariables()), upper = new ArrayList<>(getNumberOfVariables());
+    List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
+        numberOfVariables);
 
-    for (int var = 0; var < 2; var++) {
+    for (int i = 0; i < 2; i++) {
         lower.add(0.0);
         upper.add(1.0);
-    } //for
-    for (int var = 2; var < numberOfVariables; var++) {
+    }
+    for (int i = 2; i < numberOfVariables; i++) {
         lower.add(-2.0);
         upper.add(2.0);
-    } //for
+    }
 
     setVariableBounds(lower, upper);
   }

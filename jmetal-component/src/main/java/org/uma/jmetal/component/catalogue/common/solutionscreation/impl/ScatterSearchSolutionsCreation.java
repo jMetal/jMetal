@@ -36,7 +36,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
     for (int i = 0; i < numberOfSolutionsToCreate; i++) {
       List<Double> variables = generateVariables();
       DoubleSolution newSolution =
-          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getBoundsForVariables());
+          new DefaultDoubleSolution(problem.getNumberOfObjectives(), problem.getVariableBounds());
       for (int j = 0; j < problem.getNumberOfVariables(); j++) {
         newSolution.variables().set(j, variables.get(j));
       }
@@ -74,7 +74,7 @@ public class ScatterSearchSolutionsCreation implements SolutionsCreation<DoubleS
       frequency[range][i]++;
       sumOfFrequencyValues[i]++;
 
-      Bounds<Double> bounds = problem.getBoundsForVariables().get(i);
+      Bounds<Double> bounds = problem.getVariableBounds().get(i);
       Double lowerBound = bounds.getLowerBound();
       Double upperBound = bounds.getUpperBound();
       double low = lowerBound + range * (upperBound - lowerBound) / numberOfSubRanges;

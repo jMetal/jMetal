@@ -28,14 +28,13 @@ public class MOP7 extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables.
    */
   public MOP7(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(3);
     setName("MOP7");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
     }

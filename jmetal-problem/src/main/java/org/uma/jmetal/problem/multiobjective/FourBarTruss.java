@@ -26,13 +26,13 @@ public class FourBarTruss extends AbstractDoubleProblem {
    * Creates a default instance of the FourBarTruss problem
    */
   public FourBarTruss() {
-    setNumberOfVariables(4);
+    int numberOfVariables = 4 ;
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("FourBarTruss");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     lowerLimit.add(f / sigma) ;
     lowerLimit.add(Math.sqrt(2.0)*(f / sigma));

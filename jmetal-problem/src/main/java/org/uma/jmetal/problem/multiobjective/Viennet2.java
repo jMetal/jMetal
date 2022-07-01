@@ -11,15 +11,15 @@ public class Viennet2 extends AbstractDoubleProblem {
 
   /** Constructor. Creates a default instance of the Viennet2 problem */
   public Viennet2() {
-    setNumberOfVariables(2);
+    int numberOfVariables = 2 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(0);
     setName("Viennet2");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-4.0);
       upperLimit.add(4.0);
     }

@@ -10,15 +10,15 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 public class Viennet4 extends AbstractDoubleProblem {
   /** Constructor. Creates a default instance of the Viennet4 problem. */
   public Viennet4() {
-    setNumberOfVariables(2);
+    int numberOfVariables = 2 ;
     setNumberOfObjectives(3);
     setNumberOfConstraints(3);
     setName("Viennet4");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-4.0);
       upperLimit.add(4.0);
     }

@@ -18,13 +18,12 @@ public class Griewank extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables of the problem
    */
   public Griewank(Integer numberOfVariables)  {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setNumberOfConstraints(0) ;
     setName("Griewank");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
     for (int i = 0; i < getNumberOfVariables(); i++) {
       lowerLimit.add(-600.0);

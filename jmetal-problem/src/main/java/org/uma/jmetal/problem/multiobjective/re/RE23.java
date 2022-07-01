@@ -17,7 +17,6 @@ public class RE23 extends AbstractDoubleProblem {
 
   /** Constructor */
   public RE23() {
-    setNumberOfVariables(4);
     setNumberOfObjectives(2);
     setNumberOfConstraints(0);
     setName("RE23");

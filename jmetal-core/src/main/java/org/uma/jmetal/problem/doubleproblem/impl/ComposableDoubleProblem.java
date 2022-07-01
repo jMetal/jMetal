@@ -3,9 +3,7 @@ package org.uma.jmetal.problem.doubleproblem.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.tuple.Pair;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
@@ -99,7 +97,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
   }
 
   @Override
-  public List<Bounds<Double>> getBoundsForVariables() {
+  public List<Bounds<Double>> getVariableBounds() {
     return bounds;
   }
 

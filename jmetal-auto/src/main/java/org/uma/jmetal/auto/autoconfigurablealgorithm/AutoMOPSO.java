@@ -273,7 +273,7 @@ public class AutoMOPSO {
 
     if (positionUpdateParameter.getValue().equals("defaultPositionUpdate")) {
       positionUpdateParameter.addNonConfigurableParameter("positionBounds",
-          ((DoubleProblem) problem).getBoundsForVariables());
+          ((DoubleProblem) problem).getVariableBounds());
     }
 
     PositionUpdate positionUpdate = positionUpdateParameter.getParameter();

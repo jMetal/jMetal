@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.agemoeaii;
 
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEA;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
-import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.util.AGEMOEA2EnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;

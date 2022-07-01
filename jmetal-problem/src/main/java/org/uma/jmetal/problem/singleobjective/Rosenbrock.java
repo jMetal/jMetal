@@ -5,7 +5,6 @@ import java.util.List;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
-@SuppressWarnings("serial")
 public class Rosenbrock extends AbstractDoubleProblem {
 
   /**
@@ -15,15 +14,14 @@ public class Rosenbrock extends AbstractDoubleProblem {
    * @param numberOfVariables Number of variables of the problem
    */
   public Rosenbrock(Integer numberOfVariables) {
-    setNumberOfVariables(numberOfVariables);
     setNumberOfObjectives(1);
     setNumberOfConstraints(0) ;
     setName("Rosenbrock");
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
     }

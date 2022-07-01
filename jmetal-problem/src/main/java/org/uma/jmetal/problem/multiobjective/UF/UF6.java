@@ -26,20 +26,19 @@ public class UF6 extends AbstractDoubleProblem {
   * @param numberOfVariables Number of variables.
   */
   public UF6(Integer numberOfVariables, int N, double epsilon) {
-    setNumberOfVariables(numberOfVariables) ;
     setNumberOfObjectives(2) ;
     setNumberOfConstraints(0) ;
     setName("UF6") ;
 
-    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+    List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
+    List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
     
     n = N  ;
     this.epsilon = epsilon ;
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    for (int i = 1; i < getNumberOfVariables(); i++) {
+    for (int i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
     }
@@ -63,7 +62,7 @@ public class UF6 extends AbstractDoubleProblem {
  		prod1  = prod2  = 1.0;
     
     for (int j = 2 ; j <= getNumberOfVariables(); j++) {
-			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/getNumberOfVariables());
+			yj = x[j-1]-Math.sin(6.0*Math.PI*x[0]+j*Math.PI/ getNumberOfVariables());
 			pj = Math.cos(20.0*yj*Math.PI/Math.sqrt(j));
 			if (j % 2 == 0) {
 				sum2  += yj*yj;
