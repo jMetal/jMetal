@@ -66,15 +66,15 @@ public class MixedIntegerDoubleProblem extends AbstractGenericProblem<CompositeS
     approximationToM = 0;
 
     List<Integer> integerVariables = ((IntegerSolution) solution.variables().get(0)).variables();
-    for (int i = 0; i < integerVariables.size(); i++) {
-      approximationToN += Math.abs(valueN - integerVariables.get(i));
-      approximationToM += Math.abs(valueM - integerVariables.get(i));
+    for (Integer integerVariable : integerVariables) {
+      approximationToN += Math.abs(valueN - integerVariable);
+      approximationToM += Math.abs(valueM - integerVariable);
     }
 
     List<Double> doubleVariables = ((DoubleSolution) solution.variables().get(1)).variables();
-    for (int i = 0; i < doubleVariables.size(); i++) {
-      approximationToN += Math.abs(valueN - doubleVariables.get(i));
-      approximationToM += Math.abs(valueM - doubleVariables.get(i));
+    for (Double doubleVariable : doubleVariables) {
+      approximationToN += Math.abs(valueN - doubleVariable);
+      approximationToM += Math.abs(valueM - doubleVariable);
     }
 
     solution.objectives()[0] = approximationToN ;
