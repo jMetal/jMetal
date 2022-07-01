@@ -3,7 +3,8 @@ package org.uma.jmetal.problem;
 import java.io.Serializable;
 
 /**
- * Interface representing a multi-objective optimization problem
+ * Interface representing a multi-objective optimization problem. A single-objective problem is
+ * a multi-objective one with an objective.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  *

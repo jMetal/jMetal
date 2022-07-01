@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import org.uma.jmetal.algorithm.InteractiveAlgorithm;
-import org.uma.jmetal.problem.BoundedProblem;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.artificialdecisionmaker.ArtificialDecisionMaker;
 import org.uma.jmetal.util.artificialdecisionmaker.DecisionTreeEstimator;
@@ -80,16 +80,16 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
 
   private void updateObjectiveVector(List<S> solutionList){
    for (int j = 0; j < numberOfObjectives; j++) {
-      Collections.sort(solutionList, new ObjectiveComparator<>(j));
+      solutionList.sort(new ObjectiveComparator<>(j));
       double objetiveMinn = solutionList.get(0).objectives()[j];
       double objetiveMaxn = solutionList.get(solutionList.size() - 1).objectives()[j];
       idealOjectiveVector.add(objetiveMinn);
       nadirObjectiveVector.add(objetiveMaxn);
     }
-    if(problem instanceof BoundedProblem){
-      BoundedProblem<?, ?> aux =(BoundedProblem<?, ?>)problem;
+    if(problem instanceof DoubleProblem){
+      DoubleProblem aux =(DoubleProblem) problem;
       for (int i = 0; i < numberOfObjectives ; i++) {
-        Bounds<?> bounds = aux.getBoundsForVariables().get(i);
+        Bounds<?> bounds = aux.getVariableBounds().get(i);
         idealOjectiveVector.add(((Number) bounds.getLowerBound()).doubleValue());
         nadirObjectiveVector.add(((Number) bounds.getUpperBound()).doubleValue());
       }

@@ -1,6 +1,15 @@
 package org.uma.jmetal.problem;
 
-@SuppressWarnings("serial")
+import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
+
+/**
+ * Abstract class to be used as a template for implementation of problems. Using it is not
+ * mandatory and classes such as {@link AbstractDoubleProblem} and {@link AbstractIntegerProblem} do
+ * not extend it.
+ *
+ * @param <S>
+ */
 public abstract class AbstractGenericProblem<S> implements Problem<S> {
   private int numberOfVariables = 0 ;
   private int numberOfObjectives = 0 ;
