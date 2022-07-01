@@ -17,6 +17,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithCons
  */
 @SuppressWarnings("serial")
 public class NonDominatedSolutionListArchive<S extends Solution<?>> implements Archive<S> {
+
   private List<S> solutionList;
   private Comparator<S> dominanceComparator;
   private Comparator<S> equalSolutions = new EqualSolutionsComparator<S>();
@@ -47,38 +48,40 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
    */
   @Override
   public boolean add(S solution) {
-    boolean solutionInserted = false ;
+    boolean isSolutionInserted = false;
     if (solutionList.isEmpty()) {
-      solutionList.add(solution) ;
-      solutionInserted = true ;
+      solutionList.add(solution);
+      isSolutionInserted = true;
     } else {
-      Iterator<S> iterator = solutionList.iterator();
-      boolean isDominated = false;
-      
-      boolean isContained = false;
-      while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
-        S listIndividual = iterator.next();
-        int flag = dominanceComparator.compare(solution, listIndividual);
-        if (flag == -1) {
-          iterator.remove();
-        }  else if (flag == 1) {
-          isDominated = true; // dominated by one in the list
-        } else if (flag == 0) {
-          int equalflag = equalSolutions.compare(solution, listIndividual);
-          if (equalflag == 0) // solutions are equals
-            isContained = true;
-        }
-      }
-      
-      if (!isDominated && !isContained) {
-    	  solutionList.add(solution);
-    	  solutionInserted = true;
-      }
-      
-      return solutionInserted;
+      isSolutionInserted = insertSolutionIfNonDominatedAndIsNotInTheArchive(solution,
+          isSolutionInserted);
     }
 
-    return solutionInserted ;
+    return isSolutionInserted;
+  }
+
+  private boolean insertSolutionIfNonDominatedAndIsNotInTheArchive(S solution,
+      boolean solutionInserted) {
+    boolean isDominated = false;
+    boolean isContained = false;
+    Iterator<S> iterator = solutionList.iterator();
+    while (((!isDominated) && (!isContained)) && (iterator.hasNext())) {
+      S listIndividual = iterator.next();
+      int flag = dominanceComparator.compare(solution, listIndividual);
+      if (flag == -1) {
+        iterator.remove();
+      } else if (flag == 1) {
+        isDominated = true; // dominated by one in the list
+      } else if (equalSolutions.compare(solution, listIndividual) == 0) {// solutions are equals
+        isContained = true;
+      }
+    }
+
+    if (!isDominated && !isContained) {
+      solutionList.add(solution);
+      solutionInserted = true;
+    }
+    return solutionInserted;
   }
 
   public Archive<S> join(Archive<S> archive) {
@@ -87,10 +90,10 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
 
   public Archive<S> addAll(List<S> list) {
     for (S solution : list) {
-      this.add(solution) ;
+      this.add(solution);
     }
 
-    return this ;
+    return this;
   }
 
 
