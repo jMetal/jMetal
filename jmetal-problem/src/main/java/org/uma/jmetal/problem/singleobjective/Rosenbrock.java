@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -34,11 +35,8 @@ public class Rosenbrock extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] x = new double[numberOfVariables] ;
-
-    for (int i = 0; i < numberOfVariables; i++) {
-      x[i] = solution.variables().get(i) ;
-    }
+    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i))
+        .toArray();
 
     double sum = 0.0;
 

@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.singleobjective;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -23,10 +24,10 @@ public class Sphere extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>() ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    for (int i = 0; i < getNumberOfVariables(); i++) {
+    IntStream.range(0, numberOfVariables).forEach(i -> {
       lowerLimit.add(-5.12);
       upperLimit.add(5.12);
-    }
+    });
 
     setVariableBounds(lowerLimit, upperLimit);
   }
