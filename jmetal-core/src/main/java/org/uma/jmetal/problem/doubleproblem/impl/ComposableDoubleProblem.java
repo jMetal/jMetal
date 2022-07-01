@@ -34,9 +34,7 @@ import org.uma.jmetal.util.bounds.Bounds;
  * <p>This class does not intend to be a replacement of the existing of {@link
  * AbstractDoubleProblem}; it is merely an alternative way of defining a problem.
  */
-@SuppressWarnings("serial")
 public class ComposableDoubleProblem implements DoubleProblem {
-
   private List<Function<Double[], Double>> objectiveFunctions;
   private List<Function<Double[], Double>> constraints;
   private List<Bounds<Double>> bounds;
