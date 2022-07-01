@@ -12,7 +12,7 @@ import org.uma.jmetal.util.distance.Distance;
 public class EuclideanDistanceBetweenSolutionsInSolutionSpace<S extends Solution<Double>>
     implements Distance<S, S> {
 
-  private EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
+  private final EuclideanDistanceBetweenVectors distance = new EuclideanDistanceBetweenVectors() ;
 
   @Override
   public double compute(S solution1, S solution2) {

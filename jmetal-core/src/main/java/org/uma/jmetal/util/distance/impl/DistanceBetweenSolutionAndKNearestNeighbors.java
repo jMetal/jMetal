@@ -23,10 +23,6 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
     this.distance = distance ;
   }
 
-  public DistanceBetweenSolutionAndKNearestNeighbors(int k) {
-    this(k, new EuclideanDistanceBetweenSolutionsInObjectiveSpace<>()) ;
-  }
-
   /**
    * Computes the knn distance. If the solution list size is lower than k, then k = size in the computation
    * @param solution
@@ -44,11 +40,6 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
     if (limit == 0) {
       result = 0.0 ;
     } else {
-      //double sum = 0.0;
-      //for (int i = 0; i < limit; i++) {
-      //  sum += listOfDistances.get(i);
-      //}
-      //result = sum/limit ;
       result = listOfDistances.get(limit-1) ;
     }
     return result;
