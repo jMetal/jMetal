@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -72,9 +73,7 @@ public class DTLZ3 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      solution.objectives()[i] = f[i];
-    }
+    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
 
     return solution ;
   }

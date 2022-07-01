@@ -8,7 +8,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
- * Class representing problem DTLZ1
+ * Class representing problem DTLZ2
  */
 @SuppressWarnings("serial")
 public class DTLZ2 extends AbstractDoubleProblem {
@@ -72,9 +72,7 @@ public class DTLZ2 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      solution.objectives()[i] = f[i];
-    }
+    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
 
     return solution ;
   }

@@ -74,9 +74,7 @@ public class DTLZ1 extends AbstractDoubleProblem {
       }
     }
 
-    for (int i = 0; i < numberOfObjectives; i++) {
-      solution.objectives()[i] = f[i];
-    }
+    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
 
     return solution ;
   }
