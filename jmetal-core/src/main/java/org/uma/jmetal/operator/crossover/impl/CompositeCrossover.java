@@ -20,15 +20,6 @@ public class CompositeCrossover implements CrossoverOperator<CompositeSolution> 
   private List<CrossoverOperator<Solution<?>>> operators;
   private double crossoverProbability = 1.0;
 
-  /** Constructor */
-  /*
-    public CompositeCrossover(List<CrossoverOperator<Solution<?>>> operators) {
-      Check.isNotNull(operators);
-      Check.collectionIsNotEmpty(operators);
-
-  	  this.operators = operators ;
-    }
-  */
   public CompositeCrossover(List<?> operators) {
     Check.notNull(operators);
     Check.collectionIsNotEmpty(operators);

@@ -2,6 +2,7 @@ package org.uma.jmetal.solution.compositesolution;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -55,17 +56,9 @@ public class CompositeSolution extends AbstractSolution<Solution<?>> {
   public CompositeSolution(CompositeSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length) ;
 
-    for (int i = 0; i < solution.variables().size(); i++) {
-      variables().set(i, solution.variables().get(i).copy());
-    }
-
-    for (int i = 0; i < solution.objectives().length; i++) {
-      objectives()[i] = solution.objectives()[i];
-    }
-
-    for (int i = 0; i < solution.constraints().length; i++) {
-      constraints()[i] =  solution.constraints()[i];
-    }
+    IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i).copy()));
+    IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
+    IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
 
     attributes = new HashMap<Object, Object>(solution.attributes) ;
   }

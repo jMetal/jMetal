@@ -22,9 +22,7 @@ public class BLXAlphaCrossover implements CrossoverOperator<DoubleSolution> {
 
   private double crossoverProbability;
   private double alpha ;
-
   private RepairDoubleSolution solutionRepair ;
-
   private RandomGenerator<Double> randomGenerator ;
 
   /** Constructor */
