@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.CosineDistanceBetweenSolutionsInObjectiveSpace;
@@ -17,7 +17,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldIdenticalPointsHaveADistanceOfOne() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
     DoubleSolution idealPoint = problem.createSolution() ;
     idealPoint.objectives()[0] = 0.0 ;
     idealPoint.objectives()[1] = 0.0 ;
@@ -39,7 +39,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldPointsInTheSameDirectionHaveADistanceOfOne() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
     DoubleSolution idealPoint = problem.createSolution() ;
     idealPoint.objectives()[0] = 0.0 ;
     idealPoint.objectives()[1] = 0.0 ;
@@ -61,7 +61,7 @@ public class CosineDistanceBetweenSolutionsInObjectiveSpaceTest {
 
   @Test
   public void shouldTwoPerpendicularPointsHaveADistanceOfZero() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
     DoubleSolution idealPoint = problem.createSolution() ;
     idealPoint.objectives()[0] = 0.0 ;
     idealPoint.objectives()[1] = 0.0 ;

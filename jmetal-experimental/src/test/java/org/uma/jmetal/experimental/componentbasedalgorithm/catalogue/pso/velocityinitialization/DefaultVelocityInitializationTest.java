@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
@@ -29,7 +29,7 @@ class DefaultVelocityInitializationTest {
   @Test
   public void shouldInitializeReturnASpeedMatrixWithTheRightDimensions() {
     List<DoubleSolution> swarm = new ArrayList<>();
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
@@ -44,7 +44,7 @@ class DefaultVelocityInitializationTest {
   @Test
   public void shouldInitializeASpeedMatrixFullOfZeroes() {
     List<DoubleSolution> swarm = new ArrayList<>();
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());

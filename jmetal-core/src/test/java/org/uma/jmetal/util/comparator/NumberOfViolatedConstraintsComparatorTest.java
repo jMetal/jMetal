@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.constraintcomparator.impl.NumberOfViolatedConstraintsComparator;
@@ -48,7 +48,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsZeroIfTheSolutionsHaveNoConstraints() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
 
@@ -57,7 +57,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsZeroIfTheSolutionsHaveConstraintsAndTheyAreFeasible() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 1) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = 1.0 ;
@@ -68,7 +68,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheFirstSolutionIsFeasibleAndTheSecondOneIsNot() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 1) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = 0.0 ;
@@ -79,7 +79,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheSecondSolutionIsFeasibleAndTheFirstOneIsNot() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 1) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 1) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -2.0 ;
@@ -90,7 +90,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsZeroIfBothSolutionsHaveTheSameNumberOfViolatedConstraints() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 3) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;
@@ -105,7 +105,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheFirstSolutionViolatesMoreConstraintsThanTheSecondOne() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 3) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;
@@ -120,7 +120,7 @@ public class NumberOfViolatedConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheSecondSolutionViolatesMoreConstraintsThanTheFirstOne() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2, 2, 3) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(2, 2, 3) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.constraints()[0] = -1.0 ;

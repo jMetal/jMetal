@@ -9,9 +9,9 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  * Implementation of {@link DoubleProblem} that does nothing. Intended to be used in unit tests.
  */
 @SuppressWarnings("serial")
-public class DummyDoubleProblem extends AbstractDoubleProblem {
+public class FakeDoubleProblem extends AbstractDoubleProblem {
 
-  public DummyDoubleProblem(int numberOfVariables, int numberOfObjectives,
+  public FakeDoubleProblem(int numberOfVariables, int numberOfObjectives,
       int numberOfConstraints) {
     setNumberOfObjectives(numberOfObjectives);
     setNumberOfConstraints(numberOfConstraints);
@@ -27,7 +27,7 @@ public class DummyDoubleProblem extends AbstractDoubleProblem {
     setVariableBounds(lowerLimit, upperLimit);
   }
 
-  public DummyDoubleProblem() {
+  public FakeDoubleProblem() {
     this(2, 2, 0);
   }
 

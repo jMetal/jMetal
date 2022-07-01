@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -43,7 +43,7 @@ class BestSolutionSelectionTest {
   @Test
   public void shouldExecuteWorkProperlyIfTheListContainsASolution() {
     var operator = new BestSolutionSelection<DoubleSolution>(new ObjectiveComparator<>(0));
-    var dummyDoubleProblem = new DummyDoubleProblem(3, 2, 0) ;
+    var dummyDoubleProblem = new FakeDoubleProblem(3, 2, 0) ;
 
     var solution = dummyDoubleProblem.createSolution() ;
 
@@ -53,7 +53,7 @@ class BestSolutionSelectionTest {
   @Test
   public void shouldExecuteWorkProperlyIfTheListContainTwoSingleObjectiveSolutionsAndTheFirstOneIsBetter() {
     var operator = new BestSolutionSelection<DoubleSolution>(new ObjectiveComparator<>(0));
-    var dummyDoubleProblem = new DummyDoubleProblem(2, 1, 0) ;
+    var dummyDoubleProblem = new FakeDoubleProblem(2, 1, 0) ;
 
     var solution1 = dummyDoubleProblem.createSolution() ;
     var solution2 = dummyDoubleProblem.createSolution() ;
@@ -66,7 +66,7 @@ class BestSolutionSelectionTest {
   @Test
   public void shouldExecuteWorkProperlyIfTheListContainTwoSingleObjectiveSolutionsAndTheSecondOneIsBetter() {
     var operator = new BestSolutionSelection<DoubleSolution>(new ObjectiveComparator<>(0));
-    var dummyDoubleProblem = new DummyDoubleProblem(2, 1, 0) ;
+    var dummyDoubleProblem = new FakeDoubleProblem(2, 1, 0) ;
 
     var solution1 = dummyDoubleProblem.createSolution() ;
     var solution2 = dummyDoubleProblem.createSolution() ;
@@ -79,7 +79,7 @@ class BestSolutionSelectionTest {
   @Test
   public void shouldExecuteWorkProperlyIfTheListContainThreeSolutions() {
     var operator = new BestSolutionSelection<DoubleSolution>(new DominanceWithConstraintsComparator<>());
-    var dummyDoubleProblem = new DummyDoubleProblem(2, 3, 0) ;
+    var dummyDoubleProblem = new FakeDoubleProblem(2, 3, 0) ;
 
     var solution1 = dummyDoubleProblem.createSolution() ;
     var solution2 = dummyDoubleProblem.createSolution() ;

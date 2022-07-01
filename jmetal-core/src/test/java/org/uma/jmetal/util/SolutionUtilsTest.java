@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.bounds.Bounds;
@@ -20,7 +19,7 @@ public class SolutionUtilsTest {
   /** Case A: the two solutions are the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseA() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -33,7 +32,7 @@ public class SolutionUtilsTest {
   /** Case B: the two solutions are not the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithOneObjectiveCaseB() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -46,7 +45,7 @@ public class SolutionUtilsTest {
   /** Case A: the two solutions are the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseA() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -61,7 +60,7 @@ public class SolutionUtilsTest {
   /** Case B: the two solutions are not the same */
   @Test
   public void shouldDistanceBetweenObjectivesWorkProperlyWithTwoSolutionsWithTwoObjectivesCaseB() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -76,7 +75,7 @@ public class SolutionUtilsTest {
   /** Case A. Solution = [1], solutionList = [1]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseA() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -92,7 +91,7 @@ public class SolutionUtilsTest {
   /** Case B. Solution = [1], solutionList = [[2]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseB() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
 
@@ -107,7 +106,7 @@ public class SolutionUtilsTest {
   /** Case C. Solution = [1], solutionList = [[1], [2]] */
   @Test
   public void shouldAverageDistanceToSolutionListWorkProperlyCaseC() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
@@ -131,7 +130,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenTheMinValueIsNull() {
 
-    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, null, new double[] {0.2});
@@ -140,7 +139,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenTheMaxValueIsNull() {
 
-    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2}, null);
@@ -149,7 +148,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentLength() {
 
-    DoubleProblem problem = new DummyDoubleProblem(0, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(0, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3});
@@ -158,7 +157,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMinIsEmpty() {
 
-    DoubleProblem problem = new DummyDoubleProblem(0, 0, 0);
+    DoubleProblem problem = new FakeDoubleProblem(0, 0, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {}, new double[] {0.2});
@@ -167,7 +166,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMaxIsEmpty() {
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2}, new double[] {});
@@ -176,7 +175,7 @@ public class SolutionUtilsTest {
   @Test(expected = JMetalException.class)
   public void shouldNormalizeThrowsAnExceptionWhenMinAndMaxValuesHaveDifferentNumberOfObjective() {
 
-    DoubleProblem problem = new DummyDoubleProblem(3, 1, 0);
+    DoubleProblem problem = new FakeDoubleProblem(3, 1, 0);
     DoubleSolution solution = problem.createSolution();
 
     SolutionUtils.normalize(solution, new double[] {0.2, 0.2}, new double[] {0.3, 0.3});

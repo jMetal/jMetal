@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.distance.impl.DistanceBetweenSolutionAndKNearestNeighbors;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionsInSolutionSpace;
@@ -16,7 +16,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
 
   @Test
   public void shouldGetDistanceReturnZeroIfTheSolutionListContainsOnlyTheSolution() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;
@@ -35,7 +35,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
 
   @Test
   public void shouldGetDistanceWorkProperlyIfTheListContainsOnlyASolution() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;
@@ -58,7 +58,7 @@ public class DistanceBetweenSolutionAndKNearestNeighborsTest {
   @Test
   public void shouldGetDistanceWorkProperlyIfTheListContainsThreeSolutionsAndKIsEqualToTwo() {
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     DoubleSolution solution = problem.createSolution() ;
     solution.variables().set(0, 1.0) ;

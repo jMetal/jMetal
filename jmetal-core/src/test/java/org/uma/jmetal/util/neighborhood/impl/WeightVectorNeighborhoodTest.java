@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 public class WeightVectorNeighborhoodTest {
@@ -61,7 +60,7 @@ public class WeightVectorNeighborhoodTest {
         new WeightVectorNeighborhood<>(populationSize, neighborSize);
 
     List<DoubleSolution> solutionList = new ArrayList<>(populationSize);
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
     IntStream.range(0, populationSize).forEach(i -> solutionList.add(problem.createSolution()));
 
     List<DoubleSolution> neighbors;

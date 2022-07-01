@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MuCommaLambdaReplacement;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -18,7 +18,7 @@ public class MuCommaLambdaReplacementTest   {
   public void shouldReplaceReturnAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs12() {
     int mu = 10;
     int lambda = 12;
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     List<DoubleSolution> population = new ArrayList<>();
     for (int i = 0; i < mu; i++) {
       population.add(problem.createSolution());
@@ -38,7 +38,7 @@ public class MuCommaLambdaReplacementTest   {
   public void shouldReplaceRaiseAnExceptionIfMuIsEqualToLambda() {
     int mu = 10;
     int lambda = 10;
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     List<DoubleSolution> population = new ArrayList<>();
     for (int i = 0; i < mu; i++) {
       population.add(problem.createSolution());
@@ -59,7 +59,7 @@ public class MuCommaLambdaReplacementTest   {
   public void shouldReplaceRaiseAnExceptionIfMuIsLowerThanLambda() {
     int mu = 10;
     int lambda = 8;
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     List<DoubleSolution> population = new ArrayList<>();
     for (int i = 0; i < mu; i++) {
       population.add(problem.createSolution());

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -27,22 +27,22 @@ public class DefaultDominanceComparatorTest {
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheFirstSolutionIsNull() {
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution();
 
     assertThrows(NullParameterException.class, () -> dominanceComparator.compare(null, solution2));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSecondSolutionIsNull() {
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution();
 
     assertThrows(NullParameterException.class, () -> dominanceComparator.compare(solution2, null));
   }
 
   @Test
   public void shouldCompareRaiseAnExceptionIfTheSolutionsHaveNotTheSameNumberOfObjectives() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 4, 0).createSolution();
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution();
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 4, 0).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution();
 
     assertThrows(InvalidConditionException.class,
         () -> dominanceComparator.compare(solution1, solution2));
@@ -50,7 +50,7 @@ public class DefaultDominanceComparatorTest {
 
   @Test
   public void shouldCompareReturnZeroIfTheTwoSolutionsHaveOneObjectiveWithTheSameValue() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = 4.0;
@@ -62,7 +62,7 @@ public class DefaultDominanceComparatorTest {
 
   @Test
   public void shouldCompareReturnOneIfTheTwoSolutionsHasOneObjectiveAndTheSecondOneIsLower() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = 4.0;
@@ -74,7 +74,7 @@ public class DefaultDominanceComparatorTest {
 
   @Test
   public void shouldCompareReturnMinusOneIfTheTwoSolutionsHasOneObjectiveAndTheFirstOneIsLower() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 1);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 1);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = -1.0;
@@ -89,7 +89,7 @@ public class DefaultDominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseA() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = -1.0;
@@ -109,7 +109,7 @@ public class DefaultDominanceComparatorTest {
   @Test
   public void shouldCompareReturnMinusOneIfTheFirstSolutionDominatesTheSecondOneCaseB() {
     @SuppressWarnings("unchecked")
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 1);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 1);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = -1.0;
@@ -128,7 +128,7 @@ public class DefaultDominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseC() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = -1.0;
@@ -148,7 +148,7 @@ public class DefaultDominanceComparatorTest {
    */
   @Test
   public void shouldCompareReturnOneIfTheSecondSolutionDominatesTheFirstOneCaseD() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     solution1.objectives()[0] = -1.0;

@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -65,13 +65,13 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 2.0 ;
 
@@ -86,13 +86,13 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 0.0 ;
     solution2.objectives()[1] = 0.0 ;
 
@@ -108,25 +108,25 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 0.0 ;
     solution2.objectives()[1] = 2.0 ;
 
     archive.add(solution2) ;
 
-    DoubleSolution solution3 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution3 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution3.objectives()[0] = 0.5 ;
     solution3.objectives()[1] = 1.5 ;
 
     archive.add(solution3) ;
 
-    DoubleSolution solution4 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution4 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution4.objectives()[0] = 0.0 ;
     solution4.objectives()[1] = 0.0 ;
 
@@ -144,13 +144,13 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 0.0 ;
 
@@ -164,19 +164,19 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive ;
     archive = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
     archive.add(solution1) ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 0.0 ;
 
     archive.add(solution2) ;
 
-    DoubleSolution equalSolution = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution equalSolution = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     equalSolution.objectives()[0] = 1.0 ;
     equalSolution.objectives()[1] = 1.0 ;
 
@@ -203,7 +203,7 @@ public class NonDominatedSolutionListArchiveTest {
 
   @Test
   public void shouldJoinWithAnEmptyArchivesRemainTheArchiveWithTheSameNumberOfSolutions() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 1.0 ;
 
@@ -228,11 +228,11 @@ public class NonDominatedSolutionListArchiveTest {
     NonDominatedSolutionListArchive<DoubleSolution> archive2 ;
     archive2 = new NonDominatedSolutionListArchive<>() ;
 
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution1.objectives()[0] = 1.0 ;
     solution1.objectives()[1] = 2.0 ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 0).createSolution() ;
     solution2.objectives()[0] = 2.0 ;
     solution2.objectives()[1] = 1.0 ;
 

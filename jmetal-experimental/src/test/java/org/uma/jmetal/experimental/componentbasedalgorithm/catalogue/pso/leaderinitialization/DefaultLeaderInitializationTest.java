@@ -27,7 +27,7 @@ class DefaultLeaderInitializationTest {
     @Test
     public void shouldInitializeLeadersHaveTheParticleAdded(){
         List<DoubleSolution> swarm = new ArrayList<>();
-        DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+        DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
         BoundedArchive<DoubleSolution> leaders_bounded;
         swarm.add(problem.createSolution());
         swarm.add(problem.createSolution());

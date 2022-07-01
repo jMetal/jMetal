@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
@@ -43,7 +43,7 @@ public class ObjectiveComparatorTest {
   public void shouldCompareReturnMinusOneIfTheObjectiveOfSolution1IsLower() {
     comparator = new ObjectiveComparator<>(0);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -58,7 +58,7 @@ public class ObjectiveComparatorTest {
   public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsLower() {
     comparator = new ObjectiveComparator<Solution<?>>(2);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -73,7 +73,7 @@ public class ObjectiveComparatorTest {
   public void shouldCompareReturnZeroIfTheObjectiveOfTheSolutionsIsTheSame() {
     comparator = new ObjectiveComparator<Solution<?>>(2);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -88,7 +88,7 @@ public class ObjectiveComparatorTest {
   public void shouldCompareReturnMinusOneIfTheObjectiveOfSolution1IsGreaterInDescendingOrder() {
     comparator = new ObjectiveComparator<>(0, ObjectiveComparator.Ordering.DESCENDING);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -103,7 +103,7 @@ public class ObjectiveComparatorTest {
   public void shouldCompareReturnOneIfTheObjectiveOfSolution2IsGreaterInDescendingOrder() {
     comparator = new ObjectiveComparator<Solution<?>>(2, ObjectiveComparator.Ordering.DESCENDING);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -119,8 +119,8 @@ public class ObjectiveComparatorTest {
 
     comparator = new ObjectiveComparator<Solution<?>>(5, ObjectiveComparator.Ordering.DESCENDING);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
-    DoubleProblem problem2 = new DummyDoubleProblem(2, 6, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
+    DoubleProblem problem2 = new FakeDoubleProblem(2, 6, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem2.createSolution();
@@ -136,7 +136,7 @@ public class ObjectiveComparatorTest {
 
     comparator = new ObjectiveComparator<Solution<?>>(5, ObjectiveComparator.Ordering.DESCENDING);
 
-    DoubleProblem problem = new DummyDoubleProblem(2, 1, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 1, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();

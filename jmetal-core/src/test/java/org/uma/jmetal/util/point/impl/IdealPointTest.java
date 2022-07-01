@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.point.Point;
 
@@ -37,7 +37,7 @@ public class IdealPointTest {
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
     DoubleSolution solution = problem.createSolution() ;
     solution.objectives()[0] = 1.0 ;
     solution.objectives()[1] = 2.0 ;
@@ -55,7 +55,7 @@ public class IdealPointTest {
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 0.0 ;
     solution1.objectives()[1] = 1.0 ;
@@ -77,7 +77,7 @@ public class IdealPointTest {
 
     referencePoint = new IdealPoint(numberOfObjectives) ;
 
-    DoubleProblem problem = new DummyDoubleProblem(3, 3, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 3, 0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     solution1.objectives()[0] = 3.0 ;
     solution1.objectives()[1] = 1.0 ;

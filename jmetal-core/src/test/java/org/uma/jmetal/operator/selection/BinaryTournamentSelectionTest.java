@@ -15,7 +15,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
@@ -45,7 +45,7 @@ public class BinaryTournamentSelectionTest {
   @Test
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
     @SuppressWarnings("unchecked")
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     var solution1 = problem.createSolution();
     var solution2 = problem.createSolution();

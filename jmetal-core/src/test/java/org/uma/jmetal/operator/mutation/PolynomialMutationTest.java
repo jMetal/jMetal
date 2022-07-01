@@ -7,10 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,18 +15,13 @@ import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
 import org.uma.jmetal.util.bounds.Bounds;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-import org.uma.jmetal.util.pseudorandom.impl.AuditableRandomGenerator;
 
 /**
  * Note: this class does check that the polynomial mutation operator does not return invalid
@@ -52,7 +44,7 @@ public class PolynomialMutationTest {
 
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
-    DoubleProblem problem = new DummyDoubleProblem(4, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(4, 2, 0) ;
     PolynomialMutation mutation = new PolynomialMutation(1.0/problem.getNumberOfVariables(), 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
@@ -119,7 +111,7 @@ public class PolynomialMutationTest {
     double distributionIndex = 20.0 ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new DummyDoubleProblem(1, 1, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 1, 0) ;
     DoubleSolution solution = problem.createSolution() ;
     DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
 
@@ -138,7 +130,7 @@ public class PolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new DummyDoubleProblem(1,1,0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
     DoubleSolution oldSolution = (DoubleSolution)solution.copy() ;
 
@@ -160,7 +152,7 @@ public class PolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new DummyDoubleProblem(1,1,0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
@@ -183,7 +175,7 @@ public class PolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
-    DoubleProblem problem = new DummyDoubleProblem(1,1,0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1,1,0) ;
     DoubleSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
@@ -208,7 +200,7 @@ public class PolynomialMutationTest {
 
     PolynomialMutation mutation = new PolynomialMutation(mutationProbability, distributionIndex) ;
 
-    DummyDoubleProblem problem = new DummyDoubleProblem(1, 1, 0) ;
+    FakeDoubleProblem problem = new FakeDoubleProblem(1, 1, 0) ;
     ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Double[]{1.0}));
     ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Double[]{1.0}));
 

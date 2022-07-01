@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
@@ -62,7 +62,7 @@ public class ArrayPointTest {
 
   @Test
   public void shouldConstructFromASolutionReturnTheCorrectPoint() {
-    DoubleProblem problem = new DummyDoubleProblem(3, 3, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 3, 0) ;
     DoubleSolution solution = problem.createSolution() ;
     solution.objectives()[0] = 0.2 ;
     solution.objectives()[1] = 234.23 ;

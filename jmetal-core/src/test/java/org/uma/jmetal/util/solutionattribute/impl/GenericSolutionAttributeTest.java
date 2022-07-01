@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 /** @author Antonio J. Nebro <antonio@lcc.uma.es> */
@@ -48,7 +48,7 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldGetAttributeReturnNullIfTheSolutionHasNoAttribute() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     GenericSolutionAttribute<DoubleSolution, ?> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
@@ -58,7 +58,7 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldGetAttributeReturnTheAttributeValue() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     GenericSolutionAttribute<DoubleSolution, Double> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
@@ -71,7 +71,7 @@ public class GenericSolutionAttributeTest {
 
   @Test
   public void shouldSetAttributeAssignTheAttributeValueToTheSolution() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     GenericSolutionAttribute<DoubleSolution, Double> genericSolutionAttribute;
     genericSolutionAttribute = new GenericSolutionAttribute<>();
@@ -86,14 +86,14 @@ public class GenericSolutionAttributeTest {
   @Test
   public void shouldGetAttributesReturnAnNoAttributesWhenInitiateAnPointSolution() {
 
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     assertTrue(solution.attributes().isEmpty());
   }
 
   @Test
   public void shouldReturnTheCorrectAttributesWhenGetAllAttributes() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
 
     solution.attributes().put("fake-atribute-1", 1);
     solution.attributes().put("fake-atribute-2", 2);

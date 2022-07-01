@@ -20,7 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -400,7 +400,7 @@ public class SolutionListUtilsTest {
         Arrays.asList(
             mock(DoubleSolution.class), mock(DoubleSolution.class), mock(DoubleSolution.class));
 
-    Problem<DoubleSolution> problem = new DummyDoubleProblem();
+    Problem<DoubleSolution> problem = new FakeDoubleProblem();
 
     int maxListSize = 2;
     SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
@@ -415,7 +415,7 @@ public class SolutionListUtilsTest {
     solutions.add(mock(DoubleSolution.class));
     solutions.add(mock(DoubleSolution.class));
 
-    Problem<DoubleSolution> problem = new DummyDoubleProblem();
+    Problem<DoubleSolution> problem = new FakeDoubleProblem();
 
     int maxListSize = 10;
     SolutionListUtils.fillPopulationWithNewSolutions(solutions, problem, maxListSize);
@@ -426,7 +426,7 @@ public class SolutionListUtilsTest {
   @Test
   public void shouldNormalizeReturnsCorrectNormalizedNumber() {
 
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
 
@@ -452,7 +452,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnOneIfAllTheSolutionsInAListAreFeasible() {
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -463,7 +463,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnZeroIfAllTheSolutionsInAListAreNotFeasible() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2,2,1);
+    FakeDoubleProblem problem = new FakeDoubleProblem(2,2,1);
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -478,7 +478,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldGetFeasibilityRatioReturnTheRightRatioOfFeasibleSolutions() {
-    DummyDoubleProblem problem = new DummyDoubleProblem(2,2,1);
+    FakeDoubleProblem problem = new FakeDoubleProblem(2,2,1);
     DoubleSolution s1 = problem.createSolution();
     DoubleSolution s2 = problem.createSolution();
     DoubleSolution s3 = problem.createSolution();
@@ -492,7 +492,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldNormalizeSolutionListWorkProperly() {
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     s1.objectives()[0] = 0.0;
     s1.objectives()[1] = 2.0;
@@ -520,7 +520,7 @@ public class SolutionListUtilsTest {
 
   @Test
   public void shouldDistanceBasedSubsetSelectionWorkProperly() {
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     DoubleSolution s1 = problem.createSolution();
     s1.objectives()[0] = 0.0;
     s1.objectives()[1] = 3.0;

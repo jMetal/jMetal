@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.uma.jmetal.operator.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
@@ -57,7 +57,7 @@ public class NaryTournamentSelectionTest {
 
   @Test
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
     List<DoubleSolution> population = new ArrayList<>(POPULATION_SIZE) ;
     for (int i = 0 ; i < POPULATION_SIZE; i++) {

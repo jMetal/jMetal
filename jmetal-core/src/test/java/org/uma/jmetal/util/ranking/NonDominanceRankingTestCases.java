@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ranking.impl.ExperimentalFastNonDominanceRanking;
@@ -37,7 +37,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwoNonDominatedSolutionsReturnOneSubfront() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwoDominatedSolutionsReturnTwoSubfronts() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -99,7 +99,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithThreeDominatedSolutionsReturnThreeSubfronts() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithFiveSolutionsWorkProperly() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     List<DoubleSolution> population = new ArrayList<>();
 
@@ -191,7 +191,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
          1         4
          0 1 2 3 4 5
     */
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
     DoubleSolution solution3 = problem.createSolution();
@@ -233,7 +233,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
          List: 1,2,3,4,5
          Expected result: two ranks (rank 0: 1, 2, 5, 4; rank 1: 3)
     */
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();
@@ -271,7 +271,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingWorkOnTheExampleInTheMNDSPaper() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
         new double[][] {
@@ -311,7 +311,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTenSolutionsWorkProperly() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
             new double[][] {
@@ -349,7 +349,7 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
 
   @Test
   public void shouldRankingOfAPopulationWithTwentySolutionsWorkProperly() {
-    DoubleProblem problem = new DummyDoubleProblem(2, 3, 0);
+    DoubleProblem problem = new FakeDoubleProblem(2, 3, 0);
 
     double[][] objectiveValues =
         new double[][] {

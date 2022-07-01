@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 
@@ -25,7 +25,7 @@ public class KnnDensityEstimatorTest {
          1         4
          0 1 2 3 4 5
     */
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
     KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
     DoubleSolution solution1 = problem.createSolution();
@@ -73,7 +73,7 @@ public class KnnDensityEstimatorTest {
          Expected result: 4, 1, 2, 5, 3
     */
 
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
     KnnDensityEstimator<DoubleSolution> densityEstimator = new KnnDensityEstimator<>(1);
     DoubleSolution solution1 = problem.createSolution();

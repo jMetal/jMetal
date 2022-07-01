@@ -17,7 +17,7 @@ import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.crossover.impl.BLXAlphaCrossover;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.solution.util.repairsolution.impl.RepairDoubleSolutionWithBoundValue;
@@ -90,7 +90,7 @@ public class BLXAlphaCrossoverTest {
 
   @Test (expected = InvalidConditionException.class)
   public void shouldExecuteWithInvalidSolutionListSizeThrowAnException() {
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(0.1, 0.1) ;
 
@@ -104,7 +104,7 @@ public class BLXAlphaCrossoverTest {
     double alpha = 0.25 ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
     List<DoubleSolution> newSolutions = crossover.execute(solutions) ;
@@ -122,7 +122,7 @@ public class BLXAlphaCrossoverTest {
     double alpha = 0.3 ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(), problem.createSolution()) ;
 
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
@@ -145,7 +145,7 @@ public class BLXAlphaCrossoverTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.6) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
 
@@ -176,7 +176,7 @@ public class BLXAlphaCrossoverTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.3) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
-    DoubleProblem problem = new DummyDoubleProblem(1, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(1, 2, 0) ;
     List<DoubleSolution> solutions = Arrays.asList(problem.createSolution(),
         problem.createSolution()) ;
     solutions.get(0).variables().set(0, 1.0);
@@ -201,7 +201,7 @@ public class BLXAlphaCrossoverTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.2, 0.2, 0.8, 0.3, 0.2) ;
 
     BLXAlphaCrossover crossover = new BLXAlphaCrossover(crossoverProbability, alpha) ;
-    DoubleProblem problem = new DummyDoubleProblem(2, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     solution1.variables().set(0, 1.0);

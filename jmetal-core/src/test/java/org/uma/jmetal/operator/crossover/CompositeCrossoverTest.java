@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.CompositeCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.binarysolution.impl.DefaultBinarySolution;
 import org.uma.jmetal.solution.compositesolution.CompositeSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
@@ -57,7 +57,7 @@ public class CompositeCrossoverTest {
   public void shouldExecuteWorkProperlyWithASingleCrossoverOperator() {
     CompositeCrossover operator =
         new CompositeCrossover(List.of(new SBXCrossover(1.0, 20.0)));
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     CompositeSolution solution1 = new CompositeSolution(List.of(problem.createSolution()));
     CompositeSolution solution2 = new CompositeSolution(List.of(problem.createSolution()));
 
@@ -75,7 +75,7 @@ public class CompositeCrossoverTest {
         new CompositeCrossover(
             Arrays.asList(new SBXCrossover(1.0, 20.0), new SinglePointCrossover(1.0)));
 
-    DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
+    FakeDoubleProblem doubleProblem = new FakeDoubleProblem(2, 2, 0);
     CompositeSolution solution1 =
         new CompositeSolution(
             Arrays.asList(
@@ -101,7 +101,7 @@ public class CompositeCrossoverTest {
             new CompositeCrossover(
                     Arrays.asList(new SBXCrossover(1.0, 20.0), new SinglePointCrossover(1.0)));
 
-    DummyDoubleProblem doubleProblem = new DummyDoubleProblem(2, 2, 0);
+    FakeDoubleProblem doubleProblem = new FakeDoubleProblem(2, 2, 0);
     CompositeSolution solution1 =
             new CompositeSolution(
                     Arrays.asList(

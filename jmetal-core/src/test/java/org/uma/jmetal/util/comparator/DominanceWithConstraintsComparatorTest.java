@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.constraintcomparator.ConstraintComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -20,8 +20,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareTwoFeasibleSolutionsIgnoreTheConstraints() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
     solution1.constraints()[0] = 0 ;
@@ -36,8 +36,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareTwoSolutionsWithTheSameConstraintValuesIgnoreTheConstraints() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 5.0;
     solution1.constraints()[0] = -2 ;
@@ -56,8 +56,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareReturnsMinusOneIfTheFirstSolutionHasABetterConstraintViolationValue() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 1.0;
     solution1.objectives()[1] = 1.0;
     solution1.constraints()[0] = -1 ;
@@ -76,8 +76,8 @@ class DominanceWithConstraintsComparatorTest {
 
   @Test
   public void compareReturnsOneIfTheSecondSolutionHasABetterConstraintViolationValue() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 1).createSolution();
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 1).createSolution();
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 1).createSolution();
     solution1.objectives()[0] = 0.0;
     solution1.objectives()[1] = 0.0;
     solution1.constraints()[0] = -2 ;

@@ -8,7 +8,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 class CRE51Test {
   @Test
-  public void shouldConstructorCreateAProblemWithTheRightProperties() {
+  void shouldConstructorCreateAProblemWithTheRightProperties() {
     DoubleProblem problem = new CRE51();
 
     assertEquals(3, problem.getNumberOfVariables());
@@ -18,7 +18,7 @@ class CRE51Test {
   }
 
   @Test
-  public void shouldEvaluateWorkProperly() {
+  void shouldEvaluateWorkProperly() {
     DoubleProblem problem = new CRE51();
     DoubleSolution solution = problem.createSolution();
     problem.evaluate(solution);

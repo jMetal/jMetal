@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
@@ -22,7 +22,7 @@ class DefaultLocalBestInitializationTest {
   @Test
   public void shouldInitializeReturnAnArrayOfLocalBestParticlesWithTheRightSize() {
     List<DoubleSolution> swarm = new ArrayList<>();
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());
@@ -37,7 +37,7 @@ class DefaultLocalBestInitializationTest {
   @Test
   public void shouldInitializeReturnAnArrayOfLocalBestParticlesEqualToTheOriginalSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>();
-    DoubleProblem problem = new DummyDoubleProblem(3, 2, 0) ;
+    DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
     swarm.add(problem.createSolution());
     swarm.add(problem.createSolution());

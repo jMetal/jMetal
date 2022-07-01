@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
@@ -16,7 +16,7 @@ public class MuPlusLambdaReplacementTest {
   public void shouldReplaceReturnAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs2() {
     int mu = 10;
     int lambda = 2;
-    DummyDoubleProblem problem = new DummyDoubleProblem();
+    FakeDoubleProblem problem = new FakeDoubleProblem();
     List<DoubleSolution> population = new ArrayList<>();
     for (int i = 0; i < mu; i++) {
       population.add(problem.createSolution());

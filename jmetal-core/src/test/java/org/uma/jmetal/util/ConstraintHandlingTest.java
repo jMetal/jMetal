@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
@@ -19,14 +19,14 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldIsFeasibleReturnTrueIfTheSolutionHasNoConstraints() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 0).createSolution() ;
 
     assertTrue(ConstraintHandling.isFeasible(solution));
   }
 
   @Test
   public void shouldIsFeasibleReturnTrueIfTheSolutionHasConstraintsAndItIsFeasible() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = 0.0 ;
 
     assertTrue(ConstraintHandling.isFeasible(solution));
@@ -34,7 +34,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldIsFeasibleReturnFalseIfTheSolutionIsNotFeasible() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = -1.0 ;
 
     assertFalse(ConstraintHandling.isFeasible(solution));
@@ -42,14 +42,14 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldNumberOfViolatedConstraintsReturnZeroIfTheSolutionHasNoConstraints() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 0).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 0).createSolution() ;
 
     assertEquals(0, ConstraintHandling.numberOfViolatedConstraints(solution));
   }
 
   @Test
   public void shouldNumberOfViolatedConstraintsReturnZeroIfTheSolutionHasNotViolatedConstraints() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = 0.0 ;
 
     assertEquals(0, ConstraintHandling.numberOfViolatedConstraints(solution));
@@ -57,7 +57,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldNumberOfViolatedConstraintsReturnTheRightNumberOfViolatedConstraints() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution.constraints()[0] = 0.0 ;
     solution.constraints()[1] = -1.0 ;
 
@@ -66,7 +66,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldOverallConstraintViolationDegreeReturnZeroIfTheSolutionHasNotViolatedConstraints() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 1).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 1).createSolution() ;
     solution.constraints()[0] = 0.0 ;
 
     assertEquals(0.0, ConstraintHandling.overallConstraintViolationDegree(solution), EPSILON);
@@ -74,7 +74,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldOverallConstraintViolationDegreeReturnTheRightViolationDegree() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution.constraints()[0] = -1.0 ;
     solution.constraints()[1] = -2.0 ;
 
@@ -88,11 +88,11 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldFeasibilityRatioReturnZeroIfAllTheSolutionsAreUnFeasible() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution1.constraints()[0] = -1.0 ;
     solution1.constraints()[1] = -2.0 ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution2.constraints()[0] = 0.0 ;
     solution2.constraints()[1] = -1.0 ;
 
@@ -103,11 +103,11 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldFeasibilityRatioReturnOneIfAllTheSolutionsAreFeasible() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution1.constraints()[0] = 0.0 ;
     solution1.constraints()[1] = 0.0 ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution2.constraints()[0] = 0.0 ;
     solution2.constraints()[1] = 0.0 ;
 
@@ -118,15 +118,15 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldFeasibilityRatioReturnTheRightPercentageOfFeasibleSolutions() {
-    DoubleSolution solution1 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution1 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution1.constraints()[0] = 0.0 ;
     solution1.constraints()[1] = -1.0 ;
 
-    DoubleSolution solution2 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution2 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution2.constraints()[0] = 0.0 ;
     solution2.constraints()[1] = 0.0 ;
 
-    DoubleSolution solution3 = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution3 = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     solution3.constraints()[0] = -2.0 ;
     solution3.constraints()[1] = 0.0 ;
 
@@ -137,7 +137,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldOverallConstraintViolationDegreeWorkProperly() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     double overallConstraintViolationDegree = -4.0 ;
     ConstraintHandling.overallConstraintViolationDegree(solution, overallConstraintViolationDegree);
 
@@ -146,7 +146,7 @@ public class ConstraintHandlingTest {
 
   @Test
   public void shouldOverallNumberOfViolatedConstraintsProperly() {
-    DoubleSolution solution = new DummyDoubleProblem(2, 2, 2).createSolution() ;
+    DoubleSolution solution = new FakeDoubleProblem(2, 2, 2).createSolution() ;
     int numberOfViolatedConstraints = 2 ;
     ConstraintHandling.numberOfViolatedConstraints(solution, numberOfViolatedConstraints);
 

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ranking.impl.StrengthRanking;
@@ -26,7 +26,7 @@ public class StrengthRankingTest {
 
 
      */
-    DoubleProblem problem = new DummyDoubleProblem(2,2,0) ;
+    DoubleProblem problem = new FakeDoubleProblem(2,2,0) ;
     DoubleSolution solution1 = problem.createSolution() ;
     DoubleSolution solution2 = problem.createSolution() ;
     DoubleSolution solution3 = problem.createSolution() ;
@@ -69,7 +69,7 @@ public class StrengthRankingTest {
          List: 1,2,3,4,5
          Expected result: two ranks (rank 0: 1, 2, 5, 4; rank 1: 3)
     */
-    DoubleProblem problem = new DummyDoubleProblem(2,2,0);
+    DoubleProblem problem = new FakeDoubleProblem(2,2,0);
 
     DoubleSolution solution1 = problem.createSolution();
     DoubleSolution solution2 = problem.createSolution();

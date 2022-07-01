@@ -8,12 +8,10 @@ import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.operator.crossover.impl.NullCrossover;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.problem.doubleproblem.impl.DummyDoubleProblem;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  * Created by ajnebro on 10/6/15.
@@ -32,7 +30,7 @@ public class NullCrossoverTest {
 
   @Test
   public void shouldExecuteReturnTwoDifferentObjectsWhichAreEquals() {
-    Problem<DoubleSolution> problem = new DummyDoubleProblem() ;
+    Problem<DoubleSolution> problem = new FakeDoubleProblem() ;
     List<DoubleSolution> parents = new ArrayList<>(2) ;
     parents.add(problem.createSolution()) ;
     parents.add(problem.createSolution()) ;
