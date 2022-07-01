@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.uma.jmetal.operator.mutation.impl.IntegerPolynomialMutation;
+import org.uma.jmetal.problem.doubleproblem.impl.FakeIntegerProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
@@ -42,7 +43,7 @@ public class IntegerPolynomialMutationTest {
 
   @Test
   public void shouldConstructorWithProblemAndDistributionIndexParametersAssignTheCorrectValues() {
-    IntegerProblem problem = new MockIntegerProblem(4) ;
+    IntegerProblem problem = new FakeIntegerProblem(4, 2, 0) ;
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(problem, 10.0) ;
     assertEquals(1.0/problem.getNumberOfVariables(), (Double) ReflectionTestUtils
         .getField(mutation, "mutationProbability"), EPSILON) ;
@@ -103,7 +104,7 @@ public class IntegerPolynomialMutationTest {
     double distributionIndex = 20.0 ;
 
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
-    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerProblem problem = new FakeIntegerProblem(1,2,0) ;
     IntegerSolution solution = problem.createSolution() ;
     IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
 
@@ -122,7 +123,7 @@ public class IntegerPolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(1.0) ;
 
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
-    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
     IntegerSolution solution = problem.createSolution() ;
     IntegerSolution oldSolution = (IntegerSolution)solution.copy() ;
 
@@ -145,7 +146,7 @@ public class IntegerPolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.6) ;
 
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
-    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerProblem problem = new FakeIntegerProblem(1,2,0) ;
     IntegerSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
@@ -169,7 +170,7 @@ public class IntegerPolynomialMutationTest {
     Mockito.when(randomGenerator.getRandomValue()).thenReturn(0.005, 0.1) ;
 
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
-    IntegerProblem problem = new MockIntegerProblem(1) ;
+    IntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
     IntegerSolution solution = problem.createSolution() ;
 
     ReflectionTestUtils.setField(mutation, "randomGenerator", randomGenerator);
@@ -194,7 +195,7 @@ public class IntegerPolynomialMutationTest {
 
     IntegerPolynomialMutation mutation = new IntegerPolynomialMutation(mutationProbability, distributionIndex) ;
 
-    MockIntegerProblem problem = new MockIntegerProblem(1) ;
+    FakeIntegerProblem problem = new FakeIntegerProblem(1, 2, 0) ;
     ReflectionTestUtils.setField(problem, "lowerLimit", Arrays.asList(new Integer[]{1}));
     ReflectionTestUtils.setField(problem, "upperLimit", Arrays.asList(new Integer[]{1}));
 
@@ -209,69 +210,4 @@ public class IntegerPolynomialMutationTest {
     //int expectedValue = 1 ;
     //assertTrue(expectedValue == solution.variables().get(0)); ;
   }
-
-  /**
-   * Mock class representing an Integer problem
-   */
-  @SuppressWarnings("serial")
-  private class MockIntegerProblem extends AbstractIntegerProblem {
-
-    /** Constructor */
-    public MockIntegerProblem(Integer numberOfVariables) {
-      setNumberOfVariables(numberOfVariables);
-      setNumberOfObjectives(2);
-
-      List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-      List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
-
-      for (int i = 0; i < getNumberOfVariables(); i++) {
-        lowerLimit.add(-4);
-        upperLimit.add(4);
-      }
-
-      setVariableBounds(lowerLimit, upperLimit);
-    }
-
-    /** Evaluate() method */
-    @Override
-    public IntegerSolution evaluate(IntegerSolution solution) {
-      solution.objectives()[0] = 4;
-      solution.objectives()[1] = 2;
-
-      return solution ;
-    }
-  }
-
-  @Ignore
-	@Test
-	public void shouldJMetalRandomGeneratorNotBeUsedWhenCustomRandomGeneratorProvided() {
-		// Configuration
-		double crossoverProbability = 0.1;
-		int alpha = 20;
-		RepairDoubleSolutionWithBoundValue solutionRepair = new RepairDoubleSolutionWithBoundValue();
-
-    List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 2), Bounds.create(0, 2)) ;
-
-    IntegerSolution solution = new DefaultIntegerSolution(2, bounds);
-
-		// Check configuration leads to use default generator by default
-		final int[] defaultUses = { 0 };
-		JMetalRandom defaultGenerator = JMetalRandom.getInstance();
-		AuditableRandomGenerator auditor = new AuditableRandomGenerator(defaultGenerator.getRandomGenerator());
-		defaultGenerator.setRandomGenerator(auditor);
-		auditor.addListener((a) -> defaultUses[0]++);
-
-		new IntegerPolynomialMutation(crossoverProbability, alpha, solutionRepair).execute(solution);
-		assertTrue("No use of the default generator", defaultUses[0] > 0);
-
-		// Test same configuration uses custom generator instead
-		defaultUses[0] = 0;
-		final int[] customUses = { 0 };
-		new IntegerPolynomialMutation(crossoverProbability, alpha, solutionRepair, () -> {
-			customUses[0]++;
-			return new Random().nextDouble();
-		}).execute(solution);
-		assertTrue("Default random generator used", defaultUses[0] == 0);
-		assertTrue("No use of the custom generator", customUses[0] > 0);
-	}
 }

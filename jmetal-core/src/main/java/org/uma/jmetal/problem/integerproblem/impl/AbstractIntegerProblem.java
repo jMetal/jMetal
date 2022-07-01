@@ -15,10 +15,37 @@ import org.uma.jmetal.util.errorchecking.Check;
  *
  * @author Antonio J. Nebro (ajnebro@uma.es)
  */
-public abstract class AbstractIntegerProblem extends AbstractGenericProblem<IntegerSolution>
-    implements IntegerProblem {
-
+public abstract class AbstractIntegerProblem implements IntegerProblem{
   protected List<Bounds<Integer>> bounds;
+  protected int numberOfObjectives ;
+  protected int numberOfConstraints;
+  protected String name ;
+  @Override
+  public int getNumberOfVariables() {
+    return bounds.size() ;
+  }
+  @Override
+  public int getNumberOfObjectives() {
+    return numberOfObjectives ;
+  }
+
+  public void setNumberOfObjectives(int numberOfObjectives) {
+    this.numberOfObjectives = numberOfObjectives ;
+  }
+  public void setNumberOfConstraints(int numberOfConstraints) {
+    this.numberOfConstraints = numberOfConstraints ;
+  }
+  @Override
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+  @Override
+  public int getNumberOfConstraints() {
+    return numberOfConstraints ;
+  }
 
   public void setVariableBounds(List<Integer> lowerBounds, List<Integer> upperBounds) {
     Check.notNull(lowerBounds);
