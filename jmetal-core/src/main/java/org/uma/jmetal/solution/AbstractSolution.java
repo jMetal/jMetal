@@ -14,9 +14,9 @@ import org.uma.jmetal.util.errorchecking.Check;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractSolution<T> implements Solution<T> {
-  private double[] objectives;
-  private List<T> variables;
-  private double[] constraints;
+  private final double[] objectives;
+  private final List<T> variables;
+  private final double[] constraints;
   protected Map<Object, Object> attributes;
 
   @Override
