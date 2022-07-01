@@ -8,7 +8,7 @@ import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
- * This class implements the a density estimator based on the adaptive grid scheme used in the PAES algorithm.
+ * This class implements the density estimator based on the adaptive grid scheme used in the PAES algorithm.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */

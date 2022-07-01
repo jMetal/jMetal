@@ -43,5 +43,4 @@ public class CrowdingDistanceArchiveWithReferencePoint<S extends Solution<?>> ex
   public void computeDensityEstimator() {
     densityEstimator.compute(getSolutionList());
   }
-
 }

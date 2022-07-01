@@ -22,7 +22,6 @@ public class CrowdingDistanceDensityEstimator<S extends Solution<?>> implements 
    *
    * @param solutionList The <code>SolutionSet</code>.
    */
-
   @Override
   public void compute(List<S> solutionList) {
     int size = solutionList.size();

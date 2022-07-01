@@ -48,7 +48,7 @@ public class NonDominatedSolutionListArchive<S extends Solution<?>> implements A
   @Override
   public boolean add(S solution) {
     boolean solutionInserted = false ;
-    if (solutionList.size() == 0) {
+    if (solutionList.isEmpty()) {
       solutionList.add(solution) ;
       solutionInserted = true ;
     } else {

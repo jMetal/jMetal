@@ -23,7 +23,6 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   private int k;
   private double[][] distanceMatrix;
   private boolean normalize ;
-
   public KnnDensityEstimator(int k) {
     this(k, false) ;
   }
