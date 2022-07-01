@@ -64,8 +64,8 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder("Variables: ");
-    for (T var : variables) {
-      result.append(var).append(" ");
+    for (T variable : variables) {
+      result.append(variable).append(" ");
     }
     result.append("Objectives: ");
     for (Double obj : objectives) {
@@ -82,9 +82,14 @@ public abstract class AbstractSolution<T> implements Solution<T> {
   }
 
   @Override
-  public boolean equals(Object o) {
-    Check.notNull(o) ;
-    Solution<T> solution = (Solution<T>) o;
+  public boolean equals(Object object) {
+    if (object == null)
+      return false;
+
+    if (this.getClass() != object.getClass())
+      return false;
+
+    Solution<T> solution = (Solution<T>) object;
 
     return this.variables().equals(solution.variables());
   }

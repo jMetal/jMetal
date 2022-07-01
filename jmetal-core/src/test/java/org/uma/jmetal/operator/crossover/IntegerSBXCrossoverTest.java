@@ -24,8 +24,8 @@ public class IntegerSBXCrossoverTest {
 
 		List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
-		parents.add(new DefaultIntegerSolution(2, bounds));
-		parents.add(new DefaultIntegerSolution(2, bounds));
+		parents.add(new DefaultIntegerSolution(bounds, 2, 0));
+		parents.add(new DefaultIntegerSolution(bounds, 2, 0));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

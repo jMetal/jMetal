@@ -91,7 +91,7 @@ public class ComposableDoubleProblem implements DoubleProblem {
 
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
+    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
   }
 
   @Override

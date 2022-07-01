@@ -1,4 +1,4 @@
-package org.uma.jmetal.problem.doubleproblem;
+package org.uma.jmetal.problem.integerproblem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

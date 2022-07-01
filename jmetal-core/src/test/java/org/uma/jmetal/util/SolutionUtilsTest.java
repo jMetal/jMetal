@@ -184,7 +184,7 @@ public class SolutionUtilsTest {
   @Test
   public void shouldNormalizeReturnsCorrectNormalizedNumber() {
 
-    DoubleSolution solution = new DefaultDoubleSolution(2, 0, List.of(Bounds.create(0.0, 1.0)));
+    DoubleSolution solution = new DefaultDoubleSolution(List.of(Bounds.create(0.0, 1.0)), 2, 0);
 
     solution.objectives()[0] = 10;
     solution.objectives()[1] = 20;

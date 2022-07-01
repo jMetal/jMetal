@@ -245,8 +245,8 @@ public class BLXAlphaCrossoverTest {
     List<Bounds<Double>> bounds = List.of(Bounds.create(0.0, 1.0)) ;
 
 		List<DoubleSolution> solutions = new LinkedList<>();
-		solutions.add(new DefaultDoubleSolution(2, bounds));
-		solutions.add(new DefaultDoubleSolution(2, bounds));
+		solutions.add(new DefaultDoubleSolution(bounds, 2, 0));
+		solutions.add(new DefaultDoubleSolution(bounds, 2, 0));
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

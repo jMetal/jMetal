@@ -16,11 +16,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
@@ -54,11 +54,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3,0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
@@ -85,11 +85,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
         for (int i = 0; i < 2; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(2, new ArrayList<>());
+            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(2, new ArrayList<>());
+        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
         s.objectives()[0] = 1.d / Math.sqrt(2);
         s.objectives()[1] = 1.d / Math.sqrt(2);
         front.add(s);
@@ -114,11 +114,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
             s.objectives()[i] = 1;
             front.add(s);
         }
-        DefaultDoubleSolution s = new DefaultDoubleSolution(3, new ArrayList<>());
+        DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 3, 0);
         s.objectives()[0] = 1d / 3d;
         s.objectives()[1] = 1d / 3d;
         s.objectives()[2] = 1d / 3d;
@@ -142,7 +142,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         List<DefaultDoubleSolution> front = new ArrayList<>();
 
         for (int i = 0; i <= 6; i++) {
-            DefaultDoubleSolution s = new DefaultDoubleSolution(2, new ArrayList<>());
+            DefaultDoubleSolution s = new DefaultDoubleSolution(new ArrayList<>(), 2, 0);
             s.objectives()[0] = 1.0 - i / 6.0;
             s.objectives()[1] = i / 6.0;
             front.add(s);

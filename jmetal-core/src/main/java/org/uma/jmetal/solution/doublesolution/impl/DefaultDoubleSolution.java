@@ -20,10 +20,9 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
   /**
    * Constructor
    */
-  public DefaultDoubleSolution(
+  public DefaultDoubleSolution(List<Bounds<Double>> boundsList,
           int numberOfObjectives,
-          int numberOfConstraints,
-          List<Bounds<Double>> boundsList) {
+          int numberOfConstraints) {
     super(boundsList.size(), numberOfObjectives, numberOfConstraints);
 
     this.bounds = boundsList;
@@ -31,15 +30,6 @@ public class DefaultDoubleSolution extends AbstractSolution<Double> implements D
     for (int i = 0; i < boundsList.size(); i++) {
       variables().set(i, JMetalRandom.getInstance().nextDouble(bounds.get(i).getLowerBound(), bounds.get(i).getUpperBound()));
     }
-  }
-
-  /**
-   * Constructor
-   */
-  public DefaultDoubleSolution(
-          int numberOfObjectives,
-          List<Bounds<Double>> boundsList) {
-    this(numberOfObjectives, 0, boundsList);
   }
 
   /**

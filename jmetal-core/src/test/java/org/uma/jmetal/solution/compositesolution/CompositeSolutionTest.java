@@ -19,8 +19,8 @@ public class CompositeSolutionTest {
   @Test
   public void shouldConstructorCreateAValidNotNullCompositeSolutionComposedOfASolution() {
     DoubleSolution doubleSolution =
-            new DefaultDoubleSolution(
-                    3, 0, Arrays.asList(Bounds.create(3.0, 5.0)));
+            new DefaultDoubleSolution(Arrays.asList(Bounds.create(3.0, 5.0)),
+                    3, 0);
 
     assertNotNull(new CompositeSolution(Arrays.asList(doubleSolution))) ;
   }
@@ -28,11 +28,11 @@ public class CompositeSolutionTest {
   @Test(expected = Exception.class)
   public void shouldConstructorRaiseAnExceptionIfTheNumberOfObjectivesIsIncoherent() {
     DoubleSolution doubleSolution =
-            new DefaultDoubleSolution(
-                    3, 0, Arrays.asList(Bounds.create(3.0, 5.0)));
+            new DefaultDoubleSolution( Arrays.asList(Bounds.create(3.0, 5.0)),
+                    3, 0);
     IntegerSolution integerSolution =
-            new DefaultIntegerSolution(
-                    2, 0, Arrays.asList(Bounds.create(2, 10)));
+            new DefaultIntegerSolution(Arrays.asList(Bounds.create(2, 10)),
+                    2, 0);
 
     new CompositeSolution(Arrays.asList(doubleSolution, integerSolution)) ;
   }
@@ -43,11 +43,11 @@ public class CompositeSolutionTest {
     int numberOfObjectives = 2;
     int numberOfConstraints = 1;
     DoubleSolution doubleSolution =
-        new DefaultDoubleSolution(
-            numberOfObjectives, numberOfConstraints, List.of(Bounds.create(3.0, 5.0)));
+        new DefaultDoubleSolution(List.of(Bounds.create(3.0, 5.0)),
+            numberOfObjectives, numberOfConstraints);
     IntegerSolution integerSolution =
-        new DefaultIntegerSolution(
-            numberOfObjectives, numberOfConstraints, List.of(Bounds.create(2, 10)));
+        new DefaultIntegerSolution(List.of(Bounds.create(2, 10)),
+            numberOfObjectives, numberOfConstraints);
 
     CompositeSolution solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));
@@ -69,12 +69,12 @@ public class CompositeSolutionTest {
     int numberOfConstraints = 1;
     DoubleSolution doubleSolution =
         new DefaultDoubleSolution(
+            Arrays.asList(Bounds.create(3.0, 5.0), Bounds.create(1.0, 3.0)),
             numberOfObjectives,
-            numberOfConstraints,
-            Arrays.asList(Bounds.create(3.0, 5.0), Bounds.create(1.0, 3.0)));
+            numberOfConstraints);
     IntegerSolution integerSolution =
-        new DefaultIntegerSolution(
-            numberOfObjectives, numberOfConstraints, Arrays.asList(Bounds.create(2, 10)));
+        new DefaultIntegerSolution(Arrays.asList(Bounds.create(2, 10)),
+            numberOfObjectives, numberOfConstraints);
 
     CompositeSolution solution =
         new CompositeSolution(Arrays.asList(doubleSolution, integerSolution));

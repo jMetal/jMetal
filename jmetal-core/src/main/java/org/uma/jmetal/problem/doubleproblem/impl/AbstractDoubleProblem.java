@@ -61,7 +61,7 @@ public abstract class AbstractDoubleProblem implements DoubleProblem {
   }
   @Override
   public DoubleSolution createSolution() {
-    return new DefaultDoubleSolution(getNumberOfObjectives(), getNumberOfConstraints(), bounds);
+    return new DefaultDoubleSolution(bounds, getNumberOfObjectives(), getNumberOfConstraints());
   }
   @Override
   public List<Bounds<Double>> getVariableBounds() {

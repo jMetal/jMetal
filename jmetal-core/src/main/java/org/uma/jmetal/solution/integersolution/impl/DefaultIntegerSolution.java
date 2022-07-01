@@ -20,22 +20,13 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   /**
    * Constructor
    */
-  public DefaultIntegerSolution(int numberOfObjectives, int numberOfConstraints, List<Bounds<Integer>> boundsList) {
+  public DefaultIntegerSolution(List<Bounds<Integer>> boundsList, int numberOfObjectives, int numberOfConstraints) {
     super(boundsList.size(), numberOfObjectives, numberOfConstraints);
 
     this.bounds = boundsList;
 
     IntStream.range(0, bounds.size()).forEach(i -> variables().set(
             i, JMetalRandom.getInstance().nextInt(this.bounds.get(i).getLowerBound(), this.bounds.get(i).getUpperBound())));
-  }
-
-  /**
-   * Constructor
-   */
-  public DefaultIntegerSolution(
-          int numberOfObjectives,
-          List<Bounds<Integer>> bounds) {
-    this(numberOfObjectives, 0, bounds);
   }
 
   /**

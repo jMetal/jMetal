@@ -20,7 +20,7 @@ public class SimpleRandomMutationTest {
 		// Configuration
 
 		List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(0.0, 1.0)) ;
-		DoubleSolution solution = new DefaultDoubleSolution(2, bounds) ;
+		DoubleSolution solution = new DefaultDoubleSolution(bounds, 2, 0) ;
 
 		// Check configuration leads to use default generator by default
 		final int[] defaultUses = { 0 };

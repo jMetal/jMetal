@@ -62,8 +62,7 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
 
   @Override
   public IntegerSolution createSolution() {
-    return new DefaultIntegerSolution(getNumberOfObjectives(), getNumberOfConstraints(),
-        getVariableBounds());
+    return new DefaultIntegerSolution(getVariableBounds(), getNumberOfObjectives(), getNumberOfConstraints());
   }
 
   @Override

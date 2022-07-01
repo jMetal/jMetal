@@ -107,7 +107,7 @@ public class ArrayFrontTest {
 
     List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
-        Arrays.asList(new DefaultDoubleSolution(numberOfObjectives, bounds));
+        Arrays.asList(new DefaultDoubleSolution(bounds, numberOfObjectives, 0));
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -122,8 +122,8 @@ public class ArrayFrontTest {
     List<Bounds<Double>> bounds = Arrays.asList(Bounds.create(-1.0, 1.0));
     List<DoubleSolution> list =
         Arrays.asList(
-            new DefaultDoubleSolution(numberOfObjectives, bounds),
-            new DefaultDoubleSolution(numberOfObjectives, bounds));
+            new DefaultDoubleSolution(bounds, numberOfObjectives, 0),
+            new DefaultDoubleSolution(bounds, numberOfObjectives, 0));
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -139,7 +139,7 @@ public class ArrayFrontTest {
 
     List<IntegerSolution> list =
         Arrays.asList(
-            new DefaultIntegerSolution(numberOfObjectives, bounds)) ;
+            new DefaultIntegerSolution(bounds, numberOfObjectives, 0)) ;
     Front front = new ArrayFront(list);
 
     assertNotNull(ReflectionTestUtils.getField(front, "points"));
@@ -166,12 +166,12 @@ public class ArrayFrontTest {
     List<Bounds<Integer>> bounds = Arrays.asList(Bounds.create(0, 1)) ;
 
     IntegerSolution solution1 =
-        new DefaultIntegerSolution(numberOfObjectives, bounds);
+        new DefaultIntegerSolution(bounds, numberOfObjectives, 0);
     solution1.objectives()[0] = 2;
     solution1.objectives()[1] = 235;
     solution1.objectives()[2] =-123;
     IntegerSolution solution2 =
-        new DefaultIntegerSolution(numberOfObjectives, bounds);
+        new DefaultIntegerSolution(bounds, numberOfObjectives, 0);
     solution2.objectives()[0] = -13234;
     solution2.objectives()[1] = 523;
     solution2.objectives()[2] = -123423455;
