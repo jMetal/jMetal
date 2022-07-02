@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
-import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultithreadedEvaluation;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultiThreadedEvaluation;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -24,7 +24,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
  * Class to configure and run the NSGA-II algorithm using the {@link
- * MultithreadedEvaluation} evaluator.
+ * MultiThreadedEvaluation} evaluator.
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
@@ -55,7 +55,7 @@ public class ParallelNSGAIIExample extends AbstractAlgorithmRunner {
         crossover,
         mutation)
         .setTermination(termination)
-        .setEvaluation(new MultithreadedEvaluation<>(8, problem))
+        .setEvaluation(new MultiThreadedEvaluation<>(8, problem))
         .build();
 
     nsgaii.run();
