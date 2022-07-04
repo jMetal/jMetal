@@ -281,7 +281,7 @@ public class AutoMOPSO {
     LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
         new DefaultDominanceComparator());
 
-    var mopso = new ParticleSwarmOptimizationAlgorithm("OMOPSO",
+    return new ParticleSwarmOptimizationAlgorithm("OMOPSO",
         swarmInitialization,
         evaluation,
         termination,
@@ -296,8 +296,6 @@ public class AutoMOPSO {
         localBestUpdate,
         globalBestSelection,
         leaderArchive);
-
-    return mopso;
   }
 
   public static void print(List<Parameter<?>> parameterList) {
