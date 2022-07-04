@@ -1,40 +1,49 @@
 package org.uma.jmetal.util.errorchecking;
 
-import org.junit.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.errorchecking.exception.NegativeValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.errorchecking.exception.ValueOutOfRangeException;
 
-public class CheckerTest {
+class CheckerTest {
 
-  @Test (expected = NullParameterException.class)
-  public void shouldIsNotNullRaiseAnExceptionIfTheObjectIsNull() {
-    Check.notNull(null);
+  @Test
+  void shouldIsNotNullRaiseAnExceptionIfTheObjectIsNull() {
+    assertThatThrownBy(() -> Check.notNull(null)).isInstanceOf(NullParameterException.class);
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
-  public void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsNegative() {
-    Check.probabilityIsValid(-1.0);
+  @Test
+  void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsNegative() {
+    assertThatThrownBy(() -> Check.probabilityIsValid(-1.0)).isInstanceOf(InvalidProbabilityValueException.class);
   }
 
-  @Test (expected = InvalidProbabilityValueException.class)
-  public void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsHigherThanOne() {
-    Check.probabilityIsValid(1.1);
+  @Test
+  void shouldIsValidProbabilityRaiseAnExceptionIfTheValueIsHigherThanOne() {
+    assertThatThrownBy(() -> Check.probabilityIsValid(1.1)).isInstanceOf(InvalidProbabilityValueException.class);
   }
 
-  @Test (expected = ValueOutOfRangeException.class)
-  public void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsLowerThanTheLowerBound() {
-    Check.valueIsInRange(2, 3, 5);
+  @Test
+  void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsLowerThanTheLowerBound() {
+    assertThatThrownBy(() -> Check.valueIsInRange(2, 3, 5)).isInstanceOf(ValueOutOfRangeException.class);
   }
 
-  @Test (expected = ValueOutOfRangeException.class)
-  public void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsHigherThanTheUpperBound() {
-    Check.valueIsInRange(6.2, 3.1, 5.5);
+  @Test
+  void shouldIsValueInRangeRaiseAnExceptionIfTheValueIsHigherThanTheUpperBound() {
+    assertThatThrownBy(() -> Check.valueIsInRange(6.2, 3.1, 5.5)).isInstanceOf(ValueOutOfRangeException.class);
+
   }
 
-  @Test (expected = InvalidConditionException.class)
-  public void shouldThatRaiseAnExceptionIfTheExpressionIsFalse() {
-    Check.that(false, "");
+  @Test
+  void shouldThatRaiseAnExceptionIfTheExpressionIsFalse() {
+    assertThatThrownBy(() -> Check.that(false, "")).isInstanceOf(InvalidConditionException.class);
+  }
+
+  @Test
+  void shouldThatRaiseAnExceptionIfTheValueIsNegative() {
+    assertThatThrownBy(() -> Check.valueIsNotNegative(-1)).isInstanceOf(NegativeValueException.class);
   }
 }

@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.uma.jmetal.util.errorchecking.exception.EmptyCollectionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 import org.uma.jmetal.util.errorchecking.exception.InvalidProbabilityValueException;
+import org.uma.jmetal.util.errorchecking.exception.NegativeValueException;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 import org.uma.jmetal.util.errorchecking.exception.ValueOutOfRangeException;
 
@@ -44,6 +45,12 @@ public class Check {
   public static void that(boolean expression, String message) {
     if (!expression) {
         throw new InvalidConditionException(message) ;
+    }
+  }
+
+  public static void valueIsNotNegative(double value) {
+    if (value < 0.0) {
+      throw new NegativeValueException(value) ;
     }
   }
 }
