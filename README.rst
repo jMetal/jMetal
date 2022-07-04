@@ -32,8 +32,6 @@ The current development version (5.13-SNAPSHOT) is a Maven project structured in
 +---------------------+------------------------------------+
 | jmetal-problem      |  Benchmark problems                |
 +---------------------+------------------------------------+
-| jmetal-example      |  Examples                          |
-+---------------------+------------------------------------+
 | jmetal-lab          |  Experimentation and visualization |
 +---------------------+------------------------------------+
 | jmetal-experimental |  New features in development       |

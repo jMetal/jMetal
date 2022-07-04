@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
-import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

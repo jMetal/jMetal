@@ -54,7 +54,6 @@
         <module>jmetal-core</module>
         <module>jmetal-algorithm</module>
         <module>jmetal-lab</module>
-        <module>jmetal-example</module>
         <module>jmetal-auto</module>
         <module>jmetal-problem</module>
         <module>jmetal-experimental</module>

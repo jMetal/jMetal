@@ -6,7 +6,7 @@ import org.knowm.xchart.BitmapEncoder;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOMeasures;
-import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;

@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.AGEMOEAIIBuilder;
-import org.uma.jmetal.example.AlgorithmRunner;
-import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot2D;
-import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
@@ -76,16 +73,5 @@ public class AGEMOEAIIRunner extends AbstractAlgorithmRunner {
               SolutionListUtils.getMatrixWithObjectiveValues(population),
               VectorUtils.readVectors(referenceParetoFront, ","));
     }
-
-    if (problem.getNumberOfObjectives() == 3) {
-      PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (AGE-MOEA-II)");
-      plot.plot();
-    } else if (problem.getNumberOfObjectives() == 2){
-      PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (AGE-MOEA-II)");
-      plot.plot();
-    }
-
-    //PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix(), problem.getName() + " (AGE-MOEA)") ;
-    //plot.plot();
   }
 }

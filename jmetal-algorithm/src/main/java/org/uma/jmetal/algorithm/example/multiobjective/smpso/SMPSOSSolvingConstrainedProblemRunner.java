@@ -3,9 +3,7 @@ package org.uma.jmetal.algorithm.example.multiobjective.smpso;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.smpso.SMPSOBuilder;
-import org.uma.jmetal.example.AlgorithmRunner;
-import org.uma.jmetal.lab.visualization.plot.PlotFront;
-import org.uma.jmetal.lab.visualization.plot.impl.PlotSmile;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
@@ -82,8 +80,5 @@ public class SMPSOSSolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
     if (!referenceParetoFront.equals("")) {
       printQualityIndicators(population, referenceParetoFront) ;
     }
-
-    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix());
-    plot.plot();
   }
 }

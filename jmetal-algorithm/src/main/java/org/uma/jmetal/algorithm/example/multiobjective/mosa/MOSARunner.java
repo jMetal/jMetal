@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.mosa.MOSA;
 import org.uma.jmetal.algorithm.multiobjective.mosa.cooling.impl.Exponential;
-import org.uma.jmetal.example.AlgorithmRunner;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;

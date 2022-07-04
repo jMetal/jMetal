@@ -2,8 +2,8 @@ package org.uma.jmetal.algorithm.example.multiobjective.mochc;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.mochc.MOCHC45;
-import org.uma.jmetal.example.AlgorithmRunner;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.HUXCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
