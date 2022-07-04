@@ -233,7 +233,6 @@ public class AutoMOPSO {
     Problem<DoubleSolution> problem = getProblem() ;
     int swarmSize = swarmSizeParameter.getValue();
     int maximumNumberOfEvaluations = maximumNumberOfEvaluationsParameter.getValue();
-    String referenceFrontFileName = referenceFrontFilenameParameter.getValue();
 
     var swarmInitialization = new RandomSolutionsCreation<>(problem, swarmSize);
 

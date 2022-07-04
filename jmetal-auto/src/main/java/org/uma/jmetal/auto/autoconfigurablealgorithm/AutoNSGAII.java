@@ -186,7 +186,6 @@ public class AutoNSGAII {
    * @return
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
-
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;

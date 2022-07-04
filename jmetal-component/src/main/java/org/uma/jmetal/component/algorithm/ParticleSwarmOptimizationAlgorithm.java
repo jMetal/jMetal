@@ -25,7 +25,8 @@ import org.uma.jmetal.util.termination.Termination;
 
 @SuppressWarnings("serial")
 public class ParticleSwarmOptimizationAlgorithm
-        implements Algorithm<List<DoubleSolution>>, ObservableEntity {
+    implements Algorithm<List<DoubleSolution>>, ObservableEntity {
+
   private List<DoubleSolution> swarm;
   private double[][] speed;
   private DoubleSolution[] localBest;
@@ -40,9 +41,9 @@ public class ParticleSwarmOptimizationAlgorithm
   private PositionUpdate positionUpdate;
   private Perturbation perturbation;
   private GlobalBestUpdate globalBestUpdate;
-  private LocalBestUpdate localBestUpdate ;
-  private InertiaWeightComputingStrategy inertiaWeightComputingStrategy ;
-  private GlobalBestSelection globalBestSelection ;
+  private LocalBestUpdate localBestUpdate;
+  private InertiaWeightComputingStrategy inertiaWeightComputingStrategy;
+  private GlobalBestSelection globalBestSelection;
   private Map<String, Object> attributes;
 
   private long initTime;
@@ -54,6 +55,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
   /**
    * Constructor
+   *
    * @param name
    * @param createInitialSwarm
    * @param evaluation
@@ -71,21 +73,21 @@ public class ParticleSwarmOptimizationAlgorithm
    * @param globalBestArchive
    */
   public ParticleSwarmOptimizationAlgorithm(
-          String name,
-          SolutionsCreation<DoubleSolution> createInitialSwarm,
-          Evaluation<DoubleSolution> evaluation,
-          Termination termination,
-          VelocityInitialization velocityInitialization,
-          LocalBestInitialization localBestInitialization,
-          GlobalBestInitialization globalBestInitialization,
-          InertiaWeightComputingStrategy inertiaWeightComputingStrategy,
-          VelocityUpdate velocityUpdate,
-          PositionUpdate positionUpdate,
-          Perturbation perturbation,
-          GlobalBestUpdate globalBestUpdate,
-          LocalBestUpdate localBestUpdate,
-          GlobalBestSelection globalBestSelection,
-          BoundedArchive<DoubleSolution> globalBestArchive) {
+      String name,
+      SolutionsCreation<DoubleSolution> createInitialSwarm,
+      Evaluation<DoubleSolution> evaluation,
+      Termination termination,
+      VelocityInitialization velocityInitialization,
+      LocalBestInitialization localBestInitialization,
+      GlobalBestInitialization globalBestInitialization,
+      InertiaWeightComputingStrategy inertiaWeightComputingStrategy,
+      VelocityUpdate velocityUpdate,
+      PositionUpdate positionUpdate,
+      Perturbation perturbation,
+      GlobalBestUpdate globalBestUpdate,
+      LocalBestUpdate localBestUpdate,
+      GlobalBestSelection globalBestSelection,
+      BoundedArchive<DoubleSolution> globalBestArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialSwarm = createInitialSwarm;
@@ -95,13 +97,13 @@ public class ParticleSwarmOptimizationAlgorithm
     this.velocityInitialization = velocityInitialization;
     this.localBestInitialization = localBestInitialization;
     this.globalBestInitialization = globalBestInitialization;
-    this.inertiaWeightComputingStrategy = inertiaWeightComputingStrategy ;
+    this.inertiaWeightComputingStrategy = inertiaWeightComputingStrategy;
     this.velocityUpdate = velocityUpdate;
     this.positionUpdate = positionUpdate;
     this.perturbation = perturbation;
     this.globalBestUpdate = globalBestUpdate;
-    this.localBestUpdate = localBestUpdate ;
-    this.globalBestSelection = globalBestSelection ;
+    this.localBestUpdate = localBestUpdate;
+    this.globalBestSelection = globalBestSelection;
 
     this.observable = new DefaultObservable<>("Evolutionary Algorithm");
     this.attributes = new HashMap<>();
@@ -118,12 +120,13 @@ public class ParticleSwarmOptimizationAlgorithm
 
     initProgress();
     while (!termination.isMet(attributes)) {
-      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection, inertiaWeightComputingStrategy);
+      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
+          inertiaWeightComputingStrategy);
       positionUpdate.update(swarm, speed);
       swarm = perturbation.perturb(swarm);
       swarm = evaluation.evaluate(swarm);
-      globalBest = globalBestUpdate.update(swarm,globalBest) ;
-      localBest = localBestUpdate.update(swarm, localBest) ;
+      globalBest = globalBestUpdate.update(swarm, globalBest);
+      localBest = localBestUpdate.update(swarm, localBest);
       updateProgress();
     }
 
@@ -167,11 +170,7 @@ public class ParticleSwarmOptimizationAlgorithm
 
   @Override
   public List<DoubleSolution> getResult() {
-    if (globalBest != null) {
-      return globalBest.getSolutionList();
-    } else {
-      return swarm;
-    }
+    return globalBest.getSolutionList();
   }
 
   @Override
@@ -194,6 +193,6 @@ public class ParticleSwarmOptimizationAlgorithm
   }
 
   public void setTermination(Termination termination) {
-    this.termination = termination ;
+    this.termination = termination;
   }
 }
