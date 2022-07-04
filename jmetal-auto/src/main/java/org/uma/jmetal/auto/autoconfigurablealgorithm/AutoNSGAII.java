@@ -47,7 +47,6 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII {
-
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -147,7 +146,7 @@ public class AutoNSGAII {
         400);
 
     variationParameter =
-        new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
+        new VariationParameter(args, List.of("crossoverAndMutationVariation"));
     variationParameter.addGlobalParameter(offspringPopulationSizeParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", crossoverParameter);
     variationParameter.addSpecificParameter("crossoverAndMutationVariation", mutationParameter);
@@ -191,7 +190,6 @@ public class AutoNSGAII {
     Archive<DoubleSolution> archive = null;
 
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      //archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       externalArchiveParameter.setSize(populationSizeParameter.getValue());
       archive = externalArchiveParameter.getParameter();
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());

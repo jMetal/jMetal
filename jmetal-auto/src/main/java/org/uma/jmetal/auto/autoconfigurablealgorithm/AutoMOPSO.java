@@ -42,7 +42,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure OMOPSO with an argument string using class {@link
+ * Class to configure a generic MOPSO with an argument string using class {@link
  * ParticleSwarmOptimizationAlgorithm}
  *
  * @autor Daniel Doblas
