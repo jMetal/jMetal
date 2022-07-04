@@ -76,12 +76,6 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     this.externalArchive = null;
   }
 
-  public NSGAIIBuilder<S> setName(String newName) {
-    this.name = newName;
-
-    return this;
-  }
-
   public NSGAIIBuilder<S> setTermination(Termination termination) {
     this.termination = termination;
 
@@ -103,15 +97,6 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public NSGAIIBuilder<S> setDensityEstimator(DensityEstimator<S> densityEstimator) {
-    this.densityEstimator = densityEstimator;
-    this.replacement =
-        new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
-
-    return this;
-  }
-
   public NSGAIIBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
 
@@ -119,7 +104,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
-    return new EvolutionaryAlgorithm<>(name, evaluation, createInitialPopulation, termination,
+    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
         selection, variation, replacement, externalArchive);
   }
 }
