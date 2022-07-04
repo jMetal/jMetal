@@ -17,7 +17,7 @@ import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 class AutoNSGAIIIT {
   @Test
-  void AutoNSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFive()
+  void AutoNSGAIIWithDefaultSettingsReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT1()
       throws IOException {
     String referenceFrontFileName = "ZDT1.csv" ;
 
