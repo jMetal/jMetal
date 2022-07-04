@@ -1,6 +1,6 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
-import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 
 class AutoMOPSOIT {
   @Test

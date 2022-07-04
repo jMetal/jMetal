@@ -1,14 +1,13 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEA;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.AGEMOEABuilder;
 import org.uma.jmetal.algorithm.multiobjective.agemoeaii.util.AGEMOEA2EnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Implementation of AGE-MOEA-II (Adaptive GEometry-based Many-objective Evolutionary Algorithm II).

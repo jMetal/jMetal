@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.binaryproblem.impl;
 
-import java.util.List;
 import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;

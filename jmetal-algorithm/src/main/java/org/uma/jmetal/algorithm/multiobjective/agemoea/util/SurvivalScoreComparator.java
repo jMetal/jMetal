@@ -1,9 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
+import java.util.Comparator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.Comparator;
 
 /**
  * Comparator based on the survival score of AGE-MOEA

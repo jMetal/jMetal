@@ -15,7 +15,6 @@ import org.uma.jmetal.lab.experiment.util.ExperimentProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.AbstractSolution;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;

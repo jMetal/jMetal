@@ -1,12 +1,8 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii.util;
 
+import java.util.List;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.stream;
 
 /**
  * Environmental Selection used in AGE-MOEA-II (Adaptive GEometry-based Many-Objective Evolutionary Algorithm II)

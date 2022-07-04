@@ -1,11 +1,9 @@
 package org.uma.jmetal.problem.multiobjective.zdt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
-import org.uma.jmetal.problem.singleobjective.Griewank;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
 class ZDT1Test {

@@ -1,5 +1,9 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoea;
 
+import static org.junit.Assert.assertTrue;
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
+
+import java.util.List;
 import org.junit.Test;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.SurvivalScoreComparator;
@@ -19,11 +23,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
-import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 
 public class AGEMOEAIT {

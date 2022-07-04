@@ -1,9 +1,9 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class GlobalBestInitializationParameter extends CategoricalParameter {

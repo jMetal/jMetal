@@ -3,7 +3,6 @@ package org.uma.jmetal.problem.integerproblem.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.solution.integersolution.impl.DefaultIntegerSolution;

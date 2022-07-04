@@ -3,8 +3,8 @@ package org.uma.jmetal.auto.irace;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 import java.io.IOException;
-import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.NormalizeUtils;

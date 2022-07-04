@@ -1,11 +1,10 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoeaii.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
 

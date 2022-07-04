@@ -2,9 +2,9 @@ package org.uma.jmetal.algorithm.example.multiobjective;
 
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO;
 import org.uma.jmetal.algorithm.multiobjective.dmopso.DMOPSO.FunctionType;
-import org.uma.jmetal.algorithm.example.AlgorithmRunner;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;

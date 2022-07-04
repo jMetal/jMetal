@@ -1,10 +1,10 @@
 package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.VelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.ConstrainedVelocityUpdate;
 import org.uma.jmetal.component.catalogue.pso.velocityupdate.impl.DefaultVelocityUpdate;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 

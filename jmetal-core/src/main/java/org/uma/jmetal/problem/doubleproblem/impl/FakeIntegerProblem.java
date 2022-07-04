@@ -2,9 +2,7 @@ package org.uma.jmetal.problem.doubleproblem.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.integerproblem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 
 /**

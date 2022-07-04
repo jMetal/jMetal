@@ -20,7 +20,6 @@ import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 
 /** Class to configure and run the AGEMOEA algorithm */
 public class AGEMOEARunner extends AbstractAlgorithmRunner {

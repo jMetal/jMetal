@@ -1,6 +1,5 @@
 package org.uma.jmetal.problem.permutationproblem.impl;
 
-import org.uma.jmetal.problem.AbstractGenericProblem;
 import org.uma.jmetal.problem.permutationproblem.PermutationProblem;
 import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 import org.uma.jmetal.solution.permutationsolution.impl.IntegerPermutationSolution;

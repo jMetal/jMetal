@@ -1,7 +1,6 @@
 package org.uma.jmetal.problem.integerproblem ;
 
 import java.util.List;
-
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.bounds.Bounds;

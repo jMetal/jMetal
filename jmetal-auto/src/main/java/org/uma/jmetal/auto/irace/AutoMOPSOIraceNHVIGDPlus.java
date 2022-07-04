@@ -3,8 +3,8 @@ package org.uma.jmetal.auto.irace;
 import static org.uma.jmetal.util.SolutionListUtils.getMatrixWithObjectiveValues;
 
 import java.io.IOException;
-import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOPSO;
+import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.util.NormalizeUtils;

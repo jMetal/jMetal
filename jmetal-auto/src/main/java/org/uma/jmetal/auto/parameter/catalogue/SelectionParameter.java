@@ -2,10 +2,10 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.Comparator;
 import java.util.List;
+import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomMatingPoolSelection;
-import org.uma.jmetal.auto.parameter.CategoricalParameter;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 

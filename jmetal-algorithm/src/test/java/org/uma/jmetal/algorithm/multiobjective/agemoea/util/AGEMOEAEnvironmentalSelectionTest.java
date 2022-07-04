@@ -1,13 +1,12 @@
 package org.uma.jmetal.algorithm.multiobjective.agemoea.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.uma.jmetal.solution.doublesolution.impl.DefaultDoubleSolution;
 import org.uma.jmetal.util.ranking.Ranking;
 import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
 

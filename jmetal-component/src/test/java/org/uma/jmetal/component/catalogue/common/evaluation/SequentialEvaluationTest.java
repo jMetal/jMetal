@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;

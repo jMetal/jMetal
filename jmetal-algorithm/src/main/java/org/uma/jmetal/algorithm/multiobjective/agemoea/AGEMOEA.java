@@ -2,7 +2,6 @@ package org.uma.jmetal.algorithm.multiobjective.agemoea;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.uma.jmetal.algorithm.impl.AbstractGeneticAlgorithm;
 import org.uma.jmetal.algorithm.multiobjective.agemoea.util.AGEMOEAEnvironmentalSelection;
 import org.uma.jmetal.solution.Solution;
