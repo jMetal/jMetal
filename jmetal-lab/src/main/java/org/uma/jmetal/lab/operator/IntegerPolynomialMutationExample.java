@@ -1,4 +1,4 @@
-package org.uma.jmetal.example.operator;
+package org.uma.jmetal.lab.operator;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
