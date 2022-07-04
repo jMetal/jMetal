@@ -24,7 +24,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIBinaryProblemExample extends AbstractAlgorithmRunner {
+public class NSGAIIBinaryProblemExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
     BinaryProblem problem = new OneZeroMax(256) ;

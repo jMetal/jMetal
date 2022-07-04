@@ -25,7 +25,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIITSPExample extends AbstractAlgorithmRunner {
+public class NSGAIITSPExample {
   public static void main(String[] args) throws JMetalException, IOException {
 
     PermutationProblem<PermutationSolution<Integer>> problem =

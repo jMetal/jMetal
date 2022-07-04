@@ -30,7 +30,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithMixedSolutionEncodingExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithMixedSolutionEncodingExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<CompositeSolution> problem =

@@ -30,7 +30,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithPlotly2DChartExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithPlotly2DChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT3";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT3.csv";
@@ -74,11 +74,9 @@ public class NSGAIIWithPlotly2DChartExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    if (!referenceParetoFront.equals("")) {
-      QualityIndicatorUtils.printQualityIndicators(
-          SolutionListUtils.getMatrixWithObjectiveValues(population),
-          VectorUtils.readVectors(referenceParetoFront, ","));
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
 
     PlotFront plot = new Plot2D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
     plot.plot();

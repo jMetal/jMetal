@@ -30,7 +30,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class NSGAIIWithUnboundedArchiveExample extends AbstractAlgorithmRunner {
+public class NSGAIIWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.3D.csv";
@@ -77,10 +77,8 @@ public class NSGAIIWithUnboundedArchiveExample extends AbstractAlgorithmRunner {
     JMetalLogger.logger.info("Objectives values have been written to file FUN.csv");
     JMetalLogger.logger.info("Variables values have been written to file VAR.csv");
 
-    if (!referenceParetoFront.equals("")) {
-      QualityIndicatorUtils.printQualityIndicators(
-          SolutionListUtils.getMatrixWithObjectiveValues(population),
-          VectorUtils.readVectors(referenceParetoFront, ","));
-    }
+    QualityIndicatorUtils.printQualityIndicators(
+        SolutionListUtils.getMatrixWithObjectiveValues(population),
+        VectorUtils.readVectors(referenceParetoFront, ","));
   }
 }
