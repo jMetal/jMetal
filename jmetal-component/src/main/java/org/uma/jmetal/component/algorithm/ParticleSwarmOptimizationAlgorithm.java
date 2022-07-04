@@ -57,10 +57,20 @@ public class ParticleSwarmOptimizationAlgorithm
 
   /**
    * Constructor
-   *
-   * @param name            Algorithm name
+   * @param name
+   * @param createInitialSwarm
    * @param evaluation
    * @param termination
+   * @param velocityInitialization
+   * @param localBestInitialization
+   * @param globalBestInitialization
+   * @param inertiaWeightComputingStrategy
+   * @param velocityUpdate
+   * @param positionUpdate
+   * @param perturbation
+   * @param globalBestUpdate
+   * @param localBestUpdate
+   * @param globalBestSelection
    * @param externalArchive
    */
   public ParticleSwarmOptimizationAlgorithm(

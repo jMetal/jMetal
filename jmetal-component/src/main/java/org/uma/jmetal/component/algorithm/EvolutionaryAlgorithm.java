@@ -28,9 +28,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   private MatingPoolSelection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
-
   private Map<String, Object> attributes;
-
   private long initTime;
   private long totalComputingTime;
   private int evaluations;
@@ -42,8 +40,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
    * Constructor
    *
    * @param name                      Algorithm name
-   * @param evaluation
    * @param initialPopulationCreation
+   * @param evaluation
    * @param termination
    * @param selection
    * @param variation
@@ -52,16 +50,16 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
    */
   public EvolutionaryAlgorithm(
       String name,
-      Evaluation<S> evaluation,
       SolutionsCreation<S> initialPopulationCreation,
+      Evaluation<S> evaluation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
       Replacement<S> replacement,
       Archive<S> externalArchive) {
     this.name = name;
-    this.evaluation = evaluation;
     this.createInitialPopulation = initialPopulationCreation;
+    this.evaluation = evaluation;
     this.termination = termination;
     this.selection = selection;
     this.variation = variation;
@@ -93,8 +91,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       Replacement<S> replacement) {
     this(
         name,
-        evaluation,
         initialPopulationCreation,
+        evaluation,
         termination,
         selection,
         variation,
