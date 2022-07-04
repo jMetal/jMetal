@@ -49,11 +49,11 @@ public class AutoMOPSOIraceFileGenerator {
                         + "--weightMax 0.5 ")
                         .split("\\s+");
 
-        AutoMOPSO autoMOPSOwithParameters = new AutoMOPSO();
-        autoMOPSOwithParameters.parseAndCheckParameters(parameters);
+        AutoMOPSO autoMOPSOWithParameters = new AutoMOPSO();
+        autoMOPSOWithParameters.parseAndCheckParameters(parameters);
 
         AutoMOPSOIraceFileGenerator ompsoiraceParameterFile = new AutoMOPSOIraceFileGenerator();
-        ompsoiraceParameterFile.generateConfigurationFile(autoMOPSOwithParameters.autoConfigurableParameterList);
+        ompsoiraceParameterFile.generateConfigurationFile(autoMOPSOWithParameters.autoConfigurableParameterList);
     }
 
     public void generateConfigurationFile(List<Parameter<?>> parameterList) {
