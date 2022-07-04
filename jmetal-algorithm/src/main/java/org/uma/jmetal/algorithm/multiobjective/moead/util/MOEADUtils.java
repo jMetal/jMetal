@@ -99,7 +99,7 @@ public class MOEADUtils {
   }
 
   /**
-   * This methods select a subset of evenly spread solutions from a solution list. The
+   * This method selects a subset of evenly spread solutions from a solution list. The
    * implementation is based on the method described in the MOEA/D-DRA paper.
    *
    * @param solutionList
