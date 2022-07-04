@@ -17,7 +17,6 @@ import org.uma.jmetal.solution.permutationsolution.PermutationSolution;
 @SuppressWarnings("serial")
 public class IntegerPermutationSolution extends AbstractSolution<Integer>
         implements PermutationSolution<Integer> {
-
   /**
    * Constructor
    */
@@ -46,9 +45,6 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
     for (int i = 0; i < variables().size(); i++) {
       variables().set(i, solution.variables().get(i));
     }
-
-    // ?IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
-    // ??Collections.copy(variables(), solution.variables());
 
     Arrays.setAll(constraints(), i -> solution.constraints()[i]);
 
