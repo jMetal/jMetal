@@ -14,8 +14,12 @@ import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHype
 
 public class ExternalArchiveParameter extends CategoricalParameter {
   private int size ;
+  public ExternalArchiveParameter(String parameterName, String[] args, List<String> archiveTypes) {
+    super(parameterName, args, archiveTypes);
+  }
+
   public ExternalArchiveParameter(String[] args, List<String> archiveTypes) {
-    super("externalArchive", args, archiveTypes);
+    this("externalArchive", args, archiveTypes);
   }
 
   public Archive<DoubleSolution> getParameter() {

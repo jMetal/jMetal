@@ -2,7 +2,7 @@ swarmSize                                "--swarmSize "                         
 #
 archiveSize                              "--archiveSize "                         o       (100)
 #
-externalArchive                          "--externalArchive "                     c       (crowdingDistanceArchive, hypervolumeArchive, spatialSpreadDeviationArchive)
+leaderArchive                            "--leaderArchive "                       c       (crowdingDistanceArchive, hypervolumeArchive, spatialSpreadDeviationArchive)
 #
 swarmInitialization                      "--swarmInitialization "                 c       (random, latinHypercubeSampling, scatterSearch)
 #

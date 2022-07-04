@@ -53,7 +53,7 @@ public class AutoMOPSO {
 
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
-  public ExternalArchiveParameter externalArchiveParameter;
+  public ExternalArchiveParameter leaderArchiveParameter;
   public CategoricalParameter velocityInitializationParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
@@ -128,7 +128,7 @@ public class AutoMOPSO {
 
     perturbationParameter = configurePerturbation(args);
 
-    externalArchiveParameter = new ExternalArchiveParameter(args,
+    leaderArchiveParameter = new ExternalArchiveParameter("leaderArchive", args,
         List.of("crowdingDistanceArchive", "hypervolumeArchive", "spatialSpreadDeviationArchive"));
 
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
@@ -147,7 +147,7 @@ public class AutoMOPSO {
 
     autoConfigurableParameterList.add(swarmSizeParameter);
     autoConfigurableParameterList.add(archiveSizeParameter);
-    autoConfigurableParameterList.add(externalArchiveParameter);
+    autoConfigurableParameterList.add(leaderArchiveParameter);
     autoConfigurableParameterList.add(swarmInitializationParameter);
     autoConfigurableParameterList.add(velocityInitializationParameter);
     autoConfigurableParameterList.add(perturbationParameter);
@@ -240,8 +240,8 @@ public class AutoMOPSO {
     var evaluation = new SequentialEvaluation<>(problem);
     var termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
 
-    externalArchiveParameter.setSize(archiveSizeParameter.getValue());
-    BoundedArchive<DoubleSolution> externalArchive = (BoundedArchive<DoubleSolution>) externalArchiveParameter.getParameter();
+    leaderArchiveParameter.setSize(archiveSizeParameter.getValue());
+    BoundedArchive<DoubleSolution> leaderArchive = (BoundedArchive<DoubleSolution>) leaderArchiveParameter.getParameter();
     var velocityInitialization = new DefaultVelocityInitialization();
 
     if (velocityUpdateParameter.getValue().equals("constrainedVelocityUpdate")) {
@@ -261,7 +261,7 @@ public class AutoMOPSO {
     LocalBestInitialization localBestInitialization = localBestInitializationParameter.getParameter();
     GlobalBestInitialization globalBestInitialization = globalBestInitializationParameter.getParameter();
     GlobalBestSelection globalBestSelection = globalBestSelectionParameter.getParameter(
-        externalArchive.getComparator());
+        leaderArchive.getComparator());
 
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
@@ -296,7 +296,7 @@ public class AutoMOPSO {
         globalBestUpdate,
         localBestUpdate,
         globalBestSelection,
-        externalArchive);
+        leaderArchive);
 
     return mopso;
   }

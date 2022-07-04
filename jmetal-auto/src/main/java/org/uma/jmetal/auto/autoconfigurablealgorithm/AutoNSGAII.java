@@ -47,6 +47,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII {
+
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -93,7 +94,8 @@ public class AutoNSGAII {
   }
 
   private void variation(String[] args) {
-    CrossoverParameter crossoverParameter = new CrossoverParameter(args, Arrays.asList("SBX", "BLX_ALPHA"));
+    CrossoverParameter crossoverParameter = new CrossoverParameter(args,
+        Arrays.asList("SBX", "BLX_ALPHA"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
     crossoverParameter.addGlobalParameter(crossoverProbability);
@@ -109,9 +111,11 @@ public class AutoNSGAII {
     crossoverParameter.addSpecificParameter("BLX_ALPHA", alpha);
 
     MutationParameter mutationParameter =
-        new MutationParameter(args, Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
+        new MutationParameter(args,
+            Arrays.asList("uniform", "polynomial", "linkedPolynomial", "nonUniform"));
 
-    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args, 0.0, 2.0) ;
+    RealParameter mutationProbabilityFactor = new RealParameter("mutationProbabilityFactor", args,
+        0.0, 2.0);
     mutationParameter.addGlobalParameter(mutationProbabilityFactor);
     RepairDoubleSolutionStrategyParameter mutationRepairStrategy =
         new RepairDoubleSolutionStrategyParameter(
@@ -123,21 +127,24 @@ public class AutoNSGAII {
     mutationParameter.addSpecificParameter("polynomial", distributionIndexForPolynomialMutation);
 
     RealParameter distributionIndexForLinkedPolynomialMutation =
-            new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
-    mutationParameter.addSpecificParameter("linkedPolynomial", distributionIndexForLinkedPolynomialMutation);
+        new RealParameter("linkedPolynomialMutationDistributionIndex", args, 5.0, 400.0);
+    mutationParameter.addSpecificParameter("linkedPolynomial",
+        distributionIndexForLinkedPolynomialMutation);
 
     RealParameter uniformMutationPerturbation =
         new RealParameter("uniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("uniform", uniformMutationPerturbation);
 
     RealParameter nonUniformMutationPerturbation =
-            new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
+        new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
     Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
-    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
+    mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
+        problem.getNumberOfVariables());
 
-    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1, 400) ;
+    offspringPopulationSizeParameter = new IntegerParameter("offspringPopulationSize", args, 1,
+        400);
 
     variationParameter =
         new VariationParameter(args, Arrays.asList("crossoverAndMutationVariation"));
@@ -162,13 +169,15 @@ public class AutoNSGAII {
   private void algorithmResult(String[] args) {
     algorithmResultParameter =
         new CategoricalParameter("algorithmResult", args, List.of("externalArchive", "population"));
-    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10, 200) ;
-    externalArchiveParameter = new ExternalArchiveParameter(args, List.of("crowdingDistanceArchive","unboundedArchive")) ;
+    populationSizeWithArchiveParameter = new IntegerParameter("populationSizeWithArchive", args, 10,
+        200);
+    externalArchiveParameter = new ExternalArchiveParameter(args,
+        List.of("crowdingDistanceArchive", "unboundedArchive"));
     algorithmResultParameter.addSpecificParameter(
         "externalArchive", populationSizeWithArchiveParameter);
 
     algorithmResultParameter.addSpecificParameter(
-            "externalArchive", externalArchiveParameter);
+        "externalArchive", externalArchiveParameter);
   }
 
   /**
@@ -185,50 +194,56 @@ public class AutoNSGAII {
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
       //archive = new CrowdingDistanceArchive<>(populationSizeParameter.getValue());
       externalArchiveParameter.setSize(populationSizeParameter.getValue());
-      archive = externalArchiveParameter.getParameter() ;
+      archive = externalArchiveParameter.getParameter();
       populationSizeParameter.setValue(populationSizeWithArchiveParameter.getValue());
     }
 
-    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(new DominanceWithConstraintsComparator<>());
+    Ranking<DoubleSolution> ranking = new FastNonDominatedSortRanking<>(
+        new DominanceWithConstraintsComparator<>());
     DensityEstimator<DoubleSolution> densityEstimator = new CrowdingDistanceDensityEstimator<>();
     MultiComparator<DoubleSolution> rankingAndCrowdingComparator =
         new MultiComparator<>(
             Arrays.asList(
-                Comparator.comparing(ranking::getRank), Comparator.comparing(densityEstimator::getValue).reversed()));
+                Comparator.comparing(ranking::getRank),
+                Comparator.comparing(densityEstimator::getValue).reversed()));
 
     SolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter((DoubleProblem)problem, populationSizeParameter.getValue());
+        createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
+            populationSizeParameter.getValue());
 
-    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter("mutation") ;
+    MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
+        "mutation");
     if (mutationParameter.getValue().equals("nonUniform")) {
       mutationParameter.addSpecificParameter("nonUniform", maximumNumberOfEvaluationsParameter);
       mutationParameter.addNonConfigurableParameter("maxIterations",
-              maximumNumberOfEvaluationsParameter.getValue()/populationSizeParameter.getValue());
+          maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
     }
     Variation<DoubleSolution> variation = variationParameter.getParameter();
 
     MatingPoolSelection<DoubleSolution> selection =
-            selectionParameter.getParameter(
-                variation.getMatingPoolSize(), rankingAndCrowdingComparator);
+        selectionParameter.getParameter(
+            variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
     Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
 
-    RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(ranking, densityEstimator) ;
+    RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
+        ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
-            new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement, Replacement.RemovalPolicy.oneShot);
+        new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,
+            Replacement.RemovalPolicy.oneShot);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     return new EvolutionaryAlgorithm<>(
-            "NSGA-II",
-            evaluation,
-            initialSolutionsCreation,
-            termination,
-            selection,
-            variation,
-            replacement,
-            archive);
+        "NSGA-II",
+        initialSolutionsCreation,
+        evaluation,
+        termination,
+        selection,
+        variation,
+        replacement,
+        archive);
   }
 
   public static void print(List<Parameter<?>> parameterList) {

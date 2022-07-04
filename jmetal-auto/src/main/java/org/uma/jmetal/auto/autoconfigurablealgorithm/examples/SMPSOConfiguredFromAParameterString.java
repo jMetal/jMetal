@@ -29,7 +29,7 @@ public class SMPSOConfiguredFromAParameterString {
             + "--archiveSize 100 "
             + "--swarmInitialization random "
             + "--velocityInitialization defaultVelocityInitialization "
-            + "--externalArchive crowdingDistanceArchive "
+            + "--leaderArchive crowdingDistanceArchive "
             + "--localBestInitialization defaultLocalBestInitialization "
             + "--globalBestInitialization defaultGlobalBestInitialization "
             + "--globalBestSelection binaryTournament "
