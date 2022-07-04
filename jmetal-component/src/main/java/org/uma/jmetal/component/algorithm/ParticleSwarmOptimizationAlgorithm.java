@@ -30,7 +30,6 @@ public class ParticleSwarmOptimizationAlgorithm
   private double[][] speed;
   private DoubleSolution[] localBest;
   private BoundedArchive<DoubleSolution> globalBest;
-
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialSwarm;
   private Termination termination;
@@ -43,9 +42,7 @@ public class ParticleSwarmOptimizationAlgorithm
   private GlobalBestUpdate globalBestUpdate;
   private LocalBestUpdate localBestUpdate ;
   private InertiaWeightComputingStrategy inertiaWeightComputingStrategy ;
-
   private GlobalBestSelection globalBestSelection ;
-
   private Map<String, Object> attributes;
 
   private long initTime;
@@ -71,7 +68,7 @@ public class ParticleSwarmOptimizationAlgorithm
    * @param globalBestUpdate
    * @param localBestUpdate
    * @param globalBestSelection
-   * @param externalArchive
+   * @param globalBestArchive
    */
   public ParticleSwarmOptimizationAlgorithm(
           String name,
@@ -88,12 +85,12 @@ public class ParticleSwarmOptimizationAlgorithm
           GlobalBestUpdate globalBestUpdate,
           LocalBestUpdate localBestUpdate,
           GlobalBestSelection globalBestSelection,
-          BoundedArchive<DoubleSolution> externalArchive) {
+          BoundedArchive<DoubleSolution> globalBestArchive) {
     this.name = name;
     this.evaluation = evaluation;
     this.createInitialSwarm = createInitialSwarm;
     this.termination = termination;
-    this.globalBest = externalArchive;
+    this.globalBest = globalBestArchive;
 
     this.velocityInitialization = velocityInitialization;
     this.localBestInitialization = localBestInitialization;
