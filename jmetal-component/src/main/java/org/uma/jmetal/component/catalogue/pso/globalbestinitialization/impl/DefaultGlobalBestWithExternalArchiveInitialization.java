@@ -11,33 +11,17 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
-public class DefaultGlobalBestInitialization implements GlobalBestInitialization {
+public class DefaultGlobalBestWithExternalArchiveInitialization extends DefaultGlobalBestInitialization {
+  private Archive<DoubleSolution> externalArchive;
 
-  @Override
-  /**
-   * Initialize the Global Best solution.
-   * @param: swarm: List of possibles solutions
-   * @param: globalBest: List or Empty List of auxiliary solutions
-   * @return: globalBest: List with different global solutions.
-   */
+  public DefaultGlobalBestWithExternalArchiveInitialization(Archive<DoubleSolution> externalArchive) {
+    this.externalArchive = externalArchive ;
+  }
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
       BoundedArchive<DoubleSolution> globalBest) {
-    Check.notNull(swarm);
-    Check.notNull(globalBest);
-    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
-
-    for (DoubleSolution particle : swarm) {
-      globalBest.add((DoubleSolution) particle.copy());
-    }
-
-    return globalBest;
-  }
-
-  public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest, Archive<DoubleSolution> externalArchive) {
     Check.notNull(externalArchive);
     swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(externalArchive::add);
 
-    return this.initialize(swarm, globalBest) ;
+    return super.initialize(swarm, globalBest) ;
   }
 }

@@ -127,6 +127,18 @@ public class SMPSOBuilder {
     return this ;
   }
 
+  public SMPSOBuilder setGlobalBestInitialization(GlobalBestInitialization globalBestInitialization) {
+    this.globalBestInitialization = globalBestInitialization ;
+
+    return this ;
+  }
+
+  public SMPSOBuilder setGlobalBestUpdate(GlobalBestUpdate globalBestUpdate) {
+    this.globalBestUpdate = globalBestUpdate ;
+
+    return this ;
+  }
+
   public ParticleSwarmOptimizationAlgorithm build() {
     return new ParticleSwarmOptimizationAlgorithm(name, swarmInitialization, evaluation, termination,
         velocityInitialization,

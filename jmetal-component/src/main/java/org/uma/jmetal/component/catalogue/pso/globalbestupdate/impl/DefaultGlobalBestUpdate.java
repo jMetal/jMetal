@@ -17,24 +17,16 @@ public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
   /**
    * Update the List of best solutions of the Global Best's List
    * @param swarm: List of possibles solutions
-   * @param globalBest: List or Empty List of auxiliar solutions
+   * @param globalBest: List or Empty List of auxiliary solutions
    * @return List of global best solutions
    */
   public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm,
       BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(swarm);
     Check.notNull(globalBest);
-    Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
+    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(globalBest::add);
     return globalBest;
-  }
-
-  public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest, Archive<DoubleSolution> externalArchive) {
-    Check.notNull(externalArchive);
-    swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(externalArchive::add);
-
-    return this.update(swarm, globalBest);
   }
 }

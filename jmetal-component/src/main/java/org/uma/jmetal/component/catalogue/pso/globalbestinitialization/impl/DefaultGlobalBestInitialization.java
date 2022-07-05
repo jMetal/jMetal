@@ -17,8 +17,8 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
   /**
    * Initialize the Global Best solution.
    * @param: swarm: List of possibles solutions
-   * @param: globalBest: List or Empty List of auxiliar solutions
-   * @return: globalBest: List with differents global solutions.
+   * @param: globalBest: List or Empty List of auxiliary solutions
+   * @return: globalBest: List with different global solutions.
    */
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
       BoundedArchive<DoubleSolution> globalBest) {
@@ -31,13 +31,5 @@ public class DefaultGlobalBestInitialization implements GlobalBestInitialization
     }
 
     return globalBest;
-  }
-
-  public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest, Archive<DoubleSolution> externalArchive) {
-    Check.notNull(externalArchive);
-    swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(externalArchive::add);
-
-    return this.initialize(swarm, globalBest) ;
   }
 }

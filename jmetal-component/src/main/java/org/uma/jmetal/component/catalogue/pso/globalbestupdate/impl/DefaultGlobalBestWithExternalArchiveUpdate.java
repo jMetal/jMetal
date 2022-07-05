@@ -11,30 +11,19 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro
  * @author Daniel Doblas
  */
-public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
+public class DefaultGlobalBestWithExternalArchiveUpdate extends DefaultGlobalBestUpdate {
 
-  @Override
-  /**
-   * Update the List of best solutions of the Global Best's List
-   * @param swarm: List of possibles solutions
-   * @param globalBest: List or Empty List of auxiliary solutions
-   * @return List of global best solutions
-   */
-  public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest) {
-    Check.notNull(swarm);
-    Check.notNull(globalBest);
-    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
+  private Archive<DoubleSolution> externalArchive;
 
-    swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(globalBest::add);
-    return globalBest;
+  public DefaultGlobalBestWithExternalArchiveUpdate(Archive<DoubleSolution> externalArchive) {
+    this.externalArchive = externalArchive;
   }
 
   public BoundedArchive<DoubleSolution> update(List<DoubleSolution> swarm,
-      BoundedArchive<DoubleSolution> globalBest, Archive<DoubleSolution> externalArchive) {
+      BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(externalArchive);
     swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(externalArchive::add);
 
-    return this.update(swarm, globalBest);
+    return super.update(swarm, globalBest);
   }
 }

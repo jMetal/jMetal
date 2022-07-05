@@ -52,7 +52,6 @@ public class ParticleSwarmOptimizationAlgorithm
   private Observable<Map<String, Object>> observable;
 
   private final String name;
-
   /**
    * Constructor
    *
