@@ -43,7 +43,7 @@ public class FitnessObserver implements Observer<Map<String, Object>> {
         for (Double objective: solution.objectives()) {
           objectiveValues.append(objective).append(" ");
         }
-        System.out.println("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
+        JMetalLogger.logger.info("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
       }
     } else {
       JMetalLogger.logger.warning(getClass().getName()+
