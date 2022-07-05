@@ -191,7 +191,7 @@ To replicate the study presented in https://doi.org/10.1145/3319619.3326832 you 
 
 The software requirements are the following:
 
-* Java JDK (13+)
+* Java JDK (14+)
 * R
 
 

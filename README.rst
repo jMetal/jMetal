@@ -49,6 +49,8 @@ Comments and suggestions are very welcome.
 
 Changelog
 ---------
+* [7/5/2012] The jMetal project adopts Java 14.
+
 * [5/23/2022] Algorithm AGE-MOEA-II. Contribution of Annibale Panichella (@apanichella).
 
 * [5/9/2022] Algorithm `AGE-MOEA <https://dl.acm.org/doi/10.1145/3321707.3321839>`_. Contribution of Annibale Panichella (@apanichella).
