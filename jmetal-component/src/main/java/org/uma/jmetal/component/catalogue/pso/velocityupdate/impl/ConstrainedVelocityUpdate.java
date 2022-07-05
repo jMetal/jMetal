@@ -17,7 +17,6 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  * @author Daniel Doblas
  */
 public class ConstrainedVelocityUpdate implements VelocityUpdate {
-
   protected double c1Max;
   protected double c1Min;
   protected double c2Max;

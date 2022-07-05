@@ -17,7 +17,7 @@ public class DefaultVelocityInitialization implements VelocityInitialization {
    */
   public double[][] initialize(List<DoubleSolution> swarm) {
     Check.notNull(swarm);
-    Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
+    Check.that(!swarm.isEmpty(), "The swarm size is empty: " + swarm.size());
 
     int numberOfVariables = swarm.get(0).variables().size() ;
     double[][] speed = new double[swarm.size()][numberOfVariables] ;
