@@ -61,7 +61,7 @@ public class ParallelNSGAIIExample {
 
     List<DoubleSolution> population = nsgaii.getResult();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getEvaluation());
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))
