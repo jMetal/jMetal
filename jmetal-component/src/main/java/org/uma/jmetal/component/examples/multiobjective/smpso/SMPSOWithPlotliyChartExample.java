@@ -26,7 +26,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SMPSOWithPlotliChartExample extends AbstractAlgorithmRunner {
+public class SMPSOWithPlotliyChartExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws Exception {
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT4";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT4.csv";

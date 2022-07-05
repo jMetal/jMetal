@@ -6,6 +6,8 @@ import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestWithExternalArchiveInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestWithExternalArchiveUpdate;
+import org.uma.jmetal.lab.visualization.plot.PlotFront;
+import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
@@ -20,6 +22,7 @@ import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
@@ -62,5 +65,8 @@ public class SMPSOWithUnboundedArchiveExample {
     QualityIndicatorUtils.printQualityIndicators(
         SolutionListUtils.getMatrixWithObjectiveValues(population),
         VectorUtils.readVectors(referenceParetoFront, ","));
+
+    PlotFront plot = new Plot3D(new ArrayFront(population).getMatrix(), problem.getName() + " (NSGA-II)");
+    plot.plot();
   }
 }
