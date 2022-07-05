@@ -9,14 +9,15 @@ import org.uma.jmetal.util.errorchecking.Check;
 
 /**
  * @author Antonio J. Nebro
- * @author Daniel Doblas
  */
 public class DefaultGlobalBestWithExternalArchiveInitialization extends DefaultGlobalBestInitialization {
-  private Archive<DoubleSolution> externalArchive;
+  private final Archive<DoubleSolution> externalArchive;
 
   public DefaultGlobalBestWithExternalArchiveInitialization(Archive<DoubleSolution> externalArchive) {
     this.externalArchive = externalArchive ;
   }
+
+  @Override
   public BoundedArchive<DoubleSolution> initialize(List<DoubleSolution> swarm,
       BoundedArchive<DoubleSolution> globalBest) {
     Check.notNull(externalArchive);
