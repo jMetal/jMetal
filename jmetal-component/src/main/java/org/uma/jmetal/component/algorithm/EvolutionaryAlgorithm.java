@@ -83,8 +83,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
    */
   public EvolutionaryAlgorithm(
       String name,
-      Evaluation<S> evaluation,
       SolutionsCreation<S> initialPopulationCreation,
+      Evaluation<S> evaluation,
       Termination termination,
       MatingPoolSelection<S> selection,
       Variation<S> variation,
@@ -110,7 +110,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       List<S> matingPopulation = selection.select(population);
       List<S> offspringPopulation = variation.variate(population, matingPopulation);
       offspringPopulation = evaluation.evaluate(offspringPopulation);
-      updateArchive(offspringPopulation);
 
       population = replacement.replace(population, offspringPopulation);
       updateProgress();
@@ -119,22 +118,20 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
-
   private void updateArchive(List<S> population) {
-    if (externalArchive != null) {
-      for (S solution : population) {
-        externalArchive.add(solution);
-      }
+    for (S solution : population) {
+      externalArchive.add(solution);
     }
   }
 
   protected void initProgress() {
     evaluations = population.size();
 
-    updateArchive(population);
+    if (externalArchive != null) {
+      updateArchive(population);
+    }
 
     attributes.put("EVALUATIONS", evaluations);
-    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
   }
@@ -142,8 +139,11 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   protected void updateProgress() {
     evaluations += variation.getOffspringPopulationSize();
 
+    if (externalArchive != null) {
+      updateArchive(population);
+    }
+
     attributes.put("EVALUATIONS", evaluations);
-    //attributes.put("POPULATION", externalArchive == null ? population : externalArchive.getSolutionList());
     attributes.put("POPULATION", population);
     attributes.put("COMPUTING_TIME", getCurrentComputingTime());
 
@@ -190,6 +190,14 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   public Evaluation<S> getEvaluation() {
     return evaluation;
+  }
+
+  public Map<String, Object> getAttributes() {
+    return attributes ;
+  }
+
+  public List<S> getPopulation() {
+    return population ;
   }
 
   @Override
