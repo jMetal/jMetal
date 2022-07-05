@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultiThreadedEvaluation;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -19,11 +21,11 @@ import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure and run a steady-stat genetic algorithm to solve a {@link DoubleProblem}
+ * Class to configure and run a generational genetic algorithm to solve a {@link DoubleProblem}
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SteadyStateGeneticAlgorithmDefaultConfigurationExample {
+public class GenerationalGeneticAlgorithmWithMultiThreadedEvaluatorExample {
   public static void main(String[] args) throws JMetalException, IOException {
     Problem<DoubleSolution> problem = new Sphere(20) ;
 
@@ -36,18 +38,21 @@ public class SteadyStateGeneticAlgorithmDefaultConfigurationExample {
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(125000);
 
+    Evaluation<DoubleSolution> evaluation = new MultiThreadedEvaluation<>(8, problem) ;
+
     EvolutionaryAlgorithm<DoubleSolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
-        "ssGA",
+        "GGA",
                     problem,
                     populationSize,
                     offspringPopulationSize,
                     crossover,
                     mutation)
         .setTermination(termination)
+        .setEvaluation(evaluation)
         .build();
 
     geneticAlgorithm.run();

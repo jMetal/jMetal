@@ -5,43 +5,47 @@ import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
+import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
+import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.problem.singleobjective.Sphere;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.FitnessObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
- * Class to configure and run a steady-stat genetic algorithm to solve a {@link DoubleProblem}
+ * Class to configure and run a generational genetic algorithm to solve a {@link BinaryProblem}
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class SteadyStateGeneticAlgorithmDefaultConfigurationExample {
+public class GenerationalGeneticAlgorithmBinaryExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    Problem<DoubleSolution> problem = new Sphere(20) ;
+    BinaryProblem problem = new OneMax(512) ;
 
     double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SinglePointCrossover(crossoverProbability);
 
-    double mutationProbability = 1.0 / problem.getNumberOfVariables();
-    double mutationDistributionIndex = 20.0;
-    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    double mutationProbability = 1.0 / problem.getTotalNumberOfBits() ;
+    var mutation = new BitFlipMutation(mutationProbability);
 
     int populationSize = 100;
-    int offspringPopulationSize = 1;
+    int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(125000);
+    Termination termination = new TerminationByEvaluations(25000);
 
-    EvolutionaryAlgorithm<DoubleSolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
-        "ssGA",
+    EvolutionaryAlgorithm<BinarySolution> geneticAlgorithm = new GeneticAlgorithmBuilder<>(
+        "GGA",
                     problem,
                     populationSize,
                     offspringPopulationSize,
@@ -50,9 +54,11 @@ public class SteadyStateGeneticAlgorithmDefaultConfigurationExample {
         .setTermination(termination)
         .build();
 
+    geneticAlgorithm.getObservable().register(new FitnessObserver(1000));
+
     geneticAlgorithm.run();
 
-    List<DoubleSolution> population = geneticAlgorithm.getResult();
+    List<BinarySolution> population = geneticAlgorithm.getResult();
     JMetalLogger.logger.info("Total execution time : " + geneticAlgorithm.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + geneticAlgorithm.getNumberOfEvaluations());
     JMetalLogger.logger.info("Best fitness: " + geneticAlgorithm.getResult().get(0).objectives()[0]);
