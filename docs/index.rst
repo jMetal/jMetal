@@ -19,8 +19,6 @@ The jMetal project is a Maven project structured in the following sub-projects:
 +---------------------+------------------------------------+
 | jmetal-problem      |  Benchmark problems                |
 +---------------------+------------------------------------+
-| jmetal-example      |  Examples                          |
-+---------------------+------------------------------------+
 | jmetal-lab          |  Experimentation and visualization |
 +---------------------+------------------------------------+
 | jmetal-experimental |  New features in development       |
