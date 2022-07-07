@@ -1,16 +1,24 @@
 package org.uma.jmetal.auto.parameter;
 
-import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.util.errorchecking.Check;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
+/**
+ * Parameter representing a double value belonging to a range [{@link #lowerBound}, {@link #upperBound}]
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ */
 public class RealParameter extends Parameter<Double> {
 
-  private double lowerBound;
-  private double upperBound;
+  private final double lowerBound;
+  private final double upperBound;
 
   public RealParameter(String name, String[] args, double lowerBound, double upperBound) {
     super(name, args);
+    Check.that(lowerBound < upperBound, "The lower bound " + lowerBound + " "
+        + "is not higher that the upper bound " + upperBound);
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
   }
@@ -23,7 +31,7 @@ public class RealParameter extends Parameter<Double> {
   @Override
   public void check() {
     if ((getValue() < lowerBound) || (getValue() > upperBound)) {
-      throw new RuntimeException(
+      throw new JMetalException(
           "Parameter "
               + getName()
               + ": Invalid value: "
@@ -36,7 +44,7 @@ public class RealParameter extends Parameter<Double> {
   }
 
   public List<Double> getValidValues() {
-    return Arrays.asList(lowerBound, upperBound);
+    return List.of(lowerBound, upperBound);
   }
 
   @Override

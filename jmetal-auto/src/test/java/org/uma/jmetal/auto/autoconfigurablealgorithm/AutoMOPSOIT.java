@@ -78,5 +78,4 @@ class AutoMOPSOIT {
     assertTrue(population.size() >= 95) ;
     assertTrue(hv > 0.65) ;
   }
-
 }
