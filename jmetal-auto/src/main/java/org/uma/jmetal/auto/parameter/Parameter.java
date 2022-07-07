@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.auto.parameter.catalogue.CrossoverParameter;
+import org.uma.jmetal.auto.parameter.catalogue.MutationParameter;
 import org.uma.jmetal.util.errorchecking.Check;
 
 /**
@@ -16,6 +18,29 @@ import org.uma.jmetal.util.errorchecking.Check;
  * assigned by parsing an array called {@link Parameter#args} which contains sequences of pairs
  * [key, value]. For example, the args field could contain these values:
  * ["--populationSize", "100", "--offspringPopulationSize", "100", "--createInitialSolutions", "random"]
+ *
+ * Every parameter has a {@link Parameter#name} (such as "populationSize" or "offpspringPopulationSize")
+ * and a {@link Parameter#value} that is obtained after invoking the {@link Parameter#parse()} and
+ * {@link Parameter#check()} methods.
+ *
+ * Parameters can be seen a factories of any kind of objects, from single values (e.g., {@link RealParameter}
+ * to genetic operators (e.g., {@link MutationParameter}).
+ *
+ * A parameter can contain other parameters, so we define three different types of associations
+ * between them. We illustrate the associations by using the {@link CrossoverParameter} as an example:
+ * - global parameter: any crossover has a probability parameter
+ * - specific parameter: a SBX crossover has a distribution index as specific parameter
+ * - non-configurable parameter: constant parameters needed by a particular parameter
+ *
+ * The {@Parameter} class provides methods for setting and getting these sup-parameters:
+ * - {@link Parameter#addGlobalParameter(Parameter)}
+ * - {@link Parameter#addSpecificParameter(String, Parameter)}}
+ * - {@link Parameter#addNonConfigurableParameter(String, Object)}
+ * - {@link Parameter#getGlobalParameters()}
+ * - {@link Parameter#getSpecificParameters()}
+ * - {@link Parameter#getNonConfigurableParameter(String)}
+ * - {@link Parameter#findGlobalParameter(String)}
+ * - {@link Parameter#findSpecificParameter(String)}
  *
  * @author Antonio J. Nebro
  * @param <T> Type of the parameter

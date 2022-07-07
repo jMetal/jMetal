@@ -18,7 +18,7 @@ public class MutationParameter extends CategoricalParameter {
   public MutationOperator<DoubleSolution> getParameter() {
     MutationOperator<DoubleSolution> result;
     int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables") ;
-    Double mutationProbability = (Double) findGlobalParameter("mutationProbabilityFactor").getValue() * 1.0/numberOfProblemVariables;
+    double mutationProbability = (double) findGlobalParameter("mutationProbabilityFactor").getValue() * 1.0/numberOfProblemVariables;
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =
             (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
 
