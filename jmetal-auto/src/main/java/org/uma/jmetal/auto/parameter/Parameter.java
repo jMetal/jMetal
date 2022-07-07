@@ -72,6 +72,12 @@ public abstract class Parameter<T> {
 
   public abstract Parameter<T> parse();
 
+  /**
+   * Parsing a parameter implies to parse and check its global and specific parameters
+   *
+   * @param parseFunction
+   * @return
+   */
   public Parameter<T> parse(Function<String, T> parseFunction) {
     setValue(on("--" + getName(), getArgs(), parseFunction));
 

@@ -11,42 +11,47 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class MutationParameter extends CategoricalParameter {
+
   public MutationParameter(String[] args, List<String> mutationOperators) {
     super("mutation", args, mutationOperators);
   }
 
   public MutationOperator<DoubleSolution> getParameter() {
     MutationOperator<DoubleSolution> result;
-    int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables") ;
-    double mutationProbability = (double) findGlobalParameter("mutationProbabilityFactor").getValue() * 1.0/numberOfProblemVariables;
+    int numberOfProblemVariables = (int) getNonConfigurableParameter("numberOfProblemVariables");
+    double mutationProbability = (double) findGlobalParameter(
+        "mutationProbabilityFactor").getValue() / numberOfProblemVariables;
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =
-            (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
+        (RepairDoubleSolutionStrategyParameter) findGlobalParameter("mutationRepairStrategy");
 
     switch (getValue()) {
       case "polynomial":
         Double distributionIndex =
-                (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
+            (Double) findSpecificParameter("polynomialMutationDistributionIndex").getValue();
         result =
-                new PolynomialMutation(
-                        mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
+            new PolynomialMutation(
+                mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "linkedPolynomial":
         distributionIndex =
-                (Double) findSpecificParameter("linkedPolynomialMutationDistributionIndex").getValue();
+            (Double) findSpecificParameter("linkedPolynomialMutationDistributionIndex").getValue();
         result =
-                new LinkedPolynomialMutation(
-                        mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
+            new LinkedPolynomialMutation(
+                mutationProbability, distributionIndex, repairDoubleSolution.getParameter());
         break;
       case "uniform":
-        Double perturbation = (Double) findSpecificParameter("uniformMutationPerturbation").getValue();
+        Double perturbation = (Double) findSpecificParameter(
+            "uniformMutationPerturbation").getValue();
         result =
-                new UniformMutation(mutationProbability, perturbation, repairDoubleSolution.getParameter());
+            new UniformMutation(mutationProbability, perturbation,
+                repairDoubleSolution.getParameter());
         break;
       case "nonUniform":
         perturbation = (Double) findSpecificParameter("nonUniformMutationPerturbation").getValue();
-        int maxIterations = (Integer) getNonConfigurableParameter("maxIterations") ;
+        int maxIterations = (Integer) getNonConfigurableParameter("maxIterations");
         result =
-                new NonUniformMutation(mutationProbability, perturbation, maxIterations, repairDoubleSolution.getParameter());
+            new NonUniformMutation(mutationProbability, perturbation, maxIterations,
+                repairDoubleSolution.getParameter());
         break;
       default:
         throw new JMetalException("Mutation operator does not exist: " + getName());
