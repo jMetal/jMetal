@@ -7,7 +7,7 @@ import org.uma.jmetal.util.errorchecking.JMetalException;
 /**
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class ProblemUtils {
+public class ProblemFactory {
 
   /**
    * Create an instance of problem passed as argument
