@@ -29,8 +29,8 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  */
 public class NSGAIIWithRealTimeChartExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT6";
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT6.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
