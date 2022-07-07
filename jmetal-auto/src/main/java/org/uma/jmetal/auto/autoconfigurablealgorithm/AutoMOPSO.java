@@ -47,7 +47,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @autor Daniel Doblas
  */
-public class AutoMOPSO {
+public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
 
@@ -78,6 +78,12 @@ public class AutoMOPSO {
 
   private InertiaWeightComputingParameter inertiaWeightComputingParameter;
 
+  @Override
+  public List<Parameter<?>> getAutoConfigurableParameterList() {
+    return autoConfigurableParameterList ;
+  }
+
+  @Override
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
 
@@ -279,7 +285,7 @@ public class AutoMOPSO {
 
     GlobalBestUpdate globalBestUpdate = globalBestUpdateParameter.getParameter();
     LocalBestUpdate localBestUpdate = localBestUpdateParameter.getParameter(
-        new DefaultDominanceComparator());
+        new DefaultDominanceComparator<DoubleSolution>());
 
     return new ParticleSwarmOptimizationAlgorithm("OMOPSO",
         swarmInitialization,

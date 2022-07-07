@@ -46,7 +46,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @autor Antonio J. Nebro
  */
-public class AutoNSGAII {
+public class AutoNSGAII implements AutoConfigurableAlgorithm {
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -61,6 +61,12 @@ public class AutoNSGAII {
   private SelectionParameter<DoubleSolution> selectionParameter;
   private VariationParameter variationParameter;
 
+  @Override
+  public List<Parameter<?>> getAutoConfigurableParameterList() {
+    return autoConfigurableParameterList ;
+  }
+
+  @Override
   public void parseAndCheckParameters(String[] args) {
     problemNameParameter = new StringParameter("problemName", args);
     referenceFrontFilename = new StringParameter("referenceFrontFileName", args);
