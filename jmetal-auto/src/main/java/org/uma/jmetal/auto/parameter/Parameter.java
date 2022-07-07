@@ -118,6 +118,10 @@ public abstract class Parameter<T> {
     return nonConfigurableParameters.get(parameterName) ;
   }
 
+  public  Map<String, Object> getNonConfigurableParameters() {
+    return nonConfigurableParameters ;
+  }
+
   public T getValue() {
     return value;
   }
@@ -131,7 +135,6 @@ public abstract class Parameter<T> {
   }
 
   public Parameter<?> findGlobalParameter(String parameterName) {
-
     return getGlobalParameters().stream()
         .filter(parameter -> parameter.getName().equals(parameterName))
         .findFirst()
@@ -139,7 +142,6 @@ public abstract class Parameter<T> {
   }
 
   public Parameter<?> findSpecificParameter(String parameterName) {
-
     return Objects.requireNonNull(getSpecificParameters().stream()
             .filter(pair -> pair.getRight().getName().equals(parameterName))
             .findFirst()

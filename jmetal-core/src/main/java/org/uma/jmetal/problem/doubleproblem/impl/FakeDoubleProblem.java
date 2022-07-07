@@ -10,7 +10,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
  */
 @SuppressWarnings("serial")
 public class FakeDoubleProblem extends AbstractDoubleProblem {
-
   public FakeDoubleProblem(int numberOfVariables, int numberOfObjectives,
       int numberOfConstraints) {
     setNumberOfObjectives(numberOfObjectives);
