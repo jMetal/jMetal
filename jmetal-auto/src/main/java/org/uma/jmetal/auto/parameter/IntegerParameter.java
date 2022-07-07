@@ -3,6 +3,7 @@ package org.uma.jmetal.auto.parameter;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class IntegerParameter extends Parameter<Integer> {
   private final Integer lowerBound;
@@ -17,7 +18,7 @@ public class IntegerParameter extends Parameter<Integer> {
   @Override
   public void check() {
     if ((getValue() < lowerBound) || (getValue() > upperBound)) {
-      throw new RuntimeException(
+      throw new JMetalException(
           "Parameter "
               + getName()
               + ": Invalid value: "

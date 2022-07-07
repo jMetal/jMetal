@@ -58,7 +58,7 @@ public abstract class Parameter<T> {
     this.args = args;
   }
 
-  public T on(String key, String[] args, Function<String, T> parser) {
+  private T on(String key, String[] args, Function<String, T> parser) {
     return parser.apply(retrieve(args, key));
   }
 

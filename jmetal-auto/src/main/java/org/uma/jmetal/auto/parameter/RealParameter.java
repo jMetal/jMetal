@@ -43,6 +43,9 @@ public class RealParameter extends Parameter<Double> {
     }
   }
 
+  /**
+   * @return A list with the lower and upper bounds delimiting the valid values
+   */
   public List<Double> getValidValues() {
     return List.of(lowerBound, upperBound);
   }
