@@ -36,7 +36,7 @@ import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.Defaul
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
@@ -53,7 +53,7 @@ public class AutoMOPSO {
 
   private StringParameter problemNameParameter;
   public StringParameter referenceFrontFilenameParameter;
-  public ExternalArchiveParameter leaderArchiveParameter;
+  public ExternalArchiveParameter<DoubleSolution> leaderArchiveParameter;
   public CategoricalParameter velocityInitializationParameter;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
@@ -189,7 +189,7 @@ public class AutoMOPSO {
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     // TODO: the upper bound  must be the swarm size
@@ -223,7 +223,7 @@ public class AutoMOPSO {
   }
 
   protected Problem<DoubleSolution> getProblem() {
-    return ProblemUtils.loadProblem(problemNameParameter.getValue());
+    return ProblemFactory.loadProblem(problemNameParameter.getValue());
   }
 
   /**

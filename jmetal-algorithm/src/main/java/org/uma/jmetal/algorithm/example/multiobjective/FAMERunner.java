@@ -24,7 +24,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 
@@ -55,7 +55,7 @@ public class FAMERunner extends AbstractAlgorithmRunner {
       problemName = args[0];
     }
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     selection = new SpatialSpreadDeviationSelection<>(5);
 

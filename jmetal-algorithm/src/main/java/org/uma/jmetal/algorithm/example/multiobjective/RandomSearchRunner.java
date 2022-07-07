@@ -9,7 +9,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -42,7 +42,7 @@ public class RandomSearchRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv" ;
     }
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = ProblemFactory.loadProblem(problemName);
 
     algorithm = new RandomSearchBuilder<DoubleSolution>(problem)
             .setMaxEvaluations(2500000)

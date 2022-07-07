@@ -29,7 +29,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.MultiComparator;
@@ -182,7 +182,7 @@ public class AutoMODE {
    */
   EvolutionaryAlgorithm<DoubleSolution> create() {
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 

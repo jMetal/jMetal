@@ -37,7 +37,4 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     }
   }
 
-  public SolutionsCreation<IntegerSolution> getParameter(IntegerProblem problem, int populationSize) {
-    return null  ;
-  }
 }

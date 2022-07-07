@@ -28,7 +28,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -69,7 +69,7 @@ public class MicroFAMERunner extends AbstractAlgorithmRunner {
       evaluations = Integer.parseInt(args[2]);
     }
 
-    problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     crossover = new NullCrossover<>();
     mutation = new NullMutation<>();

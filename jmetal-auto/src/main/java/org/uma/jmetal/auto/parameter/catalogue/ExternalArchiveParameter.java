@@ -2,6 +2,7 @@ package org.uma.jmetal.auto.parameter.catalogue;
 
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.BestSolutionsArchive;
@@ -12,7 +13,7 @@ import org.uma.jmetal.util.archive.impl.SpatialSpreadDeviationArchive;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.impl.WFGHypervolume;
 
-public class ExternalArchiveParameter extends CategoricalParameter {
+public class ExternalArchiveParameter<S extends Solution<?>> extends CategoricalParameter {
   private int size ;
   public ExternalArchiveParameter(String parameterName, String[] args, List<String> archiveTypes) {
     super(parameterName, args, archiveTypes);
@@ -22,8 +23,8 @@ public class ExternalArchiveParameter extends CategoricalParameter {
     this("externalArchive", args, archiveTypes);
   }
 
-  public Archive<DoubleSolution> getParameter() {
-    Archive<DoubleSolution> archive;
+  public Archive<S> getParameter() {
+    Archive<S> archive;
 
     switch (getValue()) {
       case "crowdingDistanceArchive":

@@ -47,7 +47,7 @@ public class WASFGARunner extends AbstractAlgorithmRunner {
     String referenceParetoFront = "";
     List<Double> referencePoint = null;
 
-    // problem = ProblemUtils.<DoubleSolution> loadProblem(problemName);
+    // problem = ProblemFactory.<DoubleSolution> loadProblem(problemName);
     problem = new MultiobjectiveTSP("resources/tspInstances/kroA100.tsp", "resources/tspInstances/kroB100.tsp");
 
     referencePoint = new ArrayList<>();

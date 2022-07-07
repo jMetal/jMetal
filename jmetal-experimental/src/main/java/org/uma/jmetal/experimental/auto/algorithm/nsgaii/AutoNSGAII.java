@@ -30,7 +30,7 @@ import org.uma.jmetal.experimental.componentbasedalgorithm.util.Preference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -135,7 +135,7 @@ public class AutoNSGAII {
             new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables", problem.getNumberOfVariables());
 
     //DifferentialEvolutionCrossoverParameter differentialEvolutionCrossover =
@@ -187,7 +187,7 @@ public class AutoNSGAII {
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 

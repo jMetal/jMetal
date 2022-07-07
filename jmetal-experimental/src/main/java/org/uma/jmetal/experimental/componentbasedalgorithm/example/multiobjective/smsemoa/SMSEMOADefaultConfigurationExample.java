@@ -11,7 +11,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -33,7 +33,7 @@ public class SMSEMOADefaultConfigurationExample extends AbstractAlgorithmRunner 
     String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT2";
     String referenceParetoFront = "resources/referenceFrontsCSV/ZDT2.csv";
 
-    problem = ProblemUtils.loadProblem(problemName);
+    problem = ProblemFactory.loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

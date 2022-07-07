@@ -14,7 +14,7 @@ import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -52,7 +52,7 @@ public class NSGAIIBinaryRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "" ;
     }
 
-    problem = (BinaryProblem) ProblemUtils.<BinarySolution> loadProblem(problemName);
+    problem = (BinaryProblem) ProblemFactory.<BinarySolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     crossover = new SinglePointCrossover(crossoverProbability) ;

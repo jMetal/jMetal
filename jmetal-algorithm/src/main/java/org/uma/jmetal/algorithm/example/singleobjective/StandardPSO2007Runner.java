@@ -8,7 +8,7 @@ import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.Standa
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.MultiThreadedSolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
@@ -33,7 +33,7 @@ public class StandardPSO2007Runner {
 
     String problemName = "org.uma.jmetal.problem.singleobjective.Sphere";
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     int numberOfCores;
     if (args.length == 1) {

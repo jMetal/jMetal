@@ -16,7 +16,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.comparator.RankingAndDirScoreDistanceComparator;
 import org.uma.jmetal.util.fileinput.VectorFileUtils;
 
@@ -34,7 +34,7 @@ public class DNSGAIIRunner extends AbstractAlgorithmRunner {
 
     // problem
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     // crossover
     double crossoverProbability = 0.9;

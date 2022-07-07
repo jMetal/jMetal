@@ -10,7 +10,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -40,7 +40,7 @@ public class PAESWithCrowdingDistanceArchiveRunner extends AbstractAlgorithmRunn
       referenceParetoFront = "resources/referenceFrontsCSV/Kursawe.csv";
     }
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
         new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);

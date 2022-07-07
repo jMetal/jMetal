@@ -11,7 +11,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.archive.impl.GenericBoundedArchive;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -28,7 +28,7 @@ public class MOSARunner extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2_2D";
     String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ2.2D.csv";
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemName);
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemName);
 
     MutationOperator<DoubleSolution> mutation =
             new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);

@@ -8,7 +8,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
@@ -37,7 +37,7 @@ public class MOEADDEWithUnboundedNonDominatedArchiveExample extends AbstractAlgo
     String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
     String referenceParetoFront = "resources/referenceFronts/DTLZ1.3D.csv";
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     int populationSize = 300;
 

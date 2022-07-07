@@ -6,7 +6,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.multiobjective.lsmop.LSMOP3;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.observer.impl.EvaluationObserver;
@@ -31,7 +31,7 @@ public class MOEADDEWithRealTimeChartExample extends AbstractAlgorithmRunner {
     String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
     String referenceParetoFront = "resources/referenceFronts/LZ09_F2.csv";
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
     problem = new LSMOP3(5, 100, 2) ;
 
     int populationSize = 300;

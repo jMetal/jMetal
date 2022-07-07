@@ -15,7 +15,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
@@ -54,7 +54,7 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "";
     }
 
-    problem = ProblemUtils.<IntegerSolution> loadProblem(problemName);
+    problem = ProblemFactory.<IntegerSolution> loadProblem(problemName);
 
     double crossoverProbability = 0.9 ;
     double crossoverDistributionIndex = 20.0 ;

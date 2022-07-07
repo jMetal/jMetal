@@ -30,7 +30,7 @@ import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DominanceWithConstraintsComparator;
@@ -53,7 +53,7 @@ public class AutoNSGAII {
   public StringParameter referenceFrontFilename;
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private CategoricalParameter algorithmResultParameter;
-  private ExternalArchiveParameter externalArchiveParameter;
+  private ExternalArchiveParameter<DoubleSolution> externalArchiveParameter;
   private PositiveIntegerValue populationSizeParameter;
   private IntegerParameter populationSizeWithArchiveParameter;
   private IntegerParameter offspringPopulationSizeParameter;
@@ -94,7 +94,7 @@ public class AutoNSGAII {
 
   private void variation(String[] args) {
     CrossoverParameter crossoverParameter = new CrossoverParameter(args,
-        Arrays.asList("SBX", "BLX_ALPHA"));
+        List.of("SBX", "BLX_ALPHA"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
     crossoverParameter.addGlobalParameter(crossoverProbability);
@@ -138,7 +138,7 @@ public class AutoNSGAII {
         new RealParameter("nonUniformMutationPerturbation", args, 0.0, 1.0);
     mutationParameter.addSpecificParameter("nonUniform", nonUniformMutationPerturbation);
 
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
     mutationParameter.addNonConfigurableParameter("numberOfProblemVariables",
         problem.getNumberOfVariables());
 
@@ -185,7 +185,7 @@ public class AutoNSGAII {
    * @return
    */
   public EvolutionaryAlgorithm<DoubleSolution> create() {
-    Problem<DoubleSolution> problem = ProblemUtils.loadProblem(problemNameParameter.getValue());
+    Problem<DoubleSolution> problem = ProblemFactory.loadProblem(problemNameParameter.getValue());
 
     Archive<DoubleSolution> archive = null;
 

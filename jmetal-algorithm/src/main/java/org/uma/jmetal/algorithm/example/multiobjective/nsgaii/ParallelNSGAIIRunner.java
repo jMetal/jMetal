@@ -20,7 +20,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
+import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.chartcontainer.ChartContainer;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.GDominanceComparator;
@@ -63,7 +63,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
       referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
     }
 
-    problem = (DoubleProblem) ProblemUtils.<DoubleSolution>loadProblem(problemName);
+    problem = (DoubleProblem) ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
@@ -130,7 +130,7 @@ public class ParallelNSGAIIRunner extends AbstractAlgorithmRunner {
         referenceParetoFront = "jmetal-problem/src/test/resources/pareto_fronts/ZDT1.pf";
       }
 
-      problem = ProblemUtils.<DoubleSolution>loadProblem(problemName);
+      problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
       double crossoverProbability = 0.9;
       double crossoverDistributionIndex = 20.0;
