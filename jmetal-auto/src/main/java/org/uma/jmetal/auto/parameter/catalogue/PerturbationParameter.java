@@ -19,7 +19,7 @@ public class  PerturbationParameter extends CategoricalParameter {
     if ("frequencySelectionMutationBasedPerturbation".equals(getValue())) {
       MutationParameter mutationParameter = (MutationParameter) findSpecificParameter("mutation");
       MutationOperator<DoubleSolution> mutationOperator =
-          mutationParameter.getParameter();
+          mutationParameter.getDoubleSolutionParameter();
 
       int frequencyOfApplication = (int) findSpecificParameter(
           "frequencyOfApplicationOfMutationOperator").getValue();

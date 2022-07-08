@@ -9,7 +9,6 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 public class VelocityUpdateParameter extends CategoricalParameter {
-
   public VelocityUpdateParameter(String[] args, List<String> validValues) {
     super("velocityUpdate", args, validValues);
   }

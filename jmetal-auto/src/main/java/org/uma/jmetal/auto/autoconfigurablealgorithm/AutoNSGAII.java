@@ -221,7 +221,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       mutationParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
     }
-    Variation<DoubleSolution> variation = variationParameter.getParameter();
+    Variation<DoubleSolution> variation = variationParameter.getDoubleSolutionParameter();
 
     MatingPoolSelection<DoubleSolution> selection =
         selectionParameter.getParameter(

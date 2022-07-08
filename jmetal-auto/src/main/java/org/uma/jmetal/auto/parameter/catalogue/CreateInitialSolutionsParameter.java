@@ -6,8 +6,10 @@ import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCrea
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.LatinHypercubeSamplingSolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.ScatterSearchSolutionsCreation;
+import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.integerproblem.IntegerProblem;
+import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -37,4 +39,13 @@ public class CreateInitialSolutionsParameter extends CategoricalParameter {
     }
   }
 
+  public SolutionsCreation<BinarySolution> getParameter(BinaryProblem problem, int populationSize) {
+    switch (getValue()) {
+      case "random":
+        return new RandomSolutionsCreation<>(problem, populationSize);
+      default:
+        throw new JMetalException(
+            getValue() + " is not a valid initialization strategy");
+    }
+  }
 }
