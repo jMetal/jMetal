@@ -73,8 +73,6 @@ public class PESA2IT {
 
     String referenceFrontFileName = "../resources/referenceFrontsCSV/ConstrEx.csv" ;
 
-    printFinalSolutionSet(population);
-
     double[][] referenceFront = VectorUtils.readVectors(referenceFrontFileName, ",") ;
     QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
 
