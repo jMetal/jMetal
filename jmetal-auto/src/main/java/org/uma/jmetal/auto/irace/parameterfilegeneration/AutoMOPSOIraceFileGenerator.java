@@ -1,7 +1,6 @@
 package org.uma.jmetal.auto.irace.parameterfilegeneration;
 
 import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoMOPSO;
-import org.uma.jmetal.auto.autoconfigurablealgorithm.AutoNSGAII;
 
 /**
  * Program to generate the irace configuration file for class {@link AutoMOPSO}

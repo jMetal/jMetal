@@ -1,6 +1,5 @@
 package org.uma.jmetal.component.examples.singleobjective.cellulargeneticalgorithm;
 
-import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
