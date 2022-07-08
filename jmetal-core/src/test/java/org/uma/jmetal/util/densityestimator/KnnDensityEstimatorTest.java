@@ -12,11 +12,11 @@ import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.densityestimator.impl.KnnDensityEstimator;
 
-public class KnnDensityEstimatorTest {
+class KnnDensityEstimatorTest {
   private double EPSILON = 0.00000000000001;
 
   @Test
-  public void shouldDensityEstimatorComputeTheRightDistancesCase1() {
+  void shouldDensityEstimatorComputeTheRightDistancesCase1() {
     /*
          5 1
          4   2
@@ -60,7 +60,7 @@ public class KnnDensityEstimatorTest {
   }
 
   @Test
-  public void shouldSortOrderTheSolutions() {
+  void shouldSortOrderTheSolutions() {
     /*
          5 1
          4   2

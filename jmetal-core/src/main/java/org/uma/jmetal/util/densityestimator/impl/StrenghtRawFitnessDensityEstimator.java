@@ -40,8 +40,8 @@ public class StrenghtRawFitnessDensityEstimator<S extends Solution<?>>
 
     // strength(i) = |{j | j <- SolutionSet and i dominate j}|
     for (int i = 0; i < solutionList.size(); i++) {
-      for (int j = 0; j < solutionList.size(); j++) {
-        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solutionList.get(j)) == -1) {
+      for (S solution : solutionList) {
+        if (DOMINANCE_COMPARATOR.compare(solutionList.get(i), solution) == -1) {
           strength[i] += 1.0;
         }
       }

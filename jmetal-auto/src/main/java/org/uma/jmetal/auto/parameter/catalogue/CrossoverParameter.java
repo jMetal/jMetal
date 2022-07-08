@@ -14,11 +14,11 @@ public class CrossoverParameter extends CategoricalParameter {
   }
 
   public CrossoverOperator<DoubleSolution> getParameter() {
-    CrossoverOperator<DoubleSolution> result;
     Double crossoverProbability = (Double) findGlobalParameter("crossoverProbability").getValue();
     RepairDoubleSolutionStrategyParameter repairDoubleSolution =
         (RepairDoubleSolutionStrategyParameter) findGlobalParameter("crossoverRepairStrategy");
 
+    CrossoverOperator<DoubleSolution> result;
     switch (getValue()) {
       case "SBX":
         Double distributionIndex =
