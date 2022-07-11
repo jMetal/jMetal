@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -58,12 +59,12 @@ public class NSGAIIWithUnboundedArchiveExample {
         crossover,
         mutation)
         .setTermination(termination)
-        .setArchive(externalArchive)
+        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, externalArchive))
         .build();
 
     nsgaii.run();
 
-    List<DoubleSolution> population = nsgaii.getResult();
+    List<DoubleSolution> population = externalArchive.getSolutionList();
     JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 

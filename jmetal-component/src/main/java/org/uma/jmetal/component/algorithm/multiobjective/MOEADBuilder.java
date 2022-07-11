@@ -20,7 +20,6 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
@@ -31,7 +30,6 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
  */
 public class MOEADBuilder<S extends Solution<?>> {
   private String name;
-  private Archive<S> externalArchive;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -94,8 +92,6 @@ public class MOEADBuilder<S extends Solution<?>> {
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
-
-    this.externalArchive = null;
   }
 
   public MOEADBuilder<S> setTermination(Termination termination) {
@@ -103,13 +99,6 @@ public class MOEADBuilder<S extends Solution<?>> {
 
     return this;
   }
-
-  public MOEADBuilder<S> setArchive(Archive<S> externalArchive) {
-    this.externalArchive = externalArchive;
-
-    return this;
-  }
-
 
   public MOEADBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;

@@ -3,7 +3,6 @@ package org.uma.jmetal.component.algorithm.multiobjective;
 import java.util.Arrays;
 import java.util.Comparator;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithmWithExternalArchive;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
@@ -20,7 +19,6 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.comparator.MultiComparator;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
@@ -36,7 +34,6 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   private String name;
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
-  private Archive<S> externalArchive;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -73,18 +70,10 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
-
-    this.externalArchive = null;
   }
 
   public NSGAIIBuilder<S> setTermination(Termination termination) {
     this.termination = termination;
-
-    return this;
-  }
-
-  public NSGAIIBuilder<S> setArchive(Archive<S> externalArchive) {
-    this.externalArchive = externalArchive;
 
     return this;
   }
@@ -105,10 +94,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
-    if (externalArchive == null) {
       return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
           selection, variation, replacement);
-    } else return new EvolutionaryAlgorithmWithExternalArchive<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement, externalArchive) ;
   }
 }

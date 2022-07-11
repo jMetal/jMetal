@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
@@ -59,12 +60,12 @@ public class MOEADWithUnboundedArchiveExample {
         weightVectorDirectory,
         sequenceGenerator)
         .setTermination(termination)
-        .setArchive(externalArchive)
+        .setEvaluation(new SequentialEvaluationWithArchive<DoubleSolution>(problem, externalArchive))
         .build();
 
     moead.run();
 
-    List<DoubleSolution> population = moead.getResult();
+    List<DoubleSolution> population = externalArchive.getSolutionList();
     JMetalLogger.logger.info("Total execution time : " + moead.getTotalComputingTime() + "ms");
     JMetalLogger.logger.info("Number of evaluations: " + moead.getNumberOfEvaluations());
 
