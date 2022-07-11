@@ -48,7 +48,7 @@ public class NSGAIIWithUnboundedArchiveExample {
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(40000);
 
     Archive<DoubleSolution> externalArchive = new BestSolutionsArchive<>(new NonDominatedSolutionListArchive<>(), populationSize) ;
 

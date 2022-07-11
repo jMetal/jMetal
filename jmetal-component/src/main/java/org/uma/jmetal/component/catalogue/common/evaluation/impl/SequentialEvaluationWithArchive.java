@@ -26,4 +26,8 @@ public class SequentialEvaluationWithArchive<S extends Solution<?>> extends Sequ
 
     return solutions ;
   }
+
+  public Archive<S> getArchive() {
+    return archive ;
+  }
 }

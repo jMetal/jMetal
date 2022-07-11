@@ -19,9 +19,9 @@ import org.uma.jmetal.auto.parameter.catalogue.RepairDoubleSolutionStrategyParam
 import org.uma.jmetal.auto.parameter.catalogue.SelectionParameter;
 import org.uma.jmetal.auto.parameter.catalogue.VariationParameter;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
-import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithmWithExternalArchive;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
@@ -229,7 +229,13 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         selectionParameter.getParameter(
             variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
-    Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem);
+    Evaluation<DoubleSolution> evaluation ;
+    if (algorithmResultParameter.getValue().equals("externalArchive")) {
+      evaluation = new SequentialEvaluationWithArchive<>(problem, archive);
+    } else {
+      evaluation = new SequentialEvaluation<>(problem);
+    }
+
 
     RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
         ranking, densityEstimator);
@@ -241,17 +247,23 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      return new EvolutionaryAlgorithmWithExternalArchive<>(
+      return new EvolutionaryAlgorithm<>(
           "NSGA-II",
           initialSolutionsCreation,
           evaluation,
           termination,
           selection,
           variation,
-          replacement,
-          archive);
+          replacement) {
+
+        @Override
+        public List<DoubleSolution> getResult() {
+          return ((SequentialEvaluationWithArchive)getEvaluation()).getArchive().getSolutionList() ;
+        }
+      };
+
     } else {
-      return new EvolutionaryAlgorithm(
+      return new EvolutionaryAlgorithm<>(
           "NSGA-II",
           initialSolutionsCreation,
           evaluation,
