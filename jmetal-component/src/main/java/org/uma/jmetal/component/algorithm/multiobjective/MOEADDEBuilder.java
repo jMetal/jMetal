@@ -97,8 +97,6 @@ public class MOEADDEBuilder {
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
-
-    this.externalArchive = null;
   }
 
   public MOEADDEBuilder setTermination(Termination termination) {
@@ -158,6 +156,6 @@ public class MOEADDEBuilder {
 
   public EvolutionaryAlgorithm<DoubleSolution> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement, externalArchive);
+        selection, variation, replacement);
   }
 }

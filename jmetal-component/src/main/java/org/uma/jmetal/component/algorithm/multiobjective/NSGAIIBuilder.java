@@ -2,6 +2,7 @@ package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -104,7 +105,34 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   }
 
   public EvolutionaryAlgorithm<S> build() {
-    return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement, externalArchive);
+    if (externalArchive == null) {
+      return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
+          selection, variation, replacement);
+    } else return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
+        selection, variation, replacement) {
+      private void updateArchive(List<S> population) {
+        for (S solution : population) {
+          externalArchive.add(solution);
+        }
+      }
+
+      @Override
+      protected void initProgress() {
+        super.initProgress();
+        updateArchive(getPopulation());
+      }
+
+      @Override
+      protected void updateProgress() {
+        super.updateProgress();
+        updateArchive(getPopulation());
+      }
+
+      @Override
+      public List<S> getResult() {
+        return externalArchive.getSolutionList() ;
+      }
+    } ;
+
   }
 }

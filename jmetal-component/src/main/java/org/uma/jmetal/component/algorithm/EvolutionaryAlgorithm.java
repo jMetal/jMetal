@@ -11,7 +11,6 @@ import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
@@ -21,7 +20,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity {
 
   private List<S> population;
-  private Archive<S> externalArchive;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -46,40 +44,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
    * @param selection
    * @param variation
    * @param replacement
-   * @param externalArchive
-   */
-  public EvolutionaryAlgorithm(
-      String name,
-      SolutionsCreation<S> initialPopulationCreation,
-      Evaluation<S> evaluation,
-      Termination termination,
-      MatingPoolSelection<S> selection,
-      Variation<S> variation,
-      Replacement<S> replacement,
-      Archive<S> externalArchive) {
-    this.name = name;
-    this.createInitialPopulation = initialPopulationCreation;
-    this.evaluation = evaluation;
-    this.termination = termination;
-    this.selection = selection;
-    this.variation = variation;
-    this.replacement = replacement;
-    this.externalArchive = externalArchive;
-
-    this.observable = new DefaultObservable<>("Evolutionary Algorithm");
-    this.attributes = new HashMap<>();
-  }
-
-  /**
-   * Constructor
-   *
-   * @param name                      Algorithm name
-   * @param evaluation
-   * @param initialPopulationCreation
-   * @param termination
-   * @param selection
-   * @param variation
-   * @param replacement
    */
   public EvolutionaryAlgorithm(
       String name,
@@ -89,15 +53,16 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       MatingPoolSelection<S> selection,
       Variation<S> variation,
       Replacement<S> replacement) {
-    this(
-        name,
-        initialPopulationCreation,
-        evaluation,
-        termination,
-        selection,
-        variation,
-        replacement,
-        null);
+    this.name = name;
+    this.createInitialPopulation = initialPopulationCreation;
+    this.evaluation = evaluation;
+    this.termination = termination;
+    this.selection = selection;
+    this.variation = variation;
+    this.replacement = replacement;
+
+    this.observable = new DefaultObservable<>("Evolutionary Algorithm");
+    this.attributes = new HashMap<>();
   }
 
   public void run() {
@@ -118,18 +83,8 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     totalComputingTime = System.currentTimeMillis() - initTime;
   }
 
-  private void updateArchive(List<S> population) {
-    for (S solution : population) {
-      externalArchive.add(solution);
-    }
-  }
-
   protected void initProgress() {
     evaluations = population.size();
-
-    if (externalArchive != null) {
-      updateArchive(population);
-    }
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
@@ -138,10 +93,6 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   protected void updateProgress() {
     evaluations += variation.getOffspringPopulationSize();
-
-    if (externalArchive != null) {
-      updateArchive(population);
-    }
 
     attributes.put("EVALUATIONS", evaluations);
     attributes.put("POPULATION", population);
@@ -167,11 +118,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
 
   @Override
   public List<S> getResult() {
-    if (externalArchive != null) {
-      return externalArchive.getSolutionList();
-    } else {
-      return population;
-    }
+    return population;
   }
 
   public void updatePopulation(List<S> newPopulation) {

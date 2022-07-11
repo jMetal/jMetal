@@ -18,7 +18,6 @@ import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.densityestimator.DensityEstimator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.legacy.qualityindicator.impl.hypervolume.Hypervolume;
@@ -35,7 +34,6 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   private String name;
   private Ranking<S> ranking;
   private DensityEstimator<S> densityEstimator;
-  private Archive<S> externalArchive;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
@@ -63,18 +61,10 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.termination = new TerminationByEvaluations(25000);
 
     this.evaluation = new SequentialEvaluation<>(problem);
-
-    this.externalArchive = null;
   }
 
   public SMSEMOABuilder<S> setTermination(Termination termination) {
     this.termination = termination;
-
-    return this;
-  }
-
-  public SMSEMOABuilder<S> setArchive(Archive<S> externalArchive) {
-    this.externalArchive = externalArchive;
 
     return this;
   }
@@ -96,6 +86,6 @@ public class SMSEMOABuilder<S extends Solution<?>> {
 
   public EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement, externalArchive);
+        selection, variation, replacement);
   }
 }

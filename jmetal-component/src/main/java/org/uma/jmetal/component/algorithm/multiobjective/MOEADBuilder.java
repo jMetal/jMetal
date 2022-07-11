@@ -155,6 +155,6 @@ public class MOEADBuilder<S extends Solution<?>> {
 
   public EvolutionaryAlgorithm<S> build() {
     return new EvolutionaryAlgorithm<>(name, createInitialPopulation, evaluation, termination,
-        selection, variation, replacement, externalArchive);
+        selection, variation, replacement);
   }
 }
