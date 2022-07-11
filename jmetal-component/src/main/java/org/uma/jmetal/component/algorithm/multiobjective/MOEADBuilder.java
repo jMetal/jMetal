@@ -1,8 +1,6 @@
 package org.uma.jmetal.component.algorithm.multiobjective;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Comparator;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
@@ -12,9 +10,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
-import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
@@ -25,17 +21,11 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.archive.Archive;
-import org.uma.jmetal.util.comparator.MultiComparator;
-import org.uma.jmetal.util.densityestimator.DensityEstimator;
-import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
-import org.uma.jmetal.util.ranking.Ranking;
-import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
 
 /**
- * Class to configure and build an instance of the NSGA-II algorithm
+ * Class to configure and build an instance of the MOEA/D algorithm
  *
  * @param <S>
  */

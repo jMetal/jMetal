@@ -13,29 +13,22 @@ import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
 import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
-import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialCrossoverVariation;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
-import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.neighborhood.impl.WeightVectorNeighborhood;
-import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
-import org.uma.jmetal.util.sequencegenerator.impl.IntegerBoundedSequenceGenerator;
 
 /**
- * Class to configure and build an instance of the NSGA-II algorithm
+ * Class to configure and build an instance of the MOEA/D-DE algorithm
  *
  */
 public class MOEADDEBuilder {
-
   private String name;
   private Archive<DoubleSolution> externalArchive;
   private Evaluation<DoubleSolution> evaluation;
@@ -119,7 +112,6 @@ public class MOEADDEBuilder {
 
     return this;
   }
-
 
   public MOEADDEBuilder setEvaluation(Evaluation<DoubleSolution> evaluation) {
     this.evaluation = evaluation;
