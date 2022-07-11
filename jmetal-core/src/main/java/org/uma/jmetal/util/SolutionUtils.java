@@ -76,7 +76,7 @@ public class SolutionUtils {
   }
 
   public static <S extends Solution<?>> double normalizedDistanceBetweenObjectives(
-      S firstSolution, S secondSolution, double maxs[], double mins[]) {
+      S firstSolution, S secondSolution, double[] maxs, double[] mins) {
 
     double diff;
     double distance = 0.0;
