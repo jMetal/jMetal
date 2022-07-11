@@ -91,7 +91,6 @@ public class SMPSOBuilder {
 
     int frequencyOfMutation = 6;
     MutationOperator<DoubleSolution> mutationOperator = new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0) ;
-    //mutationOperator = new UniformMutation(1.0/problem.getNumberOfVariables(), 0.5) ;
     perturbation = new FrequencySelectionMutationBasedPerturbation(mutationOperator, frequencyOfMutation);
     globalBestUpdate = new DefaultGlobalBestUpdate();
     localBestUpdate = new DefaultLocalBestUpdate(new DefaultDominanceComparator<>());
