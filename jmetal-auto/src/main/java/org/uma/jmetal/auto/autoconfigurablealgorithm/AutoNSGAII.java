@@ -47,6 +47,7 @@ import org.uma.jmetal.util.ranking.impl.FastNonDominatedSortRanking;
  * @autor Antonio J. Nebro
  */
 public class AutoNSGAII implements AutoConfigurableAlgorithm {
+
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
   public List<Parameter<?>> fixedParameterList = new ArrayList<>();
   private StringParameter problemNameParameter;
@@ -63,7 +64,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
   @Override
   public List<Parameter<?>> getAutoConfigurableParameterList() {
-    return autoConfigurableParameterList ;
+    return autoConfigurableParameterList;
   }
 
   @Override
@@ -238,15 +239,76 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
-    return new EvolutionaryAlgorithm<>(
-        "NSGA-II",
-        initialSolutionsCreation,
-        evaluation,
-        termination,
-        selection,
-        variation,
-        replacement,
-        archive);
+    class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
+
+      private Archive<DoubleSolution> archive;
+
+      /**
+       * Constructor
+       *
+       * @param name                      Algorithm name
+       * @param initialPopulationCreation
+       * @param evaluation
+       * @param termination
+       * @param selection
+       * @param variation
+       * @param replacement
+       */
+      public EvolutionaryAlgorithmWithArchive(String name,
+          SolutionsCreation<DoubleSolution> initialPopulationCreation,
+          Evaluation<DoubleSolution> evaluation, Termination termination,
+          MatingPoolSelection<DoubleSolution> selection, Variation<DoubleSolution> variation,
+          Replacement<DoubleSolution> replacement,
+          Archive<DoubleSolution> archive) {
+        super(name, initialPopulationCreation, evaluation, termination, selection, variation,
+            replacement);
+        this.archive = archive;
+      }
+
+      private void updateArchive() {
+        for (DoubleSolution solution : getPopulation()) {
+          archive.add(solution);
+        }
+      }
+
+      @Override
+      protected void initProgress() {
+        super.initProgress();
+        updateArchive();
+      }
+
+      @Override
+      protected void updateProgress() {
+        super.updateProgress();
+        updateArchive();
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        return archive.getSolutionList();
+      }
+    }
+
+    if (algorithmResultParameter.getValue().equals("externalArchive")) {
+      return new EvolutionaryAlgorithmWithArchive(
+          "NSGA-II",
+          initialSolutionsCreation,
+          evaluation,
+          termination,
+          selection,
+          variation,
+          replacement, archive);
+    } else {
+      return new EvolutionaryAlgorithm(
+          "NSGA-II",
+          initialSolutionsCreation,
+          evaluation,
+          termination,
+          selection,
+          variation,
+          replacement);
+    }
+
   }
 
   public static void print(List<Parameter<?>> parameterList) {
