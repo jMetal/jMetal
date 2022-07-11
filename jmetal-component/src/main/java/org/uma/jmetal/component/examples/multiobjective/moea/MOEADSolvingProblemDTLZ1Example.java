@@ -15,12 +15,15 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
@@ -47,16 +50,23 @@ public class MOEADSolvingProblemDTLZ1Example {
 
     int populationSize = 91;
 
-    Termination termination = new TerminationByEvaluations(50000);
+    Termination termination = new TerminationByEvaluations(30000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
+
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
         mutation,
-        weightVectorDirectory)
+        weightVectorDirectory,
+        sequenceGenerator)
         .setTermination(termination)
+        .setMaximumNumberOfReplacedSolutionsy(2)
+        .setNeighborhoodSelectionProbability(0.9)
+        .setNeighborhoodSize(20)
+        .setAggregativeFunction(new PenaltyBoundaryIntersection())
         .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =

@@ -21,6 +21,8 @@ import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
+import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
+import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 import org.uma.jmetal.util.termination.Termination;
 import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
@@ -50,12 +52,14 @@ public class MOEADWithRealTimeChartExample {
     Termination termination = new TerminationByEvaluations(25000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
+    SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
         populationSize,
         crossover,
         mutation,
-        weightVectorDirectory)
+        weightVectorDirectory,
+        sequenceGenerator)
         .setTermination(termination)
         .build();
 

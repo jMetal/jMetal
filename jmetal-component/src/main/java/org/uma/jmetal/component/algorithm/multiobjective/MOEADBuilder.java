@@ -49,15 +49,15 @@ public class MOEADBuilder<S extends Solution<?>> {
   private Variation<S> variation;
   private Replacement<S> replacement;
 
-  private int neighborhoodSize ;
-  private double neighborhoodSelectionProbability ;
-  private int maximumNumberOfReplacedSolutions ;
+  private int neighborhoodSize = 20 ;
+  private double neighborhoodSelectionProbability = 0.9 ;
+  private int maximumNumberOfReplacedSolutions = 2;
   private String weightVectorDirectory ;
-  private SequenceGenerator<Integer> sequenceGenerator ;
-  private AggregativeFunction aggregativeFunction ;
+  private AggregativeFunction aggregativeFunction = new PenaltyBoundaryIntersection() ;
 
   public MOEADBuilder(Problem<S> problem, int populationSize,
-      CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory) {
+      CrossoverOperator<S> crossover, MutationOperator<S> mutation, String weightVectorDirectory,
+      SequenceGenerator<Integer> sequenceGenerator) {
     name = "MOEAD";
 
     this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
@@ -70,7 +70,6 @@ public class MOEADBuilder<S extends Solution<?>> {
     WeightVectorNeighborhood<S> neighborhood = null;
     this.weightVectorDirectory = weightVectorDirectory ;
 
-    neighborhoodSize = 20 ;
     if (problem.getNumberOfObjectives() == 2) {
       neighborhood = new WeightVectorNeighborhood<>(populationSize, neighborhoodSize);
     } else {
@@ -80,26 +79,22 @@ public class MOEADBuilder<S extends Solution<?>> {
                 populationSize,
                 problem.getNumberOfObjectives(),
                 neighborhoodSize,
-                weightVectorDirectory);
+                this.weightVectorDirectory);
       } catch (FileNotFoundException exception) {
         exception.printStackTrace();
       }
     }
 
-    neighborhoodSelectionProbability=0.9 ;
-    sequenceGenerator = new IntegerBoundedSequenceGenerator(populationSize);
     this.selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<S>(
+        new PopulationAndNeighborhoodMatingPoolSelection<>(
             variation.getMatingPoolSize(),
             sequenceGenerator,
             neighborhood,
             neighborhoodSelectionProbability,
             true);
 
-    maximumNumberOfReplacedSolutions = 2 ;
-    aggregativeFunction = new PenaltyBoundaryIntersection() ;
     this.replacement =
-        new MOEADReplacement(
+        new MOEADReplacement<>(
             (PopulationAndNeighborhoodMatingPoolSelection<S>) selection,
             neighborhood,
             aggregativeFunction,
@@ -128,6 +123,42 @@ public class MOEADBuilder<S extends Solution<?>> {
 
   public MOEADBuilder<S> setEvaluation(Evaluation<S> evaluation) {
     this.evaluation = evaluation;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setNeighborhoodSelectionProbability(double neighborhoodSelectionProbability) {
+    this.neighborhoodSelectionProbability = neighborhoodSelectionProbability;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setMaximumNumberOfReplacedSolutionsy(int maximumNumberOfReplacedSolutions) {
+    this.maximumNumberOfReplacedSolutions = maximumNumberOfReplacedSolutions;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setNeighborhoodSize(int neighborhoodSize) {
+    this.neighborhoodSize = neighborhoodSize;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setAggregativeFunction(AggregativeFunction aggregativeFunction) {
+    this.aggregativeFunction = aggregativeFunction;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setVariation(Variation<S> variation) {
+    this.variation = variation;
+
+    return this;
+  }
+
+  public MOEADBuilder<S> setSelection(MatingPoolSelection<S> selection) {
+    this.selection = selection;
 
     return this;
   }
