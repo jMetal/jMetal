@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.auto.experiments.escalability;
 import static org.uma.jmetal.util.VectorUtils.readVectors;
 
 import java.io.IOException;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByQualityIndicator;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.auto.algorithm.mopso.AutoMOPSO;
 import org.uma.jmetal.problem.Problem;
@@ -11,7 +12,6 @@ import org.uma.jmetal.qualityindicator.impl.hypervolume.impl.PISAHypervolume;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.termination.impl.TerminationByQualityIndicator;
 
 /**
  * @author Daniel Doblas

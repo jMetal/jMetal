@@ -3,6 +3,7 @@ package org.uma.jmetal.experimental.auto.experiments.escalability;
 import static org.uma.jmetal.util.VectorUtils.readVectors;
 
 import java.io.IOException;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByQualityIndicator;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
@@ -27,7 +28,6 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.termination.impl.TerminationByQualityIndicator;
 
 public class SMPSO {
 

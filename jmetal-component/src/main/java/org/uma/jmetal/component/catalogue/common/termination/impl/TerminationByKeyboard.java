@@ -1,9 +1,9 @@
-package org.uma.jmetal.util.termination.impl;
+package org.uma.jmetal.component.catalogue.common.termination.impl;
 
 import java.util.Map;
 import java.util.Scanner;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.termination.Termination;
 
 /**
  * Class that allows to check the termination condition based on introducing a character by keyboard.

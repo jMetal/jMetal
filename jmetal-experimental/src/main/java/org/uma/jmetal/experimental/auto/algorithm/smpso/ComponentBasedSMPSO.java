@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.auto.algorithm.smpso;
 
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.experimental.auto.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
@@ -25,7 +26,6 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 public class ComponentBasedSMPSO {
 

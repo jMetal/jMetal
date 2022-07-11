@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestWithExternalArchiveInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestWithExternalArchiveUpdate;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
@@ -24,8 +26,6 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.legacy.front.impl.ArrayFront;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 public class SMPSOWithUnboundedArchiveExample {
   public static void main(String[] args) throws JMetalException, IOException {

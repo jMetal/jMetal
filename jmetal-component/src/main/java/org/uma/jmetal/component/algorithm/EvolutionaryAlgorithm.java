@@ -6,6 +6,7 @@ import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
@@ -14,7 +15,6 @@ import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
-import org.uma.jmetal.util.termination.Termination;
 
 @SuppressWarnings("serial")
 public class EvolutionaryAlgorithm<S extends Solution<?>>

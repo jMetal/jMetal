@@ -1,4 +1,4 @@
-package org.uma.jmetal.util.termination;
+package org.uma.jmetal.component.catalogue.common.termination;
 
 import java.util.Map;
 
