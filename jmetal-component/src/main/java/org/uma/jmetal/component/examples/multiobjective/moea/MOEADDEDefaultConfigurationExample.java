@@ -2,10 +2,10 @@ package org.uma.jmetal.component.examples.multiobjective.moea;
 
 import java.io.IOException;
 import java.util.List;
-import javax.print.DocFlavor.STRING;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.MOEADBuilder;
-import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
+import org.uma.jmetal.component.algorithm.multiobjective.MOEADDEBuilder;
+import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.problem.Problem;
@@ -15,9 +15,12 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
+import org.uma.jmetal.util.aggregativefunction.impl.Tschebyscheff;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
@@ -29,17 +32,16 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADDefaultConfigurationExample {
+public class MOEADDEDefaultConfigurationExample {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.lz09.LZ09F2";
+    String referenceParetoFront = "resources/referenceFrontsCSV/LZ09_F2.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
-    double crossoverProbability = 0.9;
-    double crossoverDistributionIndex = 20.0;
-    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    double cr = 1.0 ;
+    double f = 0.5 ;
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
@@ -47,19 +49,29 @@ public class MOEADDefaultConfigurationExample {
 
     int populationSize = 300;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(175000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
-    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
+
+    EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADDEBuilder(
         problem,
         populationSize,
-        crossover,
+        cr,
+        f,
         mutation,
         weightVectorDirectory,
         sequenceGenerator)
         .setTermination(termination)
-        .build();
+        .setMaximumNumberOfReplacedSolutionsy(2)
+        .setNeighborhoodSelectionProbability(0.9)
+        .setNeighborhoodSize(20)
+        .setAggregativeFunction(new Tschebyscheff())
+        .build() ;
+
+    RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
+        new RunTimeChartObserver<>("MOEA/D-DE", 80, 1000, referenceParetoFront);
+    moead.getObservable().register(runTimeChartObserver);
 
     moead.run();
 
