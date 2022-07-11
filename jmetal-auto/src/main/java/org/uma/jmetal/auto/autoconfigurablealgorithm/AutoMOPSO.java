@@ -25,6 +25,7 @@ import org.uma.jmetal.auto.parameter.catalogue.VelocityUpdateParameter;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.impl.RandomSolutionsCreation;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.GlobalBestInitialization;
 import org.uma.jmetal.component.catalogue.pso.globalbestselection.GlobalBestSelection;
 import org.uma.jmetal.component.catalogue.pso.globalbestupdate.GlobalBestUpdate;
@@ -39,7 +40,6 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
 
 /**
  * Class to configure a generic MOPSO with an argument string using class {@link

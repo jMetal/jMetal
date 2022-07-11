@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
@@ -18,7 +19,6 @@ import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.termination.Termination;
 
 public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
     extends Master<ParallelTask<S>, List<S>> {

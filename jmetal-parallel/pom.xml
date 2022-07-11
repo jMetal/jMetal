@@ -76,7 +76,7 @@
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
-            <artifactId>jmetal-experimental</artifactId>
+            <artifactId>jmetal-component</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

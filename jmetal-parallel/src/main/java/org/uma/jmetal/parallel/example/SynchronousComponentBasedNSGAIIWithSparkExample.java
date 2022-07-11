@@ -3,18 +3,14 @@ package org.uma.jmetal.parallel.example;
 import static java.lang.Math.sin;
 
 import java.util.List;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.ComponentBasedEvolutionaryAlgorithm;
-import org.uma.jmetal.experimental.componentbasedalgorithm.algorithm.multiobjective.nsgaii.NSGAII;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
+import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
+import org.uma.jmetal.component.algorithm.multiobjective.NSGAIIBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.MultiThreadedEvaluation;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
-import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
 import org.uma.jmetal.parallel.synchronous.SparkEvaluation;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.multiobjective.zdt.ZDT2;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
@@ -24,8 +20,8 @@ import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 import org.uma.jmetal.util.observer.impl.RunTimeChartObserver;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.termination.Termination;
-import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
+
+;
 
 /**
  * Class to configure and run the NSGA-II algorithm using a {@link SparkEvaluation} object.
@@ -36,12 +32,7 @@ import org.uma.jmetal.util.termination.impl.TerminationByEvaluations;
  */
 public class SynchronousComponentBasedNSGAIIWithSparkExample extends AbstractAlgorithmRunner {
   public static void main(String[] args) throws JMetalException {
-    Problem<DoubleSolution> problem;
-    ComponentBasedEvolutionaryAlgorithm<DoubleSolution> algorithm;
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-
-    problem = new ZDT2() {
+    var problem = new ZDT2() {
       @Override
       public DoubleSolution evaluate(DoubleSolution solution) {
         super.evaluate(solution);
@@ -60,43 +51,39 @@ public class SynchronousComponentBasedNSGAIIWithSparkExample extends AbstractAlg
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;
-    crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
+    var crossover = new SBXCrossover(crossoverProbability, crossoverDistributionIndex);
 
     double mutationProbability = 1.0 / problem.getNumberOfVariables();
     double mutationDistributionIndex = 20.0;
-    mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
     int populationSize = 100;
     int offspringPopulationSize = populationSize;
 
     Termination termination = new TerminationByEvaluations(25000);
 
-    Logger.getLogger("org").setLevel(Level.OFF) ;
-
-    SparkConf sparkConf = new SparkConf()
-            .setMaster("local[8]")
-            .setAppName("NSGA-II with Spark");
-
-    JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
-
-
-    algorithm =
-            new NSGAII<>(
-                    problem, populationSize, offspringPopulationSize, crossover, mutation, termination)
-                    .withEvaluation(new SparkEvaluation<>(sparkContext, problem));
+    EvolutionaryAlgorithm<DoubleSolution> nsgaii = new NSGAIIBuilder<>(
+        problem,
+        populationSize,
+        offspringPopulationSize,
+        crossover,
+        mutation)
+        .setTermination(termination)
+        .setEvaluation(new MultiThreadedEvaluation<>(8, problem))
+        .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
             new RunTimeChartObserver<>(
                     "NSGA-II",
                     80, 10, "resources/referenceFrontsCSV/ZDT2.csv");
 
-    algorithm.getObservable().register(runTimeChartObserver);
+    nsgaii.getObservable().register(runTimeChartObserver);
 
-    algorithm.run();
+    nsgaii.run();
 
-    List<DoubleSolution> population = algorithm.getResult();
-    JMetalLogger.logger.info("Total execution time : " + algorithm.getTotalComputingTime() + "ms");
-    JMetalLogger.logger.info("Number of evaluations: " + algorithm.getEvaluations());
+    List<DoubleSolution> population = nsgaii.getResult();
+    JMetalLogger.logger.info("Total execution time : " + nsgaii.getTotalComputingTime() + "ms");
+    JMetalLogger.logger.info("Number of evaluations: " + nsgaii.getNumberOfEvaluations());
 
     new SolutionListOutput(population)
         .setVarFileOutputContext(new DefaultFileOutputContext("VAR.csv", ","))

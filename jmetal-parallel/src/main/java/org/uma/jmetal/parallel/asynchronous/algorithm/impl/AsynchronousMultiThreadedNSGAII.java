@@ -1,7 +1,8 @@
 package org.uma.jmetal.parallel.asynchronous.algorithm.impl;
 
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
+import org.uma.jmetal.component.catalogue.common.termination.Termination;
+import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
@@ -10,7 +11,6 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.densityestimator.impl.CrowdingDistanceDensityEstimator;
 import org.uma.jmetal.util.ranking.impl.MergeNonDominatedSortRanking;
-import org.uma.jmetal.util.termination.Termination;
 
 public class AsynchronousMultiThreadedNSGAII<S extends Solution<?>>
     extends AsynchronousMultiThreadedGeneticAlgorithm<S> {
