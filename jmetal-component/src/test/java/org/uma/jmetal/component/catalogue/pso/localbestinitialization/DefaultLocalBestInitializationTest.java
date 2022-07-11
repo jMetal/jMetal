@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization;
+package org.uma.jmetal.component.catalogue.pso.localbestinitialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
+import org.uma.jmetal.component.catalogue.pso.localbestinitialization.impl.DefaultLocalBestInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -15,12 +15,12 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 class DefaultLocalBestInitializationTest {
 
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheSwarmIsNull() {
+  void initializeRaisesAnExceptionIfTheSwarmIsNull() {
     assertThrows(NullParameterException.class, () -> new DefaultLocalBestInitialization().initialize(null)) ;
   }
 
   @Test
-  public void shouldInitializeReturnAnArrayOfLocalBestParticlesWithTheRightSize() {
+  void shouldInitializeReturnsAnArrayOfLocalBestParticlesWithTheRightSize() {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
@@ -35,7 +35,7 @@ class DefaultLocalBestInitializationTest {
   }
 
   @Test
-  public void shouldInitializeReturnAnArrayOfLocalBestParticlesEqualToTheOriginalSwarm() {
+  void initializeReturnsAnArrayOfLocalBestParticlesEqualToTheOriginalSwarm() {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 

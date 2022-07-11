@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy;
+package org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,19 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
+import org.uma.jmetal.component.catalogue.pso.inertiaweightcomputingstrategy.impl.RandomSelectedValueStrategy;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
 class RandomSelectedValueStrategyTest {
 
   @Test
-  public void shouldConstructorCreateANonNullObject() {
+  void constructorCreatesANonNullObject() {
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(0.1, 0.5) ;
     assertNotNull(randomSelectedValueStrategy);
   }
 
   @Test
-  public void shouldConstructorCreateValidInstance() {
+  void constructorCreatesAValidInstance() {
     double lowerBound = 0.1 ;
     double upperBound = 0.5 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;
@@ -27,14 +27,14 @@ class RandomSelectedValueStrategyTest {
   }
 
   @Test
-  public void shouldConstructorWithAnUpperBoundLowerThanALowerBoundThrowAnException() {
+  void constructorWithAnUpperBoundLowerThanALowerBoundThrowsAnException() {
     double lowerBound = 0.3 ;
     double upperBound = 0.2 ;
     assertThrows(InvalidConditionException.class, () -> new RandomSelectedValueStrategy(lowerBound, upperBound)) ;
   }
 
   @Test
-  public void shouldComputeReturnAValidValue() {
+  void computeReturnsAValidValue() {
     double lowerBound = 0.1 ;
     double upperBound = 0.5 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;
@@ -43,7 +43,7 @@ class RandomSelectedValueStrategyTest {
   }
 
   @Test
-  public void shouldComputeReturnTheLowerBoundIfBothBoundsAreEquals() {
+  void computeReturnsTheLowerBoundIfBothBoundsAreEquals() {
     double lowerBound = 0.2 ;
     double upperBound = 0.2 ;
     var randomSelectedValueStrategy = new RandomSelectedValueStrategy(lowerBound, upperBound) ;

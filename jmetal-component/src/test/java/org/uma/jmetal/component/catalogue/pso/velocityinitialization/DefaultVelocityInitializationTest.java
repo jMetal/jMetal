@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization;
+package org.uma.jmetal.component.catalogue.pso.velocityinitialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
+import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.DefaultVelocityInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -16,18 +16,18 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 class DefaultVelocityInitializationTest {
 
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheSwarmIsNull() {
+  void initializeRaisesAnExceptionIfTheSwarmIsNull() {
     assertThrows(NullParameterException.class, () -> new DefaultVelocityInitialization().initialize(null)) ;
   }
 
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheSwarmIsEmpty() {
+  void initializeRaisesAnExceptionIfTheSwarmIsEmpty() {
     List<DoubleSolution> swarm = new ArrayList<>() ;
     assertThrows(InvalidConditionException.class, () -> new DefaultVelocityInitialization().initialize(swarm)) ;
   }
 
   @Test
-  public void shouldInitializeReturnASpeedMatrixWithTheRightDimensions() {
+  void initializeReturnsASpeedMatrixWithTheRightDimensions() {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 
@@ -42,7 +42,7 @@ class DefaultVelocityInitializationTest {
   }
 
   @Test
-  public void shouldInitializeASpeedMatrixFullOfZeroes() {
+  void initializesASpeedMatrixFullOfZeroes() {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 

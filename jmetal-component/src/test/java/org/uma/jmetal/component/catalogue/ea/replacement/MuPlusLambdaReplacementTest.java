@@ -1,19 +1,19 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement;
+package org.uma.jmetal.component.catalogue.ea.replacement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
-public class MuPlusLambdaReplacementTest {
+class MuPlusLambdaReplacementTest {
 
   @Test
-  public void shouldReplaceReturnAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs2() {
+  public void replaceReturnsAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs2() {
     int mu = 10;
     int lambda = 2;
     FakeDoubleProblem problem = new FakeDoubleProblem();

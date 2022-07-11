@@ -20,12 +20,13 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 /**
- * Class to configure and build an instance of the NSGA-II algorithm
+ * Class to configure and build an instance of a genetic  algorithm
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
  *
  * @param <S>
  */
 public class GeneticAlgorithmBuilder<S extends Solution<?>> {
-
   private String name;
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;

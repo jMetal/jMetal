@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization;
+package org.uma.jmetal.component.catalogue.pso.globalbestinitialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
+import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestInitialization;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -18,22 +18,23 @@ import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 class DefaultGlobalBestInitializationTest {
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheSwarmIsNull() {
-    assertThrows(NullParameterException.class, () -> new DefaultGlobalBestInitialization().initialize(null, Mockito.mock(BoundedArchive.class))) ;
+  void initializeRaisesAnExceptionIfTheSwarmIsNull() {
+    assertThrows(NullParameterException.class, () -> new DefaultGlobalBestInitialization().initialize(null, Mockito.mock(
+        BoundedArchive.class))) ;
   }
 
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheGlobalBestIsNull() {
+  void initializeRaisesAnExceptionIfTheGlobalBestIsNull() {
     assertThrows(NullParameterException.class, () -> new DefaultGlobalBestInitialization().initialize(new ArrayList<>(), null)) ;
   }
 
   @Test
-  public void shouldInitializeRaiseAnExceptionIfTheSwarmIsEmpty() {
+  void initializeRaisesAnExceptionIfTheSwarmIsEmpty() {
     assertThrows(InvalidConditionException.class, () -> new DefaultGlobalBestInitialization().initialize(new ArrayList<>(), Mockito.mock(BoundedArchive.class))) ;
   }
 
   @Test
-  public void shouldInitializeReturnAGlobalBestArchiveWithASolution() {
+  void shouldInitializeReturnAGlobalBestArchiveWithASolution() {
     List<DoubleSolution> swarm = new ArrayList<>();
     DoubleProblem problem = new FakeDoubleProblem(3, 2, 0) ;
 

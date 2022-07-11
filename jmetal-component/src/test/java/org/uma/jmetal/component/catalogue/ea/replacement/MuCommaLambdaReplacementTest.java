@@ -1,4 +1,4 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.replacement;
+package org.uma.jmetal.component.catalogue.ea.replacement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,16 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.ea.replacement.impl.MuCommaLambdaReplacement;
+import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuCommaLambdaReplacement;
 import org.uma.jmetal.problem.doubleproblem.impl.FakeDoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 import org.uma.jmetal.util.errorchecking.exception.InvalidConditionException;
 
-public class MuCommaLambdaReplacementTest   {
+class MuCommaLambdaReplacementTest {
 
   @Test
-  public void shouldReplaceReturnAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs12() {
+  void ReplaceReturnsAPopulationOfTheRequiredSizeIfMuIs10AndLambdaIs12() {
     int mu = 10;
     int lambda = 12;
     FakeDoubleProblem problem = new FakeDoubleProblem();
@@ -35,7 +35,7 @@ public class MuCommaLambdaReplacementTest   {
   }
 
   @Test
-  public void shouldReplaceRaiseAnExceptionIfMuIsEqualToLambda() {
+  void ReplaceRaisesAnExceptionIfMuIsEqualToLambda() {
     int mu = 10;
     int lambda = 10;
     FakeDoubleProblem problem = new FakeDoubleProblem();
@@ -52,11 +52,12 @@ public class MuCommaLambdaReplacementTest   {
     MuCommaLambdaReplacement<DoubleSolution> replacement = new MuCommaLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 
 
-    assertThrows(InvalidConditionException.class, () -> replacement.replace(population, offspringPopulation)) ;
+    assertThrows(
+        InvalidConditionException.class, () -> replacement.replace(population, offspringPopulation)) ;
   }
 
   @Test
-  public void shouldReplaceRaiseAnExceptionIfMuIsLowerThanLambda() {
+  void replaceRaisesAnExceptionIfMuIsLowerThanLambda() {
     int mu = 10;
     int lambda = 8;
     FakeDoubleProblem problem = new FakeDoubleProblem();
