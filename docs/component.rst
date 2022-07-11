@@ -20,7 +20,7 @@ in 2011, and it was used until jMetal version 4.5.
 
 We took the decision of redesigning jMetal from scratch in 2014, leading to jMetal 5.0 a year later.
 The main features of that version were presented in the EvoSoft of the GECCO conference in 2015 (
-`Redesigning the jMetal Multi-Objective Optimization Framework <https://doi.org/10.1145/2739482.2768462>_`),
+`Redesigning the jMetal Multi-Objective Optimization Framework <https://doi.org/10.1145/2739482.2768462>`_),
 including the inclusion of algorithm templates for metaheuristics such as evolutionary algorithms
 and particle swarm optimization techniques. In this way, code reuse was significantly improved but
 at the cost of having to take into account the use of templates,
@@ -31,7 +31,7 @@ Now, in the incoming major release of jMetal (version 6.0), we propose a new arc
 design and implementation of metaheuristics. The main reason has to do with the fact that we are
 currently interested in using jMetal for the auto-configuration and auto-design of algorithms,
 and the current architecture has limitations for this, as discussed in the paper
-`Automatic Configuration of NSGA-II with jMetal and irace - GECCO Companion 2019 <https://doi.org/10.1145/3319619.3326832>`_.
+`Automatic Configuration of NSGA-II with jMetal and irace (GECCO Companion 2019) <https://doi.org/10.1145/3319619.3326832>`_.
 The idea is to use a component-based approach, were algorithmic templates are again used but
 the steps of the algorithms are objects instead of methods so, instead of using inheritance,
 implementing a given algorithm requires to add the proper components to the template.
