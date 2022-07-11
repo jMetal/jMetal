@@ -1,12 +1,12 @@
-package org.uma.jmetal.experimental.componentbasedalgorithm.algorithm;
+package org.uma.jmetal.component.algorithm;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
+import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.evaluation.Evaluation;
-import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.archive.Archive;
 import org.uma.jmetal.util.archive.impl.NonDominatedSolutionListArchive;
@@ -15,13 +15,13 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 /**
  * Class representing a random search algorithm. It implements the {@link Algorithm} interface by
- * applying a component based approach.
+ * applying a component-based approach.
  *
  * @param <S> Solution
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
+ * @author Antonio J. Nebro (ajnebro@uma.es)
  */
 @SuppressWarnings("serial")
-public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<List<S>> {
+public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<List<S>> {
   protected Termination termination;
   protected SolutionsCreation<S> solutionsCreation;
   protected Evaluation<S> evaluation;
@@ -45,7 +45,7 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
    * @param name
    * @param termination
    */
-  public ComponentBasedRandomSearchAlgorithm(
+  public RandomSearchAlgorithm(
       String name,
       SolutionsCreation<S> solutionsCreation,
       Evaluation<S> evaluation,
@@ -130,17 +130,6 @@ public class ComponentBasedRandomSearchAlgorithm<S extends Solution<?>> implemen
     return archive;
   }
 
-  public ComponentBasedRandomSearchAlgorithm<S> withTermination(Termination termination) {
-    this.termination = termination;
-
-    return this;
-  }
-
-  public ComponentBasedRandomSearchAlgorithm<S> withName(String newName) {
-    this.name = newName;
-
-    return this;
-  }
 
   public Observable<Map<String, Object>> getObservable() {
     return observable;
