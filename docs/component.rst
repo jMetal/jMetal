@@ -45,9 +45,30 @@ based architecture; this way, while NSGA-II adapts very well to the architecture
 we had to design some complex components. As a consequence, all the component-related stuff is
 located in a new Maven sub-project called `jmetal-component`.
 
+The structure of the `jmetal-component` is depicted in this figure:
+
 .. figure:: resources/figures/jmetal-component.png
    :scale: 40 %
    :alt: Structure of the jmetal-component sub-project
+
+The main packages of the sub-project are the following:
+
+* `algorithm`: Contains the algorithmic templates (such as `EvolutionaryAlgorithm` and `ParticleSwarmOptimization`) as well as builder classes to instantiate single- and multi-objective metaheuristicas from them.
+
+* `catalogue`: The components are included in a catalogue that is structured into three sub-packages:
+
+  - `common`: Components that can be part of any algorithm.
+
+  - `ea`: Specific components for evolutionary algorithms.
+
+  - `pso`: Specific components of particle swarm optimization techniques.
+
+* `examples`: Contains plenty of examples of how to use the templates to configure, create, and execute algorithms.
+
+We describe the most relevant classes of these packages next.
+
+The `EvolutionaryComputation` template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 ...
