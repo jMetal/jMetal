@@ -25,7 +25,7 @@ import org.uma.jmetal.util.observable.impl.DefaultObservable;
 
 @SuppressWarnings("serial")
 public class ParticleSwarmOptimizationAlgorithm
-    implements Algorithm<List<DoubleSolution>>, ObservableEntity {
+    implements Algorithm<List<DoubleSolution>>, ObservableEntity<Map<String, Object>> {
 
   private List<DoubleSolution> swarm;
   private double[][] speed;
