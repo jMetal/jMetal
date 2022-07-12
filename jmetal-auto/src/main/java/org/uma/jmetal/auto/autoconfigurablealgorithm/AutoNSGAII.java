@@ -236,7 +236,6 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       evaluation = new SequentialEvaluation<>(problem);
     }
 
-
     RankingAndDensityEstimatorPreference<DoubleSolution> preferenceForReplacement = new RankingAndDensityEstimatorPreference<>(
         ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
@@ -246,22 +245,46 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());
 
+    class EvolutionaryAlgorithmWithArchive extends EvolutionaryAlgorithm<DoubleSolution> {
+      private Archive<DoubleSolution> archive ;
+      /**
+       * Constructor
+       *
+       * @param name                      Algorithm name
+       * @param initialPopulationCreation
+       * @param evaluation
+       * @param termination
+       * @param selection
+       * @param variation
+       * @param replacement
+       */
+      public EvolutionaryAlgorithmWithArchive(String name,
+          SolutionsCreation<DoubleSolution> initialPopulationCreation,
+          Evaluation<DoubleSolution> evaluation, Termination termination,
+          MatingPoolSelection<DoubleSolution> selection, Variation<DoubleSolution> variation,
+          Replacement<DoubleSolution> replacement,
+          Archive<DoubleSolution> archive) {
+        super(name, initialPopulationCreation, evaluation, termination, selection, variation,
+            replacement);
+        this.archive = archive ;
+      }
+
+      @Override
+      public List<DoubleSolution> getResult() {
+        return archive.getSolutionList() ;
+      }
+    }
+
     if (algorithmResultParameter.getValue().equals("externalArchive")) {
-      return new EvolutionaryAlgorithm<>(
+      return new EvolutionaryAlgorithmWithArchive(
           "NSGA-II",
           initialSolutionsCreation,
           evaluation,
           termination,
           selection,
           variation,
-          replacement) {
-
-        @Override
-        public List<DoubleSolution> getResult() {
-          return ((SequentialEvaluationWithArchive)getEvaluation()).getArchive().getSolutionList() ;
-        }
-      };
-
+          replacement,
+          archive) ;
     } else {
       return new EvolutionaryAlgorithm<>(
           "NSGA-II",
