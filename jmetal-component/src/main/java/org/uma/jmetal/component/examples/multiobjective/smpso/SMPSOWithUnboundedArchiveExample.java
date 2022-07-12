@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.ParticleSwarmOptimizationAlgorithm;
 import org.uma.jmetal.component.algorithm.multiobjective.SMPSOBuilder;
+import org.uma.jmetal.component.catalogue.common.evaluation.impl.SequentialEvaluationWithArchive;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.pso.globalbestinitialization.impl.DefaultGlobalBestWithExternalArchiveInitialization;
-import org.uma.jmetal.component.catalogue.pso.globalbestupdate.impl.DefaultGlobalBestWithExternalArchiveUpdate;
 import org.uma.jmetal.lab.visualization.plot.PlotFront;
 import org.uma.jmetal.lab.visualization.plot.impl.Plot3D;
 import org.uma.jmetal.problem.Problem;
@@ -43,8 +42,7 @@ public class SMPSOWithUnboundedArchiveExample {
         (DoubleProblem) problem,
         swarmSize)
         .setTermination(termination)
-        .setGlobalBestInitialization(new DefaultGlobalBestWithExternalArchiveInitialization(externalUnboundedArchive))
-        .setGlobalBestUpdate(new DefaultGlobalBestWithExternalArchiveUpdate(externalUnboundedArchive))
+        .setEvaluation(new SequentialEvaluationWithArchive<>(problem, externalUnboundedArchive))
         .build();
 
     smpso.run();

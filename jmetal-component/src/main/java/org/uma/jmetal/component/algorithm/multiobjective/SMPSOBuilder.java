@@ -52,7 +52,7 @@ public class SMPSOBuilder {
   private GlobalBestUpdate globalBestUpdate;
   private LocalBestUpdate localBestUpdate;
   private GlobalBestSelection globalBestSelection;
-  private BoundedArchive<DoubleSolution> externalArchive;
+  private BoundedArchive<DoubleSolution> archive;
 
   public SMPSOBuilder(DoubleProblem problem, int swarmSize) {
     name = "SMPSO";
@@ -64,10 +64,8 @@ public class SMPSOBuilder {
     localBestInitialization = new DefaultLocalBestInitialization();
     globalBestInitialization = new DefaultGlobalBestInitialization();
 
-    externalArchive = new CrowdingDistanceArchive<>(swarmSize);
-    //globalBestSelection ; //= new TournamentGlobalBestSelection(2, externalArchive.getComparator());
-    globalBestSelection = new BinaryTournamentGlobalBestSelection(externalArchive.getComparator()) ;
-    //globalBestSelection = new RandomGlobalBestSelection() ;
+    archive = new CrowdingDistanceArchive<>(swarmSize);
+    globalBestSelection = new BinaryTournamentGlobalBestSelection(archive.getComparator()) ;
 
     double r1Min = 0.0;
     double r1Max = 1.0;
@@ -101,8 +99,8 @@ public class SMPSOBuilder {
     return this;
   }
 
-  public SMPSOBuilder setArchive(BoundedArchive<DoubleSolution> externalArchive) {
-    this.externalArchive = externalArchive;
+  public SMPSOBuilder setArchive(BoundedArchive<DoubleSolution> archive) {
+    this.archive = archive;
 
     return this;
   }
@@ -149,6 +147,6 @@ public class SMPSOBuilder {
         globalBestUpdate,
         localBestUpdate,
         globalBestSelection,
-        externalArchive);
+        archive);
   }
 }
