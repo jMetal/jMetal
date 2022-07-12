@@ -45,6 +45,11 @@ based architecture; this way, while NSGA-II adapts very well to the architecture
 we had to design some complex components. As a consequence, all the component-related stuff is
 located in a new Maven sub-project called `jmetal-component`.
 
+.. figure:: resources/figures/jmetal-component.png
+   :scale: 40 %
+   :alt: Structure of the jmetal-component sub-project
+
+
 ...
 
 
