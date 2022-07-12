@@ -14,18 +14,29 @@ import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.observer.Observer;
 
-@SuppressWarnings("serial")
+/**
+ * Template for evolutionary algorithms. Its mains features are:
+ * - The step of the algorithm are objects (components)
+ * - The algorithms are {@link ObservableEntity}, which can be observed by {@link Observer} objects.
+ * - The {@link #observable} element is a map of  pairs (String, Object), which is initialized and
+ *   updated by the {@link #initProgress()} and {@link #updateProgress()} methods.
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ *
+ * @param <S> Generic type representing the encoding of the solutions
+ */
 public class EvolutionaryAlgorithm<S extends Solution<?>>
-    implements Algorithm<List<S>>, ObservableEntity {
+    implements Algorithm<List<S>>, ObservableEntity<Map<String, Object>> {
 
   private List<S> population;
-  private Evaluation<S> evaluation;
-  private SolutionsCreation<S> createInitialPopulation;
-  private Termination termination;
-  private MatingPoolSelection<S> selection;
-  private Variation<S> variation;
-  private Replacement<S> replacement;
+  private final Evaluation<S> evaluation;
+  private final SolutionsCreation<S> createInitialPopulation;
+  private final Termination termination;
+  private final MatingPoolSelection<S> selection;
+  private final Variation<S> variation;
+  private final Replacement<S> replacement;
   private Map<String, Object> attributes;
   private long initTime;
   private long totalComputingTime;
