@@ -42,7 +42,8 @@ jMetal users who are comfortable with the current implementation and are probabl
 in learning another way of developing or using the algorithms. Another reason is that algorithms
 having tightly related components can be difficult to be implemented with the component-
 based architecture; this way, while NSGA-II adapts very well to the architecture, to implement MOEA/D
-we had to design some complext components.
+we had to design some complex components. As a consequence, all the component-related stuff is
+located in a new Maven sub-project called `jmetal-component`.
 
 ...
 

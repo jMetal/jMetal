@@ -145,8 +145,6 @@ coverage
 .RData
 .Rhistory
 
-*.png
-
 docs/_build
 docs/_static
 docs/_templates
