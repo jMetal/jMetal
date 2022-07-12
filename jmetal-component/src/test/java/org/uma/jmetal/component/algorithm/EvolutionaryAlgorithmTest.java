@@ -37,7 +37,6 @@ class EvolutionaryAlgorithmTest {
     assertThat(variation).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "variation")) ;
     assertThat(selection).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "selection")) ;
     assertThat(replacement).isSameAs(ReflectionTestUtils.getField(evolutionaryAlgorithm, "replacement")) ;
-
   }
 
 }
