@@ -1,4 +1,4 @@
-package org.uma.jmetal.component.examples.multiobjective.moea;
+package org.uma.jmetal.component.examples.multiobjective.moead;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
+import org.uma.jmetal.util.aggregativefunction.impl.PenaltyBoundaryIntersection;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -31,11 +32,11 @@ import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
  *
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
-public class MOEADWithRealTimeChartExample {
+public class MOEADSolvingProblemDTLZ1Example {
 
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    String problemName = "org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1";
+    String referenceParetoFront = "resources/referenceFrontsCSV/DTLZ1.3D.csv";
 
     Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
 
@@ -47,11 +48,12 @@ public class MOEADWithRealTimeChartExample {
     double mutationDistributionIndex = 20.0;
     var mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
-    int populationSize = 300;
+    int populationSize = 91;
 
-    Termination termination = new TerminationByEvaluations(25000);
+    Termination termination = new TerminationByEvaluations(30000);
 
     String weightVectorDirectory = "resources/weightVectorFiles/moead";
+
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(populationSize) ;
     EvolutionaryAlgorithm<DoubleSolution> moead = new MOEADBuilder<>(
         problem,
@@ -61,13 +63,16 @@ public class MOEADWithRealTimeChartExample {
         weightVectorDirectory,
         sequenceGenerator)
         .setTermination(termination)
+        .setMaximumNumberOfReplacedSolutionsy(2)
+        .setNeighborhoodSelectionProbability(0.9)
+        .setNeighborhoodSize(20)
+        .setAggregativeFunction(new PenaltyBoundaryIntersection())
         .build();
 
     RunTimeChartObserver<DoubleSolution> runTimeChartObserver =
         new RunTimeChartObserver<>("MOEA/D", 80, 100, referenceParetoFront);
 
     moead.getObservable().register(runTimeChartObserver);
-
     moead.run();
 
     List<DoubleSolution> population = moead.getResult();
