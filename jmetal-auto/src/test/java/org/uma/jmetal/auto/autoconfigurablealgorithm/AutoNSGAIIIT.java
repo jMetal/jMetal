@@ -69,7 +69,7 @@ class AutoNSGAIIIT {
   }
 
   @Test
-  void AutoNSGAIIExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
+  void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
     String referenceFrontFileName = "ZDT4.csv" ;
 
@@ -125,13 +125,71 @@ class AutoNSGAIIIT {
     assertTrue(hv > 0.65) ;
   }
 
+
   @Test
-  void AutoNSGAIIExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointFourOnProblemDTLZ2()
+  void AutoNSGAIIExternalCrowdingArchiveReturnsAFrontWithHVHigherThanZeroPointSixtyFiveOnProblemZDT4()
       throws IOException {
     String referenceFrontFileName = "ZDT4.csv" ;
 
     String[] parameters =
         ("--problemName org.uma.jmetal.problem.multiobjective.zdt.ZDT4 "
+            + "--referenceFrontFileName "+ referenceFrontFileName + " "
+            + "--maximumNumberOfEvaluations 25000 "
+            + "--algorithmResult population "
+            + "--populationSize 100 "
+            + "--algorithmResult externalArchive "
+            + "--externalArchive crowdingDistanceArchive "
+            + "--populationSizeWithArchive 100 "
+            + "--offspringPopulationSize 100 "
+            + "--createInitialSolutions random "
+            + "--variation crossoverAndMutationVariation "
+            + "--selection tournament "
+            + "--selectionTournamentSize 2 "
+            + "--rankingForSelection dominanceRanking "
+            + "--densityEstimatorForSelection crowdingDistance "
+            + "--crossover SBX "
+            + "--crossoverProbability 0.9 "
+            + "--crossoverRepairStrategy bounds "
+            + "--sbxDistributionIndex 20.0 "
+            + "--mutation polynomial "
+            + "--mutationProbabilityFactor 1.0 "
+            + "--mutationRepairStrategy bounds "
+            + "--polynomialMutationDistributionIndex 20.0 ")
+            .split("\\s+");
+
+    AutoNSGAII autoNSGAII = new AutoNSGAII();
+    autoNSGAII.parseAndCheckParameters(parameters);
+
+    EvolutionaryAlgorithm<DoubleSolution> nsgaII = autoNSGAII.create();
+
+    nsgaII.run();
+
+    List<DoubleSolution> population  = nsgaII.getResult() ;
+
+    String referenceFrontFile = "../resources/referenceFrontsCSV/"+referenceFrontFileName ;
+
+    double[][] referenceFront = VectorUtils.readVectors(referenceFrontFile, ",") ;
+    QualityIndicator hypervolume = new PISAHypervolume(referenceFront);
+
+    double[][] normalizedFront =
+        NormalizeUtils.normalize(
+            SolutionListUtils.getMatrixWithObjectiveValues(population),
+            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
+
+    double hv = hypervolume.compute(normalizedFront);
+
+    assertTrue(population.size() >= 95) ;
+    assertTrue(hv > 0.65) ;
+  }
+
+  @Test
+  void AutoNSGAIIExternalUnboundedArchiveReturnsAFrontWithHVHigherThanZeroPointFourOnProblemDTLZ2()
+      throws IOException {
+    String referenceFrontFileName = "DTLZ2.3D.csv" ;
+
+    String[] parameters =
+        ("--problemName org.uma.jmetal.problem.multiobjective.dtlz.DTLZ2 "
             + "--referenceFrontFileName "+ referenceFrontFileName + " "
             + "--maximumNumberOfEvaluations 50000 "
             + "--algorithmResult externalArchive "
