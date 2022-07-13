@@ -33,8 +33,12 @@ currently interested in using jMetal for the auto-configuration and auto-design 
 and the current architecture has limitations for this, as discussed in the paper
 `Automatic Configuration of NSGA-II with jMetal and irace (GECCO Companion 2019) <https://doi.org/10.1145/3319619.3326832>`_.
 The idea is to use a component-based approach, were algorithmic templates are again used but
-the steps of the algorithms are objects instead of methods so, instead of using inheritance,
-implementing a given algorithm requires to add the proper components to the template.
+the steps of the algorithms are implemented as objects instead of methods so, instead of using inheritance,
+implementing a given algorithm requires to add the proper components to the template. The resulting
+architecture allow metaheuristics to be highly configurable without the need of defining sub-clases .
+Furthermore, the templates are observable entities, according to the Observer pattern, so observers entities
+can register into them and be notified when the state of the algorithm changes (e.g., a real chart observer
+can receive the population after each algorithm interation to plot it).
 
 Contrarily to the approach adopted in jMetal 5.0, in jMetal 6.0 the new architecture is not going
 to replace the former one. There are some reasons for this, starting with the aforementioned comment about
@@ -69,7 +73,85 @@ We describe the most relevant classes of these packages next.
 
 The `EvolutionaryComputation` template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The component-based template for evolutionary algorithms is implemented in the `org.uma.jmetal.component.algorithm.EvolutionaryComputation` class. 
+The component-based template for evolutionary algorithms is implemented in the `org.uma.jmetal.component.algorithm.EvolutionaryComputation` class. The following code snippet shows its state variables, which include the evolutionary components (create the initial population, evaluation, selection, variation, replacement, and termination) and the attributes map (containing
+the information that will be notified to observers):
+
+.. code-block:: java
+
+  package org.uma.jmetal.solution;
+
+  public class EvolutionaryAlgorithm<S extends Solution<?>>
+    implements Algorithm<List<S>>, ObservableEntity<Map<String, Object>> {
+
+    private List<S> population;
+  
+    private final Evaluation<S> evaluation;
+    private final SolutionsCreation<S> createInitialPopulation;
+    private final Termination termination;
+    private final Selection<S> selection;
+    private final Variation<S> variation;
+    private final Replacement<S> replacement;
+  
+    private final Map<String, Object> attributes;
+  
+    private long initTime;
+    private long totalComputingTime;
+    private int evaluations;
+  
+    private final Observable<Map<String, Object>> observable;
+
+  ...
+
+The `run()` method of the class carries out the steps of a generic evolutionary algorithm:
+
+.. code-block:: java
+
+  public void run() {
+    initTime = System.currentTimeMillis();
+
+    population = createInitialPopulation.create();
+    population = evaluation.evaluate(population);
+    initProgress();
+    while (!termination.isMet(attributes)) {
+      List<S> matingPopulation = selection.select(population);
+      List<S> offspringPopulation = variation.variate(population, matingPopulation);
+      offspringPopulation = evaluation.evaluate(offspringPopulation);
+
+      population = replacement.replace(population, offspringPopulation);
+      updateProgress();
+    }
+
+    totalComputingTime = System.currentTimeMillis() - initTime;
+  }
+
+The state of the algorithm is updated with methods `initProgress()`  and `updateProgress`:
+
+.. code-block:: java
+
+  protected void initProgress() {
+    evaluations = population.size();
+
+    attributes.put("EVALUATIONS", evaluations);
+    attributes.put("POPULATION", population);
+    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+  }
+
+  protected void updateProgress() {
+    evaluations += variation.getOffspringPopulationSize();
+
+    attributes.put("EVALUATIONS", evaluations);
+    attributes.put("POPULATION", population);
+    attributes.put("COMPUTING_TIME", getCurrentComputingTime());
+
+    observable.setChanged();
+    observable.notifyObservers(attributes);
+
+    totalComputingTime = getCurrentComputingTime();
+  }
+
+As it can be observed, the `initProgress()` method initializes the evaluation counter and sets three attributes: evaluations,
+population, and computing time. The `updateProgress()` method is invoked at the end of each iteration and, besides updating the same elements as `initProgress()`, notify observers the new attribute values. 
+
 
 ...
 
