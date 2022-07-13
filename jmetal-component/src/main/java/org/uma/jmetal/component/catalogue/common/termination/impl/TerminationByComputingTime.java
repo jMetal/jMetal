@@ -22,7 +22,7 @@ public class TerminationByComputingTime implements Termination {
   public boolean isMet(Map<String, Object> algorithmStatusData) {
     Check.notNull(algorithmStatusData.get("COMPUTING_TIME"));
     Check.notNull(algorithmStatusData.get("EVALUATIONS"));
-    
+
     long currentComputingTime = (long) algorithmStatusData.get("COMPUTING_TIME") ;
     evaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
 
