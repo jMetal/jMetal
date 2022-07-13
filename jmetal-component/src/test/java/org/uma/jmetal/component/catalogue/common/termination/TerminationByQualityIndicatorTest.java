@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -115,24 +116,17 @@ class TerminationByQualityIndicatorTest {
     assertThatThrownBy(() -> termination.isMet(algorithmStatusData)).isInstanceOf(
         EmptyCollectionException.class);
   }
-/*
   @Test
-  void isMetRaisesReturnsTrueIfTheConditionIsMet() {
+  void isMetRaisesReturnsTrueIfTheNumberOfEvaluationsReachesTheLimit() {
+    termination = new TerminationByQualityIndicator(qualityIndicator, referenceFront, percentage,
+        evaluationsLimit);
+
     Map<String, Object> algorithmStatusData = new HashMap<>();
-    algorithmStatusData.put("COMPUTING_TIME", maxComputingTime + 1);
-    algorithmStatusData.put("EVALUATIONS", 2500) ;
+    algorithmStatusData.put("EVALUATIONS", evaluationsLimit) ;
+    List<DoubleSolution> population = new ArrayList<>() ;
+    population.add(mock(DoubleSolution.class)) ;
+    algorithmStatusData.put("POPULATION", population) ;
 
-    assertThat(termination.isMet(algorithmStatusData)).isTrue();
-    assertThat(termination.getEvaluations()).isEqualTo(2500) ;
+    assertThat(termination.isMet(algorithmStatusData)).isTrue() ;
   }
-
-  @Test
-  void isMetRaisesReturnsFalseIfTheConditionIsNotMet() {
-    Map<String, Object> algorithmStatusData = new HashMap<>();
-    algorithmStatusData.put("COMPUTING_TIME", maxComputingTime -1);
-    algorithmStatusData.put("EVALUATIONS", 2500) ;
-
-    assertThat(termination.isMet(algorithmStatusData)).isFalse();
-  }
-*/
 }

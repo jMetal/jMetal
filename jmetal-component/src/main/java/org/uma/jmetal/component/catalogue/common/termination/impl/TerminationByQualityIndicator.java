@@ -58,24 +58,29 @@ public class TerminationByQualityIndicator implements Termination {
     Check.notNull(population);
     Check.collectionIsNotEmpty(population);
 
-    double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(population);
-    double[][] normalizedFront =
-        NormalizeUtils.normalize(
-            front,
-            NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
-            NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
-
-    computedIndicatorValue = qualityIndicator.compute(normalizedFront);
-
+    boolean stoppingCondition = false;
     boolean unsuccessfulStopCondition = evaluationsLimit <= evaluations;
-    boolean successfulStopCondition =
-        computedIndicatorValue >= percentage * referenceFrontIndicatorValue;
-
     if (unsuccessfulStopCondition) {
       evaluationsLimitReached = true;
-    }
+      stoppingCondition = true ;
+    } else {
+      double[][] front = SolutionListUtils.getMatrixWithObjectiveValues(population);
+      double[][] normalizedFront =
+          NormalizeUtils.normalize(
+              front,
+              NormalizeUtils.getMinValuesOfTheColumnsOfAMatrix(referenceFront),
+              NormalizeUtils.getMaxValuesOfTheColumnsOfAMatrix(referenceFront));
 
-    return (successfulStopCondition || unsuccessfulStopCondition);
+      computedIndicatorValue = qualityIndicator.compute(normalizedFront);
+
+      boolean successfulStopCondition =
+          computedIndicatorValue >= percentage * referenceFrontIndicatorValue;
+      if (successfulStopCondition) {
+        stoppingCondition = true ;
+      }
+
+    }
+    return stoppingCondition;
   }
 
   public double getComputedIndicatorValue() {
