@@ -69,7 +69,6 @@ The main packages of the sub-project are the following:
 
 * `examples`: Contains plenty of examples of how to use the templates to configure, create, and execute algorithms.
 
-We describe the most relevant classes of these packages next.
 
 The `EvolutionaryComputation` template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -196,7 +195,92 @@ We provide many examples of using this class to configure NSGA-II (included the 
 * `ParallelNSGAIIExample`: NSGA-II with a multi-threaded evaluator
 * `NSGAIIStoppingByHypervolume.java`: NSGA-II using a terminator to stop the computation when the hypervolume of the current population achieves a particular value.
 
+The `ParticleSwarmOptimizationAlgorithm` template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Following the same methodology for designing a component-based template for evolutionary computation, we have designed and implemented a `ParticleSwarmOptimizationAlgorithm` class. This template was used in the paper "Automatic Design of Multi-Objective Particle Swarm Optimizers", accepted in the ANTs 2022 conference.
 
-...
+Its `run()` method is included in this code snippet:
+
+.. code-block:: java
+
+  public void run() {
+    initTime = System.currentTimeMillis();
+
+    swarm = createInitialSwarm.create();
+    swarm = evaluation.evaluate(swarm);
+    speed = velocityInitialization.initialize(swarm);
+    localBest = localBestInitialization.initialize(swarm);
+    globalBest = globalBestInitialization.initialize(swarm, globalBest);
+
+    initProgress();
+    while (!termination.isMet(attributes)) {
+      velocityUpdate.update(swarm, speed, localBest, globalBest, globalBestSelection,
+          inertiaWeightComputingStrategy);
+      positionUpdate.update(swarm, speed);
+      swarm = perturbation.perturb(swarm);
+      swarm = evaluation.evaluate(swarm);
+      globalBest = globalBestUpdate.update(swarm, globalBest);
+      localBest = localBestUpdate.update(swarm, localBest);
+      updateProgress();
+    }
+
+We can observe the specific steps of a generic PSO algorithm, and the use of common components used algo in the `EvolutionaryAlgorithm` class, such as `evaluation` and `termination`. In its current state, this class is intended to be used
+in the context of multi-objective optimization, so it assumes that an external archvive is used to store the leaders found during
+the search.
+
+The `Component` catalogue
+^^^^^^^^^^^^^^^^^^^^^^^^^
+The key of having a component-based architecture is to provide a catalogue of components to allow to generate a number of different algorithms by selecting and combining particular components in some way. The following picture shows the current components included in the `common` and `ea` packages:
+
+.. figure:: resources/figures/ComponentCatalogue.png
+   :scale: 90 %
+   :alt: Component catalogue.
+
+Each component type is included in a package containing an interface with the component name and an `impl` 
+sub-package where all the implementations of the interface are stored. For example, the `Termination` interface for termination components is as follows:
+
+.. code-block:: java
+
+  package org.uma.jmetal.component.catalogue.common.termination;
+
+  import java.util.Map;
+
+  /**
+   * This interface represents classes that isMet the termination condition of an algorithm.
+   *
+   * @author Antonio J. Nebro <antonio@lcc.uma.es>
+   */
+  @FunctionalInterface
+  public interface Termination {
+    boolean isMet(Map<String, Object> algorithmStatusData) ;
+  }
+
+This interface has a method called `isMet()` that returns true whenever the implemented stopping condition is met. For example, the `TerminationByEvaluations` class defines that method as shown here:
 
 
+.. code-block:: java 
+
+  package org.uma.jmetal.component.catalogue.common.termination.impl;
+
+  /**
+   * Class that allows to check the termination condition based on a maximum number of indicated
+   * evaluations.
+   *
+   *  @author Antonio J. Nebro <antonio@lcc.uma.es>
+   */
+  public class TerminationByEvaluations implements Termination {
+    private final int maximumNumberOfEvaluations ;
+
+    public TerminationByEvaluations(int maximumNumberOfEvaluations) {
+      this.maximumNumberOfEvaluations = maximumNumberOfEvaluations ;
+    }
+
+    @Override
+    public boolean isMet(Map<String, Object> algorithmStatusData) {
+      int currentNumberOfEvaluations = (int) algorithmStatusData.get("EVALUATIONS") ;
+
+      return (currentNumberOfEvaluations >= maximumNumberOfEvaluations) ;
+    } 
+  }
+
+The point is that this class has access to the attribute field of the algorithms using it, so it have access to the current number of evaluations. Other implementations of `Termination` allow to stop when a given computing time has been expired, when a keyboard key is pressed, or when the quality indicator value of the current population exceeds a given threshold.
