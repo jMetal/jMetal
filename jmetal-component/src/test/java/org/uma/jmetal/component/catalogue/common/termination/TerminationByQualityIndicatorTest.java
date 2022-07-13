@@ -128,5 +128,6 @@ class TerminationByQualityIndicatorTest {
     algorithmStatusData.put("POPULATION", population) ;
 
     assertThat(termination.isMet(algorithmStatusData)).isTrue() ;
+    assertThat(termination.evaluationsLimitReached()).isTrue() ;
   }
 }

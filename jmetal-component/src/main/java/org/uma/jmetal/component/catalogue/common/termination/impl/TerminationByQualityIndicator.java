@@ -17,7 +17,6 @@ import org.uma.jmetal.util.errorchecking.Check;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public class TerminationByQualityIndicator implements Termination {
-
   private final QualityIndicator qualityIndicator;
   private final double[][] referenceFront;
   private final double percentage;
