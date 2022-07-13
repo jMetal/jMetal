@@ -13,11 +13,8 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 public class DifferentialCrossoverVariation implements Variation<DoubleSolution> {
   private int matingPoolSize;
   private int offspringPopulationSize;
-
   private SequenceGenerator<Integer> solutionIndexGenerator ;
-
   private DifferentialEvolutionCrossover crossover;
-
   private MutationOperator<DoubleSolution> mutation;
 
   public DifferentialCrossoverVariation(

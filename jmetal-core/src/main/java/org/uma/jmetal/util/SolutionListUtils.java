@@ -321,6 +321,7 @@ public class SolutionListUtils {
       while (j < newSolutionList.size()) {
         if (solution.equals(newSolutionList.get(j))) {
           found = true;
+          break;
         }
         j++;
       }

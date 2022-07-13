@@ -18,7 +18,7 @@ import org.uma.jmetal.util.observer.Observer;
 
 /**
  * Template for evolutionary algorithms. Its mains features are:
- * - The step of the algorithm are objects (components)
+ * - The steps of the algorithm are carried out by objects (components)
  * - The algorithms are {@link ObservableEntity}, which can be observed by {@link Observer} objects.
  * - The {@link #observable} element is a map of  pairs (String, Object), which is initialized and
  *   updated by the {@link #initProgress()} and {@link #updateProgress()} methods.
