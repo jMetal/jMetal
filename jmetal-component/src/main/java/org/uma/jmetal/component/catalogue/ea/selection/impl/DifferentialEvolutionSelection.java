@@ -7,6 +7,7 @@ import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
+
 public class DifferentialEvolutionSelection
     implements Selection<DoubleSolution> {
   private org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection selectionOperator;
