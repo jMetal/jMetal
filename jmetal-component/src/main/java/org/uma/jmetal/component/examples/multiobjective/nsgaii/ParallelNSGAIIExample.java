@@ -1,5 +1,7 @@
 package org.uma.jmetal.component.examples.multiobjective.nsgaii;
 
+import static java.lang.Math.sin;
+
 import java.io.IOException;
 import java.util.List;
 import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
@@ -9,11 +11,11 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.operator.crossover.impl.SBXCrossover;
 import org.uma.jmetal.operator.mutation.impl.PolynomialMutation;
-import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
+import org.uma.jmetal.problem.multiobjective.zdt.ZDT1;
 import org.uma.jmetal.qualityindicator.QualityIndicatorUtils;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemFactory;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.VectorUtils;
 import org.uma.jmetal.util.errorchecking.JMetalException;
@@ -29,10 +31,24 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class ParallelNSGAIIExample {
   public static void main(String[] args) throws JMetalException, IOException {
-    String problemName = "org.uma.jmetal.problem.multiobjective.zdt.ZDT1";
-    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
+    DoubleProblem problem = new ZDT1() {
+      @Override
+      public DoubleSolution evaluate(DoubleSolution solution) {
+        super.evaluate(solution);
+        computingDelay();
 
-    Problem<DoubleSolution> problem = ProblemFactory.<DoubleSolution>loadProblem(problemName);
+        return solution;
+      }
+
+      private void computingDelay() {
+        for (long i = 0; i < 1000; i++)
+          for (long j = 0; j < 10000; j++) {
+            double dummy = sin(i) * Math.cos(j);
+          }
+      }
+    };
+
+    String referenceParetoFront = "resources/referenceFrontsCSV/ZDT1.csv";
 
     double crossoverProbability = 0.9;
     double crossoverDistributionIndex = 20.0;

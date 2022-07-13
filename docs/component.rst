@@ -152,6 +152,50 @@ The state of the algorithm is updated with methods `initProgress()`  and `update
 As it can be observed, the `initProgress()` method initializes the evaluation counter and sets three attributes: evaluations,
 population, and computing time. The `updateProgress()` method is invoked at the end of each iteration and, besides updating the same elements as `initProgress()`, notify observers the new attribute values. 
 
+Configuring a particular evolutionary algorithm with the `EvolutionaryAlgorithm` class merely requires to instantiate it the proper components. To facilitate this task, we provide builder classes that allows to get algorithms configured with default settings and facilitates to indicate particular parameter values. Let us consider the NSGA-II algorithm; the constructor of the `NSGAIIBuilder`
+class is the following one:
+
+.. code-block:: java
+
+  public NSGAIIBuilder(Problem<S> problem, int populationSize, int offspringPopulationSize,
+      CrossoverOperator<S> crossover, MutationOperator<S> mutation) {
+    name = "NSGAII";
+
+    densityEstimator = new CrowdingDistanceDensityEstimator<>();
+    ranking = new FastNonDominatedSortRanking<>();
+
+    this.createInitialPopulation = new RandomSolutionsCreation<>(problem, populationSize);
+
+    this.replacement =
+        new RankingAndDensityEstimatorReplacement<>(
+            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+
+    this.variation =
+        new CrossoverAndMutationVariation<>(
+            offspringPopulationSize, crossover, mutation);
+
+    int tournamentSize = 2 ;
+    this.selection =
+        new NaryTournamentSelection<>(
+            tournamentSize,
+            variation.getMatingPoolSize(),
+            new MultiComparator<>(
+                Arrays.asList(
+                    Comparator.comparing(ranking::getRank),
+                    Comparator.comparing(densityEstimator::getValue).reversed())));
+
+    this.termination = new TerminationByEvaluations(25000);
+
+    this.evaluation = new SequentialEvaluation<>(problem);
+  }
+
+We provide many examples of using this class to configure NSGA-II (included the `org.uma.jmetal.component.examples.multiobjective.nsgaii` package). Some of them are:
+
+* `NSGAIIDefaultConfigurationExample`: NSGA-II configured with default settings to solve a continuous problem.
+* `NSGAIISteadyStateExample`: The same as the former example, but configuring a steady-state version of the NSGA-II
+* `ParallelNSGAIIExample`: NSGA-II with a multi-threaded evaluator
+* `NSGAIIStoppingByHypervolume.java`: NSGA-II using a terminator to stop the computation when the hypervolume of the current population achieves a particular value.
+
 
 ...
 

@@ -58,9 +58,10 @@ public class NSGAIIBuilder<S extends Solution<?>> {
         new CrossoverAndMutationVariation<>(
             offspringPopulationSize, crossover, mutation);
 
+    int tournamentSize = 2 ;
     this.selection =
         new NaryTournamentSelection<>(
-            2,
+            tournamentSize,
             variation.getMatingPoolSize(),
             new MultiComparator<>(
                 Arrays.asList(
