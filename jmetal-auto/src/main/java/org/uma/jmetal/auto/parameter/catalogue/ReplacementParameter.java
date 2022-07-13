@@ -46,11 +46,11 @@ public class ReplacementParameter extends CategoricalParameter {
         if (removalPolicy.equals("oneShot")) {
           result =
               new RankingAndDensityEstimatorReplacement<>(
-                  ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+                  ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
         } else {
           result =
               new RankingAndDensityEstimatorReplacement<>(
-                  ranking, densityEstimator, Replacement.RemovalPolicy.sequential);
+                  ranking, densityEstimator, Replacement.RemovalPolicy.SEQUENTIAL);
         }
 
         break;

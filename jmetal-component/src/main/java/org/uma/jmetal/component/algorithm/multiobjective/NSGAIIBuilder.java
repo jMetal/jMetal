@@ -52,7 +52,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
 
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
 
     this.variation =
         new CrossoverAndMutationVariation<>(
@@ -83,7 +83,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
     this.ranking = ranking;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }

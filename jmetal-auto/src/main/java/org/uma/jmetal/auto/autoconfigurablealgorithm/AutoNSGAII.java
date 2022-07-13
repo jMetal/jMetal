@@ -240,7 +240,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
         ranking, densityEstimator);
     Replacement<DoubleSolution> replacement =
         new RankingAndDensityEstimatorReplacement<>(preferenceForReplacement,
-            Replacement.RemovalPolicy.oneShot);
+            Replacement.RemovalPolicy.ONE_SHOT);
 
     Termination termination =
         new TerminationByEvaluations(maximumNumberOfEvaluationsParameter.getValue());

@@ -22,8 +22,18 @@ import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.observable.Observable;
 import org.uma.jmetal.util.observable.ObservableEntity;
 import org.uma.jmetal.util.observable.impl.DefaultObservable;
+import org.uma.jmetal.util.observer.Observer;
 
-@SuppressWarnings("serial")
+/**
+ * Template for particle swarm optimization algorithms. Its mains features are:
+ * - The steps of the algorithm are carried out by objects (components)
+ * - The algorithms are {@link ObservableEntity}, which can be observed by {@link Observer} objects.
+ * - The {@link #observable} element is a map of  pairs (String, Object), which is initialized and
+ *   updated by the {@link #initProgress()} and {@link #updateProgress()} methods.
+ * - Is is assumed than an external archive is used to store the global best particles
+ *
+ * @author Antonio J. Nebro (ajnebro@uma.es)
+ */
 public class ParticleSwarmOptimizationAlgorithm
     implements Algorithm<List<DoubleSolution>>, ObservableEntity<Map<String, Object>> {
 
@@ -104,7 +114,7 @@ public class ParticleSwarmOptimizationAlgorithm
     this.localBestUpdate = localBestUpdate;
     this.globalBestSelection = globalBestSelection;
 
-    this.observable = new DefaultObservable<>("Evolutionary Algorithm");
+    this.observable = new DefaultObservable<>("Particle Swarm Optimization Algorithm");
     this.attributes = new HashMap<>();
   }
 
@@ -170,6 +180,10 @@ public class ParticleSwarmOptimizationAlgorithm
   @Override
   public List<DoubleSolution> getResult() {
     return globalBest.getSolutionList();
+  }
+
+  public List<DoubleSolution> getSwarm() {
+    return swarm ;
   }
 
   @Override

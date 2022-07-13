@@ -18,7 +18,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
 
   public RankingAndDensityEstimatorReplacement(
       Ranking<S> ranking, DensityEstimator<S> densityEstimator) {
-    this(ranking, densityEstimator, RemovalPolicy.sequential);
+    this(ranking, densityEstimator, RemovalPolicy.SEQUENTIAL);
   }
 
   public RankingAndDensityEstimatorReplacement(
@@ -43,7 +43,7 @@ public class RankingAndDensityEstimatorReplacement<S extends Solution<?>>
     List<S> resultList;
     ranking.compute(jointPopulation);
 
-    if (removalPolicy == RemovalPolicy.oneShot) {
+    if (removalPolicy == RemovalPolicy.ONE_SHOT) {
       resultList = oneShotTruncation(0, solutionList.size());
     } else {
       resultList = sequentialTruncation(0, solutionList.size());

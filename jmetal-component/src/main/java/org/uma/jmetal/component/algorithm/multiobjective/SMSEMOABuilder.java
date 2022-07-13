@@ -73,7 +73,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.ranking = ranking;
     this.replacement =
         new RankingAndDensityEstimatorReplacement<>(
-            ranking, densityEstimator, Replacement.RemovalPolicy.oneShot);
+            ranking, densityEstimator, Replacement.RemovalPolicy.ONE_SHOT);
 
     return this;
   }
