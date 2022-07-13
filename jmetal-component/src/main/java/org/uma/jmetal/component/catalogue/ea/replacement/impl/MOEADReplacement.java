@@ -2,7 +2,7 @@ package org.uma.jmetal.component.catalogue.ea.replacement.impl;
 
 import java.util.List;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.aggregativefunction.AggregativeFunction;
 import org.uma.jmetal.util.neighborhood.Neighborhood;
@@ -11,14 +11,14 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 import org.uma.jmetal.util.sequencegenerator.impl.IntegerPermutationGenerator;
 
 public class MOEADReplacement<S extends Solution<?>> implements Replacement<S> {
-  private final PopulationAndNeighborhoodMatingPoolSelection<S> matingPoolSelection;
+  private final PopulationAndNeighborhoodSelection<S> matingPoolSelection;
   private final WeightVectorNeighborhood<S> weightVectorNeighborhood;
   private final AggregativeFunction aggregativeFunction;
   private final SequenceGenerator<Integer> sequenceGenerator;
   private final int maximumNumberOfReplacedSolutions;
 
   public MOEADReplacement(
-      PopulationAndNeighborhoodMatingPoolSelection<S> matingPoolSelection,
+      PopulationAndNeighborhoodSelection<S> matingPoolSelection,
       WeightVectorNeighborhood<S> weightVectorNeighborhood,
       AggregativeFunction aggregativeFunction,
       SequenceGenerator<Integer> sequenceGenerator,

@@ -10,8 +10,8 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.DifferentialCrossoverVariation;
 import org.uma.jmetal.operator.crossover.impl.DifferentialEvolutionCrossover;
@@ -34,7 +34,7 @@ public class MOEADDEBuilder {
   private Evaluation<DoubleSolution> evaluation;
   private SolutionsCreation<DoubleSolution> createInitialPopulation;
   private Termination termination;
-  private MatingPoolSelection<DoubleSolution> selection;
+  private Selection<DoubleSolution> selection;
   private Variation<DoubleSolution> variation;
   private Replacement<DoubleSolution> replacement;
 
@@ -79,7 +79,7 @@ public class MOEADDEBuilder {
     }
 
     this.selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
+        new PopulationAndNeighborhoodSelection<>(
             variation.getMatingPoolSize(),
             sequenceGenerator,
             neighborhood,
@@ -88,7 +88,7 @@ public class MOEADDEBuilder {
 
     this.replacement =
         new MOEADReplacement<>(
-            (PopulationAndNeighborhoodMatingPoolSelection<DoubleSolution>) selection,
+            (PopulationAndNeighborhoodSelection<DoubleSolution>) selection,
             neighborhood,
             aggregativeFunction,
             sequenceGenerator,
@@ -148,7 +148,7 @@ public class MOEADDEBuilder {
     return this;
   }
 
-  public MOEADDEBuilder setSelection(MatingPoolSelection<DoubleSolution> selection) {
+  public MOEADDEBuilder setSelection(Selection<DoubleSolution> selection) {
     this.selection = selection;
 
     return this;

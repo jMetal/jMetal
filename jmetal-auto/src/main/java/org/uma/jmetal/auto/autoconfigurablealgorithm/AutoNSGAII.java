@@ -27,7 +27,7 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.util.RankingAndDensityEstimatorPreference;
 import org.uma.jmetal.problem.Problem;
@@ -225,7 +225,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
     }
     Variation<DoubleSolution> variation = variationParameter.getDoubleSolutionParameter();
 
-    MatingPoolSelection<DoubleSolution> selection =
+    Selection<DoubleSolution> selection =
         selectionParameter.getParameter(
             variation.getMatingPoolSize(), rankingAndCrowdingComparator);
 
@@ -261,7 +261,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       public EvolutionaryAlgorithmWithArchive(String name,
           SolutionsCreation<DoubleSolution> initialPopulationCreation,
           Evaluation<DoubleSolution> evaluation, Termination termination,
-          MatingPoolSelection<DoubleSolution> selection, Variation<DoubleSolution> variation,
+          Selection<DoubleSolution> selection, Variation<DoubleSolution> variation,
           Replacement<DoubleSolution> replacement,
           Archive<DoubleSolution> archive) {
         super(name, initialPopulationCreation, evaluation, termination, selection, variation,

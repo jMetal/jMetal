@@ -1,7 +1,7 @@
 package org.uma.jmetal.component.catalogue.ea.selection.impl;
 
 import java.util.List;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.NaryRandomSelection;
 import org.uma.jmetal.solution.Solution;
@@ -18,8 +18,8 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
  * @param <S> Type of the solutions
  */
-public class PopulationAndNeighborhoodMatingPoolSelection<S extends Solution<?>>
-    implements MatingPoolSelection<S> {
+public class PopulationAndNeighborhoodSelection<S extends Solution<?>>
+    implements Selection<S> {
   private SelectionOperator<List<S>, List<S>> selectionOperator;
   private int matingPoolSize;
 
@@ -31,7 +31,7 @@ public class PopulationAndNeighborhoodMatingPoolSelection<S extends Solution<?>>
 
   private boolean selectCurrentSolution ;
 
-  public PopulationAndNeighborhoodMatingPoolSelection(
+  public PopulationAndNeighborhoodSelection(
       int matingPoolSize,
       SequenceGenerator<Integer> solutionIndexGenerator,
       Neighborhood<S> neighborhood,

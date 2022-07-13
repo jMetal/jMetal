@@ -2,21 +2,20 @@ package org.uma.jmetal.component.catalogue.ea.selection.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
 
-public class DifferentialEvolutionMatingPoolSelection
-    implements MatingPoolSelection<DoubleSolution> {
-  private DifferentialEvolutionSelection selectionOperator;
+public class DifferentialEvolutionSelection
+    implements Selection<DoubleSolution> {
+  private org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection selectionOperator;
   private int matingPoolSize;
   private SequenceGenerator<Integer> solutionIndexGenerator ;
 
-  public DifferentialEvolutionMatingPoolSelection(
+  public DifferentialEvolutionSelection(
       int matingPoolSize, int numberOfParentsToSelect, boolean takeCurrentIndividualAsParent, SequenceGenerator<Integer> solutionIndexGenerator) {
-    selectionOperator = new DifferentialEvolutionSelection(numberOfParentsToSelect, takeCurrentIndividualAsParent);
+    selectionOperator = new org.uma.jmetal.operator.selection.impl.DifferentialEvolutionSelection(numberOfParentsToSelect, takeCurrentIndividualAsParent);
     this.matingPoolSize = matingPoolSize;
     this.solutionIndexGenerator = solutionIndexGenerator ;
   }

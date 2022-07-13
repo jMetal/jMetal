@@ -5,7 +5,7 @@ import org.uma.jmetal.component.algorithm.EvolutionaryAlgorithm;
 import org.uma.jmetal.component.algorithm.singleobjective.GeneticAlgorithmBuilder;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.NeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.impl.SinglePointCrossover;
 import org.uma.jmetal.operator.mutation.impl.BitFlipMutation;
@@ -54,7 +54,7 @@ public class AsynchronousCellularGeneticAlgorithmBinaryExample {
     var variation = new CrossoverAndMutationVariation<BinarySolution>(offspringPopulationSize, crossover, mutation) ;
 
     var selection =
-        new NeighborhoodMatingPoolSelection<BinarySolution>(
+        new NeighborhoodSelection<BinarySolution>(
             variation.getMatingPoolSize(),
             solutionIndexGenerator,
             neighborhood,

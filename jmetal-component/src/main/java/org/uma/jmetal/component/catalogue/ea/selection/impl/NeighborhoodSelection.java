@@ -2,7 +2,7 @@ package org.uma.jmetal.component.catalogue.ea.selection.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.Check;
@@ -17,8 +17,8 @@ import org.uma.jmetal.util.sequencegenerator.SequenceGenerator;
  * @author Antonio J. Nebro
  * @param <S> Type of the solutions
  */
-public class NeighborhoodMatingPoolSelection<S extends Solution<?>>
-    implements MatingPoolSelection<S> {
+public class NeighborhoodSelection<S extends Solution<?>>
+    implements Selection<S> {
   private SelectionOperator<List<S>, S> selectionOperator;
   private int matingPoolSize;
   private boolean updateCurrentSolutionIndex ;
@@ -26,7 +26,7 @@ public class NeighborhoodMatingPoolSelection<S extends Solution<?>>
   private SequenceGenerator<Integer> solutionIndexGenerator;
   private Neighborhood<S> neighborhood;
 
-  public NeighborhoodMatingPoolSelection(
+  public NeighborhoodSelection(
       int matingPoolSize,
       SequenceGenerator<Integer> solutionIndexGenerator,
       Neighborhood<S> neighborhood,

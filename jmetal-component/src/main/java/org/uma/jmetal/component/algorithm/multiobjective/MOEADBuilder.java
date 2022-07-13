@@ -10,8 +10,8 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MOEADReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.PopulationAndNeighborhoodSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -33,7 +33,7 @@ public class MOEADBuilder<S extends Solution<?>> {
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
-  private MatingPoolSelection<S> selection;
+  private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
 
@@ -74,7 +74,7 @@ public class MOEADBuilder<S extends Solution<?>> {
     }
 
     this.selection =
-        new PopulationAndNeighborhoodMatingPoolSelection<>(
+        new PopulationAndNeighborhoodSelection<>(
             variation.getMatingPoolSize(),
             sequenceGenerator,
             neighborhood,
@@ -83,7 +83,7 @@ public class MOEADBuilder<S extends Solution<?>> {
 
     this.replacement =
         new MOEADReplacement<>(
-            (PopulationAndNeighborhoodMatingPoolSelection<S>) selection,
+            (PopulationAndNeighborhoodSelection<S>) selection,
             neighborhood,
             aggregativeFunction,
             sequenceGenerator,
@@ -136,7 +136,7 @@ public class MOEADBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public MOEADBuilder<S> setSelection(MatingPoolSelection<S> selection) {
+  public MOEADBuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
 
     return this;

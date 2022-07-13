@@ -11,8 +11,8 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -37,7 +37,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
-  private MatingPoolSelection<S> selection;
+  private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
 
@@ -59,7 +59,7 @@ public class NSGAIIBuilder<S extends Solution<?>> {
             offspringPopulationSize, crossover, mutation);
 
     this.selection =
-        new NaryTournamentMatingPoolSelection<>(
+        new NaryTournamentSelection<>(
             2,
             variation.getMatingPoolSize(),
             new MultiComparator<>(

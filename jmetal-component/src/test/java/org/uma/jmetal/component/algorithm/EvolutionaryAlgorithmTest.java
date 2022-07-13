@@ -9,7 +9,7 @@ import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
@@ -20,7 +20,7 @@ class EvolutionaryAlgorithmTest {
     Termination termination = mock(Termination.class) ;
     SolutionsCreation<DoubleSolution> solutionsCreation = mock(SolutionsCreation.class) ;
     Evaluation<DoubleSolution> evaluation = mock(Evaluation.class) ;
-    MatingPoolSelection<DoubleSolution> selection = mock(MatingPoolSelection.class) ;
+    Selection<DoubleSolution> selection = mock(Selection.class) ;
     Variation<DoubleSolution> variation = mock(Variation.class) ;
     Replacement<DoubleSolution> replacement = mock(Replacement.class) ;
 

@@ -8,7 +8,7 @@ import org.uma.jmetal.component.catalogue.common.evaluation.Evaluation;
 import org.uma.jmetal.component.catalogue.common.solutionscreation.SolutionsCreation;
 import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.observable.Observable;
@@ -34,7 +34,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   private final Evaluation<S> evaluation;
   private final SolutionsCreation<S> createInitialPopulation;
   private final Termination termination;
-  private final MatingPoolSelection<S> selection;
+  private final Selection<S> selection;
   private final Variation<S> variation;
   private final Replacement<S> replacement;
   private final Map<String, Object> attributes;
@@ -61,7 +61,7 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
       SolutionsCreation<S> initialPopulationCreation,
       Evaluation<S> evaluation,
       Termination termination,
-      MatingPoolSelection<S> selection,
+      Selection<S> selection,
       Variation<S> variation,
       Replacement<S> replacement) {
     this.name = name;

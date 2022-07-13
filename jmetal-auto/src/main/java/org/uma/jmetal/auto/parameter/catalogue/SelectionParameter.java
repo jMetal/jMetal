@@ -3,9 +3,9 @@ package org.uma.jmetal.auto.parameter.catalogue;
 import java.util.Comparator;
 import java.util.List;
 import org.uma.jmetal.auto.parameter.CategoricalParameter;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
@@ -14,19 +14,19 @@ public class SelectionParameter<S extends Solution<?>> extends CategoricalParame
     super("selection", args, selectionStrategies) ;
   }
 
-  public MatingPoolSelection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
-    MatingPoolSelection<S> result ;
+  public Selection<S> getParameter(int matingPoolSize, Comparator<S> comparator) {
+    Selection<S> result ;
     switch(getValue()) {
       case "tournament":
         int tournamentSize =
                 (Integer) findSpecificParameter("selectionTournamentSize").getValue();
 
-        result = new NaryTournamentMatingPoolSelection<S>(
+        result = new NaryTournamentSelection<>(
                 tournamentSize, matingPoolSize, comparator);
 
         break ;
       case "random":
-        result = new RandomMatingPoolSelection<>(matingPoolSize);
+        result = new RandomSelection<>(matingPoolSize);
         break ;
       default:
         throw new JMetalException("Selection component unknown: " + getValue()) ;

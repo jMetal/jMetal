@@ -9,8 +9,8 @@ import org.uma.jmetal.component.catalogue.common.termination.Termination;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.MuPlusLambdaReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.NaryTournamentSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -31,7 +31,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
-  private MatingPoolSelection<S> selection;
+  private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
 
@@ -50,7 +50,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
             offspringPopulationSize, crossover, mutation);
 
     this.selection =
-        new NaryTournamentMatingPoolSelection<>(
+        new NaryTournamentSelection<>(
             2,
             variation.getMatingPoolSize(),
             new ObjectiveComparator<>(0));
@@ -78,7 +78,7 @@ public class GeneticAlgorithmBuilder<S extends Solution<?>> {
     return this;
   }
 
-  public GeneticAlgorithmBuilder<S> setSelection(MatingPoolSelection<S> selection) {
+  public GeneticAlgorithmBuilder<S> setSelection(Selection<S> selection) {
     this.selection = selection;
 
     return this;

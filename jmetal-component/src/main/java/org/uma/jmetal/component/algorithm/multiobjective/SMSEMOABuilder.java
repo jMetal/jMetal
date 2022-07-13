@@ -10,8 +10,8 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByE
 import org.uma.jmetal.component.catalogue.ea.replacement.Replacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.RankingAndDensityEstimatorReplacement;
 import org.uma.jmetal.component.catalogue.ea.replacement.impl.SMSEMOAReplacement;
-import org.uma.jmetal.component.catalogue.ea.selection.MatingPoolSelection;
-import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomMatingPoolSelection;
+import org.uma.jmetal.component.catalogue.ea.selection.Selection;
+import org.uma.jmetal.component.catalogue.ea.selection.impl.RandomSelection;
 import org.uma.jmetal.component.catalogue.ea.variation.Variation;
 import org.uma.jmetal.component.catalogue.ea.variation.impl.CrossoverAndMutationVariation;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
@@ -37,7 +37,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
   private Evaluation<S> evaluation;
   private SolutionsCreation<S> createInitialPopulation;
   private Termination termination;
-  private MatingPoolSelection<S> selection;
+  private Selection<S> selection;
   private Variation<S> variation;
   private Replacement<S> replacement;
 
@@ -56,7 +56,7 @@ public class SMSEMOABuilder<S extends Solution<?>> {
     this.variation =
         new CrossoverAndMutationVariation<>(1, crossover, mutation);
 
-    this.selection = new RandomMatingPoolSelection<>(variation.getMatingPoolSize());
+    this.selection = new RandomSelection<>(variation.getMatingPoolSize());
 
     this.termination = new TerminationByEvaluations(25000);
 

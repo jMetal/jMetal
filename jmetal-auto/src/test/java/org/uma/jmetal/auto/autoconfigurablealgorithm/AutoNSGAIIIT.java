@@ -1,5 +1,6 @@
 package org.uma.jmetal.auto.autoconfigurablealgorithm;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -179,8 +180,8 @@ class AutoNSGAIIIT {
 
     double hv = hypervolume.compute(normalizedFront);
 
-    assertTrue(population.size() >= 95) ;
-    assertTrue(hv > 0.65) ;
+    assertThat(population).hasSizeGreaterThan(95) ;
+    assertThat(hv).isGreaterThan(0.64) ;
   }
 
   @Test
