@@ -53,7 +53,7 @@ The structure of the `jmetal-component` is depicted in this figure:
 
 The main packages of the sub-project are the following:
 
-* `algorithm`: Contains the algorithmic templates (such as `EvolutionaryAlgorithm` and `ParticleSwarmOptimization`) as well as builder classes to instantiate single- and multi-objective metaheuristicas from them.
+* `algorithm`: Contains the algorithmic templates (such as `EvolutionaryAlgorithm` and `ParticleSwarmOptimization`) as well as builder classes to instantiate single- and multi-objective metaheuristics from them.
 
 * `catalogue`: The components are included in a catalogue that is structured into three sub-packages:
 
@@ -69,7 +69,7 @@ We describe the most relevant classes of these packages next.
 
 The `EvolutionaryComputation` template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+The component-based template for evolutionary algorithms is implemented in the `org.uma.jmetal.component.algorithm.EvolutionaryComputation` class. 
 
 ...
 
