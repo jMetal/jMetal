@@ -30,7 +30,8 @@ public class NeighborhoodMatingPoolSelection<S extends Solution<?>>
       int matingPoolSize,
       SequenceGenerator<Integer> solutionIndexGenerator,
       Neighborhood<S> neighborhood,
-      SelectionOperator<List<S>, S> selectionOperator, boolean updateCurrentSolutionIndex) {
+      SelectionOperator<List<S>, S> selectionOperator,
+      boolean updateCurrentSolutionIndex) {
     this.matingPoolSize = matingPoolSize;
     this.solutionIndexGenerator = solutionIndexGenerator;
     this.neighborhood = neighborhood;
