@@ -5,25 +5,28 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByEvaluations;
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 class TerminationByEvaluationsTest {
+  private  int maximumNumberOfEvaluations ;
+  TerminationByEvaluations termination ;
+
+  @BeforeEach
+  void setUp() {
+    maximumNumberOfEvaluations = 10000;
+    termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
+  }
 
   @Test
   void TheConstructorInitializesCorrectlyTheMaximumNumberOfEvaluations() {
-    int maximumNumberOfEvaluations = 10000;
-    TerminationByEvaluations termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-
     assertThat(termination.getMaximumNumberOfEvaluations()).isEqualTo(maximumNumberOfEvaluations);
   }
 
   @Test
-  void isMetRaisesAnExceptionIfTheEvaluationsFieldIsNotPresent() {
-    int maximumNumberOfEvaluations = 10000;
-    TerminationByEvaluations termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-
+  void isMetRaisesAnExceptionIfTheEVALUATIONSFieldIsNotPresent() {
     Map<String, Object> algorithmStatusData = new HashMap<>();
     assertThatThrownBy(() -> termination.isMet(algorithmStatusData)).isInstanceOf(
         NullParameterException.class);
@@ -31,9 +34,6 @@ class TerminationByEvaluationsTest {
 
   @Test
   void isMetRaisesReturnsTrueIfTheConditionIsMet() {
-    int maximumNumberOfEvaluations = 10000;
-    TerminationByEvaluations termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-
     Map<String, Object> algorithmStatusData = new HashMap<>();
     algorithmStatusData.put("EVALUATIONS", 10001);
 
@@ -42,9 +42,6 @@ class TerminationByEvaluationsTest {
 
   @Test
   void isMetRaisesReturnsFalseIfTheConditionIsNotMet() {
-    int maximumNumberOfEvaluations = 10000;
-    TerminationByEvaluations termination = new TerminationByEvaluations(maximumNumberOfEvaluations);
-
     Map<String, Object> algorithmStatusData = new HashMap<>();
     algorithmStatusData.put("EVALUATIONS", 9000);
 
