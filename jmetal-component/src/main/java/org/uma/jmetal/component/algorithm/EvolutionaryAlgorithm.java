@@ -37,11 +37,11 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   private final MatingPoolSelection<S> selection;
   private final Variation<S> variation;
   private final Replacement<S> replacement;
-  private Map<String, Object> attributes;
+  private final Map<String, Object> attributes;
   private long initTime;
   private long totalComputingTime;
   private int evaluations;
-  private Observable<Map<String, Object>> observable;
+  private final Observable<Map<String, Object>> observable;
 
   private final String name;
 
