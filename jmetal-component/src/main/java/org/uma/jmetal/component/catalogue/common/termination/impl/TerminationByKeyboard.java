@@ -26,7 +26,7 @@ public class TerminationByKeyboard implements Termination {
   public boolean isMet(Map<String, Object> algorithmStatusData) {
     if (keyHit) {
       this.evaluations = (int)algorithmStatusData.get("EVALUATIONS") ;
-      JMetalLogger.logger.info("Evaluations: " + evaluations);
+      JMetalLogger.logger.info(() ->"Evaluations: " + evaluations);
     }
     return keyHit ;
   }

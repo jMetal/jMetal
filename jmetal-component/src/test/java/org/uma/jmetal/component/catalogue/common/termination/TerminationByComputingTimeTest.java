@@ -11,7 +11,6 @@ import org.uma.jmetal.component.catalogue.common.termination.impl.TerminationByC
 import org.uma.jmetal.util.errorchecking.exception.NullParameterException;
 
 class TerminationByComputingTimeTest {
-
   private long maxComputingTime ;
   TerminationByComputingTime termination ;
 
