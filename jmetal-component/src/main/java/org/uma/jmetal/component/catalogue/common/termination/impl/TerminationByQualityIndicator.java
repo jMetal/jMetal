@@ -77,7 +77,6 @@ public class TerminationByQualityIndicator implements Termination {
       if (successfulStopCondition) {
         stoppingCondition = true ;
       }
-
     }
     return stoppingCondition;
   }
