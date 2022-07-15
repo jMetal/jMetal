@@ -37,7 +37,7 @@ import org.uma.jmetal.component.catalogue.pso.velocityinitialization.impl.Defaul
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
-import org.uma.jmetal.util.ProblemFactory;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceComparator;
 

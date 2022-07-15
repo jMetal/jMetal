@@ -14,7 +14,7 @@ import org.uma.jmetal.operator.selection.impl.BinaryTournamentSelection;
 import org.uma.jmetal.problem.binaryproblem.BinaryProblem;
 import org.uma.jmetal.solution.binarysolution.BinarySolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.ProblemFactory;
+import org.uma.jmetal.problem.ProblemFactory;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**

@@ -14,7 +14,7 @@ import org.uma.jmetal.problem.doubleproblem.DoubleProblem;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemFactory;
+import org.uma.jmetal.problem.ProblemFactory;
 
 /**
  * Class for configuring and running the MOEA/D-IEpsilon algorithm, described in:

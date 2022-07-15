@@ -1,7 +1,6 @@
-package org.uma.jmetal.util;
+package org.uma.jmetal.problem;
 
 import java.lang.reflect.InvocationTargetException;
-import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
 /**
