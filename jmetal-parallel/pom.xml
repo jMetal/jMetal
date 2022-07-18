@@ -81,28 +81,28 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.6.0</version>
+            <version>5.6.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.12</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.0-preview</version>
         </dependency>
         <dependency>
             <groupId>org.jppf</groupId>
             <artifactId>jppf-common</artifactId>
-            <version>6.2</version>
+            <version>6.3-alpha</version>
         </dependency>
         <dependency>
             <groupId>org.jppf</groupId>
             <artifactId>jppf-node</artifactId>
-            <version>6.2</version>
+            <version>6.3-alpha</version>
         </dependency>
         <dependency>
             <groupId>org.jppf</groupId>
             <artifactId>jppf-client</artifactId>
-            <version>6.2</version>
+            <version>6.3-alpha</version>
         </dependency>
     </dependencies>
 </project>

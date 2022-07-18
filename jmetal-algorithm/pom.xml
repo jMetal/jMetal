@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.10.8</version>
+            <version>1.10.16</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.fuzzylite</groupId>
             <artifactId>jfuzzylite</artifactId>
-            <version>5.0</version>
+            <version>6.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.chwagnlucid</groupId>
