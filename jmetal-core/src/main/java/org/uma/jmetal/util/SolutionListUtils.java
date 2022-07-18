@@ -249,32 +249,6 @@ public class SolutionListUtils {
     }
     return distance;
   }
-  /**
-   * Compares two solution lists to determine if both are equals
-   *
-   * @param solutions A <code>Solution list</code>
-   * @param newSolutionList A <code>Solution list</code>
-   * @return true if both are contains the same solutions, false in other case
-   */
-  public static <S> boolean solutionListsAreEquals(List<S> solutions, List<S> newSolutionList) {
-    boolean found;
-    for (S solution : solutions) {
-
-      int j = 0;
-      found = false;
-      while (j < newSolutionList.size()) {
-        if (solution.equals(newSolutionList.get(j))) {
-          found = true;
-          break;
-        }
-        j++;
-      }
-      if (!found) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   /**
    * This method takes a list of solutions, removes a percentage of its solutions, and it is filled

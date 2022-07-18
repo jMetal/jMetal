@@ -102,7 +102,7 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
 
   private void variation(String[] args) {
     CrossoverParameter crossoverParameter = new CrossoverParameter(args,
-        List.of("SBX", "BLX_ALPHA"));
+        List.of("SBX", "BLX_ALPHA", "wholeArithmetic"));
     ProbabilityParameter crossoverProbability =
         new ProbabilityParameter("crossoverProbability", args);
     crossoverParameter.addGlobalParameter(crossoverProbability);
@@ -212,8 +212,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
                 Comparator.comparing(ranking::getRank),
                 Comparator.comparing(densityEstimator::getValue).reversed()));
 
-    SolutionsCreation<DoubleSolution> initialSolutionsCreation =
-        createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
+    var initialSolutionsCreation =
+        (SolutionsCreation<DoubleSolution>) createInitialSolutionsParameter.getParameter((DoubleProblem) problem,
             populationSizeParameter.getValue());
 
     MutationParameter mutationParameter = (MutationParameter) variationParameter.findSpecificParameter(
@@ -223,7 +223,8 @@ public class AutoNSGAII implements AutoConfigurableAlgorithm {
       mutationParameter.addNonConfigurableParameter("maxIterations",
           maximumNumberOfEvaluationsParameter.getValue() / populationSizeParameter.getValue());
     }
-    Variation<DoubleSolution> variation = variationParameter.getDoubleSolutionParameter();
+
+    var variation = (Variation<DoubleSolution>) variationParameter.getDoubleSolutionParameter();
 
     Selection<DoubleSolution> selection =
         selectionParameter.getParameter(

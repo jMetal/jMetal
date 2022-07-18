@@ -117,4 +117,31 @@ public class ListUtils {
 
     return selectedSolutions;
   }
+
+  /**
+   * Compares two lists to determine if they are equals
+   *
+   * @param solutions A <code>list</code>
+   * @param newSolutionList A <code>list</code>
+   * @return true if both are contains equals solutions, false in other case
+   */
+  public static <S> boolean listAreEquals(List<S> solutions, List<S> newSolutionList) {
+    boolean found;
+    for (S solution : solutions) {
+
+      int j = 0;
+      found = false;
+      while (j < newSolutionList.size()) {
+        if (solution.equals(newSolutionList.get(j))) {
+          found = true;
+          break;
+        }
+        j++;
+      }
+      if (!found) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

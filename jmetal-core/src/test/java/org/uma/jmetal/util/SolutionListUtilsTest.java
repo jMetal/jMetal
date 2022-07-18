@@ -321,7 +321,7 @@ public class SolutionListUtilsTest {
       list2.add(solution);
     }
 
-    assertTrue(SolutionListUtils.solutionListsAreEquals(list1, list2));
+    assertTrue(ListUtils.listAreEquals(list1, list2));
   }
 
   @Test
@@ -342,7 +342,7 @@ public class SolutionListUtilsTest {
     list2.add(solutions.get(1));
     list2.add(solutions.get(0));
 
-    assertTrue(SolutionListUtils.solutionListsAreEquals(list1, list2));
+    assertTrue(ListUtils.listAreEquals(list1, list2));
   }
 
   @Test
