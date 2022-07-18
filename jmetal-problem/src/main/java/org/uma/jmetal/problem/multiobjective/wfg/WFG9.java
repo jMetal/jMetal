@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.wfg;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 import org.uma.jmetal.util.errorchecking.JMetalException;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -134,7 +135,15 @@ public class WFG9 extends WFG {
    */
   public DoubleSolution evaluate(DoubleSolution solution) {
     float[] variables = new float[getNumberOfVariables()];
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i1 = 0; i1 < bound; i1++) {
+          double v = solution.variables().get(i1);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       for (int i = 0; i < getNumberOfVariables(); i++) {
       variables[i] = (float) x[i] ;

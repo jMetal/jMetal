@@ -150,17 +150,25 @@ public class Benchmark {
   // Sphere function
   static public double sphere(double[] x) {
 
-    double sum = Arrays.stream(x).map(v -> v * v).sum();
+    double sum = 0.0;
+    for (double v : x) {
+      double v1 = v * v;
+      sum += v1;
+    }
 
-      return (sum);
+    return (sum);
   }
 
   // Sphere function with noise
   static public double sphere_noise(double[] x) {
 
-    double sum = Arrays.stream(x).map(v -> v * v).sum();
+    double sum = 0.0;
+    for (double v : x) {
+      double v1 = v * v;
+      sum += v1;
+    }
 
-      // NOISE
+    // NOISE
     // Comment the next line to remove the noise
     sum *= (1.0 + 0.1 * Math.abs(random.nextGaussian()));
 
@@ -262,9 +270,13 @@ public class Benchmark {
   // Rastrigin's function
   static public double rastrigin(double[] x) {
 
-    double sum = Arrays.stream(x).map(v -> (v * v) - (10.0 * Math.cos(PIx2 * v)) + 10.0).sum();
+    double sum = 0.0;
+    for (double v : x) {
+      double v1 = (v * v) - (10.0 * Math.cos(PIx2 * v)) + 10.0;
+      sum += v1;
+    }
 
-      return (sum);
+    return (sum);
   }
 
   // Non-Continuous Rastrigin's function
@@ -295,17 +307,25 @@ public class Benchmark {
       }
     }
 
-    double sum2 = IntStream.rangeClosed(0, Kmax).mapToDouble(k -> Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (0.5))).sum();
+    double sum2 = 0.0;
+    for (int k = 0; k <= Kmax; k++) {
+      double v = Math.pow(a, k) * Math.cos(PIx2 * Math.pow(b, k) * (0.5));
+      sum2 += v;
+    }
 
-      return (sum1 - sum2 * ((double) (x.length)));
+    return (sum1 - sum2 * ((double) (x.length)));
   }
 
   // F8F2
   static public double F8F2(double[] x) {
 
-    double sum = IntStream.range(1, x.length).mapToDouble(i -> F8(F2(x[i - 1], x[i]))).sum();
+    double sum = 0.0;
+    for (int i = 1; i < x.length; i++) {
+      double v = F8(F2(x[i - 1], x[i]));
+      sum += v;
+    }
 
-      sum += F8(F2(x[x.length - 1], x[0]));
+    sum += F8(F2(x[x.length - 1], x[0]));
 
     return (sum);
   }
@@ -321,9 +341,13 @@ public class Benchmark {
   // Expanded Scaffer's F6 function
   static public double EScafferF6(double[] x) {
 
-    double sum = IntStream.range(1, x.length).mapToDouble(i -> ScafferF6(x[i - 1], x[i])).sum();
+    double sum = 0.0;
+    for (int i = 1; i < x.length; i++) {
+      double v = ScafferF6(x[i - 1], x[i]);
+      sum += v;
+    }
 
-      sum += ScafferF6(x[x.length - 1], x[0]);
+    sum += ScafferF6(x[x.length - 1], x[0]);
 
     return (sum);
   }
@@ -353,7 +377,12 @@ public class Benchmark {
     double sum;
     double a = 1e6;
 
-      sum = IntStream.range(0, x.length).mapToDouble(i -> Math.pow(a, (((double) i) / ((double) (x.length - 1)))) * x[i] * x[i]).sum();
+    double result = 0.0;
+    for (int i = 0; i < x.length; i++) {
+      double v = Math.pow(a, (((double) i) / ((double) (x.length - 1)))) * x[i] * x[i];
+      result += v;
+    }
+    sum = result;
 
     return (sum);
   }
@@ -423,9 +452,13 @@ public class Benchmark {
 
   // (1xD) row vector * (Dx1) column vector = (1) scalar
   static public double xy(double[] x, double[] y) {
-    double result = IntStream.range(0, x.length).mapToDouble(i -> (x[i] * y[i])).sum();
+    double result = 0.0;
+    for (int i = 0; i < x.length; i++) {
+      double v = (x[i] * y[i]);
+      result += v;
+    }
 
-      return (result);
+    return (result);
   }
 
   //

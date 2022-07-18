@@ -61,9 +61,12 @@ public class WeightVectorNeighborhoodTest {
 
     List<DoubleSolution> solutionList = new ArrayList<>(populationSize);
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0);
-    IntStream.range(0, populationSize).forEach(i -> solutionList.add(problem.createSolution()));
+      int bound = populationSize;
+      for (int i = 0; i < bound; i++) {
+          solutionList.add(problem.createSolution());
+      }
 
-    List<DoubleSolution> neighbors;
+      List<DoubleSolution> neighbors;
     neighbors = weightVectorNeighborhood.getNeighbors(solutionList, 0);
 
     assertEquals(neighborSize, neighbors.size());

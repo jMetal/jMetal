@@ -51,7 +51,14 @@ public class ScalarizationUtils {
    * @return Array of doubles.
    */
   private static double[] toArray(List<Double> list) {
-    double[] values = list.stream().mapToDouble(aDouble -> aDouble).toArray();
+      double[] values = new double[10];
+      int count = 0;
+      for (Double aDouble : list) {
+          double v = aDouble;
+          if (values.length == count) values = Arrays.copyOf(values, count * 2);
+          values[count++] = v;
+      }
+      values = Arrays.copyOfRange(values, 0, count);
       return values;
   }
 
@@ -110,7 +117,14 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void sumOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double sum = solution.objectives()[0];
-        sum += Arrays.stream(solution.objectives(), 1, solution.objectives().length).sum();
+        double result = 0.0;
+        double[] array = solution.objectives();
+        int bound = solution.objectives().length;
+        for (int i = 1; i < bound; i++) {
+            double v = array[i];
+            result += v;
+        }
+        sum += result;
       setScalarizationValue(solution, sum);
     }
   }
@@ -125,7 +139,13 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedSum(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double sum = weights[0] * solution.objectives()[0];
-        sum += IntStream.range(1, solution.objectives().length).mapToDouble(i -> weights[i] * solution.objectives()[i]).sum();
+        double result = 0.0;
+        int bound = solution.objectives().length;
+        for (int i = 1; i < bound; i++) {
+            double v = weights[i] * solution.objectives()[i];
+            result += v;
+        }
+        sum += result;
       setScalarizationValue(solution, sum);
     }
 
@@ -139,7 +159,14 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void productOfObjectives(List<S> solutionsList) {
     for (S solution : solutionsList) {
       double product = solution.objectives()[0];
-        product *= Arrays.stream(solution.objectives(), 1, solution.objectives().length).reduce(1, (a, b) -> a * b);
+        double acc = 1;
+        double[] array = solution.objectives();
+        int bound = solution.objectives().length;
+        for (int i = 1; i < bound; i++) {
+            double v = array[i];
+            acc = acc * v;
+        }
+        product *= acc;
       setScalarizationValue(solution, product);
     }
   }
@@ -154,7 +181,13 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void weightedProduct(List<S> solutionsList, double[] weights) {
     for (S solution : solutionsList) {
       double product = Math.pow(solution.objectives()[0], weights[0]);
-        product *= IntStream.range(1, solution.objectives().length).mapToDouble(i -> Math.pow(solution.objectives()[i], weights[i])).reduce(1, (a, b) -> a * b);
+        double acc = 1;
+        int bound = solution.objectives().length;
+        for (int i = 1; i < bound; i++) {
+            double pow = Math.pow(solution.objectives()[i], weights[i]);
+            acc = acc * pow;
+        }
+        product *= acc;
       setScalarizationValue(solution, product);
     }
   }
@@ -233,7 +266,12 @@ public class ScalarizationUtils {
   public static <S extends Solution<?>> void nash(List<S> solutionsList, double[] nadirValues) {
     for (S solution : solutionsList) {
       double nash = nadirValues[0] - solution.objectives()[0];
-        nash *= IntStream.range(1, nadirValues.length).mapToDouble(i -> (nadirValues[i] - solution.objectives()[i])).reduce(1, (a, b) -> a * b);
+        double acc = 1;
+        for (int i = 1; i < nadirValues.length; i++) {
+            double v = (nadirValues[i] - solution.objectives()[i]);
+            acc = acc * v;
+        }
+        nash *= acc;
       // The Nash bargaining solution is originally maximized. To conform
       // with minimization the bargaining value is negated.
       setScalarizationValue(solution, -nash);

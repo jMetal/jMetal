@@ -101,9 +101,14 @@ public class F03ShiftedRotatedHighCondElliptic extends TestFunc {
     Benchmark.shift(m_z, x, m_o);
     Benchmark.rotate(m_zM, m_z, m_matrix);
 
-    double sum = IntStream.range(0, mDimension).mapToDouble(i -> Math.pow(constant, i) * m_zM[i] * m_zM[i]).sum();
+    double sum = 0.0;
+    int bound = mDimension;
+    for (int i = 0; i < bound; i++) {
+      double v = Math.pow(constant, i) * m_zM[i] * m_zM[i];
+      sum += v;
+    }
 
-      result = sum + mBias;
+    result = sum + mBias;
 
     return (result);
   }

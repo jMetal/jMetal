@@ -80,7 +80,12 @@ public class GDE3 extends AbstractDifferentialEvolution<List<DoubleSolution>> {
 
   @Override
   protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
+      List<DoubleSolution> population = new ArrayList<>(getMaxPopulationSize());
+      int bound = getMaxPopulationSize();
+      for (int i = 0; i < bound; i++) {
+          DoubleSolution solution = getProblem().createSolution();
+          population.add(solution);
+      }
       return population;
   }
 

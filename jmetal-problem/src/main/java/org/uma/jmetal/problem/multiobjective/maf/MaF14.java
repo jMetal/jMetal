@@ -83,7 +83,15 @@ public class MaF14 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v = solution.variables().get(i1);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
 
     //change x
     for (int i = numberOfObjectives - 1; i < numberOfVariables; i++) {
@@ -130,12 +138,21 @@ public class MaF14 extends AbstractDoubleProblem {
   }
 
   public static double Rastrigin(double[] x) {
-    double eta = Arrays.stream(x).map(v -> (Math.pow(v, 2) - 10 * Math.cos(2 * Math.PI * v) + 10)).sum();
+      double eta = 0.0;
+      for (double v : x) {
+          double v1 = (Math.pow(v, 2) - 10 * Math.cos(2 * Math.PI * v) + 10);
+          eta += v1;
+      }
       return eta;
   }
 
   public static double Rosenbrock(double[] x) {
-    double eta = IntStream.range(0, x.length - 1).mapToDouble(i -> (100 * Math.pow(Math.pow(x[i], 2) - x[i + 1], 2) + Math.pow((x[i] - 1), 2))).sum();
+      double eta = 0.0;
+      int bound = x.length - 1;
+      for (int i = 0; i < bound; i++) {
+          double v = (100 * Math.pow(Math.pow(x[i], 2) - x[i + 1], 2) + Math.pow((x[i] - 1), 2));
+          eta += v;
+      }
       return eta;
   }
 }

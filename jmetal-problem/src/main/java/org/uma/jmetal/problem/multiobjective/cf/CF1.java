@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -38,8 +39,12 @@ public class CF1 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> lowerLimit.add(0.0 + 1e-10));
-    IntStream.range(0, numberOfVariables).forEach(i -> upperLimit.add(1.0 - 1e-10));
+    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      lowerLimit.add(0.0 + 1e-10);
+    }
+    for (int i = 0; i < numberOfVariables; i++) {
+      upperLimit.add(1.0 - 1e-10);
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -65,17 +70,30 @@ public class CF1 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
+    double[] theta = new double[10];
+    int count = 0;
+    int bound2 = getNumberOfObjectives() - 1;
+    for (int i2 = 0; i2 < bound2; i2++) {
+      double v1 = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i2 + 1]) / x[i2]);
+      if (theta.length == count) theta = Arrays.copyOf(theta, count * 2);
+      theta[count++] = v1;
+    }
+    theta = Arrays.copyOfRange(theta, 0, count);
 
-      // Step 3. Compute T_
+    // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
     // Compute h function. Here is Sphere function
     double optX = 0.2;
-    double h = IntStream.range(getNumberOfObjectives(), getNumberOfVariables()).mapToDouble(i -> ((x[i] - optX) * (x[i] - optX))).sum();
+    double h = 0.0;
+    int bound1 = getNumberOfVariables();
+    for (int i1 = getNumberOfObjectives(); i1 < bound1; i1++) {
+      double v = ((x[i1] - optX) * (x[i1] - optX));
+      h += v;
+    }
 
-      t = t + h; // Add h to T_
+    t = t + h; // Add h to T_
 
     // Step 4. Specify PF shape: Linear
     double sumProd = 1.0;
@@ -101,8 +119,10 @@ public class CF1 extends AbstractDoubleProblem {
     // Other constraints, if necessary
 
     // Set constraints
-    IntStream.range(0, getNumberOfConstraints())
-        .forEach(i -> solution.constraints()[i] =  constraint[i]);
+    int bound = getNumberOfConstraints();
+    for (int i = 0; i < bound; i++) {
+      solution.constraints()[i] = constraint[i];
+    }
 
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;

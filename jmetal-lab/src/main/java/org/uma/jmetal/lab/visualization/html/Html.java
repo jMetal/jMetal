@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -132,7 +133,12 @@ public class Html {
 
     sb.append(" h1 {text-align: center} \n");
 
-      sb.append(components.stream().map(HtmlComponent::getCSS).collect(Collectors.joining("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "")));
+      StringJoiner joiner = new StringJoiner("", ".component { margin : 1em auto 2em auto; width : 90%}\n", "");
+      for (HtmlComponent component : components) {
+          String css = component.getCSS();
+          joiner.add(css);
+      }
+      sb.append(joiner.toString());
 
     return sb.append("</style>\n");
   }

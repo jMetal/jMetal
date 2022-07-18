@@ -80,8 +80,14 @@ public class ErrorRatio extends QualityIndicator {
       boolean thePointIsInTheParetoFront = false;
       for (int j = 0; j < referenceFront.length; j++) {
         double[] currentParetoFrontPoint = referenceFront[j];
-        boolean found = IntStream.range(0, numberOfObjectives).noneMatch(k -> currentPoint[k] != currentParetoFrontPoint[k]);
-          if(found){
+        boolean found = true;
+        for (int k = 0; k < numberOfObjectives; k++) {
+          if (currentPoint[k] != currentParetoFrontPoint[k]) {
+            found = false;
+            break;
+          }
+        }
+        if(found){
           thePointIsInTheParetoFront = true;
           break;
         }

@@ -43,7 +43,13 @@ public class QualityIndicatorUtils {
    * @return
    */
   public static QualityIndicator getIndicatorFromName(String name, List<QualityIndicator> list) {
-    QualityIndicator result = list.stream().filter(indicator -> indicator.getName().equals(name)).findFirst().orElse(null);
+      QualityIndicator result = null;
+      for (QualityIndicator indicator : list) {
+          if (indicator.getName().equals(name)) {
+              result = indicator;
+              break;
+          }
+      }
 
       Check.notNull(result);
 

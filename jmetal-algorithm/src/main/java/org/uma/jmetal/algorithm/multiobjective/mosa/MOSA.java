@@ -163,8 +163,13 @@ public class MOSA<S extends Solution<?>> extends AbstractEvolutionStrategy<S, Li
   }
 
   protected double compute_acceptance_probability(S currentSolution, S mutatedSolution, double temperature) {
-    double value = IntStream.range(0, currentSolution.objectives().length).mapToDouble(i -> (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
-            / Math.max(temperature, minimumTemperature)).sum();
+      double value = 0.0;
+      int bound = currentSolution.objectives().length;
+      for (int i = 0; i < bound; i++) {
+          double v = (mutatedSolution.objectives()[i] - currentSolution.objectives()[i])
+                  / Math.max(temperature, minimumTemperature);
+          value += v;
+      }
 
       double probability = Math.exp(-1.0 * value);
     Check.probabilityIsValid(probability);

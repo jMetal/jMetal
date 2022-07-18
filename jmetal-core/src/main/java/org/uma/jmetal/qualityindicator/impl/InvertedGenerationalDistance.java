@@ -66,7 +66,11 @@ public class InvertedGenerationalDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double invertedGenerationalDistance(double[][] front, double[][] referenceFront) {
-    double sum = Arrays.stream(referenceFront).mapToDouble(vector -> Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow)).sum();
+      double sum = 0.0;
+      for (double[] vector : referenceFront) {
+          double v = Math.pow(VectorUtils.distanceToClosestVector(vector, front), pow);
+          sum += v;
+      }
 
       sum = Math.pow(sum, 1.0 / pow);
 

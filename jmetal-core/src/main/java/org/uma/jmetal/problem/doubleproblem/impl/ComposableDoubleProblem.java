@@ -103,11 +103,15 @@ public class ComposableDoubleProblem implements DoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     Double[] vars = solution.variables().toArray(new Double[getNumberOfVariables()]);
 
-    IntStream.range(0, getNumberOfObjectives())
-        .forEach(i -> solution.objectives()[i] =  objectiveFunctions.get(i).apply(vars));
+    int bound1 = getNumberOfObjectives();
+    for (int i1 = 0; i1 < bound1; i1++) {
+      solution.objectives()[i1] = objectiveFunctions.get(i1).apply(vars);
+    }
 
-    IntStream.range(0, getNumberOfConstraints())
-        .forEach(i -> solution.constraints()[i] =  constraints.get(i).apply(vars));
+    int bound = getNumberOfConstraints();
+    for (int i = 0; i < bound; i++) {
+      solution.constraints()[i] = constraints.get(i).apply(vars);
+    }
 
     return solution ;
   }

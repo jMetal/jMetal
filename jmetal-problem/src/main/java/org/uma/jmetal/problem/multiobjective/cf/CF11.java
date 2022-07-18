@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -51,8 +52,12 @@ public class CF11 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> lowerLimit.add(0.0 + 1e-10));
-    IntStream.range(0, numberOfVariables).forEach(i -> upperLimit.add(1.0 - 1e-10));
+    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      lowerLimit.add(0.0 + 1e-10);
+    }
+    for (int i = 0; i < numberOfVariables; i++) {
+      upperLimit.add(1.0 - 1e-10);
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -78,17 +83,30 @@ public class CF11 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
+    double[] theta = new double[10];
+    int count = 0;
+    int bound1 = getNumberOfObjectives() - 1;
+    for (int i2 = 0; i2 < bound1; i2++) {
+      double v1 = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i2 + 1]) / x[i2]);
+      if (theta.length == count) theta = Arrays.copyOf(theta, count * 2);
+      theta[count++] = v1;
+    }
+    theta = Arrays.copyOfRange(theta, 0, count);
 
-      // Step 3. Compute T_
+    // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
     // Compute h function. Here is Sphere function
     double OptX = 0.2;
-    double h = IntStream.range(getNumberOfObjectives(), getNumberOfVariables()).mapToDouble(i -> ((x[i] - OptX) * (x[i] - OptX))).sum();
+    double h = 0.0;
+    int bound = getNumberOfVariables();
+    for (int i1 = getNumberOfObjectives(); i1 < bound; i1++) {
+      double v = ((x[i1] - OptX) * (x[i1] - OptX));
+      h += v;
+    }
 
-      t = t + h; // Add sum2 to T_
+    t = t + h; // Add sum2 to T_
 
     // Step 4. Specify PF shape: Concave
     double sumProd = 1.0;

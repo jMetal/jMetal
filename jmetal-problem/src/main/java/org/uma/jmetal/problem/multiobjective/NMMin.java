@@ -32,12 +32,12 @@ public class NMMin extends AbstractIntegerProblem {
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lowerLimit.add(lowerBound);
-      upperLimit.add(upperBound);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lowerLimit.add(lowerBound);
+          upperLimit.add(upperBound);
+      }
 
-    setVariableBounds(lowerLimit, upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */

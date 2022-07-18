@@ -45,7 +45,11 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Returns the mean of the values contained in the history
    */
   public List<Double> mean() {
-    List<Double> result = IntStream.range(0, this.numberOfObjectives).mapToObj(i -> 0.0).collect(Collectors.toCollection(() -> new ArrayList<>(this.numberOfObjectives)));
+      List<Double> result = new ArrayList<>(this.numberOfObjectives);
+      for (int i1 = 0; i1 < this.numberOfObjectives; i1++) {
+          Double aDouble = 0.0;
+          result.add(aDouble);
+      }
 
       for (List<Double> historyMember : this.history)
       for (int i = 0; i < this.numberOfObjectives;i++)
@@ -62,7 +66,11 @@ public class MOMBI2History<T extends Solution<?>> implements Serializable {
    * Returns the variance of the values contained in the history
    */
   public List<Double> variance(List<Double> mean) {
-    List<Double> result = IntStream.range(0, this.numberOfObjectives).mapToObj(i -> 0.0).collect(Collectors.toCollection(() -> new ArrayList<>(this.numberOfObjectives)));
+      List<Double> result = new ArrayList<>(this.numberOfObjectives);
+      for (int i1 = 0; i1 < this.numberOfObjectives; i1++) {
+          Double aDouble = 0.0;
+          result.add(aDouble);
+      }
 
       for (List<Double> historyMember : this.history)
       for (int i = 0; i < this.numberOfObjectives; i++)

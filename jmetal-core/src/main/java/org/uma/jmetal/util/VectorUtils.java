@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenVectors;
@@ -178,6 +179,14 @@ public class VectorUtils {
    * @return
    */
   public static double[] toArray(List<Double> list) {
-    return list.stream().mapToDouble(v->v).toArray() ;
+      double[] arr = new double[10];
+      int count = 0;
+      for (Double v : list) {
+          double v1 = v;
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v1;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      return arr;
   }
 }

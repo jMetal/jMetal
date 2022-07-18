@@ -50,7 +50,12 @@ public class ZDT6 extends ZDT1 {
    * @param solution Solution
    */
   protected double evalG(DoubleSolution solution) {
-    double g = IntStream.range(1, solution.variables().size()).mapToDouble(var -> solution.variables().get(var)).sum();
+      double g = 0.0;
+      int bound = solution.variables().size();
+      for (int var = 1; var < bound; var++) {
+          double v = solution.variables().get(var);
+          g += v;
+      }
       g = g / (solution.variables().size() - 1);
     g = Math.pow(g, 0.25);
     g = 9.0 * g;

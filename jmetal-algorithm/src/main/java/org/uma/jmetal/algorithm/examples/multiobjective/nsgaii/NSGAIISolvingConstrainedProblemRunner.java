@@ -2,6 +2,7 @@ package org.uma.jmetal.algorithm.examples.multiobjective.nsgaii;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.uma.jmetal.algorithm.Algorithm;
@@ -80,11 +81,14 @@ public class NSGAIISolvingConstrainedProblemRunner extends AbstractAlgorithmRunn
 
     AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-    List<DoubleSolution> population = algorithm.getResult().stream().filter(
-        ConstraintHandling::isFeasible).collect(
-        Collectors.toList());
+      List<DoubleSolution> population = new ArrayList<>();
+      for (DoubleSolution doubleSolution : algorithm.getResult()) {
+          if (ConstraintHandling.isFeasible(doubleSolution)) {
+              population.add(doubleSolution);
+          }
+      }
 
-    long computingTime = algorithmRunner.getComputingTime();
+      long computingTime = algorithmRunner.getComputingTime();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

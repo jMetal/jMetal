@@ -27,7 +27,11 @@ public class LIRCMOP14 extends LIRCMOP13 {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
 
-    double f = Arrays.stream(solution.objectives()).map(v -> Math.pow(v, 2)).sum();
+      double f = 0.0;
+      for (double v : solution.objectives()) {
+          double pow = Math.pow(v, 2);
+          f += pow;
+      }
       constraint[0] = (f - 3 * 3) * (f - 2 * 2);
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);
     constraint[2] = (f - 1.75 * 1.75) * (f - 1.6 * 1.6);

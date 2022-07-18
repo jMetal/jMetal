@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.singleobjective;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -36,13 +37,25 @@ public class Rastrigin extends AbstractDoubleProblem {
   public DoubleSolution evaluate(DoubleSolution solution) {
     int numberOfVariables = getNumberOfVariables() ;
 
-    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v1 = solution.variables().get(i1);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v1;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       double result;
     double a = 10.0;
     double w = 2 * Math.PI;
 
-      result = IntStream.range(0, numberOfVariables).mapToDouble(i -> x[i] * x[i] - a * Math.cos(w * x[i])).sum();
+      double sum = 0.0;
+      for (int i = 0; i < numberOfVariables; i++) {
+          double v = x[i] * x[i] - a * Math.cos(w * x[i]);
+          sum += v;
+      }
+      result = sum;
     result += a * numberOfVariables;
 
     solution.objectives()[0] = result;

@@ -42,7 +42,13 @@ public class L5Test {
     List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItem(list.get(0))) ;
-    assertEquals(4, result.stream().filter(s -> s == solution).count());
+      long count = 0L;
+      for (IntegerSolution s : result) {
+          if (s == solution) {
+              count++;
+          }
+      }
+      assertEquals(4, count);
   }
 
   /**
@@ -59,13 +65,30 @@ public class L5Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
+      List<IntegerSolution> list = new ArrayList<>(rows * columns);
+      int bound = rows * columns;
+      for (int i = 0; i < bound; i++) {
+          IntegerSolution mock = mock(IntegerSolution.class);
+          list.add(mock);
+      }
 
       List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
-    assertEquals(2, result.stream().filter(s -> s == list.get(0)).count());
-    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
+      long count1 = 0L;
+      for (IntegerSolution integerSolution : result) {
+          if (integerSolution == list.get(0)) {
+              count1++;
+          }
+      }
+      assertEquals(2, count1);
+      long count = 0L;
+      for (IntegerSolution s : result) {
+          if (s == list.get(1)) {
+              count++;
+          }
+      }
+      assertEquals(2, count);
   }
 
   /**
@@ -82,13 +105,30 @@ public class L5Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
+      List<IntegerSolution> list = new ArrayList<>(rows * columns);
+      int bound = rows * columns;
+      for (int i = 0; i < bound; i++) {
+          IntegerSolution mock = mock(IntegerSolution.class);
+          list.add(mock);
+      }
 
       List<IntegerSolution> result = neighborhood.getNeighbors(list, 1) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(0), list.get(1))) ;
-    assertEquals(2, result.stream().filter(s -> s == list.get(0)).count());
-    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
+      long count1 = 0L;
+      for (IntegerSolution integerSolution : result) {
+          if (integerSolution == list.get(0)) {
+              count1++;
+          }
+      }
+      assertEquals(2, count1);
+      long count = 0L;
+      for (IntegerSolution s : result) {
+          if (s == list.get(1)) {
+              count++;
+          }
+      }
+      assertEquals(2, count);
   }
 
   /**
@@ -106,13 +146,30 @@ public class L5Test {
     int columns = 2 ;
     L5<IntegerSolution> neighborhood = new L5<IntegerSolution>(rows, columns) ;
 
-    List<IntegerSolution> list = IntStream.range(0, rows * columns).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(rows * columns)));
+      List<IntegerSolution> list = new ArrayList<>(rows * columns);
+      int bound = rows * columns;
+      for (int i = 0; i < bound; i++) {
+          IntegerSolution mock = mock(IntegerSolution.class);
+          list.add(mock);
+      }
 
       List<IntegerSolution> result = neighborhood.getNeighbors(list, 0) ;
     assertEquals(4, result.size()) ;
     assertThat(result, hasItems(list.get(1), list.get(2))) ;
     assertThat(result, not(hasItems(list.get(3), list.get(0)))) ;
-    assertEquals(2, result.stream().filter(s -> s == list.get(1)).count());
-    assertEquals(2, result.stream().filter(s -> s == list.get(2)).count());
+      long count1 = 0L;
+      for (IntegerSolution integerSolution : result) {
+          if (integerSolution == list.get(1)) {
+              count1++;
+          }
+      }
+      assertEquals(2, count1);
+      long count = 0L;
+      for (IntegerSolution s : result) {
+          if (s == list.get(2)) {
+              count++;
+          }
+      }
+      assertEquals(2, count);
   }
 }

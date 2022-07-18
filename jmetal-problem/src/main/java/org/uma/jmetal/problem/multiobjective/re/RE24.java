@@ -57,7 +57,12 @@ public class RE24 extends AbstractDoubleProblem {
     }
 
     solution.objectives()[0] =  x1 + (120 * x2);
-    solution.objectives()[1] = IntStream.of(0, 1, 2, 3).mapToDouble(i -> g[i]).sum();
+      double sum = 0.0;
+      for (int i : new int[]{0, 1, 2, 3}) {
+          double v = g[i];
+          sum += v;
+      }
+      solution.objectives()[1] = sum;
 
     return solution;
   }

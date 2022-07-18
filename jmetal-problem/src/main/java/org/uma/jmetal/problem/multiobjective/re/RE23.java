@@ -51,7 +51,12 @@ public class RE23 extends AbstractDoubleProblem {
             + (1.7781 * x2 * x3 * x3)
             + (3.1661 * x1 * x1 * x4)
             + (19.84 * x1 * x1 * x3);
-    solution.objectives()[1] = IntStream.of(0, 1, 2).mapToDouble(i -> g[i]).sum();
+      double sum = 0.0;
+      for (int i : new int[]{0, 1, 2}) {
+          double v = g[i];
+          sum += v;
+      }
+      solution.objectives()[1] = sum;
 
     return solution;
   }

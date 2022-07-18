@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -32,10 +33,10 @@ public class DTLZ1 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
-    });
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -50,11 +51,23 @@ public class DTLZ1 extends AbstractDoubleProblem {
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i2 = 0; i2 < numberOfVariables; i2++) {
+      double v1 = solution.variables().get(i2);
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v1;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    x = arr;
 
-    double g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5) - Math.cos(20.0 * Math.PI * (x[i] - 0.5))).sum();
+    double g = 0.0;
+    for (int i1 = numberOfVariables - k; i1 < numberOfVariables; i1++) {
+      double v = (x[i1] - 0.5) * (x[i1] - 0.5) - Math.cos(20.0 * Math.PI * (x[i1] - 0.5));
+      g += v;
+    }
 
-      g = 100 * (k + g);
+    g = 100 * (k + g);
     for (int i = 0; i < numberOfObjectives; i++) {
       f[i] = (1.0 + g) * 0.5;
     }
@@ -69,7 +82,9 @@ public class DTLZ1 extends AbstractDoubleProblem {
       }
     }
 
-    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      solution.objectives()[i] = f[i];
+    }
 
     return solution ;
   }

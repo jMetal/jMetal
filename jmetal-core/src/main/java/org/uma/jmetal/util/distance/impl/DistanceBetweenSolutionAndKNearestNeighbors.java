@@ -54,8 +54,15 @@ public class DistanceBetweenSolutionAndKNearestNeighbors<S extends Solution<?>>
    * @return A list with the distances
    */
   private List<Double> knnDistances(S solution, List<S> solutionList) {
-    List<Double> listOfDistances = solutionList.stream().mapToDouble(s -> distance.compute(solution, s)).filter(distanceBetweenSolutions -> distanceBetweenSolutions != 0).boxed().collect(Collectors.toList());
+    List<Double> listOfDistances = new ArrayList<>();
+    for (S s : solutionList) {
+      double distanceBetweenSolutions = distance.compute(solution, s);
+      if (distanceBetweenSolutions != 0) {
+        Double aDouble = distanceBetweenSolutions;
+        listOfDistances.add(aDouble);
+      }
+    }
 
-      return listOfDistances ;
+    return listOfDistances ;
   }
 }

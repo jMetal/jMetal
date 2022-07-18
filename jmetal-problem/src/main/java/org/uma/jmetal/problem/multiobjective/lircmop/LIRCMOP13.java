@@ -42,7 +42,15 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          double v = solution.variables().get(i);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       solution.objectives()[0] = (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * cos(0.5 * Math.PI + x[1]);
     solution.objectives()[1] = (1.7057 + g1(x)) * cos(0.5 * Math.PI * x[0]) * sin(0.5 * Math.PI + x[1]);
@@ -56,7 +64,11 @@ public class LIRCMOP13 extends AbstractDoubleProblem {
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
 
-    double f = Arrays.stream(solution.objectives()).map(v -> Math.pow(v, 2)).sum();
+      double f = 0.0;
+      for (double v : solution.objectives()) {
+          double pow = Math.pow(v, 2);
+          f += pow;
+      }
       constraint[0] = (f - 9) * (f - 4);
     constraint[1] = (f - 1.9 * 1.9) * (f - 1.8 * 1.8);
 

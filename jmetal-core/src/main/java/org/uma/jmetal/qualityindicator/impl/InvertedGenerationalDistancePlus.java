@@ -53,7 +53,11 @@ public class InvertedGenerationalDistancePlus extends QualityIndicator {
    */
   public double invertedGenerationalDistancePlus(double[][] front, double[][] referenceFront) {
 
-    double sum = Arrays.stream(referenceFront).mapToDouble(doubles -> VectorUtils.distanceToClosestVector(doubles, front, new DominanceDistanceBetweenVectors())).sum();
+      double sum = 0.0;
+      for (double[] doubles : referenceFront) {
+          double v = VectorUtils.distanceToClosestVector(doubles, front, new DominanceDistanceBetweenVectors());
+          sum += v;
+      }
 
       // STEP 4. Divide the sum by the maximum number of points of the reference Pareto front
     return sum / referenceFront.length;

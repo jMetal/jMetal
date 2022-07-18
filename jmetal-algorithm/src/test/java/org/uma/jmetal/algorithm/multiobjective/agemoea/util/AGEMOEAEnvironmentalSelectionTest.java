@@ -72,7 +72,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         extremes.add(1);
         extremes.add(2);
 
-        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
+        List<double[]> objectiveVectors = new ArrayList<>();
+        for (DefaultDoubleSolution defaultDoubleSolution : front) {
+            double[] objectives = defaultDoubleSolution.objectives();
+            objectiveVectors.add(objectives);
+        }
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 
@@ -98,7 +102,11 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
         extremes.add(0);
         extremes.add(1);
 
-        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
+        List<double[]> objectiveVectors = new ArrayList<>();
+        for (DefaultDoubleSolution defaultDoubleSolution : front) {
+            double[] objectives = defaultDoubleSolution.objectives();
+            objectiveVectors.add(objectives);
+        }
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 
@@ -129,7 +137,7 @@ public class AGEMOEAEnvironmentalSelectionTest extends TestCase {
                 (Double) front.get(1).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
         assertTrue(Double.isInfinite(
                 (Double) front.get(2).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId())));
-        assertEquals(2.666666666666667/*2d + 2d / 3d*/,
+        assertEquals(/* streams 2.666666666666667*/    /*loops*/2d + 2d / 3d,
                 (Double) front.get(3).attributes().get(AGEMOEAEnvironmentalSelection.getAttributeId()));
     }
 

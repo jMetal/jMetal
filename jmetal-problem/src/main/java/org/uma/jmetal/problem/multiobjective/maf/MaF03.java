@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -34,12 +35,12 @@ public class MaF03 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -56,10 +57,22 @@ public class MaF03 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i2 = 0; i2 < numberOfVariables; i2++) {
+          double v1 = solution.variables().get(i2);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v1;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
 
-    double g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(i -> (Math.pow(x[i] - 0.5, 2) - Math.cos(20 * Math.PI * (x[i] - 0.5)))).sum();
-    // evaluate g
+      double g = 0.0;
+      for (int i1 = numberOfObjectives - 1; i1 < numberOfVariables; i1++) {
+          double v = (Math.pow(x[i1] - 0.5, 2) - Math.cos(20 * Math.PI * (x[i1] - 0.5)));
+          g += v;
+      }
+      // evaluate g
       g = 100 * (numberOfVariables - numberOfObjectives + 1 + g);
     double subf1 = 1, subf3 = 1 + g;
     // evaluate fm,fm-1,...2,f1

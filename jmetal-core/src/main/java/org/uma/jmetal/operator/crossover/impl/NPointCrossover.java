@@ -1,6 +1,7 @@
 package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -62,7 +63,15 @@ public class NPointCrossover<T> implements CrossoverOperator<Solution<T>> {
         mom.variables().size() >= crossovers,
         "The number of crossovers is higher than the number of variables");
 
-    int[] crossoverPoints = IntStream.range(0, crossovers).map(i -> randomNumberGenerator.nextInt(0, mom.variables().size() - 1)).toArray();
+      int[] crossoverPoints = new int[10];
+      int count = 0;
+      int bound = crossovers;
+      for (int i1 = 0; i1 < bound; i1++) {
+          int nextInt = randomNumberGenerator.nextInt(0, mom.variables().size() - 1);
+          if (crossoverPoints.length == count) crossoverPoints = Arrays.copyOf(crossoverPoints, count * 2);
+          crossoverPoints[count++] = nextInt;
+      }
+      crossoverPoints = Arrays.copyOfRange(crossoverPoints, 0, count);
       Solution<T> girl = mom.copy();
     Solution<T> boy = dad.copy();
     boolean swap = false;

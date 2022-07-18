@@ -80,12 +80,13 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           //indicator.setReferenceParetoFront(normalizedReferenceFront);
 
           double[] indicatorValues = new double[experiment.getIndependentRuns()];
-          IntStream.range(0, experiment.getIndependentRuns()).forEach(run -> {
+          int bound = experiment.getIndependentRuns();
+          for (int run = 0; run < bound; run++) {
             String frontFileName = problemDirectory + "/" +
                     experiment.getOutputParetoFrontFileName() + run + ".csv";
             double[][] front = new double[0][];
             try {
-              front = VectorUtils.readVectors(frontFileName,",");
+              front = VectorUtils.readVectors(frontFileName, ",");
             } catch (IOException e) {
               e.printStackTrace();
             }
@@ -98,7 +99,7 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
             Double indicatorValue = indicator.compute(normalizedFront);
             JMetalLogger.logger.info(indicator.getName() + ": " + indicatorValue);
             indicatorValues[run] = indicatorValue;
-          });
+          }
 
           for (double indicatorValue : indicatorValues) {
             writeQualityIndicatorValueToFile(indicatorValue, qualityIndicatorFile);
@@ -149,9 +150,15 @@ public class ComputeQualityIndicators<S extends Solution<?>, Result extends List
           List<String> fileArray;
           fileArray = Files.readAllLines(indicatorFile, StandardCharsets.UTF_8);
 
-          List<Pair<Double, Integer>> list = IntStream.range(0, fileArray.size()).mapToObj(i -> new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i)).sorted(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft()))).collect(Collectors.toList());
+          List<Pair<Double, Integer>> list = new ArrayList<>();
+          int bound = fileArray.size();
+          for (int i = 0; i < bound; i++) {
+            ImmutablePair<Double, Integer> doubleIntegerImmutablePair = new ImmutablePair<>(Double.parseDouble(fileArray.get(i)), i);
+            list.add(doubleIntegerImmutablePair);
+          }
+          list.sort(Comparator.comparingDouble(pair -> Math.abs(pair.getLeft())));
 
-            String bestFunFileName;
+          String bestFunFileName;
           String bestVarFileName;
           String medianFunFileName;
           String medianVarFileName;

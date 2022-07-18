@@ -89,7 +89,12 @@ public class MOMBI2<S extends Solution<?>> extends MOMBI<S> {
   // ToDo: refactor this method (first implementation just try to mimic c implementation)
   @Override
   public void updateReferencePoint(List<S> population) {
-    List<Double> iterationMaxs = IntStream.range(0, this.getProblem().getNumberOfObjectives()).mapToObj(i -> Double.NEGATIVE_INFINITY).collect(Collectors.toCollection(() -> new ArrayList<>(maxs.size())));
+      List<Double> iterationMaxs = new ArrayList<>(maxs.size());
+      int bound = this.getProblem().getNumberOfObjectives();
+      for (int i1 = 0; i1 < bound; i1++) {
+          Double negativeInfinity = Double.NEGATIVE_INFINITY;
+          iterationMaxs.add(negativeInfinity);
+      }
 
       for (S solution : population) {
       updateReferencePoint(solution);

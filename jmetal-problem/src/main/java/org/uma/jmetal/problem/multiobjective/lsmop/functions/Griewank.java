@@ -5,7 +5,12 @@ import java.util.List;
 public class Griewank implements Function {
     @Override
     public Double evaluate(List<Double> x) {
-        double res = x.stream().mapToDouble(value -> value).map(value -> Math.pow(value, 2.0) / 4000.0).sum();
+        double res = 0.0;
+        for (Double value : x) {
+            double v = value;
+            double v1 = Math.pow(v, 2.0) / 4000.0;
+            res += v1;
+        }
 
         double aux = 1.0;
         for (int i = 1; i <= x.size(); i++) {

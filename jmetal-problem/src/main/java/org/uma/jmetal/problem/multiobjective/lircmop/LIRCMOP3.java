@@ -2,6 +2,7 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -21,7 +22,15 @@ public class LIRCMOP3 extends LIRCMOP1 {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          double v = solution.variables().get(i);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       final double a = 0.51;
     final double b = 0.5;

@@ -24,18 +24,23 @@ public class Sphere extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>() ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lowerLimit.add(-5.12);
-      upperLimit.add(5.12);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lowerLimit.add(-5.12);
+          upperLimit.add(5.12);
+      }
 
-    setVariableBounds(lowerLimit, upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double sum = solution.variables().stream().mapToDouble(v -> v).map(v -> v * v).sum();
+      double sum = 0.0;
+      for (Double v : solution.variables()) {
+          double v1 = v;
+          double v2 = v1 * v1;
+          sum += v2;
+      }
 
       solution.objectives()[0] = sum;
 

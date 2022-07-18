@@ -27,9 +27,17 @@ public class Binh2 extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] x = new double[10];
+    int count = 0;
+    int bound = getNumberOfVariables();
+    for (int i = 0; i < bound; i++) {
+      double v = solution.variables().get(i);
+      if (x.length == count) x = Arrays.copyOf(x, count * 2);
+      x[count++] = v;
+    }
+    x = Arrays.copyOfRange(x, 0, count);
 
-      fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
+    fx[0] = 4.0 * x[0] * x[0] + 4 * x[1] * x[1];
     fx[1] = (x[0] - 5.0) * (x[0] - 5.0) + (x[1] - 5.0) * (x[1] - 5.0);
 
     solution.objectives()[0] = fx[0];

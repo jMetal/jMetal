@@ -52,9 +52,11 @@ public class ParallelCrossoverAndMutationVariation<S extends Solution<?>> implem
 
     List<S> offspringPopulation = parentsList.stream().flatMap(parents -> {
       List<S> offspring = crossover.execute(parents);
-      offspring.forEach(solution -> mutation.execute(solution));
+        for (S solution : offspring) {
+            mutation.execute(solution);
+        }
 
-      return offspring.stream() ;
+        return offspring.stream() ;
     }).collect(Collectors.toList()) ;
 
     while (offspringPopulation.size() > offspringPopulationSize) {

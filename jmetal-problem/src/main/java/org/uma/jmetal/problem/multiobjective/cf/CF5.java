@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.cf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -50,8 +51,12 @@ public class CF5 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables);
     List<Double> upperLimit = new ArrayList<>(numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> lowerLimit.add(0.0 + 1e-10));
-    IntStream.range(0, numberOfVariables).forEach(i -> upperLimit.add(1.0 - 1e-10));
+    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      lowerLimit.add(0.0 + 1e-10);
+    }
+    for (int i = 0; i < numberOfVariables; i++) {
+      upperLimit.add(1.0 - 1e-10);
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -77,9 +82,17 @@ public class CF5 extends AbstractDoubleProblem {
     }
 
     // Step 2. Compute THETA_
-    double[] theta = IntStream.range(0, getNumberOfObjectives() - 1).mapToDouble(i -> 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i + 1]) / x[i])).toArray();
+    double[] theta = new double[10];
+    int count = 0;
+    int bound1 = getNumberOfObjectives() - 1;
+    for (int i1 = 0; i1 < bound1; i1++) {
+      double v = 2.0 / Math.PI * Math.atan(Math.sqrt(sx[i1 + 1]) / x[i1]);
+      if (theta.length == count) theta = Arrays.copyOf(theta, count * 2);
+      theta[count++] = v;
+    }
+    theta = Arrays.copyOfRange(theta, 0, count);
 
-      // Step 3. Compute T_
+    // Step 3. Compute T_
     double t;
     t = (1 - sx[0]) * (1 - sx[0]); // (1 - XI^2)^2
 
@@ -124,8 +137,10 @@ public class CF5 extends AbstractDoubleProblem {
       constraint[2 * i + 2] = -(theta[i] - alpha);
     }
     // Set constraints
-    IntStream.range(0, getNumberOfConstraints())
-        .forEach(i -> solution.constraints()[i] = constraint[i]);
+    int bound = getNumberOfConstraints();
+    for (int i = 0; i < bound; i++) {
+      solution.constraints()[i] = constraint[i];
+    }
     /* ----------------------Evaluate constraints (end)--------------------------*/
     return solution;
   }

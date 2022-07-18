@@ -63,8 +63,12 @@ public class SMPSORPChangingTheReferencePointsAndChartsRunner {
     int maxIterations = 2500;
     int swarmSize = 100;
 
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = referencePoints.stream().map(referencePoint -> new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
-            swarmSize / referencePoints.size(), referencePoint)).collect(Collectors.toList());
+      List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+      for (List<Double> referencePoint : referencePoints) {
+          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+                  swarmSize / referencePoints.size(), referencePoint);
+          archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
+      }
 
       algorithm = new SMPSORP(problem,
         swarmSize,

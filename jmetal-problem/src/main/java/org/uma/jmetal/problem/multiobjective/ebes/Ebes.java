@@ -925,7 +925,11 @@ public class Ebes extends AbstractDoubleProblem {
           double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
           double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
           double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-          double sum = DoubleStream.of(xn, yn, zn).map(v -> Math.pow(v, 2.0)).sum();
+          double sum = 0.0;
+          for (double v : new double[]{xn, yn, zn}) {
+            double pow = Math.pow(v, 2.0);
+            sum += pow;
+          }
           fx[j] += Math.sqrt(sum);
         }
         solution.objectives()[j] = fx[j];
@@ -993,7 +997,15 @@ public class Ebes extends AbstractDoubleProblem {
    */
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[this.getNumberOfConstraints()];
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] x = new double[10];
+    int count = 0;
+    int bound = getNumberOfVariables();
+    for (int i1 = 0; i1 < bound; i1++) {
+      double v1 = solution.variables().get(i1);
+      if (x.length == count) x = Arrays.copyOf(x, count * 2);
+      x[count++] = v1;
+    }
+    x = Arrays.copyOfRange(x, 0, count);
 
     double x1, x2, x3, x4;
     int var = 0;
@@ -1304,7 +1316,12 @@ public class Ebes extends AbstractDoubleProblem {
         double xn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aX_][hi];
         double yn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aY_][hi];
         double zn = DisplacementNodes_[numberOfLibertyDegree_ * (int) nodeCheck_[i][0] + aZ_][hi];
-        deltaN = Math.sqrt(DoubleStream.of(xn, yn, zn).map(v -> Math.pow(v, 2)).sum());
+        double sum = 0.0;
+        for (double v : new double[]{xn, yn, zn}) {
+          double pow = Math.pow(v, 2);
+          sum += pow;
+        }
+        deltaN = Math.sqrt(sum);
         constraint[con] = (-deltaN + nodeCheck_[i][1]);
         con += 1;
       }
@@ -1319,7 +1336,14 @@ public class Ebes extends AbstractDoubleProblem {
     // asignaciÃƒÂ³n de las variables para cada grupo
     // y determinaciÃƒÂ³n de las caracterÃƒÂ­sticas mecÃƒÂ¡nicas
 
-    double[] x = solution.variables().stream().mapToDouble(aDouble -> aDouble).toArray();
+    double[] x = new double[10];
+    int count = 0;
+    for (Double aDouble : solution.variables()) {
+      double v = aDouble;
+      if (x.length == count) x = Arrays.copyOf(x, count * 2);
+      x[count++] = v;
+    }
+    x = Arrays.copyOfRange(x, 0, count);
 
     double x1, x2, x3, x4;
 
@@ -5809,7 +5833,13 @@ public class Ebes extends AbstractDoubleProblem {
       MDi[i] = Math.sqrt(1 / (1 - Math.pow(r, 2.0)) * MDi[i]);
     }
 
-    MD = Arrays.stream(MDi, 0, geometryCheck_.length).sum();
+    double sum = 0.0;
+    int bound = geometryCheck_.length;
+    for (int i = 0; i < bound; i++) {
+      double v = MDi[i];
+      sum += v;
+    }
+    MD = sum;
 
     return MD;
   }

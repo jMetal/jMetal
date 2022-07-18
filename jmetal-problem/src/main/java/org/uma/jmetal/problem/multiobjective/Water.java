@@ -28,7 +28,14 @@ public class Water extends AbstractDoubleProblem {
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
     double[] fx = new double[solution.objectives().length];
-    double[] x = solution.variables().stream().mapToDouble(aDouble -> aDouble).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      for (Double aDouble : solution.variables()) {
+          double v = aDouble;
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       fx[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
     fx[1] = 3000 * x[0];
@@ -49,7 +56,14 @@ public class Water extends AbstractDoubleProblem {
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
     double[] constraint = new double[getNumberOfConstraints()];
-    double[] x = solution.variables().stream().mapToDouble(aDouble -> aDouble).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      for (Double aDouble : solution.variables()) {
+          double v = aDouble;
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       constraint[0] = 1 - (0.00139 / (x[0] * x[1]) + 4.94 * x[2] - 0.08);
     constraint[1] = 1 - (0.000306 / (x[0] * x[1]) + 1.082 * x[2] - 0.0986);

@@ -31,10 +31,10 @@ public class FDA1 extends FDA {
 
     lowerLimit.add(0.0);
     upperLimit.add(1.0);
-    IntStream.range(1, numberOfVariables).forEach(i -> {
+    for (int i = 1; i < numberOfVariables; i++) {
       lowerLimit.add(-1.0);
       upperLimit.add(1.0);
-    });
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -61,8 +61,13 @@ public class FDA1 extends FDA {
   private double evalG(DoubleSolution solution) {
 
     double gT = Math.sin(0.5 * Math.PI * time);
-    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - gT), 2)).sum();
-      g = g + 1.0;
+    double g = 0.0;
+    int bound = solution.variables().size();
+    for (int i = 1; i < bound; i++) {
+      double pow = Math.pow((solution.variables().get(i) - gT), 2);
+      g += pow;
+    }
+    g = g + 1.0;
     return g;
   }
 

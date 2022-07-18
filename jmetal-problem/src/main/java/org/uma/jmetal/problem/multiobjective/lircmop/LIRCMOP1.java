@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lircmop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -38,7 +39,15 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          double v = solution.variables().get(i);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       solution.objectives()[0] = x[0] + g1(x);
     solution.objectives()[1] = 1 - x[0] * x[0] + g2(x);
@@ -49,7 +58,15 @@ public class LIRCMOP1 extends AbstractDoubleProblem {
 
   /** EvaluateConstraints() method */
   public void evaluateConstraints(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          double v = solution.variables().get(i);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       final double a = 0.51;
     final double b = 0.5;

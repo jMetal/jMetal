@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.lsmop;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,22 +22,41 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
       variables.set(i - 1, aux);
     }
 
-      G = IntStream.range(0, getNumberOfObjectives()).mapToDouble(i -> 0.0).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    int bound3 = getNumberOfObjectives();
+    for (int i3 = 0; i3 < bound3; i3++) {
+      double v = 0.0;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    G = arr;
 
     for (int i = 1; i <= getNumberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = IntStream.rangeClosed(len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1, len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1)).mapToObj(k -> variables.get(k - 1)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
-          G[i - 1] += getOddFunction().evaluate(x);
+        List<Double> x = new ArrayList<>(getNumberOfVariables());
+        int bound = len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+        for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1; k <= bound; k++) {
+          Double aDouble = variables.get(k - 1);
+          x.add(aDouble);
+        }
+        G[i - 1] += getOddFunction().evaluate(x);
       }
     }
 
     for (int i = 2; i <= getNumberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = IntStream.rangeClosed(len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1, len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1)).mapToObj(k -> variables.get(k - 1)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
+        List<Double> x = new ArrayList<>(getNumberOfVariables());
+        int bound = len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+        for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1; k <= bound; k++) {
+          Double aDouble = variables.get(k - 1);
+          x.add(aDouble);
+        }
 
-          G[i - 1] += getEvenFunction().evaluate(x);
+        G[i - 1] += getEvenFunction().evaluate(x);
       }
     }
 
@@ -58,17 +78,32 @@ public abstract class AbstractLSMOP1_4 extends AbstractLSMOP {
       leftHand.set(i - 1, cum);
     }
 
-    List<Double> inverted = IntStream.range(0, getNumberOfObjectives()).mapToObj(i -> leftHand.get(leftHand.size() - i - 1)).collect(Collectors.toList());
+    List<Double> inverted = new ArrayList<>();
+    int bound2 = getNumberOfObjectives();
+    for (int i2 = 0; i2 < bound2; i2++) {
+      Double aDouble2 = leftHand.get(leftHand.size() - i2 - 1);
+      inverted.add(aDouble2);
+    }
 
-      rightHand.add(1.0);
+    rightHand.add(1.0);
     for (int i = getNumberOfObjectives() - 1; i >= 1; i--) {
       rightHand.add(1.0 - variables.get(i - 1));
     }
 
-    List<Double> operand = IntStream.range(0, getNumberOfObjectives()).mapToObj(i -> inverted.get(i) * rightHand.get(i)).collect(Collectors.toList());
+    List<Double> operand = new ArrayList<>();
+    int bound1 = getNumberOfObjectives();
+    for (int i1 = 0; i1 < bound1; i1++) {
+      Double aDouble1 = inverted.get(i1) * rightHand.get(i1);
+      operand.add(aDouble1);
+    }
 
-      List<Double> y = IntStream.range(0, getNumberOfObjectives()).mapToObj(i -> (1.0 + G[i]) * operand.get(i)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfObjectives())));
-      return y;
+    List<Double> y = new ArrayList<>(getNumberOfObjectives());
+    int bound = getNumberOfObjectives();
+    for (int i = 0; i < bound; i++) {
+      Double aDouble = (1.0 + G[i]) * operand.get(i);
+      y.add(aDouble);
+    }
+    return y;
   }
 
 }

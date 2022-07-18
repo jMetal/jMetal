@@ -71,7 +71,12 @@ public class RE25 extends AbstractDoubleProblem {
     }
 
     solution.objectives()[0] = (Math.PI * Math.PI * x2 * x3 * x3 * (x1 + 2)) / 4.0;
-    solution.objectives()[1] = IntStream.of(0, 1, 2, 3, 4, 5).mapToDouble(i -> g[i]).sum();
+      double sum = 0.0;
+      for (int i : new int[]{0, 1, 2, 3, 4, 5}) {
+          double v = g[i];
+          sum += v;
+      }
+      solution.objectives()[1] = sum;
 
     return solution;
   }

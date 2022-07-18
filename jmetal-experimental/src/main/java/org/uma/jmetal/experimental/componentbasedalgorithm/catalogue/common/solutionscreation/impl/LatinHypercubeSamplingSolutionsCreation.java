@@ -55,7 +55,11 @@ public class LatinHypercubeSamplingSolutionsCreation
   }
 
   private List<Integer> getPermutation(int permutationLength) {
-    List<Integer> randomSequence = IntStream.range(0, permutationLength).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(permutationLength)));
+      List<Integer> randomSequence = new ArrayList<>(permutationLength);
+      for (int i = 0; i < permutationLength; i++) {
+          Integer integer = i;
+          randomSequence.add(integer);
+      }
 
       java.util.Collections.shuffle(randomSequence);
 

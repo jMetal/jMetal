@@ -35,12 +35,12 @@ public class MaF07 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -56,17 +56,44 @@ public class MaF07 extends AbstractDoubleProblem {
     double[] x;
     double[] f;
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr1 = new double[10];
+      int count1 = 0;
+      for (int i2 = 0; i2 < numberOfVariables; i2++) {
+          double v3 = solution.variables().get(i2);
+          if (arr1.length == count1) arr1 = Arrays.copyOf(arr1, count1 * 2);
+          arr1[count1++] = v3;
+      }
+      arr1 = Arrays.copyOfRange(arr1, 0, count1);
+      x = arr1;
 
     // evaluate g,h
     double g, h, sub1;
-      g = Arrays.stream(x, numberOfObjectives - 1, numberOfVariables).sum();
+      double result = 0.0;
+      for (int idx = numberOfObjectives - 1; idx < numberOfVariables; idx++) {
+          double v2 = x[idx];
+          result += v2;
+      }
+      g = result;
     g = 1 + 9 * g / (numberOfVariables - numberOfObjectives + 1);
     sub1 = 1 + g;
-      h = IntStream.range(0, numberOfObjectives - 1).mapToDouble(i -> (x[i] * (1 + Math.sin(3 * Math.PI * x[i])) / sub1)).sum();
+      double sum = 0.0;
+      int bound = numberOfObjectives - 1;
+      for (int i1 = 0; i1 < bound; i1++) {
+          double v1 = (x[i1] * (1 + Math.sin(3 * Math.PI * x[i1])) / sub1);
+          sum += v1;
+      }
+      h = sum;
     h = numberOfObjectives - h;
     // evaluate f1,...,m-1,m
-      f = Arrays.stream(x, 0, numberOfObjectives).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int j = 0; j < numberOfObjectives; j++) {
+          double v = x[j];
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      f = arr;
     f[numberOfObjectives - 1] = h * sub1;
 
     for (int i = 0; i < numberOfObjectives; i++) {

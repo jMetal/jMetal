@@ -24,11 +24,17 @@ public class IntegerPermutationSolution extends AbstractSolution<Integer>
   public IntegerPermutationSolution(int permutationLength, int numberOfObjectives) {
     super(permutationLength, numberOfObjectives);
 
-    List<Integer> randomSequence = IntStream.range(0, permutationLength).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(permutationLength)));
+      List<Integer> randomSequence = new ArrayList<>(permutationLength);
+      for (int i1 = 0; i1 < permutationLength; i1++) {
+          Integer integer = i1;
+          randomSequence.add(integer);
+      }
 
       java.util.Collections.shuffle(randomSequence);
 
-    IntStream.range(0, permutationLength).forEach(i -> variables().set(i, randomSequence.get(i)));
+      for (int i = 0; i < permutationLength; i++) {
+          variables().set(i, randomSequence.get(i));
+      }
   }
 
   /**

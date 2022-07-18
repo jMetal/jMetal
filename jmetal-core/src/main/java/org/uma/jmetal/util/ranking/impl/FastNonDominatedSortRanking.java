@@ -51,7 +51,12 @@ public class FastNonDominatedSortRanking<S extends Solution<?>> implements Ranki
     List<List<Integer>> iDominate = new ArrayList<>(population.size());
 
     // front[i] contains the list of individuals belonging to the front i
-    ArrayList<List<Integer>> front = IntStream.range(0, population.size() + 1).mapToObj(i -> new LinkedList<Integer>()).collect(Collectors.toCollection(() -> new ArrayList<>(population.size() + 1)));
+    ArrayList<List<Integer>> front = new ArrayList<>(population.size() + 1);
+    int bound = population.size() + 1;
+    for (int i1 = 0; i1 < bound; i1++) {
+      LinkedList<Integer> integers = new LinkedList<>();
+      front.add(integers);
+    }
 
     // Initialize the fronts
 

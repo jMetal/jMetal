@@ -130,7 +130,11 @@ public class WeightVectorNeighborhood<S extends Solution<?>> implements Neighbor
 
   @Override
   public List<S> getNeighbors(List<S> solutionList, int solutionIndex) {
-    List<S> neighbourSolutions = Arrays.stream(neighborhood[solutionIndex]).mapToObj(solutionList::get).collect(Collectors.toList());
+      List<S> neighbourSolutions = new ArrayList<>();
+      for (int i : neighborhood[solutionIndex]) {
+          S s = solutionList.get(i);
+          neighbourSolutions.add(s);
+      }
 
       return neighbourSolutions;
   }

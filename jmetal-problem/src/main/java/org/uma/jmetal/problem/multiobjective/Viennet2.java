@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -35,7 +36,14 @@ public class Viennet2 extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables();
 
     double[] f = new double[solution.objectives().length];
-    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v = solution.variables().get(i1);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       // First function
     f[0] = (x[0] - 2) * (x[0] - 2) / 2.0 + (x[1] + 1) * (x[1] + 1) / 13.0 + 3.0;

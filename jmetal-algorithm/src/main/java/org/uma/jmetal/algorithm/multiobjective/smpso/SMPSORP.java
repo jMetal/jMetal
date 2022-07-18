@@ -309,7 +309,12 @@ public class SMPSORP
 
   @Override
   public List<DoubleSolution> getResult() {
-    List<DoubleSolution> resultList = leaders.stream().flatMap(leader -> leader.getSolutionList().stream()).collect(Collectors.toList());
+      List<DoubleSolution> resultList = new ArrayList<>();
+      for (ArchiveWithReferencePoint<DoubleSolution> leader : leaders) {
+          for (DoubleSolution doubleSolution : leader.getSolutionList()) {
+              resultList.add(doubleSolution);
+          }
+      }
 
       return resultList;
   }

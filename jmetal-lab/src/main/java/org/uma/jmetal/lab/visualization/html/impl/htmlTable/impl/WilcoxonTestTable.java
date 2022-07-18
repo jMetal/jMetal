@@ -56,7 +56,14 @@ public class WilcoxonTestTable extends HtmlTable<WilcoxonTestTable.Difference[]>
   }
 
   public static double[] convertDoubleArray(Double[] array) {
-    double[] result = Arrays.stream(array).mapToDouble(aDouble -> aDouble).toArray();
+      double[] result = new double[10];
+      int count = 0;
+      for (Double aDouble : array) {
+          double v = aDouble;
+          if (result.length == count) result = Arrays.copyOf(result, count * 2);
+          result[count++] = v;
+      }
+      result = Arrays.copyOfRange(result, 0, count);
       return result;
   }
 

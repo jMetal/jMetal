@@ -58,9 +58,15 @@ public class AGEMOEAII<S extends Solution<?>> extends AGEMOEA<S> {
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).map(solution -> (S) solution.copy()).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+    List<S> matingPopulation = new ArrayList<>(population.size());
+    int bound = getMaxPopulationSize();
+    for (int i = 0; i < bound; i++) {
+      S solution = selectionOperator.execute(population);
+      S copy = (S) solution.copy();
+      matingPopulation.add(copy);
+    }
 
-      return matingPopulation;
+    return matingPopulation;
   }
 
   @Override

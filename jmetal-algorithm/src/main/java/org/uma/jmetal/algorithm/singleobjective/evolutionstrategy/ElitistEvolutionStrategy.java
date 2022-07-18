@@ -55,9 +55,14 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
   }
 
   @Override protected List<S> createInitialPopulation() {
-    List<S> population = IntStream.range(0, mu).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(mu)));
+    List<S> population = new ArrayList<>(mu);
+    int bound = mu;
+    for (int i = 0; i < bound; i++) {
+      S solution = getProblem().createSolution();
+      population.add(solution);
+    }
 
-      return population;
+    return population;
   }
 
   @Override protected List<S> evaluatePopulation(List<S> population) {
@@ -94,8 +99,13 @@ public class ElitistEvolutionStrategy<S extends Solution<?>> extends AbstractEvo
 
     Collections.sort(offspringPopulation, comparator) ;
 
-    List<S> newPopulation = IntStream.range(0, mu).mapToObj(offspringPopulation::get).collect(Collectors.toCollection(() -> new ArrayList<>(mu)));
-      return newPopulation;
+    List<S> newPopulation = new ArrayList<>(mu);
+    int bound = mu;
+    for (int i = 0; i < bound; i++) {
+      S s = offspringPopulation.get(i);
+      newPopulation.add(s);
+    }
+    return newPopulation;
   }
 
   @Override public S getResult() {

@@ -66,13 +66,15 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   }
 
   private void createWorkers(int numberOfCores, Problem<S> problem) {
-    IntStream.range(0, numberOfCores).forEach(i -> new Worker<>(
-            (task) -> {
-              problem.evaluate(task.getContents());
-              return ParallelTask.create(createTaskIdentifier(), task.getContents());
-            },
-            pendingTaskQueue,
-            completedTaskQueue).start());
+    for (int i = 0; i < numberOfCores; i++) {
+      new Worker<>(
+              (task) -> {
+                problem.evaluate(task.getContents());
+                return ParallelTask.create(createTaskIdentifier(), task.getContents());
+              },
+              pendingTaskQueue,
+              completedTaskQueue).start();
+    }
   }
 
   private int createTaskIdentifier() {
@@ -104,13 +106,14 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   public List<ParallelTask<S>> createInitialTasks() {
     List<S> initialPopulation = new ArrayList<>();
     List<ParallelTask<S>> initialTaskList = new ArrayList<>() ;
-    IntStream.range(0, populationSize)
-        .forEach(i -> initialPopulation.add(problem.createSolution()));
-    initialPopulation.forEach(
-        solution -> {
-          int taskId = JMetalRandom.getInstance().nextInt(0, 1000);
-          initialTaskList.add(ParallelTask.create(taskId, solution));
-        });
+    int bound = populationSize;
+    for (int i = 0; i < bound; i++) {
+      initialPopulation.add(problem.createSolution());
+    }
+    for (S solution : initialPopulation) {
+      int taskId = JMetalRandom.getInstance().nextInt(0, 1000);
+      initialTaskList.add(ParallelTask.create(taskId, solution));
+    }
 
     return initialTaskList ;
   }
@@ -118,10 +121,14 @@ public class AsynchronousMultiThreadedGeneticAlgorithm<S extends Solution<?>>
   @Override
   public void submitInitialTasks(List<ParallelTask<S>> initialTaskList) {
     if (initialTaskList.size() >= numberOfCores) {
-      initialTaskList.forEach(this::submitTask);
+      for (ParallelTask<S> sParallelTask : initialTaskList) {
+        submitTask(sParallelTask);
+      }
     } else {
       int idleWorkers = numberOfCores - initialTaskList.size();
-      initialTaskList.forEach(this::submitTask);
+      for (ParallelTask<S> sParallelTask : initialTaskList) {
+        submitTask(sParallelTask);
+      }
       while (idleWorkers > 0) {
         submitTask(createNewTask());
         idleWorkers--;

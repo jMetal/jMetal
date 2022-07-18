@@ -47,7 +47,11 @@ public class FDA4 extends FDA {
 
   private double evalF1(DoubleSolution solution, double g) {
     double f = 1.0d + g;
-    double mult = IntStream.rangeClosed(1, M - 1).mapToDouble(i -> Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      double mult = 1.0d;
+      for (int i = 1; i <= M - 1; i++) {
+          double cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
+          mult = mult * cos;
+      }
       return f * mult;
   }
 
@@ -55,7 +59,13 @@ public class FDA4 extends FDA {
     double f = 1.0d + g;
     double mult;
     double aux = Math.sin((solution.variables().get(M - k) * Math.PI) / 2.0d);
-      mult = IntStream.rangeClosed(1, M - k).mapToDouble(i -> Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      double acc = 1.0d;
+      int bound = M - k;
+      for (int i = 1; i <= bound; i++) {
+          double cos = Math.cos(solution.variables().get(i - 1) * Math.PI / 2.0d);
+          acc = acc * cos;
+      }
+      mult = acc;
     mult *= aux;
     return f * mult;
   }
@@ -68,7 +78,13 @@ public class FDA4 extends FDA {
   private double evalG(DoubleSolution solution, int limitInf) {
     double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0d)).sum();
+      double sum = 0.0;
+      int bound = solution.variables().size();
+      for (int i = limitInf; i < bound; i++) {
+          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
+          sum += pow;
+      }
+      g = sum;
     return g;
   }
 

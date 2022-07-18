@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -39,12 +40,12 @@ public class MaF02 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -61,7 +62,15 @@ public class MaF02 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v = solution.variables().get(i1);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
 
     double[] g = new double[numberOfObjectives];
     double[] thet = new double[numberOfObjectives - 1];

@@ -1,6 +1,7 @@
 package org.uma.jmetal.util.legacy.front.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -34,7 +35,14 @@ public class FrontUtils {
 
     int numberOfObjectives = front.getPoint(0).getDimension();
 
-    double[] maximumValue = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Double.NEGATIVE_INFINITY).toArray();
+      double[] maximumValue = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+          double negativeInfinity = Double.NEGATIVE_INFINITY;
+          if (maximumValue.length == count) maximumValue = Arrays.copyOf(maximumValue, count * 2);
+          maximumValue[count++] = negativeInfinity;
+      }
+      maximumValue = Arrays.copyOfRange(maximumValue, 0, count);
 
       for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
@@ -62,7 +70,14 @@ public class FrontUtils {
 
     int numberOfObjectives = front.getPoint(0).getDimension();
 
-    double[] minimumValue = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Double.MAX_VALUE).toArray();
+      double[] minimumValue = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+          double maxValue = Double.MAX_VALUE;
+          if (minimumValue.length == count) minimumValue = Arrays.copyOf(minimumValue, count * 2);
+          minimumValue[count++] = maxValue;
+      }
+      minimumValue = Arrays.copyOfRange(minimumValue, 0, count);
 
       for (int i = 0; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {

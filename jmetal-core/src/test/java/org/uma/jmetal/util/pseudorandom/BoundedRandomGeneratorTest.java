@@ -78,8 +78,12 @@ public class BoundedRandomGeneratorTest {
 		int max = 5;
 
 		// Generate random values
-		Map<Integer, Integer> counters = IntStream.rangeClosed(min, max).boxed().collect(Collectors.toMap(Function.identity(), i -> 0, (a, b) -> b));
-        for (int i = 0; i <= 10000; i++) {
+		Map<Integer, Integer> counters = new HashMap<>();
+		for (int i1 = min; i1 <= max; i1++) {
+			Integer integer = i1;
+			counters.put(integer, 0);
+		}
+		for (int i = 0; i <= 10000; i++) {
 			Integer value = generator.getRandomValue(min, max);
 			counters.put(value, counters.get(value) + 1);
 		}

@@ -51,14 +51,23 @@ public class ExtractSubsetOfParetoDominatedSolutionsFromFile {
 
     Archive<PointSolution> archive = new BestSolutionsArchive<>(
         new NonDominatedSolutionListArchive<>(), numberOfSolutions);
-    solutions.forEach(archive::add);
+    for (PointSolution solution : solutions) {
+      archive.add(solution);
+    }
 
     new SolutionListOutput(archive.getSolutionList()).printObjectivesToFile(outputFileName, ",");
   }
 
   private static double[] parseLineContainingObjectives(String line) {
     String[] stringValues = line.split(",");
-    double[] doubles = Arrays.stream(stringValues).mapToDouble(Double::parseDouble).toArray();
+    double[] doubles = new double[10];
+    int count = 0;
+    for (String stringValue : stringValues) {
+      double v = Double.parseDouble(stringValue);
+      if (doubles.length == count) doubles = Arrays.copyOf(doubles, count * 2);
+      doubles[count++] = v;
+    }
+    doubles = Arrays.copyOfRange(doubles, 0, count);
 
     return doubles;
   }

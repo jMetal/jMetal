@@ -57,7 +57,14 @@ public class OneMax extends AbstractBinaryProblem {
 
     BitSet bitset = solution.variables().get(0);
 
-      counterOnes += IntStream.range(0, bitset.length()).filter(bitset::get).count();
+      long count = 0L;
+      int bound = bitset.length();
+      for (int i = 0; i < bound; i++) {
+          if (bitset.get(i)) {
+              count++;
+          }
+      }
+      counterOnes += count;
 
     // OneMax is a maximization problem: multiply by -1 to minimize
     solution.objectives()[0] = -1.0 * counterOnes;

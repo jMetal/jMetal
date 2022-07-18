@@ -57,8 +57,12 @@ public class SMPSORPWithMultipleReferencePointsExample {
     int maxEvaluations = 25000;
     int swarmSize = 100;
 
-    List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = referencePoints.stream().map(referencePoint -> new CrowdingDistanceArchiveWithReferencePoint<DoubleSolution>(
-            swarmSize / referencePoints.size(), referencePoint)).collect(Collectors.toList());
+      List<ArchiveWithReferencePoint<DoubleSolution>> archivesWithReferencePoints = new ArrayList<>();
+      for (List<Double> referencePoint : referencePoints) {
+          CrowdingDistanceArchiveWithReferencePoint<DoubleSolution> doubleSolutionCrowdingDistanceArchiveWithReferencePoint = new CrowdingDistanceArchiveWithReferencePoint<>(
+                  swarmSize / referencePoints.size(), referencePoint);
+          archivesWithReferencePoints.add(doubleSolutionCrowdingDistanceArchiveWithReferencePoint);
+      }
 
       Evaluation<DoubleSolution> evaluation = new SequentialEvaluation<>(problem) ;
     Termination termination = new TerminationByEvaluations(maxEvaluations) ;

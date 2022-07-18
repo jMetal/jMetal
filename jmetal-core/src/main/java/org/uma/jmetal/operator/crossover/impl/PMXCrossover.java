@@ -1,6 +1,7 @@
 package org.uma.jmetal.operator.crossover.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -111,7 +112,15 @@ public class PMXCrossover implements
       // STEP 2: Get the subchains to interchange
       int replacement1[];
       int replacement2[] = new int[permutationLength];
-        replacement1 = IntStream.range(0, permutationLength).map(i -> replacement2[i] = -1).toArray();
+        int[] arr = new int[10];
+        int count = 0;
+        for (int i1 = 0; i1 < permutationLength; i1++) {
+            int i2 = replacement2[i1] = -1;
+            if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+            arr[count++] = i2;
+        }
+        arr = Arrays.copyOfRange(arr, 0, count);
+        replacement1 = arr;
 
       // STEP 3: Interchange
       for (int i = cuttingPoint1; i <= cuttingPoint2; i++) {

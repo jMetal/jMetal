@@ -8,7 +8,11 @@ public class WeightedSum implements AggregativeFunction {
 
   @Override
   public double compute(double[] vector, double[] weightVector) {
-    double sum = IntStream.range(0, vector.length).mapToDouble(n -> weightVector[n] * vector[n]).sum();
+      double sum = 0.0;
+      for (int n = 0; n < vector.length; n++) {
+          double v = weightVector[n] * vector[n];
+          sum += v;
+      }
 
       return sum;
   }

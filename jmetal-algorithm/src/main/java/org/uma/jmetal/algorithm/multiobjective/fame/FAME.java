@@ -207,8 +207,14 @@ public class FAME<S extends DoubleSolution> extends SteadyStateNSGAII<S> {
     int operator = rnd.nextInt(operators);
     List<S> offspring = new ArrayList<>(1);
     // ROULETTE
-    double cont = Arrays.stream(OpProb, 0, operators).sum();
-      while (cont > 0) {
+    double cont = 0.0;
+    double[] array = OpProb;
+    int bound = operators;
+    for (int i = 0; i < bound; i++) {
+      double v = array[i];
+      cont += v;
+    }
+    while (cont > 0) {
       cont -= OpProb[operator];
       if (cont <= 0) {
         break;

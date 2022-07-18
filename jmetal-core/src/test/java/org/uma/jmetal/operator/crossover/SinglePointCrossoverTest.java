@@ -318,7 +318,12 @@ public class SinglePointCrossoverTest {
 
     @Override
     public List<Integer> getListOfBitsPerVariable() {
-      return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
+        List<Integer> list = new ArrayList<>();
+        for (int i : bitsPerVariable) {
+            Integer integer = i;
+            list.add(integer);
+        }
+        return list;
     }
 
     @Override

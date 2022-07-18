@@ -100,7 +100,9 @@ public class RandomSearchAlgorithm<S extends Solution<?>> implements Algorithm<L
   }
 
   protected void updateBestFoundSolutions(List<S> solutions) {
-    solutions.forEach(solution -> archive.add(solution));
+      for (S solution : solutions) {
+          archive.add(solution);
+      }
   }
 
   protected List<S> getBestSolutions() {

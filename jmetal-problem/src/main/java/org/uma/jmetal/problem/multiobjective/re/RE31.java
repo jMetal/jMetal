@@ -49,7 +49,12 @@ public class RE31 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    solution.objectives()[2] = IntStream.of(0, 1, 2).mapToDouble(i -> g[i]).sum();
+      double sum = 0.0;
+      for (int i : new int[]{0, 1, 2}) {
+          double v = g[i];
+          sum += v;
+      }
+      solution.objectives()[2] = sum;
 
     return solution;
   }

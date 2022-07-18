@@ -24,12 +24,12 @@ public class RandomSelection<S extends Solution<?>> implements Selection<S> {
     Check.notNull(solutionList);
 
     List<S> matingPool = new ArrayList<>();
-    IntStream.range(0, numberOfElementsToSelect)
-        .forEach(
-            i ->
-                matingPool.add(
-                    solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size()-1))));
+      int bound = numberOfElementsToSelect;
+      for (int i = 0; i < bound; i++) {
+          matingPool.add(
+                  solutionList.get(JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1)));
+      }
 
-    return matingPool;
+      return matingPool;
   }
 }

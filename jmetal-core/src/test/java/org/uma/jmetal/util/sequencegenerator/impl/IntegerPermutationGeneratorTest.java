@@ -50,14 +50,12 @@ public class IntegerPermutationGeneratorTest {
     int sequenceLength = 2;
     int[] values = new int[sequenceLength];
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-    IntStream.range(0, sequenceLength)
-        .forEach(
-            i -> {
-              values[i] = sequenceGenerator.getValue();
-              sequenceGenerator.generateNext();
-            });
+      for (int i = 0; i < sequenceLength; i++) {
+          values[i] = sequenceGenerator.getValue();
+          sequenceGenerator.generateNext();
+      }
 
-    assertTrue(Arrays.equals(values, new int[] {0, 1}) || Arrays.equals(values, new int[] {1, 0}));
+      assertTrue(Arrays.equals(values, new int[] {0, 1}) || Arrays.equals(values, new int[] {1, 0}));
   }
 
   @Test
@@ -65,14 +63,12 @@ public class IntegerPermutationGeneratorTest {
     int sequenceLength = 5;
     int[] values = new int[sequenceLength];
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-    IntStream.range(0, sequenceLength)
-        .forEach(
-            i -> {
-              values[i] = sequenceGenerator.getValue();
-              sequenceGenerator.generateNext();
-            });
+      for (int i = 0; i < sequenceLength; i++) {
+          values[i] = sequenceGenerator.getValue();
+          sequenceGenerator.generateNext();
+      }
 
-    Arrays.sort(values);
+      Arrays.sort(values);
 
     assertArrayEquals(new int[] {0, 1, 2, 3, 4}, values);
   }
@@ -82,14 +78,12 @@ public class IntegerPermutationGeneratorTest {
     int sequenceLength = 3;
     List<Integer> values = new ArrayList<>(5);
     SequenceGenerator<Integer> sequenceGenerator = new IntegerPermutationGenerator(sequenceLength);
-    IntStream.range(0, 5)
-        .forEach(
-            i -> {
-              values.add(sequenceGenerator.getValue());
-              sequenceGenerator.generateNext();
-            });
+      for (int i = 0; i < 5; i++) {
+          values.add(sequenceGenerator.getValue());
+          sequenceGenerator.generateNext();
+      }
 
-    assertEquals(5, values.size());
+      assertEquals(5, values.size());
     assertTrue(values.containsAll(Arrays.asList(0, 1, 2)));
     assertFalse(values.contains(3));
   }

@@ -27,7 +27,12 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     int numberOfObjectives = front.getPointDimensions() ;
 
-      minimumValue = IntStream.range(0, numberOfObjectives).mapToObj(i -> Double.POSITIVE_INFINITY).collect(Collectors.toList());
+      List<Double> list = new ArrayList<>();
+      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+          Double positiveInfinity = Double.POSITIVE_INFINITY;
+          list.add(positiveInfinity);
+      }
+      minimumValue = list;
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {
@@ -51,7 +56,12 @@ public class FrontExtremeValues implements ExtremeValuesFinder <Front, List<Doub
 
     int numberOfObjectives = front.getPointDimensions() ;
 
-      maximumValue = IntStream.range(0, numberOfObjectives).mapToObj(i -> Double.NEGATIVE_INFINITY).collect(Collectors.toList());
+      List<Double> list = new ArrayList<>();
+      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+          Double negativeInfinity = Double.NEGATIVE_INFINITY;
+          list.add(negativeInfinity);
+      }
+      maximumValue = list;
 
     for (int i = 0 ; i < front.getNumberOfPoints(); i++) {
       for (int j = 0; j < numberOfObjectives; j++) {

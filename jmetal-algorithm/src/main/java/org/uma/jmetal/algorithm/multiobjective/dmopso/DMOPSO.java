@@ -356,9 +356,14 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
       fitness = maxFun;
 
     }else if(functionType == FunctionType.AGG){
-      double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(n -> (lambda[n]) * sol.objectives()[n]).sum();
+      double sum = 0.0;
+      int bound = problem.getNumberOfObjectives();
+      for (int n = 0; n < bound; n++) {
+        double v = (lambda[n]) * sol.objectives()[n];
+        sum += v;
+      }
 
-        fitness = sum;
+      fitness = sum;
 
     }else if(functionType == FunctionType.PBI){
       double d1, d2, nl;
@@ -394,7 +399,15 @@ public class DMOPSO implements Algorithm<List<DoubleSolution>> {
     int rnd;
     int tmp;
 
-      aux = IntStream.range(0, swarmSize).toArray();
+    int[] arr = new int[10];
+    int count = 0;
+    int bound = swarmSize;
+    for (int i1 = 0; i1 < bound; i1++) {
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = i1;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    aux = arr;
 
     for (int i = 0; i < swarmSize; i++) {
       rnd = randomGenerator.nextInt(i, swarmSize - 1);

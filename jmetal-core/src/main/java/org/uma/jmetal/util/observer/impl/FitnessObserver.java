@@ -42,7 +42,12 @@ public class FitnessObserver implements Observer<Map<String, Object>> {
 
     if (solution!=null && evaluations != null) {
       if (evaluations % frequency == 0) {
-        String objectiveValues = Arrays.stream(solution.objectives()).mapToObj(objective -> objective + " ").collect(Collectors.joining());
+          StringBuilder sb = new StringBuilder();
+          for (double objective : solution.objectives()) {
+              String s = objective + " ";
+              sb.append(s);
+          }
+          String objectiveValues = sb.toString();
           JMetalLogger.logger.info("Evaluations: " + evaluations + ". Fitness: " + objectiveValues);
       }
     } else {

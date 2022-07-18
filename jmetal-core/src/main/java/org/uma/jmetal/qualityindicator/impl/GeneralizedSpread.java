@@ -66,7 +66,15 @@ public class GeneralizedSpread extends QualityIndicator {
       //Arrays.sort(referenceFront, new VectorPositionComparator(i));
       int finalI = i;
       Arrays.sort(referenceFront, Comparator.comparingDouble(x -> x[finalI])) ;
-      double[] newPoint = Arrays.stream(referenceFront[referenceFront.length - 1], 0, numberOfObjectives).toArray();
+        double[] newPoint = new double[10];
+        int count = 0;
+        double[] array = referenceFront[referenceFront.length - 1];
+        for (int j = 0; j < numberOfObjectives; j++) {
+            double v = array[j];
+            if (newPoint.length == count) newPoint = Arrays.copyOf(newPoint, count * 2);
+            newPoint[count++] = v;
+        }
+        newPoint = Arrays.copyOfRange(newPoint, 0, count);
         extremeValues[i] = newPoint ;
     }
 
@@ -78,11 +86,19 @@ public class GeneralizedSpread extends QualityIndicator {
     if (new EuclideanDistanceBetweenVectors().compute(front[0], front[front.length - 1]) == 0.0) {
       return 1.0;
     } else {
-      double dmean = Arrays.stream(front).mapToDouble(doubles -> VectorUtils.distanceToNearestVector(doubles, front)).sum();
+        double dmean = 0.0;
+        for (double[] doubles : front) {
+            double distanceToNearestVector = VectorUtils.distanceToNearestVector(doubles, front);
+            dmean += distanceToNearestVector;
+        }
 
         dmean = dmean / (numberOfPoints);
 
-      double dExtrems = Arrays.stream(extremeValues).mapToDouble(extremeValue -> VectorUtils.distanceToClosestVector(extremeValue, front)).sum();
+        double dExtrems = 0.0;
+        for (double[] extremeValue : extremeValues) {
+            double v = VectorUtils.distanceToClosestVector(extremeValue, front);
+            dExtrems += v;
+        }
 
         double mean = 0.0;
       for (int i = 0; i < front.length; i++) {

@@ -102,7 +102,12 @@ public class TwoDimensionalMesh<S> implements Neighborhood<S> {
    * @return
    */
   private List<S> findNeighbors(List<S> solutionSet, int solution, int [][] neighborhood) {
-    List<S> neighbors = Arrays.stream(neighborhood).mapToInt(neighbor -> getNeighbor(solution, neighbor)).mapToObj(solutionSet::get).collect(Collectors.toCollection(() -> new ArrayList<>(neighborhood.length + 1)));
+      List<S> neighbors = new ArrayList<>(neighborhood.length + 1);
+      for (int[] neighbor : neighborhood) {
+          int i = getNeighbor(solution, neighbor);
+          S s = solutionSet.get(i);
+          neighbors.add(s);
+      }
 
       return neighbors;
   }

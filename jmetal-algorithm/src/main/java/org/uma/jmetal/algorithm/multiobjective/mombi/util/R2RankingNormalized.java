@@ -29,7 +29,11 @@ public class R2RankingNormalized<S extends Solution<?>> extends R2Ranking<S> {
       if (normalizer == null) values.add(solution.objectives()[i]);
       else values.add(this.normalizer.normalize(solution.objectives()[i], i));
 
-    double result = values.stream().mapToDouble(d -> Math.pow(d, 2.0)).sum();
+      double result = 0.0;
+      for (Double d : values) {
+          double pow = Math.pow(d, 2.0);
+          result += pow;
+      }
 
       return Math.sqrt(result);
   }

@@ -20,7 +20,8 @@ public class CreateNRandomSolutions<S extends Solution<?>> implements CreateNewS
       throw new JMetalException("The problem is null") ;
     }
 
-    IntStream.range(0, numberOfSolutionsToCreate)
-            .forEach(s -> {solutionList.add(problem.createSolution());});
+    for (int s = 0; s < numberOfSolutionsToCreate; s++) {
+      solutionList.add(problem.createSolution());
+    }
   }
 }

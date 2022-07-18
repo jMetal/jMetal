@@ -38,7 +38,14 @@ public class SMSEMOAReplacement<S extends Solution<?>>
 
     lastSubFront = hypervolume.computeHypervolumeContribution(lastSubFront, jointPopulation) ;
 
-    List<S> resultPopulation = IntStream.range(0, ranking.getNumberOfSubFronts() - 1).mapToObj(i -> ranking.getSubFront(i)).flatMap(Collection::stream).collect(Collectors.toList());
+      List<S> resultPopulation = new ArrayList<>();
+      int bound = ranking.getNumberOfSubFronts() - 1;
+      for (int i1 = 0; i1 < bound; i1++) {
+          List<S> subFront = ranking.getSubFront(i1);
+          for (S s : subFront) {
+              resultPopulation.add(s);
+          }
+      }
 
       for (int i = 0; i < lastSubFront.size()-1; i++) {
       resultPopulation.add(lastSubFront.get(i)) ;

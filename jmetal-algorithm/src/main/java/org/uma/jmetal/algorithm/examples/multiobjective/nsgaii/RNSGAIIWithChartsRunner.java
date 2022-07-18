@@ -157,7 +157,12 @@ public class RNSGAIIWithChartsRunner extends AbstractAlgorithmRunner {
     referencePointList = new ArrayList<>();
 
     for (int i = 0; i <= (referencePoints.size() - numberOfObjectives); i+=numberOfObjectives) {
-      List<Double> newReferencePoint = IntStream.range(i, (i + numberOfObjectives)).mapToObj(referencePoints::get).collect(Collectors.toCollection(() -> new ArrayList<>(numberOfObjectives)));
+        List<Double> newReferencePoint = new ArrayList<>(numberOfObjectives);
+        int bound = (i + numberOfObjectives);
+        for (int i1 = i; i1 < bound; i1++) {
+            Double aDouble = referencePoints.get(i1);
+            newReferencePoint.add(aDouble);
+        }
 
         referencePointList.add(newReferencePoint) ;
     }

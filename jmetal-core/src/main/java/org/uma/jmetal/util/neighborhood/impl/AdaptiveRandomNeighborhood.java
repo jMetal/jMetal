@@ -80,9 +80,15 @@ public class AdaptiveRandomNeighborhood<S> implements Neighborhood<S> {
   }
 
   private List<S> getIthNeighborhood(List<S> solutionList, int index) {
-    List<S> neighborhood = IntStream.range(0, (numberOfRandomNeighbours + 1)).map(i -> neighbours.get(index).get(i)).mapToObj(solutionList::get).collect(Collectors.toList());
+    List<S> neighborhood = new ArrayList<>();
+    int bound = (numberOfRandomNeighbours + 1);
+    for (int i = 0; i < bound; i++) {
+      int i1 = neighbours.get(index).get(i);
+      S s = solutionList.get(i1);
+      neighborhood.add(s);
+    }
 
-      return neighborhood ;
+    return neighborhood ;
   }
 
   /**

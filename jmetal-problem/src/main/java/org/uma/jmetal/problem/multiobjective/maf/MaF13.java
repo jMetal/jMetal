@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -61,10 +62,25 @@ public class MaF13 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives_];
 
-      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count1 = 0;
+      for (int i2 = 0; i2 < numberOfVariables_; i2++) {
+          double v1 = solution.variables().get(i2);
+          if (arr.length == count1) arr = Arrays.copyOf(arr, count1 * 2);
+          arr[count1++] = v1;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count1);
+      x = arr;
 
     // evaluate J,y,sub1,sub2,sub3,sub4
-    double[] y = IntStream.range(0, numberOfVariables_).mapToDouble(i -> x[i] - 2 * x[1] * Math.sin(2 * Math.PI * x[0] + (i + 1) * Math.PI / numberOfVariables_)).toArray();
+      double[] y = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables_; i1++) {
+          double v = x[i1] - 2 * x[1] * Math.sin(2 * Math.PI * x[0] + (i1 + 1) * Math.PI / numberOfVariables_);
+          if (y.length == count) y = Arrays.copyOf(y, count * 2);
+          y[count++] = v;
+      }
+      y = Arrays.copyOfRange(y, 0, count);
       ArrayList<Integer> J1 = new ArrayList<Integer>();
     ArrayList<Integer> J2 = new ArrayList<Integer>();
     ArrayList<Integer> J3 = new ArrayList<Integer>();

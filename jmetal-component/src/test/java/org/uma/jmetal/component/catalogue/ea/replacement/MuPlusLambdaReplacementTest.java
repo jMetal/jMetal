@@ -20,9 +20,17 @@ class MuPlusLambdaReplacementTest {
     int mu = 10;
     int lambda = 2;
     FakeDoubleProblem problem = new FakeDoubleProblem();
-    List<DoubleSolution> population = IntStream.range(0, mu).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
+      List<DoubleSolution> population = new ArrayList<>();
+      for (int i1 = 0; i1 < mu; i1++) {
+          DoubleSolution problemSolution = problem.createSolution();
+          population.add(problemSolution);
+      }
 
-      List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(i -> problem.createSolution()).collect(Collectors.toList());
+      List<DoubleSolution> offspringPopulation = new ArrayList<>();
+      for (int i = 0; i < lambda; i++) {
+          DoubleSolution solution = problem.createSolution();
+          offspringPopulation.add(solution);
+      }
 
       MuPlusLambdaReplacement<DoubleSolution> replacement = new MuPlusLambdaReplacement<>(new ObjectiveComparator<>(0)) ;
 

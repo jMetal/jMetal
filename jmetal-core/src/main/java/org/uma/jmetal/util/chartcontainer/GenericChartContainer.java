@@ -235,17 +235,38 @@ public class GenericChartContainer<S extends Solution<?>> {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = Arrays.stream(data).mapToDouble(datum -> datum[obj]).toArray();
+      double[] values = new double[10];
+      int count = 0;
+      for (double[] datum : data) {
+          double v = datum[obj];
+          if (values.length == count) values = Arrays.copyOf(values, count * 2);
+          values[count++] = v;
+      }
+      values = Arrays.copyOfRange(values, 0, count);
       return values;
   }
 
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
-    double[] result = solutionList.stream().mapToDouble(s -> s.objectives()[objective]).toArray();
+      double[] result = new double[10];
+      int count = 0;
+      for (S s : solutionList) {
+          double v = s.objectives()[objective];
+          if (result.length == count) result = Arrays.copyOf(result, count * 2);
+          result[count++] = v;
+      }
+      result = Arrays.copyOfRange(result, 0, count);
       return result;
   }
 
   private double[] getVariableValues(List<DoubleSolution> solutionList, int variable) {
-    double[] result = solutionList.stream().mapToDouble(doubleSolution -> doubleSolution.variables().get(variable)).toArray();
+      double[] result = new double[10];
+      int count = 0;
+      for (DoubleSolution doubleSolution : solutionList) {
+          double v = doubleSolution.variables().get(variable);
+          if (result.length == count) result = Arrays.copyOf(result, count * 2);
+          result[count++] = v;
+      }
+      result = Arrays.copyOfRange(result, 0, count);
       return result;
   }
 

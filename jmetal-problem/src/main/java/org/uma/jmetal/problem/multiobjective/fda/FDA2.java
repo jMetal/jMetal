@@ -52,8 +52,18 @@ public class FDA2 extends FDA implements Serializable {
    */
   private double evalG(DoubleSolution solution, int limitInf, int limitSup) {
 
-    double g = IntStream.range(limitInf, limitSup).mapToDouble(i -> Math.pow(solution.variables().get(i), 2.0)).sum();
-      g += IntStream.range(limitSup, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) + 1.0), 2.0)).sum();
+      double g = 0.0;
+      for (int i1 = limitInf; i1 < limitSup; i1++) {
+          double v = Math.pow(solution.variables().get(i1), 2.0);
+          g += v;
+      }
+      double sum = 0.0;
+      int bound = solution.variables().size();
+      for (int i = limitSup; i < bound; i++) {
+          double pow = Math.pow((solution.variables().get(i) + 1.0), 2.0);
+          sum += pow;
+      }
+      g += sum;
     g = g + 1.0;
     return g;
   }

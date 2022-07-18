@@ -170,7 +170,12 @@ public class GenerateFriedmanHolmTestTables<Result extends List<? extends Soluti
     double term1 =
         (12 * (double) numberOfProblems) / (numberOfAlgorithms * (numberOfAlgorithms + 1));
     double term2 = numberOfAlgorithms * (numberOfAlgorithms + 1) * (numberOfAlgorithms + 1) / (4.0);
-    double sum = IntStream.range(0, numberOfAlgorithms).mapToDouble(i -> averageRanking[i] * averageRanking[i]).sum();
+      double sum = 0.0;
+      int bound = numberOfAlgorithms;
+      for (int i = 0; i < bound; i++) {
+          double v = averageRanking[i] * averageRanking[i];
+          sum += v;
+      }
       double friedman = (sum - term2) * term1;
 
     String output =

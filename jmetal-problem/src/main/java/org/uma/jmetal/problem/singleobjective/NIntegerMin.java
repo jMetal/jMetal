@@ -28,12 +28,12 @@ public class NIntegerMin extends AbstractIntegerProblem {
     List<Integer> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Integer> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lowerLimit.add(lowerBound);
-      upperLimit.add(upperBound);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lowerLimit.add(lowerBound);
+          upperLimit.add(upperBound);
+      }
 
-    setVariableBounds(lowerLimit, upperLimit);
+      setVariableBounds(lowerLimit, upperLimit);
   }
 
   /** Evaluate() method */
@@ -43,7 +43,13 @@ public class NIntegerMin extends AbstractIntegerProblem {
 
     approximationToN = 0;
 
-      approximationToN += solution.variables().stream().mapToInt(integer -> integer).map(value -> Math.abs(valueN - value)).sum();
+      int sum = 0;
+      for (Integer integer : solution.variables()) {
+          int value = integer;
+          int abs = Math.abs(valueN - value);
+          sum += abs;
+      }
+      approximationToN += sum;
 
     solution.objectives()[0] = approximationToN;
 

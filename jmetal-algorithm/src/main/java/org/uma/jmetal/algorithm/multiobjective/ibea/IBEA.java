@@ -212,7 +212,15 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
     double fitness;
     double kappa = 0.05;
 
-      fitness = IntStream.range(0, solutionSet.size()).filter(i -> i != pos).mapToDouble(i -> Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa)).sum();
+      double sum = 0.0;
+      int bound = solutionSet.size();
+      for (int i = 0; i < bound; i++) {
+          if (i != pos) {
+              double exp = Math.exp((-1 * indicatorValues.get(i).get(pos) / maxIndicatorValue) / kappa);
+              sum += exp;
+          }
+      }
+      fitness = sum;
     solutionFitness.setAttribute(solutionSet.get(pos), fitness);
   }
 

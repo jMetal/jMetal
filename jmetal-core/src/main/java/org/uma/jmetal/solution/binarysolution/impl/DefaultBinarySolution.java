@@ -82,9 +82,13 @@ public class DefaultBinarySolution
 
   @Override
   public int getTotalNumberOfBits() {
-    int sum = variables().stream().mapToInt(BinarySet::getBinarySetLength).sum();
+    int sum = 0;
+    for (BinarySet binarySet : variables()) {
+      int binarySetLength = binarySet.getBinarySetLength();
+      sum += binarySetLength;
+    }
 
-      return sum;
+    return sum;
   }
 
   private void initializeBinaryVariables(JMetalRandom randomGenerator) {

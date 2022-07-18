@@ -28,9 +28,11 @@ public class RandomSolutionsCreation<S extends Solution<?>> implements Solutions
 
   public List<S> create() {
     List<S> solutionList = new ArrayList<>(numberOfSolutionsToCreate);
-    IntStream.range(0, numberOfSolutionsToCreate)
-        .forEach(i -> solutionList.add(problem.createSolution()));
+      int bound = numberOfSolutionsToCreate;
+      for (int i = 0; i < bound; i++) {
+          solutionList.add(problem.createSolution());
+      }
 
-    return solutionList;
+      return solutionList;
   }
 }

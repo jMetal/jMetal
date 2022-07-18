@@ -1,5 +1,6 @@
 package org.uma.jmetal.problem.integerproblem.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -53,10 +54,14 @@ public abstract class AbstractIntegerProblem implements IntegerProblem{
         lowerBounds.size() == upperBounds.size(),
         "The size of the lower bound list is not equal to the size of the upper bound list");
 
+    List<Bounds<Integer>> list = new ArrayList<>();
+    int bound = lowerBounds.size();
+    for (int i = 0; i < bound; i++) {
+      Bounds<Integer> integerBounds = Bounds.create(lowerBounds.get(i), upperBounds.get(i));
+      list.add(integerBounds);
+    }
     bounds =
-        IntStream.range(0, lowerBounds.size())
-            .mapToObj(i -> Bounds.create(lowerBounds.get(i), upperBounds.get(i)))
-            .collect(Collectors.toList());
+            list;
   }
 
   @Override

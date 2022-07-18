@@ -44,8 +44,13 @@ public class ZDT4 extends ZDT1 {
    * @param solution Solution
    */
   public double evalG(DoubleSolution solution) {
-    double g = IntStream.range(1, solution.variables().size()).mapToDouble(var -> Math.pow(solution.variables().get(var), 2.0) +
-            -10.0 * Math.cos(4.0 * Math.PI * solution.variables().get(var))).sum();
+      double g = 0.0;
+      int bound = solution.variables().size();
+      for (int var = 1; var < bound; var++) {
+          double v = Math.pow(solution.variables().get(var), 2.0) +
+                  -10.0 * Math.cos(4.0 * Math.PI * solution.variables().get(var));
+          g += v;
+      }
 
       double constant = 1.0 + 10.0 * (solution.variables().size() - 1);
     return g + constant;

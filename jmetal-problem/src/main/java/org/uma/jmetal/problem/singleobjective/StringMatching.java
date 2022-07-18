@@ -37,7 +37,14 @@ public class StringMatching extends CharSequenceProblem {
   @Override
   public CharSequenceSolution evaluate(CharSequenceSolution solution) {
     Check.that(solution.getLength() == targetString.length(), "The solution has an invalid length");
-    int counter = (int) IntStream.range(0, targetString.length()).filter(i -> targetString.charAt(i) != solution.variables().get(i)).count();
+      long count = 0L;
+      int bound = targetString.length();
+      for (int i = 0; i < bound; i++) {
+          if (targetString.charAt(i) != solution.variables().get(i)) {
+              count++;
+          }
+      }
+      int counter = (int) count;
 
       // counter += Math.abs(targetString.charAt(i) - solution.variables().get(i)) ;
 

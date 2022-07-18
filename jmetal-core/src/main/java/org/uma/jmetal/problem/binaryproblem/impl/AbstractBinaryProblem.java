@@ -18,7 +18,12 @@ public abstract class AbstractBinaryProblem extends AbstractGenericProblem<Binar
 
   @Override
   public int getTotalNumberOfBits() {
-    int count = IntStream.range(0, this.getNumberOfVariables()).map(i -> this.getListOfBitsPerVariable().get(i)).sum();
+    int count = 0;
+    int bound = this.getNumberOfVariables();
+    for (int i = 0; i < bound; i++) {
+      int i1 = this.getListOfBitsPerVariable().get(i);
+      count += i1;
+    }
 
     return count;
   }

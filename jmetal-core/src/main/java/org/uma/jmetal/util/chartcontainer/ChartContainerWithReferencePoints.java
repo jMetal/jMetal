@@ -157,13 +157,27 @@ public class ChartContainerWithReferencePoints {
   }
 
   private double[] getObjectiveValues(double[][] data, int obj) {
-    double[] values = Arrays.stream(data).mapToDouble(datum -> datum[obj]).toArray();
-      return values;
+    double[] values = new double[10];
+    int count = 0;
+    for (double[] datum : data) {
+      double v = datum[obj];
+      if (values.length == count) values = Arrays.copyOf(values, count * 2);
+      values[count++] = v;
+    }
+    values = Arrays.copyOfRange(values, 0, count);
+    return values;
   }
 
   private double[] getSolutionsForObjective(List<DoubleSolution> solutionList, int objective) {
-    double[] result = solutionList.stream().mapToDouble(doubleSolution -> doubleSolution.objectives()[objective]).toArray();
-      return result;
+    double[] result = new double[10];
+    int count = 0;
+    for (DoubleSolution doubleSolution : solutionList) {
+      double v = doubleSolution.objectives()[objective];
+      if (result.length == count) result = Arrays.copyOf(result, count * 2);
+      result[count++] = v;
+    }
+    result = Arrays.copyOfRange(result, 0, count);
+    return result;
   }
 
   public void saveChart(String fileName, BitmapFormat format) throws IOException {

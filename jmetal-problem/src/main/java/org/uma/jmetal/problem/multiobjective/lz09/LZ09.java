@@ -91,13 +91,23 @@ public class LZ09 {
 
     if (type == 1) {
       beta = 0;
-      beta += IntStream.range(0, dim).mapToDouble(i -> x.get(i) * x.get(i)).sum();
+        double sum = 0.0;
+        for (int i = 0; i < dim; i++) {
+            double v = x.get(i) * x.get(i);
+            sum += v;
+        }
+        beta += sum;
       beta = 2.0 * beta / dim;
     }
 
     if (type == 2) {
       beta = 0;
-      beta += IntStream.range(0, dim).mapToDouble(i -> Math.sqrt(i + 1) * x.get(i) * x.get(i)).sum();
+        double sum = 0.0;
+        for (int i = 0; i < dim; i++) {
+            double v = Math.sqrt(i + 1) * x.get(i) * x.get(i);
+            sum += v;
+        }
+        beta += sum;
       beta = 2.0 * beta / dim;
     }
 
@@ -220,7 +230,14 @@ public class LZ09 {
   void objective(List<Double> xVar, List<Double> yObj) {
     // 2-objective case
     if (nobj == 2) {
-      if (IntStream.of(21, 22, 23, 24, 26).anyMatch(i -> ltype == i)) {
+        boolean result = false;
+        for (int i : new int[]{21, 22, 23, 24, 26}) {
+            if (ltype == i) {
+                result = true;
+                break;
+            }
+        }
+        if (result) {
         double g = 0, h = 0, a, b;
         ArrayList<Double> aa = new ArrayList<Double>();
         ArrayList<Double> bb = new ArrayList<Double>();

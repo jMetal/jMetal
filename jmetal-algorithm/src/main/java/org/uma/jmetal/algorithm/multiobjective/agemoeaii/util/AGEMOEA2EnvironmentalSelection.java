@@ -119,7 +119,11 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @return value of the derivative for Lp with p=x
      */
     protected double originalFunction(double[] point, double x) {
-        double f = Arrays.stream(point).map(v -> Math.pow(Math.abs(v), x)).sum();
+        double f = 0.0;
+        for (double v : point) {
+            double pow = Math.pow(Math.abs(v), x);
+            f += pow;
+        }
         return Math.log(f);
     }
 
@@ -167,7 +171,14 @@ public class AGEMOEA2EnvironmentalSelection<S extends Solution<?>> extends AGEMO
      * @return middle point
      */
     protected double[] midPoint(double[] A, double[] B) {
-        double[] midpoint = IntStream.range(0, A.length).mapToDouble(i -> A[i] * 0.5 + B[i] * 0.5).toArray();
+        double[] midpoint = new double[10];
+        int count = 0;
+        for (int i = 0; i < A.length; i++) {
+            double v = A[i] * 0.5 + B[i] * 0.5;
+            if (midpoint.length == count) midpoint = Arrays.copyOf(midpoint, count * 2);
+            midpoint[count++] = v;
+        }
+        midpoint = Arrays.copyOfRange(midpoint, 0, count);
 
         return midpoint;
     }

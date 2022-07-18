@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -34,12 +35,12 @@ public class MaF06 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -56,11 +57,24 @@ public class MaF06 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives_];
 
-      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i2 = 0; i2 < numberOfVariables_; i2++) {
+          double v = solution.variables().get(i2);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
     double[] thet = new double[numberOfObjectives_ - 1];
     double g, sub1, sub2;
     // evaluate g,thet
-      g = IntStream.range(numberOfObjectives_ - 1, numberOfVariables_).mapToDouble(i -> Math.pow(x[i] - 0.5, 2)).sum();
+      double sum = 0.0;
+      for (int i1 = numberOfObjectives_ - 1; i1 < numberOfVariables_; i1++) {
+          double pow = Math.pow(x[i1] - 0.5, 2);
+          sum += pow;
+      }
+      g = sum;
     sub1 = 100 * g + 1;
     sub2 = 1 + g;
     for (int i = 0; i < 1; i++) {

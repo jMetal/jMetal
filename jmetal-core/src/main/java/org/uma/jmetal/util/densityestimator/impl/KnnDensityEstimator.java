@@ -86,13 +86,23 @@ public class KnnDensityEstimator<S extends Solution<?>> implements DensityEstima
   private boolean checkMatrixRowsAreEqual(double[][] matrix) {
     int numberOfColumns = matrix[0].length;
 
-      return IntStream.range(1, numberOfColumns).allMatch(i -> checkColumnValuesAreEqual(matrix, i));
+      for (int i = 1; i < numberOfColumns; i++) {
+          if (!checkColumnValuesAreEqual(matrix, i)) {
+              return false;
+          }
+      }
+      return true;
   }
 
   private boolean checkColumnValuesAreEqual(double[][] matrix, int column) {
     double columnValue = matrix[0][column];
 
-      return IntStream.range(1, matrix.length).noneMatch(i -> matrix[i][column] != columnValue);
+      for (int i = 1; i < matrix.length; i++) {
+          if (matrix[i][column] != columnValue) {
+              return false;
+          }
+      }
+      return true;
   }
 
   @Override

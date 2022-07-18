@@ -83,7 +83,12 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+      List<S> matingPopulation = new ArrayList<>(population.size());
+      int bound = getMaxPopulationSize();
+      for (int i = 0; i < bound; i++) {
+          S execute = selectionOperator.execute(population);
+          matingPopulation.add(execute);
+      }
 
       return matingPopulation;
   }
@@ -109,7 +114,11 @@ public class NSGAIII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, 
 
   
   private List<ReferencePoint<S>> getReferencePointsCopy() {
-	  List<ReferencePoint<S>> copy = this.referencePoints.stream().map(ReferencePoint::new).collect(Collectors.toList());
+      List<ReferencePoint<S>> copy = new ArrayList<>();
+      for (ReferencePoint<S> referencePoint : this.referencePoints) {
+          ReferencePoint<S> sReferencePoint = new ReferencePoint<>(referencePoint);
+          copy.add(sReferencePoint);
+      }
       return copy;
   }
   

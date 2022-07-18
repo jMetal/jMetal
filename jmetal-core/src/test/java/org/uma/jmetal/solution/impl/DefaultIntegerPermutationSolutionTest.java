@@ -21,7 +21,19 @@ public class DefaultIntegerPermutationSolutionTest {
         new MockIntegerPermutationProblem(permutationLength);
     PermutationSolution<Integer> solution = problem.createSolution();
 
-      assertArrayEquals(IntStream.range(0, permutationLength).boxed().toArray(), IntStream.range(0, problem.getNumberOfVariables()).mapToObj(i -> solution.variables().get(i)).sorted().toArray());
+    List<Integer> list = new ArrayList<>();
+    int bound = problem.getNumberOfVariables();
+    for (int i = 0; i < bound; i++) {
+      Integer integer = solution.variables().get(i);
+      list.add(integer);
+    }
+    list.sort(null);
+    List<Integer> result = new ArrayList<>();
+    for (int i = 0; i < permutationLength; i++) {
+      Integer integer = i;
+      result.add(integer);
+    }
+    assertArrayEquals(result.toArray(), list.toArray());
   }
 
   /** Mock class representing a integer permutation problem */

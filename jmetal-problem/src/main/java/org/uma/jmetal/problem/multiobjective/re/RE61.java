@@ -33,7 +33,15 @@ public class RE61 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i1 = 0; i1 < bound; i1++) {
+          double v1 = solution.variables().get(i1);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v1;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       solution.objectives()[0] = 106780.37 * (x[1] + x[2]) + 61704.67;
     solution.objectives()[1] = 3000 * x[0];
@@ -58,7 +66,11 @@ public class RE61 extends AbstractDoubleProblem {
       }
     }
 
-    solution.objectives()[5] = Arrays.stream(g).sum();
+      double sum = 0.0;
+      for (double v : g) {
+          sum += v;
+      }
+      solution.objectives()[5] = sum;
 
     return solution;
   }

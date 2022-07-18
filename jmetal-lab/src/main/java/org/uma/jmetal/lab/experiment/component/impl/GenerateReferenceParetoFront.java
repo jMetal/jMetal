@@ -99,7 +99,12 @@ public class GenerateReferenceParetoFront implements ExperimentComponent {
     GenericSolutionAttribute<PointSolution, String> solutionAttribute = new GenericSolutionAttribute<PointSolution, String>()  ;
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<PointSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
+        List<PointSolution> solutionsPerAlgorithm = new ArrayList<>();
+        for (PointSolution solution : nonDominatedSolutions) {
+            if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
+                solutionsPerAlgorithm.add(solution);
+            }
+        }
 
         new SolutionListOutput(solutionsPerAlgorithm)
           .printObjectivesToFile(

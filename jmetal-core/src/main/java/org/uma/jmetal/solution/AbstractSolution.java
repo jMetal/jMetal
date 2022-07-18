@@ -49,13 +49,19 @@ public abstract class AbstractSolution<T> implements Solution<T> {
     attributes = new HashMap<>();
 
     variables = new ArrayList<>(numberOfVariables);
-    IntStream.range(0, numberOfVariables).forEach(i -> variables.add(i, null));
+    for (int i2 = 0; i2 < numberOfVariables; i2++) {
+      variables.add(i2, null);
+    }
 
     objectives = new double[numberOfObjectives];
-    IntStream.range(0, numberOfObjectives).forEach(i -> objectives[i] = 0.0);
+    for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+      objectives[i1] = 0.0;
+    }
 
     constraints = new double[numberOfConstraints];
-    IntStream.range(0, numberOfConstraints).forEach(i -> constraints[i] = 0.0);
+    for (int i = 0; i < numberOfConstraints; i++) {
+      constraints[i] = 0.0;
+    }
 
     attributes = new HashMap<>();
   }

@@ -23,7 +23,10 @@ public class DefaultGlobalBestUpdate implements GlobalBestUpdate {
     Check.notNull(globalBest);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    swarm.stream().map(particle -> (DoubleSolution) particle.copy()).forEach(globalBest::add);
+    for (DoubleSolution particle : swarm) {
+      DoubleSolution copy = (DoubleSolution) particle.copy();
+      globalBest.add(copy);
+    }
     return globalBest;
   }
 }

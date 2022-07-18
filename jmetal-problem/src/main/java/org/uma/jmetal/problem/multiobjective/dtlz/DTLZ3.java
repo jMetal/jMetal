@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -45,13 +46,24 @@ public class DTLZ3 extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = getNumberOfObjectives();
     double[] f = new double[numberOfObjectives];
-    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] x = new double[10];
+    int count = 0;
+    for (int i2 = 0; i2 < numberOfVariables; i2++) {
+      double v1 = solution.variables().get(i2);
+      if (x.length == count) x = Arrays.copyOf(x, count * 2);
+      x[count++] = v1;
+    }
+    x = Arrays.copyOfRange(x, 0, count);
 
-      int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
+    int k = getNumberOfVariables() - getNumberOfObjectives() + 1;
 
-    double g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5) - Math.cos(20.0 * Math.PI * (x[i] - 0.5))).sum();
+    double g = 0.0;
+    for (int i1 = numberOfVariables - k; i1 < numberOfVariables; i1++) {
+      double v = (x[i1] - 0.5) * (x[i1] - 0.5) - Math.cos(20.0 * Math.PI * (x[i1] - 0.5));
+      g += v;
+    }
 
-      g = 100.0 * (k + g);
+    g = 100.0 * (k + g);
     for (int i = 0; i < numberOfObjectives; i++) {
       f[i] = 1.0 + g;
     }
@@ -66,7 +78,9 @@ public class DTLZ3 extends AbstractDoubleProblem {
       }
     }
 
-    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      solution.objectives()[i] = f[i];
+    }
 
     return solution ;
   }

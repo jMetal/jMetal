@@ -100,12 +100,20 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
    */
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, matingPoolSize).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+      List<S> matingPopulation = new ArrayList<>(population.size());
+      int bound = matingPoolSize;
+      for (int i = 0; i < bound; i++) {
+          S execute = selectionOperator.execute(population);
+          matingPopulation.add(execute);
+      }
 
-      List<S> newList = population.stream().map(solution -> (S) solution.copy())
-        .collect(Collectors.toList());
+      List<S> newList = new ArrayList<>();
+      for (S solution : population) {
+          S copy = (S) solution.copy();
+          newList.add(copy);
+      }
 
-    return matingPopulation;
+      return matingPopulation;
   }
 
   /**

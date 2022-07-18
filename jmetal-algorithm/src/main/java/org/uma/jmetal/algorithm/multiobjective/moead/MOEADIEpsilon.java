@@ -73,7 +73,15 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
     initializePopulation();
     idealPoint.update(population);
 
-    double[] constraints = IntStream.range(0, populationSize).mapToDouble(i -> ConstraintHandling.overallConstraintViolationDegree(population.get(i))).toArray();
+      double[] constraints = new double[10];
+      int count = 0;
+      int bound = populationSize;
+      for (int i1 = 0; i1 < bound; i1++) {
+          double v = ConstraintHandling.overallConstraintViolationDegree(population.get(i1));
+          if (constraints.length == count) constraints = Arrays.copyOf(constraints, count * 2);
+          constraints[count++] = v;
+      }
+      constraints = Arrays.copyOfRange(constraints, 0, count);
       Arrays.sort(constraints);
     double epsilonZero = Math.abs(constraints[(int) Math.ceil(0.05 * populationSize)]);
 
@@ -215,7 +223,13 @@ public class MOEADIEpsilon extends AbstractMOEAD<DoubleSolution> {
   }
 
   private void updateExternalArchive() {
-    List<DoubleSolution> feasibleSolutions = population.stream().filter(ConstraintHandling::isFeasible).map(solution -> (DoubleSolution) solution.copy()).collect(Collectors.toList());
+      List<DoubleSolution> feasibleSolutions = new ArrayList<>();
+      for (DoubleSolution doubleSolution : population) {
+          if (isFeasible(doubleSolution)) {
+              DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
+              feasibleSolutions.add(copy);
+          }
+      }
 
       if (feasibleSolutions.size() > 0) {
       feasibleSolutions.addAll(archive) ;

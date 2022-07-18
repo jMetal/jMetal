@@ -61,8 +61,11 @@ public class IntegerBoundedSequenceGeneratorTest {
     SequenceGenerator<Integer> sequenceGenerator = new IntegerBoundedSequenceGenerator(4);
     int sequenceLength = 6 ;
     int[] values = new int[sequenceLength] ;
-    IntStream.range(0, sequenceLength).forEach(i -> {values[i] = sequenceGenerator.getValue() ; sequenceGenerator.generateNext();}) ;
+      for (int i = 0; i < sequenceLength; i++) {
+          values[i] = sequenceGenerator.getValue();
+          sequenceGenerator.generateNext();
+      }
 
-    assertArrayEquals(new int[] {0, 1, 2, 3, 0, 1}, values) ;
+      assertArrayEquals(new int[] {0, 1, 2, 3, 0, 1}, values) ;
   }
 }

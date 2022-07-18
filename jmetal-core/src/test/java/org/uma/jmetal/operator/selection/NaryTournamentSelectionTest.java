@@ -62,7 +62,12 @@ public class NaryTournamentSelectionTest {
   public void shouldExecuteReturnAValidSolutionIsWithCorrectParameters() {
     DoubleProblem problem = new FakeDoubleProblem(2, 2, 0) ;
 
-    List<DoubleSolution> population = IntStream.range(0, POPULATION_SIZE).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(POPULATION_SIZE)));
+      List<DoubleSolution> population = new ArrayList<>(POPULATION_SIZE);
+      int bound = POPULATION_SIZE;
+      for (int i = 0; i < bound; i++) {
+          DoubleSolution solution = problem.createSolution();
+          population.add(solution);
+      }
       NaryTournamentSelection<DoubleSolution> selection = new NaryTournamentSelection<>() ;
 
     assertNotNull(selection.execute(population));

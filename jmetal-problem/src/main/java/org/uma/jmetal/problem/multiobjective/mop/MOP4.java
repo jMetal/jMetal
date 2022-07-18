@@ -64,7 +64,13 @@ public class MOP4 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   private double evalG(DoubleSolution solution) {
-    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0))).map(t -> Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)))).sum();
+      double g = 0.0;
+      int bound = solution.variables().size();
+      for (int i = 1; i < bound; i++) {
+          double t = solution.variables().get(i) - Math.sin(0.5 * Math.PI * solution.variables().get(0));
+          double v = Math.abs(t) / (1 + Math.exp(5 * Math.abs(t)));
+          g += v;
+      }
       g = 1 + 10 * Math.sin(Math.PI * solution.variables().get(0)) * g;
     return g;
   }

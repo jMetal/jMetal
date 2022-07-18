@@ -64,7 +64,13 @@ public class SetCoverage extends QualityIndicator {
         result = 1.0 ;
       }
     } else {
-        sum = (int) Arrays.stream(referenceFront).filter(vector -> VectorUtils.isVectorDominatedByAFront(vector, front)).count();
+        long count = 0L;
+        for (double[] vector : referenceFront) {
+            if (VectorUtils.isVectorDominatedByAFront(vector, front)) {
+                count++;
+            }
+        }
+        sum = (int) count;
       result = (double)sum/referenceFront.length ;
     }
     return result ;

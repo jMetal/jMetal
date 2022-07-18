@@ -49,7 +49,12 @@ public class CompositeMutation implements MutationOperator<CompositeSolution> {
 
     List<Solution<?>> mutatedSolutionComponents;
     int numberOfSolutionsInCompositeSolution = solution.variables().size();
-      mutatedSolutionComponents = IntStream.range(0, numberOfSolutionsInCompositeSolution).mapToObj(i -> operators.get(i).execute(solution.variables().get(i))).collect(Collectors.toList());
+    List<Solution<?>> list = new ArrayList<>();
+    for (int i = 0; i < numberOfSolutionsInCompositeSolution; i++) {
+      Solution<?> execute = operators.get(i).execute(solution.variables().get(i));
+      list.add(execute);
+    }
+    mutatedSolutionComponents = list;
 
     return new CompositeSolution(mutatedSolutionComponents);
   }

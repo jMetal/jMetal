@@ -109,10 +109,11 @@ public class NormalizeUtils {
   public static double[] getNormalizedVector(double[] vector, double min, double max) {
     double[] normalizedVector = new double[vector.length];
 
-    IntStream.range(0, vector.length)
-            .forEach(i -> normalizedVector[i] = normalize(vector[i], min, max));
+      for (int i = 0; i < vector.length; i++) {
+          normalizedVector[i] = normalize(vector[i], min, max);
+      }
 
-    return normalizedVector;
+      return normalizedVector;
   }
 
   /**

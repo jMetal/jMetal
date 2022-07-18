@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -40,13 +41,28 @@ public class Fonseca extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables() ;
 
     double[] f = new double[solution.objectives().length];
-    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      for (int i2 = 0; i2 < numberOfVariables; i2++) {
+          double v1 = solution.variables().get(i2);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v1;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
-      double sum1 = IntStream.range(0, numberOfVariables).mapToDouble(i -> StrictMath.pow(x[i] - (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0)).sum();
+      double sum1 = 0.0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v = StrictMath.pow(x[i1] - (1.0 / StrictMath.sqrt(numberOfVariables)), 2.0);
+          sum1 += v;
+      }
       double exp1 = StrictMath.exp((-1.0) * sum1);
     f[0] = 1 - exp1;
 
-    double sum2 = IntStream.range(0, numberOfVariables).mapToDouble(i -> StrictMath.pow(x[i] + (1.0 / StrictMath.sqrt((double) numberOfVariables)), 2.0)).sum();
+      double sum2 = 0.0;
+      for (int i = 0; i < numberOfVariables; i++) {
+          double pow = StrictMath.pow(x[i] + (1.0 / StrictMath.sqrt(numberOfVariables)), 2.0);
+          sum2 += pow;
+      }
       double exp2 = StrictMath.exp((-1.0) * sum2);
     f[1] = 1 - exp2;
 

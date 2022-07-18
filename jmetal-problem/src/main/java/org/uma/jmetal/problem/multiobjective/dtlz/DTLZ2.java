@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -32,10 +33,10 @@ public class DTLZ2 extends AbstractDoubleProblem {
     List<Double> lowerLimit = new ArrayList<>(numberOfVariables) ;
     List<Double> upperLimit = new ArrayList<>(numberOfVariables) ;
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
+    for (int i = 0; i < numberOfVariables; i++) {
       lowerLimit.add(0.0);
       upperLimit.add(1.0);
-    });
+    }
 
     setVariableBounds(lowerLimit, upperLimit);
   }
@@ -45,13 +46,32 @@ public class DTLZ2 extends AbstractDoubleProblem {
     int numberOfVariables = getNumberOfVariables();
     int numberOfObjectives = solution.objectives().length;
     double[] f;
-    double[] x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] x = new double[10];
+    int count1 = 0;
+    for (int i3 = 0; i3 < numberOfVariables; i3++) {
+      double v2 = solution.variables().get(i3);
+      if (x.length == count1) x = Arrays.copyOf(x, count1 * 2);
+      x[count1++] = v2;
+    }
+    x = Arrays.copyOfRange(x, 0, count1);
 
-      int k = getNumberOfVariables() - solution.objectives().length + 1;
+    int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-    double g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5)).sum();
+    double g = 0.0;
+    for (int i2 = numberOfVariables - k; i2 < numberOfVariables; i2++) {
+      double v1 = (x[i2] - 0.5) * (x[i2] - 0.5);
+      g += v1;
+    }
 
-    f = IntStream.range(0, numberOfObjectives).mapToDouble(i -> 1.0 + g).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+      double v = 1.0 + g;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    f = arr;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       for (int j = 0; j < numberOfObjectives - (i + 1); j++) {
@@ -63,7 +83,9 @@ public class DTLZ2 extends AbstractDoubleProblem {
       }
     }
 
-    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      solution.objectives()[i] = f[i];
+    }
 
     return solution ;
   }

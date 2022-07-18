@@ -19,8 +19,13 @@ public class DominanceDistanceBetweenVectors implements Distance<double[], doubl
     Check.that(vector1.length == vector2.length, "The vectors have different" +
             "dimension: " + vector1.length + " and " + vector2.length);
 
-    double distance = IntStream.range(0, vector1.length).mapToDouble(i -> Math.max(vector2[i] - vector1[i], 0.0)).map(max -> Math.pow(max, 2)).sum();
+    double distance = 0.0;
+    for (int i = 0; i < vector1.length; i++) {
+      double max = Math.max(vector2[i] - vector1[i], 0.0);
+      double pow = Math.pow(max, 2);
+      distance += pow;
+    }
 
-      return Math.sqrt(distance);
+    return Math.sqrt(distance);
   }
 }

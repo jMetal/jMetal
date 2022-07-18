@@ -21,11 +21,15 @@ public abstract class Master<T extends ParallelTask<?>,R>
   @Override
   public void submitInitialTasks(List<T> initialTasks) {
     if (initialTasks.size() >= numberOfCores) {
-      initialTasks.forEach(this::submitTask);
+        for (T initialTask : initialTasks) {
+            submitTask(initialTask);
+        }
     } else {
       int idleWorkers = numberOfCores - initialTasks.size();
-      initialTasks.forEach(this::submitTask);
-      while (idleWorkers > 0) {
+        for (T initialTask : initialTasks) {
+            submitTask(initialTask);
+        }
+        while (idleWorkers > 0) {
         submitTask(createNewTask());
         idleWorkers--;
       }

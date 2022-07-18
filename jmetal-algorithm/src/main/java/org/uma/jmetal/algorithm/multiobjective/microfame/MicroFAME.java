@@ -164,7 +164,11 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, 3).mapToObj(x -> (S) selectionOperator.execute(archive_hv.getSolutionList())).collect(Collectors.toCollection(() -> new ArrayList<>(3)));
+      List<S> matingPopulation = new ArrayList<>(3);
+      for (int x = 0; x < 3; x++) {
+          S execute = (S) selectionOperator.execute(archive_hv.getSolutionList());
+          matingPopulation.add(execute);
+      }
 
       return matingPopulation;
   }
@@ -201,7 +205,13 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
     int operator = rnd.nextInt(operators_num);
     List<S> offspring = new ArrayList<>(1);
     // RULETTA
-    double counter = Arrays.stream(operators_desirability, 0, operators_num).sum();
+      double counter = 0.0;
+      double[] array = operators_desirability;
+      int bound = operators_num;
+      for (int i = 0; i < bound; i++) {
+          double v = array[i];
+          counter += v;
+      }
       while (counter > 0) {
       counter -= operators_desirability[operator];
       if (counter <= 0) {
@@ -292,7 +302,12 @@ public class MicroFAME<S extends Solution<?>> extends SteadyStateNSGAII<S> {
 
   @Override
   protected List<S> createInitialPopulation() {
-    List<S> population = IntStream.range(0, archive_hv.getMaxSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(archive_hv.getMaxSize())));
+      List<S> population = new ArrayList<>(archive_hv.getMaxSize());
+      int bound = archive_hv.getMaxSize();
+      for (int i1 = 0; i1 < bound; i1++) {
+          S solution = getProblem().createSolution();
+          population.add(solution);
+      }
       evaluator.evaluate(population, getProblem());
     for (int i = 0; i < archive_hv.getMaxSize(); i++) {
       archive_hv.add(population.get(i));

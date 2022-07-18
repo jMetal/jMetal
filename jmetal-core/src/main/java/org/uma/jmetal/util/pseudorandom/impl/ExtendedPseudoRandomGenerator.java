@@ -2,6 +2,7 @@ package org.uma.jmetal.util.pseudorandom.impl;
 
 import org.uma.jmetal.util.pseudorandom.PseudoRandomGenerator;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -84,7 +85,15 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
     double[] x;
 
     double length = 0;
-      x = IntStream.range(0, dimension).mapToDouble(i -> 0.0).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < dimension; i1++) {
+      double v = 0.0;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    x = arr;
 
     // --------- Step 1. Direction
 
@@ -121,7 +130,15 @@ public class ExtendedPseudoRandomGenerator implements PseudoRandomGenerator {
     double[] x;
 
     double length = 0;
-      x = IntStream.range(0, dimension).mapToDouble(i -> 0.0).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < dimension; i1++) {
+      double v = 0.0;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    x = arr;
 
     // --------- Step 1. Direction
 

@@ -28,7 +28,11 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
         List<Integer> extremes = new ArrayList<>();
         extremes.add(0); extremes.add(1); extremes.add(2);
 
-        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
+        List<double[]> objectiveVectors = new ArrayList<>();
+        for (DefaultDoubleSolution defaultDoubleSolution : front) {
+            double[] objectives = defaultDoubleSolution.objectives();
+            objectiveVectors.add(objectives);
+        }
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 
@@ -52,7 +56,11 @@ public class AGEMOEA2EnvironmentalSelectionTest extends TestCase {
         List<Integer> extremes = new ArrayList<>();
         extremes.add(0); extremes.add(1);
 
-        List<double[]> objectiveVectors = front.stream().map(AbstractSolution::objectives).collect(Collectors.toList());
+        List<double[]> objectiveVectors = new ArrayList<>();
+        for (DefaultDoubleSolution defaultDoubleSolution : front) {
+            double[] objectives = defaultDoubleSolution.objectives();
+            objectiveVectors.add(objectives);
+        }
 
         double p = es.computeGeometry(objectiveVectors, extremes);
 

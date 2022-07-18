@@ -57,8 +57,13 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    * @return
    */
   protected List<S> createInitialPopulation() {
-    List<S> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
-      return population;
+    List<S> population = new ArrayList<>(getMaxPopulationSize());
+    int bound = getMaxPopulationSize();
+    for (int i = 0; i < bound; i++) {
+      S solution = getProblem().createSolution();
+      population.add(solution);
+    }
+    return population;
   }
 
   /**
@@ -69,9 +74,14 @@ public abstract class AbstractGeneticAlgorithm<S, Result> extends AbstractEvolut
    */
   @Override
   protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+    List<S> matingPopulation = new ArrayList<>(population.size());
+    int bound = getMaxPopulationSize();
+    for (int i = 0; i < bound; i++) {
+      S execute = selectionOperator.execute(population);
+      matingPopulation.add(execute);
+    }
 
-      return matingPopulation;
+    return matingPopulation;
   }
 
   /**

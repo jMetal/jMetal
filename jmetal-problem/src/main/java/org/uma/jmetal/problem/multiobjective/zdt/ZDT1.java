@@ -56,7 +56,12 @@ public class ZDT1 extends AbstractDoubleProblem {
    * @param solution Solution
    */
   protected double evalG(DoubleSolution solution) {
-    double g = IntStream.range(1, solution.variables().size()).mapToDouble(i -> solution.variables().get(i)).sum();
+      double g = 0.0;
+      int bound = solution.variables().size();
+      for (int i = 1; i < bound; i++) {
+          double v = solution.variables().get(i);
+          g += v;
+      }
       double constant = 9.0 / (solution.variables().size() - 1);
 
     return constant * g + 1.0;

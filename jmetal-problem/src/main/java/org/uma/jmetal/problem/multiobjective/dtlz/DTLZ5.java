@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.dtlz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -48,9 +49,22 @@ public class DTLZ5 extends AbstractDoubleProblem {
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] result = new double[10];
+    int count1 = 0;
+    for (int i3 = 0; i3 < numberOfVariables; i3++) {
+      double v2 = solution.variables().get(i3);
+      if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
+      result[count1++] = v2;
+    }
+    result = Arrays.copyOfRange(result, 0, count1);
+    x = result;
 
-      g = IntStream.range(numberOfVariables - k, numberOfVariables).mapToDouble(i -> (x[i] - 0.5) * (x[i] - 0.5)).sum();
+    double sum = 0.0;
+    for (int i2 = numberOfVariables - k; i2 < numberOfVariables; i2++) {
+      double v1 = (x[i2] - 0.5) * (x[i2] - 0.5);
+      sum += v1;
+    }
+    g = sum;
 
     double t = java.lang.Math.PI / (4.0 * (1.0 + g));
 
@@ -59,7 +73,15 @@ public class DTLZ5 extends AbstractDoubleProblem {
       theta[i] = t * (1.0 + 2.0 * g * x[i]);
     }
 
-    f = IntStream.range(0, numberOfObjectives).mapToDouble(i -> 1.0 + g).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+      double v = 1.0 + g;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    f = arr;
 
     for (int i = 0; i < numberOfObjectives; i++) {
       for (int j = 0; j < numberOfObjectives - (i + 1); j++) {
@@ -71,7 +93,9 @@ public class DTLZ5 extends AbstractDoubleProblem {
       }
     }
 
-    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      solution.objectives()[i] = f[i];
+    }
 
     return solution;
   }

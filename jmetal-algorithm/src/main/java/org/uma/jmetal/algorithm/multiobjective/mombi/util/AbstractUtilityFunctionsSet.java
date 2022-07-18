@@ -82,8 +82,13 @@ public abstract class AbstractUtilityFunctionsSet<S extends Solution<?>> impleme
 	 * @return
 	 */
 	public List<Double> evaluate(S solution) {
-		List<Double> result = IntStream.range(0, this.getSize()).mapToObj(i -> evaluate(solution, i)).collect(Collectors.toCollection(() -> new ArrayList<>(this.getSize())));
-        return result;
+		List<Double> result = new ArrayList<>(this.getSize());
+		int bound = this.getSize();
+		for (int i = 0; i < bound; i++) {
+			Double evaluate = evaluate(solution, i);
+			result.add(evaluate);
+		}
+		return result;
 	}
 	
 	/**

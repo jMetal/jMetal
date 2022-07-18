@@ -69,7 +69,13 @@ public class Spread extends QualityIndicator {
 
     // STEP 3. Calculate the mean of distances between points i and (i - 1).
     // (the points are in lexicografical order)
-      mean = IntStream.range(0, (numberOfPoints - 1)).mapToDouble(i -> distance.compute(front[i], front[i + 1])).sum();
+      double sum = 0.0;
+      int bound = (numberOfPoints - 1);
+      for (int i1 = 0; i1 < bound; i1++) {
+          double compute = distance.compute(front[i1], front[i1 + 1]);
+          sum += compute;
+      }
+      mean = sum;
 
     mean = mean / (double) (numberOfPoints - 1);
 

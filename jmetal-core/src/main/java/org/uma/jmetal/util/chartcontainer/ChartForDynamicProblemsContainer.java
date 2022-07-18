@@ -2,10 +2,7 @@ package org.uma.jmetal.util.chartcontainer;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.SwingWrapper;
@@ -134,8 +131,15 @@ public class ChartForDynamicProblemsContainer<S extends Solution<?>> {
   }
 
   private double[] getSolutionsForObjective(List<S> solutionList, int objective) {
-    double[] result = solutionList.stream().mapToDouble(s -> s.objectives()[objective]).toArray();
-      return result;
+    double[] result = new double[10];
+    int count = 0;
+    for (S s : solutionList) {
+      double v = s.objectives()[objective];
+      if (result.length == count) result = Arrays.copyOf(result, count * 2);
+      result[count++] = v;
+    }
+    result = Arrays.copyOfRange(result, 0, count);
+    return result;
   }
 
   public void saveChart(String fileName, BitmapEncoder.BitmapFormat format) throws IOException {

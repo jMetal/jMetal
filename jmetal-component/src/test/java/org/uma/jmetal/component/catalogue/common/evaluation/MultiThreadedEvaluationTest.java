@@ -97,9 +97,11 @@ class MultiThreadedEvaluationTest {
 
     int numberOfSolutions = 10;
     List<DoubleSolution> solutions = new ArrayList<>(numberOfSolutions);
-    IntStream.range(0, numberOfSolutions).forEach(i -> solutions.add(mock(DoubleSolution.class)));
+      for (int i = 0; i < numberOfSolutions; i++) {
+          solutions.add(mock(DoubleSolution.class));
+      }
 
-    evaluation.evaluate(solutions);
+      evaluation.evaluate(solutions);
 
     assertThat(evaluation.getComputedEvaluations()).isEqualTo(numberOfSolutions);
     verify(problem, times(numberOfSolutions)).evaluate(Mockito.any());

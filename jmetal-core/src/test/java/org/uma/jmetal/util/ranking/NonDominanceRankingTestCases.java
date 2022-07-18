@@ -289,15 +289,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
         };
 
     List<DoubleSolution> solutionList = new ArrayList<>(objectiveValues.length);
-    IntStream.range(0, objectiveValues.length)
-        .forEach(
-            i -> {
-              DoubleSolution solution = problem.createSolution();
-              solution.objectives()[0] =  objectiveValues[i][0];
-              solution.objectives()[1] =  objectiveValues[i][1];
-              solution.objectives()[2] =  objectiveValues[i][2];
-              solutionList.add(solution);
-            });
+    for (int i = 0; i < objectiveValues.length; i++) {
+      DoubleSolution solution = problem.createSolution();
+      solution.objectives()[0] = objectiveValues[i][0];
+      solution.objectives()[1] = objectiveValues[i][1];
+      solution.objectives()[2] = objectiveValues[i][2];
+      solutionList.add(solution);
+    }
 
     ranking.compute(solutionList);
 
@@ -328,15 +326,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
             };
 
     List<DoubleSolution> solutionList = new ArrayList<>(objectiveValues.length);
-    IntStream.range(0, objectiveValues.length)
-            .forEach(
-                    i -> {
-                      DoubleSolution solution = problem.createSolution();
-                      solution.objectives()[0] =  objectiveValues[i][0];
-                      solution.objectives()[1] =  objectiveValues[i][1];
-                      solution.objectives()[2] =  objectiveValues[i][2];
-                      solutionList.add(solution);
-                    });
+    for (int i = 0; i < objectiveValues.length; i++) {
+      DoubleSolution solution = problem.createSolution();
+      solution.objectives()[0] = objectiveValues[i][0];
+      solution.objectives()[1] = objectiveValues[i][1];
+      solution.objectives()[2] = objectiveValues[i][2];
+      solutionList.add(solution);
+    }
 
     ranking.compute(solutionList);
 
@@ -376,15 +372,13 @@ public abstract class NonDominanceRankingTestCases<R extends Ranking<DoubleSolut
         };
 
     List<DoubleSolution> solutionList = new ArrayList<>(objectiveValues.length);
-    IntStream.range(0, objectiveValues.length)
-        .forEach(
-            i -> {
-              DoubleSolution solution = problem.createSolution();
-              solution.objectives()[0] =  objectiveValues[i][0];
-              solution.objectives()[1] =  objectiveValues[i][1];
-              solution.objectives()[2] =  objectiveValues[i][2];
-              solutionList.add(solution);
-            });
+    for (int i = 0; i < objectiveValues.length; i++) {
+      DoubleSolution solution = problem.createSolution();
+      solution.objectives()[0] = objectiveValues[i][0];
+      solution.objectives()[1] = objectiveValues[i][1];
+      solution.objectives()[2] = objectiveValues[i][2];
+      solutionList.add(solution);
+    }
 
     ranking.compute(solutionList);
 

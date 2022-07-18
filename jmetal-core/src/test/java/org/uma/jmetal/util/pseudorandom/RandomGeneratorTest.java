@@ -22,7 +22,11 @@ public class RandomGeneratorTest {
 		Random random = new Random();
 		RandomGenerator<Integer> generator = RandomGenerator.filter(() -> random.nextInt(5), (i) -> i != 2);
 
-		Set<Integer> generated = IntStream.range(0, 10000).mapToObj(i -> generator.getRandomValue()).collect(Collectors.toSet());
+        Set<Integer> generated = new HashSet<>();
+        for (int i = 0; i < 10000; i++) {
+            Integer randomValue = generator.getRandomValue();
+            generated.add(randomValue);
+        }
 
         assertTrue(generated.contains(0));
 		assertTrue(generated.contains(1));
@@ -38,7 +42,11 @@ public class RandomGeneratorTest {
 		String[] values = { "a", "b", "c" };
 		RandomGenerator<String> generator = RandomGenerator.forArray(indexSelector, values);
 
-		Set<String> generated = IntStream.range(0, 10000).mapToObj(i -> generator.getRandomValue()).collect(Collectors.toSet());
+        Set<String> generated = new HashSet<>();
+        for (int i = 0; i < 10000; i++) {
+            String randomValue = generator.getRandomValue();
+            generated.add(randomValue);
+        }
 
         assertTrue(generated.containsAll(Arrays.asList(values)));
 		assertEquals(values.length, generated.size());
@@ -51,7 +59,11 @@ public class RandomGeneratorTest {
 		Collection<String> values = Arrays.asList("a", "b", "c");
 		RandomGenerator<String> generator = RandomGenerator.forCollection(indexSelector, values);
 
-		Set<String> generated = IntStream.range(0, 10000).mapToObj(i -> generator.getRandomValue()).collect(Collectors.toSet());
+        Set<String> generated = new HashSet<>();
+        for (int i = 0; i < 10000; i++) {
+            String randomValue = generator.getRandomValue();
+            generated.add(randomValue);
+        }
 
         assertTrue(generated.containsAll(values));
 		assertEquals(values.size(), generated.size());
@@ -67,7 +79,11 @@ public class RandomGeneratorTest {
 		BoundedRandomGenerator<Integer> indexSelector = random::nextInt;
 		RandomGenerator<EnumValues> generator = RandomGenerator.forEnum(indexSelector, EnumValues.class);
 
-		Set<EnumValues> generated = IntStream.range(0, 10000).mapToObj(i -> generator.getRandomValue()).collect(Collectors.toSet());
+        Set<EnumValues> generated = new HashSet<>();
+        for (int i = 0; i < 10000; i++) {
+            EnumValues randomValue = generator.getRandomValue();
+            generated.add(randomValue);
+        }
 
         assertTrue(generated.containsAll(Arrays.asList(EnumValues.values())));
 		assertEquals(EnumValues.values().length, generated.size());

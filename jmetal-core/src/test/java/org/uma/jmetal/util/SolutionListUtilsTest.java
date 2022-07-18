@@ -108,7 +108,11 @@ public class SolutionListUtilsTest {
       shouldFindBestSolutionReturnTheLastOneIfThisIsTheBestSolutionInALastInAListWithFiveSolutions() {
     @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class);
-    List<IntegerSolution> list = IntStream.range(0, 5).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
+      List<IntegerSolution> list = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+          IntegerSolution mock = mock(IntegerSolution.class);
+          list.add(mock);
+      }
 
       when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
@@ -201,7 +205,11 @@ public class SolutionListUtilsTest {
       shouldFindIndexOfBestSolutionReturn4IfTheBestSolutionIsTheLastInAListWithFiveSolutions() {
     @SuppressWarnings("unchecked")
     Comparator<IntegerSolution> comparator = mock(Comparator.class);
-    List<IntegerSolution> list = IntStream.range(0, 5).mapToObj(i -> mock(IntegerSolution.class)).collect(Collectors.toList());
+      List<IntegerSolution> list = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+          IntegerSolution mock = mock(IntegerSolution.class);
+          list.add(mock);
+      }
 
       when(comparator.compare(any(), any()))
         .thenReturn(1, 0, 0, 1);
@@ -288,7 +296,11 @@ public class SolutionListUtilsTest {
     int listSize = 20;
     int solutionsToBeReturned = 4;
 
-    List<BinarySolution> list = IntStream.range(0, listSize).mapToObj(i -> mock(BinarySolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(listSize)));
+      List<BinarySolution> list = new ArrayList<>(listSize);
+      for (int i = 0; i < listSize; i++) {
+          BinarySolution mock = mock(BinarySolution.class);
+          list.add(mock);
+      }
 
       List<BinarySolution> result =
         SolutionListUtils.selectNRandomDifferentSolutions(solutionsToBeReturned, list);

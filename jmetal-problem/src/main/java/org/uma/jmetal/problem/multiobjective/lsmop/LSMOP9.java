@@ -56,12 +56,26 @@ public class LSMOP9 extends AbstractLSMOP {
       variables.set(i - 1, aux);
     }
 
-      G = IntStream.range(0, getNumberOfObjectives()).mapToDouble(i -> 0.0).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      int bound1 = getNumberOfObjectives();
+      for (int i2 = 0; i2 < bound1; i2++) {
+          double v2 = 0.0;
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v2;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      G = arr;
 
     for (int i = 1; i <= getNumberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = IntStream.rangeClosed(len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1, len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1)).mapToObj(k -> variables.get(k - 1)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
+          List<Double> x = new ArrayList<>(getNumberOfVariables());
+          int bound = len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+          for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1; k <= bound; k++) {
+              Double aDouble = variables.get(k - 1);
+              x.add(aDouble);
+          }
           G[i - 1] += getOddFunction().evaluate(x);
       }
     }
@@ -69,16 +83,30 @@ public class LSMOP9 extends AbstractLSMOP {
     for (int i = 2; i <= getNumberOfObjectives(); i += 2) {
       for (int j = 1; j <= this.nk; j++) {
 
-        List<Double> x = IntStream.rangeClosed(len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1, len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1)).mapToObj(k -> variables.get(k - 1)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
+          List<Double> x = new ArrayList<>(getNumberOfVariables());
+          int bound = len.get(i - 1) + getNumberOfObjectives() - 1 + j * subLen.get(i - 1);
+          for (int k = len.get(i - 1) + getNumberOfObjectives() - 1 + (j - 1) * subLen.get(i - 1) + 1; k <= bound; k++) {
+              Double aDouble = variables.get(k - 1);
+              x.add(aDouble);
+          }
 
           G[i - 1] += getEvenFunction().evaluate(x);
       }
     }
 
-    double cofficientG = Arrays.stream(G).map(v -> (v / this.nk)).sum();
+      double cofficientG = 0.0;
+      for (double v : G) {
+          double v1 = (v / this.nk);
+          cofficientG += v1;
+      }
       cofficientG = 1 + cofficientG;
 
-    List<Double> y = IntStream.range(0, getNumberOfObjectives() - 1).mapToObj(variables::get).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfObjectives())));
+      List<Double> y = new ArrayList<>(getNumberOfObjectives());
+      int bound = getNumberOfObjectives() - 1;
+      for (int i1 = 0; i1 < bound; i1++) {
+          Double aDouble = variables.get(i1);
+          y.add(aDouble);
+      }
 
       double sum = 0.0;
     for (int i = 1; i <= getNumberOfObjectives() - 1; i++) {

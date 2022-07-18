@@ -296,6 +296,8 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   }
 
   public static void print(List<Parameter<?>> parameterList) {
-    parameterList.forEach(System.out::println);
+    for (Parameter<?> parameter : parameterList) {
+      System.out.println(parameter);
+    }
   }
 }

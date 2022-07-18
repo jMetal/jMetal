@@ -66,7 +66,12 @@ public class CoralReefsOptimization<S>
 
 		int quantity = (int) (getRho() * getN() * getM());
 
-		population = IntStream.range(0, quantity).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getN() * getM())));
+		ArrayList<S> s = new ArrayList<>(getN() * getM());
+		for (int i = 0; i < quantity; i++) {
+			S solution = problem.createSolution();
+			s.add(solution);
+		}
+		population = s;
 		return population;
 	}
 
@@ -75,8 +80,12 @@ public class CoralReefsOptimization<S>
 		int popSize = getPopulationSize();
 		MersenneTwisterGenerator random = new MersenneTwisterGenerator();
 
-		ArrayList<Coordinate> coordinates = IntStream.range(0, popSize).mapToObj(i -> new Coordinate(random.nextInt(0, getN() - 1),
-				random.nextInt(0, getM() - 1))).collect(Collectors.toCollection(() -> new ArrayList<>(popSize)));
+		ArrayList<Coordinate> coordinates = new ArrayList<>(popSize);
+		for (int i = 0; i < popSize; i++) {
+			Coordinate coordinate = new Coordinate(random.nextInt(0, getN() - 1),
+					random.nextInt(0, getM() - 1));
+			coordinates.add(coordinate);
+		}
 
 		return coordinates;
 	}
@@ -135,7 +144,11 @@ public class CoralReefsOptimization<S>
 	protected List<S> asexualReproduction(List<S> brooders) {
 		int sz = brooders.size();
 
-		List<S> larvae = IntStream.range(0, sz).mapToObj(i -> mutationOperator.execute(brooders.get(i))).collect(Collectors.toCollection(() -> new ArrayList<>(sz)));
+		List<S> larvae = new ArrayList<>(sz);
+		for (int i = 0; i < sz; i++) {
+			S execute = mutationOperator.execute(brooders.get(i));
+			larvae.add(execute);
+		}
 
 		return larvae;
 	}

@@ -97,7 +97,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override protected List<BinarySolution> createInitialPopulation() {
-    List<BinarySolution> population = IntStream.range(0, getMaxPopulationSize()).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(getMaxPopulationSize())));
+      List<BinarySolution> population = new ArrayList<>(getMaxPopulationSize());
+      int bound = getMaxPopulationSize();
+      for (int i = 0; i < bound; i++) {
+          BinarySolution solution = problem.createSolution();
+          population.add(solution);
+      }
       return population;
   }
 
@@ -108,7 +113,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
   }
 
   @Override protected List<BinarySolution> selection(List<BinarySolution> population) {
-    List<BinarySolution> matingPopulation = IntStream.range(0, population.size()).mapToObj(i -> parentSelection.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+      List<BinarySolution> matingPopulation = new ArrayList<>(population.size());
+      int bound = population.size();
+      for (int i = 0; i < bound; i++) {
+          BinarySolution execute = parentSelection.execute(population);
+          matingPopulation.add(execute);
+      }
 
       return matingPopulation;
   }
@@ -183,7 +193,12 @@ public class MOCHC extends AbstractEvolutionaryAlgorithm<BinarySolution, List<Bi
    */
 
   private int hammingDistance(BinarySolution solutionOne, BinarySolution solutionTwo) {
-    int distance = IntStream.range(0, problem.getNumberOfVariables()).map(i -> hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i))).sum();
+      int distance = 0;
+      int bound = problem.getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          int hammingDistance = hammingDistance(solutionOne.variables().get(i), solutionTwo.variables().get(i));
+          distance += hammingDistance;
+      }
 
       return distance;
   }

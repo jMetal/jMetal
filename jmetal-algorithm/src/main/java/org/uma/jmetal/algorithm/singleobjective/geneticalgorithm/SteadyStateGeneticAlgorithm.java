@@ -70,7 +70,11 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   }
 
   @Override protected List<S> selection(List<S> population) {
-    List<S> matingPopulation = IntStream.range(0, 2).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(2)));
+      List<S> matingPopulation = new ArrayList<>(2);
+      for (int i = 0; i < 2; i++) {
+          S execute = selectionOperator.execute(population);
+          matingPopulation.add(execute);
+      }
 
       return matingPopulation;
   }

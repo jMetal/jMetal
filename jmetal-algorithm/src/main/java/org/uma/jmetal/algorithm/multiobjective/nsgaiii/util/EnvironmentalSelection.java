@@ -116,7 +116,12 @@ public class EnvironmentalSelection<S extends Solution<?>>
       }
     }
 
-      x = IntStream.range(0, N).mapToObj(i -> 0.0).collect(Collectors.toList());
+    List<Double> list = new ArrayList<>();
+    for (int i1 = 0; i1 < N; i1++) {
+      Double aDouble = 0.0;
+      list.add(aDouble);
+    }
+    x = list;
 
     for (int i = N - 1; i >= 0; i -= 1) {
       for (int known = i + 1; known < N; known += 1) {
@@ -143,16 +148,44 @@ public class EnvironmentalSelection<S extends Solution<?>>
                    // the condition)
     {
         // extreme_points[f] stands for the individual with the largest value of objective f
-        intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> extreme_points.get(f).objectives()[f]).collect(Collectors.toList());
+      List<Double> list = new ArrayList<>();
+      int bound = numberOfObjectives;
+      for (int f = 0; f < bound; f++) {
+        Double objective = extreme_points.get(f).objectives()[f];
+        list.add(objective);
+      }
+      intercepts = list;
     } else {
       // Find the equation of the hyperplane
-      List<Double> b = IntStream.range(0, numberOfObjectives).mapToObj(i -> 1.0).collect(Collectors.toList()); // (pop[0].objs().size(), 1.0);
+      // (pop[0].objs().size(), 1.0);
+      List<Double> b = new ArrayList<>();
+      int bound1 = numberOfObjectives;
+      for (int i1 = 0; i1 < bound1; i1++) {
+        Double aDouble1 = 1.0;
+        b.add(aDouble1);
+      }
 
-        List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> Arrays.stream(s.objectives(), 0, numberOfObjectives).boxed().collect(Collectors.toList())).collect(Collectors.toList());
+      List<List<Double>> A = extreme_points.stream().<List<Double>>map(s -> {
+        List<Double> list = new ArrayList<>();
+        double[] array = s.objectives();
+        int bound = numberOfObjectives;
+        for (int i = 0; i < bound; i++) {
+          double v = array[i];
+          Double aDouble = v;
+          list.add(aDouble);
+        }
+        return list;
+      }).collect(Collectors.toList());
       List<Double> x = guassianElimination(A, b);
 
       // Find intercepts
-        intercepts = IntStream.range(0, numberOfObjectives).mapToObj(f -> 1.0 / x.get(f)).collect(Collectors.toList());
+      List<Double> list = new ArrayList<>();
+      int bound = numberOfObjectives;
+      for (int f = 0; f < bound; f++) {
+        Double aDouble = 1.0 / x.get(f);
+        list.add(aDouble);
+      }
+      intercepts = list;
     }
     return intercepts;
   }
@@ -182,8 +215,13 @@ public class EnvironmentalSelection<S extends Solution<?>>
     }
     double k = numerator / denominator;
 
-    double d = IntStream.range(0, direction.size()).mapToDouble(i -> Math.pow(k * direction.get(i) - point.get(i), 2.0)).sum();
-      return Math.sqrt(d);
+    double d = 0.0;
+    int bound = direction.size();
+    for (int i = 0; i < bound; i++) {
+      double pow = Math.pow(k * direction.get(i) - point.get(i), 2.0);
+      d += pow;
+    }
+    return Math.sqrt(d);
   }
 
   public void associate(List<S> population) {

@@ -124,10 +124,22 @@ public class MOEADDRA extends AbstractMOEAD<DoubleSolution> {
     List<Integer> candidate;
 
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL (NOT SORTED!!!!)
-      selected = IntStream.range(0, problem.getNumberOfObjectives()).boxed().collect(Collectors.toList());
+      List<Integer> result = new ArrayList<>();
+      int bound1 = problem.getNumberOfObjectives();
+      for (int i3 = 0; i3 < bound1; i3++) {
+          Integer integer1 = i3;
+          result.add(integer1);
+      }
+      selected = result;
 
       // set of unselected weights
-      candidate = IntStream.range(problem.getNumberOfObjectives(), populationSize).boxed().collect(Collectors.toList());
+      List<Integer> list = new ArrayList<>();
+      int bound = populationSize;
+      for (int i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
+          Integer integer = i1;
+          list.add(integer);
+      }
+      candidate = list;
 
     while (selected.size() < (int) (populationSize / 5.0)) {
       int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());

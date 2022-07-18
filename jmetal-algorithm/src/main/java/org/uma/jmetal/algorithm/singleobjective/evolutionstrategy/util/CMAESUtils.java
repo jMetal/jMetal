@@ -29,7 +29,12 @@ public class CMAESUtils {
 
       double scale;
       double h = 0.0;
-        scale = IntStream.range(0, i).mapToDouble(k -> Math.abs(d[k])).sum();
+      double sum = 0.0;
+      for (int k = 0; k < i; k++) {
+        double abs = Math.abs(d[k]);
+        sum += abs;
+      }
+      scale = sum;
       if (scale == 0.0) {
         e[i] = d[i - 1];
         for (int j = 0; j < i; j++) {
@@ -318,8 +323,12 @@ public class CMAESUtils {
   }
 
   public static double norm(double[] vector) {
-    double result = Arrays.stream(vector).map(v -> v * v).sum();
-      return result;
+    double result = 0.0;
+    for (double v : vector) {
+      double v1 = v * v;
+      result += v1;
+    }
+    return result;
   }
 
   /**

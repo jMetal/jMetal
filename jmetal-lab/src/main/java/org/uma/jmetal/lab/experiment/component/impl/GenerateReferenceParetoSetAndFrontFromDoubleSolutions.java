@@ -80,7 +80,12 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
             new GenericSolutionAttribute<DoubleSolution, String>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<DoubleSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
+        List<DoubleSolution> solutionsPerAlgorithm = new ArrayList<>();
+        for (DummyDoubleSolution solution : nonDominatedSolutions) {
+            if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
+                solutionsPerAlgorithm.add(solution);
+            }
+        }
 
         new SolutionListOutput(solutionsPerAlgorithm)
               .printObjectivesToFile(
@@ -135,10 +140,14 @@ public class GenerateReferenceParetoSetAndFrontFromDoubleSolutions implements Ex
     NonDominatedSolutionListArchive<DummyDoubleSolution> nonDominatedSolutionArchive =
             new NonDominatedSolutionListArchive<>();
 
-    for (ExperimentAlgorithm<?, ?> algorithm :
-            experiment.getAlgorithmList().stream()
-                    .filter(s -> s.getProblemTag().equals(problem.getTag()))
-                    .collect(Collectors.toCollection(ArrayList::new))) {
+      ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
+      for (ExperimentAlgorithm<?, ?> s : experiment.getAlgorithmList()) {
+          if (s.getProblemTag().equals(problem.getTag())) {
+              experimentAlgorithms.add(s);
+          }
+      }
+      for (ExperimentAlgorithm<?, ?> algorithm :
+              experimentAlgorithms) {
       String problemDirectory =
               experiment.getExperimentBaseDirectory()
                       + "/data/"

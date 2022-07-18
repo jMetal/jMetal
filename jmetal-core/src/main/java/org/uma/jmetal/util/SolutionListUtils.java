@@ -1,10 +1,6 @@
 package org.uma.jmetal.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.Problem;
@@ -28,9 +24,11 @@ public class SolutionListUtils {
 
   public static <S extends Solution<?>> List<S> getNonDominatedSolutions(List<S> solutionList) {
     Archive<S> nonDominatedSolutionArchive = new NonDominatedSolutionListArchive<>() ;
-    solutionList.forEach(nonDominatedSolutionArchive::add);
+      for (S s : solutionList) {
+          nonDominatedSolutionArchive.add(s);
+      }
 
-    return nonDominatedSolutionArchive.getSolutionList();
+      return nonDominatedSolutionArchive.getSolutionList();
   }
 
   public <S> S findWorstSolution(Collection<S> solutionList, Comparator<S> comparator) {
@@ -140,7 +138,11 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> List<S> normalizeSolutionList(
       List<S> solutions, double[] minValues, double[] maxValues) {
-    List<S> normalizedSolutions = solutions.stream().map(solution -> SolutionUtils.normalize(solution, minValues, maxValues)).collect(Collectors.toCollection(() -> new ArrayList<>(solutions.size())));
+      List<S> normalizedSolutions = new ArrayList<>(solutions.size());
+      for (S solution : solutions) {
+          S normalize = SolutionUtils.normalize(solution, minValues, maxValues);
+          normalizedSolutions.add(normalize);
+      }
 
       return normalizedSolutions;
   }
@@ -402,7 +404,14 @@ public class SolutionListUtils {
    */
   public static <S extends Solution<?>> double[] getObjectiveArrayFromSolutionList(
       List<S> solutionList, int objective) {
-    double[] result = solutionList.stream().mapToDouble(s -> s.objectives()[objective]).toArray();
+      double[] result = new double[10];
+      int count = 0;
+      for (S s : solutionList) {
+          double v = s.objectives()[objective];
+          if (result.length == count) result = Arrays.copyOf(result, count * 2);
+          result[count++] = v;
+      }
+      result = Arrays.copyOfRange(result, 0, count);
 
       return result;
   }
@@ -429,9 +438,11 @@ public class SolutionListUtils {
 
     if (originalSolutionList.get(0).objectives().length == 2) {
       Archive<S> archive = new CrowdingDistanceArchive<>(finalListSize) ;
-      originalSolutionList.forEach(archive::add);
+        for (S s : originalSolutionList) {
+            archive.add(s);
+        }
 
-      return archive.getSolutionList() ;
+        return archive.getSolutionList() ;
     }
 
     for (int i = 0; i < originalSolutionList.size(); i++) {
@@ -472,7 +483,11 @@ public class SolutionListUtils {
       solutions.remove(largestDistanceSolutionIndex);
     }
 
-    List<S> resultList = selectedSolutions.stream().map(solution -> originalSolutionList.get((int) solution.attributes().get("INDEX_"))).collect(Collectors.toList());
+      List<S> resultList = new ArrayList<>();
+      for (S solution : selectedSolutions) {
+          S index_ = originalSolutionList.get((int) solution.attributes().get("INDEX_"));
+          resultList.add(index_);
+      }
 
       return resultList;
   }
@@ -486,8 +501,11 @@ public class SolutionListUtils {
   public static <S extends Solution<?>> double[][] getMatrixWithObjectiveValues(List<S> solutionList) {
     double[][] matrix = new double[solutionList.size()][] ;
 
-    IntStream.range(0, solutionList.size()).forEach(i -> matrix[i] = solutionList.get(i).objectives()) ;
+      int bound = solutionList.size();
+      for (int i = 0; i < bound; i++) {
+          matrix[i] = solutionList.get(i).objectives();
+      }
 
-    return matrix ;
+      return matrix ;
   }
 }

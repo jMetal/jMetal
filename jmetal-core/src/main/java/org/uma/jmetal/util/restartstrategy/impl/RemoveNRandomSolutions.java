@@ -29,12 +29,10 @@ public class RemoveNRandomSolutions<S extends Solution<?>> implements RemoveSolu
     }
 
     int numberOfSolutionsToRemove = numberOfSolutionsToDelete ;
-    IntStream.range(0, numberOfSolutionsToRemove)
-            .forEach(s -> {
-                      int chosen = JMetalRandom.getInstance().nextInt(0, solutionList.size()-1);
-                      solutionList.remove(chosen);
-                    }
-            );
-    return numberOfSolutionsToDelete ;
+      for (int s = 0; s < numberOfSolutionsToRemove; s++) {
+          int chosen = JMetalRandom.getInstance().nextInt(0, solutionList.size() - 1);
+          solutionList.remove(chosen);
+      }
+      return numberOfSolutionsToDelete ;
   }
 }

@@ -280,12 +280,11 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
 
     Double[][] parent = new Double[getNumberOfRequiredParents()][];
 
-    IntStream.range(0, getNumberOfRequiredParents())
-            .forEach(
-                    i -> {
-                      parent[i] = new Double[numberOfVariables];
-                      parentSolutions.get(i).variables().toArray(parent[i]);
-                    });
+    int bound = getNumberOfRequiredParents();
+    for (int i = 0; i < bound; i++) {
+      parent[i] = new Double[numberOfVariables];
+      parentSolutions.get(i).variables().toArray(parent[i]);
+    }
 
     if (crossoverType.equals(DE_CROSSOVER_TYPE.BIN)) {
       for (int j = 0; j < numberOfVariables; j++) {
@@ -317,15 +316,14 @@ public class DifferentialEvolutionCrossover implements CrossoverOperator<DoubleS
   }
 
   private void repairVariableValues(DoubleSolution solution) {
-    IntStream.range(0, solution.variables().size())
-            .forEach(
-                    i -> {
-                      Bounds<Double> bounds = solution.getBounds(i);
-                      solution.variables().set(
-                              i,
-                              solutionRepair.repairSolutionVariableValue(
-                                      solution.variables().get(i), bounds.getLowerBound(), bounds.getUpperBound()));
-                    });
+    int bound = solution.variables().size();
+    for (int i = 0; i < bound; i++) {
+      Bounds<Double> bounds = solution.getBounds(i);
+      solution.variables().set(
+              i,
+              solutionRepair.repairSolutionVariableValue(
+                      solution.variables().get(i), bounds.getLowerBound(), bounds.getUpperBound()));
+    }
   }
 
   private double mutate(Double[][] parent, int index) {

@@ -106,9 +106,16 @@ public class ArrayFront implements Front {
 
       while (line != null) {
         String[] stringValues = line.split(separator);
-        double[] values = Arrays.stream(stringValues).mapToDouble(Double::valueOf).toArray();
+        double[] values = new double[10];
+        int count = 0;
+        for (String stringValue : stringValues) {
+          double valueOf = Double.valueOf(stringValue);
+          if (values.length == count) values = Arrays.copyOf(values, count * 2);
+          values[count++] = valueOf;
+        }
+        values = Arrays.copyOfRange(values, 0, count);
 
-          if (numberOfObjectives == 0) {
+        if (numberOfObjectives == 0) {
           numberOfObjectives = stringValues.length;
         } else {
           Check.that(
@@ -243,7 +250,13 @@ public class ArrayFront implements Front {
 
   @Override
   public double[][] getMatrix() {
-    double[][] matrix = IntStream.range(0, getNumberOfPoints()).mapToObj(i -> points[i].getValues()).toArray(double[][]::new);
+    List<double[]> list = new ArrayList<>();
+    int bound = getNumberOfPoints();
+    for (int i = 0; i < bound; i++) {
+      double[] values = points[i].getValues();
+      list.add(values);
+    }
+    double[][] matrix = list.toArray(new double[0][]);
 
       return matrix;
   }

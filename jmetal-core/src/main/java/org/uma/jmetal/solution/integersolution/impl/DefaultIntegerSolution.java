@@ -25,8 +25,11 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
 
     this.bounds = boundsList;
 
-    IntStream.range(0, bounds.size()).forEach(i -> variables().set(
-            i, JMetalRandom.getInstance().nextInt(this.bounds.get(i).getLowerBound(), this.bounds.get(i).getUpperBound())));
+    int bound = bounds.size();
+    for (int i = 0; i < bound; i++) {
+      variables().set(
+              i, JMetalRandom.getInstance().nextInt(this.bounds.get(i).getLowerBound(), this.bounds.get(i).getUpperBound()));
+    }
   }
 
   /**
@@ -35,9 +38,18 @@ public class DefaultIntegerSolution extends AbstractSolution<Integer> implements
   public DefaultIntegerSolution(DefaultIntegerSolution solution) {
     super(solution.variables().size(), solution.objectives().length, solution.constraints().length);
 
-    IntStream.range(0, solution.variables().size()).forEach(i -> variables().set(i, solution.variables().get(i)));
-    IntStream.range(0, solution.objectives().length).forEach(i -> objectives()[i] = solution.objectives()[i]);
-    IntStream.range(0, solution.constraints().length).forEach(i -> constraints()[i] = solution.constraints()[i]);
+    int bound2 = solution.variables().size();
+    for (int i2 = 0; i2 < bound2; i2++) {
+      variables().set(i2, solution.variables().get(i2));
+    }
+    int bound1 = solution.objectives().length;
+    for (int i1 = 0; i1 < bound1; i1++) {
+      objectives()[i1] = solution.objectives()[i1];
+    }
+    int bound = solution.constraints().length;
+    for (int i = 0; i < bound; i++) {
+      constraints()[i] = solution.constraints()[i];
+    }
 
     bounds = solution.bounds;
 

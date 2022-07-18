@@ -294,8 +294,13 @@ static double hv2(FRONT ps, int k)
 // assumes that ps is sorted improving
 {
   double volume = ps.points[0].objectives[0] * ps.points[0].objectives[1];
-    volume += IntStream.range(1, k).mapToDouble(i -> ps.points[i].objectives[1] *
-            (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0])).sum();
+    double sum = 0.0;
+    for (int i = 1; i < k; i++) {
+        double v = ps.points[i].objectives[1] *
+                (ps.points[i].objectives[0] - ps.points[i - 1].objectives[0]);
+        sum += v;
+    }
+    volume += sum;
   return volume;
 }
 
@@ -303,7 +308,13 @@ static double hv2(FRONT ps, int k)
 static double inclhv(POINT p)
 // returns the inclusive hypervolume of p
 {
-  double volume = Arrays.stream(p.objectives, 0, n).reduce(1, (a, b) -> a * b);
+    double volume = 1;
+    double[] array = p.objectives;
+    int bound = n;
+    for (int i = 0; i < bound; i++) {
+        double v = array[i];
+        volume = volume * v;
+    }
     return volume;
 }
 
@@ -552,7 +563,13 @@ static double hv(FRONT ps)
       double volume = ps.points[0].objectives[2] * hv2(ps, safe); 
       n--;
         // we can ditch dominated points here, but they will be ditched anyway in makeDominatedBit
-        volume += IntStream.range(safe, ps.nPoints).mapToDouble(i -> ps.points[i].objectives[n] * exclhv(ps, i)).sum();
+        double sum = 0.0;
+        int bound = ps.nPoints;
+        for (int i = safe; i < bound; i++) {
+            double v = ps.points[i].objectives[n] * exclhv(ps, i);
+            sum += v;
+        }
+        volume += sum;
       n++; 
       return volume;
     }
@@ -610,7 +627,14 @@ static double hv(FRONT ps)
       Front normalizedFront = frontNormalizer.normalize(front) ;
 
       // compute offsets for reference point in normalized space
-      double[] offsets = IntStream.range(0, maximumValues.length).mapToDouble(i -> offset / (maximumValues[i] - minimumValues[i])).toArray();
+        double[] offsets = new double[10];
+        int count = 0;
+        for (int i1 = 0; i1 < maximumValues.length; i1++) {
+            double v = offset / (maximumValues[i1] - minimumValues[i1]);
+            if (offsets.length == count) offsets = Arrays.copyOf(offsets, count * 2);
+            offsets[count++] = v;
+        }
+        offsets = Arrays.copyOfRange(offsets, 0, count);
         // STEP 3. Inverse the pareto front. This is needed because the original
       // metric by Zitzler is for maximization problem
       Front invertedFront = FrontUtils.getInvertedFront(normalizedFront);

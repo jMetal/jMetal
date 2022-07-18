@@ -71,7 +71,11 @@ public class MaF09 extends AbstractDoubleProblem {
     //generated other polygons
     int maxinterval = (int) Math.ceil(numberOfObjectives / 2.0 - 2);
     maxinter9 = maxinterval;
-    int lenp = IntStream.rangeClosed(2, 1 + maxinterval).sum();
+      int lenp = 0;
+      int bound = 1 + maxinterval;
+      for (int i1 = 2; i1 <= bound; i1++) {
+          lenp += i1;
+      }
       lenp *= (numberOfObjectives * 2);
     double[][] opoly9 = new double[lenp][2];
     int[] head = new int[maxinterval * numberOfObjectives];//i
@@ -125,11 +129,11 @@ public class MaF09 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(-10000.0);
-      upper.add(10000.0);
-    });
-    setVariableBounds(lower, upper);
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(-10000.0);
+          upper.add(10000.0);
+      }
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -145,7 +149,15 @@ public class MaF09 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables_; i1++) {
+          double v = solution.variables().get(i1);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
 
     // check if the point is infeasible
     boolean infeasible = false;
@@ -189,7 +201,15 @@ public class MaF09 extends AbstractDoubleProblem {
     double thera = Math.PI / 2, rho = r;
 
     // vertexes with the number of edges(m)
-      angle = IntStream.range(0, m).mapToDouble(i -> thera - 2 * (i + 1) * Math.PI / m).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < m; i1++) {
+          double v = thera - 2 * (i1 + 1) * Math.PI / m;
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      angle = arr;
     for (int i = 0; i < m; i++) {
       p[i][0] = rho * Math.cos(angle[i]);
       p[i][1] = rho * Math.sin(angle[i]);
@@ -291,7 +311,12 @@ public class MaF09 extends AbstractDoubleProblem {
     List<Point2D.Double> polygon;
     Point2D.Double p = new Point2D.Double(p1[0], p1[1]);
     // if the point is inside the polygon(boundary not included)
-      polygon = Arrays.stream(points).map(point -> new Point2D.Double(point[0], point[1])).collect(Collectors.toList());
+      List<Point2D.Double> list = new ArrayList<>();
+      for (double[] point : points) {
+          Point2D.Double aDouble = new Point2D.Double(point[0], point[1]);
+          list.add(aDouble);
+      }
+      polygon = list;
     ifin = checkWithJdkGeneralPath(p, polygon);
 
     return ifin;

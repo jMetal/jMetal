@@ -44,7 +44,13 @@ public class KNearestNeighborhood<S extends Solution<?>> implements Neighborhood
     minFastSort(distances, indexes, solutionList.size(), neighborSize);
 
 
-      neighbourSolutions = IntStream.rangeClosed(1, neighborSize).mapToObj(i -> solutionList.get(indexes[i])).collect(Collectors.toList());
+      List<S> list = new ArrayList<>();
+      int bound = neighborSize;
+      for (int i = 1; i <= bound; i++) {
+          S s = solutionList.get(indexes[i]);
+          list.add(s);
+      }
+      neighbourSolutions = list;
 
     return neighbourSolutions;
   }

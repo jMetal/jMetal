@@ -86,6 +86,11 @@ public class DifferentialEvolutionSelection
       indexList.add(currentSolutionIndex);
     }
 
-    return indexList.stream().map(solutionList::get).collect(Collectors.toList());
+    List<DoubleSolution> list = new ArrayList<>();
+    for (Integer integer : indexList) {
+      DoubleSolution doubleSolution = solutionList.get(integer);
+      list.add(doubleSolution);
+    }
+    return list;
   }
 }

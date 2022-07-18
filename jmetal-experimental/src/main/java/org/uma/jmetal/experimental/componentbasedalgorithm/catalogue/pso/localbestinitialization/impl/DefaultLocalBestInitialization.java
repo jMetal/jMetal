@@ -1,5 +1,6 @@
 package org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.uma.jmetal.experimental.componentbasedalgorithm.catalogue.pso.localbestinitialization.LocalBestInitialization;
 import org.uma.jmetal.solution.doublesolution.DoubleSolution;
@@ -19,7 +20,12 @@ public class DefaultLocalBestInitialization implements LocalBestInitialization {
     Check.notNull(swarm);
     Check.that(swarm.size() > 0, "The swarm size is empty: " + swarm.size());
 
-    DoubleSolution[] localBest = swarm.stream().map(doubleSolution -> (DoubleSolution) doubleSolution.copy()).toArray(DoubleSolution[]::new);
+    List<DoubleSolution> list = new ArrayList<>();
+    for (DoubleSolution doubleSolution : swarm) {
+      DoubleSolution copy = (DoubleSolution) doubleSolution.copy();
+      list.add(copy);
+    }
+    DoubleSolution[] localBest = list.toArray(new DoubleSolution[0]);
 
       return localBest ;
   }

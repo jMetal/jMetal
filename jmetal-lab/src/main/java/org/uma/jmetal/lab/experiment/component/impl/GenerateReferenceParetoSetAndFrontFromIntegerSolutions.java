@@ -80,7 +80,12 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
             new GenericSolutionAttribute<>();
 
     for (ExperimentAlgorithm<?, ?> algorithm : experiment.getAlgorithmList()) {
-      List<IntegerSolution> solutionsPerAlgorithm = nonDominatedSolutions.stream().filter(solution -> algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))).collect(Collectors.toList());
+        List<IntegerSolution> solutionsPerAlgorithm = new ArrayList<>();
+        for (DummyIntegerSolution solution : nonDominatedSolutions) {
+            if (algorithm.getAlgorithmTag().equals(solutionAttribute.getAttribute(solution))) {
+                solutionsPerAlgorithm.add(solution);
+            }
+        }
 
         new SolutionListOutput(solutionsPerAlgorithm)
               .printObjectivesToFile(
@@ -135,10 +140,14 @@ public class GenerateReferenceParetoSetAndFrontFromIntegerSolutions implements E
     NonDominatedSolutionListArchive<DummyIntegerSolution> nonDominatedSolutionArchive =
             new NonDominatedSolutionListArchive<>();
 
-    for (ExperimentAlgorithm<?, ?> algorithm :
-            experiment.getAlgorithmList().stream()
-                    .filter(s -> s.getProblemTag().equals(problem.getTag()))
-                    .collect(Collectors.toCollection(ArrayList::new))) {
+      ArrayList<ExperimentAlgorithm<?, ?>> experimentAlgorithms = new ArrayList<>();
+      for (ExperimentAlgorithm<?, ?> s : experiment.getAlgorithmList()) {
+          if (s.getProblemTag().equals(problem.getTag())) {
+              experimentAlgorithms.add(s);
+          }
+      }
+      for (ExperimentAlgorithm<?, ?> algorithm :
+              experimentAlgorithms) {
       String problemDirectory =
               experiment.getExperimentBaseDirectory()
                       + "/data/"

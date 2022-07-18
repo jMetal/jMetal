@@ -70,15 +70,17 @@ public class StrengthRanking<S extends Solution<?>> implements Ranking<S> {
 
     // front[i] contains the list of individuals belonging to the front i
     rankedSubPopulations = new ArrayList<>(maxFitnessValue + 1);
-    IntStream.range(0, maxFitnessValue + 1)
-        .forEach(index -> rankedSubPopulations.add(new ArrayList<>()));
+      int bound = maxFitnessValue + 1;
+      for (int index = 0; index < bound; index++) {
+          rankedSubPopulations.add(new ArrayList<>());
+      }
 
-    // Assign each solution to its corresponding front
-    solutionList.forEach(
-        solution ->
-            rankedSubPopulations.get((int) solution.attributes().get(attributeId)).add(solution));
+      // Assign each solution to its corresponding front
+      for (S solution : solutionList) {
+          rankedSubPopulations.get((int) solution.attributes().get(attributeId)).add(solution);
+      }
 
-    // Remove empty fronts
+      // Remove empty fronts
     // rankedSubPopulations.stream().filter(list -> (list.size() == 0));
     int counter = 0;
     while (counter < rankedSubPopulations.size()) {

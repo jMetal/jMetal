@@ -32,7 +32,12 @@ public class RE21 extends AbstractDoubleProblem {
     double sigma = 10;
     double tmpVar = (f / sigma);
 
-      upperLimit = IntStream.range(0, numberOfVariables).mapToObj(i -> 3 * tmpVar).collect(Collectors.toCollection(() -> new ArrayList<>(numberOfVariables)));
+      ArrayList<Double> doubles = new ArrayList<>(numberOfVariables);
+      for (int i = 0; i < numberOfVariables; i++) {
+          Double aDouble = 3 * tmpVar;
+          doubles.add(aDouble);
+      }
+      upperLimit = doubles;
 
     lowerLimit.add(0, tmpVar);
     lowerLimit.add(1, Math.sqrt(2.0) * tmpVar);

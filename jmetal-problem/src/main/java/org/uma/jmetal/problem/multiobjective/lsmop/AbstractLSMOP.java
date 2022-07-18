@@ -71,9 +71,14 @@ public abstract class AbstractLSMOP extends AbstractDoubleProblem {
 
   @java.lang.Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    List<Double> variables = IntStream.range(0, getNumberOfVariables()).mapToObj(i -> solution.variables().get(i)).collect(Collectors.toCollection(() -> new ArrayList<>(getNumberOfVariables())));
+    List<Double> variables = new ArrayList<>(getNumberOfVariables());
+    int bound = getNumberOfVariables();
+    for (int i1 = 0; i1 < bound; i1++) {
+      Double aDouble = solution.variables().get(i1);
+      variables.add(aDouble);
+    }
 
-      List<Double> y = evaluate(variables);
+    List<Double> y = evaluate(variables);
 
     for (int i = 0; i < getNumberOfObjectives(); i++) {
       solution.objectives()[i] = y.get(i);

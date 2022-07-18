@@ -60,7 +60,12 @@ public class FDA3 extends FDA implements Serializable {
     double f;
     double aux = 2.0d * Math.sin(0.5d * Math.PI * time);
     double Ft = Math.pow(10.0d, aux);
-      f = IntStream.range(limitInf, limitSup).mapToDouble(i -> Math.pow(solution.variables().get(i), Ft)).sum();
+      double sum = 0.0;
+      for (int i = limitInf; i < limitSup; i++) {
+          double pow = Math.pow(solution.variables().get(i), Ft);
+          sum += pow;
+      }
+      f = sum;
     return f;
   }
 
@@ -73,7 +78,13 @@ public class FDA3 extends FDA implements Serializable {
 
     double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0)).sum();
+      double sum = 0.0;
+      int bound = solution.variables().size();
+      for (int i = limitInf; i < bound; i++) {
+          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0);
+          sum += pow;
+      }
+      g = sum;
     g = g + 1.0 + Gt;
     return g;
   }

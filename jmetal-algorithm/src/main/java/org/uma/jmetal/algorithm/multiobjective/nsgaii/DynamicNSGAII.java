@@ -84,7 +84,12 @@ public class DynamicNSGAII<S extends Solution<?>> extends NSGAII<S>
         coverageFront.updateFront(SolutionListUtils.getMatrixWithObjectiveValues(lastReceivedFront));
         List<PointSolution> pointSolutionList;
         List<S> list = getPopulation();
-          pointSolutionList = list.stream().map(PointSolution::new).collect(Collectors.toList());
+        List<PointSolution> result = new ArrayList<>();
+        for (S s : list) {
+          PointSolution pointSolution = new PointSolution(s);
+          result.add(pointSolution);
+        }
+        pointSolutionList = result;
         coverage = coverageFront.isCoverageWithLast(pointSolutionList);
       }
 

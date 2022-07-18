@@ -131,7 +131,10 @@ public class ComponentBasedEvolutionaryAlgorithm<S extends Solution<?>>
   protected List<S> evaluatePopulation(List<S> population) {
     var solutionList = evaluation.evaluate(population) ;
     if (null != archive) {
-      solutionList.forEach(archive::add);
+      Archive<S> sArchive = archive;
+      for (S s : solutionList) {
+        sArchive.add(s);
+      }
     }
 
     return solutionList ;

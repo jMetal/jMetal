@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -34,12 +35,12 @@ public class MaF01 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i = 0; i < numberOfVariables; i++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
   }
 
   /**
@@ -55,10 +56,23 @@ public class MaF01 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          double v = solution.variables().get(i1);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
 
     double g, subf1 = 1, subf3;
-      g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(j -> (Math.pow(x[j] - 0.5, 2))).sum();
+      double sum = 0.0;
+      for (int j = numberOfObjectives - 1; j < numberOfVariables; j++) {
+          double pow = (Math.pow(x[j] - 0.5, 2));
+          sum += pow;
+      }
+      g = sum;
     subf3 = 1 + g;
 
     f[numberOfObjectives - 1] = x[0] * subf3;

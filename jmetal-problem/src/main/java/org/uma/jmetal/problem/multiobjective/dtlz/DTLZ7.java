@@ -47,11 +47,23 @@ public class DTLZ7 extends AbstractDoubleProblem {
 
     int k = getNumberOfVariables() - solution.objectives().length + 1;
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      double v1 = solution.variables().get(i1);
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v1;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    x = arr;
 
-    double g = Arrays.stream(x, numberOfVariables - k, numberOfVariables).sum();
+    double g = 0.0;
+    for (int j = numberOfVariables - k; j < numberOfVariables; j++) {
+      double v = x[j];
+      g += v;
+    }
 
-      g = 1 + (9.0 * g) / k;
+    g = 1 + (9.0 * g) / k;
 
     System.arraycopy(x, 0, f, 0, numberOfObjectives - 1);
 
@@ -64,7 +76,9 @@ public class DTLZ7 extends AbstractDoubleProblem {
 
     f[numberOfObjectives - 1] = (1 + g) * h;
 
-    IntStream.range(0, numberOfObjectives).forEach(i -> solution.objectives()[i] = f[i]);
+    for (int i = 0; i < numberOfObjectives; i++) {
+      solution.objectives()[i] = f[i];
+    }
 
     return solution;
   }

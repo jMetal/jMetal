@@ -1,10 +1,6 @@
 package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -182,7 +178,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
   }
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = IntStream.range(0, lambda).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(lambda)));
+    List<DoubleSolution> population = new ArrayList<>(lambda);
+    int bound = lambda;
+    for (int i = 0; i < bound; i++) {
+      DoubleSolution solution = getProblem().createSolution();
+      population.add(solution);
+    }
     return population;
   }
 
@@ -199,7 +200,12 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
 
   @Override protected List<DoubleSolution> reproduction(List<DoubleSolution> population) {
 
-    List<DoubleSolution> offspringPopulation = IntStream.range(0, lambda).mapToObj(iNk -> sampleSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(lambda)));
+    List<DoubleSolution> offspringPopulation = new ArrayList<>(lambda);
+    int bound = lambda;
+    for (int iNk = 0; iNk < bound; iNk++) {
+      DoubleSolution doubleSolution = sampleSolution();
+      offspringPopulation.add(doubleSolution);
+    }
 
     return offspringPopulation;
   }
@@ -498,7 +504,15 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     double sum;
 
     //TODO: Check the correctness of this random (http://en.wikipedia.org/wiki/CMA-ES)
-    artmp = IntStream.range(0, numberOfVariables).mapToDouble(i -> diagD[i] * rand.nextGaussian()).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    for (int i1 = 0; i1 < numberOfVariables; i1++) {
+      double v = diagD[i1] * rand.nextGaussian();
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    artmp = arr;
     for (int i = 0; i < numberOfVariables; i++) {
       sum = 0.0;
       for (int j = 0; j < numberOfVariables; j++) {

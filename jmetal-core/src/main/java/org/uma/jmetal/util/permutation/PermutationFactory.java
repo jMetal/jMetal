@@ -13,9 +13,11 @@ public class PermutationFactory {
     Check.notNull(randomGenerator);
 
     List<Integer> integerList = new LinkedList<>() ;
-    IntStream.range(0, length).forEach(integerList::add);
+      for (int i = 0; i < length; i++) {
+          integerList.add(i);
+      }
 
-    List<Integer> permutation = new ArrayList<>(length) ;
+      List<Integer> permutation = new ArrayList<>(length) ;
     while(!integerList.isEmpty()) {
       int index = randomGenerator.nextInt(0, integerList.size()-1) ;
       permutation.add(integerList.get(index)) ;

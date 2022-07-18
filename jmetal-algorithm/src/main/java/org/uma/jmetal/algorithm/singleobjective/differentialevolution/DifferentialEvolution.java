@@ -71,8 +71,13 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
   }
 
   @Override protected List<DoubleSolution> createInitialPopulation() {
-    List<DoubleSolution> population = IntStream.range(0, populationSize).mapToObj(i -> getProblem().createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(populationSize)));
-      return population;
+    List<DoubleSolution> population = new ArrayList<>(populationSize);
+    int bound = populationSize;
+    for (int i = 0; i < bound; i++) {
+      DoubleSolution solution = getProblem().createSolution();
+      population.add(solution);
+    }
+    return population;
   }
 
   @Override protected List<DoubleSolution> evaluatePopulation(List<DoubleSolution> population) {

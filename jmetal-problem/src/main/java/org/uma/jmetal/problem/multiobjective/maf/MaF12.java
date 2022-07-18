@@ -62,7 +62,15 @@ public class MaF12 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives_];
 
-      x = IntStream.range(0, numberOfVariables_).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] result = new double[10];
+      int count1 = 0;
+      for (int i2 = 0; i2 < numberOfVariables_; i2++) {
+          double v2 = solution.variables().get(i2);
+          if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
+          result[count1++] = v2;
+      }
+      result = Arrays.copyOfRange(result, 0, count1);
+      x = result;
 
     double subf1 = 1;
     // evaluate zi,t1i,t2i,t3i,t4i,yi
@@ -73,10 +81,23 @@ public class MaF12 extends AbstractDoubleProblem {
     double[] y = new double[numberOfObjectives_];
     double sub1, sub2 = 0;
     int lb1 = 0, ub1 = 0, lb2 = 0, ub2 = 0;
-      z = IntStream.range(0, numberOfVariables_).mapToDouble(i -> x[i] / (2 * i + 2)).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i1 = 0; i1 < numberOfVariables_; i1++) {
+          double v1 = x[i1] / (2 * i1 + 2);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v1;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      z = arr;
     for (int i = 0; i < numberOfVariables_ - 1; i++) {
       sub1 = 0;
-        sub1 += Arrays.stream(z, i + 1, numberOfVariables_).sum();
+        double sum = 0.0;
+        for (int j = i + 1; j < numberOfVariables_; j++) {
+            double v = z[j];
+            sum += v;
+        }
+        sub1 += sum;
       sub2 = sub1 / (numberOfVariables_ - i - 1);
       t1[i] = Math.pow(z[i], 0.02 + 49.98 * (0.98 / 49.98 - (1 - 2 * sub2) * Math
           .abs(Math.floor(0.5 - sub2) + 0.98 / 49.98)));

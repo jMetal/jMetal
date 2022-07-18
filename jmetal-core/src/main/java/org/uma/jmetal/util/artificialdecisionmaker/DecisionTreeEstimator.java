@@ -40,9 +40,13 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = IntStream.range(0, numberOfObjectives).mapToObj(i -> VALUE_STRING + i).collect(Collectors.toCollection(ArrayList::new));
+      ArrayList<String> myNomVals = new ArrayList<>();
+      for (int i1 = 0; i1 < numberOfObjectives; i1++) {
+        String s = VALUE_STRING + i1;
+        myNomVals.add(s);
+      }
 
-        Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
       //System.out.println(attr1.isNominal());
 
       //string
@@ -120,9 +124,13 @@ public class DecisionTreeEstimator<S extends Solution<?>> {
       Attribute attr = new Attribute("my-numeric");
 
       //nominal
-      ArrayList<String> myNomVals = IntStream.range(0, numberOfVariables).mapToObj(i -> VALUE_STRING + i).collect(Collectors.toCollection(ArrayList::new));
+      ArrayList<String> myNomVals = new ArrayList<>();
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+        String s = VALUE_STRING + i1;
+        myNomVals.add(s);
+      }
 
-        Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
+      Attribute attr1 = new Attribute(NOMINAL_STRING, myNomVals);
 
       //string
       Attribute attr2 = new Attribute(MY_STRING, (List<String>)null);

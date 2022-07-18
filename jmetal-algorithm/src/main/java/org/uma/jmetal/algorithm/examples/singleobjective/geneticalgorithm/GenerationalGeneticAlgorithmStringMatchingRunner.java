@@ -56,9 +56,14 @@ public class GenerationalGeneticAlgorithmStringMatchingRunner {
 
     long computingTime = algorithmRunner.getComputingTime();
 
-    JMetalLogger.logger.info(
+      StringBuilder sb = new StringBuilder();
+      for (Character character : solution.variables()) {
+          String s = String.valueOf(character);
+          sb.append(s);
+      }
+      JMetalLogger.logger.info(
         "Best found string: '"
-            + solution.variables().stream().map(String::valueOf).collect(Collectors.joining())
+            + sb.toString()
             + "'");
 
     new SolutionListOutput(population)

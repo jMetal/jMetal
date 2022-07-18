@@ -42,11 +42,16 @@ public class ConstraintHandling {
    * @return
    */
   public static <S extends Solution<?>> int numberOfViolatedConstraints(S solution) {
+    long count = 0L;
+    int bound = solution.constraints().length;
+    for (int i = 0; i < bound; i++) {
+      if (solution.constraints()[i] < 0) {
+        count++;
+      }
+    }
     return (int) solution.attributes().getOrDefault(
         PRECOMPUTED.NUMBER_OF_VIOLATED_CONSTRAINTS,
-        (int) IntStream.range(0, solution.constraints().length)
-            .filter(i -> solution.constraints()[i] < 0)
-            .count());
+        (int) count);
   }
 
   /**
@@ -84,9 +89,15 @@ public class ConstraintHandling {
             PRECOMPUTED.OVERALL_CONSTRAINT_VIOLATION,
             0.0);
     if (overallConstraintViolation == 0.0) {
-      overallConstraintViolation = IntStream.range(0, solution.constraints().length)
-          .filter(i -> solution.constraints()[i] < 0.0).mapToDouble(i -> solution.constraints()[i])
-          .sum();
+      double sum = 0.0;
+      int bound = solution.constraints().length;
+      for (int i = 0; i < bound; i++) {
+        if (solution.constraints()[i] < 0.0) {
+          double constraint = solution.constraints()[i];
+          sum += constraint;
+        }
+      }
+      overallConstraintViolation = sum;
     }
     return overallConstraintViolation;
   }
@@ -99,7 +110,13 @@ public class ConstraintHandling {
    */
   public static <S extends Solution<?>> double feasibilityRatio(List<S> solutions) {
     Check.collectionIsNotEmpty(solutions);
-    double result = solutions.stream().filter(ConstraintHandling::isFeasible).count();
+    long count = 0L;
+    for (S solution : solutions) {
+      if (isFeasible(solution)) {
+        count++;
+      }
+    }
+    double result = count;
 
     return result / solutions.size();
   }

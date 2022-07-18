@@ -161,7 +161,13 @@ public class ArtificialDecisionMakerDecisionTree<S extends Solution<?>> extends 
       map.putIfAbsent(rankingCoeficient.get(i),aux);
     }
     Set<Double> keys =map.keySet();
-      order = keys.stream().flatMap(key -> map.get(key).stream()).collect(Collectors.toList());
+      List<Integer> list = new ArrayList<>();
+      for (Double key : keys) {
+          for (Integer integer : map.get(key)) {
+              list.add(integer);
+          }
+      }
+      order = list;
     S solution = getSolution(front,currentReferencePoint);
     for (Integer i : order) {
       double rand = random.nextDouble(0.0, 1.0);

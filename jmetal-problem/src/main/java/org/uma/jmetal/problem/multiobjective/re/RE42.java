@@ -33,7 +33,15 @@ public class RE42 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double [] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i1 = 0; i1 < bound; i1++) {
+          double v = solution.variables().get(i1);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       double x_L = x[0];
     double x_B = x[1];
@@ -106,7 +114,11 @@ public class RE42 extends AbstractDoubleProblem {
       else constraintFuncs[i] = 0;
     }
 
-    solution.objectives()[3] = Arrays.stream(constraintFuncs).sum();
+      double sum = 0.0;
+      for (double constraintFunc : constraintFuncs) {
+          sum += constraintFunc;
+      }
+      solution.objectives()[3] = sum;
 
     return solution;
   }

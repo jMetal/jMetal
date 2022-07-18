@@ -1,6 +1,7 @@
 package org.uma.jmetal.problem.multiobjective.maf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.doubleproblem.impl.AbstractDoubleProblem;
@@ -36,15 +37,22 @@ public class MaF05 extends AbstractDoubleProblem {
     List<Double> lower = new ArrayList<>(numberOfVariables), upper = new ArrayList<>(
         numberOfVariables);
 
-    IntStream.range(0, numberOfVariables).forEach(i -> {
-      lower.add(0.0);
-      upper.add(1.0);
-    });
+      for (int i1 = 0; i1 < numberOfVariables; i1++) {
+          lower.add(0.0);
+          upper.add(1.0);
+      }
 
-    setVariableBounds(lower, upper);
+      setVariableBounds(lower, upper);
 
     //other constants during the whole process once M&D are defined
-    double[] c5 = IntStream.range(0, numberOfObjectives).mapToDouble(i -> Math.pow(2, i + 1)).toArray();
+      double[] c5 = new double[10];
+      int count = 0;
+      for (int i = 0; i < numberOfObjectives; i++) {
+          double pow = Math.pow(2, i + 1);
+          if (c5.length == count) c5 = Arrays.copyOf(c5, count * 2);
+          c5[count++] = pow;
+      }
+      c5 = Arrays.copyOfRange(c5, 0, count);
       const5 = c5;
   }
 
@@ -62,9 +70,21 @@ public class MaF05 extends AbstractDoubleProblem {
     double[] x;
     double[] f = new double[numberOfObjectives];
 
-      x = IntStream.range(0, numberOfVariables).mapToDouble(i -> solution.variables().get(i)).toArray();
-    double g = IntStream.range(numberOfObjectives - 1, numberOfVariables).mapToDouble(i -> Math.pow(x[i] - 0.5, 2)).sum();
-    // evaluate g
+      double[] arr = new double[10];
+      int count = 0;
+      for (int i2 = 0; i2 < numberOfVariables; i2++) {
+          double v = solution.variables().get(i2);
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      x = arr;
+      double g = 0.0;
+      for (int i1 = numberOfObjectives - 1; i1 < numberOfVariables; i1++) {
+          double pow = Math.pow(x[i1] - 0.5, 2);
+          g += pow;
+      }
+      // evaluate g
       double subf1 = 1, subf3 = 1 + g;
     // evaluate fm,fm-1,...2,f1
     f[numberOfObjectives - 1] =

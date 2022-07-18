@@ -135,7 +135,11 @@ public class SolutionUtils {
   public static <S extends Solution<?>> double averageDistanceToSolutionList(
       S solution, List<S> solutionList) {
 
-    double sumOfDistances = solutionList.stream().mapToDouble(sol -> distanceBetweenObjectives(solution, sol)).sum();
+      double sumOfDistances = 0.0;
+      for (S sol : solutionList) {
+          double v = distanceBetweenObjectives(solution, sol);
+          sumOfDistances += v;
+      }
 
       return sumOfDistances / solutionList.size();
   }

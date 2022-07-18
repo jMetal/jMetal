@@ -50,7 +50,11 @@ public class MOEADUtils {
 
   public static double distVector(double[] vector1, double[] vector2) {
     int dim = vector1.length;
-    double sum = IntStream.range(0, dim).mapToDouble(n -> (vector1[n] - vector2[n]) * (vector1[n] - vector2[n])).sum();
+      double sum = 0.0;
+      for (int n = 0; n < dim; n++) {
+          double v = (vector1[n] - vector2[n]) * (vector1[n] - vector2[n]);
+          sum += v;
+      }
       return Math.sqrt(sum);
   }
 
@@ -138,9 +142,11 @@ public class MOEADUtils {
     }
 
     IdealPoint idealPoint = new IdealPoint(2);
-    solutionList.forEach(solution -> idealPoint.update(solution.objectives()));
+      for (S solution : solutionList) {
+          idealPoint.update(solution.objectives());
+      }
 
-    // Select the best solution for each mombi2-weights.weight vector
+      // Select the best solution for each mombi2-weights.weight vector
     for (int i = 0; i < newSolutionListSize; i++) {
       S currentBest = solutionList.get(0);
       double value = scalarizingFitnessFunction(currentBest, lambda[i], idealPoint);
@@ -202,7 +208,15 @@ public class MOEADUtils {
     List<S> candidate;
     resultSolutionList.add(solutionList.get(randomIndex));
 
-      candidate = IntStream.range(0, solutionList.size()).filter(i -> i != randomIndex).mapToObj(solutionList::get).collect(Collectors.toList());
+      List<S> list = new ArrayList<>();
+      int bound = solutionList.size();
+      for (int i1 = 0; i1 < bound; i1++) {
+          if (i1 != randomIndex) {
+              S s = solutionList.get(i1);
+              list.add(s);
+          }
+      }
+      candidate = list;
 
     while (resultSolutionList.size() < newSolutionListSize) {
       int index = 0;

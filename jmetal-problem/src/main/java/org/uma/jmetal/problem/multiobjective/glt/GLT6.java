@@ -64,8 +64,14 @@ public class GLT6 extends AbstractDoubleProblem {
   }
 
   private double g(DoubleSolution solution) {
-    double result = IntStream.range(2, solution.variables().size()).mapToDouble(i -> solution.variables().get(i)
-            - Math.sin(2 * Math.PI * solution.variables().get(0) + i * Math.PI / solution.variables().size())).map(value -> value * value).sum();
+      double result = 0.0;
+      int bound = solution.variables().size();
+      for (int i = 2; i < bound; i++) {
+          double value = solution.variables().get(i)
+                  - Math.sin(2 * Math.PI * solution.variables().get(0) + i * Math.PI / solution.variables().size());
+          double v = value * value;
+          result += v;
+      }
 
       return result ;
   }

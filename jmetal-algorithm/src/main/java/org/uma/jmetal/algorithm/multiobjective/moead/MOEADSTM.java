@@ -154,10 +154,22 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
 
       // WARNING! HERE YOU HAVE TO USE THE WEIGHT PROVIDED BY QINGFU Et AL
       // (NOT SORTED!!!!)
-      selected = IntStream.range(0, problem.getNumberOfObjectives()).boxed().collect(Collectors.toList());
+      List<Integer> result = new ArrayList<>();
+      int bound1 = problem.getNumberOfObjectives();
+      for (int i3 = 0; i3 < bound1; i3++) {
+          Integer integer1 = i3;
+          result.add(integer1);
+      }
+      selected = result;
 
       // set of unselected weights
-      candidate = IntStream.range(problem.getNumberOfObjectives(), populationSize).boxed().collect(Collectors.toList());
+      List<Integer> list = new ArrayList<>();
+      int bound = populationSize;
+      for (int i1 = problem.getNumberOfObjectives(); i1 < bound; i1++) {
+          Integer integer = i1;
+          list.add(integer);
+      }
+      candidate = list;
 
     while (selected.size() < (int) (populationSize / 5.0)) {
       int best_idd = (int) (randomGenerator.nextDouble() * candidate.size());
@@ -258,10 +270,22 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     int[] statusWoman;
 
     final int NOT_ENGAGED = -1;
-      statusWoman = IntStream.range(0, womenSize).map(i -> NOT_ENGAGED).toArray();
+      int[] arr = new int[10];
+      int count = 0;
+      for (int i1 = 0; i1 < womenSize; i1++) {
+          int not_engaged = NOT_ENGAGED;
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = not_engaged;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      statusWoman = arr;
 
     // List of men that are not currently engaged.
-    LinkedList<Integer> freeMen = IntStream.range(0, menSize).boxed().collect(Collectors.toCollection(LinkedList::new));
+      LinkedList<Integer> freeMen = new LinkedList<>();
+      for (int i = 0; i < menSize; i++) {
+          Integer integer = i;
+          freeMen.add(integer);
+      }
 
       // next[i] is the next woman to whom i has not yet proposed.
     int[] next = new int[womenSize];
@@ -318,11 +342,29 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double[] vecProj;
 
     // vecInd has been normalized to the range [0,1]
-      vecInd = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (individual.objectives()[i] - idealPoint.getValue(i)) /
-              (nadirPoint.getValue(i) - idealPoint.getValue(i))).toArray();
+      double[] result = new double[10];
+      int count1 = 0;
+      int bound1 = problem.getNumberOfObjectives();
+      for (int i1 = 0; i1 < bound1; i1++) {
+          double v1 = (individual.objectives()[i1] - idealPoint.getValue(i1)) /
+                  (nadirPoint.getValue(i1) - idealPoint.getValue(i1));
+          if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
+          result[count1++] = v1;
+      }
+      result = Arrays.copyOfRange(result, 0, count1);
+      vecInd = result;
 
     scale = innerproduct(vecInd, lambda) / innerproduct(lambda, lambda);
-      vecProj = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> vecInd[i] - scale * lambda[i]).toArray();
+      double[] arr = new double[10];
+      int count = 0;
+      int bound = problem.getNumberOfObjectives();
+      for (int i = 0; i < bound; i++) {
+          double v = vecInd[i] - scale * lambda[i];
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      vecProj = arr;
 
     distance = norm_vector(vecProj);
 
@@ -340,9 +382,34 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
     double[] vecInd;
     double[] normalizedObj;
 
-      distanceSum = Arrays.stream(individual.objectives(), 0, problem.getNumberOfObjectives()).sum();
-    normalizedObj = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> individual.objectives()[i] / distanceSum).toArray();
-      vecInd = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> normalizedObj[i] - lambda[i]).toArray();
+      double sum = 0.0;
+      double[] array = individual.objectives();
+      int bound2 = problem.getNumberOfObjectives();
+      for (int j = 0; j < bound2; j++) {
+          double v2 = array[j];
+          sum += v2;
+      }
+      distanceSum = sum;
+      double[] result = new double[10];
+      int count1 = 0;
+      int bound1 = problem.getNumberOfObjectives();
+      for (int i1 = 0; i1 < bound1; i1++) {
+          double v1 = individual.objectives()[i1] / distanceSum;
+          if (result.length == count1) result = Arrays.copyOf(result, count1 * 2);
+          result[count1++] = v1;
+      }
+      result = Arrays.copyOfRange(result, 0, count1);
+      normalizedObj = result;
+      double[] arr = new double[10];
+      int count = 0;
+      int bound = problem.getNumberOfObjectives();
+      for (int i = 0; i < bound; i++) {
+          double v = normalizedObj[i] - lambda[i];
+          if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+          arr[count++] = v;
+      }
+      arr = Arrays.copyOfRange(arr, 0, count);
+      vecInd = arr;
 
     distance = norm_vector(vecInd);
 
@@ -353,7 +420,12 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the norm of the vector
    */
   public double norm_vector(double[] z) {
-    double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> z[i] * z[i]).sum();
+      double sum = 0.0;
+      int bound = problem.getNumberOfObjectives();
+      for (int i = 0; i < bound; i++) {
+          double v = z[i] * z[i];
+          sum += v;
+      }
 
       return Math.sqrt(sum);
   }
@@ -362,7 +434,11 @@ public class MOEADSTM extends AbstractMOEAD<DoubleSolution> {
    * Calculate the dot product of two vectors
    */
   public double innerproduct(double[] vec1, double[] vec2) {
-    double sum = IntStream.range(0, vec1.length).mapToDouble(i -> vec1[i] * vec2[i]).sum();
+      double sum = 0.0;
+      for (int i = 0; i < vec1.length; i++) {
+          double v = vec1[i] * vec2[i];
+          sum += v;
+      }
 
       return sum;
   }

@@ -53,7 +53,11 @@ public class GenerationalDistance extends QualityIndicator {
    * @param referenceFront The reference pareto front
    */
   public double generationalDistance(double[][] front, double[][] referenceFront) {
-    double sum = Arrays.stream(front).mapToDouble(doubles -> Math.pow(VectorUtils.distanceToClosestVector(doubles, referenceFront), pow)).sum();
+      double sum = 0.0;
+      for (double[] doubles : front) {
+          double v = Math.pow(VectorUtils.distanceToClosestVector(doubles, referenceFront), pow);
+          sum += v;
+      }
 
       sum = Math.pow(sum, 1.0 / pow);
 

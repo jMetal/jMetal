@@ -3,6 +3,7 @@ package org.uma.jmetal.problem.multiobjective.lircmop;
 import static java.lang.Math.sqrt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -42,7 +43,15 @@ public class LIRCMOP5 extends AbstractDoubleProblem {
   /** Evaluate() method */
   @Override
   public DoubleSolution evaluate(DoubleSolution solution) {
-    double[] x = IntStream.range(0, getNumberOfVariables()).mapToDouble(i -> solution.variables().get(i)).toArray();
+      double[] x = new double[10];
+      int count = 0;
+      int bound = getNumberOfVariables();
+      for (int i = 0; i < bound; i++) {
+          double v = solution.variables().get(i);
+          if (x.length == count) x = Arrays.copyOf(x, count * 2);
+          x[count++] = v;
+      }
+      x = Arrays.copyOfRange(x, 0, count);
 
       solution.objectives()[0] = x[0] + 10 * g1(x) + 0.7057;
     solution.objectives()[1] = 1 - sqrt(x[0]) + 10 * g2(x) + 7057;

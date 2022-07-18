@@ -24,6 +24,10 @@ private final Comparator<S> comparator ;
     Check.notNull(solutionList);
     Check.collectionIsNotEmpty(solutionList);
 
-    return solutionList.stream().reduce(solutionList.get(0), (x, y) -> (comparator.compare(x, y) < 0) ? x : y);
+    S acc = solutionList.get(0);
+    for (S s : solutionList) {
+      acc = (comparator.compare(acc, s) < 0) ? acc : s;
+    }
+    return acc;
   }
 }

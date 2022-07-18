@@ -13,9 +13,11 @@ public class SequentialSolutionListEvaluator<S> implements SolutionListEvaluator
 
   @Override
   public List<S> evaluate(List<S> solutionList, Problem<S> problem) throws JMetalException {
-    solutionList.forEach(problem::evaluate);
+      for (S s : solutionList) {
+          problem.evaluate(s);
+      }
 
-    return solutionList;
+      return solutionList;
   }
 
   @Override

@@ -13,13 +13,7 @@
 
 package org.uma.jmetal.algorithm.multiobjective.cdg;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import org.uma.jmetal.algorithm.Algorithm;
@@ -358,16 +352,33 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void group2() {
     double[] childDelta;
-    double[] maxFunValue = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> 0).toArray();
+    double[] maxFunValue = new double[10];
+    int count1 = 0;
+    int bound1 = problem.getNumberOfObjectives();
+    for (int i2 = 0; i2 < bound1; i2++) {
+      double v1 = 0;
+      if (maxFunValue.length == count1) maxFunValue = Arrays.copyOf(maxFunValue, count1 * 2);
+      maxFunValue[count1++] = v1;
+    }
+    maxFunValue = Arrays.copyOfRange(maxFunValue, 0, count1);
 
-      for (int i = 0; i < population.size(); i++) {
+    for (int i = 0; i < population.size(); i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-      childDelta = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (maxFunValue[i] - idealPoint[i]) / childGrid_).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    int bound = problem.getNumberOfObjectives();
+    for (int i1 = 0; i1 < bound; i1++) {
+      double v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    childDelta = arr;
 
     for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
 
@@ -393,16 +404,33 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
 
   protected void group3() {
     double[] childDelta;
-    double[] maxFunValue = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> 0).toArray();
+    double[] maxFunValue = new double[10];
+    int count1 = 0;
+    int bound1 = problem.getNumberOfObjectives();
+    for (int i2 = 0; i2 < bound1; i2++) {
+      double v1 = 0;
+      if (maxFunValue.length == count1) maxFunValue = Arrays.copyOf(maxFunValue, count1 * 2);
+      maxFunValue[count1++] = v1;
+    }
+    maxFunValue = Arrays.copyOfRange(maxFunValue, 0, count1);
 
-      for (int i = 0; i < population.size(); i++) {
+    for (int i = 0; i < population.size(); i++) {
       for (int j = 0; j < problem.getNumberOfObjectives(); j++) {
         if (population.get(i).objectives()[j] > maxFunValue[j])
           maxFunValue[j] = population.get(i).objectives()[j];
       }
     }
 
-      childDelta = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(i -> (maxFunValue[i] - idealPoint[i]) / childGrid_).toArray();
+    double[] arr = new double[10];
+    int count = 0;
+    int bound = problem.getNumberOfObjectives();
+    for (int i1 = 0; i1 < bound; i1++) {
+      double v = (maxFunValue[i1] - idealPoint[i1]) / childGrid_;
+      if (arr.length == count) arr = Arrays.copyOf(arr, count * 2);
+      arr[count++] = v;
+    }
+    arr = Arrays.copyOfRange(arr, 0, count);
+    childDelta = arr;
 
     for (int i = 1; i < childGridNum_; i++) team.get(i).clear();
 
@@ -490,7 +518,15 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
         sum = sum + flag[j];
       }
       if (sum == 1) {
-          od = IntStream.range(0, problem.getNumberOfObjectives()).filter(j -> flag[j] == 1).findFirst().orElse(0);
+        int found = 0;
+        int bound = problem.getNumberOfObjectives();
+        for (int j = 0; j < bound; j++) {
+          if (flag[j] == 1) {
+            found = j;
+            break;
+          }
+        }
+        od = found;
         tempBorder.get(od).add(population.get(i));
       }
     }
@@ -624,7 +660,14 @@ public abstract class AbstractCDG<S extends Solution<?>> implements Algorithm<Li
   }
 
   protected int getGridPos(int j, double funValue) {
-    int g = (int) IntStream.range(0, k_).filter(i -> funValue > gridDetalSum_[j][i]).count();
+    long count = 0L;
+    int bound = k_;
+    for (int i = 0; i < bound; i++) {
+      if (funValue > gridDetalSum_[j][i]) {
+        count++;
+      }
+    }
+    int g = (int) count;
       if (g == k_) g = k_ - 1;
     return g;
   }

@@ -123,7 +123,11 @@ public class NaryRandomSelectionTest {
     int solutionsToBeReturned = 4 ;
 
     NaryRandomSelection<BinarySolution> selection = new NaryRandomSelection<BinarySolution>(solutionsToBeReturned) ;
-    List<BinarySolution> list = IntStream.range(0, listSize).mapToObj(i -> mock(BinarySolution.class)).collect(Collectors.toCollection(() -> new ArrayList<>(listSize)));
+      List<BinarySolution> list = new ArrayList<>(listSize);
+      for (int i = 0; i < listSize; i++) {
+          BinarySolution mock = mock(BinarySolution.class);
+          list.add(mock);
+      }
 
       List<BinarySolution> result = (List<BinarySolution>) selection.execute(list);
     assertEquals(solutionsToBeReturned, result.size());

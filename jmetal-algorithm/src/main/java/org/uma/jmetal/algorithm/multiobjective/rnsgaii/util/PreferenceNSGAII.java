@@ -23,7 +23,11 @@ public class PreferenceNSGAII<S extends Solution<?>> {
 
   public Double evaluate(S solution) {
 
-    List<Double> objectiveValues = Arrays.stream(solution.objectives()).boxed().collect(Collectors.toCollection(() -> new ArrayList<>(solution.objectives().length)));
+      List<Double> objectiveValues = new ArrayList<>(solution.objectives().length);
+      for (double v : solution.objectives()) {
+          Double aDouble = v;
+          objectiveValues.add(aDouble);
+      }
 
       double normalizeDiff = 0.0D;
     double distance = 0.0D;

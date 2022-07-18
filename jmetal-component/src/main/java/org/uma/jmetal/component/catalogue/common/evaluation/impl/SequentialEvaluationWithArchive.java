@@ -22,9 +22,11 @@ public class SequentialEvaluationWithArchive<S extends Solution<?>> extends Sequ
   public List<S> evaluate(List<S> solutionList) {
     List<S> solutions = super.evaluate(solutionList) ;
 
-    solutions.forEach(solution -> archive.add((S)solution.copy()));
+      for (S solution : solutions) {
+          archive.add((S) solution.copy());
+      }
 
-    return solutions ;
+      return solutions ;
   }
 
   public Archive<S> getArchive() {

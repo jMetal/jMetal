@@ -50,13 +50,24 @@ public class FDA5 extends FDA implements Serializable {
 
   private double evalF1(DoubleSolution solution, double g, double Ft) {
     double f = 1.0d + g;
-    double mult = IntStream.rangeClosed(1, M - 1).mapToDouble(i -> Math.pow(solution.variables().get(i - 1), Ft)).map(y_i -> Math.cos(y_i * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      double mult = 1.0d;
+      for (int i = 1; i <= M - 1; i++) {
+          double y_i = Math.pow(solution.variables().get(i - 1), Ft);
+          double cos = Math.cos(y_i * Math.PI / 2.0d);
+          mult = mult * cos;
+      }
       return f * mult;
   }
 
   private double evalFK(DoubleSolution solution, double g, int k, double Ft) {
     double f = 1.0d + g;
-    double mult = IntStream.rangeClosed(1, M - k).mapToDouble(i -> Math.pow(solution.variables().get(i - 1), Ft)).map(y_i -> Math.cos(y_i * Math.PI / 2.0d)).reduce(1.0d, (a, b) -> a * b);
+      double mult = 1.0d;
+      int bound = M - k;
+      for (int i = 1; i <= bound; i++) {
+          double y_i = Math.pow(solution.variables().get(i - 1), Ft);
+          double cos = Math.cos(y_i * Math.PI / 2.0d);
+          mult = mult * cos;
+      }
       double yy = Math.pow(solution.variables().get(M - k), Ft);
     mult *= Math.sin(yy * Math.PI / 2.0d);
     return f * mult;
@@ -70,7 +81,13 @@ public class FDA5 extends FDA implements Serializable {
   private double evalG(DoubleSolution solution, int limitInf) {
     double g;
     double Gt = Math.abs(Math.sin(0.5d * Math.PI * time));
-      g = IntStream.range(limitInf, solution.variables().size()).mapToDouble(i -> Math.pow((solution.variables().get(i) - Gt), 2.0d)).sum();
+      double sum = 0.0;
+      int bound = solution.variables().size();
+      for (int i = limitInf; i < bound; i++) {
+          double pow = Math.pow((solution.variables().get(i) - Gt), 2.0d);
+          sum += pow;
+      }
+      g = sum;
     return g + Gt;
   }
 

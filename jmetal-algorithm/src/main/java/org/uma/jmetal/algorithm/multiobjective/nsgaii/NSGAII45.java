@@ -108,7 +108,12 @@ public class NSGAII45<S extends Solution<?>> implements Algorithm<List<S>> {
   }
 
   protected List<S> createInitialPopulation() {
-    List<S> population = IntStream.range(0, populationSize).mapToObj(i -> problem.createSolution()).collect(Collectors.toCollection(() -> new ArrayList<>(populationSize)));
+      List<S> population = new ArrayList<>(populationSize);
+      int bound = populationSize;
+      for (int i = 0; i < bound; i++) {
+          S solution = problem.createSolution();
+          population.add(solution);
+      }
       return population;
   }
 

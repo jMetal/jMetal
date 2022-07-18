@@ -297,9 +297,14 @@ public abstract class AbstractMOEAD<S extends Solution<?>> implements Algorithm<
 
       fitness = maxFun;
     } else if (MOEAD.FunctionType.AGG.equals(functionType)) {
-      double sum = IntStream.range(0, problem.getNumberOfObjectives()).mapToDouble(n -> (lambda[n]) * individual.objectives()[n]).sum();
+      double sum = 0.0;
+      int bound = problem.getNumberOfObjectives();
+      for (int n = 0; n < bound; n++) {
+        double v = (lambda[n]) * individual.objectives()[n];
+        sum += v;
+      }
 
-        fitness = sum;
+      fitness = sum;
 
     } else if (MOEAD.FunctionType.PBI.equals(functionType)) {
       double d1, d2, nl;

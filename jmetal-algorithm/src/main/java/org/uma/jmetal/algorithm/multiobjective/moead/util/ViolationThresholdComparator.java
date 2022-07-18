@@ -59,7 +59,13 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * Return the ratio of feasible solutions
    */
   public double feasibilityRatio(List<S> solutionSet) {
-    double aux = solutionSet.stream().filter(solution -> ConstraintHandling.numberOfViolatedConstraints(solution) < 0).mapToDouble(solution -> 1.0).sum();
+      double aux = 0.0;
+      for (S solution : solutionSet) {
+          if (ConstraintHandling.numberOfViolatedConstraints(solution) < 0) {
+              double v = 1.0;
+              aux += v;
+          }
+      }
       return aux / (double) solutionSet.size();
   }
 
@@ -68,8 +74,12 @@ public class ViolationThresholdComparator<S extends Solution<?>> implements Comp
    * Return the ratio of feasible solutions
    */
   public double meanOverallViolation(List<S> solutionSet) {
-    double aux = solutionSet.stream().mapToDouble(solution -> Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
-            ConstraintHandling.overallConstraintViolationDegree(solution))).sum();
+      double aux = 0.0;
+      for (S solution : solutionSet) {
+          double abs = Math.abs(ConstraintHandling.numberOfViolatedConstraints(solution) *
+                  ConstraintHandling.overallConstraintViolationDegree(solution));
+          aux += abs;
+      }
       return aux / (double) solutionSet.size();
   }
 

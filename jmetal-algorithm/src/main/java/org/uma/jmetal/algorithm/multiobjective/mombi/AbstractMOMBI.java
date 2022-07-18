@@ -84,9 +84,14 @@ public abstract class AbstractMOMBI<S extends Solution<?>> extends AbstractGenet
 
 	@Override
 	protected List<S> selection(List<S> population) {
-		List<S> matingPopulation = IntStream.range(0, this.getMaxPopulationSize()).mapToObj(i -> selectionOperator.execute(population)).collect(Collectors.toCollection(() -> new ArrayList<>(population.size())));
+		List<S> matingPopulation = new ArrayList<>(population.size());
+		int bound = this.getMaxPopulationSize();
+		for (int i = 0; i < bound; i++) {
+			S execute = selectionOperator.execute(population);
+			matingPopulation.add(execute);
+		}
 
-        return matingPopulation;
+		return matingPopulation;
 	}
 
 	@Override

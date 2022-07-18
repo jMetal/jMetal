@@ -28,9 +28,17 @@ public class ListOrderedGrouping<C extends Comparable<C>> extends ListGrouping<C
   public void computeGroups(List<C> list) {
     Check.notNull(list);
     indices = new ArrayList<>(list.size());
-    IntStream.range(0, list.size()).forEach(i -> indices.add(i));
+      int bound = list.size();
+      for (int i = 0; i < bound; i++) {
+          indices.add(i);
+      }
 
-    indices = indices.stream().sorted(Comparator.comparing(list::get)).collect(Collectors.toList());
+      List<Integer> result = new ArrayList<>();
+      for (Integer index : indices) {
+          result.add(index);
+      }
+      result.sort(Comparator.comparing(list::get));
+      indices = result;
 
     createGroups();
   }

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -168,7 +169,12 @@ public class BitFlipMutationTest {
 
     @Override
     public List<Integer> getListOfBitsPerVariable() {
-      return Arrays.stream(bitsPerVariable).boxed().collect(Collectors.toList());
+      List<Integer> list = new ArrayList<>();
+      for (int i : bitsPerVariable) {
+        Integer integer = i;
+        list.add(integer);
+      }
+      return list;
     }
 
     @Override

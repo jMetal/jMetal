@@ -83,7 +83,12 @@ public class RE41 extends AbstractDoubleProblem {
       else g[i] = 0;
     }
 
-    double valueObjectiveThree = Arrays.stream(g, 0, numberOfOriginalConstraints).sum();
+      double valueObjectiveThree = 0.0;
+      int bound = numberOfOriginalConstraints;
+      for (int i = 0; i < bound; i++) {
+          double v = g[i];
+          valueObjectiveThree += v;
+      }
 
       solution.objectives()[3] = valueObjectiveThree;
 

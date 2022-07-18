@@ -54,15 +54,13 @@ public abstract class Parameter<T> {
       parameter.parse().check();
     }
 
-    getSpecificParameters()
-            .forEach(
-                    pair -> {
-                      if (pair.getKey().equals(getValue())) {
-                        pair.getValue().parse().check();
-                      }
-                    });
+      for (Pair<String, Parameter<?>> pair : getSpecificParameters()) {
+          if (pair.getKey().equals(getValue())) {
+              pair.getValue().parse().check();
+          }
+      }
 
-    return this;
+      return this;
   }
 
   public String getName() {
@@ -107,19 +105,23 @@ public abstract class Parameter<T> {
 
   public Parameter<?> findGlobalParameter(String parameterName) {
 
-    return getGlobalParameters().stream()
-        .filter(parameter -> parameter.getName().equals(parameterName))
-        .findFirst()
-        .orElse(null);
+      for (Parameter<?> parameter : getGlobalParameters()) {
+          if (parameter.getName().equals(parameterName)) {
+              return parameter;
+          }
+      }
+      return null;
   }
 
   public Parameter<?> findSpecificParameter(String parameterName) {
 
-    return Objects.requireNonNull(getSpecificParameters().stream()
-            .filter(pair -> pair.getRight().getName().equals(parameterName))
-            .findFirst()
-            .orElse(null))
-        .getValue();
+      for (Pair<String, Parameter<?>> pair : getSpecificParameters()) {
+          if (pair.getRight().getName().equals(parameterName)) {
+              return Objects.requireNonNull(pair)
+                      .getValue();
+          }
+      }
+      return null;
   }
 
   @Override
