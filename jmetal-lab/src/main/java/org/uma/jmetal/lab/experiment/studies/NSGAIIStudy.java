@@ -2,7 +2,6 @@ package org.uma.jmetal.lab.experiment.studies;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -12,6 +11,7 @@ import org.uma.jmetal.lab.experiment.component.impl.ComputeQualityIndicators;
 import org.uma.jmetal.lab.experiment.component.impl.ExecuteAlgorithms;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateBoxplotsWithR;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateFriedmanTestTables;
+import org.uma.jmetal.lab.experiment.component.impl.GenerateHtmlPages;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateLatexTablesWithStatistics;
 import org.uma.jmetal.lab.experiment.component.impl.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.lab.experiment.util.ExperimentAlgorithm;
@@ -81,7 +81,7 @@ public class NSGAIIStudy {
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory("resources/referenceFrontsCSV")
             .setIndicatorList(
-                Arrays.asList(
+                List.of(
                         new Epsilon(),
                         new Spread(),
                         new GenerationalDistance(),
@@ -96,6 +96,7 @@ public class NSGAIIStudy {
     new ExecuteAlgorithms<>(experiment).run();
     new ComputeQualityIndicators<>(experiment).run();
     new GenerateLatexTablesWithStatistics(experiment).run();
+    new GenerateHtmlPages<>(experiment).run() ;
     new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
     new GenerateBoxplotsWithR<>(experiment).setRows(2).setColumns(3).run();
@@ -112,58 +113,81 @@ public class NSGAIIStudy {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms = new ArrayList<>();
 
     for (int run = 0; run < INDEPENDENT_RUNS; run++) {
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm =
-            new NSGAIIBuilder<>(
-                    problemList.get(i).getProblem(),
-                    new SBXCrossover(1.0, 5),
-                    new PolynomialMutation(
-                        1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 10.0),
-                    100)
-                .setMaxEvaluations(25000)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIa", problemList.get(i), run));
-      }
-
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm =
-            new NSGAIIBuilder<>(
-                    problemList.get(i).getProblem(),
-                    new SBXCrossover(1.0, 20.0),
-                    new PolynomialMutation(
-                        1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 20.0),
-                    100)
-                .setMaxEvaluations(25000)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIb", problemList.get(i), run));
-      }
-
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm =
-            new NSGAIIBuilder<>(
-                    problemList.get(i).getProblem(),
-                    new SBXCrossover(1.0, 40.0),
-                    new PolynomialMutation(
-                        1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 40.0),
-                    10)
-                .setMaxEvaluations(25000)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIIc", problemList.get(i), run));
-      }
-
-      for (int i = 0; i < problemList.size(); i++) {
-        Algorithm<List<DoubleSolution>> algorithm =
-            new NSGAIIBuilder<>(
-                    problemList.get(i).getProblem(),
-                    new SBXCrossover(1.0, 80.0),
-                    new PolynomialMutation(
-                        1.0 / problemList.get(i).getProblem().getNumberOfVariables(), 80.0),
-                    100)
-                .setMaxEvaluations(25000)
-                .build();
-        algorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAIId", problemList.get(i), run));
+      for (var experimentProblem : problemList) {
+        nsgaIIa(algorithms, run, experimentProblem);
+        nsgaIIb(algorithms, run, experimentProblem);
+        nsgaIIc(algorithms, run, experimentProblem);
+        nsgaIId(algorithms, run, experimentProblem);
       }
     }
     return algorithms;
+  }
+
+  private static void nsgaIId(
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run,
+      ExperimentProblem<DoubleSolution> experimentProblem) {
+    Algorithm<List<DoubleSolution>> algorithm =
+        new NSGAIIBuilder<>(
+            experimentProblem.getProblem(),
+            new SBXCrossover(1.0, 80.0),
+            new PolynomialMutation(
+                1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                80.0),
+            100)
+            .setMaxEvaluations(25000)
+            .build();
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "NSGAIId", experimentProblem, run));
+  }
+
+  private static void nsgaIIc(
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run,
+      ExperimentProblem<DoubleSolution> experimentProblem) {
+    Algorithm<List<DoubleSolution>> algorithm =
+        new NSGAIIBuilder<>(
+            experimentProblem.getProblem(),
+            new SBXCrossover(1.0, 40.0),
+            new PolynomialMutation(
+                1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                40.0),
+            10)
+            .setMaxEvaluations(25000)
+            .build();
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "NSGAIIc", experimentProblem, run));
+  }
+
+  private static void nsgaIIb(
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run,
+      ExperimentProblem<DoubleSolution> experimentProblem) {
+    Algorithm<List<DoubleSolution>> algorithm =
+        new NSGAIIBuilder<>(
+            experimentProblem.getProblem(),
+            new SBXCrossover(1.0, 20.0),
+            new PolynomialMutation(
+                1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                20.0),
+            100)
+            .setMaxEvaluations(25000)
+            .build();
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "NSGAIIb", experimentProblem, run));
+  }
+
+  private static void nsgaIIa(
+      List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithms, int run,
+      ExperimentProblem<DoubleSolution> experimentProblem) {
+    Algorithm<List<DoubleSolution>> algorithm =
+        new NSGAIIBuilder<>(
+            experimentProblem.getProblem(),
+            new SBXCrossover(1.0, 5),
+            new PolynomialMutation(
+                1.0 / experimentProblem.getProblem().getNumberOfVariables(),
+                10.0),
+            100)
+            .setMaxEvaluations(25000)
+            .build();
+    algorithms.add(
+        new ExperimentAlgorithm<>(algorithm, "NSGAIIa", experimentProblem, run));
   }
 }
