@@ -3,7 +3,6 @@ package org.uma.jmetal.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.uma.jmetal.problem.Problem;
@@ -19,7 +18,6 @@ import org.uma.jmetal.util.distance.Distance;
 import org.uma.jmetal.util.distance.impl.EuclideanDistanceBetweenSolutionAndASolutionListInObjectiveSpace;
 import org.uma.jmetal.util.errorchecking.Check;
 import org.uma.jmetal.util.errorchecking.JMetalException;
-import org.uma.jmetal.util.pseudorandom.BoundedRandomGenerator;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /** @author Antonio J. Nebro */
@@ -218,60 +216,6 @@ public class SolutionListUtils {
   }
 
   /**
-   * This method receives a normalized list of non-dominated solutions and return the inverted one.
-   * This operation is needed for minimization problem
-   *
-   * @param solutionList The front to invert
-   * @return The inverted front
-   */
-  public static <S> List<S> selectNRandomDifferentSolutions(
-      int numberOfSolutionsToBeReturned, List<S> solutionList) {
-    JMetalRandom random = JMetalRandom.getInstance();
-    return selectNRandomDifferentSolutions(
-        numberOfSolutionsToBeReturned, solutionList, random::nextInt);
-  }
-
-  /**
-   * This method selects N random different {@link Solution} objects from a list
-   *
-   * @param solutionList The list
-   * @param randomGenerator The random number generator
-   * @return The selected solutions
-   */
-  public static <S> List<S> selectNRandomDifferentSolutions(
-      int numberOfSolutionsToBeReturned,
-      List<S> solutionList,
-      BoundedRandomGenerator<Integer> randomGenerator) {
-    Check.notNull(solutionList);
-    Check.collectionIsNotEmpty(solutionList);
-    Check.that(
-        solutionList.size() >= numberOfSolutionsToBeReturned,
-        "The solution list size ("
-            + solutionList.size()
-            + ") is less than "
-            + "the number of requested solutions ("
-            + numberOfSolutionsToBeReturned
-            + ")");
-
-    List<S> resultList = new ArrayList<>(numberOfSolutionsToBeReturned);
-
-    if (solutionList.size() == 1) {
-      resultList.add(solutionList.get(0));
-    } else {
-      Collection<Integer> positions = new HashSet<>(numberOfSolutionsToBeReturned);
-      while (positions.size() < numberOfSolutionsToBeReturned) {
-        int nextPosition = randomGenerator.getRandomValue(0, solutionList.size() - 1);
-        if (!positions.contains(nextPosition)) {
-          positions.add(nextPosition);
-          resultList.add(solutionList.get(nextPosition));
-        }
-      }
-    }
-
-    return resultList;
-  }
-
-  /**
    * Returns a matrix with the euclidean distance between each pair of solutions in the population.
    * Distances are measured in the objective space
    *
@@ -333,7 +277,7 @@ public class SolutionListUtils {
   }
 
   /**
-   * This methods takes a list of solutions, removes a percentage of its solutions, and it is filled
+   * This method takes a list of solutions, removes a percentage of its solutions, and it is filled
    * with new random generated solutions
    *
    * @param solutionList
