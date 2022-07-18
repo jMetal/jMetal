@@ -41,7 +41,7 @@ public class CrossoverParameter extends CategoricalParameter {
         result =
             new BLXAlphaCrossover(crossoverProbability, alpha, repairDoubleSolution.getParameter());
         break;
-      case "WholeArithmetic":
+      case "wholeArithmetic":
         result =
             new WholeArithmeticCrossover(crossoverProbability, repairDoubleSolution.getParameter());
         break;
@@ -59,10 +59,10 @@ public class CrossoverParameter extends CategoricalParameter {
       case "HUX":
         result = new HUXCrossover(crossoverProbability);
         break;
-      case "Uniform":
+      case "uniform":
         result = new UniformCrossover(crossoverProbability);
         break;
-      case "SinglePoint":
+      case "singlePoint":
         result = new SinglePointCrossover(crossoverProbability);
         break;
       default:
