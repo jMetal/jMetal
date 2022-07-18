@@ -45,7 +45,7 @@ import org.uma.jmetal.util.comparator.dominanceComparator.impl.DefaultDominanceC
  * Class to configure a generic MOPSO with an argument string using class {@link
  * ParticleSwarmOptimizationAlgorithm}
  *
- * @autor Daniel Doblas
+ * @author Daniel Doblas
  */
 public class AutoMOPSO implements AutoConfigurableAlgorithm{
   public List<Parameter<?>> autoConfigurableParameterList = new ArrayList<>();
@@ -58,7 +58,6 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   private PositiveIntegerValue maximumNumberOfEvaluationsParameter;
   private PositiveIntegerValue archiveSizeParameter;
   private IntegerParameter swarmSizeParameter;
-  private CreateInitialSolutionsParameter swarmInitializationParameter;
   private LocalBestInitializationParameter localBestInitializationParameter;
   private GlobalBestInitializationParameter globalBestInitializationParameter;
   private GlobalBestSelectionParameter globalBestSelectionParameter;
@@ -67,13 +66,6 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   private GlobalBestUpdateParameter globalBestUpdateParameter;
   private LocalBestUpdateParameter localBestUpdateParameter;
   private VelocityUpdateParameter velocityUpdateParameter;
-  private RealParameter c1MinParameter;
-  private RealParameter c1MaxParameter;
-  private RealParameter c2MinParameter;
-  private RealParameter c2MaxParameter;
-  private RealParameter wMinParameter;
-  private RealParameter wMaxParameter;
-  private RealParameter weightParameter;
   private MutationParameter mutationParameter;
 
   private InertiaWeightComputingParameter inertiaWeightComputingParameter;
@@ -102,8 +94,7 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     swarmSizeParameter = new IntegerParameter("swarmSize", args, 10, 200);
     archiveSizeParameter = new PositiveIntegerValue("archiveSize", args);
 
-    swarmInitializationParameter =
-        new CreateInitialSolutionsParameter("swarmInitialization",
+    CreateInitialSolutionsParameter swarmInitializationParameter = new CreateInitialSolutionsParameter("swarmInitialization",
             args, Arrays.asList("random", "latinHypercubeSampling", "scatterSearch"));
 
     velocityInitializationParameter =
@@ -140,9 +131,9 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
     inertiaWeightComputingParameter = new InertiaWeightComputingParameter(args,
         List.of("constantValue", "randomSelectedValue", "linearIncreasingValue", "linearDecreasingValue"));
 
-    weightParameter = new RealParameter("weight", args, 0.1, 1.0);
-    wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
-    wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
+    RealParameter weightParameter = new RealParameter("weight", args, 0.1, 1.0);
+    RealParameter wMinParameter = new RealParameter("weightMin", args, 0.1, 0.5);
+    RealParameter wMaxParameter = new RealParameter("weightMax", args, 0.5, 1.0);
     inertiaWeightComputingParameter.addSpecificParameter("constantValue", weightParameter);
     inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMinParameter);
     inertiaWeightComputingParameter.addSpecificParameter("randomSelectedValue", wMaxParameter);
@@ -213,10 +204,10 @@ public class AutoMOPSO implements AutoConfigurableAlgorithm{
   }
 
   private VelocityUpdateParameter configureVelocityUpdate(String[] args) {
-    c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
-    c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
-    c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
-    c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
+    RealParameter c1MinParameter = new RealParameter("c1Min", args, 1.0, 2.0);
+    RealParameter c1MaxParameter = new RealParameter("c1Max", args, 2.0, 3.0);
+    RealParameter c2MinParameter = new RealParameter("c2Min", args, 1.0, 2.0);
+    RealParameter c2MaxParameter = new RealParameter("c2Max", args, 2.0, 3.0);
 
     velocityUpdateParameter = new VelocityUpdateParameter(args,
         List.of("defaultVelocityUpdate", "constrainedVelocityUpdate"));
