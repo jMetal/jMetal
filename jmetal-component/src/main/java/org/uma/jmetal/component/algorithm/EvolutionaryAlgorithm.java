@@ -31,12 +31,12 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
     implements Algorithm<List<S>>, ObservableEntity<Map<String, Object>> {
 
   private List<S> population;
-  private final Evaluation<S> evaluation;
-  private final SolutionsCreation<S> createInitialPopulation;
-  private final Termination termination;
-  private final Selection<S> selection;
-  private final Variation<S> variation;
-  private final Replacement<S> replacement;
+  private Evaluation<S> evaluation;
+  private SolutionsCreation<S> createInitialPopulation;
+  private Termination termination;
+  private Selection<S> selection;
+  private Variation<S> variation;
+  private Replacement<S> replacement;
   private final Map<String, Object> attributes;
   private long initTime;
   private long totalComputingTime;
@@ -161,5 +161,13 @@ public class EvolutionaryAlgorithm<S extends Solution<?>>
   @Override
   public Observable<Map<String, Object>> getObservable() {
     return observable;
+  }
+
+  public void setTermination(Termination termination) {
+    this.termination = termination ;
+  }
+
+  public void setEvaluation(Evaluation<S> evaluation) {
+    this.evaluation = evaluation ;
   }
 }
